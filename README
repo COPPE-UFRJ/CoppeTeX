@@ -1,0 +1,18 @@
+This project provides a LaTeX document class suitable for writing
+academic dissertations and thesis according to the format rules of the
+Alberto Luiz Coimbra Institute for Graduate Studies and Research in
+Engineering (Coppe/UFRJ).
+
+The 'coppe' class contains a minimalist set of macro commands which
+allows its users to create required textual elements according to the
+Coppe/UFRJ dissertation/thesis guide. Among these elements, there are a
+title page, cataloging details, native and foreign languages
+abstracts, table of contents, and references.
+
+Although following the Coppe/UFRJ guidelines, it can be easily ported to
+standards of other institutions. This is possible due to users'
+flexibility in defining textual elements required by their institutions.
+
+The development of this class follows the Comprehensive TeX
+Archive Network (CTAN) standards, i.e., it distributes a '.ins' file,
+'.dtx', and README, to assist its users during installation and use.

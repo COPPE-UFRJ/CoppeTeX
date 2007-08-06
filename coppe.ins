@@ -1,0 +1,144 @@
+%
+% This is file `coppe.ins'.
+%
+% It uses the docstrip utility to generate the `coppe'
+% document class and a sample manuscript `example.tex'
+% from file `coppe.dtx'.
+%
+% Copyright (C) 2007 Vicente Helano, George Ainsworth Jr. and Alvaro Cuno
+%
+% This program is free software; you can redistribute it and/or modify
+% it under the terms of the GNU General Public License as published by
+% the Free Software Foundation; either version 2 of the License, or
+% (at your option) any later version.
+%
+% This program is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+% GNU General Public License for more details.
+%
+% You should have received a copy of the GNU General Public License
+% along with this package; if not, write to the Free Software
+% Foundation, Inc., 51 Franklin St, Fifth Floor,
+% Boston, MA  02110-1301, USA.
+%
+% $URL$
+% $Id$
+%
+% Author(s): Vicente Helano,
+%            George Ainsworth,
+%            Alvaro Cuno
+%
+
+\input docstrip
+
+\keepsilent
+\askforoverwritefalse
+
+\declarepreamble\classpreamble
+
+This is the `coppe' document class used for composition of LaTeX
+monographs (master and phd thesis, and phd qualifying exams)
+satisfying the requirements of the Coordination of Research and
+Graduate Courses in Engineering at the Federal University of
+Rio de Janeiro.
+
+Copyright (C) 2007 Vicente Helano and George Ainsworth Jr.
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin St, Fifth Floor,
+Boston, MA  02110-1301, USA.
+
+Author(s): Vicente Helano,
+           George Ainsworth
+
+\endpreamble
+
+\declarepreamble\symblpreamble
+
+This is the makeindex style for creating ordered list of symbols
+when using the `coppe' document class.
+
+Copyright (C) 2007 Vicente Helano and George Ainsworth Jr.
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin St, Fifth Floor,
+Boston, MA  02110-1301, USA.
+
+Author(s): Vicente Helano,
+           George Ainsworth
+
+\endpreamble
+
+\declarepreamble\abbrevpreamble
+
+This is the makeindex style for creating ordered list of abbreviations
+when using the `coppe' document class.
+
+Copyright (C) 2007 Vicente Helano and George Ainsworth Jr.
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin St, Fifth Floor,
+Boston, MA  02110-1301, USA.
+
+Author(s): Vicente Helano,
+           George Ainsworth
+
+\endpreamble
+
+\declarepreamble\examplepreamble
+
+This is a sample monograph which ilustrates the use of `coppe' document
+class and `coppe-unsrt' BibTeX style.
+
+\endpreamble
+
+\postamble
+% end of `coppe' customized files
+\endpostamble
+
+\usedir{tex/latex/coppe}
+\generate{%
+  \usepreamble\symblpreamble
+  \file{coppe-symbl.ist}{\from{coppe.dtx}{symblist}}%
+  \usepreamble\abbrevpreamble
+  \file{coppe-abbrev.ist}{\from{coppe.dtx}{abbrevist}}%
+  \usepreamble\examplepreamble
+  \file{example.tex}{\from{coppe.dtx}{example}}%
+  \usepreamble\classpreamble
+  \file{coppe.cls}{\from{coppe.dtx}{class}}%
+}
+\endbatchfile
