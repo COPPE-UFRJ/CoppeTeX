@@ -3,7 +3,7 @@
 % This is file `coppe.dtx'.
 %
 % It uses the doc utility to generate documentations for the 'coppe'
-% document class and the 'coppe-unsrt' BibTeX style
+% document class and the 'coppe-unsrt' BibTeX style.
 %
 % Copyright (C) 2007 Vicente Helano, George Ainsworth Jr. and Alvaro Cuno
 %
@@ -47,7 +47,7 @@
 %</driver>
 % \fi
 %
-% ^^A \CheckSum{1}
+%% \CheckSum{919}
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
 %%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
@@ -66,17 +66,29 @@
 %%
 % \changes{v0.0}{2007/03/01}{Creation Date.}
 % \changes{v0.1}{2007/06/22}{Sourceforge submission.}
+% \changes{v0.1}{2007/08/13}{Bibliography correction, title translation, and
+% addresses fixing.}
 %
 % \GetFileInfo{coppe}
 %
-% \title{A classe \texttt{coppe} para documentos em \LaTeX}
-% \author{Vicente Helano F. Batista\thanks{email: helano@coc.ufrj.br,
-% url: www.coc.ufrj.br/helano}
-% \and George O. Ainsworth Jr.\thanks{email: george@coc.ufrj.br}
-% \and Alvaro Cuno\thanks{email: alvaro@lcg.ufrj.br}
-% \vspace*{0.25cm}
-% \and {\normalsize Universidade Federal do Rio de Janeiro}\\
-% {\small PEC and PESC/COPPE}}
+% \title{The \texttt{coppe} document class}
+% \author{
+% \begin{tabular}{cc}
+% Vicente Helano F. Batista\thanks{email: helano@coc.ufrj.br} &
+% George O. Ainsworth Jr.\thanks{email: george@coc.ufrj.br}\\
+% \multicolumn{2}{c}{\footnotesize Programa de Engenharia Civil}\\
+% \multicolumn{2}{c}{\footnotesize COPPE, Universidade Federal do Rio de
+% Janeiro}\\
+% \multicolumn{2}{c}{\footnotesize Rio de Janeiro, RJ, 21945-970, Brazil}\\
+% \end{tabular}
+% \vspace{0.5cm}
+\and
+% \begin{tabular}{c}
+% Alvaro Cuno\thanks{email: alvaro@lcg.ufrj.br}\\
+% {\footnotesize Programa de Engenharia de Sistemas e Computação}\\
+% {\footnotesize COPPE, Universidade Federal do Rio de Janeiro}\\
+% {\footnotesize Rio de Janeiro, RJ, 21945-970, Brazil}\\
+% \end{tabular}}
 %
 % \maketitle
 %
@@ -480,9 +492,9 @@ postamble
 %
 % \StopEventually{\PrintIndex}
 %
-% \section{Implementação}
+% \section{Implementation}
 %
-% \subsection{O arquivo \texttt{coppe.cls}}
+% \subsection{The file `\texttt{coppe.cls}'}
 %    \begin{macrocode}
 %<*class>
 \def\filename{coppe.dtx}
@@ -970,8 +982,9 @@ postamble
 %</class>
 %    \end{macrocode}
 %
-% \section*{Thanks}
-% The authors would like to thank the CNPq for the financial support.
+% \section*{Aknowledgements}
+% The authors would like to thank the National Council for Scientific and
+% Technological Development (CNPq) for the financial support.
 %
 % \nocite{*}
 % \bibliographystyle{plain}
