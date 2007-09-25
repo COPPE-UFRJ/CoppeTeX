@@ -1,31 +1,28 @@
 %
 % This is file `ufrj-unsrt.bst',
 %
-% BibTeX style for using with CoppeTeX package.
+% Numbered BibTeX style for using with CoppeTeX package.
 %
-% Copyright (C) 2007 Vicente Helano, George Ainsworth Jr. and Alvaro Cuno.
+% Copyright (C) 2007 Vicente Helano and George Ainsworth Jr.
 %
 % This program is free software; you can redistribute it and/or modify
-% it under the terms of the GNU General Public License as published by
-% the Free Software Foundation; either version 2 of the License, or
-% (at your option) any later version.
+% it under the terms of the GNU General Public License version 3 as
+% published by the Free Software Foundation.
 %
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
-% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-% GNU General Public License for more details.
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+% GNU General Public License version 3 for more details.
 %
 % You should have received a copy of the GNU General Public License
-% along with this package; if not, write to the Free Software
-% Foundation, Inc., 51 Franklin St, Fifth Floor,
-% Boston, MA  02110-1301, USA.
+% version 3 along with this package (see COPYING file).
+% If not, see <http://www.gnu.org/licenses/>.
 %
 % $URL$
 % $Id$
 %
 % Author(s): Vicente Helano,
-%            George Ainsworth,
-%            Alvaro Cuno
+%            George Ainsworth
 %
 
 ENTRY

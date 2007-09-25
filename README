@@ -1,3 +1,8 @@
+This is the README file for the CoppeTeX package.
+
+Introduction
+------------
+
 This project provides a LaTeX document class suitable for writing
 academic dissertations and thesis according to the format rules of the
 Alberto Luiz Coimbra Institute for Graduate Studies and Research in
@@ -6,13 +11,38 @@ Engineering (Coppe/UFRJ).
 The 'coppe' class contains a minimalist set of macro commands which
 allows its users to create required textual elements according to the
 Coppe/UFRJ dissertation/thesis guide. Among these elements, there are a
-title page, cataloging details, native and foreign languages
-abstracts, table of contents, and references.
+title page, cataloging details, native and foreign languages abstracts,
+table of contents, and references.
 
 Although following the Coppe/UFRJ guidelines, it can be easily ported to
 standards of other institutions. This is possible due to users'
 flexibility in defining textual elements required by their institutions.
 
-The development of this class follows the Comprehensive TeX
-Archive Network (CTAN) standards, i.e., it distributes a '.ins' file,
-'.dtx', and README, to assist its users during installation and use.
+The development of this class follows the Comprehensive TeX Archive
+Network (CTAN) standards, i.e., it distributes a '.ins' file, '.dtx',
+and README, to assist its users during installation and use.
+
+
+Contents
+--------
+
+You should have got the following files:
+  1. COPYING
+  2. ChangeLog
+  3. Makefile
+  4. README
+  5. coppe-unsrt.bst
+  6. coppe.bib
+  7. coppe.dtx
+  8. coppe.ins
+
+
+Contact
+-------
+
+Please, send any comments, suggestions, questions and bugs to:
+  Vicente Helano <helano@users.sourceforge.net>.
+
+
+And have a good thesis,
+  CoppeTeX team.

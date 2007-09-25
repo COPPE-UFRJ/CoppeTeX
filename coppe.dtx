@@ -5,29 +5,26 @@
 % It uses the doc utility to generate documentations for the 'coppe'
 % document class and the 'coppe-unsrt' BibTeX style.
 %
-% Copyright (C) 2007 Vicente Helano, George Ainsworth Jr. and Alvaro Cuno
+% Copyright (C) 2007 Vicente Helano and George Ainsworth Jr.
 %
 % This program is free software; you can redistribute it and/or modify
-% it under the terms of the GNU General Public License as published by
-% the Free Software Foundation; either version 2 of the License, or
-% (at your option) any later version.
+% it under the terms of the GNU General Public License version 3 as
+% published by the Free Software Foundation.
 %
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
-% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-% GNU General Public License for more details.
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+% GNU General Public License version 3 for more details.
 %
 % You should have received a copy of the GNU General Public License
-% along with this package; if not, write to the Free Software
-% Foundation, Inc., 51 Franklin St, Fifth Floor,
-% Boston, MA  02110-1301, USA.
+% version 3 along with this package (see COPYING file).
+% If not, see <http://www.gnu.org/licenses/>.
 %
 % $URL$
 % $Id$
 %
 % Author(s): Vicente Helano,
-%            George Ainsworth,
-%            Alvaro Cuno
+%            George Ainsworth
 %
 % \fi
 %
@@ -36,6 +33,9 @@
 \documentclass{ltxdoc}
 \usepackage[latin1]{inputenc}
 \usepackage[T1]{fontenc}
+
+\def\CoppeTeX{{\rm C\kern-.05em{\sc o\kern-.025em p\kern-.025em
+p\kern-.025em e}}\kern-.08em\TeX}
 
 \EnableCrossrefs
 \CodelineIndex
@@ -65,31 +65,22 @@
 %%
 % \changes{v0.0}{2007/03/01}{Creation Date.}
 % \changes{v0.1}{2007/06/22}{Sourceforge submission.}
-% \changes{v0.1}{2007/08/13}{Bibliography correction, title translation, and
-% addresses fixing.}
-% \changes{v0.1}{2007/08/17}{Abstract translation; |babel| package
-% deletion from the driver document.}
+% \changes{v0.1}{2007/08/13}{Documentation: bibliography fixed,
+% title translation.}
+% \changes{v0.1}{2007/08/17}{Documentation: abstract translation;
+% Code: |babel| package deletion from the driver document.}
+% \changes{v0.1}{2007/09/25}{Documentation: introduction, installation;
+% License: update to the 3rd version of the GNU GPL; |ChangeLog| remove,
+% and added Change History.}
 %
 % \GetFileInfo{coppe}
 %
 % \title{The \texttt{coppe} document class}
 % \author{
-% \begin{tabular}{cc}
-% Vicente Helano F. Batista\thanks{email: helano@coc.ufrj.br} &
-% George O. Ainsworth Jr.\thanks{email: george@coc.ufrj.br}\\
-% \multicolumn{2}{c}{\footnotesize Programa de Engenharia Civil}\\
-% \multicolumn{2}{c}{\footnotesize COPPE, Universidade Federal do Rio de
-% Janeiro}\\
-% \multicolumn{2}{c}{\footnotesize Rio de Janeiro, RJ, 21945-970, Brazil}\\
-% \end{tabular}
-% \vspace{0.5cm}
-\and
-% \begin{tabular}{c}
-% Alvaro Cuno\thanks{email: alvaro@lcg.ufrj.br}\\
-% {\footnotesize Programa de Engenharia de Sistemas e Computação}\\
-% {\footnotesize COPPE, Universidade Federal do Rio de Janeiro}\\
-% {\footnotesize Rio de Janeiro, RJ, 21945-970, Brazil}\\
-% \end{tabular}}
+% Vicente Helano F. Batista\thanks{Send comments, suggestions, questions
+% and bugs to helano@users.sourceforge.net.}
+% \and
+% George O. Ainsworth Jr.}
 %
 % \maketitle
 %
@@ -97,24 +88,63 @@
 % In this work, it is described the |coppe| document class suitable for writing
 % academic dissertations, thesis and qualifying exams according to the format
 % rules of the Alberto Luiz Coimbra Institute for Graduate Studies and
-% Research in Engineering (Coppe/UFRJ). The minimalist set of macro commands
+% Research in Engineering. The minimalist set of macro commands
 % provided by the |coppe| class allows its users to concentrate most of
 % their efforts on text composition rather than on the document layout.
 % \end{abstract}
 %
-% \section{Introdução}
-% A composição de documentos em \LaTeX\ é muitas vezes dificultada quando
-% o autor vê-se obrigado a seguir um formato pré-definido pela instituição
-% responsável pela publicação. Isso se dá, principalmente,
-% devido a inexistência de uma classe para documentos
-% em \LaTeX\ satisfazendo às exigências de formatação impostas.
+% \section{Introduction}
+% Writing documents in \LaTeX\ may be a laborious task when the
+% authors have to prepare their manuscripts rigorously respecting
+% format rules imposed by the publisher. Regardless of difficulty,
+% great part of the thesis presented to the Coordination of Graduate
+% Studies and Research in Engeneering of the Federal University of Rio
+% de Janeiro (COPPE/UFRJ) is done in \LaTeX. The |coppe| class was
+% developed to facilitate and encourage the use of \LaTeX\ by students
+% of any graduate program at COPPE/UFRJ.
 %
-% Apesar disso, grande parte das teses apresentadas à Coordenação de
-% Pesquisas e Pós-graduação em Engenharia da Universidade Federal do Rio
-% de Janeiro (COPPE/UFRJ) são elaboradas em \LaTeX. Tendo em vista
-% facilitar e difundir o uso de \LaTeX\ no âmbito da COPPE/UFRJ,
-% foi desenvolvida a classe |coppe| para composição de dissertações,
-% exames de qualificação e teses segundo as normas do Registro
+% \section{License}
+% Each file belonging to this package contains a copyright notice.
+% Its use is protected by the {GNU} General Public License (GPL) version
+% 3, so that users are free for copying, distributing or modifying the
+% source code, among other acts covered by this license.
+%
+% To see the full text of the {GNU GPL} license, go to the |COPYING|
+% file attached to this package.
+% 
+% \section{Installation}
+% A instalação da classe |coppe|
+% passa apenas pela execução de um compilador \LaTeX\
+% em alguns dos arquivos distribuídos. Ao final desse processo,
+% existirão um arquivo DVI com esta documentação, o arquivo |coppe.cls|
+% contendo a classe propriamente dita, um exemplo de utilização dessa
+% classe (|exemplo.tex|), estilos de índice no formato Makeindex para as
+% listas de símbolos e abreviaturas.
+%
+% \subsection{Dependencies}
+% A instalação de |coppe| requer qualquer distribuição de \LaTeX2e
+% contendo os pacotes |doc| para a obtenção dessa documentação, e
+% |docstrip| para a extração dos arquivos |coppe.cls| e |example.tex|.
+% Ainda serão necessários os pacotes |ifthen|, |babel| e |geometry|.
+%
+% \subsection{Getting the \texttt{coppe} class}
+% The |coppe| class can be obtained from the \CoppeTeX\ project
+% at SourceForge.net. Its URL is http://sourceforge.net/projects/coppe.
+% There, it can be...
+%
+% \subsection{Build and Install}
+% \subsection{Known Bugs}
+% \subsection{TODO}
+% \begin{itemize}
+%   \item Substituir o exemplo pela tese de doutorado do George Ainsworth Jr..
+%   \item Estilo \BibTeX por ordem alfabética.
+%   \item Consertar referência da página nas listas de abreviaturas e símbolos
+%   \item Deixar mais robusto o |abbrev| e |symbl| permitindo texto em duas
+%   linhas
+% \end{itemize}
+%
+% \section{User Interface}
+% The dissertations and thesis are regulated by the Registro
 % Acadêmico da UFRJ\cite{TNR96a}.
 %
 % As teses apresentadas à Coordenação de Pesquisas e Pós-graduação em
@@ -132,70 +162,17 @@
 % referências bibliográficas. Entretanto, todo o acabamento gráfico
 % da monografia é de responsabilidade do autor.
 %
-% Recomanda-se a limitação do encadeamento de seções até o quinto
-% nível. Em \LaTeX, tem-se até o XXX nível.
+% Para os números de páginas do frontmatter e do mainmatter aparecerem
+% na ficha catalográfica, utilizou-se uma referência. Assim, mesmo com
+% uma main vazia, será necessário re-executar o \LaTeX para obter as
+% referências corretas.
 %
-% Assim, este trabalho facilitará a utilização de \LaTeX\ para a
-% composição de textos acadêmicos no âmbito da Coordenação de Pesquisa e
-% Pós-graduação em Engenharia (COPPE).
-%
-% \section{Licensa de Uso}
-% Cada arquivo contido nesse pacote possui uma nota sobre os direitos
-% de utilização do mesmo. A utilização de todos os arquivos
-% que compõem esse pacote é
-% resguardada pela {GNU} \emph{General Public License} (GPL). Assim,
-% todos os usuários desse pacote estão livres para copiar, distribuir ou
-% modificar o código fonte aqui desenvolvido, dentre outras ações
-% previstas na {GNU GPL}.
-%
-% Para a definição na íntegra da licensa {GNU GPL}, ver o arquivo 
-% |LICENSE| em anexo a este pacote.
-% 
-% \section{Instalação}
-% A instalação da classe |coppe|
-% passa apenas pela execução de um compilador \LaTeX\
-% em alguns dos arquivos distribuídos. Ao final desse processo,
-% existirão um arquivo DVI com esta documentação, o arquivo |coppe.cls|
-% contendo a classe propriamente dita, um exemplo de utilização dessa
-% classe (|exemplo.tex|), estilos de índice no formato Makeindex para as
-% listas de símbolos e abreviaturas.
-%
-% \subsection{Pré-requisitos}
-% A instalação de |coppe| requer qualquer distribuição de \LaTeX2e
-% contendo os pacotes |doc| para a obtenção dessa documentação, e
-% |docstrip| para a extração dos arquivos |coppe.cls| e |example.tex|.
-% Ainda serão necessários os pacotes |ifthen|, |babel| e |geometry|.
-%
-%
-% \subsection{Obtendo a classe \texttt{coppe}}
-% A classe |coppe| tem como repositório principal a página do
-% primeiro autor. Pode-se obtê-la também entrando em contato com
-% os autores por \textit{email} ou por correspondencia.
-%
-% \subsection{Compilando e Instalando}
-% \subsection{Bugs}
-% \subsection{TODO}
-% \begin{itemize}
-%   \item Substituir o exemplo pela tese de doutorado do George Ainsworth Jr..
-%   \item Estilo \BibTeX por ordem alfabética.
-%   \item Consertar referência da página nas listas de abreviaturas e símbolos
-%   \item Deixar mais robusto o |abbrev| e |symbl| permitindo texto em duas
-%   linhas
-% \end{itemize}
-%
-% \section{Interface do Usuário}
-%  Para os números de páginas do frontmatter e do mainmatter aparecerem
-%  na ficha catalográfica, utilizou-se uma referência. Assim, mesmo com
-%  uma main vazia, será necessário re-executar o \LaTeX para obter as
-%  referências corretas.
-%
-%  For a correct exbition o fthe title it is needed to have a Times font.
-% \subsection{Folha de Rosto}
+% For a correct exbition of the title it is needed to have a Times font.
+% \subsection{Front Face}
 % Esta página não deve conter numeração. Também não pode conter
 % separação de sílabas.
 % O comando |\maketitle| é redefinido para cumprimento dos padrões de
 % folhas de rosto especificados pelo ...
-%
 %
 % \DescribeMacro{\author}
 % O nome do autor deve ser passado em dois argumentos: sobrenome e
@@ -215,17 +192,17 @@
 % em algarismos arábicos (e.g. outubro de 2007 deve ser igual a
 % |\date{8}{2007}|).
 %
-% \subsection{Ficha Catalográfica}
+% \subsection{Catalog}
 % Essa ficha é gerada automaticamente.
 %
-% \subsection{Dedicatória (opcional)}
+% \subsection{Dedication (optional)}
 % \DescribeMacro{\dedication}
 %
-% \subsection{Agradecimentos (opcional)}
+% \subsection{Aknowledgements (optional)}
 % Os agradecimentos devem ser postos após o início de um capítulo não
 % numerado, ou seja, |\chapter*{Agradecimentos}|.
 %
-% \subsection{Resumos em Português e Inglês}
+% \subsection{Abstracts}
 % \DescribeMacro{\resumo}
 % \DescribeMacro{\abstract}
 % Segundo a norma \cite{TNR96a}, os resumos devem estar contidos em
@@ -242,16 +219,16 @@
 % e figuras. Segundo ABNT, um resumo deve compreender entre de 150
 % a 500 palavras.
 %
-% \subsection{Sumário}
+% \subsection{Table of Contents}
 % \DescribeMacro{\tableofcontents}
 % É, basicamente, o mesmo sumário da classe |book| com a adição de
 % entradas para listas de símbolos e abreviaturas e índice remissivo,
 % caso requerido pelo autor.
 %
-% \subsection{Lista de Figuras (opcional)}
-% \subsection{Lista de Tabelas (opcional)}
+% \subsection{List of Figures (optional)}
+% \subsection{List of Tables (optional)}
 %
-% \subsection{Lista de Símbolos (opcional)}
+% \subsection{List of Simbols (optional)}
 % \DescribeMacro{\printlosymbols}
 % Como descrito em \cite{TNR96a}, a lista de símbolos é um elemento
 % opcional da monografia. É recomendado [SIBI] que, na primeira
@@ -302,7 +279,7 @@ postamble
 %</symblist>
 %    \end{macrocode}
 %
-% \subsection{Lista de Abreviaturas (opcional)}
+% \subsection{List of Abreviations (optional)}
 % \DescribeMacro{\printloabbreviations}
 % A lista de abreviaturas também é opcional \cite{TNR96a}.
 %    \begin{macrocode}
@@ -327,8 +304,8 @@ postamble
 % segue o mesmo padrão descrito para os comandos de inserção na lista de
 % símbolos. 
 %
-% \subsection{Corpo do Texto}
-% \subsubsection{Figuras}
+% \subsection{Body of the text}
+% \subsubsection{Figures}
 % Para obter um melhor acabamento do texto final, não inserir figuras
 % fiquem no meio do texto. Essas devem estar sempre posicionadas no topo
 % ou no bottom do texto. Quando da impossibilidade da redução da
@@ -344,11 +321,11 @@ postamble
 % O títulos de uma figura deve vir logo abaixo de seu ponto de
 % inserção.
 %
-% \subsubsection{Tabelas}
+% \subsubsection{Tables}
 % Todas as tabelas devem ser nomeadas, numeradas e citadas no texto.
 % O título de cada tabela deve estar posicionado acima de sua inserção.
 %
-% \subsection{Referências Bibliográficas}
+% \subsection{References}
 % Apesar da normatização do formato do capítulo contendo as referências
 % ciratadas ao longo do texto, o que se viu foi o total abandono dessa.
 % Por isso, os autores resolveram compor também um estilo de
@@ -361,18 +338,17 @@ postamble
 % Para o emprego de vários modelos citações, os autores indicam a
 % utilização do pacote |natbib|.
 %
-%
-% \subsection{Apêndices (opcional)}
+% \subsection{Apendices (optional)}
 % Todo e qualquer tipo de dado longo ou auxiliar deve ser posto em
 % apêndices. Siga o exemplo da Seção~\ref{COPPE:SAMPLE}, caso queira
 % o aparecimento desses.
 %
-% \subsection{Índice Remissivo (opcional)}
+% \subsection{Index (optional)}
 % A construção de índices remissivo não é nada agradável. Entretanto,
 % esse enriquece a monografia. Em \LaTeX, o pacote |makeindex| é
 % responsável pela construção de tal elemento textual.
 %
-% \subsection{Um Exemplo Simples}
+% \subsection{A simple example}
 % \label{COPPE:SAMPLE}
 %   A basic document using the \texttt{coppe} class should contain at
 %   least the following code.
@@ -483,7 +459,7 @@ postamble
 %</example>
 %    \end{macrocode}
 %
-% \subsection{Estilos de Referências Bibliográficas}
+% \subsection{A \BibTeX\ style}
 % Segundo o ...,  O estilo de referências bibliografia utilizado em
 % teses da COPPEThe bibliography style currently used in COPPE thesis
 % is contained in
@@ -984,12 +960,13 @@ postamble
 %
 % \section*{Aknowledgements}
 % The authors would like to thank the National Council for Scientific and
-% Technological Development (CNPq) for the financial support.
+% Technological Development (CNPq) for the financial support. They are
+% also grateful to Alvaro Cuno for setting the SVN repository.
 %
 % \nocite{*}
 % \bibliographystyle{plain}
 % \bibliography{coppe}
 % \Finale
-% \PrintIndex
 % \PrintChanges
+% \PrintIndex
 \endinput

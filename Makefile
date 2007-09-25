@@ -1,40 +1,37 @@
 #
 # This is file `Makefile'.
 #
-# Here's a description...
+# It should be used to strip the CoppeTeX class and its documentation.
 #
-# Copyright (C) 2007 Vicente Helano, George Ainsworth Jr. and Alvaro Cuno
+# Copyright (C) 2007 Vicente Helano and George Ainsworth Jr.
 #
 # This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2 of the License, or
-# (at your option) any later version.
+# it under the terms of the GNU General Public License version 3 as
+# published by the Free Software Foundation.
 #
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License version 3 for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with this package; if not, write to the Free Software
-# Foundation, Inc., 51 Franklin St, Fifth Floor,
-# Boston, MA  02110-1301, USA.
+# version 3 along with this package (see COPYING file).
+# If not, see <http://www.gnu.org/licenses/>.
 #
 # $URL$
 # $Id$
 #
 # Author(s): Vicente Helano,
-#            George Ainsworth,
-#            Alvaro Cuno
+#            George Ainsworth
 #
 
 PROGRAM_NAME=CoppeTeX Makefile
 PACKAGE_NAME=coppe
 DOC_SOURCE=coppe.dtx
 VERSION="1.0"
-AUTHORS=Vicente Helano, George Ainsworth Jr. and Alvaro Cuno
+AUTHORS=Vicente Helano and George Ainsworth Jr.
 COPYRIGHT_YEAR=2007
-PACKAGE_BUGREPORT="helano@inbox"
+PACKAGE_BUGREPORT="helano@users.sourceforge.net"
 
 TEX = latex
 BIBTEX = bibtex
@@ -45,11 +42,12 @@ _printf=printf
 _rm=rm
 _tar=tar
 
-TEXFLAGS  = -interaction=batchmode
+TEXFLAGS  = 
 BIBTEXFLAGS = -terse
 DVIPSFLAGS = -Ppdf -G0 -q -t A4 
 DVIPDFMFLAGS = -c -r 300 -p a4
 IDXFLAGS = -q -s gind.ist
+GLOFLAGS = -q -s gglo.ist
 SYXFLAGS = -q -s coppe-symbl.ist
 ABXFLAGS = -q -s coppe-abbrev.ist
 
@@ -59,7 +57,23 @@ all:
 	@${_printf} "make: unknown target\n"
 	@${_printf} "Try \`make help\' for more information.\n" >&2
 
-doc: $(PACKAGE_NAME).dvi
+doc: $(PACKAGE_NAME).dtx
+	@$(TEX) $(TEXFLAGS) $<
+	@if grep -s "There were undefined references" $(basename $<).log; then \
+	  $(BIBTEX) $(BIBTEXFLAGS) $(basename $<).aux; \
+	fi
+	@if grep -s '$(basename $<).idx' $(basename $<).log; then \
+	  $(MAKEIDX) $(IDXFLAGS) $(basename $<).idx -o $(basename $<).ind;\
+	fi
+	@if grep -s '$(basename $<).glo' $(basename $<).log; then \
+	  $(MAKEIDX) $(GLOFLAGS) $(basename $<).glo -o $(basename $<).gls;\
+	fi
+	@i=6 ; \
+	while grep "Rerun to get cross-references right" $(basename $<).log && \
+	  [ $$i -gt 0 ] ; do \
+	  $(TEX) $(TEXFLAGS) $< ; \
+		let "i--"; \
+	done
 
 class: $(PACKAGE_NAME).cls
 
@@ -73,7 +87,8 @@ distclean: clean
 
 clean:
 	@$(_rm) -f *.log *.aux *.dvi *.ist *.idx *.blg *.bbl *.glo *.bz2 \
-		         *.toc *.lof *.lot *.syx *.abx *.lab *.ilg *.los *~ 
+		         *.toc *.lof *.lot *.syx *.abx *.lab *.ilg *.los *.ind \
+						 *.gls *~ 
 
 help:
 	@${_printf} "Usage: make [TARGET]\n" "${PROGRAM_NAME}"
@@ -125,6 +140,7 @@ $(PACKAGE_NAME).dvi: $(PACKAGE_NAME).dtx
 	@if grep -s '$(basename $<).abx' $(basename $<).log; then \
 	  $(MAKEIDX) $(ABXFLAGS) $(basename $<).abx -o $(basename $<).lab;\
 	fi
+	@$(TEX) $(TEXFLAGS) $<
 	@i=6 ; \
 	while grep "Rerun to get cross-references right" $(basename $<).log && \
 	  [ $$i -gt 0 ] ; do \
