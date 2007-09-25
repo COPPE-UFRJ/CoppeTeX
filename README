@@ -2,7 +2,6 @@ This is the README file for the CoppeTeX package.
 
 Introduction
 ------------
-
 This project provides a LaTeX document class suitable for writing
 academic dissertations and thesis according to the format rules of the
 Alberto Luiz Coimbra Institute for Graduate Studies and Research in
@@ -18,31 +17,58 @@ Although following the Coppe/UFRJ guidelines, it can be easily ported to
 standards of other institutions. This is possible due to users'
 flexibility in defining textual elements required by their institutions.
 
+
+When Conceived
+--------------
+It was conceived in january 2007, during the D.Sc. studies of Vicente Helano
+and George Ainsworth at the Federal University of Rio de Janeiro/COPPE.
+
+
+How Much
+--------
+``This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License version 3 as
+published by the Free Software Foundation.''
+
+
+Archive Content
+---------------
 The development of this class follows the Comprehensive TeX Archive
-Network (CTAN) standards, i.e., it distributes a '.ins' file, '.dtx',
+Network (CTAN) standards, so it distributes a '.ins' file, '.dtx',
 and README, to assist its users during installation and use.
 
+You should have received the following files:
+  1. COPYING: full text of the GNU General Policy License version 3.
 
-Contents
---------
+  2. Makefile: used to extract the coppe class and build the
+     documentation and a sample thesis.
 
-You should have got the following files:
-  1. COPYING
-  2. ChangeLog
-  3. Makefile
-  4. README
-  5. coppe-unsrt.bst
-  6. coppe.bib
-  7. coppe.dtx
-  8. coppe.ins
+  3. README: describe the CoppeTeX package.
+
+  4. coppe-unsrt.bst: unsorted BibTeX style.
+
+  5. coppe.bib: contains the references cited in the documentation.
+
+  6. coppe.dtx: main source file; contains the documentation, a sample
+     thesis and Makeindex styles.
+
+  7. coppe.ins: used to strip out the coppe document class from `coppe.dtx'.
+
+
+Installing
+----------
+There is a Makefile for helping you during installation.
+Try `make help`, and see what happens.
 
 
 Contact
 -------
-
 Please, send any comments, suggestions, questions and bugs to:
   Vicente Helano <helano@users.sourceforge.net>.
 
 
-And have a good thesis,
+Have a good thesis,
   CoppeTeX team.
+
+                                             Rio de Janeiro, september 25, 2007.
+
