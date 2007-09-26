@@ -46,7 +46,7 @@ p\kern-.025em e}}\kern-.08em\TeX}
 %</driver>
 % \fi
 %
-%% \CheckSum{919}
+%% \CheckSum{944}
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
 %%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
@@ -75,7 +75,7 @@ p\kern-.025em e}}\kern-.08em\TeX}
 %
 % \GetFileInfo{coppe}
 %
-% \title{The \texttt{coppe} document class}
+% \title{The |coppe| document class}
 % \author{
 % Vicente Helano F. Batista\thanks{Send comments, suggestions, questions
 % and bugs to helano@users.sourceforge.net.}
@@ -98,7 +98,7 @@ p\kern-.025em e}}\kern-.08em\TeX}
 % authors have to prepare their manuscripts rigorously respecting
 % format rules imposed by the publisher. Regardless of difficulty,
 % great part of the thesis presented to the Coordination of Graduate
-% Studies and Research in Engeneering of the Federal University of Rio
+% Studies and Research in Engineering of the Federal University of Rio
 % de Janeiro (COPPE/UFRJ) is done in \LaTeX. The |coppe| class was
 % developed to facilitate and encourage the use of \LaTeX\ by students
 % of any graduate program at COPPE/UFRJ.
@@ -112,37 +112,6 @@ p\kern-.025em e}}\kern-.08em\TeX}
 % To see the full text of the {GNU GPL} license, go to the |COPYING|
 % file attached to this package.
 % 
-% \section{Installation}
-% A instalação da classe |coppe|
-% passa apenas pela execução de um compilador \LaTeX\
-% em alguns dos arquivos distribuídos. Ao final desse processo,
-% existirão um arquivo DVI com esta documentação, o arquivo |coppe.cls|
-% contendo a classe propriamente dita, um exemplo de utilização dessa
-% classe (|exemplo.tex|), estilos de índice no formato Makeindex para as
-% listas de símbolos e abreviaturas.
-%
-% \subsection{Dependencies}
-% A instalação de |coppe| requer qualquer distribuição de \LaTeX2e
-% contendo os pacotes |doc| para a obtenção dessa documentação, e
-% |docstrip| para a extração dos arquivos |coppe.cls| e |example.tex|.
-% Ainda serão necessários os pacotes |ifthen|, |babel| e |geometry|.
-%
-% \subsection{Getting the \texttt{coppe} class}
-% The |coppe| class can be obtained from the \CoppeTeX\ project
-% at SourceForge.net. Its URL is http://sourceforge.net/projects/coppe.
-% There, it can be...
-%
-% \subsection{Build and Install}
-% \subsection{Known Bugs}
-% \subsection{TODO}
-% \begin{itemize}
-%   \item Substituir o exemplo pela tese de doutorado do George Ainsworth Jr..
-%   \item Estilo \BibTeX por ordem alfabética.
-%   \item Consertar referência da página nas listas de abreviaturas e símbolos
-%   \item Deixar mais robusto o |abbrev| e |symbl| permitindo texto em duas
-%   linhas
-% \end{itemize}
-%
 % \section{User Interface}
 % The dissertations and thesis are regulated by the Registro
 % Acadêmico da UFRJ\cite{TNR96a}.
@@ -167,7 +136,7 @@ p\kern-.025em e}}\kern-.08em\TeX}
 % uma main vazia, será necessário re-executar o \LaTeX para obter as
 % referências corretas.
 %
-% For a correct exbition of the title it is needed to have a Times font.
+% For a correct exhibition of the title it is needed to have a Times font.
 % \subsection{Front Face}
 % Esta página não deve conter numeração. Também não pode conter
 % separação de sílabas.
@@ -354,9 +323,12 @@ postamble
 %   least the following code.
 %    \begin{macrocode}
 %<*example>
-\documentclass[msc]{coppe}
-\usepackage{ae}
+\documentclass[dsc]{coppe}
+\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[brazil]{babel}
 \usepackage{amsmath,amssymb}
+
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 
@@ -367,13 +339,10 @@ postamble
   \frontmatter
   \titulo{Queima de Combustíveis Líquidos em Combustores Pulsantes
   Tipo Tubo de Rijke}
-%  \titulo{Geração de Malhas Não-Estruturadas Tetraédricas Utilizando
-%  um Método de Avanço de Fronteira}
   \title{Generation of Unstructured Tetrahedral Meshes Using an
   Advancing Front Method}
-%  \author{Batista}{Vicente Helano Feitosa}
   \author{Couto}{Heraldo da Silva}
-  \department{peno}
+  \department{PENO}
   \advisor{Prof.}{Fernando Luiz Bastos Ribeiro}{D.Sc.}
   \coadvisor{Prof.}{José Antonio Fontes Santiago}{D.Sc.}
   \examinator{Prof.}{José Luis Drummond Alves}{D.Sc.}
@@ -394,26 +363,10 @@ postamble
  
   \resumo{Apresenta-se, nesta tese, um método para geração de malhas
   não-estruturadas tetraédricas baseado em avanço de
-  fronteira. O algoritmo elaborado é resultado da combinação de passos
-  de algoritmos preexistentes. Neste,
-  a discretização das superfícies de contorno é assumida como dado de
-  entrada, a distribuição do tamanho de elemento é constante ao longo do
-  domínio e, além de se verificar a validade geométrica de cada elemento
-  novo, aplicam-se testes de qualidade.
-  Diversos exemplos demonstram a capacidade do algoritmo em discretizar
-  volumes arbitrários obtendo distribuições razoáveis em termos de
-  tamanho de aresta, volume de elemento e outras métricas de qualidade.}
+  fronteira.}
 
   \abstract{This work presents an algorithm to generate uniform
-  unstructured tetrahedral meshes based on advancing front method.
-  The algorithm is a combination of other well known algorithms.
-  The domain surface discretization is assumed as an input,
-  the distribution of element size is constant through the domain and,
-  beyond of checking the geometric validity of each new element
-  quality checks are applied. Some examples
-  show the ability of the algorithm to discretize arbitrary volumes,
-  reaching reasonable distributions in terms of edge lengths, element
-  volumes and other quality metrics.}
+  unstructured tetrahedral meshes based on advancing front method.}
 
   \tableofcontents
   \listoffigures
@@ -479,29 +432,29 @@ postamble
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{coppe}[\filedate\ \fileversion\ COPPE Dissertations and Thesis]
 \LoadClass[12pt,a4paper,oneside]{book}
-\RequirePackage[latin1]{inputenc}
 \RequirePackage[brazil]{babel}
 \RequirePackage{hyphenat}
 \RequirePackage{ifthen}
 \RequirePackage[a4paper,bindingoffset=0.0cm,vcentering=true,%
   top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
-
 \renewcommand\baselinestretch{1.5}
 \let\@advisor\@empty
 \let\@coadvisor\@empty
-
+\newboolean{maledoc}
+\setboolean{maledoc}{false}
 \DeclareOption{msc}{%
   \newcommand{\@degree}{M.Sc.}
   \newcommand{\@degtextpt}{Mestre}
   \newcommand{\@degtexten}{Master}
-  \newcommand\@doctypept{Dissertação}
+  \newcommand\@doctypept{Disserta{\c c}{\~ a}o}
   \newcommand\@doctypeen{Dissertation}
 }
 \DeclareOption{dscexam}{%
   \newcommand{\@degree}{D.Sc.}
   \newcommand{\@degtextpt}{Doutor}
   \newcommand{\@degtexten}{Doctor}
-  \newcommand\@doctypept{Exame de Qualificação}
+  \setboolean{maledoc}{true}
+  \newcommand\@doctypept{Exame de Qualifica{\c c}{\~ a}o}
   \newcommand\@doctypeen{Qualifying Exam}
 }
 \DeclareOption{dsc}{%
@@ -512,43 +465,41 @@ postamble
   \newcommand\@doctypeen{Thesis}
 }
 \ProcessOptions
-\def\pec{pec}
-\def\peq{peq}
 \newcommand\department[1]{%
-  \ifthenelse{\equal{#1}{peb}}
-    {\global\def\@deptpt{Engenharia Biomédica}
+  \ifthenelse{\equal{#1}{PEB}}
+    {\global\def\@deptpt{Engenharia Biom{\' e}dica}
      \global\def\@depten{Biomedical Engineering}}{}
-  \ifthenelse{\equal{#1}{pec}}
+  \ifthenelse{\equal{#1}{PEC}}
     {\global\def\@deptpt{Engenharia Civil}
      \global\def\@depten{Civil Engineering}}{}
-  \ifthenelse{\equal{#1}{pee}}
-    {\global\def\@deptpt{Engenharia Elétrica}
+  \ifthenelse{\equal{#1}{PEE}}
+    {\global\def\@deptpt{Engenharia El{\' e}trica}
      \global\def\@depten{Electrical Engineering}}{}
-  \ifthenelse{\equal{#1}{pem}}
-    {\global\def\@deptpt{Engenharia Mecânica}
+  \ifthenelse{\equal{#1}{PEM}}
+    {\global\def\@deptpt{Engenharia Mec{\^ a}nica}
      \global\def\@depten{Mechanical Engineering}}{}
-  \ifthenelse{\equal{#1}{pemm}}
-    {\global\def\@deptpt{Engenharia Metalúrgica e de Materiais}
+  \ifthenelse{\equal{#1}{PEMM}}
+    {\global\def\@deptpt{Engenharia Metal{\' u}rgica e de Materiais}
      \global\def\@depten{Metallurgical and Materials Science Engineering}}{}
-  \ifthenelse{\equal{#1}{pen}}
+  \ifthenelse{\equal{#1}{PEN}}
     {\global\def\@deptpt{Engenharia Nuclear}
      \global\def\@depten{Nuclear Engineering}}{}
-  \ifthenelse{\equal{#1}{peno}}
-    {\global\def\@deptpt{Engenharia Oceânica}
+  \ifthenelse{\equal{#1}{PENO}}
+    {\global\def\@deptpt{Engenharia Oce{\^ a}nica}
      \global\def\@depten{Ocean Engineering}}{}
-  \ifthenelse{\equal{#1}{ppe}}
-    {\global\def\@deptpt{Planejamento Energético}
+  \ifthenelse{\equal{#1}{PPE}}
+    {\global\def\@deptpt{Planejamento Energ{\' e}tico}
      \global\def\@depten{Energy Planning}}{}
-  \ifthenelse{\equal{#1}{pep}}
-    {\global\def\@deptpt{Engenharia de Produção}
+  \ifthenelse{\equal{#1}{PEP}}
+    {\global\def\@deptpt{Engenharia de Produ{\c c}{\~ a}o}
      \global\def\@depten{Production Engineering}}{}
-  \ifthenelse{\equal{#1}{peq}}
-    {\global\def\@deptpt{Engenharia Química}
+  \ifthenelse{\equal{#1}{PEQ}}
+    {\global\def\@deptpt{Engenharia Qu{\' i}mica}
      \global\def\@depten{Chemical Engineering}}{}
-  \ifthenelse{\equal{#1}{pesc}}
-    {\global\def\@deptpt{Engenharia de Sistemas e Computação}
+  \ifthenelse{\equal{#1}{PESC}}
+    {\global\def\@deptpt{Engenharia de Sistemas e Computa{\c c}{\~ a}o}
      \global\def\@depten{Systems Engineering and Computer Science}}{}
-  \ifthenelse{\equal{#1}{pet}}
+  \ifthenelse{\equal{#1}{PET}}
     {\global\def\@deptpt{Engenharia de Transportes}
      \global\def\@depten{Transportation Engineering}}{}
 }
@@ -565,7 +516,7 @@ postamble
   \global\def\@coadvisor{#2}%
   \global\def\@coaddegree{#3}%
 }
-% It was fixed the maximum number of examinators to '6'
+% It was fixed a maximum of 6 examinators
 \newcount\@examinat\@examinat0
 \newcommand\examinator[3]{%
   \global\@namedef{S:\expandafter\the\@examinat}{#1\ #2, #3}
@@ -590,7 +541,7 @@ postamble
 \newcommand\@monthen{\ifcase\month\or
   January\or February\or March\or April\or May\or June\or
   July\or August\or September\or October\or November\or December\fi}
-
+%
 \newcounter{keywords}
 \newcommand\keyword[1]{%
   \global\@namedef{K:\expandafter\the\c@keywords}{#1}
@@ -620,15 +571,15 @@ postamble
   \end{center}\par%
   \vskip 0.83cm%
   \noindent {\MakeUppercase\@doctypept}
-  \ifthenelse{\equal{\@doctypept}{Exame de Qualificação}}
-  {SUBMETIDO}{SUBMETIDA} \sloppy\nohyphens{AO CORPO DOCENTE DA
-  COORDENAÇÃO DOS PROGRAMAS DE PÓS-GRADUAÇÃO DE ENGENHARIA DA
+  \ifthenelse{\boolean{maledoc}}{SUBMETIDO}{SUBMETIDA}
+  \sloppy\nohyphens{AO CORPO DOCENTE DA COORDENA{\c C}{\~ A}O DOS
+  PROGRAMAS DE P{\' O}S-GRADUA{\c C}{\~ A}O DE ENGENHARIA DA
   UNIVERSIDADE FEDERAL DO RIO DE JANEIRO COMO PARTE DOS REQUISITOS
-  NECESSÁRIOS PARA A OBTENÇÃO DO GRAU DE {\MakeUppercase\@degtextpt}
-  EM CIÊNCIAS EM} {\MakeUppercase\@deptpt. \par}%
+  NECESS{\' A}RIOS PARA A OBTEN{\c C}{\~ A}O DO GRAU DE
+  {\MakeUppercase\@degtextpt} EM CI{\^ E}NCIAS EM}
+  {\MakeUppercase\@deptpt. \par}%
   \vskip 0.8cm%
-  \noindent \ifthenelse{\equal{\@doctypept}{Exame de Qualificação}}
-  {Aprovado}{Aprovada} por:\par%
+  \noindent \ifthenelse{\boolean{maledoc}}{Aprovado}{Aprovada} por:\par%
   \begin{flushright}%
      \begin{minipage}{0.68\textwidth}%
         \centering
@@ -656,7 +607,7 @@ postamble
     {\MakeUppercase\@monthpt\ DE \number\year}%
   \end{center}
   \end{titlepage}%
-  \ifthenelse{\equal{\@doctypept}{Exame de Qualificação}}{}{\makecatalog}%
+  \ifthenelse{\boolean{maledoc}}{}{\makecatalog}%
   \global\let\maketitle\relax%
   \global\let\and\relax%
 }
@@ -684,7 +635,7 @@ postamble
           \item \csname K:\the\count1 \endcsname \par
           \advance\count1 by 1}
         \end{enumerate}\par
-      I. COPPE/UFRJ\qquad II. Título (série)
+      I. COPPE/UFRJ\qquad II. T{\' i}tulo (s{\' e}rie)
     \end{minipage}
   \end{center}
 }
@@ -706,13 +657,11 @@ postamble
   \gdef\@resumotext{#1}%
   \clearpage
   \thispagestyle{plain}
-  \noindent Resumo
-  \ifthenelse{\equal{\@doctypept}{Exame de Qualificação}}{do}{da}
-  \@doctypept\
-  \ifthenelse{\equal{\@doctypept}{Exame de Qualificação}}
-  {apresentado}{apresentada} \sloppy\nohyphens{à COPPE/UFRJ como parte
-  dos requisitos necessários para a obtenção do grau de
-  \@degtextpt\ em Ciências (\@degree)}\par
+  \noindent Resumo \ifthenelse{\boolean{maledoc}}{do}{da}
+  \@doctypept\ \ifthenelse{\boolean{maledoc}}{apresentado}{apresentada}
+  \sloppy\nohyphens{{\` a} COPPE/UFRJ como parte dos requisitos
+  necess{\' a}rios para a obten{\c c}{\~ a}o do grau de
+  \@degtextpt\ em Ci{\^ e}ncias (\@degree)}\par
   \vskip 1.5cm
   \begin{center}
     \sloppy\nohyphens{\MakeUppercase\@titulo}\par
@@ -951,7 +900,7 @@ postamble
   \columnsep 35\p@
   \let\item\@idxitem}
   {\if@restonecol\onecolumn\else\clearpage\fi}
-\newcommand\listsymbolname{Lista de Símbolos}
+\newcommand\listsymbolname{Lista de S{\' i}mbolos}
 \newcommand\listabbreviationname{Lista de Abreviaturas}
 %    \end{macrocode}
 %    \begin{macrocode}

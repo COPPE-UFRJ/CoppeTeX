@@ -20,7 +20,7 @@ flexibility in defining textual elements required by their institutions.
 
 When Conceived
 --------------
-It was conceived in january 2007, during the D.Sc. studies of Vicente Helano
+It was conceived in January 2007, during the D.Sc. studies of Vicente Helano
 and George Ainsworth at the Federal University of Rio de Janeiro/COPPE.
 
 
@@ -34,8 +34,8 @@ published by the Free Software Foundation.''
 Archive Content
 ---------------
 The development of this class follows the Comprehensive TeX Archive
-Network (CTAN) standards, so it distributes a '.ins' file, '.dtx',
-and README, to assist its users during installation and use.
+Network (CTAN) standards, so it distributes a '.ins' file, '.dtx', and
+README, to assist its users during installation and use.
 
 You should have received the following files:
   1. COPYING: full text of the GNU General Policy License version 3.
@@ -57,8 +57,26 @@ You should have received the following files:
 
 Installing
 ----------
-There is a Makefile for helping you during installation.
-Try `make help`, and see what happens.
+To install CoppeTeX it is required to have any LaTeX distribution along
+with the packages: doc, docstrip, ifthen, geometry, inputenc and
+fontenc. The babel package is needed only to compile the sample thesis.
+
+There is a Makefile to properly extract the coppe class and build its
+documentation and examples. If you have the make utility, try `make
+help' and see what happens. Type `make class' to extract the class and
+its auxiliary files. The code for the class is contained in the file
+`coppe.cls'. To get the documentation, type `make doc'. This will
+generate the file `coppe.dvi'. The sample thesis is compiled by running
+`make example'.
+
+If you don't have any make utility, run `latex coppe.ins' to extract the
+class together with its auxiliary files. The documentation is obtained
+by running `latex coppe.dtx'. The example file has to be compiled by
+`latex' and, if you want to display lists of symbols or abbreviations,
+post-processed with Makeindex. Use the given Makeindex styles
+(coppe-symbl.ist and coppe-abbrev.ist) to generate the lists of symbols
+and abbreviations. These lists must be written to `example.syx' and
+`example.abx', respectively.
 
 
 Contact
@@ -69,6 +87,6 @@ Please, send any comments, suggestions, questions and bugs to:
 
 Have a good thesis,
   CoppeTeX team.
+  http://sourceforge.net/projects/coppe
 
-                                             Rio de Janeiro, september 25, 2007.
-
+                                             Rio de Janeiro, September 25, 2007.
