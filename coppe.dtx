@@ -113,8 +113,8 @@ p\kern-.025em e}}\kern-.08em\TeX}
 % file attached to this package.
 % 
 % \section{User Interface}
-% The dissertations and thesis are regulated by the Registro
-% Acadêmico da UFRJ\cite{TNR96a}.
+% The format rules of dissertations and thesis at COPPE/UFRJ are
+% regulated by a norm. It is the Academic Registry norm~\cite{TNR96a}. 
 %
 % As teses apresentadas à Coordenação de Pesquisas e Pós-graduação em
 % Engenharia da Universidade Federal do Rio de Janeiro (COPPE/UFRJ)
@@ -138,17 +138,19 @@ p\kern-.025em e}}\kern-.08em\TeX}
 % uma main vazia, será necessário re-executar o \LaTeX\ para obter as
 % referências corretas.
 %
-% For a correct exhibition of the title it is needed to have a Times font.
 % \subsection{Front Face}
-% Esta página não deve conter numeração. Também não pode conter
-% separação de sílabas.
-% O comando |\maketitle| é redefinido para cumprimento dos padrões de
-% folhas de rosto especificados pelo ...
+% It is unumbered. Here, it is not allowed hyphenation~\cite{TNR96a}.
 %
 % \DescribeMacro{\author}
 % O nome do autor deve ser passado em dois argumentos: sobrenome e
 % nomes restantes. Esse deve ser também informado com apenas as
 % primeiras letras de cada nome em maiúsculas.
+% All of these command must come after a |\fromtmatter| call.
+%
+% \DescribeMacro{\titulo}
+% \DescribeMacro{\title}
+% \DescribeMacro{\author}
+% \DescribeMacro{\department}
 %
 % \DescribeMacro{\advisor}
 % \DescribeMacro{\coadvisor}
@@ -162,6 +164,12 @@ p\kern-.025em e}}\kern-.08em\TeX}
 % aparecer em letras maiúsculas. O usuário deve informar o mês e o ano
 % em algarismos arábicos (e.g. outubro de 2007 deve ser igual a
 % |\date{8}{2007}|).
+%
+% \DescribeMacro{\keyword}
+%
+% \DescribeMacro{\maketitle}
+% O comando |\maketitle| é redefinido para cumprimento dos padrões de
+% folhas de rosto especificados pelo ...
 %
 % \subsection{Cataloguing Details}
 % This page contains cataloguing information useful for librarians.
