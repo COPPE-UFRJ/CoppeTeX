@@ -114,7 +114,7 @@ p\kern-.025em e}}\kern-.08em\TeX}
 % 
 % \section{User Interface}
 % The format rules of dissertations and thesis at COPPE/UFRJ are
-% regulated by a norm. It is the Academic Registry norm~\cite{TNR96a}. 
+% regulated by the Academic Registry~\cite{TNR96a}. 
 %
 % As teses apresentadas à Coordenação de Pesquisas e Pós-graduação em
 % Engenharia da Universidade Federal do Rio de Janeiro (COPPE/UFRJ)
@@ -140,17 +140,21 @@ p\kern-.025em e}}\kern-.08em\TeX}
 %
 % \subsection{Front Face}
 % It is unumbered. Here, it is not allowed hyphenation~\cite{TNR96a}.
+% All of these macros have to be called after the |\frontmatter|
+% command. This causes the initial pages to be numbered with roman
+% algarisms.
+%
+% All of these command must come after a |\fromtmatter| call.
 %
 % \DescribeMacro{\author}
+% \DescribeMacro{\department}
 % O nome do autor deve ser passado em dois argumentos: sobrenome e
 % nomes restantes. Esse deve ser também informado com apenas as
 % primeiras letras de cada nome em maiúsculas.
-% All of these command must come after a |\fromtmatter| call.
-%
+% The author's information are collected by the commands |\author| and
+% |\department|.
 % \DescribeMacro{\titulo}
 % \DescribeMacro{\title}
-% \DescribeMacro{\author}
-% \DescribeMacro{\department}
 %
 % \DescribeMacro{\advisor}
 % \DescribeMacro{\coadvisor}
@@ -160,16 +164,18 @@ p\kern-.025em e}}\kern-.08em\TeX}
 % aplicado e o grau de formação correspondente.
 %
 % \DescribeMacro{\date}
-% A data de entrada corresponde ao mês e ano de defesa. Essas devem
-% aparecer em letras maiúsculas. O usuário deve informar o mês e o ano
-% em algarismos arábicos (e.g. outubro de 2007 deve ser igual a
-% |\date{8}{2007}|).
+% This macro gets the month and year of defense. T
+% A data de entrada corresponde ao mês e ano de defesa.
+% This information is used along the work. Users should enter october
+% 2007 as |\date{10}{2007}|).
 %
 % \DescribeMacro{\keyword}
+% The keywords should describe the concentration areas of your work.
+% Usually, six words are enough.
 %
 % \DescribeMacro{\maketitle}
-% O comando |\maketitle| é redefinido para cumprimento dos padrões de
-% folhas de rosto especificados pelo ...
+% The well know |\maketitle| command was redefined. 
+% It automaticaly creates the front face and the cataloguing page.
 %
 % \subsection{Cataloguing Details}
 % This page contains cataloguing information useful for librarians.
@@ -181,10 +187,6 @@ p\kern-.025em e}}\kern-.08em\TeX}
 % This macro was created for convenience. The text is placed
 % at the right bottom of the page. The font is emphasized and in normal
 % size.
-%
-% \subsection{Aknowledgements (optional)}
-% It is not a new macro. It should be created with an unumbered chapter,
-% e.g., |\chapter*{Aknowledgements}|.
 %
 % \subsection{Abstracts}
 % \DescribeMacro{\resumo}
@@ -366,6 +368,11 @@ postamble
 
   \keyword{Geração de Malhas}
   \keyword{Malhas Não-Estruturadas}
+  \keyword{Avanço de Fronteira}
+  \keyword{Avanço de Fronteira}
+  \keyword{Avanço de Fronteira}
+  \keyword{Avanço de Fronteira}
+  \keyword{Avanço de Fronteira}
   \keyword{Avanço de Fronteira}
   \maketitle
 
