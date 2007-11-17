@@ -3,7 +3,8 @@
 %
 % Numbered BibTeX style for using with CoppeTeX package.
 %
-% Copyright (C) 2007 Vicente Helano and George Ainsworth Jr.
+% Copyright (C) 2007 CoppeTeX Project and any individual authors listed
+% elsewhere in this file.
 %
 % This program is free software; you can redistribute it and/or modify
 % it under the terms of the GNU General Public License version 3 as

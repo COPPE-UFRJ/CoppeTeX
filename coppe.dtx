@@ -5,7 +5,8 @@
 % It uses the doc utility to generate documentations for the 'coppe'
 % document class and the 'coppe-unsrt' BibTeX style.
 %
-% Copyright (C) 2007 Vicente Helano and George Ainsworth Jr.
+% Copyright (C) 2007 CoppeTeX Project and any individual authors listed
+% elsewhere in this file.
 %
 % This program is free software; you can redistribute it and/or modify
 % it under the terms of the GNU General Public License version 3 as
@@ -137,6 +138,13 @@ p\kern-.025em e}}\kern-.08em\TeX}
 % na ficha catalográfica, utilizou-se uma referência. Assim, mesmo com
 % uma main vazia, será necessário re-executar o \LaTeX\ para obter as
 % referências corretas.
+%
+% The type of the algarisms in page numbering is selected by the use of the
+% macros |\frontmatter|, |\mainmatter| and |\backmatter|. The front matter
+% ENGLOBA the front face, cataloging page, dedication, aknowledgements,
+% abstracts, table of contents, lists of tables, algorithms, symbols and
+% abbreviations. The main matter is formed by the chapters. The back matter only
+% includes the bibliography and index.
 %
 % \subsection{Front Face}
 % It is unumbered. Here, it is not allowed hyphenation~\cite{TNR96a}.

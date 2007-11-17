@@ -3,7 +3,8 @@
 #
 # It should be used to strip the CoppeTeX class and its documentation.
 #
-# Copyright (C) 2007 Vicente Helano and George Ainsworth Jr.
+# Copyright (C) 2007 CoppeTeX Project and any individual authors listed
+# elsewhere in this file.
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License version 3 as
@@ -78,6 +79,9 @@ doc: $(PACKAGE_NAME).dtx
 class: $(PACKAGE_NAME).cls
 
 example: example.tex example.dvi
+
+install:
+	@echo ${TEXMF_ROOT}
 
 dist: distclean
 	@${_tar} -jcvf $(PACKAGE_NAME).tar.bz2 ./*
