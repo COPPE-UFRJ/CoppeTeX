@@ -1,0 +1,92 @@
+This is the README file for the CoppeTeX package.
+
+Introduction
+------------
+This project provides a LaTeX document class suitable for writing
+academic dissertations and thesis according to the format rules of the
+Alberto Luiz Coimbra Institute for Graduate Studies and Research in
+Engineering (Coppe/UFRJ).
+
+The 'coppe' class contains a minimalist set of macro commands which
+allows its users to create required textual elements according to the
+Coppe/UFRJ dissertation/thesis guide. Among these elements, there are a
+title page, cataloging details, native and foreign languages abstracts,
+table of contents, and references.
+
+Although following the Coppe/UFRJ guidelines, it can be easily ported to
+standards of other institutions. This is possible due to users'
+flexibility in defining textual elements required by their institutions.
+
+
+When Conceived
+--------------
+It was conceived in January 2007, during the D.Sc. studies of Vicente Helano
+and George Ainsworth at the Federal University of Rio de Janeiro/COPPE.
+
+
+How Much
+--------
+``This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License version 3 as
+published by the Free Software Foundation.''
+
+
+Archive Content
+---------------
+The development of this class follows the Comprehensive TeX Archive
+Network (CTAN) standards, so it distributes a '.ins' file, '.dtx', and
+README, to assist its users during installation and use.
+
+You should have received the following files:
+  1. COPYING: full text of the GNU General Policy License version 3.
+
+  2. Makefile: used to extract the coppe class and build the
+     documentation and a sample thesis.
+
+  3. README: describe the CoppeTeX package.
+
+  4. coppe-unsrt.bst: unsorted BibTeX style.
+
+  5. coppe.bib: contains the references cited in the documentation.
+
+  6. coppe.dtx: main source file; contains the documentation, a sample
+     thesis and Makeindex styles.
+
+  7. coppe.ins: used to strip out the coppe document class from `coppe.dtx'.
+
+
+Installing
+----------
+To install CoppeTeX it is required to have any LaTeX distribution along
+with the packages: doc, docstrip, ifthen, geometry, inputenc and
+fontenc. The babel package is needed only to compile the sample thesis.
+
+There is a Makefile to properly extract the coppe class and build its
+documentation and examples. If you have the make utility, try `make
+help' and see what happens. Type `make class' to extract the class and
+its auxiliary files. The code for the class is contained in the file
+`coppe.cls'. To get the documentation, type `make doc'. This will
+generate the file `coppe.dvi'. The sample thesis is compiled by running
+`make example'.
+
+If you don't have any make utility, run `latex coppe.ins' to extract the
+class together with its auxiliary files. The documentation is obtained
+by running `latex coppe.dtx'. The example file has to be compiled by
+`latex' and, if you want to display lists of symbols or abbreviations,
+post-processed with Makeindex. Use the given Makeindex styles
+(coppe-symbl.ist and coppe-abbrev.ist) to generate the lists of symbols
+and abbreviations. These lists must be written to `example.syx' and
+`example.abx', respectively.
+
+
+Contact
+-------
+Please, send any comments, suggestions, questions and bugs to:
+  George Ainsworth <goajunior at users.sourceforge.net>.
+
+
+Have a good thesis,
+  CoppeTeX team.
+  http://sourceforge.net/projects/coppe
+
+                                             Rio de Janeiro, November 21, 2007.
