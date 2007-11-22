@@ -78,10 +78,10 @@ p\kern-.025em e}}\kern-.08em\TeX}
 %
 % \title{The |coppe| document class}
 % \author{
-% Vicente Helano F. Batista\thanks{Send comments, suggestions, questions
-% and bugs to helano@users.sourceforge.net.}
+% Vicente Helano F. Batista
 % \and
-% George O. Ainsworth Jr.}
+% George O. Ainsworth Jr.\thanks{Send comments, suggestions, questions
+% and bugs to goajunior@users.sourceforge.net.}}
 %
 % \maketitle
 %
@@ -167,9 +167,27 @@ p\kern-.025em e}}\kern-.08em\TeX}
 % \DescribeMacro{\advisor}
 % \DescribeMacro{\coadvisor}
 % \DescribeMacro{\examinator}
-% Os nomes do orientador, co-orientador (caso existente) e membros da
-% banca deverão ser informados, em conjunto com o pronome de tratamento
-% aplicado e o grau de formação correspondente.
+% Every COPPE student is coordinated by an advisor. It is still possible to have
+% a co-advisor. Their names must be given before executing the |\maketitle|
+% command.
+%
+% [Art. 37, Parágrafo 2º]
+% A Banca de Dissertação será composta de, no mínimo, 3 (três) membros
+% doutores, incluindo sempre que possível o orientador da dissertação e,
+% obrigatoriamente, um membro interno ao Programa que não seja o orientador e 1
+% (um) ou 2 (dois) membros externos ao Programa, reconhecidos como autoridades
+% na área da pesquisa, de acordo com o Parágrafo Único do Art. 40 da Resolução
+% CEPG 05/01.
+%
+% [Art. 39, Parágrafo 3º]
+% A Banca de Tese será composta de, no mínimo, 5 (cinco) membros doutores,
+% incluindo sempre que possível o orientador de tese e, obrigatoriamente, 1 (um)
+% membro interno ao Programa que não seja o orientador e 2 (dois) ou 3 (três)
+% membros externos ao Programa, dos quais pelo menos 1 (um) também externo a
+% UFRJ, reconhecidos como autoridades na área de pesquisa.
+%
+% It is also required to give the names of all examinators. There is a minimum
+% of two for.
 %
 % \DescribeMacro{\date}
 % This macro gets the month and year of defense. T
