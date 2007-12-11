@@ -98,11 +98,11 @@ p\kern-.025em e}}\kern-.08em\TeX}
 % Writing documents in \LaTeX\ may be a laborious task when the
 % authors have to prepare their manuscripts rigorously respecting
 % format rules imposed by the publisher. Regardless of difficulty,
-% great part of the thesis presented to the Coordination of Graduate
+% most of the thesis presented to the Coordination of Graduate
 % Studies and Research in Engineering of the Federal University of Rio
 % de Janeiro (COPPE/UFRJ) is done in \LaTeX. The |coppe| class was
-% developed to facilitate and encourage the use of \LaTeX\ by students
-% of any graduate program at COPPE/UFRJ.
+% developed to facilitate and encourage the use of \LaTeX\ by the graduate
+% students at COPPE/UFRJ.
 %
 % \section{License}
 % Each file belonging to this package contains a copyright notice.
@@ -114,17 +114,13 @@ p\kern-.025em e}}\kern-.08em\TeX}
 % file attached to this package.
 % 
 % \section{User Interface}
-% The format rules of dissertations and thesis at COPPE/UFRJ are
-% regulated by the Academic Registry~\cite{TNR96a}. 
+% The |coppe| class was design to be clear and succinct. which was design to
+% avoid data redundancy. The thesis body can be created with a few commands.
 %
-% As teses apresentadas à Coordenação de Pesquisas e Pós-graduação em
-% Engenharia da Universidade Federal do Rio de Janeiro (COPPE/UFRJ)
-% devem ser escritas em língua
-% portuguesa e impressa em um só lado. Entretanto, existe um movimento
-% de alunos visando permitir a impressão em ambos os lados de uma folha.
-% Isso implicaria na redução do consumo de papéis do volume das
-% monografias. Como as margens à direita e esquerdas são iguais a 
-% $3,0cm$, a classe |coppe| não necessitará de alterações.
+% The format rules of dissertations and thesis at COPPE/UFRJ are
+% regulated by the Academic Registry~\cite{TNR96a}. They must be written in portuguese.
+%
+% Left and right margins must be between $2.5 - 3.0cm$.
 %
 % As teses e dissertações defendidas na COPPE/UFRJ possuem como
 % elementos obrigatórios a folha de rosto, a ficha catalográfica,
@@ -210,13 +206,13 @@ p\kern-.025em e}}\kern-.08em\TeX}
 % 
 % \subsection{Dedication (optional)}
 % \DescribeMacro{\dedication}
-% This macro was created for convenience. The text is placed
-% at the right bottom of the page. The font is emphasized and in normal
-% size.
+% This macro was added for convenience. The entered text is placed
+% at the right bottom of a blank page. It is emphasized and in normal
+% size. It is numbered with roman algarisms.
 %
 % \subsection{Abstracts}
-% \DescribeMacro{\resumo}
-% \DescribeMacro{\abstract}
+% \DescribeEnv{resumo}
+% \DescribeEnv{abstract}
 % Segundo a norma \cite{TNR96a}, os resumos devem estar contidos em
 % uma única página, cada. Idealmente,
 % o resumo deve ser composto por apenas um parágrafo. Esse espaço não
@@ -394,11 +390,6 @@ postamble
 
   \keyword{Geração de Malhas}
   \keyword{Malhas Não-Estruturadas}
-  \keyword{Avanço de Fronteira}
-  \keyword{Avanço de Fronteira}
-  \keyword{Avanço de Fronteira}
-  \keyword{Avanço de Fronteira}
-  \keyword{Avanço de Fronteira}
   \keyword{Avanço de Fronteira}
   \maketitle
 
@@ -958,7 +949,7 @@ postamble
 % \section*{Aknowledgements}
 % The authors would like to thank the National Council for Scientific and
 % Technological Development (CNPq) for the financial support. They are
-% also grateful to Alvaro Cuno for setting the SVN repository.
+% also grateful to Alvaro Cuno for initially setting our SVN repository.
 %
 % \nocite{*}
 % \bibliographystyle{plain}
