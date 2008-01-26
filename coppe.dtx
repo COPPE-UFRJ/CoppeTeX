@@ -38,16 +38,11 @@
 \def\CoppeTeX{{\rm C\kern-.05em{\sc o\kern-.025em p\kern-.025em
 p\kern-.025em e}}\kern-.08em\TeX}
 
-\EnableCrossrefs
-\CodelineIndex
-\RecordChanges
-\begin{document}
-  \DocInput{coppe.dtx}
-\end{document}
-%</driver>
-% \fi
+\EnableCrossrefs \CodelineIndex \RecordChanges \begin{document}
+\DocInput{coppe.dtx} \end{document}
+%</driver> \fi
 %
-%% \CheckSum{944}
+%% ^^A \CheckSum{944}
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
 %%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
@@ -66,43 +61,50 @@ p\kern-.025em e}}\kern-.08em\TeX}
 %%
 % \changes{v0.0}{2007/03/01}{Creation Date.}
 % \changes{v0.1}{2007/06/22}{Sourceforge submission.}
-% \changes{v0.1}{2007/08/13}{Documentation: bibliography fixed,
-% title translation.}
-% \changes{v0.1}{2007/08/17}{Documentation: abstract translation;
+% \changes{v0.1}{2007/08/13}{Documentation: bibliography fixed, title
+% translation.} \changes{v0.1}{2007/08/17}{Documentation: abstract translation;
 % Code: |babel| package deletion from the driver document.}
 % \changes{v0.1}{2007/09/25}{Documentation: introduction, installation;
-% License: update to the 3rd version of the GNU GPL; |ChangeLog| remove,
-% and added Change History.}
+% License: update to the 3rd version of the GNU GPL; |ChangeLog| remove, and
+% added Change History.}
 %
 % \GetFileInfo{coppe}
 %
-% \title{The |coppe| document class}
-% \author{
-% Vicente Helano F. Batista
-% \and
-% George O. Ainsworth Jr.\thanks{Send comments, suggestions, questions
-% and bugs to goajunior@users.sourceforge.net.}}
+% \title{The |coppe| document class} \author{ Vicente Helano F. Batista \and
+% George O. Ainsworth Jr.\thanks{Send comments, suggestions, questions and bugs
+% to goajunior@users.sourceforge.net.}}
 %
 % \maketitle
 %
-% \begin{abstract}
-% In this work, it is described the |coppe| document class suitable for writing
-% academic dissertations, thesis and qualifying exams according to the format
-% rules of the Alberto Luiz Coimbra Institute for Graduate Studies and
-% Research in Engineering. The minimalist set of macro commands
-% provided by the |coppe| class allows its users to concentrate most of
-% their efforts on text composition rather than on the document layout.
-% \end{abstract}
+% \begin{abstract} In this work, it is described the |coppe| document class.
+% This class is suitable for writing academic dissertations, thesis and
+% qualifying exams according to the format rules of the Alberto Luiz Coimbra
+% Institute for Graduate Studies and Research in Engineering. Its minimalist
+% set of macro commands allows its users to concentrate most of their efforts
+% on text composition rather than on the document layout.  \end{abstract}
 %
 % \section{Introduction}
-% Writing documents in \LaTeX\ may be a laborious task when the
-% authors have to prepare their manuscripts rigorously respecting
-% format rules imposed by the publisher. Regardless of difficulty,
-% most of the thesis presented to the Coordination of Graduate
-% Studies and Research in Engineering of the Federal University of Rio
-% de Janeiro (COPPE/UFRJ) is done in \LaTeX. The |coppe| class was
-% developed to facilitate and encourage the use of \LaTeX\ by the graduate
-% students at COPPE/UFRJ.
+% Writing documents in \LaTeX\ may be a laborious task
+% when the authors have to prepare their manuscripts rigorously respecting
+% format rules imposed by publishers. Regardless of difficulty, a lot of thesis
+% presented to the Coordination of Graduate Studies and Research in Engineering
+% of the Federal University of Rio de Janeiro (COPPE/UFRJ) is typeseted in
+% \LaTeX. This demand motivated the creation of the \CoppeTeX\ project, which
+% tries to facilitate and encourage the use of \LaTeX\ within the COPPE/UFRJ
+% scope.
+%
+% The |coppe| document class is the main product of \CoppeTeX. It enables the
+% creation of dissertations, qualifying exams and thesis in a simple and
+% automatic way.  Therefore, authors can be strictly focused on text
+% composition without worring about margins sizes,
+% line spacing, paper size, vertical and horizontal alignment, etc.
+%
+% The \CoppeTeX\ comprehends also \BibTeX\ and MakeIndex style files
+% for the creation of lists of references, symbols and abbreviations.
+%
+% In which follows, it is described the user interface and implementation
+% of the |coppe| class. Some details about using the style files before are
+% also given.
 %
 % \section{License}
 % Each file belonging to this package contains a copyright notice.
@@ -114,21 +116,11 @@ p\kern-.025em e}}\kern-.08em\TeX}
 % file attached to this package.
 % 
 % \section{User Interface}
-% The |coppe| class was design to be clear and succinct. which was design to
-% avoid data redundancy. The thesis body can be created with a few commands.
-%
-% The format rules of dissertations and thesis at COPPE/UFRJ are
-% regulated by the Academic Registry~\cite{TNR96a}. They must be written in portuguese.
-%
-% Left and right margins must be between $2.5 - 3.0cm$.
-%
-% As teses e dissertações defendidas na COPPE/UFRJ possuem como
-% elementos obrigatórios a folha de rosto, a ficha catalográfica,
-% os resumos em português e inglês, o sumário e o capítulo de
-% referências bibliográficas. Entretanto, todo o acabamento gráfico
-% da monografia é de responsabilidade do autor.
-%
-% Here, it is covered all elements allowed by Regirtro Acadêmico.
+% The |coppe| class was designed to be clear and succinct. Its simple interface
+% enables the creation of well structured documents in an elegant fashion, so
+% that all the required textual elements are automatically constructed.
+% These elements comprehend the front face, cataloguing details and abstracts.
+% In which follows, we give detailed information about this interface.
 %
 % Para os números de páginas do frontmatter e do mainmatter aparecerem
 % na ficha catalográfica, utilizou-se uma referência. Assim, mesmo com
@@ -236,7 +228,7 @@ p\kern-.025em e}}\kern-.08em\TeX}
 % \subsection{List of Figures (optional)}
 % \subsection{List of Tables (optional)}
 %
-% \subsection{List of Simbols (optional)}
+% \subsection{List of Symbols (optional)}
 % \DescribeMacro{\printlosymbols}
 % Como descrito em \cite{TNR96a}, a lista de símbolos é um elemento
 % opcional da monografia. É recomendado [SIBI] que, na primeira
@@ -474,9 +466,24 @@ postamble
 \RequirePackage[brazil]{babel}
 \RequirePackage{hyphenat}
 \RequirePackage{ifthen}
+%    \end{macrocode}
+%
+% \subsubsection{Margins}
+% As required by the Academic Registry of COPPE/UFRJ~\cite{TNR96a}, vertical
+% and horizontal margins must be at least $2.5cm$ and $3.0cm$, respectively.
+% The default values were set to these lower bounds.
+%    \begin{macrocode}
 \RequirePackage[a4paper,bindingoffset=0.0cm,vcentering=true,%
-  top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
+top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
+%    \end{macrocode}
+%
+% \subsubsection{Line spacing}
+% The default line spacing is ...
+%    \begin{macrocode}
 \renewcommand\baselinestretch{1.5}
+%    \end{macrocode}
+%
+%    \begin{macrocode}
 \let\@advisor\@empty
 \let\@coadvisor\@empty
 \newboolean{maledoc}
