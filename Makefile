@@ -49,14 +49,13 @@ DVIPSFLAGS = -Ppdf -G0 -q -t A4
 DVIPDFMFLAGS = -c -r 300 -p a4
 IDXFLAGS = -q -s gind.ist
 GLOFLAGS = -q -s gglo.ist
-SYXFLAGS = -q -s coppe-symbl.ist
-ABXFLAGS = -q -s coppe-abbrev.ist
+LSTFLAGS = -q -s coppe.ist
 
 .SUFFIXES: .tex .dvi .dtx
 
 all:
 	@${_printf} "make: unknown target\n"
-	@${_printf} "Try \`make help\' for more information.\n" >&2
+	@${_printf} "Try \`make help' for more information.\n" >&2
 
 doc: $(PACKAGE_NAME).dtx
 	@$(TEX) $(TEXFLAGS) $<
@@ -121,7 +120,7 @@ version:
 	@${_printf} "published by the Free Software Foundation.\n"
 	@${_printf} "See COPYING for more details.\n"
 
-$(PACKAGE_NAME).cls example.tex: $(PACKAGE_NAME).ins
+$(PACKAGE_NAME).cls example.tex %.ist: $(PACKAGE_NAME).ins
 	@$(TEX) $(TEXFLAGS) $<
 
 $(PACKAGE_NAME).dvi: $(PACKAGE_NAME).dtx
@@ -139,10 +138,10 @@ $(PACKAGE_NAME).dvi: $(PACKAGE_NAME).dtx
 	  $(MAKEIDX) $(IDXFLAGS) $(basename $<).idx -o $(basename $<).ind;\
 	fi
 	@if grep -s '$(basename $<).syx' $(basename $<).log; then \
-	  $(MAKEIDX) $(SYXFLAGS) $(basename $<).syx -o $(basename $<).los;\
+	  $(MAKEIDX) $(LSTFLAGS) $(basename $<).syx -o $(basename $<).los;\
 	fi
 	@if grep -s '$(basename $<).abx' $(basename $<).log; then \
-	  $(MAKEIDX) $(ABXFLAGS) $(basename $<).abx -o $(basename $<).lab;\
+	  $(MAKEIDX) $(LSTFLAGS) $(basename $<).abx -o $(basename $<).lab;\
 	fi
 	@$(TEX) $(TEXFLAGS) $<
 	@i=6 ; \
