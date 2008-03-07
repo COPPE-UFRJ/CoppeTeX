@@ -65,8 +65,10 @@ p\kern-.025em e}}\kern-.08em\TeX}
 % translation.} \changes{v0.1}{2007/08/17}{Documentation: abstract translation;
 % Code: |babel| package deletion from the driver document.}
 % \changes{v0.1}{2007/09/25}{Documentation: introduction, installation;
-% License: update to the 3rd version of the GNU GPL; |ChangeLog| remove, and
+% License: update to the 3rd version of the GNU GPL; |ChangeLog| removed, and
 % added Change History.}
+% \changes{v0.2}{2008/03/06}{Unification of the code for the list of symbols
+% and abbreviations.}
 %
 % \GetFileInfo{coppe}
 %
@@ -76,14 +78,19 @@ p\kern-.025em e}}\kern-.08em\TeX}
 %
 % \maketitle
 %
-% \begin{abstract} In this work, it is described the |coppe| document class.
+% \begin{abstract}
+%
+% In this work, it is described the |coppe| document class.
 % This class is suitable for writing academic dissertations, thesis and
 % qualifying exams according to the format rules of the Alberto Luiz Coimbra
-% Institute for Graduate Studies and Research in Engineering. Its minimalist
+% Institute for Graduate Studies and Research in Engineering. The minimalist
 % set of macro commands allows its users to concentrate most of their efforts
-% on text composition rather than on the document layout.  \end{abstract}
+% on text composition rather than on the document layout.
+%
+% \end{abstract}
 %
 % \section{Introduction}
+%
 % Writing documents in \LaTeX\ may be a laborious task
 % when the authors have to prepare their manuscripts rigorously respecting
 % format rules imposed by publishers. Regardless of difficulty, a lot of thesis
@@ -95,39 +102,36 @@ p\kern-.025em e}}\kern-.08em\TeX}
 %
 % The |coppe| document class is the main product of \CoppeTeX. It enables the
 % creation of dissertations, qualifying exams and thesis in a simple and
-% automatic way.  Therefore, authors can be strictly focused on text
+% automatic way. Therefore, authors can be strictly focused on text
 % composition without worring about margins sizes,
 % line spacing, paper size, vertical and horizontal alignment, etc.
-%
 % The \CoppeTeX\ comprehends also \BibTeX\ and MakeIndex style files
-% for the creation of lists of references, symbols and abbreviations.
+% for creating lists of references, symbols and abbreviations.
 %
-% In which follows, it is described the user interface and implementation
-% of the |coppe| class. Some details about using the style files before are
-% also given.
+% In which follows, it is described the user interface
+% of the |coppe| class. Some details about using the style files cited above
+% are also given.
 %
 % \section{License}
+%
 % Each file belonging to this package contains a copyright notice.
-% Its use is protected by the {GNU} General Public License (GPL) version
-% 3, so that users are free for copying, distributing or modifying the
+% Its use is protected by the {GNU} General Public License (GPL) version~3,
+% so that users are free for copying, distributing or modifying the
 % source code, among other acts covered by this license.
 %
 % To see the full text of the {GNU GPL} license, go to the |COPYING|
 % file attached to this package.
 % 
 % \section{User Interface}
+%
 % The |coppe| class was designed to be clear and succinct. Its simple interface
-% enables the creation of well structured documents in an elegant fashion, so
-% that all the required textual elements are automatically constructed.
+% enables the creation of well structured documents in an elegant fashion, in
+% such a way that all of the required textual elements are automatically
+% constructed.
 % These elements comprehend the front face, cataloguing details and abstracts.
-% In which follows, we give detailed information about this interface.
+% They are regulated by the Academic Registry at COPPE/UFRJ \cite{TNR96a}.
 %
-% Para os números de páginas do frontmatter e do mainmatter aparecerem
-% na ficha catalográfica, utilizou-se uma referência. Assim, mesmo com
-% uma main vazia, será necessário re-executar o \LaTeX\ para obter as
-% referências corretas.
-%
-% The type of the algarisms in page numbering is selected by the use of the
+% The type of the algarisms in page numbering is selected by using the
 % macros |\frontmatter|, |\mainmatter| and |\backmatter|. The front matter
 % ENGLOBA the front face, cataloging page, dedication, aknowledgements,
 % abstracts, table of contents, lists of tables, algorithms, symbols and
@@ -264,38 +268,10 @@ p\kern-.025em e}}\kern-.08em\TeX}
 %
 % A manutenção da lista de símbolos em ordem alfabética é realizada pelo
 % programa |makeindex|. O estilo que deve ser empregado é o seguinte:
-%    \begin{macrocode}
-%<*symblist>
-actual '='
-quote '!'
-level '>'
-delim_0   ", p. "
-lethead_flag  0
-headings_flag 0
-preamble
-"\n\\begin{thelosymbols}\n  \\makeatletter"
-postamble
-"\n  \\end{thelosymbols}\n"
-%</symblist>
-%    \end{macrocode}
 %
 % \subsection{List of Abreviations (optional)}
 % \DescribeMacro{\printloabbreviations}
 % A lista de abreviaturas também é opcional \cite{TNR96a}.
-%    \begin{macrocode}
-%<*abbrevist>
-actual '='
-quote '!'
-level '>'
-delim_0   ", p. "
-lethead_flag  0
-headings_flag 0
-preamble
-"\n\\begin{theloabbreviations}\n  \\makeatletter"
-postamble
-"\n  \\end{theloabbreviations}\n"
-%</abbrevist>
-%    \end{macrocode}
 %
 % \DescribeMacro{\abbrev}
 % Pode-se inserir uma abreviatura na sua respectiva lista com a execução
@@ -338,6 +314,12 @@ postamble
 % Para o emprego de vários modelos citações, os autores indicam a
 % utilização do pacote |natbib|.
 %
+% Segundo o ...,  O estilo de referências bibliografia utilizado em
+% teses da COPPEThe bibliography style currently used in COPPE thesis
+% is contained in
+% the file |coppe.bst|. Its documentation is separated from this
+% document to garantee flexibility.
+%
 % \subsection{Apendices (optional)}
 % Todo e qualquer tipo de dado longo ou auxiliar deve ser posto em
 % apêndices. Siga o exemplo da Seção~\ref{COPPE:SAMPLE}, caso queira
@@ -348,7 +330,9 @@ postamble
 % esse enriquece a monografia. Em \LaTeX, o pacote |makeindex| é
 % responsável pela construção de tal elemento textual.
 %
-% \subsection{A simple example}
+%
+%
+% \section{A Simple Example}
 % \label{COPPE:SAMPLE}
 %   A basic document using the \texttt{coppe} class should contain at
 %   least the following code.
@@ -442,13 +426,6 @@ postamble
 \end{document}
 %</example>
 %    \end{macrocode}
-%
-% \subsection{A \BibTeX\ style}
-% Segundo o ...,  O estilo de referências bibliografia utilizado em
-% teses da COPPEThe bibliography style currently used in COPPE thesis
-% is contained in
-% the file |coppe.bst|. Its documentation is separated from this
-% document to garantee flexibility.
 %
 % \StopEventually{\PrintIndex}
 %
@@ -562,7 +539,7 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
   \global\def\@coadvisor{#2}%
   \global\def\@coaddegree{#3}%
 }
-% It was fixed a maximum of 6 examinators
+% It was fixed a maximum of 6 examinators, just for the sake of page layout
 \newcount\@examinat\@examinat0
 \newcommand\examinator[3]{%
   \global\@namedef{S:\expandafter\the\@examinat}{#1\ #2, #3}
@@ -593,6 +570,13 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
   \global\@namedef{K:\expandafter\the\c@keywords}{#1}
   \global\addtocounter{keywords}{1}
 }
+%
+% Para os números de páginas do frontmatter e do mainmatter aparecerem
+% na ficha catalográfica, utilizou-se uma referência. Assim, mesmo com
+% uma main vazia, será necessário re-executar o \LaTeX\ para obter as
+% referências corretas.
+%
+%
 \renewcommand\frontmatter{%
   \cleardoublepage
   \@mainmatterfalse
@@ -807,7 +791,9 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
 %    \end{macrocode}
 %
 %    \begin{macrocode}
-\newcommand\printlosymbols{\@input@{\jobname.los}}
+\newcommand\printlosymbols{%
+\renewcommand{\glossaryname}{Lista de Símbolos}%
+\@input@{\jobname.los}}
 \def\makelosymbols{%
   \newwrite\@losfile
   \immediate\openout\@losfile=\jobname.syx
@@ -832,7 +818,9 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
     \@esphack}}}
 %    \end{macrocode}
 %    \begin{macrocode}
-\newcommand\printloabbreviations{\@input@{\jobname.lab}}
+\newcommand\printloabbreviations{%
+\renewcommand{\glossaryname}{Lista de Abreviaturas}%
+\@input@{\jobname.lab}}
 \def\makeloabbreviations{%
   \newwrite\@labfile
   \immediate\openout\@labfile=\jobname.abx
@@ -888,17 +876,17 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
 %    \end{macrocode}
 %
 %    \begin{macrocode}
-\newenvironment{thelosymbols}{%
+\newenvironment{theglossary}{%
   \clearpage%
   \if@twocolumn%
     \@restonecoltrue\onecolumn%
   \else%
     \@restonecolfalse%
   \fi%
-  \@mkboth{\MakeUppercase\listsymbolname}%
-  {\MakeUppercase\listsymbolname}%
-  \chapter*{\listsymbolname}%
-  \addcontentsline{toc}{chapter}{\listsymbolname}
+  \@mkboth{\MakeUppercase\glossaryname}%
+  {\MakeUppercase\glossaryname}%
+  \chapter*{\glossaryname}%
+  \addcontentsline{toc}{chapter}{\glossaryname}
   \list{}
   {\setlength{\listparindent}{0in}%
    \setlength{\labelwidth}{1.0in}%
@@ -907,28 +895,7 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
    \setlength{\itemindent}{0in}}%
    \sloppy}%
   {\if@restonecol\onecolumn\else\clearpage\fi%
-   \endlist}
-%
-\newenvironment{theloabbreviations}{%
-  \clearpage%
-  \if@twocolumn%
-    \@restonecoltrue\onecolumn%
-  \else%
-    \@restonecolfalse%
-  \fi%
-  \@mkboth{\MakeUppercase\listabbreviationname}%
-  {\MakeUppercase\listabbreviationname}%
-  \chapter*{\listabbreviationname}%
-  \addcontentsline{toc}{chapter}{\listabbreviationname}
-  \list{}
-  {\setlength{\listparindent}{0in}%
-   \setlength{\labelwidth}{1.0in}%
-   \setlength{\leftmargin}{1.5in}%
-   \setlength{\labelsep}{0.5in}%
-   \setlength{\itemindent}{0in}}%
-   \sloppy}%
-  {\if@restonecol\onecolumn\else\clearpage\fi%
-   \endlist}
+\endlist}
 %
 \renewenvironment{theindex}{%
   \if@twocolumn
@@ -946,11 +913,26 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
   \columnsep 35\p@
   \let\item\@idxitem}
   {\if@restonecol\onecolumn\else\clearpage\fi}
-\newcommand\listsymbolname{Lista de S{\' i}mbolos}
-\newcommand\listabbreviationname{Lista de Abreviaturas}
+\newcommand\glossaryname{Glossary}
 %    \end{macrocode}
+%
 %    \begin{macrocode}
 %</class>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%<*glossary>
+actual '='
+quote '!'
+level '>'
+delim_0   ", p. "
+lethead_flag  0
+headings_flag 0
+preamble
+"\n\\begin{theglossary}\n  \\makeatletter"
+postamble
+"\n  \\end{theglossary}\n"
+%</glossary>
 %    \end{macrocode}
 %
 % \section*{Aknowledgements}

@@ -5,17 +5,17 @@ Introduction
 This project provides a LaTeX document class suitable for writing
 academic dissertations and thesis according to the format rules of the
 Alberto Luiz Coimbra Institute for Graduate Studies and Research in
-Engineering (Coppe/UFRJ).
+Engineering (COPPE/UFRJ).
 
 The 'coppe' class contains a minimalist set of macro commands which
-allows its users to create required textual elements according to the
-Coppe/UFRJ dissertation/thesis guide. Among these elements, there are a
+allows its users to create the required textual elements according to the
+COPPE/UFRJ dissertation/thesis guide. Among these elements, there are a
 title page, cataloging details, native and foreign languages abstracts,
 table of contents, and references.
 
-Although following the Coppe/UFRJ guidelines, it can be easily ported to
-standards of other institutions. This is possible due to users'
-flexibility in defining textual elements required by their institutions.
+Although following the COPPE/UFRJ guidelines, it can be easily ported to
+standards of other institutions. This is possible due to the given users'
+flexibility.
 
 
 When Conceived
@@ -50,7 +50,7 @@ You should have received the following files:
   5. coppe.bib: contains the references cited in the documentation.
 
   6. coppe.dtx: main source file; contains the documentation, a sample
-     thesis and Makeindex styles.
+     thesis and Makeindex style.
 
   7. coppe.ins: used to strip out the coppe document class from `coppe.dtx'.
 
@@ -69,13 +69,11 @@ its auxiliary files. The code for the class is contained in the file
 generate the file `coppe.dvi'. The sample thesis is compiled by running
 `make example'.
 
-If you don't have any make utility, run `latex coppe.ins' to extract the
-class together with its auxiliary files. The documentation is obtained
-by running `latex coppe.dtx'. The example file has to be compiled by
-`latex' and, if you want to display lists of symbols or abbreviations,
-post-processed with Makeindex. Use the given Makeindex styles
-(coppe-symbl.ist and coppe-abbrev.ist) to generate the lists of symbols
-and abbreviations. These lists must be written to `example.syx' and
+If you don't have any make utility, run `latex coppe.ins' to extract the class
+together with auxiliary files. The documentation is obtained by running `latex
+coppe.dtx'. The example file has to be compiled by `latex' and, if you want to
+display lists of symbols or abbreviations, use the given Makeindex style
+`coppe.ist'. These lists must be saved to files named `example.syx' and
 `example.abx', respectively.
 
 
@@ -89,4 +87,4 @@ Have a good thesis,
   CoppeTeX team.
   http://sourceforge.net/projects/coppe
 
-                                             Rio de Janeiro, November 21, 2007.
+                                             Rio de Janeiro, 6 March 2008.
