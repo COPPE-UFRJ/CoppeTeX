@@ -38,8 +38,10 @@
 \def\CoppeTeX{{\rm C\kern-.05em{\sc o\kern-.025em p\kern-.025em
 p\kern-.025em e}}\kern-.08em\TeX}
 
-\EnableCrossrefs \CodelineIndex \RecordChanges \begin{document}
-\DocInput{coppe.dtx} \end{document}
+\EnableCrossrefs \CodelineIndex \RecordChanges
+\begin{document}
+  \DocInput{coppe.dtx}
+\end{document}
 %</driver> \fi
 %
 %% ^^A \CheckSum{944}
@@ -69,10 +71,14 @@ p\kern-.025em e}}\kern-.08em\TeX}
 % added Change History.}
 % \changes{v0.2}{2008/03/06}{Unification of the code for the list of symbols
 % and abbreviations.}
+% \changes{v0.3}{2008/03/06}{Added `draft' option.}
+%
+% ^^A \input do-not-index.tex
 %
 % \GetFileInfo{coppe}
 %
-% \title{The |coppe| document class} \author{ Vicente Helano F. Batista \and
+% \title{The |coppe| document class}
+% \author{ Vicente Helano F. Batista \and
 % George O. Ainsworth Jr.\thanks{Send comments, suggestions, questions and bugs
 % to goajunior@users.sourceforge.net.}}
 %
@@ -126,19 +132,20 @@ p\kern-.025em e}}\kern-.08em\TeX}
 %
 % The |coppe| class was designed to be clear and succinct. Its simple interface
 % enables the creation of well structured documents in an elegant fashion, in
-% such a way that all of the required textual elements are automatically
+% such a way that all of the needed elements are automatically
 % constructed.
 % These elements comprehend the front face, cataloguing details and abstracts.
 % They are regulated by the Academic Registry at COPPE/UFRJ \cite{TNR96a}.
 %
-% The type of the algarisms in page numbering is selected by using the
-% macros |\frontmatter|, |\mainmatter| and |\backmatter|. The front matter
+% \subsection{Front Face}
+%
+% The front matter
 % ENGLOBA the front face, cataloging page, dedication, aknowledgements,
 % abstracts, table of contents, lists of tables, algorithms, symbols and
-% abbreviations. The main matter is formed by the chapters. The back matter only
-% includes the bibliography and index.
+% abbreviations.
+% The page numbering style is selected by using the
+% macros |\frontmatter|, |\mainmatter| and |\backmatter|.
 %
-% \subsection{Front Face}
 % It is unumbered. Here, it is not allowed hyphenation~\cite{TNR96a}.
 % All of these macros have to be called after the |\frontmatter|
 % command. This causes the initial pages to be numbered with roman
@@ -161,25 +168,8 @@ p\kern-.025em e}}\kern-.08em\TeX}
 % \DescribeMacro{\examinator}
 % Every COPPE student is coordinated by an advisor. It is still possible to have
 % a co-advisor. Their names must be given before executing the |\maketitle|
-% command.
-%
-% [Art. 37, Parágrafo 2º]
-% A Banca de Dissertação será composta de, no mínimo, 3 (três) membros
-% doutores, incluindo sempre que possível o orientador da dissertação e,
-% obrigatoriamente, um membro interno ao Programa que não seja o orientador e 1
-% (um) ou 2 (dois) membros externos ao Programa, reconhecidos como autoridades
-% na área da pesquisa, de acordo com o Parágrafo Único do Art. 40 da Resolução
-% CEPG 05/01.
-%
-% [Art. 39, Parágrafo 3º]
-% A Banca de Tese será composta de, no mínimo, 5 (cinco) membros doutores,
-% incluindo sempre que possível o orientador de tese e, obrigatoriamente, 1 (um)
-% membro interno ao Programa que não seja o orientador e 2 (dois) ou 3 (três)
-% membros externos ao Programa, dos quais pelo menos 1 (um) também externo a
-% UFRJ, reconhecidos como autoridades na área de pesquisa.
-%
-% It is also required to give the names of all examinators. There is a minimum
-% of two for.
+% command. It is also required to enter the names of all examinators. There is
+% a minimum of $3$ for thesis and $2$ dissertations and qualifying exams.
 %
 % \DescribeMacro{\date}
 % This macro is used to set the month and year of defense.
@@ -281,6 +271,10 @@ p\kern-.025em e}}\kern-.08em\TeX}
 % símbolos. 
 %
 % \subsection{Body of the text}
+%
+% The main matter is formed by the chapters. The back matter only
+% includes the bibliography and index.
+%
 % \subsubsection{Figures}
 % Para obter um melhor acabamento do texto final, não inserir figuras
 % fiquem no meio do texto. Essas devem estar sempre posicionadas no topo
@@ -338,7 +332,7 @@ p\kern-.025em e}}\kern-.08em\TeX}
 %   least the following code.
 %    \begin{macrocode}
 %<*example>
-\documentclass[dsc]{coppe}
+\documentclass[draft,dsc]{coppe}
 \usepackage[latin1]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[brazil]{babel}
@@ -361,7 +355,7 @@ p\kern-.025em e}}\kern-.08em\TeX}
   \advisor{Prof.}{Fernando Luiz Bastos Ribeiro}{D.Sc.}
   \coadvisor{Prof.}{José Antonio Fontes Santiago}{D.Sc.}
   \examinator{Prof.}{José Luis Drummond Alves}{D.Sc.}
-  \examinator{Prof.}{Joaquim Bento Cavalcante Neto}{D.Sc.}
+  \examinator{Prof.}{José Luis Drummond Alves}{D.Sc.}
   \date{06}{2005}
 
   \keyword{Geração de Malhas}
@@ -463,14 +457,19 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
 %    \begin{macrocode}
 \let\@advisor\@empty
 \let\@coadvisor\@empty
+\newcounter{minexaminats}
+\newboolean{isdraft}
 \newboolean{maledoc}
 \setboolean{maledoc}{false}
+\setboolean{isdraft}{false}
+%
 \DeclareOption{msc}{%
   \newcommand{\@degree}{M.Sc.}
   \newcommand{\@degtextpt}{Mestre}
   \newcommand{\@degtexten}{Master}
   \newcommand\@doctypept{Disserta{\c c}{\~ a}o}
   \newcommand\@doctypeen{Dissertation}
+  \setcounter{minexaminats}{2}
 }
 \DeclareOption{dscexam}{%
   \newcommand{\@degree}{D.Sc.}
@@ -479,6 +478,7 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
   \setboolean{maledoc}{true}
   \newcommand\@doctypept{Exame de Qualifica{\c c}{\~ a}o}
   \newcommand\@doctypeen{Qualifying Exam}
+  \setcounter{minexaminats}{2}
 }
 \DeclareOption{dsc}{%
   \newcommand{\@degree}{D.Sc.}
@@ -486,6 +486,10 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
   \newcommand{\@degtexten}{Doctor}
   \newcommand\@doctypept{Tese}
   \newcommand\@doctypeen{Thesis}
+  \setcounter{minexaminats}{3}
+}
+\DeclareOption{draft}{%
+  \setboolean{isdraft}{true}
 }
 \ProcessOptions
 \newcommand\department[1]{%
@@ -545,8 +549,10 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
   \global\@namedef{S:\expandafter\the\@examinat}{#1\ #2, #3}
   \global\advance\@examinat by 1
   \ifnum\@examinat>6
-    \message{coppe.cls: warning: maximum number of examinators exceeded.}
-    \message{coppe.cls: warning: see documentation for details.}
+    \ClassWarning{coppe}{%
+      Maximum number of examinators exceeded.\MessageBreak
+      Printing only six of them}{%
+      See `coppe' documentation for details}
     \@examinat=6
   \fi
 }
@@ -576,7 +582,6 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
 % uma main vazia, será necessário re-executar o \LaTeX\ para obter as
 % referências corretas.
 %
-%
 \renewcommand\frontmatter{%
   \cleardoublepage
   \@mainmatterfalse
@@ -591,8 +596,19 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
   \pagenumbering{arabic}}
 %    \end{macrocode}
 %
+% \begin{macro}{\maketitle}
 %    \begin{macrocode}
 \renewcommand\maketitle{%
+\ifthenelse{\@examinat<\value{minexaminats}}{%
+  \ifthenelse{\boolean{isdraft}}{%
+    \ClassWarning{coppe}{Too few examinators for a \@doctypeen}%
+  }{%
+    \ClassError{coppe}{%
+    Too few examinators for a \@doctypeen}{%
+    This value is regulated by the Academic Registry at COPPE/UFRJ.\MessageBreak
+    To disable this check, enable the draft option of the coppe class.}%
+  }%
+}{}
   \begin{titlepage}%
   \begin{center}%
     \sloppy\nohyphens{\MakeUppercase\@titulo}\par%
@@ -641,6 +657,11 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
   \global\let\maketitle\relax%
   \global\let\and\relax%
 }
+%    \end{macrocode}
+% \changes{v0.3}{2008/03/07}{Added number of examinators test.}
+% \end{macro}
+%
+%    \begin{macrocode}
 \newcommand\makecatalog{%
   \thispagestyle{plain}
   \setcounter{page}{2}
@@ -817,6 +838,7 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
     \endgroup
     \@esphack}}}
 %    \end{macrocode}
+%
 %    \begin{macrocode}
 \newcommand\printloabbreviations{%
 \renewcommand{\glossaryname}{Lista de Abreviaturas}%
@@ -844,6 +866,7 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
     \endgroup
     \@esphack}}}
 %    \end{macrocode}
+%
 %
 %    \begin{macrocode}
 \newdimen\bibindent%
