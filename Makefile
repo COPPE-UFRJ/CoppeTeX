@@ -43,6 +43,11 @@ _printf=printf
 _rm=rm
 _tar=tar
 
+CLSDIR=$(DESTDIR)/tex/latex/coppe
+BSTDIR=$(DESTDIR)/bibtex/bst/coppe
+ISTDIR=$(DESTDIR)/makeindex/coppe
+DOCDIR=$(DESTDIR)/doc/latex/coppe
+
 TEXFLAGS  = 
 BIBTEXFLAGS = -terse
 DVIPSFLAGS = -Ppdf -G0 -q -t A4 
@@ -79,8 +84,33 @@ class: $(PACKAGE_NAME).cls
 
 example: example.tex example.dvi
 
-install:
-	@echo ${TEXMF_ROOT}
+install: doc class example
+	@if [ "$(DESTDIR)" == "" ]; then \
+	  $(_printf) "error: empty detination directory.\n"; \
+	  make help; \
+	  exit 1; \
+	fi
+	if [ -d "$(CLSDIR)" ]; then \
+	  rm -rf $(CLSDIR); \
+	fi
+	mkdir -vp $(CLSDIR)
+	cp -vp $(PACKAGE_NAME).cls $(CLSDIR)/
+	if [ -d "$(BSTDIR)" ]; then \
+	  rm -rf $(BSTDIR); \
+	fi
+	mkdir -vp $(BSTDIR)
+	cp -vp $(PACKAGE_NAME)-unsrt.bst $(BSTDIR)/
+	if [ -d "$(ISTDIR)" ]; then \
+	  rm -rf $(ISTDIR); \
+	fi
+	mkdir -vp $(ISTDIR)
+	cp -vp $(PACKAGE_NAME).ist $(ISTDIR)/
+	if [ -d "$(DOCDIR)" ]; then \
+	  rm -rf $(DOCDIR); \
+	fi
+	mkdir -vp $(DOCDIR)
+	cp -vp README COPYING $(PACKAGE_NAME).dvi \
+		example.tex example.dvi $(DOCDIR)/
 
 dist: distclean
 	@${_tar} -jcvf $(PACKAGE_NAME).tar.bz2 ./*
@@ -106,6 +136,7 @@ help:
            "  example      generate a DVI file from \`example.tex'" \
            "  dist         create a compressed archive from sources" \
            "  clean        remove auxiliary archives" \
+	   "  install      install class in DESTDIR" \
            "  help         display this message and exit" \
            "  version      print version information and exit"
 	@${_printf} "\n"

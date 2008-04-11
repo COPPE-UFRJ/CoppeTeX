@@ -5,7 +5,7 @@
 % It uses the doc utility to generate documentations for the 'coppe'
 % document class and the 'coppe-unsrt' BibTeX style.
 %
-% Copyright (C) 2007 CoppeTeX Project and any individual authors listed
+% Copyright (C) 2008 CoppeTeX Project and any individual authors listed
 % elsewhere in this file.
 %
 % This program is free software; you can redistribute it and/or modify
@@ -44,7 +44,7 @@ p\kern-.025em e}}\kern-.08em\TeX}
 \end{document}
 %</driver> \fi
 %
-%% ^^A \CheckSum{944}
+%% ^^A \CheckSum{995}
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
 %%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
@@ -73,7 +73,38 @@ p\kern-.025em e}}\kern-.08em\TeX}
 % and abbreviations.}
 % \changes{v0.3}{2008/03/06}{Added `draft' option.}
 %
-% ^^A \input do-not-index.tex
+% \DoNotIndex{\!,\',\.,\>,\^,\`,\',\~,\=,\\,\\\~,\\\^,\\ }
+% \DoNotIndex{\@arabic,\@auxout,\@biblabel,\@bsphack,\@clubpenalty,\@empty}
+% \DoNotIndex{\@esphack,\@idxitem,\@ifpackageloaded,\@input@,\@latex@warning}
+% \DoNotIndex{\@m,\@mainmatterfalse,\@mainmattertrue,\@makeschapterhead}
+% \DoNotIndex{\@mkboth,\@namedef,\@noitemerr,\@onlypreamble,\@openbib@code}
+% \DoNotIndex{\@plus,\@restonecolfalse,\@restonecoltrue,\@sanitize,\@starttoc}
+% \DoNotIndex{\@whilenum,\AtBeginDocument,\AtEndDocument,\BibTeX,\ClassError}
+% \DoNotIndex{\ClassWarning,\DeclareOption,\Gamma,\LaTeX,\LoadClass}
+% \DoNotIndex{\MakeUppercase,\MessageBreak,\NeedsTeXFormat,\Omega,\Pi}
+% \DoNotIndex{\ProcessOptions,\ProvidesClass,\RequirePackage,\Roman}
+% \DoNotIndex{\addcontentsline,\addtocounter,\advance,\and,\arabic}
+% \DoNotIndex{\baselineskip,\baselinestretch,\begin,\begingroup,\bibindent}
+% \DoNotIndex{\bibname,\boolean,\c,\c@enumiv,\centering,\chapter}
+% \DoNotIndex{\cleardoublepage,\clearpage,\clubpenalty,\columnsep}
+% \DoNotIndex{\columnseprule,\count,\csname,\def,\do,\documentclass,\else}
+% \DoNotIndex{\end,\endcsname,\endgroup,\endlist,\equal,\eta,\expandafter}
+% \DoNotIndex{\fi,\filedate,\filename,\fileversion,\gdef,\global,\hbox}
+% \DoNotIndex{\hrulefill,\if@restonecol,\if@twocolumn,\ifcase,\ifnum}
+% \DoNotIndex{\ifthenelse,\ifx,\immediate,\indexentry,\indexname,\it,\item}
+% \DoNotIndex{\itemindent,\jobname,\kern,\labelsep,\labelwidth,\leftmargin}
+% \DoNotIndex{\let,\list,\listfigurename,\listparindent,\listtablename,\lower}
+% \DoNotIndex{\makebox,\mathbb,\mathbf,\mathcal,\month,\n,\newboolean}
+% \DoNotIndex{\newcommand,\newcount,\newcounter,\newdimen,\newenvironment}
+% \DoNotIndex{\newlabel,\newpage,\newwrite,\nocite,\nohyphens,\noindent}
+% \DoNotIndex{\normalsize,\nu,\number,\omega,\onecolumn,\openout,\or,\p@}
+% \DoNotIndex{\p@enumiv,\pagenumbering,\pageref,\pagestyle,\par,\parindent}
+% \DoNotIndex{\parskip,\protected@write,\qquad,\relax,\renewcommand}
+% \DoNotIndex{\renewenvironment,\rm,\sc,\setboolean,\setcounter,\setlength}
+% \DoNotIndex{\sfcode,\sloppy,\string,\textit,\texttt,\textwidth,\the}
+% \DoNotIndex{\theenumiv,\thepage,\thispagestyle,\twocolumn,\typeout}
+% \DoNotIndex{\usecounter,\usepackage,\value,\vfill,\vskip,\vspace}
+% \DoNotIndex{\widowpenalty,\write,\year,\z@}
 %
 % \GetFileInfo{coppe}
 %
@@ -160,8 +191,8 @@ p\kern-.025em e}}\kern-.08em\TeX}
 % primeiras letras de cada nome em maiúsculas.
 % The author's information are collected by the commands |\author| and
 % |\department|.
-% \DescribeMacro{\titulo}
 % \DescribeMacro{\title}
+% \DescribeMacro{\foreigntitle}
 %
 % \DescribeMacro{\advisor}
 % \DescribeMacro{\coadvisor}
@@ -197,8 +228,8 @@ p\kern-.025em e}}\kern-.08em\TeX}
 % size. It is numbered with roman algarisms.
 %
 % \subsection{Abstracts}
-% \DescribeEnv{resumo}
 % \DescribeEnv{abstract}
+% \DescribeEnv{foreignabstract}
 % Segundo a norma \cite{TNR96a}, os resumos devem estar contidos em
 % uma única página, cada. Idealmente,
 % o resumo deve ser composto por apenas um parágrafo. Esse espaço não
@@ -324,18 +355,15 @@ p\kern-.025em e}}\kern-.08em\TeX}
 % esse enriquece a monografia. Em \LaTeX, o pacote |makeindex| é
 % responsável pela construção de tal elemento textual.
 %
-%
-%
 % \section{A Simple Example}
 % \label{COPPE:SAMPLE}
 %   A basic document using the \texttt{coppe} class should contain at
 %   least the following code.
 %    \begin{macrocode}
 %<*example>
-\documentclass[draft,dsc]{coppe}
+\documentclass[msc]{coppe}
 \usepackage[latin1]{inputenc}
 \usepackage[T1]{fontenc}
-\usepackage[brazil]{babel}
 \usepackage{amsmath,amssymb}
 
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
@@ -346,14 +374,14 @@ p\kern-.025em e}}\kern-.08em\TeX}
 
 \begin{document}
   \frontmatter
-  \titulo{Queima de Combustíveis Líquidos em Combustores Pulsantes
+  \title{Queima de Combustíveis Líquidos em Combustores Pulsantes
   Tipo Tubo de Rijke}
-  \title{Generation of Unstructured Tetrahedral Meshes Using an
+  \foreigntitle{Generation of Unstructured Tetrahedral Meshes Using an
   Advancing Front Method}
   \author{Couto}{Heraldo da Silva}
   \department{PENO}
   \advisor{Prof.}{Fernando Luiz Bastos Ribeiro}{D.Sc.}
-  \coadvisor{Prof.}{José Antonio Fontes Santiago}{D.Sc.}
+  \coadvisor{Prof.}{Fernando Luiz Bastos Ribeiro}{D.Sc.}
   \examinator{Prof.}{José Luis Drummond Alves}{D.Sc.}
   \examinator{Prof.}{José Luis Drummond Alves}{D.Sc.}
   \date{06}{2005}
@@ -370,11 +398,11 @@ p\kern-.025em e}}\kern-.08em\TeX}
   Científico e Tecnológico dos Estados Unidos do Brasil} pelo suporte
   financeiro.
  
-  \resumo{Apresenta-se, nesta tese, um método para geração de malhas
+  \abstract{Apresenta-se, nesta tese, um método para geração de malhas
   não-estruturadas tetraédricas baseado em avanço de
   fronteira.}
 
-  \abstract{This work presents an algorithm to generate uniform
+  \foreignabstract{This work presents an algorithm to generate uniform
   unstructured tetrahedral meshes based on advancing front method.}
 
   \tableofcontents
@@ -434,21 +462,13 @@ p\kern-.025em e}}\kern-.08em\TeX}
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{coppe}[\filedate\ \fileversion\ COPPE Dissertations and Thesis]
 \LoadClass[12pt,a4paper,oneside]{book}
-\RequirePackage[brazil]{babel}
+\RequirePackage[english,brazil]{babel}
 \RequirePackage{hyphenat}
 \RequirePackage{ifthen}
-%    \end{macrocode}
-%
-% \subsubsection{Margins}
-% As required by the Academic Registry of COPPE/UFRJ~\cite{TNR96a}, vertical
-% and horizontal margins must be at least $2.5cm$ and $3.0cm$, respectively.
-% The default values were set to these lower bounds.
-%    \begin{macrocode}
 \RequirePackage[a4paper,bindingoffset=0.0cm,vcentering=true,%
 top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
 %    \end{macrocode}
 %
-% \subsubsection{Line spacing}
 % The default line spacing is ...
 %    \begin{macrocode}
 \renewcommand\baselinestretch{1.5}
@@ -465,85 +485,133 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
 %
 \DeclareOption{msc}{%
   \newcommand{\@degree}{M.Sc.}
-  \newcommand{\@degtextpt}{Mestre}
-  \newcommand{\@degtexten}{Master}
-  \newcommand\@doctypept{Disserta{\c c}{\~ a}o}
-  \newcommand\@doctypeen{Dissertation}
+  \newcommand{\local@degname}{Mestre em Ci{\^ e}ncias}
+  \newcommand{\foreign@degname}{Master of Science}
+  \newcommand\local@doctype{Disserta{\c c}{\~ a}o}
+  \newcommand\foreign@doctype{Dissertation}
   \setcounter{minexaminats}{2}
 }
 \DeclareOption{dscexam}{%
   \newcommand{\@degree}{D.Sc.}
-  \newcommand{\@degtextpt}{Doutor}
-  \newcommand{\@degtexten}{Doctor}
+  \newcommand{\local@degname}{Doutor em Ci{\^ e}ncias}
+  \newcommand{\foreign@degname}{Doctor of Science}
   \setboolean{maledoc}{true}
-  \newcommand\@doctypept{Exame de Qualifica{\c c}{\~ a}o}
-  \newcommand\@doctypeen{Qualifying Exam}
+  \newcommand\local@doctype{Exame de Qualifica{\c c}{\~ a}o}
+  \newcommand\foreign@doctype{Qualifying Exam}
   \setcounter{minexaminats}{2}
 }
 \DeclareOption{dsc}{%
   \newcommand{\@degree}{D.Sc.}
-  \newcommand{\@degtextpt}{Doutor}
-  \newcommand{\@degtexten}{Doctor}
-  \newcommand\@doctypept{Tese}
-  \newcommand\@doctypeen{Thesis}
+  \newcommand{\local@degname}{Doutor em Ci{\^ e}ncias}
+  \newcommand{\foreign@degname}{Doctor of Science}
+  \newcommand\local@doctype{Tese}
+  \newcommand\foreign@doctype{Thesis}
   \setcounter{minexaminats}{3}
 }
 \DeclareOption{draft}{%
   \setboolean{isdraft}{true}
+  \ClassWarning{coppe}{draft mode is ON}%
 }
 \ProcessOptions
+%    \end{macrocode}
+%
+% \begin{macro}{\university}
+% Set the university name.
+%    \begin{macrocode}
+\newcommand\university[1]{%
+  \renewcommand\local@universityname{#1}
+}
+%
+% \begin{macro}{\department}
+% This macro is used to set the main properties of the documents.
+%    \begin{macrocode}
 \newcommand\department[1]{%
   \ifthenelse{\equal{#1}{PEB}}
-    {\global\def\@deptpt{Engenharia Biom{\' e}dica}
-     \global\def\@depten{Biomedical Engineering}}{}
+    {\global\def\local@deptname{Engenharia Biom{\' e}dica}
+     \global\def\foreign@deptname{Biomedical Engineering}}{}
   \ifthenelse{\equal{#1}{PEC}}
-    {\global\def\@deptpt{Engenharia Civil}
-     \global\def\@depten{Civil Engineering}}{}
+    {\global\def\local@deptname{Engenharia Civil}
+     \global\def\foreign@deptname{Civil Engineering}}{}
   \ifthenelse{\equal{#1}{PEE}}
-    {\global\def\@deptpt{Engenharia El{\' e}trica}
-     \global\def\@depten{Electrical Engineering}}{}
+    {\global\def\local@deptname{Engenharia El{\' e}trica}
+     \global\def\foreign@deptname{Electrical Engineering}}{}
   \ifthenelse{\equal{#1}{PEM}}
-    {\global\def\@deptpt{Engenharia Mec{\^ a}nica}
-     \global\def\@depten{Mechanical Engineering}}{}
+    {\global\def\local@deptname{Engenharia Mec{\^ a}nica}
+     \global\def\foreign@deptname{Mechanical Engineering}}{}
   \ifthenelse{\equal{#1}{PEMM}}
-    {\global\def\@deptpt{Engenharia Metal{\' u}rgica e de Materiais}
-     \global\def\@depten{Metallurgical and Materials Science Engineering}}{}
+    {\global\def\local@deptname{Engenharia Metal{\' u}rgica e de Materiais}
+\global\def\foreign@deptname{Metallurgical and Materials Science Engineering}}{}
   \ifthenelse{\equal{#1}{PEN}}
-    {\global\def\@deptpt{Engenharia Nuclear}
-     \global\def\@depten{Nuclear Engineering}}{}
+    {\global\def\local@deptname{Engenharia Nuclear}
+     \global\def\foreign@deptname{Nuclear Engineering}}{}
   \ifthenelse{\equal{#1}{PENO}}
-    {\global\def\@deptpt{Engenharia Oce{\^ a}nica}
-     \global\def\@depten{Ocean Engineering}}{}
+    {\global\def\local@deptname{Engenharia Oce{\^ a}nica}
+     \global\def\foreign@deptname{Ocean Engineering}}{}
   \ifthenelse{\equal{#1}{PPE}}
-    {\global\def\@deptpt{Planejamento Energ{\' e}tico}
-     \global\def\@depten{Energy Planning}}{}
+    {\global\def\local@deptname{Planejamento Energ{\' e}tico}
+     \global\def\foreign@deptname{Energy Planning}}{}
   \ifthenelse{\equal{#1}{PEP}}
-    {\global\def\@deptpt{Engenharia de Produ{\c c}{\~ a}o}
-     \global\def\@depten{Production Engineering}}{}
+    {\global\def\local@deptname{Engenharia de Produ{\c c}{\~ a}o}
+     \global\def\foreign@deptname{Production Engineering}}{}
   \ifthenelse{\equal{#1}{PEQ}}
-    {\global\def\@deptpt{Engenharia Qu{\' i}mica}
-     \global\def\@depten{Chemical Engineering}}{}
+    {\global\def\local@deptname{Engenharia Qu{\' i}mica}
+     \global\def\foreign@deptname{Chemical Engineering}}{}
   \ifthenelse{\equal{#1}{PESC}}
-    {\global\def\@deptpt{Engenharia de Sistemas e Computa{\c c}{\~ a}o}
-     \global\def\@depten{Systems Engineering and Computer Science}}{}
+    {\global\def\local@deptname{Engenharia de Sistemas e Computa{\c c}{\~ a}o}
+     \global\def\foreign@deptname{Systems Engineering and Computer Science}}{}
   \ifthenelse{\equal{#1}{PET}}
-    {\global\def\@deptpt{Engenharia de Transportes}
-     \global\def\@depten{Transportation Engineering}}{}
+    {\global\def\local@deptname{Engenharia de Transportes}
+     \global\def\foreign@deptname{Transportation Engineering}}{}
 }
-\newcommand\titulo[1]{%
-  \global\def\@titulo{#1}%
+%    \end{macrocode}
+% \end{macro}
+%
+%
+% \begin{macro}{\title}
+% Used to enter the foreign title.
+%    \begin{macrocode}
+\renewcommand\title[1]{%
+  \global\def\local@title{#1}%
 }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\foreigntitle}
+% Used to enter the foreign title.
+%    \begin{macrocode}
+\newcommand\foreigntitle[1]{%
+  \global\def\foreign@title{#1}%
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\advisor}
+% Defines globaly the title, name and academic degree of the advisor.
+%    \begin{macrocode}
 \newcommand\advisor[3]{%
   \global\def\@adtitle{#1}%
   \global\def\@advisor{#2}%
   \global\def\@addegree{#3}%
 }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\coadvisor}
+% Defines globaly the title, name and academic degree of the coadvisor.
+%    \begin{macrocode}
 \newcommand\coadvisor[3]{%
   \global\def\@coadtitle{#1}%
   \global\def\@coadvisor{#2}%
   \global\def\@coaddegree{#3}%
+  \renewcommand\local@advisorstring{Orientadores}%
+  \renewcommand\foreign@advisorstring{Advisors}%
 }
-% It was fixed a maximum of 6 examinators, just for the sake of page layout
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\examinator}
+% It was fixed a maximum of 6 examinators, just for the sake of page layout.
+%    \begin{macrocode}
 \newcount\@examinat\@examinat0
 \newcommand\examinator[3]{%
   \global\@namedef{S:\expandafter\the\@examinat}{#1\ #2, #3}
@@ -551,42 +619,87 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
   \ifnum\@examinat>6
     \ClassWarning{coppe}{%
       Maximum number of examinators exceeded.\MessageBreak
-      Printing only six of them}{%
-      See `coppe' documentation for details}
+      Printing only six of them}
     \@examinat=6
   \fi
 }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\author}
+% The macro |\author| is redefined to allow the identification of the author's
+% firstnames and surname.
+%    \begin{macrocode}
 \renewcommand\author[2]{%
   \global\def\@authname{#2}
   \global\def\@authsurn{#1}
 }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\date}
+% This code enables makes easy to switch from dates in diferent languages.
+%    \begin{macrocode}
 \renewcommand\date[2]{%
   \month=#1
   \year=#2
 }
-\newcommand\@monthpt{\ifcase\month\or
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\local@monthname}
+%    \begin{macrocode}
+\newcommand\local@monthname{\ifcase\month\or
   Janeiro\or Fevereiro\or Março\or Abril\or Maio\or Junho\or
   Julho\or Agosto\or Setembro\or Outubro\or Novembro\or Dezembro\fi}
-\newcommand\@monthen{\ifcase\month\or
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\foreign@monthname}
+%    \begin{macrocode}
+\newcommand\foreign@monthname{\ifcase\month\or
   January\or February\or March\or April\or May\or June\or
   July\or August\or September\or October\or November\or December\fi}
+%    \end{macrocode}
+% \end{macro}
 %
+% \begin{macro}{\place}
+% Used to enter the place of defense.
+%    \begin{macrocode}
+\newcommand\place[3]{%
+  \renewcommand\local@cityname{#1}
+  \renewcommand\local@statename{#2}
+  \renewcommand\local@countryname{#3}
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\keywords}
+%    \begin{macrocode}
 \newcounter{keywords}
 \newcommand\keyword[1]{%
   \global\@namedef{K:\expandafter\the\c@keywords}{#1}
   \global\addtocounter{keywords}{1}
 }
+%    \end{macrocode}
+% \end{macro}
 %
+% \begin{macro}{\frontmatter}
 % Para os números de páginas do frontmatter e do mainmatter aparecerem
 % na ficha catalográfica, utilizou-se uma referência. Assim, mesmo com
 % uma main vazia, será necessário re-executar o \LaTeX\ para obter as
 % referências corretas.
-%
+%    \begin{macrocode}
 \renewcommand\frontmatter{%
   \cleardoublepage
   \@mainmatterfalse
   \pagestyle{plain}
   \pagenumbering{roman}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\mainmatter}
+%    \begin{macrocode}
 \renewcommand\mainmatter{%
   \immediate\write\@auxout{%
     \string\newlabel{front:pageno}{{}{\Roman{page}}{}{}{}}}
@@ -595,50 +708,42 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
   \pagestyle{plain}
   \pagenumbering{arabic}}
 %    \end{macrocode}
+% \end{macro}
 %
 % \begin{macro}{\maketitle}
 %    \begin{macrocode}
 \renewcommand\maketitle{%
 \ifthenelse{\@examinat<\value{minexaminats}}{%
   \ifthenelse{\boolean{isdraft}}{%
-    \ClassWarning{coppe}{Too few examinators for a \@doctypeen}%
+    \ClassWarning{coppe}{Too few examinators for a \local@doctype}%
   }{%
     \ClassError{coppe}{%
-    Too few examinators for a \@doctypeen}{%
+    Too few examinators for a \local@doctype}{%
     This value is regulated by the Academic Registry at COPPE/UFRJ.\MessageBreak
     To disable this check, enable the draft option of the coppe class.}%
   }%
 }{}
   \begin{titlepage}%
   \begin{center}%
-    \sloppy\nohyphens{\MakeUppercase\@titulo}\par%
+    \sloppy\nohyphens{\MakeUppercase\local@title}\par%
     \vskip 1.0cm%
     {\@authname\ \@authsurn}\par%
   \end{center}\par%
   \vskip 0.83cm%
-  \noindent {\MakeUppercase\@doctypept}
-  \ifthenelse{\boolean{maledoc}}{SUBMETIDO}{SUBMETIDA}
-  \sloppy\nohyphens{AO CORPO DOCENTE DA COORDENA{\c C}{\~ A}O DOS
-  PROGRAMAS DE P{\' O}S-GRADUA{\c C}{\~ A}O DE ENGENHARIA DA
-  UNIVERSIDADE FEDERAL DO RIO DE JANEIRO COMO PARTE DOS REQUISITOS
-  NECESS{\' A}RIOS PARA A OBTEN{\c C}{\~ A}O DO GRAU DE
-  {\MakeUppercase\@degtextpt} EM CI{\^ E}NCIAS EM}
-  {\MakeUppercase\@deptpt. \par}%
+  \frontpage@maintext%
   \vskip 0.8cm%
-  \noindent \ifthenelse{\boolean{maledoc}}{Aprovado}{Aprovada} por:\par%
+  \noindent \local@approvedname:\par%
   \begin{flushright}%
      \begin{minipage}{0.68\textwidth}%
         \centering
-        \ifx\@advisor\@empty \else
+        \ifthenelse{\equal{\@advisor}{\@empty}}{}{%
           \vskip16\p@ \baselineskip14pt
           \makebox[\textwidth]{\hrulefill}
-          \@adtitle\ \@advisor, \@addegree
-        \fi
-        \ifx\@coadvisor\@empty \else
+          \@adtitle\ \@advisor, \@addegree}
+        \ifthenelse{\equal{\@coadvisor}{\@empty}}{}{%
           \vskip16\p@ \baselineskip12pt
           \makebox[\textwidth]{\hrulefill}
-          \@coadtitle\ \@coadvisor, \@coaddegree
-        \fi
+          \@coadtitle\ \@coadvisor, \@coaddegree}
         \count1=0
         \@whilenum \count1<\@examinat \do {%
             \vskip16\p@ \baselineskip14pt
@@ -648,19 +753,17 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
      \end{minipage}
   \end{flushright}
   \vfill
-  \begin{center}
-    RIO DE JANEIRO -- RJ, BRASIL\par
-    {\MakeUppercase\@monthpt\ DE \number\year}%
-  \end{center}
+  \frontpage@bottomtext
   \end{titlepage}%
   \ifthenelse{\boolean{maledoc}}{}{\makecatalog}%
   \global\let\maketitle\relax%
-  \global\let\and\relax%
-}
+  \global\let\and\relax}
 %    \end{macrocode}
 % \changes{v0.3}{2008/03/07}{Added number of examinators test.}
+% \changes{v0.3}{2008/03/07}{Generalization.}
 % \end{macro}
 %
+% \begin{macro}{\makecatalog}
 %    \begin{macrocode}
 \newcommand\makecatalog{%
   \thispagestyle{plain}
@@ -671,13 +774,13 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
       \vskip 8.0cm
      \noindent \sloppy\nohyphens{\MakeUppercase\@authsurn},
       \nohyphens{\MakeUppercase\@authname}\par
-      \@titulo\ [Rio de Janeiro] \number\year\par
+      \local@title\ [\local@cityname] \number\year\par
       \pageref{front:pageno},
       \pageref{main:pageno}
       p. $29,7$cm (COPPE/UFRJ, \@degree,
-      \nohyphens{\@deptpt}, \number\year)\par
-      \@doctypept\ --
-      \nohyphens{Universidade Federal do Rio de Janeiro, COPPE}\par
+      \nohyphens{\local@deptname}, \number\year)\par
+      \local@doctype\ --
+      \nohyphens{\local@universityname, COPPE}\par
       \baselineskip 0pt
       \begin{enumerate}
         \setlength{\itemindent}{-2.7ex}
@@ -691,6 +794,9 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
   \end{center}
 }
 %    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\dedication}
 %    \begin{macrocode}
 \newcommand\dedication[1]{
   \gdef\@dedic{#1}
@@ -699,85 +805,79 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
       \begin{minipage}{60mm}
         \it \normalsize \@dedic
       \end{minipage}
-    \end{flushright}}
-}
+    \end{flushright}}}
 %    \end{macrocode}
+% \end{macro}
 %
-%    \begin{macrocode}
-\newcommand\resumo[1]{%
-  \gdef\@resumotext{#1}%
-  \clearpage
-  \thispagestyle{plain}
-  \noindent Resumo \ifthenelse{\boolean{maledoc}}{do}{da}
-  \@doctypept\ \ifthenelse{\boolean{maledoc}}{apresentado}{apresentada}
-  \sloppy\nohyphens{{\` a} COPPE/UFRJ como parte dos requisitos
-  necess{\' a}rios para a obten{\c c}{\~ a}o do grau de
-  \@degtextpt\ em Ci{\^ e}ncias (\@degree)}\par
-  \vskip 1.5cm
-  \begin{center}
-    \sloppy\nohyphens{\MakeUppercase\@titulo}\par
-    \vskip 1.5cm
-    \@authname\ \@authsurn \par
-    \vskip 0.5cm
-    \@monthpt/\number\year
-  \end{center}\par
-  \vskip 1.0cm
-  \vfill
-  \begin{tabbing}
-    \ifx\@coadvisor\@empty
-      Orientador: \= \@advisor\\
-    \else
-      Orientadores: \= \@advisor\\
-                    \> \@coadvisor\\
-    \fi
-    Programa: \= \@deptpt
-  \end{tabbing}\par
-  \vspace{0.5cm}
-  \@resumotext
-  \vfill}
-%    \end{macrocode}
-%
+
+% \begin{macro}{\abstract}
 %    \begin{macrocode}
 \newcommand\abstract[1]{%
-  \gdef\@abstracttext{#1}%
-  \newpage
+  \gdef\abstract@maintext{#1}%
+  \clearpage
   \thispagestyle{plain}
-  \noindent \sloppy\nohyphens{Abstract of \@doctypeen\ presented to
-  COPPE/UFRJ as a partial fulfillment of the requirements for the
-  degree of \@degtexten\ of Science (\@degree)}\par
+  \abstract@toptext\par
   \vskip 1.5cm
   \begin{center}
-    \sloppy\nohyphens{\MakeUppercase\@title}\par
+    \sloppy\nohyphens{\MakeUppercase\local@title}\par
     \vskip 1.5cm
     \@authname\ \@authsurn \par
     \vskip 0.5cm
-    \@monthen/\number\year
+    \local@monthname/\number\year
   \end{center}\par
   \vskip 1.0cm
   \vfill
   \begin{tabbing}
-    \ifx\@coadvisor\@empty
-      Advisor:  \= \@advisor\\
-    \else
-      Advisors: \= \@advisor\\
-                \> \@coadvisor\\
-    \fi
-    Department: \= \@depten
+    \local@advisorstring: \= \@advisor\\
+    \ifthenelse{\equal{\@coadvisor}{\@empty}}{}{\> \@coadvisor\\}
+    \local@deptstring: \= \local@deptname
   \end{tabbing}\par
   \vspace{0.5cm}
-  \@abstracttext
+  \abstract@maintext
+  \vfill}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\foreignabstract}
+%    \begin{macrocode}
+\newcommand\foreignabstract[1]{%
+  \gdef\foreignabstract@maintext{#1}%
+  \newpage
+  \thispagestyle{plain}
+  \begin{otherlanguage}{english}
+  \foreignabstract@toptext\par
+  \vskip 1.5cm
+  \begin{center}
+    \sloppy\nohyphens{\MakeUppercase\foreign@title}\par
+    \vskip 1.5cm
+    \@authname\ \@authsurn \par
+    \vskip 0.5cm
+    \foreign@monthname/\number\year
+  \end{center}\par
+  \vskip 1.0cm
+  \vfill
+  \begin{tabbing}
+    \foreign@advisorstring: \= \@advisor\\
+    \ifthenelse{\equal{\@coadvisor}{\@empty}}{}{\> \@coadvisor\\}
+    \foreign@deptstring: \= \foreign@deptname
+  \end{tabbing}\par
+  \vspace{0.5cm}
+  \foreignabstract@maintext
+  \end{otherlanguage}
   \vfill
   \global\let\@author\@empty
   \global\let\@date\@empty
-  \global\let\@title\@empty
-  \global\let\title\relax
-  \global\let\@titulo\@empty
-  \global\let\titulo\relax
+  \global\let\foreign@title\@empty
+  \global\let\foreign@title\relax
+  \global\let\local@title\@empty
+  \global\let\local@title\relax
   \global\let\author\relax
   \global\let\author\relax
   \global\let\date\relax}
 %    \end{macrocode}
+% \end{macro}
 %
+% \begin{macro}{\listoffigures}
 %    \begin{macrocode}
 \renewcommand\listoffigures{%
     \if@twocolumn
@@ -793,7 +893,9 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
     \if@restonecol\twocolumn\fi
     }
 %    \end{macrocode}
+% \end{macro}
 %
+% \begin{macro}{\listoftables}
 %    \begin{macrocode}
 \renewcommand\listoftables{%
     \if@twocolumn
@@ -810,11 +912,18 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
     \if@restonecol\twocolumn\fi
     }
 %    \end{macrocode}
+% \end{macro}
 %
+% \begin{macro}{\printlosymbols}
 %    \begin{macrocode}
 \newcommand\printlosymbols{%
-\renewcommand{\glossaryname}{Lista de Símbolos}%
+\renewcommand\glossaryname{\listsymbolname}%
 \@input@{\jobname.los}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\makelosymbols}
+%    \begin{macrocode}
 \def\makelosymbols{%
   \newwrite\@losfile
   \immediate\openout\@losfile=\jobname.syx
@@ -825,6 +934,10 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
   \let\makelosymbols\@empty
 }
 \@onlypreamble\makelosymbols
+%    \end{macrocode}
+% \end{macro}
+%
+%    \begin{macrocode}
 \AtBeginDocument{%
 \@ifpackageloaded{hyperref}{%
   \def\@wrlos#1#2{%
@@ -839,10 +952,16 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
     \@esphack}}}
 %    \end{macrocode}
 %
+% \begin{macro}{\printloabbreciations}
 %    \begin{macrocode}
 \newcommand\printloabbreviations{%
-\renewcommand{\glossaryname}{Lista de Abreviaturas}%
+\renewcommand\glossaryname{\listabbreviationname}%
 \@input@{\jobname.lab}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\makeloabbreciations}
+%    \begin{macrocode}
 \def\makeloabbreviations{%
   \newwrite\@labfile
   \immediate\openout\@labfile=\jobname.abx
@@ -853,6 +972,10 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
   \let\makeloabbreviations\@empty
 }
 \@onlypreamble\makeloabbreviations
+%    \end{macrocode}
+% \end{macro}
+%
+%    \begin{macrocode}
 \AtBeginDocument{%
 \@ifpackageloaded{hyperref}{%
   \def\@wrlab#1#2{%
@@ -866,7 +989,6 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
     \endgroup
     \@esphack}}}
 %    \end{macrocode}
-%
 %
 %    \begin{macrocode}
 \newdimen\bibindent%
@@ -937,6 +1059,55 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
   \let\item\@idxitem}
   {\if@restonecol\onecolumn\else\clearpage\fi}
 \newcommand\glossaryname{Glossary}
+\newcommand\listabbreviationname{Lista de Abreviaturas}
+\newcommand\listsymbolname{Lista de S{\' i}mbolos}
+%
+\newcommand\local@advisorstring{Orientador}
+\newcommand\foreign@advisorstring{Advisor}
+\ifthenelse{\boolean{maledoc}}{%
+  \newcommand\local@approvedname{Aprovado por}%
+}{%
+  \newcommand\local@approvedname{Aprovada por}%
+}
+\newcommand\foreign@approvedname{Aproved by}
+\newcommand\local@universityname{Universidade Federal do Rio de Janeiro}
+\newcommand\local@deptstring{Programa}
+\newcommand\foreign@deptstring{Department}
+\newcommand\local@cityname{Rio de Janeiro}
+\newcommand\local@statename{RJ}
+\newcommand\local@countryname{Brasil}
+%
+\newcommand\frontpage@maintext{
+  \noindent {\MakeUppercase\local@doctype}
+  \ifthenelse{\boolean{maledoc}}{SUBMETIDO}{SUBMETIDA}
+  \sloppy\nohyphens{AO CORPO DOCENTE DA COORDENA{\c C}{\~ A}O DOS
+  PROGRAMAS DE P{\' O}S-GRADUA{\c C}{\~ A}O DE ENGENHARIA DA
+  UNIVERSIDADE FEDERAL DO RIO DE JANEIRO COMO PARTE DOS REQUISITOS
+  NECESS{\' A}RIOS PARA A OBTEN{\c C}{\~ A}O DO GRAU DE
+  {\MakeUppercase\local@degname} EM}
+  {\MakeUppercase\local@deptname. \par}%
+}
+%
+\newcommand\frontpage@bottomtext{%
+  \begin{center}
+  {\MakeUppercase{\local@cityname\ -- \local@statename, \local@countryname}}\par
+  {\MakeUppercase\local@monthname\ DE \number\year}
+  \end{center}%
+}
+%
+\newcommand\abstract@toptext{%
+  \noindent Resumo \ifthenelse{\boolean{maledoc}}{do}{da}
+  \local@doctype\ \ifthenelse{\boolean{maledoc}}{apresentado}{apresentada}
+  \sloppy\nohyphens{{\` a} COPPE/UFRJ como parte dos requisitos
+  necess{\' a}rios para a obten{\c c}{\~ a}o do grau de
+  \local@degname\ (\@degree)}
+}
+\newcommand\foreignabstract@toptext{%
+  \noindent \sloppy\nohyphens{Abstract of \foreign@doctype\ presented to
+  COPPE/UFRJ as a partial fulfillment of the requirements for the
+  degree of \foreign@degname\ (\@degree)}
+}
+%
 %    \end{macrocode}
 %
 %    \begin{macrocode}
@@ -960,7 +1131,9 @@ postamble
 %
 % \section*{Aknowledgements}
 % The authors would like to thank the National Council for Scientific and
-% Technological Development (CNPq) for the financial support. They are
+% Technological Development (CNPq) and the Foundation for Technological
+% (COPPETEC)
+% for the financial support. They are
 % also grateful to Alvaro Cuno for initially setting our SVN repository.
 %
 % \nocite{*}
