@@ -72,6 +72,7 @@ p\kern-.025em e}}\kern-.08em\TeX}
 % \changes{v0.2}{2008/03/06}{Unification of the code for the list of symbols
 % and abbreviations.}
 % \changes{v0.3}{2008/03/06}{Added `draft' option.}
+% \changes{v0.4}{2008/04/12}{Beta documentation.}
 %
 % \DoNotIndex{\!,\',\.,\>,\^,\`,\',\~,\=,\\,\\\~,\\\^,\\ }
 % \DoNotIndex{\@arabic,\@auxout,\@biblabel,\@bsphack,\@clubpenalty,\@empty}
@@ -163,47 +164,55 @@ p\kern-.025em e}}\kern-.08em\TeX}
 %
 % The |coppe| class was designed to be clear and succinct. Its simple interface
 % enables the creation of well structured documents in an elegant fashion, in
-% such a way that all of the needed elements are automatically
-% constructed.
-% These elements comprehend the front face, cataloguing details and abstracts.
+% such a way that all of the needed elements are automatically constructed.
+% These elements comprehend the front face, cataloguing details, abstracts and
+% references.
 % They are regulated by the Academic Registry at COPPE/UFRJ \cite{TNR96a}.
 %
-% \subsection{Front Face}
+% As this class is based on the standard |book| class, a typical document will
+% be composed of three parts: frontmatter, mainmatter and backmatter.
+% You can start these parts using |\frontmatter|, |\mainmatter| and
+% |\backmatter|.  The frontmatter of a thesis comprehends the front face,
+% cataloging page, dedication, aknowledgements, abstracts, table of contents,
+% and lists of tables, algorithms, symbols and abbreviations. Chapters and
+% appendix form the mainmatter. The backmatter is usually composed by the
+% bibliograpphic references and an index.
 %
-% The front matter
-% ENGLOBA the front face, cataloging page, dedication, aknowledgements,
-% abstracts, table of contents, lists of tables, algorithms, symbols and
-% abbreviations.
-% The page numbering style is selected by using the
-% macros |\frontmatter|, |\mainmatter| and |\backmatter|.
-%
-% It is unumbered. Here, it is not allowed hyphenation~\cite{TNR96a}.
-% All of these macros have to be called after the |\frontmatter|
-% command. This causes the initial pages to be numbered with roman
-% algarisms.
-%
-% All of these command must come after a |\fromtmatter| call.
+% \subsection*{Front face}
+% The front face is unumbered. There, it is not allowed to use
+% hyphenation~\cite{TNR96a}. It is constructed by calling |\maketitle|.
+% Next, it is described the commands used to
+% enter the information required to create it.
 %
 % \DescribeMacro{\author}
 % \DescribeMacro{\department}
-% O nome do autor deve ser passado em dois argumentos: sobrenome e
-% nomes restantes. Esse deve ser também informado com apenas as
-% primeiras letras de cada nome em maiúsculas.
-% The author's information are collected by the commands |\author| and
-% |\department|.
+% The |\author| command was redefined. Here, it receives two arguments:
+% the author's surname and firstnames, e.g. |\author{Surname}{Firstnames}|.
+% The words should be typed with
+% only first letters in uppercase.
+%
 % \DescribeMacro{\title}
 % \DescribeMacro{\foreigntitle}
+% Used to enter the titles of the monograph in the current and foreign
+% languages. The default languages are brazilian portuguese and english.
 %
 % \DescribeMacro{\advisor}
 % \DescribeMacro{\coadvisor}
 % \DescribeMacro{\examinator}
-% Every COPPE student is coordinated by an advisor. It is still possible to have
-% a co-advisor. Their names must be given before executing the |\maketitle|
-% command. It is also required to enter the names of all examinators. There is
-% a minimum of $3$ for thesis and $2$ dissertations and qualifying exams.
+% Every COPPE student is coordinated by an advisor. It is still possible to
+% have a co-advisor.  It is also required to enter the names of all
+% examinators. There is a minimum of $3$ for thesis and $2$ dissertations and
+% qualifying exams.  The names must be given before calling |\maketitle| as
+% follows:
+% \begin{verbatim}
+%   \advisor{Prof.}{Advisor's Name}{PhD}
+%   \coadvisor{Prof.}{Co-advisor's Name}{DSc}
+%   \examinator{Prof.}{First Examinator's Name}{DSc}
+%   ...
+% \end{verbatim}
 %
 % \DescribeMacro{\date}
-% This macro is used to set the month and year of defense.
+% This macro is used to set month and year of defense.
 % This information is required to create the front face, cataloging details
 % page and abstracts. For example, October 2007 should be entered as
 % |\date{10}{2007}|.
@@ -212,153 +221,57 @@ p\kern-.025em e}}\kern-.08em\TeX}
 % The keywords should describe the concentration areas of your work.
 % Usually, six words are enough.
 %
-% \DescribeMacro{\maketitle}
-% The well know |\maketitle| command was redefined. 
-% It automaticaly creates the front face and the cataloguing page.
-%
-% \subsection{Cataloguing Details}
-% This page contains cataloguing information useful for librarians.
-% It is automatically generated from the data entered by the user,
-% except in qualifying exams.
+% \subsection*{Cataloguing details}
+% This page contains cataloguing information useful for librarians.  It is
+% automatically generated from the data entered by the user when calling
+% |\maketitle|, except in qualifying exams.
 % 
-% \subsection{Dedication (optional)}
+% \subsection*{Dedication (optional)}
 % \DescribeMacro{\dedication}
 % This macro was added for convenience. The entered text is placed
 % at the right bottom of a blank page. It is emphasized and in normal
 % size. It is numbered with roman algarisms.
 %
-% \subsection{Abstracts}
+% \subsection*{Abstracts}
 % \DescribeEnv{abstract}
 % \DescribeEnv{foreignabstract}
-% Segundo a norma \cite{TNR96a}, os resumos devem estar contidos em
-% uma única página, cada. Idealmente,
-% o resumo deve ser composto por apenas um parágrafo. Esse espaço não
-% é reservado para metodologia. Assim, deve-se ser breve e objetivo.
-% Caso haja apenas um orientador, é possível inserir resumos de até
-% 17 linhas. No caso da existência de um co-orientador, esse número
-% cai é reduzido para 16 linhas.
-%
-% A primeira frase de um resumo deve conter uma definição concisa do
-% tema de trabalho. Descreve-se os métodos, resultados e conclusões
-% de modo conciso. Evitar o emprego de símbolos, equações, diagramas
-% e figuras. Segundo ABNT, um resumo deve compreender entre de 150
-% a 500 palavras.
-%
-% \subsection{Table of Contents}
-% \DescribeMacro{\tableofcontents}
-% É, basicamente, o mesmo sumário da classe |book| com a adição de
-% entradas para listas de símbolos e abreviaturas e índice remissivo,
-% caso requerido pelo autor.
-%
-% \subsection{List of Figures (optional)}
-% \subsection{List of Tables (optional)}
-%
-% \subsection{List of Symbols (optional)}
-% \DescribeMacro{\printlosymbols}
-% Como descrito em \cite{TNR96a}, a lista de símbolos é um elemento
-% opcional da monografia. É recomendado [SIBI] que, na primeira
-% aparição da sigla, essa deve ser precedida por sua definição.
-% Assim, o |symbb| não é recomendado.
-%
-% \DescribeMacro{\symbl}
-% A inserção de entradas na lista de símbolos é feita empregando-se
-% o comando |\symbl|. Esse comando tem como parâmetros de entrada
-% o próprio símbolo e sua descrição.
-% Como exemplo,
-% \begin{verbatim}
-%   \symba{coeficiente de Poisson}{$\nu$}
-% \end{verbatim}
-% produzirá o seguinte resultado: coeficiente de Poisson ($\nu$).
-% No caso do comando |\symbb|,
-% \begin{verbatim}
-%   \symbb{$\nu$}{coeficiente de Poisson}
-% \end{verbatim}
-% resultará em: $\nu$ (coeficiente de Poisson)
-% Já para |\symbd|,
-% \begin{verbatim}
-%   \symbd{$\nu$}{coeficiente de Poisson}
-% \end{verbatim}
-% apenas imprimirá: $\nu$. Esse comando é útil quando o autor quer
-% mais liberdade para definir o símbolo. Por exemplo,
-% \begin{verbatim}
-% onde \symbd{$\nu$}{coeficiente de Poisson} denota o coeficiente
-% de Poisson.
-% \end{verbatim}
-% resulta em: onde $\nu$ denota o coeficiente de
-% Poisson.
-%
-% A manutenção da lista de símbolos em ordem alfabética é realizada pelo
-% programa |makeindex|. O estilo que deve ser empregado é o seguinte:
-%
-% \subsection{List of Abreviations (optional)}
+% As stated by the Academic Registry~\cite{TNR96a}, the abstracts must be in
+% one page each. Still, it is recommended that they should be only one
+% paragraph long.  Thus, it was fixed a maximum
+% of 17 lines, when it doesn't exist a
+% co-advisor. Otherwise, this number is decreased to 16.
+% 
+% \subsection*{Lists of symbols and abbreviations (optional)}
 % \DescribeMacro{\printloabbreviations}
-% A lista de abreviaturas também é opcional \cite{TNR96a}.
-%
+% \DescribeMacro{\printlosymbols}
 % \DescribeMacro{\abbrev}
-% Pode-se inserir uma abreviatura na sua respectiva lista com a execução
-% dos comandos |\abbreva|, |\abbrevb| e |\abbrevd|. A diferença entre
-% eles
-% segue o mesmo padrão descrito para os comandos de inserção na lista de
-% símbolos. 
+% \DescribeMacro{\symbl}
+% The lists of symbols and abbreviations are optionals. It is recommended
+% to define a symbol/abbreviation in its first ocurrence in the text.
+% They are lexicographicaly sorted by using the |makeindex| program.
+% You have to pass the distributed MakeIndex style |coppe.ist| to |makeindex|
+% to get these lists correctly displayed.
 %
-% \subsection{Body of the text}
-%
-% The main matter is formed by the chapters. The back matter only
-% includes the bibliography and index.
-%
-% \subsubsection{Figures}
-% Para obter um melhor acabamento do texto final, não inserir figuras
-% fiquem no meio do texto. Essas devem estar sempre posicionadas no topo
-% ou no bottom do texto. Quando da impossibilidade da redução da
-% imagem, é permitido o uso de papel A3 com dobrados em tamanho A4.
-%
-% Sempre que possível, entrar com figuras
-% originais e preferencialmente no formato EPS (\emph{Encapsulated
-% Postscript}).
-% Respeitar as margens do texto, ou seja, não inserir figuras
-% transpassando a área destinada ao texto.
-% Segundo a norma regulamentadora da COPPE \cite{TNR96a}, todas as
-% figuras devem ser nomeadas, numeradas e citadas na monografia.
-% O títulos de uma figura deve vir logo abaixo de seu ponto de
-% inserção.
-%
-% \subsubsection{Tables}
-% Todas as tabelas devem ser nomeadas, numeradas e citadas no texto.
-% O título de cada tabela deve estar posicionado acima de sua inserção.
-%
-% \subsection{References}
-% Apesar da normatização do formato do capítulo contendo as referências
-% ciratadas ao longo do texto, o que se viu foi o total abandono dessa.
-% Por isso, os autores resolveram compor também um estilo de
-% bibliografia que atendesse às exigências do Registro Acadêmico.
-% O resultado disso é o estilo |coppe-unsrt|, o qual as referências
-% são enumeradas por ordem de citação. Em breve, planeja-se
-% disponibilizar um estilo de bibliografia no qual as entradas são
-% dispostas em ordem alfabética.
-%
-% Para o emprego de vários modelos citações, os autores indicam a
-% utilização do pacote |natbib|.
-%
-% Segundo o ...,  O estilo de referências bibliografia utilizado em
-% teses da COPPEThe bibliography style currently used in COPPE thesis
-% is contained in
-% the file |coppe.bst|. Its documentation is separated from this
-% document to garantee flexibility.
-%
-% \subsection{Apendices (optional)}
-% Todo e qualquer tipo de dado longo ou auxiliar deve ser posto em
-% apêndices. Siga o exemplo da Seção~\ref{COPPE:SAMPLE}, caso queira
-% o aparecimento desses.
-%
-% \subsection{Index (optional)}
-% A construção de índices remissivo não é nada agradável. Entretanto,
-% esse enriquece a monografia. Em \LaTeX, o pacote |makeindex| é
-% responsável pela construção de tal elemento textual.
+% To define a symbol use
+% |\symbl{Some Symbol}{Some Symbol Definition}|, and for abbreviations
+% |\abbrev{Some Abbreviation}{Some Abbreviation Definition}|.
+% These commands are called \emph{dummy}, since they don't output anything at
+% the place they are executed, just an entry in the correspondent list.
+% 
+% \subsection*{References}
+% It is well known that bibliography databases can be easily maintained when
+% using \BibTeX. Thus, the \CoppeTeX\ project designed the \BibTeX\ style 
+% |coppe-unsrt.bst| to
+% complement the |coppe| class.
+% It is a numbered style,
+% which sorts references by order of citation. The only thing you have to do
+% is to include it as your bibliography style:
+% |\bibliographystyle{coppe-unsrt}|.
 %
 % \section{A Simple Example}
 % \label{COPPE:SAMPLE}
-%   A basic document using the \texttt{coppe} class should contain at
-%   least the following code.
+% A basic document using the |coppe| class should contain at
+% least the following code.
 %    \begin{macrocode}
 %<*example>
 \documentclass[msc]{coppe}
@@ -374,16 +287,16 @@ p\kern-.025em e}}\kern-.08em\TeX}
 
 \begin{document}
   \frontmatter
-  \title{Queima de Combustíveis Líquidos em Combustores Pulsantes
-  Tipo Tubo de Rijke}
+  \title{Geração de Malhas Não-estruturadas Tetraédricas Utilizando um
+  Método de Avanço de Fronteira}
   \foreigntitle{Generation of Unstructured Tetrahedral Meshes Using an
   Advancing Front Method}
   \author{Couto}{Heraldo da Silva}
-  \department{PENO}
+  \department{PEC}
   \advisor{Prof.}{Fernando Luiz Bastos Ribeiro}{D.Sc.}
-  \coadvisor{Prof.}{Fernando Luiz Bastos Ribeiro}{D.Sc.}
+  \coadvisor{Prof.}{José Antonio Fontes Santiago}{D.Sc.}
   \examinator{Prof.}{José Luis Drummond Alves}{D.Sc.}
-  \examinator{Prof.}{José Luis Drummond Alves}{D.Sc.}
+  \examinator{Prof.}{Joaquim Bento Cavalcante Neto}{D.Sc.}
   \date{06}{2005}
 
   \keyword{Geração de Malhas}
@@ -394,9 +307,10 @@ p\kern-.025em e}}\kern-.08em\TeX}
   \dedication{--- À minha esposa, Ledjane ---}
 
   \chapter*{Agradecimentos}
-  Agradeço ao \abbrev{CNPq}{Conselho Nacional de Desenvolvimento
-  Científico e Tecnológico dos Estados Unidos do Brasil} pelo suporte
-  financeiro.
+  Agradeço ao Conselho Nacional de Desenvolvimento Científico e Tecnológico dos
+  Estados Unidos do Brasil (CNPq)%
+  \abbrev{CNPq}{Conselho Nacional de Desenvolvimento Científico e Tecnológico}
+  pelo suporte financeiro.
  
   \abstract{Apresenta-se, nesta tese, um método para geração de malhas
   não-estruturadas tetraédricas baseado em avanço de
@@ -414,29 +328,19 @@ p\kern-.025em e}}\kern-.08em\TeX}
   \mainmatter
   \chapter{Introdução}
   Em métodos numéricos para obter soluções aproximadas de equações
-  diferenciais, tais como o \abbrev{MEF}{método de elementos finitos}
-  e o \abbrev{MVF}{método de volumes finitos}, o domínio no qual estas
+  diferenciais, tais como o método dos elementos finitos (MEF)%
+  \abbrev{MEF}{método de elementos finitos}
+  e o método dos volumes finitos (MVF)%
+  \abbrev{MVF}{método de volumes finitos}, o domínio no qual estas
   equações foram definidas é discretizado em sub-domínios simples
   denominados \textit{elementos}.
 
-  \chapter{Conceitos Básicos}
+  Denotemos o domínio por $\Omega$%
+  \symbl{$\Omega$}{domínio de definição de uma equação diferencial}
+
+  \chapter{Revisão Bibliográfica}
   \chapter{Método Proposto}
   \chapter{Resultados e Discussões}
-  Sejam o \symbl{$\nu$}{coeficiente de Poisson},
-  Sejam o \symbl{$\Pi$}{coeficiente de Poisson},
-  a matriz \symbl{$\mathbf{K}$}{matriz de rigidez}
-  e \symbl{$E$}{módulo de elasticidade} o módulo de elasticidade.
-  Vamos testar a lista de símbolos. Então,
-  \symbl{$\mathbb{R}$}{conjunto dos números reais},
-  \symbl{$\mathcal{L}$}{lista de faces do fronte},
-  \symbl{$\Omega$}{domínio de definição da equação}.
-  \symbl{$\omega$}{o dominio pequeno}
-  \symbl{$\eta$}{o dominio pequeno}, \symbl{$\Gamma$}{Função gamma}
-
-  Os autores recomendam fortemente o uso do pacote
-  \texttt{natbib} para citações a referências
-  bibliográficas\abbrev{NATBIB}{Native Bibliography Format}.
-
   \chapter{Conclusões}
   \appendix
   \chapter{Código Fonte}
@@ -453,7 +357,7 @@ p\kern-.025em e}}\kern-.08em\TeX}
 %
 % \section{Implementation}
 %
-% \subsection{The file `\texttt{coppe.cls}'}
+% \subsection{The `\texttt{coppe.cls}' file}
 %    \begin{macrocode}
 %<*class>
 \def\filename{coppe.dtx}
@@ -469,7 +373,7 @@ p\kern-.025em e}}\kern-.08em\TeX}
 top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
 %    \end{macrocode}
 %
-% The default line spacing is ...
+% The default line spacing is $1.5pt$.
 %    \begin{macrocode}
 \renewcommand\baselinestretch{1.5}
 %    \end{macrocode}
@@ -618,7 +522,7 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
   \global\advance\@examinat by 1
   \ifnum\@examinat>6
     \ClassWarning{coppe}{%
-      Maximum number of examinators exceeded.\MessageBreak
+      Maximum number of examiners exceeded.\MessageBreak
       Printing only six of them}
     \@examinat=6
   \fi
@@ -627,7 +531,7 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
 % \end{macro}
 %
 % \begin{macro}{\author}
-% The macro |\author| is redefined to allow the identification of the author's
+% It is redefined to allow the identification of the author's
 % firstnames and surname.
 %    \begin{macrocode}
 \renewcommand\author[2]{%
@@ -715,10 +619,10 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
 \renewcommand\maketitle{%
 \ifthenelse{\@examinat<\value{minexaminats}}{%
   \ifthenelse{\boolean{isdraft}}{%
-    \ClassWarning{coppe}{Too few examinators for a \local@doctype}%
+    \ClassWarning{coppe}{Too few examiners for a \local@doctype}%
   }{%
     \ClassError{coppe}{%
-    Too few examinators for a \local@doctype}{%
+    Too few examiners for a \local@doctype}{%
     This value is regulated by the Academic Registry at COPPE/UFRJ.\MessageBreak
     To disable this check, enable the draft option of the coppe class.}%
   }%
@@ -1069,7 +973,7 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
 }{%
   \newcommand\local@approvedname{Aprovada por}%
 }
-\newcommand\foreign@approvedname{Aproved by}
+\newcommand\foreign@approvedname{Approved by}
 \newcommand\local@universityname{Universidade Federal do Rio de Janeiro}
 \newcommand\local@deptstring{Programa}
 \newcommand\foreign@deptstring{Department}
@@ -1131,10 +1035,8 @@ postamble
 %
 % \section*{Aknowledgements}
 % The authors would like to thank the National Council for Scientific and
-% Technological Development (CNPq) and the Foundation for Technological
-% (COPPETEC)
-% for the financial support. They are
-% also grateful to Alvaro Cuno for initially setting our SVN repository.
+% Technological Development (CNPq) They are also grateful to Alvaro Cuno who
+% initially configured our SVN repository.
 %
 % \nocite{*}
 % \bibliographystyle{plain}
