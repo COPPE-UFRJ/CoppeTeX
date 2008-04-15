@@ -80,26 +80,6 @@ doc: $(PACKAGE_NAME).dtx
 		let "i--"; \
 	done
 
-docpdf: $(PACKAGE_NAME).dtx
-	@$(TEX) '\newcommand{\driver}{dvipdfm} \input{coppe.dtx}'
-	@if grep -s "There were undefined references" $(basename $<).log; then \
-	  $(BIBTEX) $(BIBTEXFLAGS) $(basename $<).aux; \
-	fi
-	@if grep -s '$(basename $<).idx' $(basename $<).log; then \
-	  $(MAKEIDX) $(IDXFLAGS) $(basename $<).idx -o $(basename $<).ind;\
-	fi
-	@if grep -s '$(basename $<).glo' $(basename $<).log; then \
-	  $(MAKEIDX) $(GLOFLAGS) $(basename $<).glo -o $(basename $<).gls;\
-	fi
-	@i=6 ; \
-	while grep "Rerun to get cross-references right" $(basename $<).log && \
-	  [ $$i -gt 0 ] ; do \
-  	$(TEX) '\newcommand{\driver}{dvips} \input{coppe.dtx}' ; \
-		let "i--"; \
-	done; \
-	dvipdfm -c -r 1200 -p a4 $(PACKAGE_NAME).dvi
-
-
 class: $(PACKAGE_NAME).cls
 
 example: example.tex example.dvi
