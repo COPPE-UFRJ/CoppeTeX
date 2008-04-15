@@ -198,16 +198,16 @@ p\kern-.025em e}}\kern-.08em\TeX}
 %
 % \DescribeMacro{\advisor}
 % \DescribeMacro{\coadvisor}
-% \DescribeMacro{\examinator}
+% \DescribeMacro{\examiner}
 % Every COPPE student is coordinated by an advisor. It is still possible to
 % have a co-advisor.  It is also required to enter the names of all
-% examinators. There is a minimum of $3$ for thesis and $2$ dissertations and
+% examiners. There is a minimum of $3$ for thesis and $2$ dissertations and
 % qualifying exams.  The names must be given before calling |\maketitle| as
 % follows:
 % \begin{verbatim}
 %   \advisor{Prof.}{Advisor's Name}{PhD}
 %   \coadvisor{Prof.}{Co-advisor's Name}{DSc}
-%   \examinator{Prof.}{First Examinator's Name}{DSc}
+%   \examiner{Prof.}{First Examiner's Name}{DSc}
 %   ...
 % \end{verbatim}
 %
@@ -295,8 +295,8 @@ p\kern-.025em e}}\kern-.08em\TeX}
   \department{PEC}
   \advisor{Prof.}{Fernando Luiz Bastos Ribeiro}{D.Sc.}
   \coadvisor{Prof.}{José Antonio Fontes Santiago}{D.Sc.}
-  \examinator{Prof.}{José Luis Drummond Alves}{D.Sc.}
-  \examinator{Prof.}{Joaquim Bento Cavalcante Neto}{D.Sc.}
+  \examiner{Prof.}{José Luis Drummond Alves}{D.Sc.}
+  \examiner{Prof.}{Joaquim Bento Cavalcante Neto}{D.Sc.}
   \date{06}{2005}
 
   \keyword{Geração de Malhas}
@@ -381,7 +381,7 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
 %    \begin{macrocode}
 \let\@advisor\@empty
 \let\@coadvisor\@empty
-\newcounter{minexaminats}
+\newcounter{minexaminers}
 \newboolean{isdraft}
 \newboolean{maledoc}
 \setboolean{maledoc}{false}
@@ -393,7 +393,7 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
   \newcommand{\foreign@degname}{Master of Science}
   \newcommand\local@doctype{Disserta{\c c}{\~ a}o}
   \newcommand\foreign@doctype{Dissertation}
-  \setcounter{minexaminats}{2}
+  \setcounter{minexaminers}{2}
 }
 \DeclareOption{dscexam}{%
   \newcommand{\@degree}{D.Sc.}
@@ -402,7 +402,7 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
   \setboolean{maledoc}{true}
   \newcommand\local@doctype{Exame de Qualifica{\c c}{\~ a}o}
   \newcommand\foreign@doctype{Qualifying Exam}
-  \setcounter{minexaminats}{2}
+  \setcounter{minexaminers}{2}
 }
 \DeclareOption{dsc}{%
   \newcommand{\@degree}{D.Sc.}
@@ -410,7 +410,7 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
   \newcommand{\foreign@degname}{Doctor of Science}
   \newcommand\local@doctype{Tese}
   \newcommand\foreign@doctype{Thesis}
-  \setcounter{minexaminats}{3}
+  \setcounter{minexaminers}{3}
 }
 \DeclareOption{draft}{%
   \setboolean{isdraft}{true}
@@ -513,18 +513,18 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\examinator}
-% It was fixed a maximum of 6 examinators, just for the sake of page layout.
+% \begin{macro}{\examiner}
+% It was fixed a maximum of 6 examiners, just for the sake of page layout.
 %    \begin{macrocode}
-\newcount\@examinat\@examinat0
-\newcommand\examinator[3]{%
-  \global\@namedef{S:\expandafter\the\@examinat}{#1\ #2, #3}
-  \global\advance\@examinat by 1
-  \ifnum\@examinat>6
+\newcount\@examiner\@examiner0
+\newcommand\examiner[3]{%
+  \global\@namedef{S:\expandafter\the\@examiner}{#1\ #2, #3}
+  \global\advance\@examiner by 1
+  \ifnum\@examiner>6
     \ClassWarning{coppe}{%
       Maximum number of examiners exceeded.\MessageBreak
       Printing only six of them}
-    \@examinat=6
+    \@examiner=6
   \fi
 }
 %    \end{macrocode}
@@ -617,7 +617,7 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
 % \begin{macro}{\maketitle}
 %    \begin{macrocode}
 \renewcommand\maketitle{%
-\ifthenelse{\@examinat<\value{minexaminats}}{%
+\ifthenelse{\@examiner<\value{minexaminers}}{%
   \ifthenelse{\boolean{isdraft}}{%
     \ClassWarning{coppe}{Too few examiners for a \local@doctype}%
   }{%
@@ -649,7 +649,7 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
           \makebox[\textwidth]{\hrulefill}
           \@coadtitle\ \@coadvisor, \@coaddegree}
         \count1=0
-        \@whilenum \count1<\@examinat \do {%
+        \@whilenum \count1<\@examiner \do {%
             \vskip16\p@ \baselineskip14pt
             \makebox[\textwidth]{\hrulefill}
             \csname S:\the\count1 \endcsname
@@ -663,7 +663,7 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
   \global\let\maketitle\relax%
   \global\let\and\relax}
 %    \end{macrocode}
-% \changes{v0.3}{2008/03/07}{Added number of examinators test.}
+% \changes{v0.3}{2008/03/07}{Added number of examiners test.}
 % \changes{v0.3}{2008/03/07}{Generalization.}
 % \end{macro}
 %
