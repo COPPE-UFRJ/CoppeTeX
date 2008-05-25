@@ -312,12 +312,16 @@ p\kern-.025em e}}\kern-.08em\TeX}
   \abbrev{CNPq}{Conselho Nacional de Desenvolvimento Científico e Tecnológico}
   pelo suporte financeiro.
  
-  \abstract{Apresenta-se, nesta tese, um método para geração de malhas
+  \begin{abstract}
+  Apresenta-se, nesta tese, um método para geração de malhas
   não-estruturadas tetraédricas baseado em avanço de
-  fronteira.}
+  fronteira.
+  \end{abstract}
 
-  \foreignabstract{This work presents an algorithm to generate uniform
-  unstructured tetrahedral meshes based on advancing front method.}
+  \begin{foreignabstract}
+  This work presents an algorithm to generate uniform
+  unstructured tetrahedral meshes based on advancing front method.
+  \end{foreignabstract} 
 
   \tableofcontents
   \listoffigures
@@ -714,7 +718,7 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
 % \end{macro}
 %
 
-% \begin{macro}{abstract}
+% \begin{environment}{abstract}
 %    \begin{macrocode}
 \newenvironment{abstract}{%
   \gdef\abstract@maintext{#1}%
@@ -739,9 +743,10 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
   \vspace{0.5cm}
   \abstract@maintext}{\par\vfill}
 %    \end{macrocode}
-% \end{macro}
+% \changes{0.5}{2008/05/25}{Changed from macro to environment.}
+% \end{environment}
 %
-% \begin{macro}{foreignabstract}
+% \begin{environment}{foreignabstract}
 %    \begin{macrocode}
 \newenvironment{foreignabstract}{%
   \gdef\foreignabstract@maintext{#1}%
@@ -778,7 +783,8 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
   \global\let\author\relax
   \global\let\date\relax}
 %    \end{macrocode}
-% \end{macro}
+% \changes{0.5}{2008/05/25}{Changed from macro to environment.}
+% \end{environment}
 %
 % \begin{macro}{\listoffigures}
 %    \begin{macrocode}
