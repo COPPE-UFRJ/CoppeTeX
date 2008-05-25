@@ -714,9 +714,9 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
 % \end{macro}
 %
 
-% \begin{macro}{\abstract}
+% \begin{macro}{abstract}
 %    \begin{macrocode}
-\newcommand\abstract[1]{%
+\newenvironment{abstract}{%
   \gdef\abstract@maintext{#1}%
   \clearpage
   \thispagestyle{plain}
@@ -737,14 +737,13 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
     \local@deptstring: \= \local@deptname
   \end{tabbing}\par
   \vspace{0.5cm}
-  \abstract@maintext
-  \vfill}
+  \abstract@maintext}{\par\vfill}
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\foreignabstract}
+% \begin{macro}{foreignabstract}
 %    \begin{macrocode}
-\newcommand\foreignabstract[1]{%
+\newenvironment{foreignabstract}{%
   \gdef\foreignabstract@maintext{#1}%
   \newpage
   \thispagestyle{plain}
@@ -767,7 +766,7 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
   \end{tabbing}\par
   \vspace{0.5cm}
   \foreignabstract@maintext
-  \end{otherlanguage}
+  \end{otherlanguage}}{%
   \vfill
   \global\let\@author\@empty
   \global\let\@date\@empty
