@@ -33,7 +33,6 @@
 %<*driver>
 \documentclass{ltxdoc}
 \usepackage[latin1]{inputenc}
-\usepackage[T1]{fontenc}
 
 \def\CoppeTeX{{\rm C\kern-.05em{\sc o\kern-.025em p\kern-.025em
 p\kern-.025em e}}\kern-.08em\TeX}
@@ -274,9 +273,8 @@ p\kern-.025em e}}\kern-.08em\TeX}
 % least the following code.
 %    \begin{macrocode}
 %<*example>
-\documentclass[msc]{coppe}
+\documentclass[dsc]{coppe}
 \usepackage[latin1]{inputenc}
-\usepackage[T1]{fontenc}
 \usepackage{amsmath,amssymb}
 
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
@@ -405,7 +403,7 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
   \setboolean{maledoc}{true}
   \newcommand\local@doctype{Exame de Qualifica{\c c}{\~ a}o}
   \newcommand\foreign@doctype{Qualifying Exam}
-  \setcounter{minexaminers}{2}
+  \setcounter{minexaminers}{1}
 }
 \DeclareOption{dsc}{%
   \newcommand{\@degree}{D.Sc.}
@@ -413,7 +411,7 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
   \newcommand{\foreign@degname}{Doctor of Science}
   \newcommand\local@doctype{Tese}
   \newcommand\foreign@doctype{Thesis}
-  \setcounter{minexaminers}{3}
+  \setcounter{minexaminers}{2}
 }
 \DeclareOption{draft}{%
   \setboolean{isdraft}{true}
