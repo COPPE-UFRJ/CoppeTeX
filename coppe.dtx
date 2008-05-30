@@ -104,7 +104,8 @@ p\kern-.025em e}}\kern-.08em\TeX}
 % \DoNotIndex{\sfcode,\sloppy,\string,\textit,\texttt,\textwidth,\the}
 % \DoNotIndex{\theenumiv,\thepage,\thispagestyle,\twocolumn,\typeout}
 % \DoNotIndex{\usecounter,\usepackage,\value,\vfill,\vskip,\vspace}
-% \DoNotIndex{\widowpenalty,\write,\year,\z@}
+% \DoNotIndex{\widowpenalty,\write,\year,\z@, \appendix}
+% \DoNotIndex{\bibliography, \bibliographystyle}
 %
 % \GetFileInfo{coppe}
 %
@@ -579,7 +580,7 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\keywords}
+% \begin{macro}{\keyword}
 %    \begin{macrocode}
 \newcounter{keywords}
 \newcommand\keyword[1]{%
@@ -755,7 +756,7 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
   \vspace{0.5cm}}{%
   \vfill}
 %    \end{macrocode}
-% \changes{0.5}{2008/05/25}{Changed from macro to environment.}
+% \changes{v0.5}{2008/05/25}{Changed from macro to environment.}
 % \end{environment}
 %
 % \begin{environment}{foreignabstract}
@@ -871,7 +872,7 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
     \@esphack}}}
 %    \end{macrocode}
 %
-% \begin{macro}{\printloabbreciations}
+% \begin{macro}{\printloabbreviations}
 %    \begin{macrocode}
 \newcommand\printloabbreviations{%
 \renewcommand\glossaryname{\listabbreviationname}%
@@ -879,7 +880,7 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\makeloabbreciations}
+% \begin{macro}{\makeloabbreviations}
 %    \begin{macrocode}
 \def\makeloabbreviations{%
   \newwrite\@labfile
