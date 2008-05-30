@@ -44,7 +44,7 @@ p\kern-.025em e}}\kern-.08em\TeX}
 \end{document}
 %</driver> \fi
 %
-%% \CheckSum{1007}
+%% \CheckSum{1005}
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
 %%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
@@ -308,9 +308,8 @@ p\kern-.025em e}}\kern-.08em\TeX}
 
   \chapter*{Agradecimentos}
   Agradeço ao Conselho Nacional de Desenvolvimento Científico e Tecnológico dos
-  Estados Unidos do Brasil (CNPq)%
-  \abbrev{CNPq}{Conselho Nacional de Desenvolvimento Científico e Tecnológico}
-  pelo suporte financeiro.
+  Estados Unidos do Brasil (CNPq)\abbrev{CNPq}{Conselho Nacional de
+  Desenvolvimento Científico e Tecnológico} pelo suporte financeiro.
  
   \begin{abstract}
   Apresenta-se, nesta tese, um método para geração de malhas
@@ -618,6 +617,21 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
 %    \end{macrocode}
 % \end{macro}
 %
+% \begin{macro}{\backmatter}
+%    \begin{macrocode}
+\renewcommand\backmatter{%
+  \immediate\write\@auxout{%
+    \string\newlabel{main:pageno}{{}{\arabic{page}}{}{}{}}}%
+  \if@openright
+    \cleardoublepage
+  \else
+    \clearpage
+  \fi
+  \@mainmatterfalse}
+%    \end{macrocode}
+% \changes{v0.5}{2008/05/30}{Added mainmatter pages counter.}
+% \end{macro}
+%
 % \begin{macro}{\maketitle}
 %    \begin{macrocode}
 \renewcommand\maketitle{%
@@ -722,7 +736,6 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
 % This is a specialization of the abstract in the article standard class.
 %    \begin{macrocode}
 \newenvironment{abstract}{%
-  \gdef\abstract@maintext{#1}%
   \clearpage
   \thispagestyle{plain}
   \abstract@toptext\par
@@ -741,8 +754,8 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
     \ifthenelse{\equal{\@coadvisor}{\@empty}}{}{\> \@coadvisor\\}
     \local@deptstring: \= \local@deptname
   \end{tabbing}\par
-  \vspace{0.5cm}
-  \abstract@maintext}{\par\vfill}
+  \vspace{0.5cm}}{%
+  \vfill}
 %    \end{macrocode}
 % \changes{0.5}{2008/05/25}{Changed from macro to environment.}
 % \end{environment}
@@ -750,7 +763,6 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
 % \begin{environment}{foreignabstract}
 %    \begin{macrocode}
 \newenvironment{foreignabstract}{%
-  \gdef\foreignabstract@maintext{#1}%
   \newpage
   \thispagestyle{plain}
   \begin{otherlanguage}{english}
@@ -770,9 +782,8 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
     \ifthenelse{\equal{\@coadvisor}{\@empty}}{}{\> \@coadvisor\\}
     \foreign@deptstring: \= \foreign@deptname
   \end{tabbing}\par
-  \vspace{0.5cm}
-  \foreignabstract@maintext
-  \end{otherlanguage}}{%
+  \vspace{0.5cm}}{%
+  \end{otherlanguage}
   \vfill
   \global\let\@author\@empty
   \global\let\@date\@empty
@@ -923,11 +934,6 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
      {\def\@noitemerr%
        {\@latex@warning{Empty `thebibliography' environment}}%
       \endlist}
-\AtEndDocument{%
-  \addtocounter{page}{-1}%
-  \immediate\write\@auxout{%
-    \string\newlabel{main:pageno}{{}{\arabic{page}}{}{}{}}}
-}
 %    \end{macrocode}
 %
 %    \begin{macrocode}
