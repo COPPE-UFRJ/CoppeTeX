@@ -43,7 +43,7 @@ p\kern-.025em e}}\kern-.08em\TeX}
 \end{document}
 %</driver> \fi
 %
-%% \CheckSum{1005}
+%% \CheckSum{1007}
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
 %%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
@@ -769,11 +769,12 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
   \end{center}\par
   \vskip 1.0cm
   \vfill
-  \begin{tabbing}
-    \local@advisorstring: \= \@advisor\\
-    \ifthenelse{\equal{\@coadvisor}{\@empty}}{}{\> \@coadvisor\\}
-    \local@deptstring: \= \local@deptname
-  \end{tabbing}\par
+  \noindent\local@advisorstring:%
+  \begin{tabular}[t]{l}
+    \@advisor\\
+    \ifthenelse{\equal{\@coadvisor}{\@empty}}{}{\@coadvisor\\}
+  \end{tabular}\par
+  \vspace{0.2cm} \noindent\local@deptstring: \local@deptname\par
   \vspace{0.5cm}}{%
   \vfill}
 %    \end{macrocode}
@@ -797,11 +798,12 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
   \end{center}\par
   \vskip 1.0cm
   \vfill
-  \begin{tabbing}
-    \foreign@advisorstring: \= \@advisor\\
-    \ifthenelse{\equal{\@coadvisor}{\@empty}}{}{\> \@coadvisor\\}
-    \foreign@deptstring: \= \foreign@deptname
-  \end{tabbing}\par
+  \noindent\foreign@advisorstring:%
+  \begin{tabular}[t]{l}
+    \@advisor\\
+    \ifthenelse{\equal{\@coadvisor}{\@empty}}{}{\@coadvisor\\}
+  \end{tabular}\par
+  \vspace{0.2cm} \noindent\foreign@deptstring: \foreign@deptname\par
   \vspace{0.5cm}}{%
   \end{otherlanguage}
   \vfill
