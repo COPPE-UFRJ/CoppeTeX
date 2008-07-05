@@ -43,7 +43,7 @@ p\kern-.025em e}}\kern-.08em\TeX}
 \end{document}
 %</driver> \fi
 %
-%% \CheckSum{1005}
+%% \CheckSum{1007}
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
 %%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
@@ -186,7 +186,6 @@ p\kern-.025em e}}\kern-.08em\TeX}
 % enter the information required to create it.
 %
 % \DescribeMacro{\author}
-% \DescribeMacro{\department}
 % The |\author| command was redefined. Here, it receives two arguments:
 % the author's surname and firstnames, e.g. |\author{Surname}{Firstnames}|.
 % The words should be typed with
@@ -196,6 +195,9 @@ p\kern-.025em e}}\kern-.08em\TeX}
 % \DescribeMacro{\foreigntitle}
 % Used to enter the titles of the monograph in the current and foreign
 % languages. The default languages are brazilian portuguese and english.
+% The |babel| package is automatically loaded by |coppe.cls|, so you
+% don't need to load it again. The brazilian portuguese is the main language
+% and the english is only required for the foreign abstract.
 %
 % \DescribeMacro{\advisor}
 % \DescribeMacro{\coadvisor}
@@ -211,6 +213,23 @@ p\kern-.025em e}}\kern-.08em\TeX}
 %   \examiner{Prof.}{First Examiner's Name}{DSc}
 %   ...
 % \end{verbatim}
+%
+% \DescribeMacro{\department}
+% The Alberto Luiz Coimbra institute is divided into 12 academic units:
+% Biomedical Engineering (PEB),
+% Civil Engineering (PEC),
+% Electrical Engineering (PEE),
+% Mechanical Engineering (PEM),
+% Metallurgical and Materials Science Engineering (PEMM),
+% Nuclear Engineering (PEN),
+% Ocean Engineering (PENO),
+% Energy Planning (PPE),
+% Production Engineering (PEP),
+% Chemical Engineering (PEQ),
+% Systems Engineering and Computer Science (PESC), and
+% Transportation Engineering (PET).
+% You must specify your department using one of the above abbreviations,
+% e.g. |\department{PEB}|.
 %
 % \DescribeMacro{\date}
 % This macro is used to set month and year of defense.
@@ -292,12 +311,12 @@ p\kern-.025em e}}\kern-.08em\TeX}
   \foreigntitle{Solution of Generalized Eigensystems with Algorithms Based on
   Arnoldi Methods}
   \author{Ainsworth Jr.}{George Oliveira}
-  \department{PEC}
   \advisor{Prof.}{Carlos Magluta}{D.Sc.}
   \coadvisor{Prof.}{Ney Roitman}{D.Sc.}
   \examiner{Prof.}{Alvaro Luiz Gayoso Azeredo Coutino}{D.Sc.}
   \examiner{Prof.}{Webe João Mansur}{Ph.D.}
   \examiner{Prof.}{Paulo Batista Gonçalves}{D.Sc.}
+  \department{PEC}
   \date{04}{2003}
 
   \keyword{Problemas de Autovalor}
@@ -445,7 +464,9 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
 }
 %
 % \begin{macro}{\department}
-% This macro is used to set the main properties of the documents.
+% This macro is used to set the author's affiliation. There are twelve options
+% which correspond to all academic units at COPPE/UFRJ. It defines the current
+% and the foreign names of these units.
 %    \begin{macrocode}
 \newcommand\department[1]{%
   \ifthenelse{\equal{#1}{PEB}}
@@ -764,11 +785,12 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
   \end{center}\par
   \vskip 1.0cm
   \vfill
-  \begin{tabbing}
-    \local@advisorstring: \= \@advisor\\
-    \ifthenelse{\equal{\@coadvisor}{\@empty}}{}{\> \@coadvisor\\}
-    \local@deptstring: \= \local@deptname
-  \end{tabbing}\par
+  \noindent\local@advisorstring:%
+  \begin{tabular}[t]{l}
+    \@advisor\\
+    \ifthenelse{\equal{\@coadvisor}{\@empty}}{}{\@coadvisor\\}
+  \end{tabular}\par
+  \vspace{0.2cm} \noindent\local@deptstring: \local@deptname\par
   \vspace{0.5cm}}{%
   \vfill}
 %    \end{macrocode}
@@ -792,11 +814,12 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
   \end{center}\par
   \vskip 1.0cm
   \vfill
-  \begin{tabbing}
-    \foreign@advisorstring: \= \@advisor\\
-    \ifthenelse{\equal{\@coadvisor}{\@empty}}{}{\> \@coadvisor\\}
-    \foreign@deptstring: \= \foreign@deptname
-  \end{tabbing}\par
+  \noindent\foreign@advisorstring:%
+  \begin{tabular}[t]{l}
+    \@advisor\\
+    \ifthenelse{\equal{\@coadvisor}{\@empty}}{}{\@coadvisor\\}
+  \end{tabular}\par
+  \vspace{0.2cm} \noindent\foreign@deptstring: \foreign@deptname\par
   \vspace{0.5cm}}{%
   \end{otherlanguage}
   \vfill
