@@ -195,6 +195,9 @@ p\kern-.025em e}}\kern-.08em\TeX}
 % \DescribeMacro{\foreigntitle}
 % Used to enter the titles of the monograph in the current and foreign
 % languages. The default languages are brazilian portuguese and english.
+% The |babel| package is automatically loaded by |coppe.cls|, so you
+% don't need to load it again. The brazilian portuguese is the main language
+% and the english is only required for the foreign abstract.
 %
 % \DescribeMacro{\advisor}
 % \DescribeMacro{\coadvisor}
@@ -212,8 +215,21 @@ p\kern-.025em e}}\kern-.08em\TeX}
 % \end{verbatim}
 %
 % \DescribeMacro{\department}
-% The Alberto Luiz Coimbra institute is divided into 12 academic units. Each one
-% represents a major field in engineering.
+% The Alberto Luiz Coimbra institute is divided into 12 academic units:
+% Biomedical Engineering (PEB),
+% Civil Engineering (PEC),
+% Electrical Engineering (PEE),
+% Mechanical Engineering (PEM),
+% Metallurgical and Materials Science Engineering (PEMM),
+% Nuclear Engineering (PEN),
+% Ocean Engineering (PENO),
+% Energy Planning (PPE),
+% Production Engineering (PEP),
+% Chemical Engineering (PEQ),
+% Systems Engineering and Computer Science (PESC), and
+% Transportation Engineering (PET).
+% You must specify your department using one of the above abbreviations,
+% e.g. |\department{PEB}|.
 %
 % \DescribeMacro{\date}
 % This macro is used to set month and year of defense.
@@ -449,8 +465,8 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
 %
 % \begin{macro}{\department}
 % This macro is used to set the author's affiliation. There are twelve options
-% which correspond to all academic units at COPPE/UFRJ. It defines the current and
-% the foreign names of these units.
+% which correspond to all academic units at COPPE/UFRJ. It defines the current
+% and the foreign names of these units.
 %    \begin{macrocode}
 \newcommand\department[1]{%
   \ifthenelse{\equal{#1}{PEB}}
