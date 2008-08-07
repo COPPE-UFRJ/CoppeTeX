@@ -976,7 +976,6 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
 %
 %    \begin{macrocode}
 \newenvironment{theglossary}{%
-  \clearpage%
   \if@twocolumn%
     \@restonecoltrue\onecolumn%
   \else%
@@ -993,7 +992,7 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
    \setlength{\labelsep}{0.5in}%
    \setlength{\itemindent}{0in}}%
    \sloppy}%
-  {\if@restonecol\onecolumn\else\clearpage\fi%
+  {\if@restonecol\twocolumn\fi%
 \endlist}
 %
 \renewenvironment{theindex}{%
