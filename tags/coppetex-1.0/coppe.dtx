@@ -1,0 +1,1099 @@
+% \iffalse meta-comment
+%
+% This is file `coppe.dtx'.
+%
+% It uses the doc utility to generate documentations for the 'coppe'
+% document class and the 'coppe-unsrt' BibTeX style.
+%
+% Copyright (C) 2008 CoppeTeX Project and any individual authors listed
+% elsewhere in this file.
+%
+% This program is free software; you can redistribute it and/or modify
+% it under the terms of the GNU General Public License version 3 as
+% published by the Free Software Foundation.
+%
+% This program is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+% GNU General Public License version 3 for more details.
+%
+% You should have received a copy of the GNU General Public License
+% version 3 along with this package (see COPYING file).
+% If not, see <http://www.gnu.org/licenses/>.
+%
+% $URL$
+% $Id$
+%
+% Author(s): Vicente Helano,
+%            George Ainsworth
+%
+% \fi
+%
+% \iffalse
+%<*driver>
+\documentclass{ltxdoc}
+\usepackage[latin1]{inputenc}
+
+\def\CoppeTeX{{\rm C\kern-.05em{\sc o\kern-.025em p\kern-.025em
+p\kern-.025em e}}\kern-.08em\TeX}
+
+\EnableCrossrefs \CodelineIndex \RecordChanges
+\begin{document}
+  \DocInput{coppe.dtx}
+\end{document}
+%</driver> \fi
+%
+%% \CheckSum{1007}
+%% \CharacterTable
+%%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+%%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+%%   Digits        \0\1\2\3\4\5\6\7\8\9
+%%   Exclamation   \!     Double quote  \"     Hash (number) \#
+%%   Dollar        \$     Percent       \%     Ampersand     \&
+%%   Acute accent  \'     Left paren    \(     Right paren   \)
+%%   Asterisk      \*     Plus          \+     Comma         \,
+%%   Minus         \-     Point         \.     Solidus       \/
+%%   Colon         \:     Semicolon     \;     Less than     \<
+%%   Equals        \=     Greater than  \>     Question mark \?
+%%   Commercial at \@     Left bracket  \[     Backslash     \\
+%%   Right bracket \]     Circumflex    \^     Underscore    \_
+%%   Grave accent  \`     Left brace    \{     Vertical bar  \|
+%%   Right brace   \}     Tilde         \~}
+%%
+% \changes{v0.0}{2007/03/01}{Creation Date.}
+% \changes{v0.1}{2007/06/22}{Sourceforge submission.}
+% \changes{v0.1}{2007/08/13}{Documentation: bibliography fixed, title
+% translation.} \changes{v0.1}{2007/08/17}{Documentation: abstract translation;
+% Code: |babel| package deletion from the driver document.}
+% \changes{v0.1}{2007/09/25}{Documentation: introduction, installation;
+% License: update to the 3rd version of the GNU GPL; |ChangeLog| removed, and
+% added Change History.}
+% \changes{v0.2}{2008/03/06}{Unification of the code for the list of symbols
+% and abbreviations.}
+% \changes{v0.3}{2008/03/06}{Added `draft' option.}
+% \changes{v0.4}{2008/04/12}{Beta documentation.}
+% \changes{v1.0}{2008/06/10}{First \CoppeTeX\ release.}
+%
+% \DoNotIndex{\!,\',\.,\>,\^,\`,\',\~,\=,\\,\\\~,\\\^,\\ }
+% \DoNotIndex{\@arabic,\@auxout,\@biblabel,\@bsphack,\@clubpenalty,\@empty}
+% \DoNotIndex{\@esphack,\@idxitem,\@ifpackageloaded,\@input@,\@latex@warning}
+% \DoNotIndex{\@m,\@mainmatterfalse,\@mainmattertrue,\@makeschapterhead}
+% \DoNotIndex{\@mkboth,\@namedef,\@noitemerr,\@onlypreamble,\@openbib@code}
+% \DoNotIndex{\@plus,\@restonecolfalse,\@restonecoltrue,\@sanitize,\@starttoc}
+% \DoNotIndex{\@whilenum,\AtBeginDocument,\AtEndDocument,\BibTeX,\ClassError}
+% \DoNotIndex{\ClassWarning,\DeclareOption,\Gamma,\LaTeX,\LoadClass}
+% \DoNotIndex{\MakeUppercase,\MessageBreak,\NeedsTeXFormat,\Omega,\Pi}
+% \DoNotIndex{\ProcessOptions,\ProvidesClass,\RequirePackage,\Roman}
+% \DoNotIndex{\addcontentsline,\addtocounter,\advance,\and,\arabic}
+% \DoNotIndex{\baselineskip,\baselinestretch,\begin,\begingroup,\bibindent}
+% \DoNotIndex{\bibname,\boolean,\c,\c@enumiv,\centering,\chapter}
+% \DoNotIndex{\cleardoublepage,\clearpage,\clubpenalty,\columnsep}
+% \DoNotIndex{\columnseprule,\count,\csname,\def,\do,\documentclass,\else}
+% \DoNotIndex{\end,\endcsname,\endgroup,\endlist,\equal,\eta,\expandafter}
+% \DoNotIndex{\fi,\filedate,\filename,\fileversion,\gdef,\global,\hbox}
+% \DoNotIndex{\hrulefill,\if@restonecol,\if@twocolumn,\ifcase,\ifnum}
+% \DoNotIndex{\ifthenelse,\ifx,\immediate,\indexentry,\indexname,\it,\item}
+% \DoNotIndex{\itemindent,\jobname,\kern,\labelsep,\labelwidth,\leftmargin}
+% \DoNotIndex{\let,\list,\listfigurename,\listparindent,\listtablename,\lower}
+% \DoNotIndex{\makebox,\mathbb,\mathbf,\mathcal,\month,\n,\newboolean}
+% \DoNotIndex{\newcommand,\newcount,\newcounter,\newdimen,\newenvironment}
+% \DoNotIndex{\newlabel,\newpage,\newwrite,\nocite,\nohyphens,\noindent}
+% \DoNotIndex{\normalsize,\nu,\number,\omega,\onecolumn,\openout,\or,\p@}
+% \DoNotIndex{\p@enumiv,\pagenumbering,\pageref,\pagestyle,\par,\parindent}
+% \DoNotIndex{\parskip,\protected@write,\qquad,\relax,\renewcommand}
+% \DoNotIndex{\renewenvironment,\rm,\sc,\setboolean,\setcounter,\setlength}
+% \DoNotIndex{\sfcode,\sloppy,\string,\textit,\texttt,\textwidth,\the}
+% \DoNotIndex{\theenumiv,\thepage,\thispagestyle,\twocolumn,\typeout}
+% \DoNotIndex{\usecounter,\usepackage,\value,\vfill,\vskip,\vspace}
+% \DoNotIndex{\widowpenalty,\write,\year,\z@, \appendix}
+% \DoNotIndex{\bibliography, \bibliographystyle}
+%
+% \GetFileInfo{coppe}
+%
+% \title{The |coppe| document class}
+% \author{ Vicente Helano F. Batista \and
+% George O. Ainsworth Jr.\thanks{Send comments, suggestions, questions and bugs
+% to goajunior@users.sourceforge.net.}}
+%
+% \maketitle
+%
+% \begin{abstract}
+%
+% In this work, it is described the |coppe| document class.
+% This class is suitable for writing academic dissertations, thesis and
+% qualifying exams according to the format rules of the Alberto Luiz Coimbra
+% Institute for Graduate Studies and Research in Engineering. The minimalist
+% set of macro commands allows its users to concentrate most of their efforts
+% on text composition rather than on the document layout.
+%
+% \end{abstract}
+%
+% \section{Introduction}
+%
+% Writing documents in \LaTeX\ may be a laborious task
+% when the authors have to prepare their manuscripts rigorously respecting
+% format rules imposed by publishers. Regardless of difficulty, a lot of thesis
+% presented to the Coordination of Graduate Studies and Research in Engineering
+% of the Federal University of Rio de Janeiro (COPPE/UFRJ) is typeseted in
+% \LaTeX. This demand motivated the creation of the \CoppeTeX\ project, which
+% tries to facilitate and encourage the use of \LaTeX\ within the COPPE/UFRJ
+% scope.
+%
+% The |coppe| document class is the main product of \CoppeTeX. It enables the
+% creation of dissertations, qualifying exams and thesis in a simple and
+% automatic way. Therefore, authors can be strictly focused on text
+% composition without worring about margins sizes,
+% line spacing, paper size, vertical and horizontal alignment, etc.
+% The \CoppeTeX\ comprehends also \BibTeX\ and MakeIndex style files
+% for creating lists of references, symbols and abbreviations.
+%
+% In which follows, it is described the user interface
+% of the |coppe| class. Some details about using the style files cited above
+% are also given.
+%
+% \section{License}
+%
+% Each file belonging to this package contains a copyright notice.
+% Its use is protected by the {GNU} General Public License (GPL) version~3,
+% so that users are free for copying, distributing or modifying the
+% source code, among other acts covered by this license.
+%
+% To see the full text of the {GNU GPL} license, go to the |COPYING|
+% file attached to this package.
+% 
+% \section{User Interface}
+%
+% The |coppe| class was designed to be clear and succinct. Its simple interface
+% enables the creation of well structured documents in an elegant fashion, in
+% such a way that all of the needed elements are automatically constructed.
+% These elements comprehend the front face, cataloguing details, abstracts and
+% references.
+% They are regulated by the Academic Registry at COPPE/UFRJ \cite{TNR96a}.
+%
+% As this class is based on the standard |book| class, a typical document will
+% be composed of three parts: frontmatter, mainmatter and backmatter.
+% You can start these parts using |\frontmatter|, |\mainmatter| and
+% |\backmatter|.  The frontmatter of a thesis comprehends the front face,
+% cataloging page, dedication, aknowledgements, abstracts, table of contents,
+% and lists of tables, algorithms, symbols and abbreviations. Chapters and
+% appendix form the mainmatter. The backmatter is usually composed by the
+% bibliograpphic references and an index.
+%
+% \subsection*{Front face}
+% The front face is unumbered. There, it is not allowed to use
+% hyphenation~\cite{TNR96a}. It is constructed by calling |\maketitle|.
+% Next, it is described the commands used to
+% enter the information required to create it.
+%
+% \DescribeMacro{\author}
+% The |\author| command was redefined. Here, it receives two arguments:
+% the author's surname and firstnames, e.g. |\author{Surname}{Firstnames}|.
+% The words should be typed with
+% only first letters in uppercase.
+%
+% \DescribeMacro{\title}
+% \DescribeMacro{\foreigntitle}
+% Used to enter the titles of the monograph in the current and foreign
+% languages. The default languages are brazilian portuguese and english.
+% The |babel| package is automatically loaded by |coppe.cls|, so you
+% don't need to load it again. The brazilian portuguese is the main language
+% and the english is only required for the foreign abstract.
+%
+% \DescribeMacro{\advisor}
+% \DescribeMacro{\coadvisor}
+% \DescribeMacro{\examiner}
+% Every COPPE student is coordinated by an advisor. It is still possible to
+% have a co-advisor.  It is also required to enter the names of all
+% examiners. There is a minimum of $3$ for thesis and $2$ dissertations and
+% qualifying exams.  The names must be given before calling |\maketitle| as
+% follows:
+% \begin{verbatim}
+%   \advisor{Prof.}{Advisor's Name}{PhD}
+%   \coadvisor{Prof.}{Co-advisor's Name}{DSc}
+%   \examiner{Prof.}{First Examiner's Name}{DSc}
+%   ...
+% \end{verbatim}
+%
+% \DescribeMacro{\department}
+% The Alberto Luiz Coimbra institute is divided into 12 academic units:
+% Biomedical Engineering (PEB),
+% Civil Engineering (PEC),
+% Electrical Engineering (PEE),
+% Mechanical Engineering (PEM),
+% Metallurgical and Materials Science Engineering (PEMM),
+% Nuclear Engineering (PEN),
+% Ocean Engineering (PENO),
+% Energy Planning (PPE),
+% Production Engineering (PEP),
+% Chemical Engineering (PEQ),
+% Systems Engineering and Computer Science (PESC), and
+% Transportation Engineering (PET).
+% You must specify your department using one of the above abbreviations,
+% e.g. |\department{PEB}|.
+%
+% \DescribeMacro{\date}
+% This macro is used to set month and year of defense.
+% This information is required to create the front face, cataloging details
+% page and abstracts. For example, October 2007 should be entered as
+% |\date{10}{2007}|.
+%
+% \DescribeMacro{\keyword}
+% The keywords should describe the concentration areas of your work.
+% Usually, six words are enough.
+%
+% \subsection*{Cataloguing details}
+% This page contains cataloguing information useful for librarians.  It is
+% automatically generated from the data entered by the user when calling
+% |\maketitle|, except in qualifying exams.
+% 
+% \subsection*{Dedication (optional)}
+% \DescribeMacro{\dedication}
+% This macro was added for convenience. The entered text is placed
+% at the right bottom of a blank page. It is emphasized and in normal
+% size. It is numbered with roman algarisms.
+%
+% \subsection*{Abstracts}
+% \DescribeEnv{abstract}
+% \DescribeEnv{foreignabstract}
+% As stated by the Academic Registry~\cite{TNR96a}, the abstracts must be in
+% one page each. Still, it is recommended that they should be only one
+% paragraph long.  Thus, it was fixed a maximum
+% of 17 lines, when it doesn't exist a
+% co-advisor. Otherwise, this number is decreased to 16.
+% 
+% \subsection*{Lists of symbols and abbreviations (optional)}
+% \DescribeMacro{\printloabbreviations}
+% \DescribeMacro{\printlosymbols}
+% \DescribeMacro{\abbrev}
+% \DescribeMacro{\symbl}
+% The lists of symbols and abbreviations are optionals. It is recommended
+% to define a symbol/abbreviation in its first ocurrence in the text.
+% They are lexicographicaly sorted by using the |makeindex| program.
+% You have to pass the distributed MakeIndex style |coppe.ist| to |makeindex|
+% to get these lists correctly displayed.
+%
+% To define a symbol use
+% |\symbl{Some Symbol}{Some Symbol Definition}|, and for abbreviations
+% |\abbrev{Some Abbreviation}{Some Abbreviation Definition}|.
+% These commands are called \emph{dummy}, since they don't output anything at
+% the place they are executed, just an entry in the correspondent list.
+% 
+% \subsection*{References}
+% It is well known that bibliography databases can be easily maintained when
+% using \BibTeX. Thus, the \CoppeTeX\ project designed the \BibTeX\ style 
+% |coppe-unsrt.bst| to
+% complement the |coppe| class.
+% It is a numbered style,
+% which sorts references by order of citation. The only thing you have to do
+% is to include it as your bibliography style:
+% |\bibliographystyle{coppe-unsrt}|.
+%
+% \section{A Simple Example}
+% \label{COPPE:SAMPLE}
+% A basic document using the |coppe| class should contain at
+% least the following code.
+%    \begin{macrocode}
+%<*example>
+\documentclass[dsc]{coppe}
+\usepackage[latin1]{inputenc}
+\usepackage{amsmath,amssymb}
+
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+\makelosymbols
+\makeloabbreviations
+
+\begin{document}
+  \frontmatter
+  \title{Desenvolvimento de Um Algoritmo Baseado no Método de Arnoldi para
+  Solução de Problemas de Autovalor Generalizado}
+  \foreigntitle{Solution of Generalized Eigensystems with Algorithms Based on
+  Arnoldi Methods}
+  \author{Ainsworth Jr.}{George Oliveira}
+  \advisor{Prof.}{Carlos Magluta}{D.Sc.}
+  \coadvisor{Prof.}{Ney Roitman}{D.Sc.}
+  \examiner{Prof.}{Alvaro Luiz Gayoso Azeredo Coutino}{D.Sc.}
+  \examiner{Prof.}{Webe João Mansur}{Ph.D.}
+  \examiner{Prof.}{Paulo Batista Gonçalves}{D.Sc.}
+  \department{PEC}
+  \date{04}{2003}
+
+  \keyword{Problemas de Autovalor}
+  \keyword{Método de Arnoldi}
+  \keyword{Análise Dinâmica}
+  \maketitle
+
+  \dedication{%
+  À minha mãe pelo dom da vida e pelo amparo ao longo desses anos.\\
+  Às minhas tias Vanete e Vanilde (\emph{in memoriam}).}
+
+  \chapter*{Agradecimentos}
+  Agradeço ao Conselho Nacional de Desenvolvimento Científico e Tecnológico dos
+  Estados Unidos do Brasil (CNPq)\abbrev{CNPq}{Conselho Nacional de
+  Desenvolvimento Científico e Tecnológico} pelo suporte financeiro.
+ 
+  \begin{abstract}
+  Autovalores e autovetores de operadores lineares são importantes para muitas
+  áreas da Matemática Aplicada. Na Engenharia Civil, sobretudo na Engenharia de
+  Estruturas o uso de problemas de autovalor tem fundamental importância, um
+  exemplo típico é a análise dinâmica, onde os autovalores representam as
+  frequências naturais e os autovetores os modos de vibração associados à sua
+  frequência natural correspondente. A crescente demanda da avaliação numérica
+  de forma mais eficiente dessas quantidades, despertou o interesse na busca de
+  novos métodos para a solução de problemas de autovalor, principalmente quando
+  o problema a ser analisado conduz a quantidades pertencentes ao conjunto dos
+  números complexos. 
+  \end{abstract}
+
+  \begin{foreignabstract}
+  Eigenvalues and eigenvectors of linear operators are important in many Applied
+  Mathematics areas. In Civil Engineering, especially in Structural Analysis,
+  eigensystems have a fundamental importance. A typical example is in dynamic
+  analysis, where the eigenvalues represent the natural frequencies and
+  eigenvectors the mode shape. The incresing demand for efficient numeric
+  evaluation of eigenvalues and eigenvectors motivated the search for new
+  methods for the solution of complex eigensystems.
+  \end{foreignabstract} 
+
+  \tableofcontents
+  \listoffigures
+  \listoftables
+  \printlosymbols
+  \printloabbreviations
+ 
+  \mainmatter
+  \chapter{Introdução}
+  Em métodos numéricos para obter soluções aproximadas de equações
+  diferenciais, tais como o método dos elementos finitos (MEF)%
+  \abbrev{MEF}{método de elementos finitos}
+  e o método dos volumes finitos (MVF)%
+  \abbrev{MVF}{método de volumes finitos}, o domínio no qual estas
+  equações foram definidas é discretizado em sub-domínios simples
+  denominados \textit{elementos}.
+
+  Denotemos o domínio por $\Omega$%
+  \symbl{$\Omega$}{domínio de definição de uma equação diferencial}
+
+  \chapter{Revisão Bibliográfica}
+  \chapter{Método Proposto}
+  \chapter{Resultados e Discussões}
+  \chapter{Conclusões}
+  \appendix
+  \chapter{Código Fonte}
+
+  \backmatter
+  \nocite{*}
+  \bibliographystyle{coppe-unsrt}
+  \bibliography{coppe}
+\end{document}
+%</example>
+%    \end{macrocode}
+%
+% \StopEventually{\PrintIndex}
+%
+% \section{Implementation}
+%
+% \subsection{The `\texttt{coppe.cls}' file}
+%    \begin{macrocode}
+%<*class>
+\def\filename{coppe.dtx}
+\def\fileversion{v1.0}
+\def\filedate{2007/03/01}
+\NeedsTeXFormat{LaTeX2e}[1995/12/01]
+\ProvidesClass{coppe}[\filedate\ \fileversion\ COPPE Dissertations and Thesis]
+\LoadClass[12pt,a4paper,oneside]{book}
+\RequirePackage[english,brazil]{babel}
+\RequirePackage{hyphenat}
+\RequirePackage{ifthen}
+\RequirePackage[a4paper,bindingoffset=0.0cm,vcentering=true,%
+top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
+%    \end{macrocode}
+%
+% The default line spacing is $1.5pt$.
+%    \begin{macrocode}
+\renewcommand\baselinestretch{1.5}
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\let\@advisor\@empty
+\let\@coadvisor\@empty
+\newcounter{minexaminers}
+\newboolean{isdraft}
+\newboolean{maledoc}
+\setboolean{maledoc}{false}
+\setboolean{isdraft}{false}
+%
+\DeclareOption{msc}{%
+  \newcommand{\@degree}{M.Sc.}
+  \newcommand{\local@degname}{Mestre em Ci{\^ e}ncias}
+  \newcommand{\foreign@degname}{Master of Science}
+  \newcommand\local@doctype{Disserta{\c c}{\~ a}o}
+  \newcommand\foreign@doctype{Dissertation}
+  \setcounter{minexaminers}{2}
+}
+\DeclareOption{dscexam}{%
+  \newcommand{\@degree}{D.Sc.}
+  \newcommand{\local@degname}{Doutor em Ci{\^ e}ncias}
+  \newcommand{\foreign@degname}{Doctor of Science}
+  \setboolean{maledoc}{true}
+  \newcommand\local@doctype{Exame de Qualifica{\c c}{\~ a}o}
+  \newcommand\foreign@doctype{Qualifying Exam}
+  \setcounter{minexaminers}{1}
+}
+\DeclareOption{dsc}{%
+  \newcommand{\@degree}{D.Sc.}
+  \newcommand{\local@degname}{Doutor em Ci{\^ e}ncias}
+  \newcommand{\foreign@degname}{Doctor of Science}
+  \newcommand\local@doctype{Tese}
+  \newcommand\foreign@doctype{Thesis}
+  \setcounter{minexaminers}{2}
+}
+\DeclareOption{draft}{%
+  \setboolean{isdraft}{true}
+  \ClassWarning{coppe}{draft mode is ON}%
+}
+\ProcessOptions
+%    \end{macrocode}
+%
+% \begin{macro}{\university}
+% Set the university name.
+%    \begin{macrocode}
+\newcommand\university[1]{%
+  \renewcommand\local@universityname{#1}
+}
+%
+% \begin{macro}{\department}
+% This macro is used to set the author's affiliation. There are twelve options
+% which correspond to all academic units at COPPE/UFRJ. It defines the current
+% and the foreign names of these units.
+%    \begin{macrocode}
+\newcommand\department[1]{%
+  \ifthenelse{\equal{#1}{PEB}}
+    {\global\def\local@deptname{Engenharia Biom{\' e}dica}
+     \global\def\foreign@deptname{Biomedical Engineering}}{}
+  \ifthenelse{\equal{#1}{PEC}}
+    {\global\def\local@deptname{Engenharia Civil}
+     \global\def\foreign@deptname{Civil Engineering}}{}
+  \ifthenelse{\equal{#1}{PEE}}
+    {\global\def\local@deptname{Engenharia El{\' e}trica}
+     \global\def\foreign@deptname{Electrical Engineering}}{}
+  \ifthenelse{\equal{#1}{PEM}}
+    {\global\def\local@deptname{Engenharia Mec{\^ a}nica}
+     \global\def\foreign@deptname{Mechanical Engineering}}{}
+  \ifthenelse{\equal{#1}{PEMM}}
+    {\global\def\local@deptname{Engenharia Metal{\' u}rgica e de Materiais}
+\global\def\foreign@deptname{Metallurgical and Materials Science Engineering}}{}
+  \ifthenelse{\equal{#1}{PEN}}
+    {\global\def\local@deptname{Engenharia Nuclear}
+     \global\def\foreign@deptname{Nuclear Engineering}}{}
+  \ifthenelse{\equal{#1}{PENO}}
+    {\global\def\local@deptname{Engenharia Oce{\^ a}nica}
+     \global\def\foreign@deptname{Ocean Engineering}}{}
+  \ifthenelse{\equal{#1}{PPE}}
+    {\global\def\local@deptname{Planejamento Energ{\' e}tico}
+     \global\def\foreign@deptname{Energy Planning}}{}
+  \ifthenelse{\equal{#1}{PEP}}
+    {\global\def\local@deptname{Engenharia de Produ{\c c}{\~ a}o}
+     \global\def\foreign@deptname{Production Engineering}}{}
+  \ifthenelse{\equal{#1}{PEQ}}
+    {\global\def\local@deptname{Engenharia Qu{\' i}mica}
+     \global\def\foreign@deptname{Chemical Engineering}}{}
+  \ifthenelse{\equal{#1}{PESC}}
+    {\global\def\local@deptname{Engenharia de Sistemas e Computa{\c c}{\~ a}o}
+     \global\def\foreign@deptname{Systems Engineering and Computer Science}}{}
+  \ifthenelse{\equal{#1}{PET}}
+    {\global\def\local@deptname{Engenharia de Transportes}
+     \global\def\foreign@deptname{Transportation Engineering}}{}
+}
+%    \end{macrocode}
+% \end{macro}
+%
+%
+% \begin{macro}{\title}
+% Used to enter the foreign title.
+%    \begin{macrocode}
+\renewcommand\title[1]{%
+  \global\def\local@title{#1}%
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\foreigntitle}
+% Used to enter the foreign title.
+%    \begin{macrocode}
+\newcommand\foreigntitle[1]{%
+  \global\def\foreign@title{#1}%
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\advisor}
+% Defines globaly the title, name and academic degree of the advisor.
+%    \begin{macrocode}
+\newcommand\advisor[3]{%
+  \global\def\@adtitle{#1}%
+  \global\def\@advisor{#2}%
+  \global\def\@addegree{#3}%
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\coadvisor}
+% Defines globaly the title, name and academic degree of the coadvisor.
+%    \begin{macrocode}
+\newcommand\coadvisor[3]{%
+  \global\def\@coadtitle{#1}%
+  \global\def\@coadvisor{#2}%
+  \global\def\@coaddegree{#3}%
+  \renewcommand\local@advisorstring{Orientadores}%
+  \renewcommand\foreign@advisorstring{Advisors}%
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\examiner}
+% It was fixed a maximum of 6 examiners, just for the sake of page layout.
+%    \begin{macrocode}
+\newcount\@examiner\@examiner0
+\newcommand\examiner[3]{%
+  \global\@namedef{S:\expandafter\the\@examiner}{#1\ #2, #3}
+  \global\advance\@examiner by 1
+  \ifnum\@examiner>6
+    \ClassWarning{coppe}{%
+      Maximum number of examiners exceeded.\MessageBreak
+      Printing only six of them}
+    \@examiner=6
+  \fi
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\author}
+% It is redefined to allow the identification of the author's
+% firstnames and surname.
+%    \begin{macrocode}
+\renewcommand\author[2]{%
+  \global\def\@authname{#2}
+  \global\def\@authsurn{#1}
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\date}
+% This code enables makes easy to switch from dates in diferent languages.
+%    \begin{macrocode}
+\renewcommand\date[2]{%
+  \month=#1
+  \year=#2
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\local@monthname}
+%    \begin{macrocode}
+\newcommand\local@monthname{\ifcase\month\or
+  Janeiro\or Fevereiro\or Março\or Abril\or Maio\or Junho\or
+  Julho\or Agosto\or Setembro\or Outubro\or Novembro\or Dezembro\fi}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\foreign@monthname}
+%    \begin{macrocode}
+\newcommand\foreign@monthname{\ifcase\month\or
+  January\or February\or March\or April\or May\or June\or
+  July\or August\or September\or October\or November\or December\fi}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\place}
+% Used to enter the place of defense.
+%    \begin{macrocode}
+\newcommand\place[3]{%
+  \renewcommand\local@cityname{#1}
+  \renewcommand\local@statename{#2}
+  \renewcommand\local@countryname{#3}
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\keyword}
+%    \begin{macrocode}
+\newcounter{keywords}
+\newcommand\keyword[1]{%
+  \global\@namedef{K:\expandafter\the\c@keywords}{#1}
+  \global\addtocounter{keywords}{1}
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\frontmatter}
+% Para os números de páginas do frontmatter e do mainmatter aparecerem
+% na ficha catalográfica, utilizou-se uma referência. Assim, mesmo com
+% uma main vazia, será necessário re-executar o \LaTeX\ para obter as
+% referências corretas.
+%    \begin{macrocode}
+\renewcommand\frontmatter{%
+  \cleardoublepage
+  \@mainmatterfalse
+  \pagestyle{plain}
+  \pagenumbering{roman}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\mainmatter}
+%    \begin{macrocode}
+\renewcommand\mainmatter{%
+  \immediate\write\@auxout{%
+    \string\newlabel{front:pageno}{{}{\Roman{page}}{}{}{}}}
+  \cleardoublepage
+  \@mainmattertrue
+  \pagestyle{plain}
+  \pagenumbering{arabic}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\backmatter}
+%    \begin{macrocode}
+\renewcommand\backmatter{%
+  \immediate\write\@auxout{%
+    \string\newlabel{main:pageno}{{}{\arabic{page}}{}{}{}}}%
+  \if@openright
+    \cleardoublepage
+  \else
+    \clearpage
+  \fi
+  \@mainmatterfalse}
+%    \end{macrocode}
+% \changes{v0.5}{2008/05/30}{Added mainmatter pages counter.}
+% \end{macro}
+%
+% \begin{macro}{\maketitle}
+%    \begin{macrocode}
+\renewcommand\maketitle{%
+\ifthenelse{\@examiner<\value{minexaminers}}{%
+  \ifthenelse{\boolean{isdraft}}{%
+    \ClassWarning{coppe}{Too few examiners for a \local@doctype}%
+  }{%
+    \ClassError{coppe}{%
+    Too few examiners for a \local@doctype}{%
+    This value is regulated by the Academic Registry at COPPE/UFRJ.\MessageBreak
+    To disable this check, enable the draft option of the coppe class.}%
+  }%
+}{}
+  \begin{titlepage}%
+  \begin{center}%
+    \sloppy\nohyphens{\MakeUppercase\local@title}\par%
+    \vskip 1.0cm%
+    {\@authname\ \@authsurn}\par%
+  \end{center}\par%
+  \vskip 0.83cm%
+  \frontpage@maintext%
+  \vskip 0.8cm%
+  \noindent \local@approvedname:\par%
+  \begin{flushright}%
+     \begin{minipage}{0.68\textwidth}%
+        \centering
+        \ifthenelse{\equal{\@advisor}{\@empty}}{}{%
+          \vskip16\p@ \baselineskip14pt
+          \makebox[\textwidth]{\hrulefill}
+          \@adtitle\ \@advisor, \@addegree}
+        \ifthenelse{\equal{\@coadvisor}{\@empty}}{}{%
+          \vskip16\p@ \baselineskip12pt
+          \makebox[\textwidth]{\hrulefill}
+          \@coadtitle\ \@coadvisor, \@coaddegree}
+        \count1=0
+        \@whilenum \count1<\@examiner \do {%
+            \vskip16\p@ \baselineskip14pt
+            \makebox[\textwidth]{\hrulefill}
+            \csname S:\the\count1 \endcsname
+            \advance\count1 by 1}
+     \end{minipage}
+  \end{flushright}
+  \vfill
+  \frontpage@bottomtext
+  \end{titlepage}%
+  \ifthenelse{\boolean{maledoc}}{}{\makecatalog}%
+  \global\let\maketitle\relax%
+  \global\let\and\relax}
+%    \end{macrocode}
+% \changes{v0.3}{2008/03/07}{Added number of examiners test.}
+% \changes{v0.3}{2008/03/07}{Generalization.}
+% \end{macro}
+%
+% \begin{macro}{\makecatalog}
+%    \begin{macrocode}
+\newcommand\makecatalog{%
+  \thispagestyle{plain}
+  \setcounter{page}{2}
+  \begin{center}
+    \begin{minipage}[c]{42ex}
+      \setlength{\parindent}{0.55cm}
+      \vskip 8.0cm
+     \noindent \sloppy\nohyphens{\MakeUppercase\@authsurn},
+      \nohyphens{\MakeUppercase\@authname}\par
+      \local@title\ [\local@cityname] \number\year\par
+      \pageref{front:pageno},
+      \pageref{main:pageno}
+      p. $29,7$cm (COPPE/UFRJ, \@degree,
+      \nohyphens{\local@deptname}, \number\year)\par
+      \local@doctype\ --
+      \nohyphens{\local@universityname, COPPE}\par
+      \baselineskip 0pt
+      \begin{enumerate}
+        \setlength{\itemindent}{-2.7ex}
+        \count1=0
+        \@whilenum \count1<\value{keywords} \do {%
+          \item \csname K:\the\count1 \endcsname \par
+          \advance\count1 by 1}
+        \end{enumerate}\par
+      I. COPPE/UFRJ\qquad II. T{\' i}tulo (s{\' e}rie)
+    \end{minipage}
+  \end{center}
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\dedication}
+%    \begin{macrocode}
+\newcommand\dedication[1]{
+  \gdef\@dedic{#1}
+  \chapter*{\vfill
+    \begin{flushright}
+      \begin{minipage}{60mm}
+        \it \normalsize \@dedic
+      \end{minipage}
+    \end{flushright}}}
+%    \end{macrocode}
+% \end{macro}
+%
+
+% \begin{environment}{abstract}
+% This is a specialization of the abstract in the article standard class.
+%    \begin{macrocode}
+\newenvironment{abstract}{%
+  \clearpage
+  \thispagestyle{plain}
+  \abstract@toptext\par
+  \vskip 1.5cm
+  \begin{center}
+    \sloppy\nohyphens{\MakeUppercase\local@title}\par
+    \vskip 1.5cm
+    \@authname\ \@authsurn \par
+    \vskip 0.5cm
+    \local@monthname/\number\year
+  \end{center}\par
+  \vskip 1.0cm
+  \vfill
+  \noindent\local@advisorstring:%
+  \begin{tabular}[t]{l}
+    \@advisor\\
+    \ifthenelse{\equal{\@coadvisor}{\@empty}}{}{\@coadvisor\\}
+  \end{tabular}\par
+  \vspace{0.2cm} \noindent\local@deptstring: \local@deptname\par
+  \vspace{0.5cm}}{%
+  \vfill}
+%    \end{macrocode}
+% \changes{v0.5}{2008/05/25}{Changed from macro to environment.}
+% \end{environment}
+%
+% \begin{environment}{foreignabstract}
+%    \begin{macrocode}
+\newenvironment{foreignabstract}{%
+  \newpage
+  \thispagestyle{plain}
+  \begin{otherlanguage}{english}
+  \foreignabstract@toptext\par
+  \vskip 1.5cm
+  \begin{center}
+    \sloppy\nohyphens{\MakeUppercase\foreign@title}\par
+    \vskip 1.5cm
+    \@authname\ \@authsurn \par
+    \vskip 0.5cm
+    \foreign@monthname/\number\year
+  \end{center}\par
+  \vskip 1.0cm
+  \vfill
+  \noindent\foreign@advisorstring:%
+  \begin{tabular}[t]{l}
+    \@advisor\\
+    \ifthenelse{\equal{\@coadvisor}{\@empty}}{}{\@coadvisor\\}
+  \end{tabular}\par
+  \vspace{0.2cm} \noindent\foreign@deptstring: \foreign@deptname\par
+  \vspace{0.5cm}}{%
+  \end{otherlanguage}
+  \vfill
+  \global\let\@author\@empty
+  \global\let\@date\@empty
+  \global\let\foreign@title\@empty
+  \global\let\foreign@title\relax
+  \global\let\local@title\@empty
+  \global\let\local@title\relax
+  \global\let\author\relax
+  \global\let\author\relax
+  \global\let\date\relax}
+%    \end{macrocode}
+% \changes{0.5}{2008/05/25}{Changed from macro to environment.}
+% \end{environment}
+%
+% \begin{macro}{\listoffigures}
+%    \begin{macrocode}
+\renewcommand\listoffigures{%
+    \if@twocolumn
+      \@restonecoltrue\onecolumn
+    \else
+      \@restonecolfalse
+    \fi
+    \chapter*{\listfigurename}%
+      \addcontentsline{toc}{chapter}{\listfigurename}%
+      \@mkboth{\MakeUppercase\listfigurename}%
+              {\MakeUppercase\listfigurename}%
+    \@starttoc{lof}%
+    \if@restonecol\twocolumn\fi
+    }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\listoftables}
+%    \begin{macrocode}
+\renewcommand\listoftables{%
+    \if@twocolumn
+      \@restonecoltrue\onecolumn
+    \else
+      \@restonecolfalse
+    \fi
+    \chapter*{\listtablename}%
+      \addcontentsline{toc}{chapter}{\listtablename}%
+      \@mkboth{%
+          \MakeUppercase\listtablename}%
+         {\MakeUppercase\listtablename}%
+    \@starttoc{lot}%
+    \if@restonecol\twocolumn\fi
+    }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\printlosymbols}
+%    \begin{macrocode}
+\newcommand\printlosymbols{%
+\renewcommand\glossaryname{\listsymbolname}%
+\@input@{\jobname.los}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\makelosymbols}
+%    \begin{macrocode}
+\def\makelosymbols{%
+  \newwrite\@losfile
+  \immediate\openout\@losfile=\jobname.syx
+  \def\symbl{\@bsphack\begingroup
+             \@sanitize
+             \@wrlos}\typeout
+  {Writing index of symbols file \jobname.syx}%
+  \let\makelosymbols\@empty
+}
+\@onlypreamble\makelosymbols
+%    \end{macrocode}
+% \end{macro}
+%
+%    \begin{macrocode}
+\AtBeginDocument{%
+\@ifpackageloaded{hyperref}{%
+  \def\@wrlos#1#2{%
+    \protected@write\@losfile{}%
+      {\string\indexentry{[#1] #2|hyperpage}{\thepage}}%
+    \endgroup
+    \@esphack}}{%
+  \def\@wrlos#1#2{%
+    \protected@write\@losfile{}%
+      {\string\indexentry{[#1] #2}{\thepage}}%
+    \endgroup
+    \@esphack}}}
+%    \end{macrocode}
+%
+% \begin{macro}{\printloabbreviations}
+%    \begin{macrocode}
+\newcommand\printloabbreviations{%
+\renewcommand\glossaryname{\listabbreviationname}%
+\@input@{\jobname.lab}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\makeloabbreviations}
+%    \begin{macrocode}
+\def\makeloabbreviations{%
+  \newwrite\@labfile
+  \immediate\openout\@labfile=\jobname.abx
+  \def\abbrev{\@bsphack\begingroup
+              \@sanitize
+              \@wrlab}\typeout
+  {Writing index of abbreviations file \jobname.abx}%
+  \let\makeloabbreviations\@empty
+}
+\@onlypreamble\makeloabbreviations
+%    \end{macrocode}
+% \end{macro}
+%
+%    \begin{macrocode}
+\AtBeginDocument{%
+\@ifpackageloaded{hyperref}{%
+  \def\@wrlab#1#2{%
+    \protected@write\@labfile{}%
+      {\string\indexentry{[#1] #2|hyperpage}{\thepage}}%
+    \endgroup
+    \@esphack}}{%
+  \def\@wrlab#1#2{%
+    \protected@write\@labfile{}%
+      {\string\indexentry{[#1] #2}{\arabic{page}}}%
+    \endgroup
+    \@esphack}}}
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\newdimen\bibindent%
+\setlength\bibindent{1.5em}%
+\renewenvironment{thebibliography}[1]%
+     {\chapter*{\bibname}%
+      \addcontentsline{toc}{chapter}{\bibname}%
+      \list{\@biblabel{\@arabic\c@enumiv}}%
+           {\setlength{\labelwidth}{0ex}%
+            \setlength{\leftmargin}{9.0ex}%
+            \setlength{\itemindent}{-9.0ex}%
+            \advance\leftmargin\labelsep%
+            \@openbib@code%
+            \usecounter{enumiv}%
+            \let\p@enumiv\@empty%
+            \renewcommand\theenumiv{\@arabic\c@enumiv}}%
+      \sloppy%
+      \clubpenalty4000%
+      \@clubpenalty \clubpenalty%
+      \widowpenalty4000%
+      \sfcode`\.\@m}%
+     {\def\@noitemerr%
+       {\@latex@warning{Empty `thebibliography' environment}}%
+      \endlist}
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\newenvironment{theglossary}{%
+  \if@twocolumn%
+    \@restonecoltrue\onecolumn%
+  \else%
+    \@restonecolfalse%
+  \fi%
+  \@mkboth{\MakeUppercase\glossaryname}%
+  {\MakeUppercase\glossaryname}%
+  \chapter*{\glossaryname}%
+  \addcontentsline{toc}{chapter}{\glossaryname}
+  \list{}
+  {\setlength{\listparindent}{0in}%
+   \setlength{\labelwidth}{1.0in}%
+   \setlength{\leftmargin}{1.5in}%
+   \setlength{\labelsep}{0.5in}%
+   \setlength{\itemindent}{0in}}%
+   \sloppy}%
+  {\if@restonecol\twocolumn\fi%
+\endlist}
+%
+\renewenvironment{theindex}{%
+  \if@twocolumn
+    \@restonecolfalse
+  \else
+    \@restonecoltrue
+  \fi
+  \twocolumn[\@makeschapterhead{\indexname}]%
+  \@mkboth{\MakeUppercase\indexname}%
+  {\MakeUppercase\indexname}%
+  \thispagestyle{plain}\parindent\z@
+  \addcontentsline{toc}{chapter}{\indexname}
+  \parskip\z@ \@plus .3\p@\relax
+  \columnseprule \z@
+  \columnsep 35\p@
+  \let\item\@idxitem}
+  {\if@restonecol\onecolumn\else\clearpage\fi}
+\newcommand\glossaryname{Glossary}
+\newcommand\listabbreviationname{Lista de Abreviaturas}
+\newcommand\listsymbolname{Lista de S{\' i}mbolos}
+%
+\newcommand\local@advisorstring{Orientador}
+\newcommand\foreign@advisorstring{Advisor}
+\ifthenelse{\boolean{maledoc}}{%
+  \newcommand\local@approvedname{Aprovado por}%
+}{%
+  \newcommand\local@approvedname{Aprovada por}%
+}
+\newcommand\foreign@approvedname{Approved by}
+\newcommand\local@universityname{Universidade Federal do Rio de Janeiro}
+\newcommand\local@deptstring{Programa}
+\newcommand\foreign@deptstring{Department}
+\newcommand\local@cityname{Rio de Janeiro}
+\newcommand\local@statename{RJ}
+\newcommand\local@countryname{Brasil}
+%
+\newcommand\frontpage@maintext{
+  \noindent {\MakeUppercase\local@doctype}
+  \ifthenelse{\boolean{maledoc}}{SUBMETIDO}{SUBMETIDA}
+  \sloppy\nohyphens{AO CORPO DOCENTE DA COORDENA{\c C}{\~ A}O DOS
+  PROGRAMAS DE P{\' O}S-GRADUA{\c C}{\~ A}O DE ENGENHARIA DA
+  UNIVERSIDADE FEDERAL DO RIO DE JANEIRO COMO PARTE DOS REQUISITOS
+  NECESS{\' A}RIOS PARA A OBTEN{\c C}{\~ A}O DO GRAU DE
+  {\MakeUppercase\local@degname} EM}
+  {\MakeUppercase\local@deptname. \par}%
+}
+%
+\newcommand\frontpage@bottomtext{%
+  \begin{center}
+  {\MakeUppercase{\local@cityname\ -- \local@statename, \local@countryname}}\par
+  {\MakeUppercase\local@monthname\ DE \number\year}
+  \end{center}%
+}
+%
+\newcommand\abstract@toptext{%
+  \noindent Resumo \ifthenelse{\boolean{maledoc}}{do}{da}
+  \local@doctype\ \ifthenelse{\boolean{maledoc}}{apresentado}{apresentada}
+  \sloppy\nohyphens{{\` a} COPPE/UFRJ como parte dos requisitos
+  necess{\' a}rios para a obten{\c c}{\~ a}o do grau de
+  \local@degname\ (\@degree)}
+}
+\newcommand\foreignabstract@toptext{%
+  \noindent \sloppy\nohyphens{Abstract of \foreign@doctype\ presented to
+  COPPE/UFRJ as a partial fulfillment of the requirements for the
+  degree of \foreign@degname\ (\@degree)}
+}
+%
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%</class>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%<*glossary>
+actual '='
+quote '!'
+level '>'
+delim_0   ", p. "
+lethead_flag  0
+headings_flag 0
+preamble
+"\n\\begin{theglossary}\n  \\makeatletter"
+postamble
+"\n  \\end{theglossary}\n"
+%</glossary>
+%    \end{macrocode}
+%
+% \section*{Aknowledgements}
+% The authors would like to thank the National Council for Scientific and
+% Technological Development (CNPq). They are also grateful to
+% Alvaro Cuno for setting up the initial SVN repository,
+% Caio Graco and Paula Faragó for being the first \CoppeTeX\ users and for
+% their feedbacks, and
+% professor Fernando Lizarralde for helpful comments.
+%
+% \nocite{*}
+% \bibliographystyle{plain}
+% \bibliography{coppe}
+% \Finale
+% \PrintChanges
+% \PrintIndex
+\endinput
