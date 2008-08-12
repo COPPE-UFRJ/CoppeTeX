@@ -379,13 +379,14 @@ p\kern-.025em e}}\kern-.08em\TeX}
   \chapter{Método Proposto}
   \chapter{Resultados e Discussões}
   \chapter{Conclusões}
-  \appendix
-  \chapter{Código Fonte}
 
   \backmatter
   \nocite{*}
   \bibliographystyle{coppe-unsrt}
   \bibliography{coppe}
+
+  \appendix
+  \chapter{Código Fonte}
 \end{document}
 %</example>
 %    \end{macrocode}
@@ -656,16 +657,15 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
 % \begin{macro}{\backmatter}
 %    \begin{macrocode}
 \renewcommand\backmatter{%
-  \immediate\write\@auxout{%
-    \string\newlabel{main:pageno}{{}{\arabic{page}}{}{}{}}}%
   \if@openright
     \cleardoublepage
   \else
     \clearpage
-  \fi
-  \@mainmatterfalse}
+  \fi}
+%
 %    \end{macrocode}
 % \changes{v0.5}{2008/05/30}{Added mainmatter pages counter.}
+% \changes{v1.0}{2008/08/11}{Moved mainmatter counter to |AtEndDocument|.}
 % \end{macro}
 %
 % \begin{macro}{\maketitle}
@@ -1011,6 +1011,10 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
   \columnsep 35\p@
   \let\item\@idxitem}
   {\if@restonecol\onecolumn\else\clearpage\fi}
+\AtEndDocument{%
+  \immediate\write\@auxout{%
+    \string\newlabel{main:pageno}{{}{\arabic{page}}{}{}{}}}%
+}
 \newcommand\glossaryname{Glossary}
 \newcommand\listabbreviationname{Lista de Abreviaturas}
 \newcommand\listsymbolname{Lista de S{\' i}mbolos}
