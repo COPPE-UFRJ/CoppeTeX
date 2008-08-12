@@ -95,7 +95,7 @@ Makeindex style `coppe.ist'. These lists must be saved to files named
 `example.syx' and `example.abx', respectively. For installing it, you can
 follow the steps in the next paragraph.
 
-You can still download a release package. Suppose TEXMF is a variable which
+You can still download a release package. Supose TEXMF is a variable which
 stores the path of your local LaTeX tree. Then you should copy the files
 coppe.cls, coppe.ist and coppe-unsrt.bst to $TEXMF/tex/latex/coppe,
 $TEXMF/makeindex/coppe and $TEXMF/bibtex/bst/coppe, respectively. In the end,
