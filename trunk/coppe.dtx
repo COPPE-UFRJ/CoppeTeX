@@ -208,8 +208,8 @@ p\kern-.025em e}}\kern-.08em\TeX}
 % qualifying exams.  The names must be given before calling |\maketitle| as
 % follows:
 % \begin{verbatim}
-%   \advisor{Prof.}{Advisor's Name}{PhD}
-%   \coadvisor{Prof.}{Co-advisor's Name}{DSc}
+%   \advisor{Prof.}{Advisor's Name}{Surname}{PhD}
+%   \coadvisor{Prof.}{Co-advisor's Name}{Surname}{DSc}
 %   \examiner{Prof.}{First Examiner's Name}{DSc}
 %   ...
 % \end{verbatim}
@@ -310,10 +310,10 @@ p\kern-.025em e}}\kern-.08em\TeX}
   Solução de Problemas de Autovalor Generalizado}
   \foreigntitle{Solution of Generalized Eigensystems with Algorithms Based on
   Arnoldi Methods}
-  \author{Ainsworth Jr.}{George Oliveira}
-  \advisor{Prof.}{Carlos Magluta}{D.Sc.}
-  \coadvisor{Prof.}{Ney Roitman}{D.Sc.}
-  \examiner{Prof.}{Alvaro Luiz Gayoso Azeredo Coutino}{D.Sc.}
+  \author{George Oliveira}{Ainsworth Jr.}
+  \advisor{Prof.}{Carlos}{Magluta}{D.Sc.}
+  \coadvisor{Prof.}{Ney}{Roitman}{D.Sc.}
+  \examiner{Prof.}{Alvaro Luiz Gayoso Azeredo Coutinho}{D.Sc.}
   \examiner{Prof.}{Webe João Mansur}{Ph.D.}
   \examiner{Prof.}{Paulo Batista Gonçalves}{D.Sc.}
   \department{PEC}
@@ -417,8 +417,10 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
 %    \end{macrocode}
 %
 %    \begin{macrocode}
-\let\@advisor\@empty
-\let\@coadvisor\@empty
+\let\@adname\@empty
+\let\@adsurn\@empty
+\let\@coadname\@empty
+\let\@coadsurn\@empty
 \newcounter{minexaminers}
 \newboolean{isdraft}
 \newboolean{maledoc}
@@ -427,6 +429,7 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
 %
 \DeclareOption{msc}{%
   \newcommand{\@degree}{M.Sc.}
+  \newcommand{\@degreename}{mestrado}
   \newcommand{\local@degname}{Mestre em Ci{\^ e}ncias}
   \newcommand{\foreign@degname}{Master of Science}
   \newcommand\local@doctype{Disserta{\c c}{\~ a}o}
@@ -435,6 +438,7 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
 }
 \DeclareOption{dscexam}{%
   \newcommand{\@degree}{D.Sc.}
+  \newcommand{\@degreename}{doutorado}
   \newcommand{\local@degname}{Doutor em Ci{\^ e}ncias}
   \newcommand{\foreign@degname}{Doctor of Science}
   \setboolean{maledoc}{true}
@@ -444,6 +448,7 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
 }
 \DeclareOption{dsc}{%
   \newcommand{\@degree}{D.Sc.}
+  \newcommand{\@degreename}{doutorado}
   \newcommand{\local@degname}{Doutor em Ci{\^ e}ncias}
   \newcommand{\foreign@degname}{Doctor of Science}
   \newcommand\local@doctype{Tese}
@@ -532,10 +537,11 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
 % \begin{macro}{\advisor}
 % Defines globaly the title, name and academic degree of the advisor.
 %    \begin{macrocode}
-\newcommand\advisor[3]{%
+\newcommand\advisor[4]{%
   \global\def\@adtitle{#1}%
-  \global\def\@advisor{#2}%
-  \global\def\@addegree{#3}%
+  \global\def\@adname{#2}%
+  \global\def\@adsurn{#3}%
+  \global\def\@addegree{#4}%
 }
 %    \end{macrocode}
 % \end{macro}
@@ -543,10 +549,11 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
 % \begin{macro}{\coadvisor}
 % Defines globaly the title, name and academic degree of the coadvisor.
 %    \begin{macrocode}
-\newcommand\coadvisor[3]{%
+\newcommand\coadvisor[4]{%
   \global\def\@coadtitle{#1}%
-  \global\def\@coadvisor{#2}%
-  \global\def\@coaddegree{#3}%
+  \global\def\@coadname{#2}%
+  \global\def\@coadsurn{#3}%
+  \global\def\@coaddegree{#4}%
   \renewcommand\local@advisorstring{Orientadores}%
   \renewcommand\foreign@advisorstring{Advisors}%
 }
@@ -575,8 +582,8 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
 % firstnames and surname.
 %    \begin{macrocode}
 \renewcommand\author[2]{%
-  \global\def\@authname{#2}
-  \global\def\@authsurn{#1}
+  \global\def\@authname{#1}
+  \global\def\@authsurn{#2}
 }
 %    \end{macrocode}
 % \end{macro}
@@ -681,6 +688,23 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
     To disable this check, enable the draft option of the coppe class.}%
   }%
 }{}
+  \begin{titlepage}
+  {\MakeUppercase\local@title}\par
+  \@authname\ \@authsurn\par
+  \begin{flushright}
+  \begin{minipage}{79mm}
+  \sloppy\nohyphens{\local@doctype\ de \@degreename\ apresentada ao Programa de Pós-graduação em  \local@deptname, COPPE, da \local@universityname, como parte dos requisitos  necessários à obtenção do título de MMESTE em \local@deptname.}
+  \end{minipage}
+  \begin{minipage}{79mm}
+  Orientadores: Fulano e Cicrano
+  \end{minipage}
+  \end{flushright}
+  \vspace*{\fill}
+  \begin{center}
+  Rio de Janeiro\par
+  \local@monthname\ de \number\year
+  \end{center}
+  \end{titlepage}
   \begin{titlepage}%
   \begin{center}%
     \sloppy\nohyphens{\MakeUppercase\local@title}\par%
@@ -694,14 +718,14 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
   \begin{flushright}%
      \begin{minipage}{0.68\textwidth}%
         \centering
-        \ifthenelse{\equal{\@advisor}{\@empty}}{}{%
+        \ifthenelse{\equal{\@adname}{\@empty}}{}{%
           \vskip16\p@ \baselineskip14pt
           \makebox[\textwidth]{\hrulefill}
-          \@adtitle\ \@advisor, \@addegree}
-        \ifthenelse{\equal{\@coadvisor}{\@empty}}{}{%
+          \@adtitle\ \@adname\ \@adsurn, \@addegree}
+        \ifthenelse{\equal{\@coadname}{\@empty}}{}{%
           \vskip16\p@ \baselineskip12pt
           \makebox[\textwidth]{\hrulefill}
-          \@coadtitle\ \@coadvisor, \@coaddegree}
+          \@coadtitle\ \@coadname\ \@coadsurn, \@coaddegree}
         \count1=0
         \@whilenum \count1<\@examiner \do {%
             \vskip16\p@ \baselineskip14pt
@@ -726,31 +750,37 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
 \newcommand\makecatalog{%
   \thispagestyle{plain}
   \setcounter{page}{2}
+  \vspace*{\fill}
   \begin{center}
-    \begin{minipage}[c]{42ex}
+    \setlength{\fboxsep}{5mm}
+    \framebox[120mm][c]{\makebox[5mm][c]{}%
+      \begin{minipage}[c]{105mm}
       \setlength{\parindent}{0.55cm}
-      \vskip 8.0cm
-     \noindent \sloppy\nohyphens{\MakeUppercase\@authsurn},
-      \nohyphens{\MakeUppercase\@authname}\par
-      \local@title\ [\local@cityname] \number\year\par
+      \noindent \sloppy\nohyphens\@authsurn,
+      \nohyphens\@authname\par
+      \local@title/\@authname\ \@authsurn. -- \local@cityname:
+      UFRJ/COPPE, \number\year.\par
       \pageref{front:pageno},
       \pageref{main:pageno}
-      p. $29,7$cm (COPPE/UFRJ, \@degree,
-      \nohyphens{\local@deptname}, \number\year)\par
-      \local@doctype\ --
-      \nohyphens{\local@universityname, COPPE}\par
-      \baselineskip 0pt
-      \begin{enumerate}
-        \setlength{\itemindent}{-2.7ex}
-        \count1=0
-        \@whilenum \count1<\value{keywords} \do {%
-          \item \csname K:\the\count1 \endcsname \par
-          \advance\count1 by 1}
-        \end{enumerate}\par
-      I. COPPE/UFRJ\qquad II. T{\' i}tulo (s{\' e}rie)
-    \end{minipage}
+      p.\ifthenelse{\isundefined{\@lofflag}}{INDEFINIDO}{DEFINIDO} $29,7$cm.\par
+      \local@advisorstring:\ \@adname\ \@adsurn
+     \ifthenelse{\equal{\@coadname}{\@empty}}{.}{, \@coadname\ \@coadsurn.}\par
+      \nohyphens{\local@doctype\ (\@degreename) --
+      UFRJ/COPPE/Programa de \local@deptname, \number\year.}\par
+      \bibname: p. \pageref{bib:begin} -- \pageref{bib:end}.\par
+      \count1=0
+      \count2=1
+      \@whilenum \count1<\value{keywords} \do {%
+        \number\count2. \csname K:\the\count1 \endcsname.
+        \advance\count1 by 1
+        \advance\count2 by 1}
+      I. \@adsurn, \@adname%
+      \ifthenelse{\equal{\@coadname}{\@empty}}{}{\emph{\ et al.}}.
+      II. \local@universityname, COPPE, Programa de \local@deptname.
+      III. T{\' i}tulo.
+    \end{minipage}}
   \end{center}
-}
+  \vspace*{\fill}}
 %    \end{macrocode}
 % \end{macro}
 %
@@ -787,8 +817,8 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
   \vfill
   \noindent\local@advisorstring:%
   \begin{tabular}[t]{l}
-    \@advisor\\
-    \ifthenelse{\equal{\@coadvisor}{\@empty}}{}{\@coadvisor\\}
+    \@adname\ \@adsurn\\
+    \ifthenelse{\equal{\@coadname}{\@empty}}{}{\@coadname\ \@coadsurn\\}
   \end{tabular}\par
   \vspace{0.2cm} \noindent\local@deptstring: \local@deptname\par
   \vspace{0.5cm}}{%
@@ -816,8 +846,8 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
   \vfill
   \noindent\foreign@advisorstring:%
   \begin{tabular}[t]{l}
-    \@advisor\\
-    \ifthenelse{\equal{\@coadvisor}{\@empty}}{}{\@coadvisor\\}
+    \@adname\ \@adsurn\\
+    \ifthenelse{\equal{\@coadname}{\@empty}}{}{\@coadname\ \@coadsurn\\}
   \end{tabular}\par
   \vspace{0.2cm} \noindent\foreign@deptstring: \foreign@deptname\par
   \vspace{0.5cm}}{%
@@ -839,6 +869,7 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
 % \begin{macro}{\listoffigures}
 %    \begin{macrocode}
 \renewcommand\listoffigures{%
+    \global\def\@lofflag{: il.;}%
     \if@twocolumn
       \@restonecoltrue\onecolumn
     \else
@@ -955,6 +986,8 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
 \renewenvironment{thebibliography}[1]%
      {\chapter*{\bibname}%
       \addcontentsline{toc}{chapter}{\bibname}%
+      \immediate\write\@auxout{%
+      \string\newlabel{bib:begin}{{}{\arabic{page}}{}{}{}}}%
       \list{\@biblabel{\@arabic\c@enumiv}}%
            {\setlength{\labelwidth}{0ex}%
             \setlength{\leftmargin}{9.0ex}%
@@ -971,6 +1004,8 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
       \sfcode`\.\@m}%
      {\def\@noitemerr%
        {\@latex@warning{Empty `thebibliography' environment}}%
+      \immediate\write\@auxout{%
+      \string\newlabel{bib:end}{{}{\arabic{page}}{}{}{}}}%
       \endlist}
 %    \end{macrocode}
 %
