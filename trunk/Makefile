@@ -94,7 +94,7 @@ install: doc class example
 	  rm -rf $(CLSDIR); \
 	fi
 	mkdir -vp $(CLSDIR)
-	cp -vp $(PACKAGE_NAME).cls $(CLSDIR)/
+	cp -vp $(PACKAGE_NAME).cls minerva.eps minerva.pdf $(CLSDIR)/
 	if [ -d "$(BSTDIR)" ]; then \
 	  rm -rf $(BSTDIR); \
 	fi
