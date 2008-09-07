@@ -73,6 +73,7 @@ p\kern-.025em e}}\kern-.08em\TeX}
 % \changes{v0.3}{2008/03/06}{Added `draft' option.}
 % \changes{v0.4}{2008/04/12}{Beta documentation.}
 % \changes{v1.0}{2008/06/10}{First \CoppeTeX\ release.}
+% \changes{v2.0}{2008/09/07}{\CoppeTeX\ release 2.0.}
 %
 % \DoNotIndex{\!,\',\.,\>,\^,\`,\',\~,\=,\\,\\\~,\\\^,\\ }
 % \DoNotIndex{\@arabic,\@auxout,\@biblabel,\@bsphack,\@clubpenalty,\@empty}
@@ -168,7 +169,7 @@ p\kern-.025em e}}\kern-.08em\TeX}
 % such a way that all of the needed elements are automatically constructed.
 % These elements comprehend the front face, cataloguing details, abstracts and
 % references.
-% They are regulated by the Academic Registry at COPPE/UFRJ \cite{TNR96a}.
+% They are regulated by the Academic Registry at COPPE/UFRJ \cite{TNR08a}.
 %
 % As this class is based on the standard |book| class, a typical document will
 % be composed of three parts: frontmatter, mainmatter and backmatter.
@@ -181,13 +182,13 @@ p\kern-.025em e}}\kern-.08em\TeX}
 %
 % \subsection*{Front face}
 % The front face is unumbered. There, it is not allowed to use
-% hyphenation~\cite{TNR96a}. It is constructed by calling |\maketitle|.
+% hyphenation~\cite{TNR08a}. It is constructed by calling |\maketitle|.
 % Next, it is described the commands used to
 % enter the information required to create it.
 %
 % \DescribeMacro{\author}
 % The |\author| command was redefined. Here, it receives two arguments:
-% the author's surname and firstnames, e.g. |\author{Surname}{Firstnames}|.
+% the author's surname and firstnames, e.g. |\author{First Names}{Surname}|.
 % The words should be typed with
 % only first letters in uppercase.
 %
@@ -204,15 +205,23 @@ p\kern-.025em e}}\kern-.08em\TeX}
 % \DescribeMacro{\examiner}
 % Every COPPE student is coordinated by an advisor. It is still possible to
 % have a co-advisor.  It is also required to enter the names of all
-% examiners. There is a minimum of $3$ for thesis and $2$ dissertations and
-% qualifying exams.  The names must be given before calling |\maketitle| as
-% follows:
+% examiners. For the advisor and co-advisor's names, you should enter them
+% as below:
 % \begin{verbatim}
 %   \advisor{Prof.}{Advisor's Name}{Surname}{PhD}
 %   \coadvisor{Prof.}{Co-advisor's Name}{Surname}{DSc}
-%   \examiner{Prof.}{First Examiner's Name}{DSc}
+% \end{verbatim}
+% The examinators' name are entered as follows:
+% \begin{verbatim}
+%   \examiner{Prof.}{First Examiner's Complete Name}{DSc}
+%   \examiner{Prof.}{Second Examiner's Complete Name}{PhD}
 %   ...
 % \end{verbatim}
+%
+% The difference in providing advisors and examinators' names was introduces in
+% version 2.0, because
+% of the new standard approved in 3rd July 2008.
+% Remember that all names must be given before calling |\maketitle|.
 %
 % \DescribeMacro{\department}
 % The Alberto Luiz Coimbra institute is divided into 12 academic units:
@@ -255,7 +264,7 @@ p\kern-.025em e}}\kern-.08em\TeX}
 % \subsection*{Abstracts}
 % \DescribeEnv{abstract}
 % \DescribeEnv{foreignabstract}
-% As stated by the Academic Registry~\cite{TNR96a}, the abstracts must be in
+% As stated by the Academic Registry~\cite{TNR08a}, the abstracts must be in
 % one page each. Still, it is recommended that they should be only one
 % paragraph long.  Thus, it was fixed a maximum
 % of 17 lines, when it doesn't exist a
@@ -288,13 +297,30 @@ p\kern-.025em e}}\kern-.08em\TeX}
 % is to include it as your bibliography style:
 % |\bibliographystyle{coppe-unsrt}|.
 %
+% \section{Graphics driver}
+%
+% Since the addition of a front cover with a Minerva's picture in version 2.0,
+% the use of package which enables graphics inclusion has become mandatory.
+% The \CoppeTeX\ loads by default |graphicx| using the |dvips| driver, so
+% you mustn't load it by yourself.
+% In addition, you can tell the |coppe| class to use
+% your preffered graphics driver. For simplicity, we
+% provide 3 standard options: |dvips|, |pdftex| and |dvipdfm|.
+%
+% If you would like
+% to generate a PDF output, we encourage the use of PDF\TeX.
+% To do so, just call |pdflatex| instead of |latex| over your main \LaTeX\
+% source. Note that PDF\TeX\ requires all illustrations in PDF.
+%
 % \section{A Simple Example}
 % \label{COPPE:SAMPLE}
 % A basic document using the |coppe| class should contain at
 % least the following code.
+% You can generate a PDF by typing |pdflatex example.tex|.
+%
 %    \begin{macrocode}
 %<*example>
-\documentclass[dsc,dvipdfm]{coppe}
+\documentclass[dsc,pdftex]{coppe}
 \usepackage[latin1]{inputenc}
 \usepackage{amsmath,amssymb}
 
@@ -312,7 +338,7 @@ p\kern-.025em e}}\kern-.08em\TeX}
   Arnoldi Methods}
   \author{George Oliveira}{Ainsworth Jr.}
   \advisor{Prof.}{Carlos}{Magluta}{D.Sc.}
-  \coadvisor{Prof.}{Ney}{Roytman}{D.Sc.}
+  \coadvisor{Prof.}{Ney}{Roitman}{D.Sc.}
   \examiner{Prof.}{Alvaro Luiz Gayoso Azeredo Coutinho}{D.Sc.}
   \examiner{Prof.}{Webe João Mansur}{Ph.D.}
   \examiner{Prof.}{Paulo Batista Gonçalves}{D.Sc.}
