@@ -294,7 +294,7 @@ p\kern-.025em e}}\kern-.08em\TeX}
 % least the following code.
 %    \begin{macrocode}
 %<*example>
-\documentclass[dsc]{coppe}
+\documentclass[dsc,dvipdfm]{coppe}
 \usepackage[latin1]{inputenc}
 \usepackage{amsmath,amssymb}
 
@@ -306,13 +306,13 @@ p\kern-.025em e}}\kern-.08em\TeX}
 
 \begin{document}
   \frontmatter
-  \title{Desenvolvimento de Um Algoritmo Baseado no Método de Arnoldi para
+  \title{Desenvolvimento de um Algoritmo Baseado no Método de Arnoldi para
   Solução de Problemas de Autovalor Generalizado}
   \foreigntitle{Solution of Generalized Eigensystems with Algorithms Based on
   Arnoldi Methods}
   \author{George Oliveira}{Ainsworth Jr.}
   \advisor{Prof.}{Carlos}{Magluta}{D.Sc.}
-  \coadvisor{Prof.}{Ney}{Roitman}{D.Sc.}
+  \coadvisor{Prof.}{Ney}{Roytman}{D.Sc.}
   \examiner{Prof.}{Alvaro Luiz Gayoso Azeredo Coutinho}{D.Sc.}
   \examiner{Prof.}{Webe João Mansur}{Ph.D.}
   \examiner{Prof.}{Paulo Batista Gonçalves}{D.Sc.}
@@ -407,6 +407,8 @@ p\kern-.025em e}}\kern-.08em\TeX}
 \RequirePackage[english,brazil]{babel}
 \RequirePackage{hyphenat}
 \RequirePackage{ifthen}
+\RequirePackage{graphicx}
+\RequirePackage{ifpdf}
 \RequirePackage[a4paper,bindingoffset=0.0cm,vcentering=true,%
 top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
 %    \end{macrocode}
@@ -426,21 +428,23 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
 \newboolean{maledoc}
 \setboolean{maledoc}{false}
 \setboolean{isdraft}{false}
+\newboolean{needbb}
+\setboolean{needbb}{false}
 %
 \DeclareOption{msc}{%
   \newcommand{\@degree}{M.Sc.}
-  \newcommand{\@degreename}{mestrado}
-  \newcommand{\local@degname}{Mestre em Ci{\^ e}ncias}
-  \newcommand{\foreign@degname}{Master of Science}
+  \newcommand{\@degreename}{Mestrado}
+  \newcommand{\local@degname}{Mestre}
+  \newcommand{\foreign@degname}{Master}
   \newcommand\local@doctype{Disserta{\c c}{\~ a}o}
   \newcommand\foreign@doctype{Dissertation}
   \setcounter{minexaminers}{2}
 }
 \DeclareOption{dscexam}{%
   \newcommand{\@degree}{D.Sc.}
-  \newcommand{\@degreename}{doutorado}
-  \newcommand{\local@degname}{Doutor em Ci{\^ e}ncias}
-  \newcommand{\foreign@degname}{Doctor of Science}
+  \newcommand{\@degreename}{Doutorado}
+  \newcommand{\local@degname}{Doutor}
+  \newcommand{\foreign@degname}{Doctor}
   \setboolean{maledoc}{true}
   \newcommand\local@doctype{Exame de Qualifica{\c c}{\~ a}o}
   \newcommand\foreign@doctype{Qualifying Exam}
@@ -448,9 +452,9 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
 }
 \DeclareOption{dsc}{%
   \newcommand{\@degree}{D.Sc.}
-  \newcommand{\@degreename}{doutorado}
-  \newcommand{\local@degname}{Doutor em Ci{\^ e}ncias}
-  \newcommand{\foreign@degname}{Doctor of Science}
+  \newcommand{\@degreename}{Doutorado}
+  \newcommand{\local@degname}{Doutor}
+  \newcommand{\foreign@degname}{Doctor}
   \newcommand\local@doctype{Tese}
   \newcommand\foreign@doctype{Thesis}
   \setcounter{minexaminers}{2}
@@ -459,7 +463,17 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
   \setboolean{isdraft}{true}
   \ClassWarning{coppe}{draft mode is ON}%
 }
-\ProcessOptions
+\DeclareOption{dvips}{%
+  \PassOptionsToPackage{dvips}{graphicx}
+}
+\DeclareOption{dvipdfm}{%
+  \PassOptionsToPackage{dvipdfm}{graphicx}
+  \setboolean{needbb}{true}
+}
+\DeclareOption{pdftex}{%
+  \PassOptionsToPackage{pdftex}{graphicx}
+}
+\ProcessOptions\relax
 %    \end{macrocode}
 %
 % \begin{macro}{\university}
@@ -689,23 +703,41 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
   }%
 }{}
   \begin{titlepage}
-  {\MakeUppercase\local@title}\par
-  \@authname\ \@authsurn\par
+  \begin{flushleft}
+  \setlength\baselineskip{0pt}
+  \setlength\parskip{1mm}
+  \makebox[20mm][c]{%
+    \ifthenelse{\boolean{needbb}}{%
+      \includegraphics[bb = 0 0 43 66]{minerva}}{%
+      \includegraphics{minerva}}}\par
+  \makebox[20mm][c]{\textbf{UFRJ}}
+  \end{flushleft}
+  \begin{center}
+  \nohyphens{\MakeUppercase\local@title}\par
+  \vspace*{\fill}
+  \nohyphens{\@authname\ \@authsurn}\par
+  \end{center}
+  \vspace*{\fill}
   \begin{flushright}
   \begin{minipage}{79mm}
-  \sloppy\nohyphens{\local@doctype\ de \@degreename\ apresentada ao Programa de Pós-graduação em  \local@deptname, COPPE, da \local@universityname, como parte dos requisitos  necessários à obtenção do título de MMESTE em \local@deptname.}
-  \end{minipage}
+  \frontcover@maintext
+  \end{minipage}\par
+  \vspace*{0.8cm}
   \begin{minipage}{79mm}
-  Orientadores: Fulano e Cicrano
+  \noindent\local@advisorstring:
+  \nohyphens{\@adname\ \@adsurn}%
+  \ifthenelse{\equal{\@coadname}{\@empty}}{.}{%
+  \nohyphens{\ e \@coadname\ \@coadsurn.}}
   \end{minipage}
   \end{flushright}
   \vspace*{\fill}
   \begin{center}
-  Rio de Janeiro\par
+  \local@cityname\par
   \local@monthname\ de \number\year
   \end{center}
   \end{titlepage}
-  \begin{titlepage}%
+  \clearpage
+  \thispagestyle{empty}
   \begin{center}%
     \sloppy\nohyphens{\MakeUppercase\local@title}\par%
     \vskip 1.0cm%
@@ -736,7 +768,6 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
   \end{flushright}
   \vfill
   \frontpage@bottomtext
-  \end{titlepage}%
   \ifthenelse{\boolean{maledoc}}{}{\makecatalog}%
   \global\let\maketitle\relax%
   \global\let\and\relax}
@@ -746,8 +777,14 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
 % \end{macro}
 %
 % \begin{macro}{\makecatalog}
+% When the document has illustrations, it is required to insert '': il.;´´
+% between the number of pages of the textual part and the page dimension.
+% We have created a label to flag the existence of lists of figures. It is
+% checked to be undefined using the
+% plain \TeX\ command |\@isundefined|~\cite{TeX:FAQ}.
 %    \begin{macrocode}
 \newcommand\makecatalog{%
+  \clearpage
   \thispagestyle{plain}
   \setcounter{page}{3}
   \vspace*{\fill}
@@ -756,28 +793,28 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
     \framebox[120mm][c]{\makebox[5mm][c]{}%
       \begin{minipage}[c]{105mm}
       \setlength{\parindent}{0.55cm}
-      \noindent \sloppy\nohyphens\@authsurn,
+      \noindent\sloppy\nohyphens\@authsurn,
       \nohyphens\@authname\par
-      \local@title/\@authname\ \@authsurn. -- \local@cityname:
-      UFRJ/COPPE, \number\year.\par
+      \nohyphens{\local@title/\@authname\ \@authsurn. -- \local@cityname:
+      UFRJ/COPPE, \number\year.}\par
       \pageref{front:pageno},
       \pageref{main:pageno}
-      p.\ifthenelse{\isundefined{\@lofflag}}{INDEFINIDO}{DEFINIDO} $29,7$cm.\par
-      \local@advisorstring:\ \@adname\ \@adsurn
-     \ifthenelse{\equal{\@coadname}{\@empty}}{.}{, \@coadname\ \@coadsurn.}\par
-      \nohyphens{\local@doctype\ (\@degreename) --
+      p.\@ifundefined{r@cat:lofflag}{}{\pageref{cat:lofflag}} $29,7$cm.\par
+      \nohyphens{\local@advisorstring:\ \@adname\ \@adsurn
+      \ifthenelse{\equal{\@coadname}{\@empty}}{.}{, \@coadname\ \@coadsurn.}}\par
+      \nohyphens{\local@doctype\ ({\MakeLowercase\@degreename}) --
       UFRJ/COPPE/Programa de \local@deptname, \number\year.}\par
       \bibname: p. \pageref{bib:begin} -- \pageref{bib:end}.\par
       \count1=0
       \count2=1
-      \@whilenum \count1<\value{keywords} \do {%
+      \nohyphens{\@whilenum \count1<\value{keywords} \do {%
         \number\count2. \csname K:\the\count1 \endcsname.
         \advance\count1 by 1
         \advance\count2 by 1}
       I. \@adsurn, \@adname%
-      \ifthenelse{\equal{\@coadname}{\@empty}}{}{\emph{\ et al.}}.
+      \ifthenelse{\equal{\@coadname}{\@empty}}{}{\emph{~et~al.}}.
       II. \local@universityname, COPPE, Programa de \local@deptname.
-      III. T{\' i}tulo.
+      III. T{\' i}tulo.}
     \end{minipage}}
   \end{center}
   \vspace*{\fill}}
@@ -869,7 +906,8 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
 % \begin{macro}{\listoffigures}
 %    \begin{macrocode}
 \renewcommand\listoffigures{%
-    \global\def\@lofflag{: il.;}%
+  \immediate\write\@auxout{%
+  \string\newlabel{cat:lofflag}{{}{:~il.;}{}{}{}}}
     \if@twocolumn
       \@restonecoltrue\onecolumn
     \else
@@ -1069,6 +1107,15 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
 \newcommand\local@statename{RJ}
 \newcommand\local@countryname{Brasil}
 %
+\newcommand\frontcover@maintext{
+  \sloppy\nohyphens{\local@doctype\ de \@degreename\
+  \ifthenelse{\boolean{maledoc}}{apresentado}{apresentada}
+  ao Programa de P{\' o}s-gradua{\c c}{\~ a}o em \local@deptname,
+  COPPE, da \local@universityname, como parte dos requisitos
+  necess{\' a}rios {\` a} obten{\c c}{\~ a}o do t{\' i}tulo de
+  \local@degname\ em \local@deptname.}
+}
+%
 \newcommand\frontpage@maintext{
   \noindent {\MakeUppercase\local@doctype}
   \ifthenelse{\boolean{maledoc}}{SUBMETIDO}{SUBMETIDA}
@@ -1076,7 +1123,7 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
   DE P{\' O}S-GRADUA{\c C}{\~ A}O E PESQUISA DE ENGENHARIA DA
   UNIVERSIDADE FEDERAL DO RIO DE JANEIRO COMO PARTE DOS REQUISITOS
   NECESS{\' A}RIOS PARA A OBTEN{\c C}{\~ A}O DO GRAU DE
-  {\MakeUppercase\local@degname} EM}
+  {\MakeUppercase\local@degname} EM CI{\^E}NCIAS EM}
   {\MakeUppercase\local@deptname. \par}%
 }
 %
@@ -1092,12 +1139,12 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
   \local@doctype\ \ifthenelse{\boolean{maledoc}}{apresentado}{apresentada}
   \sloppy\nohyphens{{\` a} COPPE/UFRJ como parte dos requisitos
   necess{\' a}rios para a obten{\c c}{\~ a}o do grau de
-  \local@degname\ (\@degree)}
+  \local@degname\ em Ci{\^ e}ncias (\@degree)}
 }
 \newcommand\foreignabstract@toptext{%
   \noindent \sloppy\nohyphens{Abstract of \foreign@doctype\ presented to
   COPPE/UFRJ as a partial fulfillment of the requirements for the
-  degree of \foreign@degname\ (\@degree)}
+  degree of \foreign@degname\ of Science (\@degree)}
 }
 %
 %    \end{macrocode}
