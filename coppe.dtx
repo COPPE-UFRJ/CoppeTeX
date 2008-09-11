@@ -425,11 +425,12 @@ p\kern-.025em e}}\kern-.08em\TeX}
 %    \begin{macrocode}
 %<*class>
 \def\filename{coppe.dtx}
-\def\fileversion{v1.0}
+\def\fileversion{v2.0}
 \def\filedate{2007/03/01}
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{coppe}[\filedate\ \fileversion\ COPPE Dissertations and Thesis]
 \LoadClass[12pt,a4paper,oneside]{book}
+\RequirePackage{hyperref}
 \RequirePackage[english,brazil]{babel}
 \RequirePackage{hyphenat}
 \RequirePackage{ifthen}
@@ -437,6 +438,8 @@ p\kern-.025em e}}\kern-.08em\TeX}
 \RequirePackage{ifpdf}
 \RequirePackage[a4paper,bindingoffset=0.0cm,vcentering=true,%
 top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
+\def\CoppeTeX{{\rm C\kern-.05em{\sc o\kern-.025em p\kern-.025em
+p\kern-.025em e}}\kern-.08em\TeX}
 %    \end{macrocode}
 %
 % The default line spacing is $1.5pt$.
@@ -490,14 +493,14 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
   \ClassWarning{coppe}{draft mode is ON}%
 }
 \DeclareOption{dvips}{%
-  \PassOptionsToPackage{dvips}{graphicx}
+  \PassOptionsToPackage{dvips}{hyperref,graphicx}
 }
 \DeclareOption{dvipdfm}{%
-  \PassOptionsToPackage{dvipdfm}{graphicx}
+  \PassOptionsToPackage{dvipdfm}{hyperref,graphicx}
   \setboolean{needbb}{true}
 }
 \DeclareOption{pdftex}{%
-  \PassOptionsToPackage{pdftex}{graphicx}
+  \PassOptionsToPackage{pdftex}{hyperref,graphicx}
 }
 \ProcessOptions\relax
 %    \end{macrocode}
@@ -718,6 +721,41 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
 % \begin{macro}{\maketitle}
 %    \begin{macrocode}
 \renewcommand\maketitle{%
+\begingroup
+  % changes to \toks@ and \count@ are kept local;
+  % it's not necessary for them, but it is usually the case
+  % for \count1, because the first ten counters are written
+  % to the DVI file, thus you got lucky because of PDF output
+  \toks@={}% in this special case not necessary
+  \count@=0 %
+  \@whilenum\count@<\value{keywords}\do{%
+    % * a keyword separator is not necessary,
+    %    if there is onlyone keyword
+    % * \csname K:\the\count@\endcsname must be expanded
+    %    at least once, to get rid of the loop depended \count@
+    \ifcase\count@ % same as \ifnum0=\count@
+      \toks@=\expandafter{\csname K:\the\count@\endcsname}%
+    \else
+      \toks@=\expandafter\expandafter\expandafter{%
+        \expandafter\the\expandafter\toks@
+        \expandafter;\expandafter\space
+        \csname K:\the\count@\endcsname
+      }%
+    \fi
+    \advance\count@ by 1 %
+  }%
+  \edef\x{\endgroup
+    \noexpand\hypersetup{%
+      pdfkeywords={\the\toks@}%
+    }%
+  }%
+\x
+\hypersetup{%
+  pdfauthor={\@authname\ \@authsurn},
+  pdftitle={\local@title},
+  pdfsubject={\local@doctype\ de \@degreename\ em \local@deptname\ da COPPE/UFRJ},
+  pdfcreator={LaTeX with CoppeTeX toolkit}
+}
 \ifthenelse{\@examiner<\value{minexaminers}}{%
   \ifthenelse{\boolean{isdraft}}{%
     \ClassWarning{coppe}{Too few examiners for a \local@doctype}%
@@ -736,7 +774,7 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
     \ifthenelse{\boolean{needbb}}{%
       \includegraphics[bb = 0 0 43 66]{minerva}}{%
       \includegraphics{minerva}}}\par
-  \makebox[20mm][c]{\textbf{UFRJ}}
+  \makebox[20mm][c]{\textbf{\small UFRJ}}
   \end{flushleft}
   \begin{center}
   \nohyphens{\MakeUppercase\local@title}\par
