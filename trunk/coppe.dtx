@@ -331,7 +331,6 @@ p\kern-.025em e}}\kern-.08em\TeX}
 \makeloabbreviations
 
 \begin{document}
-  \frontmatter
   \title{Desenvolvimento de um Algoritmo Baseado no Método de Arnoldi para
   Solução de Problemas de Autovalor Generalizado}
   \foreigntitle{Solution of Generalized Eigensystems with Algorithms Based on
@@ -349,6 +348,8 @@ p\kern-.025em e}}\kern-.08em\TeX}
   \keyword{Método de Arnoldi}
   \keyword{Análise Dinâmica}
   \maketitle
+
+  \frontmatter
 
   \dedication{%
   À minha mãe pelo dom da vida e pelo amparo ao longo desses anos.\\
@@ -430,6 +431,7 @@ p\kern-.025em e}}\kern-.08em\TeX}
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{coppe}[\filedate\ \fileversion\ COPPE Dissertations and Thesis]
 \LoadClass[12pt,a4paper,oneside]{book}
+\RequirePackage{lastpage}
 \RequirePackage{hyperref}
 \RequirePackage[english,brazil]{babel}
 \RequirePackage{hyphenat}
@@ -501,6 +503,7 @@ p\kern-.025em e}}\kern-.08em\TeX}
 }
 \DeclareOption{pdftex}{%
   \PassOptionsToPackage{pdftex}{hyperref,graphicx}
+  \PassOptionsToPackage{plainpages=false,pdfpagelabels}{hyperref}
 }
 \ProcessOptions\relax
 %    \end{macrocode}
@@ -687,8 +690,13 @@ p\kern-.025em e}}\kern-.08em\TeX}
 \renewcommand\frontmatter{%
   \cleardoublepage
   \@mainmatterfalse
-  \pagestyle{plain}
-  \pagenumbering{roman}}
+  \pagenumbering{roman}
+  \thispagestyle{empty}
+  \makefrontpage
+  \clearpage
+  \thispagestyle{plain}
+  \ifthenelse{\boolean{maledoc}}{}{\makecatalog}%
+}
 %    \end{macrocode}
 % \end{macro}
 %
@@ -696,7 +704,7 @@ p\kern-.025em e}}\kern-.08em\TeX}
 %    \begin{macrocode}
 \renewcommand\mainmatter{%
   \immediate\write\@auxout{%
-    \string\newlabel{front:pageno}{{}{\Roman{page}}{}{}{}}}
+    \string\newlabel{front:pageno}{{}{\Roman{page}}{}{page.\roman{page}}{}}}
   \cleardoublepage
   \@mainmattertrue
   \pagestyle{plain}
@@ -721,6 +729,97 @@ p\kern-.025em e}}\kern-.08em\TeX}
 % \begin{macro}{\maketitle}
 %    \begin{macrocode}
 \renewcommand\maketitle{%
+\pagenumbering{alph}
+\config@hypersetup
+\ifthenelse{\@examiner<\value{minexaminers}}{%
+  \ifthenelse{\boolean{isdraft}}{%
+    \ClassWarning{coppe}{Too few examiners for a \local@doctype}%
+  }{%
+    \ClassError{coppe}{%
+    Too few examiners for a \local@doctype}{%
+    This value is regulated by the Academic Registry at COPPE/UFRJ.\MessageBreak
+    To disable this check, enable the draft option of the coppe class.}%
+  }%
+}{}
+  \begin{titlepage}
+  \begin{flushleft}
+  \setlength\baselineskip{0pt}
+  \setlength\parskip{1mm}
+  \makebox[20mm][c]{%
+    \ifthenelse{\boolean{needbb}}{%
+      \includegraphics[bb = 0 0 43 66]{minerva}}{%
+      \includegraphics{minerva}}}\par
+  \makebox[20mm][c]{\textbf{\small UFRJ}}
+  \end{flushleft}
+  \begin{center}
+  \nohyphens{\MakeUppercase\local@title}\par
+  \vspace*{\fill}
+  \nohyphens{\@authname\ \@authsurn}\par
+  \end{center}
+  \vspace*{\fill}
+  \begin{flushright}
+  \begin{minipage}{80mm}
+  \frontcover@maintext
+  \end{minipage}\par
+  \vspace*{0.8cm}
+  \begin{minipage}{80mm}
+  \noindent\local@advisorstring:
+  \nohyphens{\@adname\ \@adsurn}%
+  \ifthenelse{\equal{\@coadname}{\@empty}}{.}{%
+  \nohyphens{\ e \@coadname\ \@coadsurn.}}
+  \end{minipage}
+  \end{flushright}
+  \vspace*{\fill}
+  \begin{center}
+  \local@cityname\par
+  \local@monthname\ de \number\year
+  \end{center}
+  \end{titlepage}
+  \global\let\maketitle\relax%
+  \global\let\and\relax}
+%    \end{macrocode}
+% \changes{v0.3}{2008/03/07}{Added number of examiners test.}
+% \changes{v0.3}{2008/03/07}{Generalization.}
+% \end{macro}
+%
+%
+%    \begin{macrocode}
+\newcommand\makefrontpage{%
+  \begin{center}%
+    \sloppy\nohyphens{\MakeUppercase\local@title}\par%
+    \vskip 1.0cm%
+    {\@authname\ \@authsurn}\par%
+  \end{center}\par%
+  \vskip 0.83cm%
+  \frontpage@maintext%
+  \vskip 0.8cm%
+  \noindent \local@approvedname:\par%
+  \begin{flushright}%
+     \begin{minipage}{0.68\textwidth}%
+        \centering
+        \ifthenelse{\equal{\@adname}{\@empty}}{}{%
+          \vskip16\p@ \baselineskip12pt
+          \makebox[\textwidth]{\hrulefill}
+          \@adtitle\ \@adname\ \@adsurn, \@addegree}
+        \ifthenelse{\equal{\@coadname}{\@empty}}{}{%
+          \vskip26\p@ \baselineskip12pt
+          \makebox[\textwidth]{\hrulefill}
+          \@coadtitle\ \@coadname\ \@coadsurn, \@coaddegree}
+        \count1=0
+        \@whilenum \count1<\@examiner \do {%
+            \vskip26\p@ \baselineskip12pt
+            \makebox[\textwidth]{\hrulefill}
+            \csname S:\the\count1 \endcsname
+            \advance\count1 by 1}
+     \end{minipage}
+  \end{flushright}
+  \vfill
+  \frontpage@bottomtext}
+
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\newcommand\config@hypersetup{%
 \begingroup
   % changes to \toks@ and \count@ are kept local;
   % it's not necessary for them, but it is usually the case
@@ -755,90 +854,8 @@ p\kern-.025em e}}\kern-.08em\TeX}
   pdftitle={\local@title},
   pdfsubject={\local@doctype\ de \@degreename\ em \local@deptname\ da COPPE/UFRJ},
   pdfcreator={LaTeX with CoppeTeX toolkit}
-}
-\ifthenelse{\@examiner<\value{minexaminers}}{%
-  \ifthenelse{\boolean{isdraft}}{%
-    \ClassWarning{coppe}{Too few examiners for a \local@doctype}%
-  }{%
-    \ClassError{coppe}{%
-    Too few examiners for a \local@doctype}{%
-    This value is regulated by the Academic Registry at COPPE/UFRJ.\MessageBreak
-    To disable this check, enable the draft option of the coppe class.}%
-  }%
-}{}
-  \begin{titlepage}
-  \begin{flushleft}
-  \setlength\baselineskip{0pt}
-  \setlength\parskip{1mm}
-  \makebox[20mm][c]{%
-    \ifthenelse{\boolean{needbb}}{%
-      \includegraphics[bb = 0 0 43 66]{minerva}}{%
-      \includegraphics{minerva}}}\par
-  \makebox[20mm][c]{\textbf{\small UFRJ}}
-  \end{flushleft}
-  \begin{center}
-  \nohyphens{\MakeUppercase\local@title}\par
-  \vspace*{\fill}
-  \nohyphens{\@authname\ \@authsurn}\par
-  \end{center}
-  \vspace*{\fill}
-  \begin{flushright}
-  \begin{minipage}{79mm}
-  \frontcover@maintext
-  \end{minipage}\par
-  \vspace*{0.8cm}
-  \begin{minipage}{79mm}
-  \noindent\local@advisorstring:
-  \nohyphens{\@adname\ \@adsurn}%
-  \ifthenelse{\equal{\@coadname}{\@empty}}{.}{%
-  \nohyphens{\ e \@coadname\ \@coadsurn.}}
-  \end{minipage}
-  \end{flushright}
-  \vspace*{\fill}
-  \begin{center}
-  \local@cityname\par
-  \local@monthname\ de \number\year
-  \end{center}
-  \end{titlepage}
-  \clearpage
-  \thispagestyle{empty}
-  \begin{center}%
-    \sloppy\nohyphens{\MakeUppercase\local@title}\par%
-    \vskip 1.0cm%
-    {\@authname\ \@authsurn}\par%
-  \end{center}\par%
-  \vskip 0.83cm%
-  \frontpage@maintext%
-  \vskip 0.8cm%
-  \noindent \local@approvedname:\par%
-  \begin{flushright}%
-     \begin{minipage}{0.68\textwidth}%
-        \centering
-        \ifthenelse{\equal{\@adname}{\@empty}}{}{%
-          \vskip16\p@ \baselineskip14pt
-          \makebox[\textwidth]{\hrulefill}
-          \@adtitle\ \@adname\ \@adsurn, \@addegree}
-        \ifthenelse{\equal{\@coadname}{\@empty}}{}{%
-          \vskip16\p@ \baselineskip12pt
-          \makebox[\textwidth]{\hrulefill}
-          \@coadtitle\ \@coadname\ \@coadsurn, \@coaddegree}
-        \count1=0
-        \@whilenum \count1<\@examiner \do {%
-            \vskip16\p@ \baselineskip14pt
-            \makebox[\textwidth]{\hrulefill}
-            \csname S:\the\count1 \endcsname
-            \advance\count1 by 1}
-     \end{minipage}
-  \end{flushright}
-  \vfill
-  \frontpage@bottomtext
-  \ifthenelse{\boolean{maledoc}}{}{\makecatalog}%
-  \global\let\maketitle\relax%
-  \global\let\and\relax}
+}}
 %    \end{macrocode}
-% \changes{v0.3}{2008/03/07}{Added number of examiners test.}
-% \changes{v0.3}{2008/03/07}{Generalization.}
-% \end{macro}
 %
 % \begin{macro}{\makecatalog}
 % When the document has illustrations, it is required to insert '': il.;´´
@@ -848,9 +865,6 @@ p\kern-.025em e}}\kern-.08em\TeX}
 % plain \TeX\ command |\@isundefined|~\cite{TeX:FAQ}.
 %    \begin{macrocode}
 \newcommand\makecatalog{%
-  \clearpage
-  \thispagestyle{plain}
-  \setcounter{page}{3}
   \vspace*{\fill}
   \begin{center}
     \setlength{\fboxsep}{5mm}
@@ -862,7 +876,7 @@ p\kern-.025em e}}\kern-.08em\TeX}
       \nohyphens{\local@title/\@authname\ \@authsurn. -- \local@cityname:
       UFRJ/COPPE, \number\year.}\par
       \pageref{front:pageno},
-      \pageref{main:pageno}
+      \pageref{LastPage}
       p.\@ifundefined{r@cat:lofflag}{}{\pageref{cat:lofflag}} $29,7$cm.\par
       \nohyphens{\local@advisorstring:\ \@adname\ \@adsurn
       \ifthenelse{\equal{\@coadname}{\@empty}}{.}{, \@coadname\ \@coadsurn.}}\par
@@ -971,7 +985,7 @@ p\kern-.025em e}}\kern-.08em\TeX}
 %    \begin{macrocode}
 \renewcommand\listoffigures{%
   \immediate\write\@auxout{%
-  \string\newlabel{cat:lofflag}{{}{:~il.;}{}{}{}}}
+  \string\newlabel{cat:lofflag}{{}{:~il.;}{}{page.\roman{page}}{}}}
     \if@twocolumn
       \@restonecoltrue\onecolumn
     \else
@@ -1089,7 +1103,7 @@ p\kern-.025em e}}\kern-.08em\TeX}
      {\chapter*{\bibname}%
       \addcontentsline{toc}{chapter}{\bibname}%
       \immediate\write\@auxout{%
-      \string\newlabel{bib:begin}{{}{\arabic{page}}{}{}{}}}%
+      \string\newlabel{bib:begin}{{}{\arabic{page}}{}{page.\arabic{page}}{}}}%
       \list{\@biblabel{\@arabic\c@enumiv}}%
            {\setlength{\labelwidth}{0ex}%
             \setlength{\leftmargin}{9.0ex}%
@@ -1107,7 +1121,7 @@ p\kern-.025em e}}\kern-.08em\TeX}
      {\def\@noitemerr%
        {\@latex@warning{Empty `thebibliography' environment}}%
       \immediate\write\@auxout{%
-      \string\newlabel{bib:end}{{}{\arabic{page}}{}{}{}}}%
+      \string\newlabel{bib:end}{{}{\arabic{page}}{}{page.\arabic{page}}{}}}%
       \endlist}
 %    \end{macrocode}
 %
@@ -1148,10 +1162,6 @@ p\kern-.025em e}}\kern-.08em\TeX}
   \columnsep 35\p@
   \let\item\@idxitem}
   {\if@restonecol\onecolumn\else\clearpage\fi}
-\AtEndDocument{%
-  \immediate\write\@auxout{%
-    \string\newlabel{main:pageno}{{}{\arabic{page}}{}{}{}}}%
-}
 \newcommand\glossaryname{Glossary}
 \newcommand\listabbreviationname{Lista de Abreviaturas}
 \newcommand\listsymbolname{Lista de S{\' i}mbolos}
