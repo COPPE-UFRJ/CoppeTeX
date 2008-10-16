@@ -143,7 +143,7 @@ p\kern-.025em e}}\kern-.08em\TeX}
 % The |coppe| document class is the main product of \CoppeTeX. It enables the
 % creation of dissertations, qualifying exams and thesis in a simple and
 % automatic way. Therefore, authors can be strictly focused on text
-% composition without worring about margins sizes,
+% composition without worrying about margins sizes,
 % line spacing, paper size, vertical and horizontal alignment, etc.
 % The \CoppeTeX\ comprehends also \BibTeX\ and MakeIndex style files
 % for creating lists of references, symbols and abbreviations.
@@ -167,7 +167,7 @@ p\kern-.025em e}}\kern-.08em\TeX}
 % The |coppe| class was designed to be clear and succinct. Its simple interface
 % enables the creation of well structured documents in an elegant fashion, in
 % such a way that all of the needed elements are automatically constructed.
-% These elements comprehend the front face, cataloguing details, abstracts and
+% These elements comprehend the front face, cataloging details, abstracts and
 % references.
 % They are regulated by the Academic Registry at COPPE/UFRJ \cite{TNR08a}.
 %
@@ -175,30 +175,36 @@ p\kern-.025em e}}\kern-.08em\TeX}
 % be composed of three parts: frontmatter, mainmatter and backmatter.
 % You can start these parts using |\frontmatter|, |\mainmatter| and
 % |\backmatter|.  The frontmatter of a thesis comprehends the front face,
-% cataloging page, dedication, aknowledgements, abstracts, table of contents,
-% and lists of tables, algorithms, symbols and abbreviations. Chapters and
-% appendix form the mainmatter. The backmatter is usually composed by the
-% bibliograpphic references and an index.
+% cataloging page, dedication, acknowledgments, abstracts, table of contents,
+% and lists of tables, algorithms, symbols and abbreviations. The mainmatter
+% is just composed by the document chapters.
+% The backmatter is usually composed by
+% bibliographic references, appendices and index.
+%
+%
+% \subsection*{Front cover}
+%
+% In July 2008, the Academic Registry has introduced 
 %
 % \subsection*{Front face}
-% The front face is unumbered. There, it is not allowed to use
+% The front face is unnumbered. There, it is not allowed to use
 % hyphenation~\cite{TNR08a}. It is constructed by calling |\maketitle|.
 % Next, it is described the commands used to
 % enter the information required to create it.
 %
 % \DescribeMacro{\author}
 % The |\author| command was redefined. Here, it receives two arguments:
-% the author's surname and firstnames, e.g. |\author{First Names}{Surname}|.
+% the author's surname and first names, e.g. |\author{First Names}{Surname}|.
 % The words should be typed with
 % only first letters in uppercase.
 %
 % \DescribeMacro{\title}
 % \DescribeMacro{\foreigntitle}
 % Used to enter the titles of the monograph in the current and foreign
-% languages. The default languages are brazilian portuguese and english.
+% languages. The default languages are Brazilian Portuguese and English.
 % The |babel| package is automatically loaded by |coppe.cls|, so you
-% don't need to load it again. The brazilian portuguese is the main language
-% and the english is only required for the foreign abstract.
+% don't need to load it again. The Brazilian Portuguese is the main language
+% and the English is only required for the foreign abstract.
 %
 % \DescribeMacro{\advisor}
 % \DescribeMacro{\coadvisor}
@@ -211,14 +217,14 @@ p\kern-.025em e}}\kern-.08em\TeX}
 %   \advisor{Prof.}{Advisor's Name}{Surname}{PhD}
 %   \coadvisor{Prof.}{Co-advisor's Name}{Surname}{DSc}
 % \end{verbatim}
-% The examinators' name are entered as follows:
+% The examiners' name are entered as follows:
 % \begin{verbatim}
 %   \examiner{Prof.}{First Examiner's Complete Name}{DSc}
 %   \examiner{Prof.}{Second Examiner's Complete Name}{PhD}
 %   ...
 % \end{verbatim}
 %
-% The difference in providing advisors and examinators' names was introduces in
+% The difference in providing advisors and examiners' names was introduces in
 % version 2.0, because
 % of the new standard approved in 3rd July 2008.
 % Remember that all names must be given before calling |\maketitle|.
@@ -250,8 +256,8 @@ p\kern-.025em e}}\kern-.08em\TeX}
 % The keywords should describe the concentration areas of your work.
 % Usually, six words are enough.
 %
-% \subsection*{Cataloguing details}
-% This page contains cataloguing information useful for librarians.  It is
+% \subsection*{Cataloging details}
+% This page contains cataloging information useful for librarians.  It is
 % automatically generated from the data entered by the user when calling
 % |\maketitle|, except in qualifying exams.
 % 
@@ -259,7 +265,7 @@ p\kern-.025em e}}\kern-.08em\TeX}
 % \DescribeMacro{\dedication}
 % This macro was added for convenience. The entered text is placed
 % at the right bottom of a blank page. It is emphasized and in normal
-% size. It is numbered with roman algarisms.
+% size. It is numbered with roman numerals.
 %
 % \subsection*{Abstracts}
 % \DescribeEnv{abstract}
@@ -276,8 +282,8 @@ p\kern-.025em e}}\kern-.08em\TeX}
 % \DescribeMacro{\abbrev}
 % \DescribeMacro{\symbl}
 % The lists of symbols and abbreviations are optionals. It is recommended
-% to define a symbol/abbreviation in its first ocurrence in the text.
-% They are lexicographicaly sorted by using the |makeindex| program.
+% to define a symbol/abbreviation in its first occurrence in the text.
+% They are lexicographically sorted by using the |makeindex| program.
 % You have to pass the distributed MakeIndex style |coppe.ist| to |makeindex|
 % to get these lists correctly displayed.
 %
@@ -304,7 +310,7 @@ p\kern-.025em e}}\kern-.08em\TeX}
 % The \CoppeTeX\ loads by default |graphicx| using the |dvips| driver, so
 % you mustn't load it by yourself.
 % In addition, you can tell the |coppe| class to use
-% your preffered graphics driver. For simplicity, we
+% your preferred graphics driver. For simplicity, we
 % provide 3 standard options: |dvips|, |pdftex| and |dvipdfm|.
 %
 % If you would like
@@ -337,7 +343,7 @@ p\kern-.025em e}}\kern-.08em\TeX}
   Arnoldi Methods}
   \author{George Oliveira}{Ainsworth Jr.}
   \advisor{Prof.}{Carlos}{Magluta}{D.Sc.}
-  \coadvisor{Prof.}{Ney}{Roitman}{D.Sc.}
+  \coadvisor{Prof.}{Antonio Alberto Fernandes de}{Oliveira}{D.Sc.}
   \examiner{Prof.}{Alvaro Luiz Gayoso Azeredo Coutinho}{D.Sc.}
   \examiner{Prof.}{Webe João Mansur}{Ph.D.}
   \examiner{Prof.}{Paulo Batista Gonçalves}{D.Sc.}
@@ -378,7 +384,7 @@ p\kern-.025em e}}\kern-.08em\TeX}
   Mathematics areas. In Civil Engineering, especially in Structural Analysis,
   eigensystems have a fundamental importance. A typical example is in dynamic
   analysis, where the eigenvalues represent the natural frequencies and
-  eigenvectors the mode shape. The incresing demand for efficient numeric
+  eigenvectors the mode shape. The increasing demand for efficient numeric
   evaluation of eigenvalues and eigenvectors motivated the search for new
   methods for the solution of complex eigensystems.
   \end{foreignabstract} 
@@ -581,7 +587,7 @@ p\kern-.025em e}}\kern-.08em\TeX}
 % \end{macro}
 %
 % \begin{macro}{\advisor}
-% Defines globaly the title, name and academic degree of the advisor.
+% Defines globally the title, name and academic degree of the advisor.
 %    \begin{macrocode}
 \newcommand\advisor[4]{%
   \global\def\@adtitle{#1}%
@@ -593,7 +599,7 @@ p\kern-.025em e}}\kern-.08em\TeX}
 % \end{macro}
 %
 % \begin{macro}{\coadvisor}
-% Defines globaly the title, name and academic degree of the coadvisor.
+% Defines globally the title, name and academic degree of the co-advisor.
 %    \begin{macrocode}
 \newcommand\coadvisor[4]{%
   \global\def\@coadtitle{#1}%
@@ -625,7 +631,7 @@ p\kern-.025em e}}\kern-.08em\TeX}
 %
 % \begin{macro}{\author}
 % It is redefined to allow the identification of the author's
-% firstnames and surname.
+% first names and surname.
 %    \begin{macrocode}
 \renewcommand\author[2]{%
   \global\def\@authname{#1}
@@ -635,7 +641,7 @@ p\kern-.025em e}}\kern-.08em\TeX}
 % \end{macro}
 %
 % \begin{macro}{\date}
-% This code enables makes easy to switch from dates in diferent languages.
+% This code enables makes easy to switch from dates in different languages.
 %    \begin{macrocode}
 \renewcommand\date[2]{%
   \month=#1
@@ -692,6 +698,7 @@ p\kern-.025em e}}\kern-.08em\TeX}
   \@mainmatterfalse
   \pagenumbering{roman}
   \thispagestyle{empty}
+  \setcounter{page}{2}
   \makefrontpage
   \clearpage
   \pagestyle{plain}
@@ -758,16 +765,21 @@ p\kern-.025em e}}\kern-.08em\TeX}
   \end{center}
   \vspace*{\fill}
   \begin{flushright}
-  \begin{minipage}{80mm}
+  \begin{minipage}{100mm}
   \frontcover@maintext
   \end{minipage}\par
   \vspace*{0.8cm}
-  \begin{minipage}{80mm}
-  \noindent\local@advisorstring:
-  \nohyphens{\@adname\ \@adsurn}%
-  \ifthenelse{\equal{\@coadname}{\@empty}}{.}{%
-  \nohyphens{\ e \@coadname\ \@coadsurn.}}
+
+  \begin{minipage}{100mm}
+  \noindent\local@advisorstring:%
+  \begin{tabular}[t]{l}
+    \@adname\ \@adsurn\\
+    \ifthenelse{\equal{\@coadname}{\@empty}}{}{\@coadname\ \@coadsurn\\}
+  \end{tabular}
+
   \end{minipage}
+
+
   \end{flushright}
   \vspace*{\fill}
   \begin{center}
@@ -829,7 +841,7 @@ p\kern-.025em e}}\kern-.08em\TeX}
   \count@=0 %
   \@whilenum\count@<\value{keywords}\do{%
     % * a keyword separator is not necessary,
-    %    if there is onlyone keyword
+    %    if there is just one keyword
     % * \csname K:\the\count@\endcsname must be expanded
     %    at least once, to get rid of the loop depended \count@
     \ifcase\count@ % same as \ifnum0=\count@
@@ -1242,7 +1254,7 @@ postamble
 %</glossary>
 %    \end{macrocode}
 %
-% \section*{Aknowledgements}
+% \section*{Acknowledgments}
 % The authors would like to thank the National Council for Scientific and
 % Technological Development (CNPq). They are also grateful to
 % Alvaro Cuno for setting up the initial SVN repository,
