@@ -318,6 +318,12 @@ p\kern-.025em e}}\kern-.08em\TeX}
 % To do so, just call |pdflatex| instead of |latex| over your main \LaTeX\
 % source. Note that PDF\TeX\ requires all illustrations in PDF.
 %
+% \section{Quality printing}
+%
+% To get your work correctly dimensioned,
+% you must be sure any page scaling option (e.g. fit or shrink to printable
+% area) isn't enabled.
+%
 % \section{A Simple Example}
 % \label{COPPE:SAMPLE}
 % A basic document using the |coppe| class should contain at
@@ -326,12 +332,9 @@ p\kern-.025em e}}\kern-.08em\TeX}
 %
 %    \begin{macrocode}
 %<*example>
-\documentclass[dsc,pdftex]{coppe}
+\documentclass[dsc,dvips]{coppe}
 \usepackage[latin1]{inputenc}
 \usepackage{amsmath,amssymb}
-
-\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
-    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 
 \makelosymbols
 \makeloabbreviations
@@ -342,8 +345,8 @@ p\kern-.025em e}}\kern-.08em\TeX}
   \foreigntitle{Solution of Generalized Eigensystems with Algorithms Based on
   Arnoldi Methods}
   \author{George Oliveira}{Ainsworth Jr.}
-  \advisor{Prof.}{Carlos}{Magluta}{D.Sc.}
-  \coadvisor{Prof.}{Antonio Alberto Fernandes de}{Oliveira}{D.Sc.}
+  \advisor{Prof.}{Cl{\'a}udio}{Esperança}{Ph.D.}
+  \coadvisor{Prof.}{Ant{\^ o}nio Alberto Fernandes de}{Oliveira}{D.Sc.}
   \examiner{Prof.}{Alvaro Luiz Gayoso Azeredo Coutinho}{D.Sc.}
   \examiner{Prof.}{Webe João Mansur}{Ph.D.}
   \examiner{Prof.}{Paulo Batista Gonçalves}{D.Sc.}
@@ -443,6 +446,8 @@ p\kern-.025em e}}\kern-.08em\TeX}
 \RequirePackage{hyphenat}
 \RequirePackage{ifthen}
 \RequirePackage{graphicx}
+\RequirePackage{tabularx}
+\RequirePackage{eqparbox}
 \RequirePackage{ifpdf}
 \RequirePackage[a4paper,bindingoffset=0.0cm,vcentering=true,%
 top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
@@ -760,26 +765,20 @@ p\kern-.025em e}}\kern-.08em\TeX}
   \end{flushleft}
   \begin{center}
   \nohyphens{\MakeUppercase\local@title}\par
-  \vspace*{\fill}
+  \vspace*{28mm}
   \nohyphens{\@authname\ \@authsurn}\par
   \end{center}
-  \vspace*{\fill}
+  \vspace*{16mm}
   \begin{flushright}
-  \begin{minipage}{100mm}
+  \begin{minipage}{80mm}
   \frontcover@maintext
   \end{minipage}\par
-  \vspace*{0.8cm}
-
-  \begin{minipage}{100mm}
-  \noindent\local@advisorstring:%
-  \begin{tabular}[t]{l}
-    \@adname\ \@adsurn\\
-    \ifthenelse{\equal{\@coadname}{\@empty}}{}{\@coadname\ \@coadsurn\\}
-  \end{tabular}
-
-  \end{minipage}
-
-
+  \vspace*{7.5mm}
+  \begin{tabularx}{80mm}[b]{@{}l@{ }X@{}}
+    \local@advisorstring: & \nohyphens{\@adname\ \@adsurn}\\
+    \ifthenelse{\equal{\@coadname}{\@empty}}{}{%
+      & \nohyphens{\@coadname\ \@coadsurn}\\}
+  \end{tabularx}\par
   \end{flushright}
   \vspace*{\fill}
   \begin{center}
@@ -794,40 +793,39 @@ p\kern-.025em e}}\kern-.08em\TeX}
 % \changes{v0.3}{2008/03/07}{Generalization.}
 % \end{macro}
 %
-%
 %    \begin{macrocode}
 \newcommand\makefrontpage{%
-  \begin{center}%
-    \sloppy\nohyphens{\MakeUppercase\local@title}\par%
-    \vskip 1.0cm%
-    {\@authname\ \@authsurn}\par%
-  \end{center}\par%
-  \vskip 0.83cm%
-  \frontpage@maintext%
-  \vskip 0.8cm%
-  \noindent \local@approvedname:\par%
-  \begin{flushright}%
-     \begin{minipage}{0.68\textwidth}%
-        \centering
-        \ifthenelse{\equal{\@adname}{\@empty}}{}{%
-          \vskip16\p@ \baselineskip12pt
-          \makebox[\textwidth]{\hrulefill}
-          \@adtitle\ \@adname\ \@adsurn, \@addegree}
+  \begin{center}
+    \sloppy\nohyphens{\MakeUppercase\local@title}\par
+    \vspace*{7mm}
+    {\@authname\ \@authsurn}\par
+  \end{center}\par
+  \vspace*{4mm}
+  \frontpage@maintext
+  \vspace*{8mm}
+  \noindent\local@approvedname:\par
+     \begin{center}
+  \begin{flushright}
+        \vskip16\p@ \baselineskip12pt
+        \eqparbox{signture@list}{\hrulefill}\\
+        \eqparbox{signture@list}{\protect\centering%
+          \ \ \ \@adtitle\ \@adname\ \@adsurn, \@addegree\ \ \ }\\
         \ifthenelse{\equal{\@coadname}{\@empty}}{}{%
-          \vskip26\p@ \baselineskip12pt
-          \makebox[\textwidth]{\hrulefill}
-          \@coadtitle\ \@coadname\ \@coadsurn, \@coaddegree}
+        \vskip26\p@ \baselineskip12pt
+        \eqparbox{signture@list}{\hrulefill}\\
+        \eqparbox{signture@list}{\protect\centering%
+          \ \ \ \@coadtitle\ \@coadname\ \@coadsurn, \@coaddegree\ \ \ }\\}
         \count1=0
-        \@whilenum \count1<\@examiner \do {%
+        \@whilenum \count1<\@examiner \do {
             \vskip26\p@ \baselineskip12pt
-            \makebox[\textwidth]{\hrulefill}
-            \csname S:\the\count1 \endcsname
+        \eqparbox{signture@list}{\hrulefill}\\
+        \eqparbox{signture@list}{\protect\centering%
+            \ \ \ \csname S:\the\count1 \endcsname\ \ \ }\\
             \advance\count1 by 1}
-     \end{minipage}
   \end{flushright}
-  \vfill
+     \end{center}
+  \vspace*{\fill}
   \frontpage@bottomtext}
-
 %    \end{macrocode}
 %
 %    \begin{macrocode}
@@ -882,7 +880,7 @@ p\kern-.025em e}}\kern-.08em\TeX}
     \setlength{\fboxsep}{5mm}
     \framebox[120mm][c]{\makebox[5mm][c]{}%
       \begin{minipage}[c]{105mm}
-      \setlength{\parindent}{0.55cm}
+      \setlength{\parindent}{5mm}
       \noindent\sloppy\nohyphens\@authsurn,
       \nohyphens\@authname\par
       \nohyphens{\local@title/\@authname\ \@authsurn. -- \local@cityname:
@@ -890,8 +888,15 @@ p\kern-.025em e}}\kern-.08em\TeX}
       \pageref{front:pageno},
       \pageref{LastPage}
       p.\@ifundefined{r@cat:lofflag}{}{\pageref{cat:lofflag}} $29,7$cm.\par
-      \nohyphens{\local@advisorstring:\ \@adname\ \@adsurn
-      \ifthenelse{\equal{\@coadname}{\@empty}}{.}{, \@coadname\ \@coadsurn.}}\par
+      % There is an issue here. When the last entry must be split between lines,
+      % the spacing between it and the next paragraph becomes smaller.
+      % Should we manually introduce a fixed space? But how could we know that
+      % a name was split?
+      \begin{tabularx}{100mm}[b]{@{}l@{ }X@{}}
+        \local@advisorstring: & \nohyphens{\@adname\ \@adsurn}%
+        \ifthenelse{\equal{\@coadname}{\@empty}}{}{\\
+          & \nohyphens{\@coadname\ \@coadsurn}}
+      \end{tabularx}\par
       \nohyphens{\local@doctype\ ({\MakeLowercase\@degreename}) --
       UFRJ/COPPE/Programa de \local@deptname, \number\year.}\par
       \bibname: p. \pageref{bib:begin} -- \pageref{bib:end}.\par
@@ -932,24 +937,26 @@ p\kern-.025em e}}\kern-.08em\TeX}
   \clearpage
   \thispagestyle{plain}
   \abstract@toptext\par
-  \vskip 1.5cm
+  \vspace*{8.6mm}
   \begin{center}
     \sloppy\nohyphens{\MakeUppercase\local@title}\par
-    \vskip 1.5cm
+    \vspace*{13.2mm}
     \@authname\ \@authsurn \par
-    \vskip 0.5cm
+    \vspace*{7mm}
     \local@monthname/\number\year
   \end{center}\par
-  \vskip 1.0cm
-  \vfill
-  \noindent\local@advisorstring:%
-  \begin{tabular}[t]{l}
-    \@adname\ \@adsurn\\
-    \ifthenelse{\equal{\@coadname}{\@empty}}{}{\@coadname\ \@coadsurn\\}
-  \end{tabular}\par
-  \vspace{0.2cm} \noindent\local@deptstring: \local@deptname\par
-  \vspace{0.5cm}}{%
-  \vfill}
+% Old style
+%  \vspace*{3mm}
+  \vspace*{\fill}
+  \noindent%
+  \begin{tabularx}{\textwidth}[b]{@{}l@{ }X@{}}
+    \local@advisorstring: & \nohyphens{\@adname\ \@adsurn}\\
+    \ifthenelse{\equal{\@coadname}{\@empty}}{}{%
+      & \nohyphens{\@coadname\ \@coadsurn}\\}
+  \end{tabularx}\par
+  \vspace*{2mm}
+  \noindent\local@deptstring: \local@deptname\par
+  \vspace*{7mm}}{\vspace*{\fill}}
 %    \end{macrocode}
 % \changes{v0.5}{2008/05/25}{Changed from macro to environment.}
 % \end{environment}
@@ -957,29 +964,32 @@ p\kern-.025em e}}\kern-.08em\TeX}
 % \begin{environment}{foreignabstract}
 %    \begin{macrocode}
 \newenvironment{foreignabstract}{%
-  \newpage
+  \clearpage
   \thispagestyle{plain}
   \begin{otherlanguage}{english}
   \foreignabstract@toptext\par
-  \vskip 1.5cm
+  \vspace*{8.6mm}
   \begin{center}
     \sloppy\nohyphens{\MakeUppercase\foreign@title}\par
-    \vskip 1.5cm
+    \vspace*{13.2mm}
     \@authname\ \@authsurn \par
-    \vskip 0.5cm
+    \vspace*{7mm}
     \foreign@monthname/\number\year
   \end{center}\par
-  \vskip 1.0cm
-  \vfill
-  \noindent\foreign@advisorstring:%
-  \begin{tabular}[t]{l}
-    \@adname\ \@adsurn\\
-    \ifthenelse{\equal{\@coadname}{\@empty}}{}{\@coadname\ \@coadsurn\\}
-  \end{tabular}\par
-  \vspace{0.2cm} \noindent\foreign@deptstring: \foreign@deptname\par
-  \vspace{0.5cm}}{%
+% Old style
+%  \vspace*{3mm}
+  \vspace*{\fill}
+  \noindent%
+  \begin{tabularx}{\textwidth}[b]{@{}l@{ }X@{}}
+    \foreign@advisorstring: & \nohyphens{\@adname\ \@adsurn}\\
+    \ifthenelse{\equal{\@coadname}{\@empty}}{}{%
+      & \nohyphens{\@coadname\ \@coadsurn}\\}
+  \end{tabularx}\par
+  \vspace*{2mm}
+  \noindent\foreign@deptstring: \foreign@deptname\par
+  \vspace*{7mm}}{%
   \end{otherlanguage}
-  \vfill
+  \vspace*{\fill}
   \global\let\@author\@empty
   \global\let\@date\@empty
   \global\let\foreign@title\@empty
@@ -1206,7 +1216,7 @@ p\kern-.025em e}}\kern-.08em\TeX}
   \noindent {\MakeUppercase\local@doctype}
   \ifthenelse{\boolean{maledoc}}{SUBMETIDO}{SUBMETIDA}
   \sloppy\nohyphens{AO CORPO DOCENTE DO INSTITUTO ALBERTO LUIZ COIMBRA
-  DE P{\' O}S-GRADUA{\c C}{\~ A}O E PESQUISA DE ENGENHARIA DA
+  DE P{\' O}S-GRADUA{\c C}{\~ A}O E PESQUISA DE ENGENHARIA (COPPE) DA
   UNIVERSIDADE FEDERAL DO RIO DE JANEIRO COMO PARTE DOS REQUISITOS
   NECESS{\' A}RIOS PARA A OBTEN{\c C}{\~ A}O DO GRAU DE
   {\MakeUppercase\local@degname} EM CI{\^E}NCIAS EM}
