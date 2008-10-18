@@ -121,7 +121,7 @@ distclean: clean
 clean:
 	@$(_rm) -f *.log *.aux *.dvi *.ist *.idx *.blg *.bbl *.glo *.bz2 \
 		         *.toc *.lof *.lot *.syx *.abx *.lab *.ilg *.los *.ind \
-						 *.gls
+						 *.gls *.out
 
 help:
 	@${_printf} "Usage: make [TARGET]\n" "${PROGRAM_NAME}"
