@@ -120,7 +120,8 @@ p\kern-.025em e}}\kern-.08em\TeX}
 %
 % \begin{abstract}
 %
-% In this work, it is described the |coppe| document class.
+% In this work, it is described the |coppe| document class as well as
+% other files distributed by the \CoppeTeX\ project.
 % This class is suitable for writing academic dissertations, thesis and
 % qualifying exams according to the format rules of the Alberto Luiz Coimbra
 % Institute for Graduate Studies and Research in Engineering. The minimalist
@@ -140,17 +141,24 @@ p\kern-.025em e}}\kern-.08em\TeX}
 % tries to facilitate and encourage the use of \LaTeX\ within the COPPE/UFRJ
 % scope.
 %
-% The |coppe| document class is the main product of \CoppeTeX. It enables the
+% The |coppe| document class is the main product of \CoppeTeX.
+% It was designed to be clear and succinct. It enables the
 % creation of dissertations, qualifying exams and thesis in a simple and
-% automatic way. Therefore, authors can be strictly focused on text
+% automatic way.
+% The main goal of the |coppe| class is to maintain authors strictly focused
+% on text
 % composition without worrying about margins sizes,
 % line spacing, paper size, vertical and horizontal alignment, etc.
-% The \CoppeTeX\ comprehends also \BibTeX\ and MakeIndex style files
+% The \CoppeTeX\ project comprehends also \BibTeX\ and Makeindex style files
 % for creating lists of references, symbols and abbreviations.
+% Although there aren't official guidelines to write qualifying
+% exams, we provide this option just for convenience, as this exam is a requisite
+% to obtain the DSc degree.
 %
 % In which follows, it is described the user interface
 % of the |coppe| class. Some details about using the style files cited above
-% are also given.
+% are also given. We use the term \emph{thesis} to generally refer to
+% dissertation, qualifying exam, and thesis itself.
 %
 % \section{License}
 %
@@ -164,27 +172,30 @@ p\kern-.025em e}}\kern-.08em\TeX}
 % 
 % \section{User Interface}
 %
-% The |coppe| class was designed to be clear and succinct. Its simple interface
-% enables the creation of well structured documents in an elegant fashion, in
-% such a way that all of the needed elements are automatically constructed.
-% These elements comprehend the front face, cataloging details, abstracts and
-% references.
-% They are regulated by the Academic Registry at COPPE/UFRJ \cite{TNR08a}.
-%
-% As this class is based on the standard |book| class, a typical document will
-% be composed of three parts: frontmatter, mainmatter and backmatter.
-% You can start these parts using |\frontmatter|, |\mainmatter| and
-% |\backmatter|.  The frontmatter of a thesis comprehends the front face,
+% \DescribeMacro{\frontmatter}
+% \DescribeMacro{\mainmatter}
+% \DescribeMacro{\backmatter}
+% A thesis to be approved by the Academic Registry at COPPE/UFRJ
+% must contain three-parts:
+% \emph{front}, \emph{main} and \emph{back} matters~\cite{TNR08a}.
+% Each one of these parts is started by calling its corresponding macro
+% |\frontmatter|, |\mainmatter| or |\backmatter|.
+% The front matter of a thesis consists of front cover and face,
 % cataloging page, dedication, acknowledgments, abstracts, table of contents,
-% and lists of tables, algorithms, symbols and abbreviations. The mainmatter
-% is just composed by the document chapters.
-% The backmatter is usually composed by
-% bibliographic references, appendices and index.
+% and lists of tables, algorithms, symbols and abbreviations.
+% The main matter
+% is just composed by chapters, while the
+% back matter usually consists of bibliographic references,
+% appendices and index.
 %
-%
+% You must invoke the |\frontmatter| macro immediately after the |\maketitle|
+% one. The |\mainmatter| command comes right before the first chapter,
+% and |\backmatter| must be typed before the list of references.
+% 
 % \subsection*{Front cover}
 %
-% In July 2008, the Academic Registry has introduced 
+% This element was recently introduced by the Academic Registry. It is
+% automatically constructed by the |\maketitle| command.
 %
 % \subsection*{Front face}
 % The front face is unnumbered. There, it is not allowed to use
@@ -193,14 +204,14 @@ p\kern-.025em e}}\kern-.08em\TeX}
 % enter the information required to create it.
 %
 % \DescribeMacro{\author}
-% The |\author| command was redefined. Here, it receives two arguments:
-% the author's surname and first names, e.g. |\author{First Names}{Surname}|.
-% The words should be typed with
-% only first letters in uppercase.
+% The |\author| command was redefined. Here, it takes two arguments:
+% the author's first names and surname, e.g. |\author{First Names}{Surname}|.
+% The words should be typed with only first letters in uppercase.
 %
 % \DescribeMacro{\title}
 % \DescribeMacro{\foreigntitle}
-% Used to enter the titles of the monograph in the current and foreign
+% The macros |\title| and |\foreigntitle| are used to enter the titles of the
+% monograph in the current and foreign
 % languages. The default languages are Brazilian Portuguese and English.
 % The |babel| package is automatically loaded by |coppe.cls|, so you
 % don't need to load it again. The Brazilian Portuguese is the main language
@@ -210,23 +221,25 @@ p\kern-.025em e}}\kern-.08em\TeX}
 % \DescribeMacro{\coadvisor}
 % \DescribeMacro{\examiner}
 % Every COPPE student is coordinated by an advisor. It is still possible to
-% have a co-advisor.  It is also required to enter the names of all
-% examiners. For the advisor and co-advisor's names, you should enter them
+% have a co-advisor. Their names must be provided by the commands
+% |\advisor| and |\coadvisor|.
+% It is also required to enter the names of all
+% examiners using the |\examiner| macro.
+% For the advisor and co-advisor's names, you should enter them
 % as below:
 % \begin{verbatim}
-%   \advisor{Prof.}{Advisor's Name}{Surname}{PhD}
-%   \coadvisor{Prof.}{Co-advisor's Name}{Surname}{DSc}
+%   \advisor{Title}{Advisor's Name}{Advisor's Surname}{Degree}
+%   \coadvisor{Title}{Co-advisor's Name}{Co-advisor's Surname}{Degree}
 % \end{verbatim}
-% The examiners' name are entered as follows:
+% The examiners' names are entered differently:
 % \begin{verbatim}
-%   \examiner{Prof.}{First Examiner's Complete Name}{DSc}
-%   \examiner{Prof.}{Second Examiner's Complete Name}{PhD}
+%   \examiner{Title}{First Examiner's Complete Name}{Degree}
+%   \examiner{Title}{Second Examiner's Complete Name}{Degree}
 %   ...
 % \end{verbatim}
 %
-% The difference in providing advisors and examiners' names was introduces in
-% version 2.0, because
-% of the new standard approved in 3rd July 2008.
+% The difference in providing advisors and examiners' names was introduced in
+% version 2.0, because of the new standard approved in 3rd July 2008.
 % Remember that all names must be given before calling |\maketitle|.
 %
 % \DescribeMacro{\department}
@@ -247,13 +260,19 @@ p\kern-.025em e}}\kern-.08em\TeX}
 % e.g. |\department{PEB}|.
 %
 % \DescribeMacro{\date}
-% This macro is used to set month and year of defense.
+% This macro is used to set the month and year of defense.
 % This information is required to create the front face, cataloging details
 % page and abstracts. For example, October 2007 should be entered as
 % |\date{10}{2007}|.
 %
 % \DescribeMacro{\keyword}
 % The keywords should describe the concentration areas of your work.
+% You must provide them as follows:
+% \begin{verbatim}
+%   \keyword{First Keyword}
+%   \keyword{Second Keyword}
+%   ...
+% \end{verbatim}
 % Usually, six words are enough.
 %
 % \subsection*{Cataloging details}
@@ -263,76 +282,129 @@ p\kern-.025em e}}\kern-.08em\TeX}
 % 
 % \subsection*{Dedication (optional)}
 % \DescribeMacro{\dedication}
-% This macro was added for convenience. The entered text is placed
+% This macro was added for convenience. The input text is placed
 % at the right bottom of a blank page. It is emphasized and in normal
-% size. It is numbered with roman numerals.
+% size. It is numbered with roman digits.
 %
 % \subsection*{Abstracts}
 % \DescribeEnv{abstract}
 % \DescribeEnv{foreignabstract}
 % As stated by the Academic Registry~\cite{TNR08a}, the abstracts must be in
 % one page each. Still, it is recommended that they should be only one
-% paragraph long.  Thus, it was fixed a maximum
-% of 17 lines, when it doesn't exist a
-% co-advisor. Otherwise, this number is decreased to 16.
+% paragraph long. They must be defined inside the environments |abstract| and
+% |foreignabstract|.
 % 
 % \subsection*{Lists of symbols and abbreviations (optional)}
-% \DescribeMacro{\printloabbreviations}
-% \DescribeMacro{\printlosymbols}
 % \DescribeMacro{\abbrev}
 % \DescribeMacro{\symbl}
 % The lists of symbols and abbreviations are optionals. It is recommended
 % to define a symbol/abbreviation in its first occurrence in the text.
-% They are lexicographically sorted by using the |makeindex| program.
-% You have to pass the distributed MakeIndex style |coppe.ist| to |makeindex|
-% to get these lists correctly displayed.
-%
 % To define a symbol use
 % |\symbl{Some Symbol}{Some Symbol Definition}|, and for abbreviations
 % |\abbrev{Some Abbreviation}{Some Abbreviation Definition}|.
 % These commands are called \emph{dummy}, since they don't output anything at
 % the place they are executed, just an entry in the correspondent list.
-% 
+%
+% \DescribeMacro{\makeloabbreviations}
+% \DescribeMacro{\makelosymbols}
+% \DescribeMacro{\printloabbreviations}
+% \DescribeMacro{\printlosymbols}
+% These lists are lexicographically sorted by using the MakeIndex program,
+% which is part of any \LaTeX\ implementation. Makeindex needs  two commands 
+% to create a final sorted list: one which generates a list of entries and the 
+% other that indicates the position where the list will be printed out.  
+% To generate the lists of symbols and abbreviations, the |coppe| class has
+% the commands |\makeloabbreviations| and |\makelosymbols|, respectively.
+% They must be called in the document preamble. The commands |\printlosymbols| 
+% and |\printloabbreviations| have to be invoked at the point where you want 
+% the respective lists appear, e.g. following the list of tables as showed in 
+% the example. Once you call |latex|, it will be created two files with 
+% extensions |abx| and |syx|, which contain makeindex input data. They must be 
+% processed with |makeindex| command in order to get the lists correctly 
+% produced, redirecting the output to files with extension |lab| and |los| 
+% respectively:
+% \begin{verbatim} 
+%   makeindex -s coppe.ist -o example.lab example.abx
+%   makeindex -s coppe.ist -o example.los example.syx 
+% \end{verbatim}
+% Note the option |-s| with the style file |coppe.ist|. Rerun |latex| twice to 
+% get the references correctly solved and you are done. 
+%
 % \subsection*{References}
 % It is well known that bibliography databases can be easily maintained when
 % using \BibTeX. Thus, the \CoppeTeX\ project designed the \BibTeX\ style 
 % |coppe-unsrt.bst| to
 % complement the |coppe| class.
 % It is a numbered style,
-% which sorts references by order of citation. The only thing you have to do
-% is to include it as your bibliography style:
-% |\bibliographystyle{coppe-unsrt}|.
+% which sorts references by order of citation.
+% To use it,
+% you have to select |coppe-unsrt| as the \BibTeX\ style and
+% include your \BibTeX\ references
+% without the |bib| extension, as in the following
+% example:
+% \begin{verbatim}
+%   \bibliographystyle{coppe-unsrt}
+%   \bibliography{myreferences}
+% \end{verbatim}
+% Run in sequence \LaTeX, \BibTeX, and twice again \LaTeX\ to resolve
+% references issues.
+% This style is not compatible with |natbib|.
 %
 % \section{Graphics driver}
 %
-% Since the addition of a front cover with a Minerva's picture in version 2.0,
-% the use of package which enables graphics inclusion has become mandatory.
-% The \CoppeTeX\ loads by default |graphicx| using the |dvips| driver, so
+% Since the addition of a front cover with a Minerva's picture,
+% it is required to use a package to enable graphical inclusion.
+% You may choose among three standard graphical drivers,
+% |dvips|, |pdftex| and |dvipdfm|, just passing it as a class option.
+% The \CoppeTeX\ loads |graphicx| using the |dvips| driver by default, so
 % you mustn't load it by yourself.
-% In addition, you can tell the |coppe| class to use
-% your preferred graphics driver. For simplicity, we
-% provide 3 standard options: |dvips|, |pdftex| and |dvipdfm|.
 %
 % If you would like
-% to generate a PDF output, we encourage the use of PDF\TeX.
-% To do so, just call |pdflatex| instead of |latex| over your main \LaTeX\
-% source. Note that PDF\TeX\ requires all illustrations in PDF.
+% to generate a PDF output, we encourage the use of pdf\TeX.
+% Remember that pdf\TeX\ turns the default graphics extension to PDF.
 %
-% \section{Quality printing}
+% \section{Hyperref}
+% When working with PDF's, there is the possibility to add extra information
+% to the file as the author's name, document title, subject, keywords, etc.
+% This is easily done with the |hyperref| package.
+% It is also useful to enable hyperlinks.
+% The |coppe| class loads |hyperref| by default and fills in all the document
+% properties.
+% 
+% \section{Useful tips}
 %
-% To get your work correctly dimensioned,
-% you must be sure any page scaling option (e.g. fit or shrink to printable
-% area) isn't enabled.
+% \textbf{Printing}. To get your work correctly printed,
+% you must ensure that any page scaling option (e.g. fit or shrink to printable
+% area) isn't enabled. This options often comes in print dialogs of document
+% visualization softwares.
+%
+% \textbf{Pictures}. The default picture format of \LaTeX\ is the
+% Encapsulated PostScript (EPS). If you use pdf\TeX, the default format becomes
+% the PDF.
+% The package |graphicx| enables handling other formats like
+% JPEG, PNG and GIF. In this case, you must provide the bounding box of your
+% picture. There are two ways of doing this: pass an option to the
+% |\includegraphics| command (e.g.
+% |\includegraphics[bb = 0 0 35 28]{picture.png}|),
+% or provide a file with extension |bb| containing
+% the bounding box values (e.g. |%%BoundingBox: 0 0 9 12|).
+% This file will be automatically read by \LaTeX.
+%
+% \textbf{Fonts}. The default font in \LaTeX\ is the Computer Modern.
+% If you would like to try its enhanced version, consider using the package
+% |lmodern|.
+% To use Times, it is recommended to load the package |mathptmx|, rather than
+% the deprecated |times|. There is also an enhanced Times version available
+% with the |tgtermes| package. You can still use the Arial font face with the
+% package |uarial|. Before including these packages you should call
+% |\usepackage[T1]{fontenc}|. This command will tell \LaTeX\ to use high-quality
+% PostScript Type1 fonts.
 %
 % \section{A Simple Example}
 % \label{COPPE:SAMPLE}
-% A basic document using the |coppe| class should contain at
-% least the following code.
-% You can generate a PDF by typing |pdflatex example.tex|.
-%
 %    \begin{macrocode}
 %<*example>
-\documentclass[dsc,dvips]{coppe}
+\documentclass[dsc,pdftex]{coppe}
 \usepackage[latin1]{inputenc}
 \usepackage{amsmath,amssymb}
 
@@ -345,13 +417,13 @@ p\kern-.025em e}}\kern-.08em\TeX}
   \foreigntitle{Solution of Generalized Eigensystems with Algorithms Based on
   Arnoldi Methods}
   \author{George Oliveira}{Ainsworth Jr.}
-  \advisor{Prof.}{Cl{\'a}udio}{Esperança}{Ph.D.}
-  \coadvisor{Prof.}{Ant{\^ o}nio Alberto Fernandes de}{Oliveira}{D.Sc.}
+  \advisor{Prof.}{Carlos}{Magluta}{D.Sc.}
+  \coadvisor{Prof.}{Fernando Luiz Bastos}{Ribeiro}{D.Sc.}
   \examiner{Prof.}{Alvaro Luiz Gayoso Azeredo Coutinho}{D.Sc.}
   \examiner{Prof.}{Webe João Mansur}{Ph.D.}
   \examiner{Prof.}{Paulo Batista Gonçalves}{D.Sc.}
   \department{PEC}
-  \date{04}{2003}
+  \date{12}{2008}
 
   \keyword{Problemas de Autovalor}
   \keyword{Método de Arnoldi}
@@ -360,14 +432,12 @@ p\kern-.025em e}}\kern-.08em\TeX}
 
   \frontmatter
 
-  \dedication{%
-  À minha mãe pelo dom da vida e pelo amparo ao longo desses anos.\\
+  \dedication{À minha mãe pelo dom da vida e pelo amparo ao longo desses anos.\\
   Às minhas tias Vanete e Vanilde (\emph{in memoriam}).}
 
   \chapter*{Agradecimentos}
   Agradeço ao Conselho Nacional de Desenvolvimento Científico e Tecnológico dos
-  Estados Unidos do Brasil (CNPq)\abbrev{CNPq}{Conselho Nacional de
-  Desenvolvimento Científico e Tecnológico} pelo suporte financeiro.
+  Estados Unidos do Brasil (CNPq) pelo suporte financeiro.
  
   \begin{abstract}
   Autovalores e autovetores de operadores lineares são importantes para muitas
@@ -448,7 +518,6 @@ p\kern-.025em e}}\kern-.08em\TeX}
 \RequirePackage{graphicx}
 \RequirePackage{tabularx}
 \RequirePackage{eqparbox}
-\RequirePackage{ifpdf}
 \RequirePackage[a4paper,bindingoffset=0.0cm,vcentering=true,%
 top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
 \def\CoppeTeX{{\rm C\kern-.05em{\sc o\kern-.025em p\kern-.025em
@@ -624,12 +693,13 @@ p\kern-.025em e}}\kern-.08em\TeX}
 \newcommand\examiner[3]{%
   \global\@namedef{S:\expandafter\the\@examiner}{#1\ #2, #3}
   \global\advance\@examiner by 1
-  \ifnum\@examiner>6
-    \ClassWarning{coppe}{%
-      Maximum number of examiners exceeded.\MessageBreak
-      Printing only six of them}
-    \@examiner=6
-  \fi
+%  Should we use this check?
+%  \ifnum\@examiner>6
+%    \ClassWarning{coppe}{%
+%      Maximum number of examiners exceeded.\MessageBreak
+%      Printing only six of them}
+%    \@examiner=6
+%  \fi
 }
 %    \end{macrocode}
 % \end{macro}
@@ -743,16 +813,17 @@ p\kern-.025em e}}\kern-.08em\TeX}
 \renewcommand\maketitle{%
 \pagenumbering{alph}
 \config@hypersetup
-\ifthenelse{\@examiner<\value{minexaminers}}{%
-  \ifthenelse{\boolean{isdraft}}{%
-    \ClassWarning{coppe}{Too few examiners for a \local@doctype}%
-  }{%
-    \ClassError{coppe}{%
-    Too few examiners for a \local@doctype}{%
-    This value is regulated by the Academic Registry at COPPE/UFRJ.\MessageBreak
-    To disable this check, enable the draft option of the coppe class.}%
-  }%
-}{}
+% Should we use this check?
+%\ifthenelse{\@examiner<\value{minexaminers}}{%
+%  \ifthenelse{\boolean{isdraft}}{%
+%    \ClassWarning{coppe}{Too few examiners for a \local@doctype}%
+%  }{%
+%    \ClassError{coppe}{%
+%    Too few examiners for a \local@doctype}{%
+%    This value is regulated by the Academic Registry at COPPE/UFRJ.\MessageBreak
+%    To disable this check, enable the draft option of the coppe class.}%
+%  }%
+%}{}
   \begin{titlepage}
   \begin{flushleft}
   \setlength\baselineskip{0pt}
@@ -862,7 +933,7 @@ p\kern-.025em e}}\kern-.08em\TeX}
 \hypersetup{%
   pdfauthor={\@authname\ \@authsurn},
   pdftitle={\local@title},
-  pdfsubject={\local@doctype\ de \@degreename\ em \local@deptname\ da COPPE/UFRJ},
+ pdfsubject={\local@doctype\ de \@degreename\ em \local@deptname\ da COPPE/UFRJ},
   pdfcreator={LaTeX with CoppeTeX toolkit}
 }}
 %    \end{macrocode}
@@ -1270,7 +1341,7 @@ postamble
 % Alvaro Cuno for setting up the initial SVN repository,
 % Caio Graco and Paula Faragó for being the first \CoppeTeX\ users and for
 % their feedbacks, and
-% professor Fernando Lizarralde for helpful comments.
+% professor Fernando Lizarralde and Heiko Oberdiek for helpful comments.
 %
 % \nocite{*}
 % \bibliographystyle{plain}
