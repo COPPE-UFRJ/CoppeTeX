@@ -19,8 +19,8 @@
 # version 3 along with this package (see COPYING file).
 # If not, see <http://www.gnu.org/licenses/>.
 #
-# $URL$
-# $Id$
+# $URL: https://coppetex.svn.sourceforge.net/svnroot/coppetex/branches/coppetex-2.0/Makefile $
+# $Id: Makefile 122 2008-10-21 00:21:50Z helano $
 #
 # Author(s): Vicente Helano,
 #            George Ainsworth
@@ -110,7 +110,7 @@ install: doc class example
 	fi
 	mkdir -vp $(DOCDIR)
 	cp -vp README COPYING $(PACKAGE_NAME).dvi \
-		example.tex example.pdf $(DOCDIR)
+		example.tex example.dvi $(DOCDIR)/
 
 dist: distclean
 	@${_tar} -jcvf $(PACKAGE_NAME).tar.bz2 ./*
