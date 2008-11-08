@@ -30,10 +30,20 @@
 #
 
 TEX=latex
-TMPDIR=`mktemp -d coppetex.XXXXXXXXXX`
+#TMPDIR=`mktemp -d coppetex.XXXXXXXXXX`
+PROJECT=coppetex
+SVNROOT=https://coppetex.svn.sourceforge.net/svnroot/coppetex
+VERSION=$1
 
-echo -n "updating working copy... "
-svn update
+echo "updating working copy... "
+mkdir ${PROJECT}-${VERSION}{,-src,-template}
+DISTFILES='coppe.bib coppe.cls coppe.ist coppe.pdf coppe-unsrt.bst COPYING \
+  minerva.pdf minerva.eps example.pdf example.tex README'
+SRCFILES='coppe.bib coppe.ins COPYING minerva.eps README \
+  coppe.dtx coppe-unsrt.bst Makefile minerva.pdf'
+TEMPLATEFILES='coppe.cls coppe.ist coppe-unsrt.bst COPYING README \
+  minerva.pdf minerva.eps'
+exit 0
 
 # get URL
 URL=`svn info | grep URL | cut -d " " -f 2`
@@ -42,16 +52,10 @@ SVNROOT=`svn info | grep "Repository Root" | cut -d " " -f 3`
 BRANCH=${SVNROOT}/branches/coppetex-${VERSION}
 TAG=${SVNROOT}/tags/coppetex-${VERSION}
 
-echo "removing old tag."
-svn rm -m "Removing old tag." ${TAG}
-echo "tagging Coppetex" ${VERSION}
-svn cp -m "Release tag for version ${VERSION}" ${BRANCH} ${TAG}
-
 # make packages: sources and minimum toolkit
 svn --force export ${TAG} ${TMPDIR}
 cd ${TMPDIR}
 SOURCES=`ls`
-DISTFILES='coppe.bib coppe.cls coppe.ist coppe.pdf coppe-unsrt.bst COPYING example.pdf example.tex README'
 
 make class doc example
 dvipdfm example.dvi
