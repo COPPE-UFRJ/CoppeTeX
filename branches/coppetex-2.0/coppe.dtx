@@ -43,7 +43,7 @@ p\kern-.025em e}}\kern-.08em\TeX}
 \end{document}
 %</driver> \fi
 %
-%% \CheckSum{1308}
+%% \CheckSum{1311}
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
 %%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
@@ -103,11 +103,14 @@ p\kern-.025em e}}\kern-.08em\TeX}
 % \DoNotIndex{\p@enumiv,\pagenumbering,\pageref,\pagestyle,\par,\parindent}
 % \DoNotIndex{\parskip,\protected@write,\qquad,\relax,\renewcommand}
 % \DoNotIndex{\renewenvironment,\rm,\sc,\setboolean,\setcounter,\setlength}
-% \DoNotIndex{\sfcode,\sloppy,\string,\textit,\texttt,\textwidth,\the}
-% \DoNotIndex{\theenumiv,\thepage,\thispagestyle,\twocolumn,\typeout}
-% \DoNotIndex{\usecounter,\usepackage,\value,\vfill,\vskip,\vspace}
-% \DoNotIndex{\widowpenalty,\write,\year,\z@, \appendix}
-% \DoNotIndex{\bibliography, \bibliographystyle}
+% \DoNotIndex{\sfcode,\sloppy,\string,\textit,\texttt,\textwidth,\the, \emph}
+% \DoNotIndex{\theenumiv,\thepage,\thispagestyle,\twocolumn,\typeout, \edef}
+% \DoNotIndex{\usecounter,\usepackage,\value,\vfill,\vskip,\vspace, \count@}
+% \DoNotIndex{\widowpenalty,\write,\year,\z@, \appendix, \@ifundefined}
+% \DoNotIndex{\bibliography, \bibliographystyle, \eqparbox, \fboxsep, \fill}
+% \DoNotIndex{\fontfamily, \framebox, \hypersetup, \includegraphics}
+% \DoNotIndex{\MakeLowercase, \noexpand, \PassOptionsToPackage, \protect}
+% \DoNotIndex{\raggedleft, \roman, \small, \space, \TeX, \textbf, \x}
 %
 % \GetFileInfo{coppe}
 %
@@ -728,7 +731,7 @@ p\kern-.025em e}}\kern-.08em\TeX}
 % \begin{macro}{\local@monthname}
 %    \begin{macrocode}
 \newcommand\local@monthname{\ifcase\month\or
-  Janeiro\or Fevereiro\or Março\or Abril\or Maio\or Junho\or
+  Janeiro\or Fevereiro\or Mar{\c c}o\or Abril\or Maio\or Junho\or
   Julho\or Agosto\or Setembro\or Outubro\or Novembro\or Dezembro\fi}
 %    \end{macrocode}
 % \end{macro}
@@ -934,7 +937,10 @@ p\kern-.025em e}}\kern-.08em\TeX}
   pdfauthor={\@authname\ \@authsurn},
   pdftitle={\local@title},
  pdfsubject={\local@doctype\ de \@degreename\ em \local@deptname\ da COPPE/UFRJ},
-  pdfcreator={LaTeX with CoppeTeX toolkit}
+  pdfcreator={LaTeX with CoppeTeX toolkit},
+  breaklinks={true},
+  raiselinks={true},
+  pageanchor={true},
 }}
 %    \end{macrocode}
 %
@@ -991,12 +997,13 @@ p\kern-.025em e}}\kern-.08em\TeX}
 %    \begin{macrocode}
 \newcommand\dedication[1]{
   \gdef\@dedic{#1}
-  \chapter*{\vfill
+    \cleardoublepage
+    \vspace*{\fill}
     \begin{flushright}
       \begin{minipage}{60mm}
-        \it \normalsize \@dedic
+        \raggedleft \it \normalsize \@dedic
       \end{minipage}
-    \end{flushright}}}
+    \end{flushright}}
 %    \end{macrocode}
 % \end{macro}
 %
@@ -1071,7 +1078,7 @@ p\kern-.025em e}}\kern-.08em\TeX}
   \global\let\author\relax
   \global\let\date\relax}
 %    \end{macrocode}
-% \changes{0.5}{2008/05/25}{Changed from macro to environment.}
+% \changes{v0.5}{2008/05/25}{Changed from macro to environment.}
 % \end{environment}
 %
 % \begin{macro}{\listoffigures}
