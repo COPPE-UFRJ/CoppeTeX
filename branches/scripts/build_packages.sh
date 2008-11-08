@@ -22,6 +22,7 @@
 #
 # $URL: https://coppetex.svn.sourceforge.net/svnroot/coppetex/branches/scripts/build_packages.sh $
 # $Id: build_packages.sh 138 2008-11-08 18:24:02Z helano $
+# $Author$
 #
 # Author(s): Vicente Helano <helano@inbox.com>
 #
