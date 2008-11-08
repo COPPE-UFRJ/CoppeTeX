@@ -31,54 +31,51 @@
 
 TEX=latex
 #TMPDIR=`mktemp -d coppetex.XXXXXXXXXX`
+TMPDIR=coppetex-release
 PROJECT=coppetex
 SVNROOT=https://coppetex.svn.sourceforge.net/svnroot/coppetex
 VERSION=$1
 
-echo "updating working copy... "
-mkdir ${PROJECT}-${VERSION}{,-src,-template}
-DISTFILES='coppe.bib coppe.cls coppe.ist coppe.pdf coppe-unsrt.bst COPYING \
-  minerva.pdf minerva.eps example.pdf example.tex README'
-SRCFILES='coppe.bib coppe.ins COPYING minerva.eps README \
-  coppe.dtx coppe-unsrt.bst Makefile minerva.pdf'
-TEMPLATEFILES='coppe.cls coppe.ist coppe-unsrt.bst COPYING README \
-  minerva.pdf minerva.eps'
-exit 0
+if [ "$1" == "" ]; then
+  printf "%s: missing version number\n" "$0"
+  exit 1
+fi
 
-# get URL
-URL=`svn info | grep URL | cut -d " " -f 2`
-VERSION=`svn info | grep URL | cut -d "-" -f 2`
-SVNROOT=`svn info | grep "Repository Root" | cut -d " " -f 3`
-BRANCH=${SVNROOT}/branches/coppetex-${VERSION}
-TAG=${SVNROOT}/tags/coppetex-${VERSION}
+svn --force export ${SVNROOT}/tags/coppetex-${VERSION} $TMPDIR > /dev/null
+if [ "$?" != "0" ]; then
+  printf "%s: invalid version number\n" "$0"
+  exit 1
+fi
 
-# make packages: sources and minimum toolkit
-svn --force export ${TAG} ${TMPDIR}
-cd ${TMPDIR}
-SOURCES=`ls`
+cd $TMPDIR
+svn --force export ${SVNROOT}/branches/template ${PROJECT}-${VERSION}-template > /dev/null
 
-make class doc example
-dvipdfm example.dvi
-dvipdfm coppe.dvi
+mkdir ${PROJECT}-${VERSION}{,-src}
+DISTFILES='coppe.bib coppe.cls coppe.ist coppe.pdf coppe-unsrt.bst COPYING minerva.pdf minerva.eps example.tex example.pdf README'
+SRCFILES='coppe.bib coppe.ins COPYING minerva.eps README coppe.dtx coppe-unsrt.bst Makefile minerva.pdf'
+TEMPLATEFILES='coppe.cls coppe.ist coppe-unsrt.bst COPYING README minerva.pdf minerva.eps coppe.pdf'
 
-mkdir -p coppetex-${VERSION}{,-src}
-cp ${SOURCES} coppetex-${VERSION}-src
-cp ${DISTFILES} coppetex-${VERSION}
+make example doc
+pdflatex coppe.dtx
+pdflatex coppe.dtx
+
+cp ${DISTFILES} ${PROJECT}-${VERSION} && \
+cp ${SRCFILES} ${PROJECT}-${VERSION}-src && \
+cp ${TEMPLATEFILES} ${PROJECT}-${VERSION}-template
 
 tar -zcvf coppetex-${VERSION}-src.tar.gz coppetex-${VERSION}-src/*
 zip coppetex-${VERSION}-src.zip coppetex-${VERSION}-src/*
 tar -zcvf coppetex-${VERSION}.tar.gz coppetex-${VERSION}/*
 zip coppetex-${VERSION}.zip coppetex-${VERSION}/*
+tar -zcvf coppetex-${VERSION}-template.tar.gz coppetex-${VERSION}-template/*
+zip coppetex-${VERSION}-template.zip coppetex-${VERSION}-template/*
 
-mv *.tar.gz *.zip ../
-
-cd -
-rm -rf ${TMPDIR}
+cd ..
 
 # send files
-PACKAGES='coppetex-1.0.tar.gz coppetex-1.0.zip coppetex-1.0-src.tar.gz coppetex-1.0-src.zip'
-for i in ${PACKAGES}; do
-  scp $i helano@frs.sourceforge.net:uploads/${i}
-done
+#PACKAGES='coppetex-1.0.tar.gz coppetex-1.0.zip coppetex-1.0-src.tar.gz coppetex-1.0-src.zip'
+#for i in ${PACKAGES}; do
+#  scp $i helano@frs.sourceforge.net:uploads/${i}
+#done
 
 exit 0
