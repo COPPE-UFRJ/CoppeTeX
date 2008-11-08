@@ -20,8 +20,8 @@
 # version 3 along with this package (see COPYING file).
 # If not, see <http://www.gnu.org/licenses/>.
 #
-# $URL$
-# $Id$
+# $URL: https://coppetex.svn.sourceforge.net/svnroot/coppetex/branches/scripts/build_packages.sh $
+# $Id: build_packages.sh 138 2008-11-08 18:24:02Z helano $
 #
 # Author(s): Vicente Helano <helano@inbox.com>
 #
