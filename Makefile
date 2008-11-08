@@ -110,7 +110,7 @@ install: doc class example
 	fi
 	mkdir -vp $(DOCDIR)
 	cp -vp README COPYING $(PACKAGE_NAME).dvi \
-		example.tex example.pdf $(DOCDIR)
+		example.tex example.dvi $(DOCDIR)/
 
 dist: distclean
 	@${_tar} -jcvf $(PACKAGE_NAME).tar.bz2 ./*
