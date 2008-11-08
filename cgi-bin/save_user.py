@@ -20,8 +20,8 @@
 # version 3 along with this package (see COPYING file).
 # If not, see <http://www.gnu.org/licenses/>.
 #
-# $URL: $
-# $Id: $
+# $URL$
+# $Id$
 #
 # Author(s): Vicente Helano,
 #            George Ainsworth
