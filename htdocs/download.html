@@ -1,0 +1,339 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+
+<head>
+  <title>CoppeTeX</title>
+  <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
+  <meta name="keywords"
+    content="coppetex,coppe,ufrj,latex,document class,latex package,
+    thesis,dissertation,">
+  <meta name="description" content="A LaTeX tool kit useful for writing
+  dissertations and thesis at COPPE/UFRJ.">
+
+  <link rel="shortcut icon" href="images/favicon.ico" >
+  <link href="style/main.css" rel="stylesheet" type="text/css" media="all">
+  <link href="style/header.css" rel="stylesheet" type="text/css" media="all">
+  <link href="style/navbar.css" rel="stylesheet" type="text/css" media="all">
+  <link href="style/content.css" rel="stylesheet" type="text/css" media="all">
+  <link href="style/footer.css" rel="stylesheet" type="text/css" media="all">
+  <link href="style/downloads.css" rel="stylesheet" type="text/css" media="all">
+
+  <script type="text/javascript">
+    function Enable(id) {
+      element = document.getElementById(id);
+      element.disabled = false;
+    }
+    function Disable(id) {
+      element = document.getElementById(id);
+      element.disabled = true;
+    }
+    function Display(id) {
+      element = document.getElementById(id);
+      element.style.display = "inline";
+    }
+    function Hide(id) {
+      element = document.getElementById(id);
+      element.style.display = "none";
+    }
+    function isYear(n) {
+      var c;
+      var is = Boolean(true);
+      var isdigit = "0123456789";
+      if (n.length != 4) { return false; }
+      for (i = 0; i < n.length && is == "true"; i++) {
+        c = n.charAt(i);
+        if (isdigit.indexOf(c) == -1) { is = false; }
+      }
+      return is;
+    }
+    function checkForm(form) {
+      var missing = new Array();
+      if (!(isYear(form.year.value))) {
+        missing.push("Year");
+        alert("Invalid Year. Please, provide valid data.");
+        form.year.focus();
+        return false;
+      }
+      if (form.author.value === "") { missing.push("Author's name"); }
+      if (form.title.value === "") { missing.push("Title"); }
+      if (form.schoolbutton[1].checked) { // external institution
+        if (form.schoolname.value === "") { missing.push("School"); }
+        if (form.otherdeptname.value === "") { missing.push("Department"); }
+      } // else we don't need to check school and department for COPPE/UFRJ
+      if (missing.length > 0) {
+        alert("The following fields are missing: " + missing.toString() + ". Please, provide valid data.");
+        return false;
+      }
+      return true;
+    }
+  </script>
+</head>
+
+<body>
+<div id="header">
+  <!-- Google CSE Search Box Begins  -->
+  <form id="searchbox_014050451544240989057:qn0p_qkdkmy" action="http://coppetex.sourceforge.net/results.html">
+  <div>
+  <label for="q" title="Search CoppeTeX's site">search coppetex:</label> 
+  <input type="hidden" name="cx" value="014050451544240989057:qn0p_qkdkmy">
+  <input type="hidden" name="cof" value="FORID:10">
+  <input type="text" id="q" name="q" size="25">
+  <input type="submit" name="sa" value="Go">
+  </div>
+  </form>
+  <script type="text/javascript"
+src="http://www.google.com/coop/cse/brand?form=searchbox_014050451544240989057%3Aqn0p_qkdkmy">
+  </script>
+  <!-- Google CSE Search Box Ends -->
+  <p>
+  A LaTeX tool kit useful for<br>
+  writing dissertations and<br>
+  thesis at COPPE/UFRJ.
+  </p>
+</div>
+
+<div id="navbar">
+  <div id="menu">
+    <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="download.html" id="current-page">Downloads</a></li>
+    <li><a href="install.html">Install</a></li>
+    <li><a href="doc.html">Documentation</a></li>
+    <li><a href="mailing-list.html">Mailing List</a></li>
+    <li><a href="team.html">Team</a></li>
+    <li class="lastli"><a href="contact.html">Contact</a></li>
+    </ul>
+  </div>
+  <div id="banners">
+  <p>Friend Projects:</p>
+    <a href="http://www.ctan.org">
+<img src="images/banner_ctan.png" alt="CTAN banner."></a><br>
+    <a href="http://www.latex-project.org">
+<img src="images/banner_latex.png" alt="LaTeX Project banner."></a><br>
+    <a href="http://www.tex-br.org">
+<img src="images/banner_tex-br.png" alt="TeX-BR Wiki banner."></a><br>
+  <p>Hosted by:</p>
+    <a href="http://sourceforge.net">
+    <img
+      src="http://sflogo.sourceforge.net/sflogo.php?group_id=199659&amp;type=4"
+      alt="SourceForge.net Logo"></a>
+  </div>
+</div>
+
+<div id="content">
+  <h1>Download CoppeTeX</h1>
+
+  <p>
+
+  Before downloading CoppeTeX, we would like to ask you to fill in the
+  following optional form with details of your publication.  We emphasize that
+  your data won't be used for any other purposes rather than statistical ones.
+
+  </p>
+
+  <form method="post" action="../cgi-bin/save_user.py" onSubmit="return checkForm(this);">
+  <table>
+    <tbody>
+    <tr>
+      <td colspan="2">
+      School:
+      <input type="radio" name="schoolbutton" checked value="Universidade Federal do Rio de Janeiro" onClick="Hide('otherdept');Display('coppedept');Disable('inputother');">
+      COPPE/UFRJ
+      <input type="radio" name="schoolbutton" onClick="Hide('coppedept');Display('otherdept');Enable('inputother');"> Other:
+      <input maxlength="2048" id="inputother" type="text" name="schoolname" size="33" disabled>
+      </td>
+    </tr>
+    <tr>
+      <td>Author's name:</td>
+      <td><input maxlength="2048" type="text" id="authorfield" name="author" size="50"></td>
+    </tr>
+    <tr>
+      <td>Title:</td>
+      <td><input maxlength="2048" type="text" name="title" size="50"></td>
+    </tr>
+    <tr>
+      <td>Department:</td>
+      <td>
+      <select id="coppedept" name="dept">
+      <option value="Programa de Engenharia Biom{\' e}dica">Biomedical Engineering (PEB)</option>
+      <option value="Programa de Engenharia Civil">Civil Engineering (PEC)</option>
+      <option value="Programa de Engenharia El{\' e}trica">Electrical Engineering (PEE)</option>
+      <option value="Programa de Engenharia Mec{\^ a}nica">Mechanical Engineering (PEM)</option>
+      <option value="Programa de Engenharia Metal{\' u}rgica e de Materiais">Metallurgical and Materials Science Engineering (PEMM)</option>
+      <option value="Programa de Engenharia Nuclear">Nuclear Engineering (PEN)</option>
+      <option value="Programa de Engenharia Oce{\^ a}nica">Ocean Engineering (PENO)</option>
+      <option value="Programa de Planejamento Energ{\' e}tico">Energy Planning (PPE)</option>
+      <option value="Programa de Engenharia de Produ{\c c}{\~ a}o">Production Engineering (PEP)</option>
+      <option value="Programa de Engenharia Qu{\' i}mica">Chemical Engineering (PEQ)</option>
+      <option value="Programa de Engenharia de Sistemas e Computa{\c c}{\~ a}o">Systems Engineering and Computer Science (PESC)</option>
+      <option value="Programa de Engenharia de Transportes">Transportation Engineering (PET)</option>
+      </select>
+      <input id="otherdept" maxlength="2048" type="text" name="otherdeptname" size="50" style="display: none;">
+      </td>
+
+    </tr>
+    <tr>
+      <td>Year (yyyy):</td>
+      <td><input type="text" name="year" size="4" maxlength="4"></td>
+    </tr>
+    <tr>
+      <td>Document type:</td>
+      <td>
+      <select name="doctype">
+      <option value="msc">Dissertation</option>
+      <option value="dscexam">Qualifying Exam</option>
+      <option value="dsc">Thesis</option>
+      </select>
+      </td>
+    </tr>
+    <tr>
+      <td>
+      <input type="submit" value="Submit">
+      <input type="reset" value="Clear" onClick="Hide('otherdept');Display('coppedept');Disable('inputother');">
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  </form>
+
+  <p>
+
+  The CoppeTeX project was conceived in the hope that it will be useful for
+  you.  We will be grateful if you acknowledge the CoppeTeX project in your
+  publications. To do so, you should use the <code style="display:
+  inline;">\CoppeTeX</code> macro, which is already defined in the file
+  coppe.cls.
+
+  </p>
+
+  <p>
+
+  Don't forget that you must read and comply with the
+  <a href="http://www.gnu.org/licenses/gpl-3.0.txt">
+  license terms</a>.
+
+  </p>
+
+  <h2>Latest stable release</h2>
+
+  <table class="downloads-list">
+    <thead>
+    <tr class="downloads-header">
+      <th>filename</th>
+      <th>size (bytes)</th>
+      <th>date</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr class="downloads-item">
+      <td class="downloads-filename"><a href="http://downloads.sourceforge.net/coppetex/coppetex-2.0.tar.gz?use_mirror=">coppetex-2.0.tar.gz</a></td>
+      <td class="downloads-size">91801</td>
+      <td class="downloads-date">10/21/2008</td>
+    </tr>
+    <tr class="downloads-item">
+      <td class="downloads-filename"><a href="http://downloads.sourceforge.net/coppetex/coppetex-2.0.zip?use_mirror=">coppetex-2.0.zip</a></td>
+      <td class="downloads-size">93548</td>
+      <td class="downloads-date">10/21/2008</td>
+    </tr>
+    </tbody>
+  </table>
+
+  <p>After downloading, decompress and install it into a TEXMF tree of your
+  preference. More details about installation can be found at the
+  <a href="install.html">install page</a>.</p>
+
+  <p>If you are interested in older versions of CoppeTeX, please
+  visit the <a href="http://sourceforge.net/project/showfiles.php?group_id=199659">releases archive</a> at Sourceforge.net. </p>
+
+  <h2>Sources</h2>
+  <p>
+  The most up-to-date source files can be checked out from our
+  SVN repository with the following command:
+  </p>
+  <code>
+    svn co https://coppetex.svn.sourceforge.net/svnroot/coppetex/trunk coppetex
+  </code>
+
+  <p>The sources of a specific branch can be retrieved by typing:</p>
+  <code>
+    svn co https://coppetex.svn.sourceforge.net/svnroot/coppetex/branches/coppetex-M.N
+    coppetex-M.N
+  </code>
+  <p>
+
+  where M.N is any valid version number, for example 1.0.
+
+  </p>
+
+  <p>
+
+  If you don't have any SVN client available, you can get one <a
+  href="http://subversion.tigris.org/getting.html">here</a>.  If you
+  still don't know what SVN is, you can download the sources snapshot of the
+  current release from below:
+
+  </p>
+
+  <table class="downloads-list">
+    <thead>
+    <tr class="downloads-header">
+      <th>filename</th>
+      <th>size (bytes)</th>
+      <th>date</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr class="downloads-item">
+      <td class="downloads-filename"><a href="http://downloads.sourceforge.net/coppetex/coppetex-2.0-src.tar.gz?use_mirror=">coppetex-2.0-src.tar.gz</a></td>
+      <td class="downloads-size">101421</td>
+      <td class="downloads-date">10/21/2008</td>
+    </tr>
+    <tr class="downloads-item">
+      <td class="downloads-filename"><a href="http://downloads.sourceforge.net/coppetex/coppetex-2.0-src.zip?use_mirror=">coppetex-2.0-src.zip</a></td>
+      <td class="downloads-size">103433</td>
+      <td class="downloads-date">10/21/2008</td>
+    </tr>
+    </tbody>
+  </table>
+
+  <p>
+  
+  We would like to emphasize that these files may not contain the most
+  up-to-date code. The only guaranteed way of getting the latest sources is by
+  checking out the trunk directory of the SVN repository as explained above.
+  For older snapshots, go to the <a
+  href="http://sourceforge.net/project/showfiles.php?group_id=199659">download
+  archives</a>.
+  
+  </p>
+
+  <p>
+  
+  Instructions on how to install CoppeTeX from sources are given at the <a
+  href="install.html">install page</a>. See the <a
+  href="doc.html">documentation page</a> for details about the implementation.
+  
+  </p>
+
+</div>
+
+<div id="footer">
+<!-- SVN control tags -->
+<p>
+Latest modified:
+Thu Jun 12 11:32:59 CEST 2008
+<br>
+&copy;
+2008
+CoppeTeX Project
+</p>
+<!-- Validators -->
+<a href="http://validator.w3.org/check?uri=referer">
+<img src="images/valid-html401-blue.png" alt="Valid HTML 4.01 Strict"></a>
+
+<a href="http://jigsaw.w3.org/css-validator/validator?uri=http://coppetex.sourceforge.net"><img src="images/valid-css-blue.png" alt="Valid CSS"></a>
+</div>
+
+</body>
+</html>
