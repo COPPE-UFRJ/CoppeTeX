@@ -1,0 +1,51 @@
+\documentclass[dsc,dvips]{coppe}
+\usepackage[latin1]{inputenc}
+\usepackage{amsmath,amssymb}
+
+\makelosymbols
+\makeloabbreviations
+
+\begin{document}
+  \title{Desenvolvimento de um Algoritmo Baseado no Método de Arnoldi para
+  Solução de Problemas de Autovalor Generalizado}
+  \foreigntitle{Solution of Generalized Eigensystems with Algorithms Based on
+  Arnoldi Methods}
+  \author{Camila}{Meyworm}
+  \advisor{Prof.}{Carlos}{Magluta}{D.Sc.}
+  \coadvisor{Prof.}{Fernando Luiz Bastos}{Ribeiro}{D.Sc.}
+  \examiner{Prof.}{Alvaro Luiz Gayoso Azeredo Coutinho}{D.Sc.}
+  \examiner{Prof.}{Webe João Mansur}{Ph.D.}
+  \examiner{Prof.}{Paulo Batista Gonçalves}{D.Sc.}
+  \department{PEMM}
+  \date{12}{2008}
+  \keyword{Problemas de Autovalor}
+  \keyword{Método de Arnoldi}
+  \keyword{Análise Dinâmica}
+  \keyword{Palavra Chave}
+  \maketitle
+
+  \frontmatter
+  \include{dedic}
+  \include{thanks}
+  \include{resumo}
+  \include{abstract}
+  \tableofcontents
+  \listoffigures
+  \listoftables
+  \printlosymbols
+  \printloabbreviations
+
+  \mainmatter
+  \include{chap01}
+  \include{chap02}
+  \include{chap03}
+  \include{chap04}
+  \include{chap05}
+
+  \backmatter
+  \nocite{*}
+  \bibliographystyle{coppe-unsrt}
+  \bibliography{thesis}
+  \appendix
+  \include{appenA}
+\end{document}
