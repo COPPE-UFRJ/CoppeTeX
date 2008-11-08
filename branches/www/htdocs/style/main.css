@@ -1,0 +1,72 @@
+/* 
+ * main.css: Main Cascading Style Sheet
+ *
+ * Copyright (C) 2008 CoppeTeX Project and any individual authors listed
+ * elsewhere in this file.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * $URL$
+ * $Id$
+ *
+ *
+ * Author: Vicente Helano
+ *         George Ainsworth Jr.
+ */
+
+body {
+  color: black;
+  background: white;
+  font-family: arial, sans-serif;
+  font-size: 10pt;
+  margin-left: 6%;
+  margin-right: 6%;
+}
+
+:link {
+  background-color: inherit;
+  color: rgb(0, 0, 153)
+}
+:visited {
+  background-color: inherit;
+  color: rgb(153, 0, 153)
+}
+a:hover {
+  background-color: inherit;
+  color: #ed6614;
+}
+a {
+  text-decoration: none;
+}
+
+address {
+  margin-left: 3%;
+  margin-top: 0;
+  margin-bottom: 0;
+  color: #900;
+}
+
+code {
+  font-size: 90%;
+  color: #900;
+}
+
+h1 {
+  font-size: 150%;
+}
+
+h2 {
+  font-size: 115%;
+  color: #3b6989;
+}

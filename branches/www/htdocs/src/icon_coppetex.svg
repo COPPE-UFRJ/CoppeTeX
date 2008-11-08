@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://web.resource.org/cc/"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="109.988"
+   height="22.688"
+   id="svg2"
+   sodipodi:version="0.32"
+   inkscape:version="0.45.1"
+   sodipodi:docname="icon_coppetex.svg"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape"
+   sodipodi:docbase="D:\Documents and Settings\helano\Desktop\coppetex_html\src"
+   inkscape:export-filename="D:\Documents and Settings\helano\Desktop\coppetex_html\images\favicon2.png"
+   inkscape:export-xdpi="360"
+   inkscape:export-ydpi="360">
+  <metadata
+     id="metadata31">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     inkscape:window-height="853"
+     inkscape:window-width="1280"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     guidetolerance="10.0"
+     gridtolerance="10.0"
+     objecttolerance="10.0"
+     borderopacity="1.0"
+     bordercolor="#666666"
+     pagecolor="#ffffff"
+     id="base"
+     showguides="true"
+     inkscape:guide-bbox="true"
+     inkscape:zoom="14.407301"
+     inkscape:cx="5.2046616"
+     inkscape:cy="38.937641"
+     inkscape:window-x="0"
+     inkscape:window-y="144"
+     inkscape:current-layer="svg2">
+    <sodipodi:guide
+       orientation="vertical"
+       position="38.652373"
+       id="guide2197" />
+  </sodipodi:namedview>
+  <defs
+     id="defs4">
+    <marker
+       id="ArrowEnd"
+       viewBox="0 0 10 10"
+       refX="0"
+       refY="5"
+       markerUnits="strokeWidth"
+       markerWidth="4"
+       markerHeight="3"
+       orient="auto">
+      <path
+         d="M 0 0 L 10 5 L 0 10 z"
+         id="path7" />
+    </marker>
+    <marker
+       id="ArrowStart"
+       viewBox="0 0 10 10"
+       refX="10"
+       refY="5"
+       markerUnits="strokeWidth"
+       markerWidth="4"
+       markerHeight="3"
+       orient="auto">
+      <path
+         d="M 10 0 L 0 5 L 10 10 z"
+         id="path10" />
+    </marker>
+  </defs>
+  <rect
+     style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.19753152;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     id="rect3182"
+     width="15.802468"
+     height="15.802575"
+     x="-9.0603094"
+     y="-21.918182"
+     inkscape:export-filename="C:\Documents and Settings\helano\Desktop\coppetex_html\images\favicon.png"
+     inkscape:export-xdpi="298.125"
+     inkscape:export-ydpi="298.125" />
+  <path
+     id="path14"
+     d="M -5.1401566,-20.621559 C -5.1401566,-20.787063 -5.1449161,-20.795579 -5.1766484,-20.795579 C -5.1966801,-20.795579 -5.2022337,-20.787063 -5.2385269,-20.676863 L -5.4554999,-19.90583 C -5.6964687,-20.469443 -5.9915817,-20.797074 -6.3703897,-20.797074 C -7.2117002,-20.797074 -7.9748695,-19.410114 -7.9748695,-17.518517 C -7.9748695,-15.60986 -7.2111027,-14.231428 -6.3626553,-14.231428 C -5.6088074,-14.231428 -5.1393635,-15.471833 -5.1393635,-16.530054 C -5.1393635,-16.621331 -5.1393635,-16.659178 -5.1835907,-16.659178 C -5.2222633,-16.659178 -5.2222633,-16.631349 -5.2278169,-16.548977 C -5.2664914,-15.251801 -5.7591403,-14.454427 -6.2914533,-14.454427 C -6.7934247,-14.454427 -7.5968528,-15.118226 -7.5968528,-17.518517 C -7.5968528,-19.927347 -6.7787472,-20.573708 -6.3015699,-20.573708 C -5.7452568,-20.573708 -5.3408648,-19.670961 -5.2470553,-18.388249 C -5.2377339,-18.278047 -5.2377339,-18.259112 -5.1937053,-18.259112 C -5.1393635,-18.259112 -5.1393635,-18.276553 -5.1393635,-18.441671 L -5.1401566,-20.621559 z "
+     style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.18055546;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     inkscape:export-filename="C:\Documents and Settings\helano\Desktop\coppetex_html\images\favicon.png"
+     inkscape:export-xdpi="298.125"
+     inkscape:export-ydpi="298.125" />
+  <path
+     id="path16"
+     d="M -2.2443582,-17.506888 C -2.2443582,-19.300643 -2.8276431,-20.797074 -3.5527325,-20.797074 C -4.2825833,-20.797074 -4.8613062,-19.302102 -4.8613062,-17.506888 C -4.8613062,-15.688271 -4.2686998,-14.265937 -3.5527325,-14.265937 C -2.8377577,-14.265937 -2.2443582,-15.68632 -2.2443582,-17.506888 z M -3.5535255,-14.559371 C -3.9029813,-14.559371 -4.4460055,-15.248604 -4.4460055,-17.634597 C -4.4460055,-19.909938 -3.8843394,-20.503641 -3.5535255,-20.503641 C -3.2189458,-20.503641 -2.6610466,-19.898244 -2.6610466,-17.634597 C -2.6610466,-15.248604 -3.2034753,-14.559371 -3.5535255,-14.559371"
+     style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.18055546;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     inkscape:export-filename="C:\Documents and Settings\helano\Desktop\coppetex_html\images\favicon.png"
+     inkscape:export-xdpi="298.125"
+     inkscape:export-ydpi="298.125" />
+  <path
+     id="path18"
+     d="M -1.2138417,-17.240263 L -0.55380424,-17.240263 C -0.061155457,-17.240263 0.35335158,-17.996287 0.35335158,-18.908263 C 0.35335158,-19.772491 -0.021688199,-20.601133 -0.58791682,-20.601133 L -1.9234624,-20.601133 L -1.9234624,-20.309639 C -1.5942367,-20.309639 -1.5702387,-20.237016 -1.5702387,-19.742265 L -1.5702387,-15.273463 C -1.5702387,-14.778229 -1.5942367,-14.70609 -1.9234624,-14.70609 L -1.9234624,-14.414602 C -1.7810624,-14.426302 -1.4998318,-14.448723 -1.3913469,-14.448723 C -1.28286,-14.448723 -1.0069845,-14.426302 -0.85903187,-14.414602 L -0.85903187,-14.70609 C -1.1890506,-14.70609 -1.2130486,-14.778229 -1.2130486,-15.275414 L -1.2138417,-17.240263 z M -1.2324856,-17.531746 L -1.2324856,-19.793435 C -1.2324856,-20.271614 -1.2076946,-20.307703 -1.0333618,-20.307703 L -0.6902546,-20.307703 C -0.06333679,-20.307703 -0.06333679,-19.397663 -0.06333679,-18.919479 C -0.06333679,-18.45299 -0.06333679,-17.531746 -0.6902546,-17.531746 L -1.2324856,-17.531746 z "
+     style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.18055546;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     inkscape:export-filename="C:\Documents and Settings\helano\Desktop\coppetex_html\images\favicon.png"
+     inkscape:export-xdpi="298.125"
+     inkscape:export-ydpi="298.125" />
+  <path
+     id="path20"
+     d="M 1.4038991,-17.240263 L 2.0639374,-17.240263 C 2.5565856,-17.240263 2.9710927,-17.996287 2.9710927,-18.908263 C 2.9710927,-19.772491 2.5962517,-20.601133 2.0298247,-20.601133 L 0.69427878,-20.601133 L 0.69427878,-20.309639 C 1.0235043,-20.309639 1.0475024,-20.237016 1.0475024,-19.742265 L 1.0475024,-15.273463 C 1.0475024,-14.778229 1.0235043,-14.70609 0.69427878,-14.70609 L 0.69427878,-14.414602 C 0.83687761,-14.426302 1.1181073,-14.448723 1.2263949,-14.448723 C 1.3348807,-14.448723 1.6107561,-14.426302 1.7587092,-14.414602 L 1.7587092,-14.70609 C 1.4286905,-14.70609 1.4046925,-14.778229 1.4046925,-15.275414 L 1.4038991,-17.240263 z M 1.3852563,-17.531746 L 1.3852563,-19.793435 C 1.3852563,-20.271614 1.4100473,-20.307703 1.584378,-20.307703 L 1.9276858,-20.307703 C 2.5544043,-20.307703 2.5544043,-19.397663 2.5544043,-18.919479 C 2.5544043,-18.45299 2.5544043,-17.531746 1.9276858,-17.531746 L 1.3852563,-17.531746 z "
+     style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.18055546;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     inkscape:export-filename="C:\Documents and Settings\helano\Desktop\coppetex_html\images\favicon.png"
+     inkscape:export-xdpi="298.125"
+     inkscape:export-ydpi="298.125" />
+  <path
+     id="path22"
+     d="M 5.6717354,-16.756728 L 5.5485738,-16.756728 C 5.4650772,-15.288572 5.3464758,-14.70609 4.7149974,-14.70609 L 4.1820878,-14.70609 C 4.0101372,-14.70609 3.9853462,-14.74216 3.9853462,-15.229594 L 3.9853462,-17.48398 L 4.3324219,-17.48398 C 4.6987346,-17.48398 4.7584319,-17.240263 4.7584319,-16.419422 L 4.8770324,-16.419422 L 4.8770324,-18.822461 L 4.7584319,-18.822461 C 4.7584319,-18.017227 4.6995277,-17.777415 4.3324219,-17.777415 L 3.9853462,-17.777415 L 3.9853462,-19.748124 C 3.9853462,-20.225799 4.0093441,-20.261856 4.1820878,-20.261856 L 4.6848521,-20.261856 C 5.2574262,-20.261856 5.3851512,-19.845108 5.4402864,-18.546581 L 5.5634481,-18.546581 L 5.4704317,-20.587477 L 3.2834608,-20.587477 L 3.2834608,-20.263819 C 3.6025718,-20.263819 3.6265697,-20.191674 3.6265697,-19.698411 L 3.6265697,-15.275414 C 3.6265697,-14.782131 3.6033652,-14.709988 3.2834608,-14.709988 L 3.2834608,-14.418504 L 5.5293358,-14.418504 L 5.6717354,-16.756728 z "
+     style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.18055546;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     inkscape:export-filename="C:\Documents and Settings\helano\Desktop\coppetex_html\images\favicon.png"
+     inkscape:export-xdpi="298.125"
+     inkscape:export-ydpi="298.125" />
+  <path
+     id="path24"
+     d="M -3.1465034,-13.541488 L -7.8404143,-13.541488 L -7.9776113,-11.967069 L -7.8312241,-11.967069 C -7.7261931,-13.146229 -7.6106583,-13.35263 -6.3506128,-13.35263 C -6.2042247,-13.35263 -5.9672489,-13.35263 -5.9016035,-13.35263 C -5.746683,-13.331348 -5.746683,-13.244834 -5.746683,-13.080978 L -5.746683,-9.2060105 C -5.746683,-8.9487331 -5.7709714,-8.8702567 -6.455643,-8.8702567 L -6.6863837,-8.8702567 L -6.6863837,-8.6983555 C -6.2964558,-8.7049666 -5.8901161,-8.7118658 -5.491326,-8.7118658 C -5.0938485,-8.7118658 -4.6861952,-8.7049666 -4.2965952,-8.6983555 L -4.2965952,-8.8702567 L -4.5233971,-8.8702567 C -5.1978949,-8.8702567 -5.2221833,-8.9487331 -5.2221833,-9.2060105 L -5.2221833,-13.080978 C -5.2221833,-13.238221 -5.2221833,-13.323595 -5.076124,-13.35263 C -5.0117931,-13.35263 -4.776128,-13.35263 -4.6297409,-13.35263 C -3.3861053,-13.35263 -3.2643355,-13.147389 -3.1593043,-11.967069 L -3.0132451,-11.967069 L -3.1465034,-13.541488 z "
+     style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.17471753;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     inkscape:export-filename="C:\Documents and Settings\helano\Desktop\coppetex_html\images\favicon.png"
+     inkscape:export-xdpi="298.125"
+     inkscape:export-ydpi="298.125" />
+  <path
+     id="path26"
+     d="M 0.93199031,-8.9464337 L 0.78593105,-8.9464337 C 0.60770644,-7.8908785 0.50234674,-7.3171072 -0.92706348,-7.3171072 L -2.0554921,-7.3171072 C -2.3797755,-7.3171072 -2.3952026,-7.3530397 -2.3952026,-7.5979558 L -2.3952026,-9.5877583 L -1.6284747,-9.5877583 C -0.86174595,-9.5877583 -0.78855287,-9.3416928 -0.78855287,-8.740899 L -0.65791978,-8.740899 L -0.65791978,-10.592721 L -0.78855287,-10.592721 C -0.78855287,-10.001989 -0.86174595,-9.7605216 -1.6284747,-9.7605216 L -2.3952026,-9.7605216 L -2.3952026,-11.524667 C -2.3952026,-11.764983 -2.3797755,-11.800917 -2.0554921,-11.800917 L -0.94380225,-11.800917 C 0.31394646,-11.800917 0.4600057,-11.363112 0.57422753,-10.421969 L 0.72028638,-10.421969 L 0.52565035,-11.996387 L -3.5899325,-11.996387 L -3.5899325,-11.800917 C -3.0142298,-11.800917 -2.9219997,-11.800917 -2.9219997,-11.48098 L -2.9219997,-7.6393497 C -2.9219997,-7.3194072 -3.0132451,-7.3194072 -3.5899325,-7.3194072 L -3.5899325,-7.1475051 L 0.63954377,-7.1475051 L 0.93199031,-8.9464337 z "
+     style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.17471753;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     inkscape:export-filename="C:\Documents and Settings\helano\Desktop\coppetex_html\images\favicon.png"
+     inkscape:export-xdpi="298.125"
+     inkscape:export-ydpi="298.125" />
+  <path
+     id="path28"
+     d="M 3.1232037,-11.392146 L 4.3258114,-12.914826 C 4.4462683,-13.064313 4.6911228,-13.371897 5.3577428,-13.379651 L 5.3577428,-13.55156 C 5.1719685,-13.538049 4.8631113,-13.538049 4.6681477,-13.538049 C 4.3999892,-13.538049 4.0668431,-13.538049 3.86433,-13.55156 L 3.86433,-13.379651 C 4.1246108,-13.358386 4.1886136,-13.215797 4.1886136,-13.101103 C 4.1886136,-13.01601 4.1488996,-12.958513 4.0911319,-12.887806 L 3.0178446,-11.524667 L 1.815237,-13.066312 C 1.7587823,-13.143933 1.7512334,-13.166355 1.7512334,-13.187617 C 1.7512334,-13.251729 1.8398533,-13.373036 2.1089957,-13.379651 L 2.1089957,-13.55156 C 1.8487154,-13.538049 1.4512382,-13.538049 1.1834081,-13.538049 C 0.97301796,-13.538049 0.56667829,-13.538049 0.37040137,-13.55156 L 0.37040137,-13.379651 C 0.81645579,-13.379651 0.96284305,-13.364985 1.1423803,-13.143933 L 2.7102996,-11.127112 L 1.2959887,-9.3181201 C 0.94741668,-8.8757182 0.41897805,-8.8679577 0.26405707,-8.8679577 L 0.26405707,-8.6960555 C 0.44983089,-8.7095658 0.75901638,-8.7095658 0.95365273,-8.7095658 C 1.1729056,-8.7095658 1.5549564,-8.7095658 1.7577975,-8.6960555 L 1.7577975,-8.8679577 C 1.5063795,-8.8892285 1.4331858,-9.03181 1.4331858,-9.1465061 C 1.4331858,-9.2384935 1.4729008,-9.2890867 1.5139287,-9.3396801 L 2.8140183,-11.001486 L 4.2283288,-9.181289 C 4.2923325,-9.1025247 4.2923325,-9.0812529 4.2923325,-9.0599802 C 4.2923325,-9.0039255 4.2194674,-8.881467 3.93457,-8.8668072 L 3.93457,-8.694905 C 4.1948499,-8.7084163 4.5923275,-8.7084163 4.8604861,-8.7084163 C 5.070548,-8.7084163 5.4772159,-8.7084163 5.6744777,-8.694905 L 5.6744777,-8.8668072 C 5.1539168,-8.8668072 5.0718607,-8.9015902 4.9103759,-9.1025247 L 3.1232037,-11.392146 z "
+     style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.17471753;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     inkscape:export-filename="C:\Documents and Settings\helano\Desktop\coppetex_html\images\favicon.png"
+     inkscape:export-xdpi="298.125"
+     inkscape:export-ydpi="298.125" />
+</svg>
