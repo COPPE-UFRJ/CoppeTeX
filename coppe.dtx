@@ -31,8 +31,10 @@
 %
 % \iffalse
 %<*driver>
-\documentclass{ltxdoc}
+\documentclass[a4paper]{ltxdoc}
+\usepackage[T1]{fontenc}
 \usepackage[latin1]{inputenc}
+\usepackage{lmodern}
 
 \def\CoppeTeX{{\rm C\kern-.05em{\sc o\kern-.025em p\kern-.025em
 p\kern-.025em e}}\kern-.08em\TeX}
@@ -43,7 +45,7 @@ p\kern-.025em e}}\kern-.08em\TeX}
 \end{document}
 %</driver> \fi
 %
-%% \CheckSum{1311}
+%% \CheckSum{1314}
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
 %%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
@@ -407,9 +409,11 @@ p\kern-.025em e}}\kern-.08em\TeX}
 % \label{COPPE:SAMPLE}
 %    \begin{macrocode}
 %<*example>
-\documentclass[dsc,pdftex]{coppe}
+\documentclass[dsc,pdftex,onehalfspacing]{coppe}
+\usepackage[T1]{fontenc}
 \usepackage[latin1]{inputenc}
 \usepackage{amsmath,amssymb}
+\usepackage{lmodern}
 
 \makelosymbols
 \makeloabbreviations
@@ -519,17 +523,13 @@ p\kern-.025em e}}\kern-.08em\TeX}
 \RequirePackage{hyphenat}
 \RequirePackage{ifthen}
 \RequirePackage{graphicx}
+\RequirePackage{setspace}
 \RequirePackage{tabularx}
 \RequirePackage{eqparbox}
 \RequirePackage[a4paper,bindingoffset=0.0cm,vcentering=true,%
 top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
 \def\CoppeTeX{{\rm C\kern-.05em{\sc o\kern-.025em p\kern-.025em
 p\kern-.025em e}}\kern-.08em\TeX}
-%    \end{macrocode}
-%
-% The default line spacing is $1.5pt$.
-%    \begin{macrocode}
-\renewcommand\baselinestretch{1.5}
 %    \end{macrocode}
 %
 %    \begin{macrocode}
@@ -588,6 +588,19 @@ p\kern-.025em e}}\kern-.08em\TeX}
   \PassOptionsToPackage{pdftex}{hyperref,graphicx}
   \PassOptionsToPackage{plainpages=false,pdfpagelabels}{hyperref}
 }
+%    \end{macrocode}
+% Here is the default one-and-a-half line spacing. We provide the option |onehalfspacing| just for completion.
+%    \begin{macrocode}
+\onehalfspacing
+\DeclareOption{onehalfspacing}{
+}
+%
+\DeclareOption{doublespacing}{%
+  \doublespacing
+}
+%    \end{macrocode}
+%
+%    \begin{macrocode}
 \ProcessOptions\relax
 %    \end{macrocode}
 %
