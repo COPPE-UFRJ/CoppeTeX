@@ -54,16 +54,14 @@ print "Content-type: text/html; charset=iso-8859-1\n"
 print """
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<html lang="en">
 
 <head>
   <title>CoppeTeX</title>
-  <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
-  <meta name="keywords"
-    content="coppetex,coppe,ufrj,latex,document class,latex package,
-    thesis,dissertation,">
-  <meta name="description" content="A LaTeX tool kit useful for writing
-  dissertations and thesis at COPPE/UFRJ.">
+  <meta http-equiv="Content-Language" content='en'>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="keywords" content="coppetex,coppe,ufrj,latex,document class,latex package, thesis,dissertation,">
+  <meta name="description" content="A LaTeX tool kit useful for writing dissertations and thesis at COPPE/UFRJ.">
 
   <link rel="shortcut icon" href="/images/favicon.ico" >
   <link href="/style/main.css" rel="stylesheet" type="text/css" media="all">
@@ -169,6 +167,9 @@ print """
 
   <h2>Latest stable release</h2>
 
+  <p>The latest stable release can be downloaded from below. For a ready-to-use
+  template, go to the <a href="doc.html">Documentation page</a>.</p>
+
   <table class="downloads-list">
     <thead>
     <tr class="downloads-header">
@@ -179,14 +180,14 @@ print """
     </thead>
     <tbody>
     <tr class="downloads-item">
-      <td class="downloads-filename"><a href="http://downloads.sourceforge.net/coppetex/coppetex-2.0.tar.gz?use_mirror=">coppetex-2.0.tar.gz</a></td>
-      <td class="downloads-size">91801</td>
-      <td class="downloads-date">10/21/2008</td>
+      <td class="downloads-filename"><a href="http://downloads.sourceforge.net/coppetex/coppetex-2.0.1.tar.gz?use_mirror=">coppetex-2.0.1.tar.gz</a></td>
+      <td class="downloads-size">356600</td>
+      <td class="downloads-date">11/08/2008</td>
     </tr>
     <tr class="downloads-item">
-      <td class="downloads-filename"><a href="http://downloads.sourceforge.net/coppetex/coppetex-2.0.zip?use_mirror=">coppetex-2.0.zip</a></td>
-      <td class="downloads-size">93548</td>
-      <td class="downloads-date">10/21/2008</td>
+      <td class="downloads-filename"><a href="http://downloads.sourceforge.net/coppetex/coppetex-2.0.1.zip?use_mirror=">coppetex-2.0.1.zip</a></td>
+      <td class="downloads-size">352543</td>
+      <td class="downloads-date">11/08/2008</td>
     </tr>
     </tbody>
   </table>
@@ -237,14 +238,14 @@ print """
     </thead>
     <tbody>
     <tr class="downloads-item">
-      <td class="downloads-filename"><a href="http://downloads.sourceforge.net/coppetex/coppetex-2.0-src.tar.gz?use_mirror=">coppetex-2.0-src.tar.gz</a></td>
-      <td class="downloads-size">101421</td>
-      <td class="downloads-date">10/21/2008</td>
+      <td class="downloads-filename"><a href="http://downloads.sourceforge.net/coppetex/coppetex-2.0.1-src.tar.gz?use_mirror=">coppetex-2.0.1-src.tar.gz</a></td>
+      <td class="downloads-size">102451</td>
+      <td class="downloads-date">11/08/2008</td>
     </tr>
     <tr class="downloads-item">
-      <td class="downloads-filename"><a href="http://downloads.sourceforge.net/coppetex/coppetex-2.0-src.zip?use_mirror=">coppetex-2.0-src.zip</a></td>
-      <td class="downloads-size">103433</td>
-      <td class="downloads-date">10/21/2008</td>
+      <td class="downloads-filename"><a href="http://downloads.sourceforge.net/coppetex/coppetex-2.0.1-src.zip?use_mirror=">coppetex-2.0.1-src.zip</a></td>
+      <td class="downloads-size">103591</td>
+      <td class="downloads-date">11/08/2008</td>
     </tr>
     </tbody>
   </table>
@@ -274,10 +275,10 @@ print """
 <!-- SVN control tags -->
 <p>
 Latest modified:
-Tue Oct 21 22:27:41 BRST 2008
+Thu Mar  5 20:15:53 BRT 2009
 <br>
 &copy;
-2008
+2009
 CoppeTeX Project
 </p>
 <!-- Validators -->
@@ -286,6 +287,16 @@ CoppeTeX Project
 
 <a href="http://jigsaw.w3.org/css-validator/validator?uri=http://coppetex.sourceforge.net"><img src="/images/valid-css-blue.png" alt="Valid CSS"></a>
 </div>
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-7087383-1");
+pageTracker._trackPageview();
+} catch(err) {}</script>
 
 </body>
 </html>
