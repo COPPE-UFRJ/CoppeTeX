@@ -20,8 +20,8 @@
 # version 3 along with this package (see COPYING file).
 # If not, see <http://www.gnu.org/licenses/>.
 #
-# $URL$
-# $Id$
+# $URL: https://coppetex.svn.sourceforge.net/svnroot/coppetex/branches/www/cgi-bin/save_user.py $
+# $Id: save_user.py 163 2009-03-05 23:21:52Z helano $
 #
 # Author(s): Vicente Helano,
 #            George Ainsworth
@@ -70,6 +70,7 @@ print """
   <link href="/style/content.css" rel="stylesheet" type="text/css" media="all">
   <link href="/style/footer.css" rel="stylesheet" type="text/css" media="all">
   <link href="/style/downloads.css" rel="stylesheet" type="text/css" media="all">
+  <script type="text/javascript" src="/scripts/lastmod.js"></script>
 </head>
 
 <body>
@@ -274,12 +275,12 @@ print """
 <div id="footer">
 <!-- SVN control tags -->
 <p>
-Latest modified:
-Thu Mar  5 20:15:53 BRT 2009
-<br>
-&copy;
-2009
-CoppeTeX Project
+<script type="text/javascript">
+  var lastchanged = "$LastChangedDate$";
+  var lastauthor = "$LastChangedBy$";
+  last_modified(lastchanged, lastauthor);
+  copyright_info();
+</script>
 </p>
 <!-- Validators -->
 <a href="http://validator.w3.org/check?uri=referer">
