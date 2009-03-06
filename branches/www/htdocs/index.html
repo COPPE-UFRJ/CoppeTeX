@@ -18,6 +18,7 @@
   <link href="style/content.css" rel="stylesheet" type="text/css" media="all">
   <link href="style/footer.css" rel="stylesheet" type="text/css" media="all">
   <link href="style/latest-news.css" rel="stylesheet" type="text/css" media="all">
+  <script type="text/javascript" src="scripts/lastmod.js"></script>
 </head>
 
 <body>
@@ -149,13 +150,12 @@ alt="SourceForge.net Logo"></a>
 <div id="footer">
 <!-- SVN control tags -->
 <p>
-Latest modified:
-Tue Jan 20 01:31:50 BRST 2009
-<br>
-&copy;
-2009
-CoppeTeX Project
-</p>
+<script type="text/javascript">
+  var lastchanged = "$LastChangedDate$";
+  var lastauthor = "$LastChangedBy$";
+  last_modified(lastchanged, lastauthor);
+  copyright_info();
+</script>
 <!-- Validators -->
 <a href="http://validator.w3.org/check?uri=referer">
 <img src="images/valid-html401-blue.png" alt="Valid HTML 4.01 Strict"></a>

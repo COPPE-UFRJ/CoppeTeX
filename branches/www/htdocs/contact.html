@@ -15,6 +15,7 @@
   <link href="style/navbar.css" rel="stylesheet" type="text/css" media="all">
   <link href="style/content.css" rel="stylesheet" type="text/css" media="all">
   <link href="style/footer.css" rel="stylesheet" type="text/css" media="all">
+  <script type="text/javascript" src="scripts/lastmod.js"></script>
 </head>
 
 <body>
@@ -91,16 +92,12 @@ alt="SourceForge.net Logo"></a>
 <div id="footer">
 <!-- SVN control tags -->
 <p>
-Latest modified:
 <script type="text/javascript">
-  var lastchanged = "$LastChangedDate$"
-  var lastauthor = "$LastChangedBy$"
-  document.write(lastchanged + lastauthor);
+  var lastchanged = "$LastChangedDate$";
+  var lastauthor = "$LastChangedBy$";
+  last_modified(lastchanged, lastauthor);
+  copyright_info();
 </script>
-<br>
-&copy;
-2009
-CoppeTeX Project
 </p>
 <!-- Validators -->
 <a href="http://validator.w3.org/check?uri=referer">
