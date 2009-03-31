@@ -61,18 +61,3 @@
   text-align: left;
 }
 
-.member-email 
-{
-  border: none; margin: 0; padding: 0;
-  text-align: left;
-  font-family: monospace;
-  font-size: 90%;
-  color: #900;
-}
-
-.member-url 
-{
-	border: none; margin: 0; padding: 0;
-  font-size: 90%;
-  text-align: left;
-}
