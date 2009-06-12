@@ -25,22 +25,23 @@
  *         George Ainsworth Jr.
  */
 
-body {
-  color: black;
-  background: white;
+body,html {
+  color: #444444;
   font-family: arial, sans-serif;
   font-size: 10pt;
-  margin-left: 6%;
-  margin-right: 6%;
+  margin:0;
+  padding:0;
 }
 
 :link {
   background-color: inherit;
-  color: rgb(0, 0, 153)
+  text-decoration: underline;
+  color: #64b514;
 }
 :visited {
   background-color: inherit;
-  color: rgb(153, 0, 153)
+  text-decoration: underline;
+  color: #64b514;
 }
 a:hover {
   background-color: inherit;
@@ -51,9 +52,6 @@ a {
 }
 
 address {
-  margin-left: 3%;
-  margin-top: 0;
-  margin-bottom: 0;
   color: #900;
 }
 
@@ -68,5 +66,18 @@ h1 {
 
 h2 {
   font-size: 115%;
-  color: #3b6989;
+  color: #63b412;
 }
+
+h3 {
+  font-size: 100%;
+  font-style: italic;
+  color: #63b412;
+  font-weight: normal;
+}
+
+
+div .cleanboth {
+  clear: both;
+}
+

@@ -26,62 +26,47 @@
  */
 
 #navbar {
-  clear: left;
-  float: left;
-  width: 180px;
+  margin-top: 20px;
+  float: right;
+  display: inline;
+  width: 100%;
+}
+#navbar ul {
+  padding: 3px 0;
+  margin-left: 0;
+  border-bottom: 1px solid #778;
+  font: bold 12px Verdana, sans-serif;
+  text-align: right;
 }
 
-#navbar #menu {
-  text-align: left;
+#navbar li {
+  list-style: none;
+  display: inline;
+  margin: 0;
 }
 
-#menu ul {
-  padding: 4%;
-  margin-left: 1em;
-  border-bottom: 1px solid #b3b3b3;
-  border-top: 1px solid #b3b3b3;
-  list-style-type: none;
-}
-
-#menu li {
-  border-bottom: 1px solid #b3b3b3;
-  padding: 0.25em;
-}
-
-#menu .lastli {
+#navbar li a {
+  padding: 3px 0.5em;
+  margin-left: 3px;
+  border: 1px solid #778;
   border-bottom: none;
-  padding: 0.25em;
-}
-
-#menu li a {
+  background: #b8dd93;
   text-decoration: none;
 }
 
-#navbar #banners {
-  margin-left: 1em;
-  margin-top: 10%;
-  margin-bottom: 10%;
-  text-align: center;
+#navbar li a:link { color: green; }
+#navbar li a:visited { color: green; }
+
+#navbar li a:hover
+{
+color: #000;
+background: #63b412;
+border-color: #227;
 }
 
-#navbar #banners img {
-  width: 125px;
-  height: 37px;
-  border: 0;
-  margin-top: 5%;
+#navbar li a#current
+{
+background: white;
+border-bottom: 1px solid white;
 }
 
-#navbar #banners p {
-  padding: 0;
-  margin-left: 1em;
-  margin-right: 0;
-  margin-bottom: -0.1em;
-  text-align: left;
-  font-size: 80%;
-  color: gray;
-}
-
-#navbar #menu #current-page {
-  font-weight: bold;
-  font-size: 90%;
-}

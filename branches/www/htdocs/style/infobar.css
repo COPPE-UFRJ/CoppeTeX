@@ -1,5 +1,5 @@
 /*
- * downloads.css: Downloads Style
+ * infobar.css: Navigation Bar Style
  *
  * Copyright (C) 2007 CoppeTeX Project and any individual authors listed
  * elsewhere in this file.
@@ -25,44 +25,29 @@
  *         George Ainsworth Jr.
  */
 
-.downloads-list {
-  border-collapse: collapse;
-  width: 100%;
-  border-bottom: 1pt solid #ececec;
+#infobar {
+  float: right;
+  width: 200px;
+  margin-left: 0;
 }
 
-.downloads-header {
-  color: gray;
-}
-
-.downloads-header th {
-  text-align: left;
-  background: #63b412;
-  color: white;
+#infobar .banners {
+  text-align: center;
+  margin-top: 1em;
+  padding-top: 1em;
+  color: #63b412;
   font-size: 9pt;
   font-weight: bold;
-  line-height: 150%;
 }
 
-.downloads-item {
+#infobar .banners img {
+  border: 0;
+  padding: 3px;
 }
 
-.downloads-filename {
-  width: 30%;
+#infobar .banners p {
   text-align: left;
-  font-weight: normal;
-}
-
-.downloads-date {
-  width: 20%;
-  text-align: left;
-  font-size: 90%;
+  font-size: 80%;
   color: gray;
 }
 
-.downloads-size {
-  width: 10%;
-  text-align: left;
-  font-size: 90%;
-  color: gray;
-}
