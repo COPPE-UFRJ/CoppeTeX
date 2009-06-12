@@ -26,26 +26,22 @@
  */
 
 #footer {
-  border-top: 1px solid #cccccc;
-  clear: both;
-  font-size: 80%;
+  border-top: dotted #cecece 1pt;
+  font-size: 9pt;
   font-style: italic;
-  margin-top: 0;
   padding: 0.25em;
-  width: 100%;
+  margin-top: 1em;
 }
 
-#footer p {
+#footer div.comments {
   float: left;
-  text-indent: 0;
-  margin-top: 0;
   font-family: arial, sans-serif;
 }
 
-#footer img {
+#footer div.validators {
   float: right;
-  margin-top: 0;
-  height: 31px;
-  width: 88px;
+}
+
+#footer img {
   border: 0;
 }

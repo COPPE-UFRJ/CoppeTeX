@@ -30,3 +30,5 @@ User-agent: *
 Disallow: /style/
 Disallow: /images/
 Disallow: /src/
+Disallow: /doc/
+Disallow: /scripts/

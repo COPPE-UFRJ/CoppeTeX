@@ -1,28 +1,81 @@
-<?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?>
-<svg width="109.988" height="22.688">
-  <defs> 
-    <marker id="ArrowEnd" viewBox="0 0 10 10" refX="0" refY="5" 
-     markerUnits="strokeWidth" 
-     markerWidth="4" 
-     markerHeight="3" 
-     orient="auto"> 
-        <path d="M 0 0 L 10 5 L 0 10 z" /> 
-    </marker>
-    <marker id="ArrowStart" viewBox="0 0 10 10" refX="10" refY="5" 
-     markerUnits="strokeWidth" 
-     markerWidth="4" 
-     markerHeight="3" 
-     orient="auto"> 
-        <path d="M 10 0 L 0 5 L 10 10 z" /> 
-    </marker> </defs>
-<g>
-<path style="stroke:none; fill-rule:evenodd; fill:#000000" d="M 14.293 0.473022C 14.293 0.0269775 14.269 0.00402832 14.109 0.00402832C 14.008 0.00402832 13.98 0.0269775 13.797 0.323975L 12.703 2.40198C 11.488 0.882996 10 0 8.09 0C 3.848 0 0 3.73798 0 8.836C 0 13.98 3.85101 17.695 8.129 17.695C 11.93 17.695 14.297 14.352 14.297 11.5C 14.297 11.254 14.297 11.152 14.074 11.152C 13.879 11.152 13.879 11.227 13.851 11.449C 13.656 14.945 11.172 17.094 8.48801 17.094C 5.957 17.094 1.90601 15.305 1.90601 8.836C 1.90601 2.34399 6.03101 0.60199 8.437 0.60199C 11.242 0.60199 13.281 3.03497 13.754 6.492C 13.801 6.789 13.801 6.84003 14.023 6.84003C 14.297 6.84003 14.297 6.79303 14.297 6.34802"/>
-<path style="stroke:none; fill-rule:evenodd; fill:#000000" d="M 28.894 10.953C 28.894 7.27301 25.953 4.203 22.297 4.203C 18.617 4.203 15.699 7.27002 15.699 10.953C 15.699 14.684 18.687 17.602 22.297 17.602C 25.902 17.602 28.894 14.688 28.894 10.953zM 22.293 17C 20.531 17 17.793 15.586 17.793 10.691C 17.793 6.02301 20.625 4.80499 22.293 4.80499C 23.98 4.80499 26.793 6.047 26.793 10.691C 26.793 15.586 24.058 17 22.293 17"/>
-<path style="stroke:none; fill-rule:evenodd; fill:#000000" d="M 34.09 11.5L 37.418 11.5C 39.902 11.5 41.992 9.94897 41.992 8.078C 41.992 6.30499 40.101 4.60498 37.246 4.60498L 30.512 4.60498L 30.512 5.203C 32.172 5.203 32.293 5.35199 32.293 6.367L 32.293 15.535C 32.293 16.551 32.172 16.699 30.512 16.699L 30.512 17.297C 31.23 17.273 32.648 17.227 33.195 17.227C 33.742 17.227 35.133 17.273 35.879 17.297L 35.879 16.699C 34.215 16.699 34.094 16.551 34.094 15.531L 34.09 11.5zM 33.996 10.902L 33.996 6.26202C 33.996 5.28101 34.121 5.20697 35 5.20697L 36.73 5.20697C 39.891 5.20697 39.891 7.07397 39.891 8.05499C 39.891 9.01202 39.891 10.902 36.73 10.902"/>
-<path style="stroke:none; fill-rule:evenodd; fill:#000000" d="M 47.289 11.5L 50.617 11.5C 53.101 11.5 55.191 9.94897 55.191 8.078C 55.191 6.30499 53.301 4.60498 50.445 4.60498L 43.711 4.60498L 43.711 5.203C 45.371 5.203 45.492 5.35199 45.492 6.367L 45.492 15.535C 45.492 16.551 45.371 16.699 43.711 16.699L 43.711 17.297C 44.43 17.273 45.848 17.227 46.394 17.227C 46.941 17.227 48.332 17.273 49.078 17.297L 49.078 16.699C 47.414 16.699 47.293 16.551 47.293 15.531L 47.289 11.5zM 47.195 10.902L 47.195 6.26202C 47.195 5.28101 47.32 5.20697 48.199 5.20697L 49.93 5.20697C 53.09 5.20697 53.09 7.07397 53.09 8.05499C 53.09 9.01202 53.09 10.902 49.93 10.902"/>
-<path style="stroke:none; fill-rule:evenodd; fill:#000000" d="M 68.808 12.492L 68.187 12.492C 67.766 15.504 67.168 16.699 63.984 16.699L 61.297 16.699C 60.43 16.699 60.305 16.625 60.305 15.625L 60.305 11L 62.055 11C 63.902 11 64.203 11.5 64.203 13.184L 64.801 13.184L 64.801 8.25403L 64.203 8.25403C 64.203 9.90601 63.906 10.398 62.055 10.398L 60.305 10.398L 60.305 6.35498C 60.305 5.375 60.426 5.30103 61.297 5.30103L 63.832 5.30103C 66.719 5.30103 67.363 6.15601 67.641 8.82001L 68.262 8.82001L 67.793 4.633L 56.766 4.633L 56.766 5.297C 58.375 5.297 58.496 5.44501 58.496 6.45697L 58.496 15.531C 58.496 16.543 58.379 16.691 56.766 16.691L 56.766 17.289L 68.09 17.289"/>
-<path style="stroke:none; fill-rule:evenodd; fill:#000000" d="M 83.113 0.445007L 68.812 0.445007L 68.394 5.922L 68.84 5.922C 69.16 1.82001 69.512 1.10199 73.351 1.10199C 73.797 1.10199 74.519 1.10199 74.719 1.10199C 75.191 1.17603 75.191 1.47699 75.191 2.047L 75.191 15.527C 75.191 16.422 75.117 16.695 73.031 16.695L 72.328 16.695L 72.328 17.293C 73.516 17.27 74.754 17.246 75.969 17.246C 77.18 17.246 78.422 17.27 79.609 17.293L 79.609 16.695L 78.918 16.695C 76.863 16.695 76.789 16.422 76.789 15.527L 76.789 2.047C 76.789 1.5 76.789 1.203 77.234 1.10199C 77.43 1.10199 78.148 1.10199 78.594 1.10199C 82.383 1.10199 82.754 1.81598 83.074 5.922L 83.519 5.922"/>
-<path style="stroke:none; fill-rule:evenodd; fill:#000000" d="M 95.539 16.43L 95.094 16.43C 94.551 20.102 94.23 22.098 89.875 22.098L 86.437 22.098C 85.449 22.098 85.402 21.973 85.402 21.121L 85.402 14.199L 87.738 14.199C 90.074 14.199 90.297 15.055 90.297 17.145L 90.695 17.145L 90.695 10.703L 90.297 10.703C 90.297 12.758 90.074 13.598 87.738 13.598L 85.402 13.598L 85.402 7.461C 85.402 6.625 85.449 6.5 86.437 6.5L 89.824 6.5C 93.656 6.5 94.101 8.02301 94.449 11.297L 94.894 11.297L 94.301 5.82001L 81.762 5.82001L 81.762 6.5C 83.516 6.5 83.797 6.5 83.797 7.61298L 83.797 20.977C 83.797 22.09 83.519 22.09 81.762 22.09L 81.762 22.688L 94.648 22.688"/>
-<path style="stroke:none; fill-rule:evenodd; fill:#000000" d="M 102.215 7.922L 105.879 2.625C 106.246 2.10498 106.992 1.03497 109.023 1.008L 109.023 0.409973C 108.457 0.45697 107.516 0.45697 106.922 0.45697C 106.105 0.45697 105.09 0.45697 104.473 0.409973L 104.473 1.008C 105.266 1.08197 105.461 1.578 105.461 1.97699C 105.461 2.27301 105.34 2.47302 105.164 2.71899L 101.894 7.461L 98.23 2.09802C 98.058 1.828 98.035 1.75 98.035 1.67603C 98.035 1.453 98.305 1.03101 99.125 1.008L 99.125 0.409973C 98.332 0.45697 97.121 0.45697 96.305 0.45697C 95.664 0.45697 94.426 0.45697 93.828 0.409973L 93.828 1.008C 95.187 1.008 95.633 1.05902 96.18 1.828L 100.957 8.84399L 96.648 15.137C 95.586 16.676 93.976 16.703 93.504 16.703L 93.504 17.301C 94.07 17.254 95.012 17.254 95.605 17.254C 96.273 17.254 97.437 17.254 98.055 17.301L 98.055 16.703C 97.289 16.629 97.066 16.133 97.066 15.734C 97.066 15.414 97.187 15.238 97.312 15.062L 101.273 9.28101L 105.582 15.613C 105.777 15.887 105.777 15.961 105.777 16.035C 105.777 16.23 105.555 16.656 104.687 16.707L 104.687 17.305C 105.48 17.258 106.691 17.258 107.508 17.258C 108.148 17.258 109.387 17.258 109.988 17.305L 109.988 16.707C 108.402 16.707 108.152 16.586 107.66 15.887"/>
-</g>
-</svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="svg2"
+   sodipodi:version="0.32"
+   inkscape:version="0.46"
+   width="143.28874"
+   height="48.427795"
+   xml:space="preserve"
+   sodipodi:docname="logo_coppetex.svg"
+   version="1.0"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape"><metadata
+     id="metadata7"><rdf:RDF><cc:Work
+         rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" /></cc:Work></rdf:RDF></metadata><defs
+     id="defs5"><inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       id="perspective9" /></defs><sodipodi:namedview
+     inkscape:window-height="852"
+     inkscape:window-width="1440"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     guidetolerance="10.0"
+     gridtolerance="10.0"
+     objecttolerance="10.0"
+     borderopacity="1.0"
+     bordercolor="#666666"
+     pagecolor="#ffffff"
+     id="base"
+     showgrid="false"
+     inkscape:zoom="3.7686143"
+     inkscape:cx="71.644371"
+     inkscape:cy="24.213898"
+     inkscape:window-x="0"
+     inkscape:window-y="25"
+     inkscape:current-layer="g11" /><g
+     id="g11"
+     inkscape:groupmode="layer"
+     inkscape:label="logo_coppetex"
+     transform="matrix(1.25,0,0,-1.25,-146.12306,905.11311)"><text
+       transform="matrix(1,0,0,-1,120.443,696.205)"
+       id="text13"><tspan
+         style="font-size:24.78709984px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:LMRoman17;-inkscape-font-specification:LMRoman17-Regular"
+         x="0"
+         y="0"
+         id="tspan15">C</tspan></text>
+<text
+       transform="matrix(1,0,0,-1,135.854,696.205)"
+       id="text17"><tspan
+         style="font-size:24.78709984px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:LMRoman10;-inkscape-font-specification:LMRoman10-CapsRegular"
+         x="0 15.058164 28.215157 41.347363"
+         y="0"
+         sodipodi:role="line"
+         id="tspan19">oppe</tspan></text>
+<text
+       transform="matrix(1,0,0,-1,189.212,696.205)"
+       id="text21"><tspan
+         style="font-size:24.78709984px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:LMRoman17;-inkscape-font-specification:LMRoman17-Regular"
+         x="0"
+         y="0"
+         id="tspan23">T</tspan><tspan
+         style="font-size:24.78709984px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:LMRoman17;-inkscape-font-specification:LMRoman17-Regular"
+         x="12.758"
+         y="5.335"
+         id="tspan25">E</tspan><tspan
+         style="font-size:24.78709984px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:LMRoman17;-inkscape-font-specification:LMRoman17-Regular"
+         x="25.487"
+         y="0"
+         id="tspan27">X</tspan></text>
+</g></svg>

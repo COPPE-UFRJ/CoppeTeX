@@ -26,17 +26,11 @@
  */
 
 #content {
-  background: #fff;
-  font-size: 100%;
-  margin-left: 200px;
-  margin-right: 2%;
-  margin-bottom: 0;
-  text-align: left;
-  line-height: 150%;
+  width: 575px;
+  float: right;
+  margin-right: 25px;
 }
 
 #content h1 {
-  margin-bottom: 3.5%;
-  text-align: right;
-  color: #3b6989;
+  color: #63b412;
 }

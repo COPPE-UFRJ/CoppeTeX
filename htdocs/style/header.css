@@ -27,23 +27,18 @@
 
 #header {
   font-family: arial, sans-serif;
-  font-size: 80%;
-  text-align: left;
+  font-size: 180%;
   margin-top: 20px;
-  margin-bottom: 50px;
-  width: 100%;
   color: #888;
   font-weight: normal;
-  height: 52px;
+  height: 128px;
   background-image: url('../images/logo_coppetex.png');
   background-repeat: no-repeat;
-  background-position: left;
+  background-position: 2% 5%;
 }
 
-#header p {
-  margin-left: 260px;
-}
 #header form {
+  font-size: 10pt;
   float: right;
   text-align: right;
 }

@@ -7,16 +7,28 @@
   <meta http-equiv="Content-Language" content='en'>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
   <meta name="keywords" content="coppetex,coppe,ufrj,latex,document class,latex package, thesis,dissertation,">
-  <meta name="description" content="A LaTeX tool kit useful for writing dissertations and thesis at COPPE/UFRJ.">
+  <meta name="description" content="A LaTeX toolkit useful for writing dissertations and thesis at COPPE/UFRJ.">
+  <!-- Google META -->
+  <meta name="verify-v1" content="kfXu9JjZ+qbk5Zu0/aeOubWqi5EUpqR2x6Lk8DQgd9I=">
 
   <link rel="shortcut icon" href="images/favicon.ico" >
   <link href="style/main.css" rel="stylesheet" type="text/css" media="all">
+  <link href="style/bodywrapper.css" rel="stylesheet" type="text/css" media="all">
   <link href="style/header.css" rel="stylesheet" type="text/css" media="all">
   <link href="style/navbar.css" rel="stylesheet" type="text/css" media="all">
+  <link href="style/infobar.css" rel="stylesheet" type="text/css" media="all">
   <link href="style/content.css" rel="stylesheet" type="text/css" media="all">
   <link href="style/footer.css" rel="stylesheet" type="text/css" media="all">
+  <link href="style/latest-news.css" rel="stylesheet" type="text/css" media="all">
   <link href="style/downloads.css" rel="stylesheet" type="text/css" media="all">
+  <link href="style/recaptch.css" rel="stylesheet" type="text/css" media="all">
+  <link href="style/googleajax.css" rel="stylesheet" type="text/css" media="all">
+  <link href="style/pubs.css" rel="stylesheet" type="text/css" media="all">
+
   <script type="text/javascript" src="scripts/lastmod.js"></script>
+
+  <!--script type="text/javascript" src="http://api.recaptcha.net/js/recaptcha_ajax.js"></script-->
+  <script type="text/javascript" src="scripts/validate.js"></script>
 
   <script type="text/javascript">
     function Enable(id) {
@@ -46,115 +58,219 @@
       }
       return is;
     }
-    function checkForm(form) {
-      var missing = new Array();
-      if (!(isYear(form.year.value))) {
-        missing.push("Year");
-        alert("Invalid Year. Please, provide valid data.");
-        form.year.focus();
-        return false;
-      }
-      if (form.author.value === "") { missing.push("Author's name"); }
-      if (form.title.value === "") { missing.push("Title"); }
-      if (form.schoolbutton[1].checked) { // external institution
-        if (form.schoolname.value === "") { missing.push("School"); }
-        if (form.otherdeptname.value === "") { missing.push("Department"); }
-      } // else we don't need to check school and department for COPPE/UFRJ
-      if (missing.length > 0) {
-        alert("The following fields are missing: " + missing.toString() + ". Please, provide valid data.");
-        return false;
-      }
-      return true;
+
+    function clearForm() {
+      Hide('schoolname_warning');
+      Hide('author_warning');
+      Hide('title_warning');
+      Hide('dept_warning');
+      Hide('final_submit');
+      Display('init_submit');
+      Hide('otherdept');
+      Display('coppedept');
+      Disable('inputother');
     }
+
+    function checkForm(id) {
+      form = document.getElementById(id);
+      var is_valid = new Boolean(true);
+      if (form.schoolbutton[1].checked) { // external institution
+        if (form.schoolname.value === "") { document.getElementById('schoolname_warning').innerHTML = "Please enter your institution name"; Display('schoolname_warning'); is_valid = false; }
+        else { Hide('schoolname_warning'); }
+      }
+      if (form.author.value === "") { document.getElementById('author_warning').innerHTML = "Please enter your name"; Display('author_warning'); is_valid = false; }
+      else { Hide('author_warning'); }
+      if (form.title.value === "") { document.getElementById('title_warning').innerHTML = "Please enter the title of your work"; Display('title_warning'); is_valid = false; }
+      else { Hide('title_warning'); }
+      if (form.schoolbutton[1].checked) { // external institution
+        if (form.otherdeptname.value === "") { document.getElementById('dept_warning').innerHTML = "Please enter your affiliation"; Display('dept_warning'); is_valid = false; }
+        else { Hide('dept_warning'); }
+      }
+
+      return is_valid;
+    }
+
+  function showRecaptcha(element) {
+    document.getElementById('recaptcha_div').innerHTML = "<div style='font-size:8pt; font-weight: bold;'><img style='vertical-align: middle;' src='images/loadingbar.gif' border='0' alt='Loading...' \/>&nbsp;Loading...<\/div>";
+    Recaptcha.create("6LfKlAMAAAAAAHF19dEqWBe0grDtPQvAei22VY_e", element, {
+        theme: "clean",
+        tabindex: 0,
+        callback: Recaptcha.focus_response_field
+    });
+  }
+
+  function destroyRecaptchaWidget() {
+    Recaptcha.destroy();
+  }
+
+  function checkSubmission() {
+    document.getElementById('recaptcha_div').innerHTML = "<div style='font-size:8pt; font-weight: bold;'><img style='vertical-align: middle;' src='images/loadingbar.gif' border='0' alt='Loading...' \/>&nbsp;Loading...<\/div>";
+    var isvalid = checkForm('user_data');
+    if (isvalid) {
+      Hide('init_submit');
+      Hide('init_clear');
+      Display('final_submit');
+      Display('cancel_submit');
+      showRecaptcha('recaptcha_div');
+    } else {
+     document.getElementById('recaptcha_div').innerHTML = ""; 
+    }
+  }
+
+  function xmlhttpPost(strURL) {
+    var xmlHttpReq = false;
+    var self = this;
+    // Mozilla/Safari
+    if (window.XMLHttpRequest) {
+        self.xmlHttpReq = new XMLHttpRequest();
+    }
+    // IE
+    else if (window.ActiveXObject) {
+        self.xmlHttpReq = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    self.xmlHttpReq.open('POST', strURL, true);
+    self.xmlHttpReq.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    self.xmlHttpReq.onreadystatechange = function() {
+        if (self.xmlHttpReq.readyState == 4) {
+            updatepage(self.xmlHttpReq.responseText);
+        }
+    }
+    self.open('GET', strURL, true);
+    self.xmlHttpReq.send(null);
+}
+
+function xmlhttpRecaptcha() {
+var ipStr = '<!--#echo var="REMOTE_ADDR"-->';
+  var strURL = "http://api-verify.recaptcha.net/verify?privatekey=6LfKlAMAAAAAAHF19dEqWBe0grDtPQvAei22VY_e;" + ipStr;
+            alert(strURL);
+    var xmlHttpReq = false;
+    var self = this;
+    // Mozilla/Safari
+    if (window.XMLHttpRequest) {
+        self.xmlHttpReq = new XMLHttpRequest();
+    }
+    // IE
+    else if (window.ActiveXObject) {
+        self.xmlHttpReq = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    self.xmlHttpReq.open('POST', strURL, true);
+    self.xmlHttpReq.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    self.xmlHttpReq.onreadystatechange = function() {
+        if (self.xmlHttpReq.readyState == 4) { // done
+            updatepage(self.xmlHttpReq.responseText);
+        }
+    }
+    self.open('GET', strURL, true);
+    self.xmlHttpReq.send(null);
+}
+
+  function checkContent(value) {
+    document.getElementById('schoolname_warning').innerHTML = "OK!";
+    Display('schoolname_warning'); 
+  }
+
+  function validateAction() {
+    form = document.getElementById('user_data');
+    if (Recaptcha.get_response()) {
+      Hide('user_data');
+      document.getElementById('response_to_submission').innerHTML = "<div style='font-size:8pt; font-weight: bold;'><img style='vertical-align: middle;' src='images/loadingbar.gif' border='0' alt='Loading...' \/>&nbsp;Checking...<\/div><p>Thank you for submitting your information to CoppeTeX!<\/p>";
+//      xmlhttpPost("../cgi-bin/save_user.py");
+      Recaptcha.destroy();
+    } else {
+      document.getElementById('recaptcha_error_div').innerHTML = "<div style='color: red; font-size:8pt;'>Wrong text.<\/div>";
+      Recaptcha.reload();
+    }
+  }
+
   </script>
 </head>
 
 <body>
+
+<div id="bodywrapper">
+
 <div id="header">
   <!-- Google CSE Search Box Begins  -->
-  <form id="searchbox_014050451544240989057:qn0p_qkdkmy" action="http://coppetex.sourceforge.net/results.html">
-  <div>
-  <label for="q" title="Search CoppeTeX's site">search coppetex:</label> 
-  <input type="hidden" name="cx" value="014050451544240989057:qn0p_qkdkmy">
-  <input type="hidden" name="cof" value="FORID:10">
-  <input type="text" id="q" name="q" size="25">
-  <input type="submit" name="sa" value="Go">
-  </div>
-  </form>
+  <form id="searchbox_014050451544240989057:qn0p_qkdkmy" action="http://coppetex.sourceforge.net/results.html"><div><label for="q" title="Search CoppeTeX's site">search coppetex:</label><input type="hidden" name="cx" value="014050451544240989057:qn0p_qkdkmy"><input type="hidden" name="cof" value="FORID:10"><input type="text" id="q" name="q" size="32"><input type="submit" name="sa" value="Go"></div></form>
   <script type="text/javascript"
 src="http://www.google.com/coop/cse/brand?form=searchbox_014050451544240989057%3Aqn0p_qkdkmy">
   </script>
   <!-- Google CSE Search Box Ends -->
-  <p>
-  A LaTeX tool kit useful for<br>
-  writing dissertations and<br>
-  thesis at COPPE/UFRJ.
-  </p>
+<div id="navbar">
+  <ul>
+  <li style="float: left; margin-left: 1%; font-size: 8pt; font-weight: normal; font-style: italic; text-align: left;">A LaTeX toolkit for writing thesis and dissertations</li>
+  <li><a href="index.html">Home</a></li>
+  <li><a href="doc.html">Documentation</a></li>
+  <li><a href="download.html" id="current">Download</a></li>
+  <li><a href="team.html">Project Members</a></li>
+  </ul>
+</div>
 </div>
 
-<div id="navbar">
-  <div id="menu">
-    <ul>
-    <li><a href="index.html">Home</a></li>
-    <li><a href="download.html" id="current-page">Downloads</a></li>
-    <li><a href="install.html">Install</a></li>
-    <li><a href="doc.html">Documentation</a></li>
-    <li><a href="mailing-list.html">Mailing List</a></li>
-    <li><a href="team.html">Team</a></li>
-    <li class="lastli"><a href="contact.html">Contact</a></li>
-    </ul>
+<div class="cleanboth"></div>
+
+<div id="infobar">
+  <h1 style="color: #63b412; font-size: 11pt; font-weight: bold;">Latest News&nbsp;<a href="http://sourceforge.net/export/rss2_projnews.php?group_id=199659"><img src="images/feed-icon.png" style="border: none;" alt="Subscribe the CoppeTeX RSS feed"></a></h1>
+    <dl id="latest-news-list">
+    <dt>Nov 08</dt>
+      <dd><a href="https://sourceforge.net/forum/forum.php?forum_id=885566">CoppeTeX Release 2.0.1.</a></dd>
+    <dt>Oct 08</dt>
+      <dd><a href="https://sourceforge.net/forum/forum.php?forum_id=879594">CoppeTeX Release 2.0.</a></dd>
+    <dt>Sep 08</dt>
+      <dd><a href="#">CoppeTeX 2.0 with new format rules is coming soon...</a></dd>
+    <dt>Jun 08</dt>
+      <dd><a href="https://sourceforge.net/forum/forum.php?forum_id=834849">CoppeTeX Release 1.0.</a></dd>
+    <dt>Oct 07</dt>
+      <dd><a href="https://sourceforge.net/forum/forum.php?forum_id=749961">Project Website.</a></dd>
+    </dl>
+    <p>View <a href="https://sourceforge.net/news/?group_id=199659">more...</a></p>
+
+  <h1 style="margin-top: 1em; padding-top: 1em; border-top: dotted 1pt #cecece; color: #63b412; font-size: 11pt; font-weight: bold;">Help &amp; Support</h1>
+  <p>We have a <a href="mailing-list.html">mailing list</a> where you can ask the CoppeTeX team and users about any problem you are experiencing.</p>
+  <h1 style="margin-top: 1em; padding-top: 1em; border-top: dotted 1pt #cecece; color: #63b412; font-size: 11pt; font-weight: bold;">Friend Projects</h1>
+  <div class="banners">
+    <a href="http://www.ctan.org"><img src="images/banner_ctan.png" alt="CTAN banner."></a><br>
+    <a href="http://www.latex-project.org"><img src="images/banner_latex.png" alt="LaTeX Project banner."></a><br>
+    <a href="http://www.tex-br.org"><img src="images/banner_tex-br.png" alt="TeX-BR Wiki banner."></a><br>
   </div>
-  <div id="banners">
-  <p>Friend Projects:</p>
-    <a href="http://www.ctan.org">
-<img src="images/banner_ctan.png" alt="CTAN banner."></a><br>
-    <a href="http://www.latex-project.org">
-<img src="images/banner_latex.png" alt="LaTeX Project banner."></a><br>
-    <a href="http://www.tex-br.org">
-<img src="images/banner_tex-br.png" alt="TeX-BR Wiki banner."></a><br>
-  <p>Hosted by:</p>
-    <a href="http://sourceforge.net">
-    <img
-      src="http://sflogo.sourceforge.net/sflogo.php?group_id=199659&amp;type=4"
-      alt="SourceForge.net Logo"></a>
+
+  <h1 style="margin-top: 1em; padding-top: 1em; border-top: dotted 1pt #cecece; color: #63b412; font-size: 11pt; font-weight: bold;">Hosted by:</h1>
+  <div class="banners">
+    <a href="http://sourceforge.net"><img src="http://sflogo.sourceforge.net/sflogo.php?group_id=199659&amp;type=4" alt="SourceForge.net Logo"></a>
   </div>
+
 </div>
 
 <div id="content">
   <h1>Download CoppeTeX</h1>
 
-  <p>
+  <div id="response_to_submission"></div>
+  <form method="post" id="user_data" action="" style="line-height: 150%;">
 
-  Before downloading CoppeTeX, we would like to ask you to fill in the
+  <p>Before downloading CoppeTeX, we would like to ask you to fill in the
   following optional form with details of your publication.  We emphasize that
-  your data won't be used for any other purposes rather than statistical ones.
+  your data won't be used for any other purposes rather than statistical ones.</p>
 
-  </p>
-
-  <form method="post" action="../cgi-bin/save_user.py" onSubmit="return checkForm(this);">
-  <table>
-    <tbody>
-    <tr>
-      <td colspan="2">
-      School:
-      <input type="radio" name="schoolbutton" checked value="Universidade Federal do Rio de Janeiro" onClick="Hide('otherdept');Display('coppedept');Disable('inputother');">
-      COPPE/UFRJ
-      <input type="radio" name="schoolbutton" onClick="Hide('coppedept');Display('otherdept');Enable('inputother');"> Other:
-      <input maxlength="2048" id="inputother" type="text" name="schoolname" size="33" disabled>
-      </td>
-    </tr>
-    <tr>
-      <td>Author's name:</td>
-      <td><input maxlength="2048" type="text" id="authorfield" name="author" size="50"></td>
-    </tr>
-    <tr>
-      <td>Title:</td>
-      <td><input maxlength="2048" type="text" name="title" size="50"></td>
-    </tr>
-    <tr>
-      <td>Department:</td>
-      <td>
-      <select id="coppedept" name="dept">
+  <fieldset>
+  <legend>User Information</legend>
+  <div>
+  <label style="width: 150px;">School:</label> <input type="radio" name="schoolbutton" checked value="Universidade Federal do Rio de Janeiro" onClick="Hide('otherdept');Display('coppedept');Disable('inputother');"> COPPE/UFRJ <input type="radio" name="schoolbutton" onClick="Hide('coppedept');Display('otherdept');Enable('inputother');"> Other: <input maxlength="2048" id="inputother" type="text" name="schoolname" size="33" onblur="validate(this.value, this.id);" disabled>
+  <span id="schoolname_warning" style="color: red; display: none;"></span>
+  </div>
+  <div>
+  <label>Author's name:</label>
+  <input maxlength="2048" type="text" id="authorfield" name="author" size="50">
+  <span id="author_warning" style="color: red; display: none;"></span>
+  </div>
+  <div>
+  <label>Subject:</label>
+  <input maxlength="2048" type="text" name="title" size="50">
+  <span id="title_warning" style="color: red; display: none;"></span>
+  <span id="doctype_text" style="color: red;"></span>
+  </div>
+  <div>
+  <label>Department:</label>
+    <select id="coppedept" name="dept">
       <option value="Programa de Engenharia Biom{\' e}dica">Biomedical Engineering (PEB)</option>
       <option value="Programa de Engenharia Civil">Civil Engineering (PEC)</option>
       <option value="Programa de Engenharia El{\' e}trica">Electrical Engineering (PEE)</option>
@@ -167,33 +283,24 @@ src="http://www.google.com/coop/cse/brand?form=searchbox_014050451544240989057%3
       <option value="Programa de Engenharia Qu{\' i}mica">Chemical Engineering (PEQ)</option>
       <option value="Programa de Engenharia de Sistemas e Computa{\c c}{\~ a}o">Systems Engineering and Computer Science (PESC)</option>
       <option value="Programa de Engenharia de Transportes">Transportation Engineering (PET)</option>
-      </select>
-      <input id="otherdept" maxlength="2048" type="text" name="otherdeptname" size="50" style="display: none;">
-      </td>
-
-    </tr>
-    <tr>
-      <td>Year (yyyy):</td>
-      <td><input type="text" name="year" size="4" maxlength="4"></td>
-    </tr>
-    <tr>
-      <td>Document type:</td>
-      <td>
-      <select name="doctype">
-      <option value="msc">Dissertation</option>
-      <option value="dscexam">Qualifying Exam</option>
-      <option value="dsc">Thesis</option>
-      </select>
-      </td>
-    </tr>
-    <tr>
-      <td>
-      <input type="submit" value="Submit">
-      <input type="reset" value="Clear" onClick="Hide('otherdept');Display('coppedept');Disable('inputother');">
-      </td>
-    </tr>
-    </tbody>
-  </table>
+    </select>
+    <input id="otherdept" maxlength="2048" type="text" name="otherdeptname" size="50" style="display: none;">
+    <span id="dept_warning" style="color: red; display: none;"></span></div>
+  <div>
+  <label>Degree:</label>
+  <select name="doctype">
+    <option value="msc">Master of Science</option>
+    <option value="dsc">Doctor of Science</option>
+  </select>
+  </div>
+  <div id="recaptcha_div"></div><div id="recaptcha_error_div"></div>
+  <div>
+  <input type="button" value="Submit" id="init_submit" onClick="checkSubmission();">
+  <input type="reset" value="Clear" id="init_clear" onClick="clearForm();">
+  <input type="submit" value="Submit" id="final_submit" style="display: none;" onClick="validateAction();">
+  <input type="button" value="Cancel" id="cancel_submit" style="display: none;" onClick="Hide('final_submit');Hide(this.id);Display('init_submit');Display('init_clear');destroyRecaptchaWidget();">
+  </div>
+  </fieldset>
   </form>
 
   <p>
@@ -243,7 +350,7 @@ src="http://www.google.com/coop/cse/brand?form=searchbox_014050451544240989057%3
 
   <p>After downloading, decompress and install it into a TEXMF tree of your
   preference. More details about installation can be found at the
-  <a href="install.html">install page</a>.</p>
+  <a href="doc.html">documentation page</a>.</p>
 
   <p>If you are interested in older versions of CoppeTeX, please
   visit the <a href="http://sourceforge.net/project/showfiles.php?group_id=199659">releases archive</a> at Sourceforge.net. </p>
@@ -312,32 +419,34 @@ src="http://www.google.com/coop/cse/brand?form=searchbox_014050451544240989057%3
 
   <p>
   
-  Instructions on how to install CoppeTeX from sources are given at the <a
-  href="install.html">install page</a>. See the <a
-  href="doc.html">documentation page</a> for details about the implementation.
+  Instructions on how to install CoppeTeX from sources are given at the
+  <a href="doc.html">documentation page</a>.
   
   </p>
 
 </div>
 
+<div class="cleanboth"></div>
+
 <div id="footer">
 <!-- SVN control tags -->
-<p>
+<div class="comments">
 <script type="text/javascript">
-  var lastchanged = "$LastChangedDate$";
-  var lastauthor = "$LastChangedBy$";
-  last_modified(lastchanged, lastauthor);
-  copyright_info();
+  last_modified(String("$LastChangedDate$"),
+                String("$LastChangedBy$"));
+  show_copyright_info();
 </script>
-</p>
+</div>
 <!-- Validators -->
-<a href="http://validator.w3.org/check?uri=referer">
-<img src="images/valid-html401-blue.png" alt="Valid HTML 4.01 Strict"></a>
-
+<div class="validators">
+<a href="http://validator.w3.org/check?uri=referer"><img src="images/valid-html401-blue.png" alt="Valid HTML 4.01 Strict"></a>
 <a href="http://jigsaw.w3.org/css-validator/validator?uri=http://coppetex.sourceforge.net"><img src="images/valid-css-blue.png" alt="Valid CSS"></a>
 </div>
+</div>
 
-<script type="text/javascript">
+</div>
+
+<!--script type="text/javascript">
 var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
 document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
 </script>
@@ -345,7 +454,6 @@ document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.
 try {
 var pageTracker = _gat._getTracker("UA-7087383-1");
 pageTracker._trackPageview();
-} catch(err) {}</script>
-
+} catch(err) {}</script-->
 </body>
 </html>
