@@ -35,6 +35,7 @@
 \usepackage[T1]{fontenc}
 \usepackage[latin1]{inputenc}
 \usepackage{lmodern}
+\usepackage{url}
 
 \def\CoppeTeX{{\rm C\kern-.05em{\sc o\kern-.025em p\kern-.025em
 p\kern-.025em e}}\kern-.08em\TeX}
@@ -117,9 +118,7 @@ p\kern-.025em e}}\kern-.08em\TeX}
 % \GetFileInfo{coppe}
 %
 % \title{The |coppe| document class}
-% \author{ Vicente Helano F. Batista \and
-% George O. Ainsworth Jr.\thanks{Send comments, suggestions, questions and bugs
-% to goajunior@users.sourceforge.net.}}
+% \author{Vicente H. F. Batista \and George O. Ainsworth Jr.}
 %
 % \maketitle
 %
@@ -174,6 +173,12 @@ p\kern-.025em e}}\kern-.08em\TeX}
 %
 % To see the full text of the {GNU GPL} license, go to the |COPYING|
 % file attached to this package.
+%
+% \section{Support}
+%
+% We provide a mailing list where users can send questions, comments,
+% and bugs to. More details can be found at
+% \url{http://coppetex.sourceforge.net/mailing-list.html}.
 % 
 % \section{User Interface}
 %
@@ -991,7 +996,7 @@ p\kern-.025em e}}\kern-.08em\TeX}
       % There is an issue here. When the last entry must be split between lines,
       % the spacing between it and the next paragraph becomes smaller.
       % Should we manually introduce a fixed space? But how could we know that
-      % a name was split?
+      % a name was split? Is this happening yet? 
       \begin{tabularx}{100mm}[b]{@{}l@{ }X@{}}
         \local@advisorstring: & \nohyphens{\@adname\ \@adsurn}%
         \ifthenelse{\equal{\@coadname}{\@empty}}{}{\\
