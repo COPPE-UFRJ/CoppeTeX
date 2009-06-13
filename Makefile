@@ -116,7 +116,8 @@ dist: distclean
 	@${_tar} -jcvf $(PACKAGE_NAME).tar.bz2 ./*
 
 distclean: clean
-	@$(_rm) -f $(PACKAGE_NAME).cls example.* *~ coppe.pdf coppe.ps coppe.dvi
+	@$(_rm) -f $(PACKAGE_NAME).cls example.pdf example.ps example.dvi \
+             example.tex *~ coppe.pdf coppe.ps coppe.dvi
 
 clean:
 	@$(_rm) -f *.log *.aux *.dvi *.ist *.idx *.blg *.bbl *.glo *.bz2 \
