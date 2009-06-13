@@ -15,7 +15,7 @@ a title page, cataloging details, native and foreign languages abstracts, table
 of contents, and list of bibliographic references.
 
 Although it is tied to the COPPE/UFRJ guidelines, it can be easily ported to
-standards of other institutions. This is possible due to the code modularity.
+standards of other institutions.
 
 
 When Conceived
@@ -50,12 +50,10 @@ files:
 
   3. README: describe the CoppeTeX package.
 
-  4. coppe-unsrt.bst: unsorted BibTeX style.
+  4. coppe-unsrt.bst: unsorted BibTeX style, Natbib compatible.
 
-  5. coppe.bib: contains the references cited in the documentation.
-
-  6. coppe.dtx: main source file; contains the documentation, a sample
-     thesis and Makeindex style.
+  5. coppe.dtx: main source file; contains the documentation, a sample
+     thesis and a Makeindex style.
 
   7. coppe.ins: used to strip out the coppe document class from `coppe.dtx'.
 
@@ -88,8 +86,11 @@ If you have some experience with LaTeX classes and packages, you won't have any
 difficult when installing CoppeTeX. It should be installed as any other LaTeX
 package you have ever used. So, you can save your time skipping this section.
 
-The impatient user should get a thesis template. For the enthusiastic newbies,
-we give here succinct instructions for installing the CoppeTeX bundle.
+The impatient user should get a thesis template at
+<http://coppetex.sourceforge.net/doc.html#thesistemplate>.
+
+For the enthusiastic newbies, we give here succinct instructions for installing
+the CoppeTeX bundle.
 
 There exist two possible ways of obtaining CoppeTeX. You can download a release
 or the sources. Each of these has its own installation method. We describe both
@@ -115,15 +116,15 @@ coppe.dtx. Now, you should follow the instructions in the 'From releases'
 section.
 
 
-Contact
--------
+Help & Support
+--------------
 
-Please, send any comments, suggestions, questions and bugs to:
-  George Ainsworth <goajunior at users.sourceforge.net>.
+Please, send any comments, suggestions, questions and bugs to our mailing list
+<http://coppetex.sourceforge.net/mailing-list.html>.
 
 
 Have a good thesis,
   CoppeTeX team.
   http://coppetex.sourceforge.net
 
-                                             Rio de Janeiro, 14 October 2008.
+                                             Rio de Janeiro, 13 June 2009.
