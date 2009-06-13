@@ -351,9 +351,10 @@ p\kern-.025em e}}\kern-.08em\TeX}
 %   \bibliographystyle{coppe-unsrt}
 %   \bibliography{example}
 % \end{verbatim}
+%
 % Run in sequence \LaTeX, \BibTeX, and twice again \LaTeX\ to resolve
 % references issues.
-% This style is not compatible with |natbib|.
+% This style IS compatible with |natbib|.
 %
 % \section{Graphics driver}
 %
@@ -419,54 +420,41 @@ p\kern-.025em e}}\kern-.08em\TeX}
 \makeloabbreviations
 
 \begin{document}
-  \title{Desenvolvimento de um Algoritmo Baseado no Método de Arnoldi para
-  Solução de Problemas de Autovalor Generalizado}
-  \foreigntitle{Solution of Generalized Eigensystems with Algorithms Based on
-  Arnoldi Methods}
-  \author{George Oliveira}{Ainsworth Jr.}
-  \advisor{Prof.}{Carlos}{Magluta}{D.Sc.}
-  \coadvisor{Prof.}{Fernando Luiz Bastos}{Ribeiro}{D.Sc.}
-  \examiner{Prof.}{Alvaro Luiz Gayoso Azeredo Coutinho}{D.Sc.}
-  \examiner{Prof.}{Webe João Mansur}{Ph.D.}
-  \examiner{Prof.}{Paulo Batista Gonçalves}{D.Sc.}
+  \title{Título da Tese}
+  \foreigntitle{Thesis Title}
+  \author{Author's First and Middle Names}{LastName}
+  \advisor{Prof.}{Adviser's First and Middle Names}{LastName}{Ph.D.}
+  \coadvisor{Prof.}{Co-adviser's First and Middle Names}{LastName}{Ph.D.}
+  \examiner{Prof.}{First Examiner's Complete Name}{D.Sc.}
+  \examiner{Prof.}{Second Examiner's Complete Name}{Ph.D.}
+  \examiner{Prof.}{... Examiner's Complete Name}{D.Sc.}
+  \examiner{Prof.}{$n$-ésimo Examiner's Complete Name}{Ph.D.}
   \department{PEC}
-  \date{12}{2008}
+  \date{06}{2009}
 
-  \keyword{Problemas de Autovalor}
-  \keyword{Método de Arnoldi}
-  \keyword{Análise Dinâmica}
+  \keyword{Primeira Palavra-chave}
+  \keyword{Segunda Palavra-chave}
+  \keyword{...}
+  \keyword{$n$-ésima Palavra-chave}
   \maketitle
 
   \frontmatter
-
-  \dedication{À minha mãe pelo dom da vida e pelo amparo ao longo desses anos.\\
-  Às minhas tias Vanete e Vanilde (\emph{in memoriam}).}
+  \dedication{A alguém cujo valor é digno desta dedicatória.}
 
   \chapter*{Agradecimentos}
-  Agradeço ao Conselho Nacional de Desenvolvimento Científico e Tecnológico dos
-  Estados Unidos do Brasil (CNPq) pelo suporte financeiro.
+
+  Gostaria de agradecer a todos.
  
   \begin{abstract}
-  Autovalores e autovetores de operadores lineares são importantes para muitas
-  áreas da Matemática Aplicada. Na Engenharia Civil, sobretudo na Engenharia de
-  Estruturas o uso de problemas de autovalor tem fundamental importância, um
-  exemplo típico é a análise dinâmica, onde os autovalores representam as
-  frequências naturais e os autovetores os modos de vibração associados à sua
-  frequência natural correspondente. A crescente demanda da avaliação numérica
-  de forma mais eficiente dessas quantidades, despertou o interesse na busca de
-  novos métodos para a solução de problemas de autovalor, principalmente quando
-  o problema a ser analisado conduz a quantidades pertencentes ao conjunto dos
-  números complexos. 
+
+  Apresenta-se, nesta tese, os resultados obtidos durante os últimos 4 anos.
+
   \end{abstract}
 
   \begin{foreignabstract}
-  Eigenvalues and eigenvectors of linear operators are important in many Applied
-  Mathematics areas. In Civil Engineering, especially in Structural Analysis,
-  eigensystems have a fundamental importance. A typical example is in dynamic
-  analysis, where the eigenvalues represent the natural frequencies and
-  eigenvectors the mode shape. The increasing demand for efficient numeric
-  evaluation of eigenvalues and eigenvectors motivated the search for new
-  methods for the solution of complex eigensystems.
+
+  In this work, we present some results obtained during the last four years.
+
   \end{foreignabstract} 
 
   \tableofcontents
@@ -477,26 +465,47 @@ p\kern-.025em e}}\kern-.08em\TeX}
  
   \mainmatter
   \chapter{Introdução}
-  Em métodos numéricos para obter soluções aproximadas de equações
-  diferenciais, tais como o método dos elementos finitos (MEF)%
-  \abbrev{MEF}{método de elementos finitos}
-  e o método dos volumes finitos (MVF)%
-  \abbrev{MVF}{método de volumes finitos}, o domínio no qual estas
-  equações foram definidas é discretizado em sub-domínios simples
-  denominados \textit{elementos}.
 
-  Denotemos o domínio por $\Omega$%
-  \symbl{$\Omega$}{domínio de definição de uma equação diferencial}
+  Segundo a norma de formatação de teses e dissertações do Instituto Alberto Luiz Coimbra de Pós-graduação e Pesquisa de Engenharia (COPPE),
+  toda abreviatura deve ser definida antes de utilizada.
+  \abbrev{COPPE}{Instituto Alberto Luiz Coimbra de Pós-graduação e Pesquisa de Engenharia}
+
+  Do mesmo modo, é imprescindível ainda definir os símbolos, tal como o conjunto dos números reais $\mathbb{R}$ e o conjunto vazio $\emptyset$.
+  \symbl{$\mathbb{R}$}{Conjunto dos números reais}
+  \symbl{$\emptyset$}{Conjunto vazio}
 
   \chapter{Revisão Bibliográfica}
+
+  Para ilustrar a completa adesão ao estilo de citações e listagem de referências bibliográficas, citamos aqui alguns dos trabalhos contidos na norma fornecida pela CPGP da COPPE.
+
+  \begin{table}
+  \caption{Exemplos de citações utilizando três comandos diferentes.}
+  \label{tab:citation}
+  \centering
+  \begin{tabular}{|c|c|c|c|}
+    Tipo da Publicação & \verb|\cite| & \verb|\citet| & \verb|\citep|\\
+    \hline
+    Livro & \cite{book-example} & \citet{book-example} & \citep{book-example}\\
+    Artigo & \cite{article-example} & \citet{article-example} & \citep{article-example}\\
+    Relatório & \cite{techreport-example} & \citet{techreport-example} & \citep{techreport-example}\\
+    Relatório & \cite{techreport-exampleIn} & \citet{techreport-exampleIn} & \citep{techreport-exampleIn}\\
+    Anais de Congresso & \cite{inproceedings-example} & \citet{inproceedings-example} & \citep{inproceedings-example}\\
+    Séries & \cite{incollection-example} & \citet{incollection-example} & \citep{incollection-example}\\
+    Em Livro & \cite{inbook-example} & \citet{inbook-example} & \citep{inbook-example}\\
+    Dissertação de mestrado & \cite{mastersthesis-example} & \citet{mastersthesis-example} & \citep{mastersthesis-example}\\
+    Tese de doutorado & \cite{phdthesis-example} & \citet{phdthesis-example} & \citep{phdthesis-example}\\
+    Manual & \cite{manual-example} & \citet{manual-example} & \citep{manual-example}\\
+    Outros & \cite{misc-example} & \citet{misc-example} & \citep{misc-example}\\
+  \end{tabular}
+  \end{table}
+
   \chapter{Método Proposto}
   \chapter{Resultados e Discussões}
   \chapter{Conclusões}
 
   \backmatter
-  \nocite{*}
   \bibliographystyle{coppe-unsrt}
-  \bibliography{coppe}
+  \bibliography{example}
 
   \appendix
   \chapter{Código Fonte}
