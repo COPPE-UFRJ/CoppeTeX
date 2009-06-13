@@ -27,9 +27,7 @@
 % Author(s): Vicente Helano <helano@coc.ufrj.br>
 %
 % TODO:
-%   1. Do we really need an "artigo em congresso publicado na forma digital"
-%      style?
-%   2. Verify the use of cross-references.
+%   1. Verify the use of cross-references.
 
 ENTRY
   { address
@@ -894,6 +892,11 @@ FUNCTION {incollection}
   fin.entry
 }
 
+% Do we need to consider the difference between printed and online proceedings?
+% Let's assume they are the same and that people
+% can use the 'notes' field to give details about the media
+% used to publish it.
+
 FUNCTION {inproceedings}
 { output.bibitem
   format.authors "author" output.check
@@ -941,10 +944,10 @@ FUNCTION {manual}
   author format.key output
   new.block
   format.btitle "title" output.check
+  format.edition output
   organization address new.block.checkb
   organization output
   address output
-  format.edition output
   format.date output
   format.url output
   format.access output
@@ -1107,7 +1110,7 @@ FUNCTION {chop.word}
 
 FUNCTION {format.lab.names}
 { 's :=
-  s #1 "{vv~}{ll}" format.name$
+  s #1 "{vv~}{ll}" format.name$ capify
   s num.names$ duplicate$
   #2 >
     { pop$ " et~al." emphasize * }
@@ -1115,7 +1118,7 @@ FUNCTION {format.lab.names}
         'skip$
         { s #2 "{ff }{vv }{ll}{ jj}" format.name$ "others" =
             { " et~al." emphasize * }
-            { " e " * s #2 "{vv~}{ll}" format.name$ * }
+            { " e" * s #2 "{vv~}{ll}" format.name$ capify * }
           if$
         }
       if$
