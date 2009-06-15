@@ -282,31 +282,31 @@ FUNCTION {bbl.phdthesis}
 { "Ph.D. Thesis" }
 
 FUNCTION {bbl.first}
-{ "1st" }
+{ "1" }
 
 FUNCTION {bbl.second}
-{ "2nd" }
+{ "2" }
 
 FUNCTION {bbl.third}
-{ "3rd" }
+{ "3" }
 
 FUNCTION {bbl.fourth}
-{ "4th" }
+{ "4" }
 
 FUNCTION {bbl.fifth}
-{ "5th" }
+{ "5" }
 
 FUNCTION {bbl.st}
-{ "st" }
+{ "" }
 
 FUNCTION {bbl.nd}
-{ "nd" }
+{ "" }
 
 FUNCTION {bbl.rd}
-{ "rd" }
+{ "" }
 
 FUNCTION {bbl.th}
-{ "th" }
+{ "" }
 
 MACRO {jan} {"Jan."}
 
@@ -959,10 +959,11 @@ FUNCTION {format.publisher}
           { address * }
           if$
         }
-        { publisher *
-          address empty$
-            'skip$
-            { ": " * address * }
+        { address empty$
+          'skip$
+          { address *
+            ", " * publisher *
+          }
           if$
         }
       if$
