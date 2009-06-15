@@ -31,11 +31,8 @@
 %
 % \iffalse
 %<*driver>
-\documentclass[a4paper]{ltxdoc}
-\usepackage[T1]{fontenc}
+\documentclass{ltxdoc}
 \usepackage[latin1]{inputenc}
-\usepackage{lmodern}
-\usepackage{url}
 
 \def\CoppeTeX{{\rm C\kern-.05em{\sc o\kern-.025em p\kern-.025em
 p\kern-.025em e}}\kern-.08em\TeX}
@@ -46,7 +43,7 @@ p\kern-.025em e}}\kern-.08em\TeX}
 \end{document}
 %</driver> \fi
 %
-%% \CheckSum{1315}
+%% \CheckSum{1311}
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
 %%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
@@ -118,7 +115,9 @@ p\kern-.025em e}}\kern-.08em\TeX}
 % \GetFileInfo{coppe}
 %
 % \title{The |coppe| document class}
-% \author{Vicente H. F. Batista \and George O. Ainsworth Jr.}
+% \author{ Vicente Helano F. Batista \and
+% George O. Ainsworth Jr.\thanks{Send comments, suggestions, questions and bugs
+% to goajunior@users.sourceforge.net.}}
 %
 % \maketitle
 %
@@ -173,12 +172,6 @@ p\kern-.025em e}}\kern-.08em\TeX}
 %
 % To see the full text of the {GNU GPL} license, go to the |COPYING|
 % file attached to this package.
-%
-% \section{Support}
-%
-% We provide a mailing list where users can send questions, comments,
-% and bugs to. More details can be found at
-% \url{http://coppetex.sourceforge.net/mailing-list.html}.
 % 
 % \section{User Interface}
 %
@@ -356,10 +349,9 @@ p\kern-.025em e}}\kern-.08em\TeX}
 %   \bibliographystyle{coppe-unsrt}
 %   \bibliography{example}
 % \end{verbatim}
-%
 % Run in sequence \LaTeX, \BibTeX, and twice again \LaTeX\ to resolve
 % references issues.
-% This style IS compatible with |natbib|.
+% This style is not compatible with |natbib|.
 %
 % \section{Graphics driver}
 %
@@ -415,51 +407,62 @@ p\kern-.025em e}}\kern-.08em\TeX}
 % \label{COPPE:SAMPLE}
 %    \begin{macrocode}
 %<*example>
-\documentclass[dsc,pdftex,onehalfspacing]{coppe}
-\usepackage[T1]{fontenc}
+\documentclass[dsc,pdftex]{coppe}
 \usepackage[latin1]{inputenc}
 \usepackage{amsmath,amssymb}
-\usepackage{lmodern}
 
 \makelosymbols
 \makeloabbreviations
 
 \begin{document}
-  \title{Título da Tese}
-  \foreigntitle{Thesis Title}
-  \author{Author's First and Middle Names}{LastName}
-  \advisor{Prof.}{Adviser's First and Middle Names}{LastName}{Ph.D.}
-  \coadvisor{Prof.}{Co-adviser's First and Middle Names}{LastName}{Ph.D.}
-  \examiner{Prof.}{First Examiner's Complete Name}{D.Sc.}
-  \examiner{Prof.}{Second Examiner's Complete Name}{Ph.D.}
-  \examiner{Prof.}{... Examiner's Complete Name}{D.Sc.}
-  \examiner{Prof.}{$n$-ésimo Examiner's Complete Name}{Ph.D.}
+  \title{Desenvolvimento de um Algoritmo Baseado no Método de Arnoldi para
+  Solução de Problemas de Autovalor Generalizado}
+  \foreigntitle{Solution of Generalized Eigensystems with Algorithms Based on
+  Arnoldi Methods}
+  \author{George Oliveira}{Ainsworth Jr.}
+  \advisor{Prof.}{Carlos}{Magluta}{D.Sc.}
+  \coadvisor{Prof.}{Fernando Luiz Bastos}{Ribeiro}{D.Sc.}
+  \examiner{Prof.}{Alvaro Luiz Gayoso Azeredo Coutinho}{D.Sc.}
+  \examiner{Prof.}{Webe João Mansur}{Ph.D.}
+  \examiner{Prof.}{Paulo Batista Gonçalves}{D.Sc.}
   \department{PEC}
-  \date{06}{2009}
+  \date{12}{2008}
 
-  \keyword{Primeira Palavra-chave}
-  \keyword{Segunda Palavra-chave}
-  \keyword{...}
-  \keyword{$n$-ésima Palavra-chave}
+  \keyword{Problemas de Autovalor}
+  \keyword{Método de Arnoldi}
+  \keyword{Análise Dinâmica}
   \maketitle
 
   \frontmatter
-  \dedication{A alguém cujo valor é digno desta dedicatória.}
+
+  \dedication{À minha mãe pelo dom da vida e pelo amparo ao longo desses anos.\\
+  Às minhas tias Vanete e Vanilde (\emph{in memoriam}).}
 
   \chapter*{Agradecimentos}
-
-  Gostaria de agradecer a todos.
+  Agradeço ao Conselho Nacional de Desenvolvimento Científico e Tecnológico dos
+  Estados Unidos do Brasil (CNPq) pelo suporte financeiro.
  
   \begin{abstract}
-
-  Apresenta-se, nesta tese, os resultados obtidos durante os últimos 4 anos.
-
+  Autovalores e autovetores de operadores lineares são importantes para muitas
+  áreas da Matemática Aplicada. Na Engenharia Civil, sobretudo na Engenharia de
+  Estruturas o uso de problemas de autovalor tem fundamental importância, um
+  exemplo típico é a análise dinâmica, onde os autovalores representam as
+  frequências naturais e os autovetores os modos de vibração associados à sua
+  frequência natural correspondente. A crescente demanda da avaliação numérica
+  de forma mais eficiente dessas quantidades, despertou o interesse na busca de
+  novos métodos para a solução de problemas de autovalor, principalmente quando
+  o problema a ser analisado conduz a quantidades pertencentes ao conjunto dos
+  números complexos. 
   \end{abstract}
 
   \begin{foreignabstract}
-
-  In this work, we present some results obtained during the last four years.
-
+  Eigenvalues and eigenvectors of linear operators are important in many Applied
+  Mathematics areas. In Civil Engineering, especially in Structural Analysis,
+  eigensystems have a fundamental importance. A typical example is in dynamic
+  analysis, where the eigenvalues represent the natural frequencies and
+  eigenvectors the mode shape. The increasing demand for efficient numeric
+  evaluation of eigenvalues and eigenvectors motivated the search for new
+  methods for the solution of complex eigensystems.
   \end{foreignabstract} 
 
   \tableofcontents
@@ -470,47 +473,26 @@ p\kern-.025em e}}\kern-.08em\TeX}
  
   \mainmatter
   \chapter{Introdução}
+  Em métodos numéricos para obter soluções aproximadas de equações
+  diferenciais, tais como o método dos elementos finitos (MEF)%
+  \abbrev{MEF}{método de elementos finitos}
+  e o método dos volumes finitos (MVF)%
+  \abbrev{MVF}{método de volumes finitos}, o domínio no qual estas
+  equações foram definidas é discretizado em sub-domínios simples
+  denominados \textit{elementos}.
 
-  Segundo a norma de formatação de teses e dissertações do Instituto Alberto Luiz Coimbra de Pós-graduação e Pesquisa de Engenharia (COPPE),
-  toda abreviatura deve ser definida antes de utilizada.
-  \abbrev{COPPE}{Instituto Alberto Luiz Coimbra de Pós-graduação e Pesquisa de Engenharia}
-
-  Do mesmo modo, é imprescindível ainda definir os símbolos, tal como o conjunto dos números reais $\mathbb{R}$ e o conjunto vazio $\emptyset$.
-  \symbl{$\mathbb{R}$}{Conjunto dos números reais}
-  \symbl{$\emptyset$}{Conjunto vazio}
+  Denotemos o domínio por $\Omega$%
+  \symbl{$\Omega$}{domínio de definição de uma equação diferencial}
 
   \chapter{Revisão Bibliográfica}
-
-  Para ilustrar a completa adesão ao estilo de citações e listagem de referências bibliográficas, citamos aqui alguns dos trabalhos contidos na norma fornecida pela CPGP da COPPE.
-
-  \begin{table}
-  \caption{Exemplos de citações utilizando três comandos diferentes.}
-  \label{tab:citation}
-  \centering
-  \begin{tabular}{|c|c|c|c|}
-    Tipo da Publicação & \verb|\cite| & \verb|\citet| & \verb|\citep|\\
-    \hline
-    Livro & \cite{book-example} & \citet{book-example} & \citep{book-example}\\
-    Artigo & \cite{article-example} & \citet{article-example} & \citep{article-example}\\
-    Relatório & \cite{techreport-example} & \citet{techreport-example} & \citep{techreport-example}\\
-    Relatório & \cite{techreport-exampleIn} & \citet{techreport-exampleIn} & \citep{techreport-exampleIn}\\
-    Anais de Congresso & \cite{inproceedings-example} & \citet{inproceedings-example} & \citep{inproceedings-example}\\
-    Séries & \cite{incollection-example} & \citet{incollection-example} & \citep{incollection-example}\\
-    Em Livro & \cite{inbook-example} & \citet{inbook-example} & \citep{inbook-example}\\
-    Dissertação de mestrado & \cite{mastersthesis-example} & \citet{mastersthesis-example} & \citep{mastersthesis-example}\\
-    Tese de doutorado & \cite{phdthesis-example} & \citet{phdthesis-example} & \citep{phdthesis-example}\\
-    Manual & \cite{manual-example} & \citet{manual-example} & \citep{manual-example}\\
-    Outros & \cite{misc-example} & \citet{misc-example} & \citep{misc-example}\\
-  \end{tabular}
-  \end{table}
-
   \chapter{Método Proposto}
   \chapter{Resultados e Discussões}
   \chapter{Conclusões}
 
   \backmatter
+  \nocite{*}
   \bibliographystyle{coppe-unsrt}
-  \bibliography{example}
+  \bibliography{coppe}
 
   \appendix
   \chapter{Código Fonte}
@@ -531,20 +513,23 @@ p\kern-.025em e}}\kern-.08em\TeX}
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{coppe}[\filedate\ \fileversion\ COPPE Dissertations and Thesis]
 \LoadClass[12pt,a4paper,oneside]{book}
-\RequirePackage[numbers,sort&compress]{natbib}
-\RequirePackage{hyphenat}
 \RequirePackage{lastpage}
 \RequirePackage{hyperref}
 \RequirePackage[english,brazil]{babel}
+\RequirePackage{hyphenat}
 \RequirePackage{ifthen}
 \RequirePackage{graphicx}
-\RequirePackage{setspace}
 \RequirePackage{tabularx}
 \RequirePackage{eqparbox}
 \RequirePackage[a4paper,bindingoffset=0.0cm,vcentering=true,%
 top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
 \def\CoppeTeX{{\rm C\kern-.05em{\sc o\kern-.025em p\kern-.025em
 p\kern-.025em e}}\kern-.08em\TeX}
+%    \end{macrocode}
+%
+% The default line spacing is $1.5pt$.
+%    \begin{macrocode}
+\renewcommand\baselinestretch{1.5}
 %    \end{macrocode}
 %
 %    \begin{macrocode}
@@ -603,19 +588,6 @@ p\kern-.025em e}}\kern-.08em\TeX}
   \PassOptionsToPackage{pdftex}{hyperref,graphicx}
   \PassOptionsToPackage{plainpages=false,pdfpagelabels}{hyperref}
 }
-%    \end{macrocode}
-% Here is the default one-and-a-half line spacing. We provide the option |onehalfspacing| just for completion.
-%    \begin{macrocode}
-\onehalfspacing
-\DeclareOption{onehalfspacing}{
-}
-%
-\DeclareOption{doublespacing}{%
-  \doublespacing
-}
-%    \end{macrocode}
-%
-%    \begin{macrocode}
 \ProcessOptions\relax
 %    \end{macrocode}
 %
@@ -646,7 +618,7 @@ p\kern-.025em e}}\kern-.08em\TeX}
      \global\def\foreign@deptname{Mechanical Engineering}}{}
   \ifthenelse{\equal{#1}{PEMM}}
     {\global\def\local@deptname{Engenharia Metal{\' u}rgica e de Materiais}
-\global\def\foreign@deptname{Metallurgical and Materials Engineering}}{}
+\global\def\foreign@deptname{Metallurgical and Materials Science Engineering}}{}
   \ifthenelse{\equal{#1}{PEN}}
     {\global\def\local@deptname{Engenharia Nuclear}
      \global\def\foreign@deptname{Nuclear Engineering}}{}
@@ -863,7 +835,7 @@ p\kern-.025em e}}\kern-.08em\TeX}
     \ifthenelse{\boolean{needbb}}{%
       \includegraphics[bb = -1 -1 48 64]{minerva}}{%
       \includegraphics{minerva}}}\par
-  \makebox[20mm][c]{\textbf{\textsf{\small COPPE/UFRJ}}}
+  \makebox[20mm][c]{{\fontfamily{phv}\textbf{\small COPPE/UFRJ}}}
   \end{flushleft}
   \begin{center}
   \nohyphens{\MakeUppercase\local@title}\par
@@ -996,7 +968,7 @@ p\kern-.025em e}}\kern-.08em\TeX}
       % There is an issue here. When the last entry must be split between lines,
       % the spacing between it and the next paragraph becomes smaller.
       % Should we manually introduce a fixed space? But how could we know that
-      % a name was split? Is this happening yet? 
+      % a name was split?
       \begin{tabularx}{100mm}[b]{@{}l@{ }X@{}}
         \local@advisorstring: & \nohyphens{\@adname\ \@adsurn}%
         \ifthenelse{\equal{\@coadname}{\@empty}}{}{\\
@@ -1309,7 +1281,7 @@ p\kern-.025em e}}\kern-.08em\TeX}
 \newcommand\local@statename{RJ}
 \newcommand\local@countryname{Brasil}
 %
-\newcommand\frontcover@maintext{
+\newcommand\frontcover@maintext{%
   \sloppy\nohyphens{\local@doctype\ de \@degreename\
   \ifthenelse{\boolean{maledoc}}{apresentado}{apresentada}
   ao Programa de P{\' o}s-gradua{\c c}{\~ a}o em \local@deptname,
@@ -1318,7 +1290,7 @@ p\kern-.025em e}}\kern-.08em\TeX}
   \local@degname\ em \local@deptname.}
 }
 %
-\newcommand\frontpage@maintext{
+\newcommand\frontpage@maintext{%
   \noindent {\MakeUppercase\local@doctype}
   \ifthenelse{\boolean{maledoc}}{SUBMETIDO}{SUBMETIDA}
   \sloppy\nohyphens{AO CORPO DOCENTE DO INSTITUTO ALBERTO LUIZ COIMBRA
@@ -1326,7 +1298,7 @@ p\kern-.025em e}}\kern-.08em\TeX}
   UNIVERSIDADE FEDERAL DO RIO DE JANEIRO COMO PARTE DOS REQUISITOS
   NECESS{\' A}RIOS PARA A OBTEN{\c C}{\~ A}O DO GRAU DE
   {\MakeUppercase\local@degname} EM CI{\^E}NCIAS EM
-  {\MakeUppercase\local@deptname.\par}}%
+  {\MakeUppercase\local@deptname}}.\par%
 }
 %
 \newcommand\frontpage@bottomtext{%
