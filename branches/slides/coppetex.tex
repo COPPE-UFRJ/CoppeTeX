@@ -23,6 +23,7 @@
 % Author(s): Vicente Helano
 
 \documentclass[style=coppe,mode=present,paper=a4paper]{powerdot}
+\usepackage[T1]{fontenc}
 \usepackage{color,subfigure,rotating,multirow}
 \usepackage{amssymb}
 
@@ -91,6 +92,26 @@ at COPPE/UFRJ
 \end{center}
 \end{slide}
 
+\begin{slide}{IDE's}
+\vspace*{1cm}
+I like using...
+\begin{table}
+\begin{tabular}{ccc}
+  OS & \LaTeX\ distro & IDE's\\
+  \hline
+  \includegraphics[bb=0 0 266 314,width=.1\textwidth]{images/linux-logo.png} & teTeX & Vim\\
+  \includegraphics[bb=0 0 266 314,width=.1\textwidth]{images/apple-logo.png} & MacTeX & Vim\\
+  \includegraphics[bb=0 0 266 314,width=.1\textwidth]{images/windows-logo.png} & MikTeX & Vim\\
+\end{tabular}
+\end{table}
+\begin{itemize}
+\item[Linux] Vi(m), (X)Emacs, Kate, Kile, Gedit, 
+\item[MacOS] TextMate, Vi(m)
+\item[Windows] WinEdt, Winshell, TeXnic, LEd, Winefish
+\end{itemize}
+\end{slide}
+
+
 \begin{slide}{\CoppeTeX}
 \vspace*{1cm}
 \begin{itemize}
@@ -111,7 +132,18 @@ at COPPE/UFRJ
 \begin{slide}{Known Issues}
 \vspace*{1cm}
 \begin{itemize}
-\item \texttt{fncychap} restart chapter and section counters in appendix, anymore?
+\item \texttt{fncychap} restart chapter and section counters in appendix
+\item \texttt{natbib} generates empty citations
+\item Anymore?
+\end{itemize}
+\end{slide}
+
+\begin{slide}{Tips}
+\vspace*{1cm}
+\begin{itemize}
+\item Use our mailing list
+\item ISO-8859-1 vs. UTF-8: you can use \texttt{iconv} to switch between them
+\item pdf\TeX: native TrueType and Type 1 fonts, micro-typographic extensions, direct access to intrinsic PDF features (by Hàn The Thành)
 \end{itemize}
 \end{slide}
 
