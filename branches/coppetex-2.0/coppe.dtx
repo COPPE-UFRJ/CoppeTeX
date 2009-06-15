@@ -1281,7 +1281,7 @@ p\kern-.025em e}}\kern-.08em\TeX}
 \newcommand\local@statename{RJ}
 \newcommand\local@countryname{Brasil}
 %
-\newcommand\frontcover@maintext{
+\newcommand\frontcover@maintext{%
   \sloppy\nohyphens{\local@doctype\ de \@degreename\
   \ifthenelse{\boolean{maledoc}}{apresentado}{apresentada}
   ao Programa de P{\' o}s-gradua{\c c}{\~ a}o em \local@deptname,
@@ -1290,15 +1290,15 @@ p\kern-.025em e}}\kern-.08em\TeX}
   \local@degname\ em \local@deptname.}
 }
 %
-\newcommand\frontpage@maintext{
+\newcommand\frontpage@maintext{%
   \noindent {\MakeUppercase\local@doctype}
   \ifthenelse{\boolean{maledoc}}{SUBMETIDO}{SUBMETIDA}
   \sloppy\nohyphens{AO CORPO DOCENTE DO INSTITUTO ALBERTO LUIZ COIMBRA
   DE P{\' O}S-GRADUA{\c C}{\~ A}O E PESQUISA DE ENGENHARIA (COPPE) DA
   UNIVERSIDADE FEDERAL DO RIO DE JANEIRO COMO PARTE DOS REQUISITOS
   NECESS{\' A}RIOS PARA A OBTEN{\c C}{\~ A}O DO GRAU DE
-  {\MakeUppercase\local@degname} EM CI{\^E}NCIAS EM}
-  {\MakeUppercase\local@deptname. \par}%
+  {\MakeUppercase\local@degname} EM CI{\^E}NCIAS EM
+  {\MakeUppercase\local@deptname}}.\par%
 }
 %
 \newcommand\frontpage@bottomtext{%
