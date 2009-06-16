@@ -20,8 +20,8 @@
 # version 3 along with this package (see COPYING file).
 # If not, see <http://www.gnu.org/licenses/>.
 #
-# $URL: https://coppetex.svn.sourceforge.net/svnroot/coppetex/branches/www/cgi-bin/save_user.py $
-# $Id: save_user.py 163 2009-03-05 23:21:52Z helano $
+# $URL$
+# $Id$
 #
 # Author(s): Vicente Helano,
 #            George Ainsworth
@@ -276,8 +276,8 @@ print """
 <!-- SVN control tags -->
 <p>
 <script type="text/javascript">
-  last_modified(String("$LastChangedDate: 2009-03-05 23:01:35 -0300 (Thu, 05 Mar 2009) $"),
-                String("$LastChangedBy: helano $"));
+  last_modified(String("$LastChangedDate$"),
+                String("$LastChangedBy$"));
   copyright_info();
 </script>
 </p>
