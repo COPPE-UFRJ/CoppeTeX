@@ -442,6 +442,15 @@ FUNCTION {n.dashify}
   while$
 }
 
+FUNCTION {format.year}
+{ year duplicate$ empty$
+    { "empty year in " cite$ * warning$
+       pop$ "" }
+    'skip$
+  if$
+  extra.label *
+}
+
 FUNCTION {format.date}
 { year duplicate$ empty$
     { "empty year in " cite$ * warning$
@@ -575,6 +584,10 @@ FUNCTION {format.vol.num.pages}
         'skip$
       if$
     }
+  if$
+  month empty$
+    'skip$
+    { " (" * month * ")" * }
   if$
   pages empty$
     'skip$
@@ -740,7 +753,7 @@ FUNCTION {article}
 { output.bibitem
   format.authors "author" output.check
   author format.key output
-  new.block
+  format.year "year" output.check
   format.title "title" output.check
   end.quote.title
   crossref missing$
@@ -749,7 +762,6 @@ FUNCTION {article}
         { format.vol.num.pages output }
         { format.vol.num.eid output }
       if$
-      format.date "year" output.check
     }
     { format.article.crossref output.nonnull
       eid empty$
