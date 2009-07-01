@@ -801,7 +801,7 @@ FUNCTION {book}
       if$
     }
   if$
-  format.date "year" output.check
+  format.year "year" output.check
   format.btitle "title" output.check
   crossref missing$
     { format.bvolume output
@@ -828,12 +828,11 @@ FUNCTION {booklet}
 { output.bibitem
   format.authors output
   author format.key output
-  new.block
+  format.year "year" output.check
   format.intitle "title" output.check
   howpublished address new.block.checkb
   howpublished output
   address output
-  format.date output
   format.isbn output
   format.doi output
   format.url output
@@ -856,7 +855,7 @@ FUNCTION {inbook}
       if$
     }
   if$
-  new.block
+  format.year "year" output.check
   format.intitle "title" output.check
   end.quote.title
   crossref missing$
@@ -872,7 +871,7 @@ FUNCTION {inbook}
       format.book.crossref output.nonnull
     }
   if$
-  format.date "year" output.check
+  format.month output
   format.isbn output
   format.doi output
   format.url output
@@ -886,7 +885,7 @@ FUNCTION {incollection}
 { output.bibitem
   format.authors "author" output.check
   author format.key output
-  new.block
+  format.year "year" output.check
   format.intitle "title" output.check
   end.quote.title
   crossref missing$
@@ -896,8 +895,8 @@ FUNCTION {incollection}
       format.edition output
       publisher "publisher" output.check
       format.chapter.pages output
-      address "address" output.check
-      format.date "year" output.check
+      address output
+      format.month output
     }
     { format.incoll.inproc.crossref output.nonnull
       format.chapter.pages output
@@ -962,13 +961,13 @@ FUNCTION {manual}
 { output.bibitem
   format.authors output
   author format.key output
-  new.block
+  format.year output
   format.btitle "title" output.check
   format.edition output
   organization address new.block.checkb
   organization output
   address output
-  format.date output
+  format.month output
   format.url output
   format.access output
   new.block
@@ -980,13 +979,13 @@ FUNCTION {mastersthesis}
 { output.bibitem
   format.authors "author" output.check
   author format.key output
-  new.block
+  format.year "year" output.check
   format.btitle "title" output.check
   new.block
   "Tese de Mestrado" format.thesis.type output.nonnull
   school "school" output.check
   address output
-  format.date "year" output.check
+  format.month output
   format.url output
   format.access output
   new.block
@@ -998,11 +997,12 @@ FUNCTION {misc}
 { output.bibitem
   format.authors output
   author format.key output
+  format.year output
   title howpublished new.block.checkb
   format.intitle output
   howpublished new.block.checka
   howpublished output
-  format.date output
+  format.month output
   format.issn output
   format.url output
   format.access output
@@ -1016,13 +1016,13 @@ FUNCTION {phdthesis}
 { output.bibitem
   format.authors "author" output.check
   author format.key output
-  new.block
+  format.year "year" output.check
   format.btitle "title" output.check
   new.block
   "Tese de Doutorado" format.thesis.type output.nonnull
   school "school" output.check
   address output
-  format.date "year" output.check
+  format.month output
   format.url output
   format.access output
   new.block
@@ -1034,12 +1034,12 @@ FUNCTION {proceedings}
 { output.bibitem
   format.editors output
   editor format.key output
-  new.block
+  format.year "year" output.check
   format.btitle "title" output.check
   format.bvolume output
   format.number.series output
   address output
-  format.date "year" output.check
+  format.month "month" output.check
   new.sentence
   organization output
   publisher output
@@ -1062,7 +1062,7 @@ FUNCTION {techreport}
   format.tr.number output.nonnull
   institution "institution" output.check
   address output
-  format.month "month" output.check
+  format.month output
   format.url output
   format.access output
   new.block
@@ -1074,11 +1074,11 @@ FUNCTION {unpublished}
 { output.bibitem
   format.authors "author" output.check
   author format.key output
-  new.block
+  format.year output
   format.title "title" output.check
   new.block
   note "note" output.check
-  format.date output
+  format.month output
   format.url output
   format.access output
   fin.entry
