@@ -21,8 +21,8 @@
 % version 3 along with this package (see COPYING file).
 % If not, see <http://www.gnu.org/licenses/>.
 %
-% $URL: https://coppetex.svn.sourceforge.net/svnroot/coppetex/trunk/coppe-unsrt.bst $
-% $Id: coppe-unsrt.bst 176 2009-06-13 18:30:19Z helano $
+% $URL$
+% $Id$
 %
 % Author(s): Vicente Helano <helano@coc.ufrj.br>
 %
