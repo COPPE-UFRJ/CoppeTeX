@@ -451,6 +451,15 @@ FUNCTION {format.year}
   extra.label *
 }
 
+FUNCTION {format.month}
+{
+  month duplicate$ empty$
+    { pop$ "" }
+    'skip$
+  if$
+  extra.label *
+}
+
 FUNCTION {format.date}
 { year duplicate$ empty$
     { "empty year in " cite$ * warning$
@@ -1047,13 +1056,13 @@ FUNCTION {techreport}
 { output.bibitem
   format.authors "author" output.check
   author format.key output
-%  format.year "year" output.check
+  format.year "year" output.check
   format.btitle "title" output.check
   new.block
   format.tr.number output.nonnull
   institution "institution" output.check
   address output
-%  format.month "month" output.check
+  format.month "month" output.check
   format.url output
   format.access output
   new.block
