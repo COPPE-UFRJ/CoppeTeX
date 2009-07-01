@@ -921,7 +921,7 @@ FUNCTION {inproceedings}
 { output.bibitem
   format.authors "author" output.check
   author format.key output
-  new.block
+  format.year "year" output.check
   format.intitle "title" output.check
   end.quote.title
   crossref missing$
@@ -933,10 +933,10 @@ FUNCTION {inproceedings}
         { organization publisher new.sentence.checkb
           organization output
           publisher output
-          format.date "year" output.check
+          format.month "month" output.check
         }
         { address output.nonnull
-          format.date "year" output.check
+          format.month "month" output.check
           new.sentence
           organization output
           publisher output
