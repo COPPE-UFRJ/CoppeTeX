@@ -792,7 +792,7 @@ FUNCTION {book}
       if$
     }
   if$
-  new.block
+  format.date "year" output.check
   format.btitle "title" output.check
   crossref missing$
     { format.bvolume output
@@ -806,7 +806,6 @@ FUNCTION {book}
       format.book.crossref output.nonnull
     }
   if$
-  format.date "year" output.check
   format.isbn output
   format.doi output
   format.url output
@@ -1048,13 +1047,13 @@ FUNCTION {techreport}
 { output.bibitem
   format.authors "author" output.check
   author format.key output
-  new.block
+%  format.year "year" output.check
   format.btitle "title" output.check
   new.block
   format.tr.number output.nonnull
   institution "institution" output.check
   address output
-  format.date "year" output.check
+%  format.month "month" output.check
   format.url output
   format.access output
   new.block
