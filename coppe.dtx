@@ -34,6 +34,7 @@
 \documentclass[a4paper]{ltxdoc}
 \usepackage[T1]{fontenc}
 \usepackage[latin1]{inputenc}
+\usepackage[colorlinks={true},breaklinks={true}]{hyperref}
 \usepackage{lmodern}
 \usepackage{url}
 
@@ -124,13 +125,13 @@ p\kern-.025em e}}\kern-.08em\TeX}
 %
 % \begin{abstract}
 %
-% In this work, it is described the |coppe| document class as well as
-% other files distributed by the \CoppeTeX\ project.
-% This class is suitable for writing academic dissertations, thesis and
-% qualifying exams according to the format rules of the Alberto Luiz Coimbra
-% Institute for Graduate Studies and Research in Engineering. The minimalist
-% set of macro commands allows its users to concentrate most of their efforts
-% on text composition rather than on the document layout.
+% In this work, it is described the |coppe| document class as well as other
+% files distributed by the \CoppeTeX\ project.  This class is suitable for
+% writing academic dissertations, thesis and qualifying exams according to the
+% formatting rules of the Alberto Luiz Coimbra Institute for Graduate Studies
+% and Research in Engineering. The minimalist set of macro commands allows its
+% users to concentrate most of their efforts on text composition rather than on
+% the document layout.
 %
 % \end{abstract}
 %
@@ -138,7 +139,7 @@ p\kern-.025em e}}\kern-.08em\TeX}
 %
 % Writing documents in \LaTeX\ may be a laborious task
 % when the authors have to prepare their manuscripts rigorously respecting
-% format rules imposed by publishers. Regardless of difficulty, a lot of thesis
+% formatting rules imposed by publishers. Regardless of difficulty, a lot of thesis
 % presented to the Coordination of Graduate Studies and Research in Engineering
 % of the Federal University of Rio de Janeiro (COPPE/UFRJ) is typeseted in
 % \LaTeX. This demand motivated the creation of the \CoppeTeX\ project, which
@@ -214,42 +215,42 @@ p\kern-.025em e}}\kern-.08em\TeX}
 % enter the information required to create it.
 %
 % \DescribeMacro{\author}
-% The |\author| command was redefined. Here, it takes two arguments:
-% the author's first names and surname, e.g. |\author{First Names}{Surname}|.
+% The |\author| command was redefined. Here, it takes two arguments: the
+% author's first names and surname, e.g., |\author{First Names}{Surname}|.
 % The words should be typed with only first letters in uppercase.
 %
 % \DescribeMacro{\title}
 % \DescribeMacro{\foreigntitle}
-% The macros |\title| and |\foreigntitle| are used to enter the titles of the
-% monograph in the current and foreign
-% languages. The default languages are Brazilian Portuguese and English.
-% The |babel| package is automatically loaded by |coppe.cls|, so you
-% don't need to load it again. The Brazilian Portuguese is the main language
-% and the English is only required for the foreign abstract.
+% The macros |\title| and |\foreigntitle| are used to enter the titles of your
+% monograph in the current and foreign languages. The default languages are
+% Brazilian Portuguese and English.  The |babel| package is automatically
+% loaded by |coppe.cls|, so you do not need to load it again. The Brazilian
+% Portuguese is the main language and the English is only required for the
+% foreign abstract.
 %
 % \DescribeMacro{\advisor}
-% \DescribeMacro{\coadvisor}
 % \DescribeMacro{\examiner}
-% Every COPPE student is coordinated by an advisor. It is still possible to
-% have a co-advisor. Their names must be provided by the commands
-% |\advisor| and |\coadvisor|.
-% It is also required to enter the names of all
-% examiners using the |\examiner| macro.
-% For the advisor and co-advisor's names, you should enter them
+% Every COPPE student is coordinated by at least one advisor.
+% M.Sc. and D.Sc. students can have at most 2 and 3 advisors,
+% respectively.
+% Their names must be provided by issuing the command |\advisor|
 % as below:
 % \begin{verbatim}
-%   \advisor{Title}{Advisor's Name}{Advisor's Surname}{Degree}
-%   \coadvisor{Title}{Co-advisor's Name}{Co-advisor's Surname}{Degree}
+%   \advisor{Title}{Advisor's Name}{Surname}{Degree}
+%   \advisor{Title}{Second Advisor's Name}{Surname}{Degree}
+%   \advisor{Title}{Third Advisor's Name}{Surname}{Degree}
 % \end{verbatim}
+%
+% The advisors are not necessarily members of the thesis examination board.
+% Thus, it is required to enter the names of all examiners using the |\examiner| macro.
 % The examiners' names are entered differently:
 % \begin{verbatim}
 %   \examiner{Title}{First Examiner's Complete Name}{Degree}
 %   \examiner{Title}{Second Examiner's Complete Name}{Degree}
 %   ...
+%   \examiner{Title}{n-th Examiner's Complete Name}{Degree}
 % \end{verbatim}
 %
-% The difference in providing advisors and examiners' names was introduced in
-% version 2.0, because of the new standard approved in 3rd July 2008.
 % Remember that all names must be given before calling |\maketitle|.
 %
 % \DescribeMacro{\department}
@@ -282,13 +283,15 @@ p\kern-.025em e}}\kern-.08em\TeX}
 %   \keyword{First Keyword}
 %   \keyword{Second Keyword}
 %   ...
+%   \keyword{n-th Keyword}
 % \end{verbatim}
 % Usually, six words are enough.
 %
 % \subsection*{Cataloging details}
-% This page contains cataloging information useful for librarians.  It is
-% automatically generated from the data entered by the user when calling
-% |\maketitle|, except in qualifying exams.
+% This page contains cataloging information useful for librarians.
+% Fortunately, it is automatically generated from the data you entered
+% at the time you call |\maketitle|.
+% It is not needed in qualifying exams.
 % 
 % \subsection*{Dedication (optional)}
 % \DescribeMacro{\dedication}
@@ -342,13 +345,13 @@ p\kern-.025em e}}\kern-.08em\TeX}
 %
 % \subsection*{References}
 % It is well known that bibliography databases can be easily maintained when
-% using \BibTeX. Thus, the \CoppeTeX\ project designed the \BibTeX\ style 
-% |coppe-unsrt.bst| to
-% complement the |coppe| class.
-% It is a numbered style,
-% which sorts references by order of citation.
-% To use it,
-% you have to select |coppe-unsrt| as the \BibTeX\ style and
+% using \BibTeX. Thus, the \CoppeTeX\ project designed two \BibTeX\ styles,
+% |coppe-plain.bst| and |coppe-unsrt.bst|.
+% The |coppe-plain.bst| creates a list of references alphabetically sorted.
+% The later is a numbered style,
+% which sorts references by the order of citation.
+% To use them,
+% you have to select either |coppe-plain| or |coppe-unsrt| as the \BibTeX\ style and
 % include your \BibTeX\ references
 % without the |bib| extension, as in the following
 % example:
@@ -358,8 +361,9 @@ p\kern-.025em e}}\kern-.08em\TeX}
 % \end{verbatim}
 %
 % Run in sequence \LaTeX, \BibTeX, and twice again \LaTeX\ to resolve
-% references issues.
-% This style IS compatible with |natbib|.
+% reference issues.
+% These styles are |natbib| compatible.
+% This means that you can use the commands |\citet| and |\citep|.
 %
 % \section{Graphics driver}
 %
@@ -428,8 +432,12 @@ p\kern-.025em e}}\kern-.08em\TeX}
   \title{Título da Tese}
   \foreigntitle{Thesis Title}
   \author{Author's First and Middle Names}{LastName}
-  \advisor{Prof.}{Adviser's First and Middle Names}{LastName}{Ph.D.}
-  \coadvisor{Prof.}{Co-adviser's First and Middle Names}{LastName}{Ph.D.}
+  \advisor{Prof.}{First Advisor's First and Middle Names}{LastName}{D.Sc.}
+  \advisor{Prof.}{Second Advisor's First and Middle Names}{LastName}{Ph.D.}
+  \advisor{Prof.}{Third Advisor's First and Middle Names}{LastName}{D.Sc.}
+
+  \examiner{Prof.}{First Advisor's First and Middle Names LastName}{D.Sc.}
+  \examiner{Prof.}{Second Advisor's First and Middle Names LastName}{Ph.D.}
   \examiner{Prof.}{First Examiner's Complete Name}{D.Sc.}
   \examiner{Prof.}{Second Examiner's Complete Name}{Ph.D.}
   \examiner{Prof.}{... Examiner's Complete Name}{D.Sc.}
@@ -437,10 +445,10 @@ p\kern-.025em e}}\kern-.08em\TeX}
   \department{PEC}
   \date{06}{2009}
 
-  \keyword{Primeira Palavra-chave}
-  \keyword{Segunda Palavra-chave}
+  \keyword{Primeira palavra-chave}
+  \keyword{Segunda palavra-chave}
   \keyword{...}
-  \keyword{$n$-ésima Palavra-chave}
+  \keyword{$n$-ésima palavra-chave}
   \maketitle
 
   \frontmatter
@@ -471,17 +479,21 @@ p\kern-.025em e}}\kern-.08em\TeX}
   \mainmatter
   \chapter{Introdução}
 
-  Segundo a norma de formatação de teses e dissertações do Instituto Alberto Luiz Coimbra de Pós-graduação e Pesquisa de Engenharia (COPPE),
-  toda abreviatura deve ser definida antes de utilizada.
-  \abbrev{COPPE}{Instituto Alberto Luiz Coimbra de Pós-graduação e Pesquisa de Engenharia}
+  Segundo a norma de formatação de teses e dissertações do Instituto Alberto
+  Luiz Coimbra de Pós-graduação e Pesquisa de Engenharia (COPPE), toda
+  abreviatura deve ser definida antes de utilizada.\abbrev{COPPE}{Instituto
+  Alberto Luiz Coimbra de Pós-graduação e Pesquisa de Engenharia}
 
-  Do mesmo modo, é imprescindível ainda definir os símbolos, tal como o conjunto dos números reais $\mathbb{R}$ e o conjunto vazio $\emptyset$.
-  \symbl{$\mathbb{R}$}{Conjunto dos números reais}
-  \symbl{$\emptyset$}{Conjunto vazio}
+  Do mesmo modo, é imprescindível ainda definir os símbolos, tal como o
+  conjunto dos números reais $\mathbb{R}$ e o conjunto vazio $\emptyset$.
+  \symbl{$\mathbb{R}$}{Conjunto dos números reais} \symbl{$\emptyset$}{Conjunto
+  vazio}
 
   \chapter{Revisão Bibliográfica}
 
-  Para ilustrar a completa adesão ao estilo de citações e listagem de referências bibliográficas, citamos aqui alguns dos trabalhos contidos na norma fornecida pela CPGP da COPPE.
+  Para ilustrar a completa adesão ao estilo de citações e listagem de
+  referências bibliográficas, citamos aqui alguns dos trabalhos contidos na
+  norma fornecida pela CPGP da COPPE.
 
   \begin{table}
   \caption{Exemplos de citações utilizando três comandos diferentes.}
@@ -548,11 +560,6 @@ p\kern-.025em e}}\kern-.08em\TeX}
 %    \end{macrocode}
 %
 %    \begin{macrocode}
-\let\@adname\@empty
-\let\@adsurn\@empty
-\let\@coadname\@empty
-\let\@coadsurn\@empty
-\newcounter{minexaminers}
 \newboolean{isdraft}
 \newboolean{maledoc}
 \setboolean{maledoc}{false}
@@ -567,7 +574,6 @@ p\kern-.025em e}}\kern-.08em\TeX}
   \newcommand{\foreign@degname}{Master}
   \newcommand\local@doctype{Disserta{\c c}{\~ a}o}
   \newcommand\foreign@doctype{Dissertation}
-  \setcounter{minexaminers}{2}
 }
 \DeclareOption{dscexam}{%
   \newcommand{\@degree}{D.Sc.}
@@ -577,7 +583,6 @@ p\kern-.025em e}}\kern-.08em\TeX}
   \setboolean{maledoc}{true}
   \newcommand\local@doctype{Exame de Qualifica{\c c}{\~ a}o}
   \newcommand\foreign@doctype{Qualifying Exam}
-  \setcounter{minexaminers}{1}
 }
 \DeclareOption{dsc}{%
   \newcommand{\@degree}{D.Sc.}
@@ -586,7 +591,6 @@ p\kern-.025em e}}\kern-.08em\TeX}
   \newcommand{\foreign@degname}{Doctor}
   \newcommand\local@doctype{Tese}
   \newcommand\foreign@doctype{Thesis}
-  \setcounter{minexaminers}{2}
 }
 \DeclareOption{draft}{%
   \setboolean{isdraft}{true}
@@ -604,7 +608,8 @@ p\kern-.025em e}}\kern-.08em\TeX}
   \PassOptionsToPackage{plainpages=false,pdfpagelabels}{hyperref}
 }
 %    \end{macrocode}
-% Here is the default one-and-a-half line spacing. We provide the option |onehalfspacing| just for completion.
+% Here is the default one-and-a-half line spacing. We provide the option
+% |onehalfspacing| just for completion.
 %    \begin{macrocode}
 \onehalfspacing
 \DeclareOption{onehalfspacing}{
@@ -694,49 +699,35 @@ p\kern-.025em e}}\kern-.08em\TeX}
 % \begin{macro}{\advisor}
 % Defines globally the title, name and academic degree of the advisor.
 %    \begin{macrocode}
+\newcount\@advisor\@advisor0
 \newcommand\advisor[4]{%
-  \global\def\@adtitle{#1}%
-  \global\def\@adname{#2}%
-  \global\def\@adsurn{#3}%
-  \global\def\@addegree{#4}%
+  \global\@namedef{CoppeAdvisorTitle:\expandafter\the\@advisor}{#1}
+  \global\@namedef{CoppeAdvisorName:\expandafter\the\@advisor}{#2}
+  \global\@namedef{CoppeAdvisorSurname:\expandafter\the\@advisor}{#3}
+  \global\@namedef{CoppeAdvisorDegree:\expandafter\the\@advisor}{#4}
+  \global\advance\@advisor by 1
+  \ifnum\@advisor>1
+    \renewcommand\local@advisorstring{Orientadores}
+    \renewcommand\foreign@advisorstring{Advisors}
+  \fi
 }
 %    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{\coadvisor}
-% Defines globally the title, name and academic degree of the co-advisor.
-%    \begin{macrocode}
-\newcommand\coadvisor[4]{%
-  \global\def\@coadtitle{#1}%
-  \global\def\@coadname{#2}%
-  \global\def\@coadsurn{#3}%
-  \global\def\@coaddegree{#4}%
-  \renewcommand\local@advisorstring{Orientadores}%
-  \renewcommand\foreign@advisorstring{Advisors}%
-}
-%    \end{macrocode}
+% \changes{v2.1}{2009/07/01}{Advisors, co-advisors, co-co-advisors, etc., all
+% of them are simply considered advisors.}
 % \end{macro}
 %
 % \begin{macro}{\examiner}
-% It was fixed a maximum of 6 examiners, just for the sake of page layout.
 %    \begin{macrocode}
 \newcount\@examiner\@examiner0
 \newcommand\examiner[3]{%
-  \global\@namedef{S:\expandafter\the\@examiner}{#1\ #2, #3}
+  \global\@namedef{CoppeExaminer:\expandafter\the\@examiner}{#1\ #2, #3}
   \global\advance\@examiner by 1
-%  Should we use this check?
-%  \ifnum\@examiner>6
-%    \ClassWarning{coppe}{%
-%      Maximum number of examiners exceeded.\MessageBreak
-%      Printing only six of them}
-%    \@examiner=6
-%  \fi
 }
 %    \end{macrocode}
 % \end{macro}
 %
 % \begin{macro}{\author}
-% It is redefined to allow the identification of the author's
+% It was redefined to allow the identification of the author's
 % first names and surname.
 %    \begin{macrocode}
 \renewcommand\author[2]{%
@@ -787,7 +778,7 @@ p\kern-.025em e}}\kern-.08em\TeX}
 %    \begin{macrocode}
 \newcounter{keywords}
 \newcommand\keyword[1]{%
-  \global\@namedef{K:\expandafter\the\c@keywords}{#1}
+  \global\@namedef{CoppeKeyword:\expandafter\the\c@keywords}{#1}
   \global\addtocounter{keywords}{1}
 }
 %    \end{macrocode}
@@ -844,17 +835,6 @@ p\kern-.025em e}}\kern-.08em\TeX}
 \renewcommand\maketitle{%
 \pagenumbering{alph}
 \config@hypersetup
-% Should we use this check?
-%\ifthenelse{\@examiner<\value{minexaminers}}{%
-%  \ifthenelse{\boolean{isdraft}}{%
-%    \ClassWarning{coppe}{Too few examiners for a \local@doctype}%
-%  }{%
-%    \ClassError{coppe}{%
-%    Too few examiners for a \local@doctype}{%
-%    This value is regulated by the Academic Registry at COPPE/UFRJ.\MessageBreak
-%    To disable this check, enable the draft option of the coppe class.}%
-%  }%
-%}{}
   \begin{titlepage}
   \begin{flushleft}
   \setlength\baselineskip{0pt}
@@ -877,9 +857,21 @@ p\kern-.025em e}}\kern-.08em\TeX}
   \end{minipage}\par
   \vspace*{7.5mm}
   \begin{tabularx}{80mm}[b]{@{}l@{ }X@{}}
-    \local@advisorstring: & \nohyphens{\@adname\ \@adsurn}\\
-    \ifthenelse{\equal{\@coadname}{\@empty}}{}{%
-      & \nohyphens{\@coadname\ \@coadsurn}\\}
+    \local@advisorstring: &
+    \count1=0
+    \toks@={}
+    \@whilenum \count1<\@advisor \do{%
+    \ifcase\count1 % same as \ifnum0=\count1
+      \toks@=\expandafter{\csname CoppeAdvisorName:\the\count1\expandafter\endcsname\expandafter\space\csname CoppeAdvisorSurname:\the\count1\endcsname\\}
+    \else
+      \toks@=\expandafter\expandafter\expandafter{%
+        \expandafter\the\expandafter\toks@
+        \expandafter&\expandafter\space
+        \csname CoppeAdvisorName:\the\count1\expandafter\endcsname\expandafter\space\csname CoppeAdvisorSurname:\the\count1\endcsname\\
+      }%
+    \fi
+    \advance\count1 by 1}
+    \the\toks@
   \end{tabularx}\par
   \end{flushright}
   \vspace*{\fill}
@@ -908,21 +900,12 @@ p\kern-.025em e}}\kern-.08em\TeX}
   \noindent\local@approvedname:\par
      \begin{center}
   \begin{flushright}
-        \vskip16\p@ \baselineskip12pt
-        \eqparbox{signture@list}{\hrulefill}\\
-        \eqparbox{signture@list}{\protect\centering%
-          \ \ \ \@adtitle\ \@adname\ \@adsurn, \@addegree\ \ \ }\\
-        \ifthenelse{\equal{\@coadname}{\@empty}}{}{%
-        \vskip26\p@ \baselineskip12pt
-        \eqparbox{signture@list}{\hrulefill}\\
-        \eqparbox{signture@list}{\protect\centering%
-          \ \ \ \@coadtitle\ \@coadname\ \@coadsurn, \@coaddegree\ \ \ }\\}
         \count1=0
         \@whilenum \count1<\@examiner \do {
             \vskip26\p@ \baselineskip12pt
         \eqparbox{signture@list}{\hrulefill}\\
         \eqparbox{signture@list}{\protect\centering%
-            \ \ \ \csname S:\the\count1 \endcsname\ \ \ }\\
+            \ \ \ \csname CoppeExaminer:\the\count1 \endcsname\ \ \ }\\
             \advance\count1 by 1}
   \end{flushright}
      \end{center}
@@ -942,15 +925,15 @@ p\kern-.025em e}}\kern-.08em\TeX}
   \@whilenum\count@<\value{keywords}\do{%
     % * a keyword separator is not necessary,
     %    if there is just one keyword
-    % * \csname K:\the\count@\endcsname must be expanded
+    % * \csname CoppeKeyword:\the\count@\endcsname must be expanded
     %    at least once, to get rid of the loop depended \count@
     \ifcase\count@ % same as \ifnum0=\count@
-      \toks@=\expandafter{\csname K:\the\count@\endcsname}%
+      \toks@=\expandafter{\csname CoppeKeyword:\the\count@\endcsname}%
     \else
       \toks@=\expandafter\expandafter\expandafter{%
         \expandafter\the\expandafter\toks@
         \expandafter;\expandafter\space
-        \csname K:\the\count@\endcsname
+        \csname CoppeKeyword:\the\count@\endcsname
       }%
     \fi
     \advance\count@ by 1 %
@@ -996,11 +979,23 @@ p\kern-.025em e}}\kern-.08em\TeX}
       % There is an issue here. When the last entry must be split between lines,
       % the spacing between it and the next paragraph becomes smaller.
       % Should we manually introduce a fixed space? But how could we know that
-      % a name was split? Is this happening yet? 
+      % a name was split? Is this happening yet?
       \begin{tabularx}{100mm}[b]{@{}l@{ }X@{}}
-        \local@advisorstring: & \nohyphens{\@adname\ \@adsurn}%
-        \ifthenelse{\equal{\@coadname}{\@empty}}{}{\\
-          & \nohyphens{\@coadname\ \@coadsurn}}
+        \local@advisorstring: &
+        \count1=0
+        \toks@={}
+        \@whilenum \count1<\@advisor \do{%
+        \ifcase\count1 % same as \ifnum0=\count1
+          \toks@=\expandafter{\csname CoppeAdvisorName:\the\count1\expandafter\endcsname\expandafter\space\csname CoppeAdvisorSurname:\the\count1\endcsname\\}
+        \else
+          \toks@=\expandafter\expandafter\expandafter{%
+            \expandafter\the\expandafter\toks@
+            \expandafter&\expandafter\space
+            \csname CoppeAdvisorName:\the\count1\expandafter\endcsname\expandafter\space\csname CoppeAdvisorSurname:\the\count1\endcsname\\
+          }%
+        \fi
+        \advance\count1 by 1}
+        \the\toks@
       \end{tabularx}\par
       \nohyphens{\local@doctype\ ({\MakeLowercase\@degreename}) --
       UFRJ/COPPE/Programa de \local@deptname, \number\year.}\par
@@ -1008,11 +1003,11 @@ p\kern-.025em e}}\kern-.08em\TeX}
       \count1=0
       \count2=1
       \nohyphens{\@whilenum \count1<\value{keywords} \do {%
-        \number\count2. \csname K:\the\count1 \endcsname.
+        \number\count2. \csname CoppeKeyword:\the\count1 \endcsname.
         \advance\count1 by 1
         \advance\count2 by 1}
-      I. \@adsurn, \@adname%
-      \ifthenelse{\equal{\@coadname}{\@empty}}{}{\emph{~et~al.}}.
+      I. \csname CoppeAdvisorSurname:0\endcsname,\ \csname CoppeAdvisorName:0\endcsname%
+      \ifthenelse{\equal{\@advisor}{1}}{}{\emph{~et~al.}}.
       II. \local@universityname, COPPE, Programa de \local@deptname.
       III. T{\' i}tulo.}
     \end{minipage}}
@@ -1056,9 +1051,21 @@ p\kern-.025em e}}\kern-.08em\TeX}
   \vspace*{\fill}
   \noindent%
   \begin{tabularx}{\textwidth}[b]{@{}l@{ }X@{}}
-    \local@advisorstring: & \nohyphens{\@adname\ \@adsurn}\\
-    \ifthenelse{\equal{\@coadname}{\@empty}}{}{%
-      & \nohyphens{\@coadname\ \@coadsurn}\\}
+    \local@advisorstring: &
+    \count1=0
+    \toks@={}
+    \@whilenum \count1<\@advisor \do{%
+    \ifcase\count1 % same as \ifnum0=\count1
+      \toks@=\expandafter{\csname CoppeAdvisorName:\the\count1\expandafter\endcsname\expandafter\space\csname CoppeAdvisorSurname:\the\count1\endcsname\\}
+    \else
+      \toks@=\expandafter\expandafter\expandafter{%
+        \expandafter\the\expandafter\toks@
+        \expandafter&\expandafter\space
+        \csname CoppeAdvisorName:\the\count1\expandafter\endcsname\expandafter\space\csname CoppeAdvisorSurname:\the\count1\endcsname\\
+      }%
+    \fi
+    \advance\count1 by 1}
+    \the\toks@
   \end{tabularx}\par
   \vspace*{2mm}
   \noindent\local@deptstring: \local@deptname\par
@@ -1087,9 +1094,21 @@ p\kern-.025em e}}\kern-.08em\TeX}
   \vspace*{\fill}
   \noindent%
   \begin{tabularx}{\textwidth}[b]{@{}l@{ }X@{}}
-    \foreign@advisorstring: & \nohyphens{\@adname\ \@adsurn}\\
-    \ifthenelse{\equal{\@coadname}{\@empty}}{}{%
-      & \nohyphens{\@coadname\ \@coadsurn}\\}
+    \local@advisorstring: &
+    \count1=0
+    \toks@={}
+    \@whilenum \count1<\@advisor \do{%
+    \ifcase\count1 % same as \ifnum0=\count1
+      \toks@=\expandafter{\csname CoppeAdvisorName:\the\count1\expandafter\endcsname\expandafter\space\csname CoppeAdvisorSurname:\the\count1\endcsname\\}
+    \else
+      \toks@=\expandafter\expandafter\expandafter{%
+        \expandafter\the\expandafter\toks@
+        \expandafter&\expandafter\space
+        \csname CoppeAdvisorName:\the\count1\expandafter\endcsname\expandafter\space\csname CoppeAdvisorSurname:\the\count1\endcsname\\
+      }%
+    \fi
+    \advance\count1 by 1}
+    \the\toks@
   \end{tabularx}\par
   \vspace*{2mm}
   \noindent\foreign@deptstring: \foreign@deptname\par
