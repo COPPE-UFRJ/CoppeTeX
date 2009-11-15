@@ -35,8 +35,19 @@
   <script type="text/javascript" src="scripts/lastmod.js"></script>
 
   <script type="text/javascript">
+  
   $.validator.setDefaults({
-    submitHandler: function() { alert("submitted!"); }
+    submitHandler: function() { 
+      alert("submitted!");
+      $.ajax({
+        type: "POST",
+        url: "../cgi-bin/save_user.py",
+        dataType: "xml",
+        success: function(request) {
+          alert("TESTE");
+        }
+      });
+    }
   });
 
   $(document).ready(function() {
@@ -96,13 +107,14 @@
 
   </script>
   <style type="text/css">
-  #user_data label.error {
+  form.user_data label.error, label.error {
     text-align: left;
     width: auto;
     display: block;
     margin: 0px 0px 6px 0px;
     font-size: 8pt;
   }
+
   </style>
 </head>
 
@@ -174,20 +186,21 @@ src="http://www.google.com/coop/cse/brand?form=searchbox_014050451544240989057%3
 
   <fieldset>
   <legend>User Information</legend>
-  <div>
-  <label style="width: 150px;">School:</label> <input type="radio" name="schoolbutton" checked value="Universidade Federal do Rio de Janeiro" onClick="Hide('otherdept');Display('coppedept');Disable('inputother');Disable('otherdept');"> COPPE/UFRJ <input type="radio" id="otherschool" name="schoolbutton" onClick="Hide('coppedept');Display('otherdept');Enable('inputother');Enable('otherdept');"> Other: <input maxlength="2048" id="inputother" type="text" name="schoolname" size="28" disabled class="required">
-  </div>
-  <div>
-  <label>Author's name:</label>
-  <input maxlength="2048" type="text" id="authorfield" name="author" size="50" class="required">
-  </div>
-  <div>
-  <label>Thesis title:</label>
-  <input maxlength="2048" type="text" name="title" size="50" class="required">
-  </div>
-  <div>
+  <p>
+  <label style="width: 150px;">School:</label>
+  <input type="radio" name="schoolbutton" checked value="Universidade Federal do Rio de Janeiro" onClick="Hide('otherdept');Display('coppedept');Disable('inputother');Disable('otherdept');"> COPPE/UFRJ <input type="radio" id="otherschool" name="schoolbutton" onClick="Hide('coppedept');Display('otherdept');Enable('inputother');Enable('otherdept');"> Other: <input maxlength="2048" id="inputother" type="text" name="schoolname" size="50" disabled class="required" style="color: black; text-align: left;">
+  </p>
+  <p>
+  <label for="author">Author's name:</label>
+  <input maxlength="2048" type="text" id="author" name="author" size="50" class="required" style="color: black; text-align: left;">
+  </p>
+  <p>
+  <label for="title">Thesis title:</label>
+  <input maxlength="2048" type="text" name="title" size="50" class="required" style="color: black; text-align: left;">
+  </p>
+  <p>
   <label>Department:</label>
-    <select id="coppedept" name="dept">
+    <select id="coppedept" name="dept" class="required" style="color: black; text-align: left;">
       <option value="" style="font-style: italic;" selected>Choose your department&nbsp;...</option>
       <option value="Programa de Engenharia Biom{\' e}dica">Biomedical Engineering (PEB)</option>
       <option value="Programa de Engenharia Civil">Civil Engineering (PEC)</option>
@@ -202,18 +215,20 @@ src="http://www.google.com/coop/cse/brand?form=searchbox_014050451544240989057%3
       <option value="Programa de Engenharia de Sistemas e Computa{\c c}{\~ a}o">Systems Engineering and Computer Science (PESC)</option>
       <option value="Programa de Engenharia de Transportes">Transportation Engineering (PET)</option>
     </select>
-    <input id="otherdept" maxlength="2048" type="text" name="otherdeptname" size="50" style="display: none;" disabled class="required">
-  <div>
-  <label>Thesis degree:</label>
-  <select name="doctype">
+    <input id="otherdept" maxlength="2048" type="text" name="otherdeptname" size="50" style="display: none;" disabled class="required" style="color: black; text-align: left;">
+  </p>
+  <p>
+  <label for="degree">Thesis degree:</label>
+  <select name="degree" class="required" style="color: black; text-align: left;">
+    <option value="" style="font-style: italic;" selected>Choose a degree&nbsp;...</option>
     <option value="msc">Master of Science</option>
     <option value="dsc">Doctor of Science</option>
   </select>
-  </div>
-  <div>
-  <input type="submit" value="Submit" id="submit">
+  </p>
+  <p>
+  <input type="submit" value="Submit" id="submit" class="submit">
   <input type="reset" value="Clear" id="clear">
-  </div>
+  </p>
   </fieldset>
   </form>
 
