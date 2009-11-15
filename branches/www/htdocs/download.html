@@ -21,30 +21,42 @@
   <link href="style/footer.css" rel="stylesheet" type="text/css" media="all">
   <link href="style/latest-news.css" rel="stylesheet" type="text/css" media="all">
   <link href="style/downloads.css" rel="stylesheet" type="text/css" media="all">
-  <link href="style/recaptch.css" rel="stylesheet" type="text/css" media="all">
-  <link href="style/googleajax.css" rel="stylesheet" type="text/css" media="all">
-  <link href="style/pubs.css" rel="stylesheet" type="text/css" media="all">
 
+  <style type="text/css" medial="all">
+  .error {
+    text-align: right;
+    clear: right;
+    color: red;
+  }
+  </style>
+
+  <script type="text/javascript" src="scripts/jquery-1.3.2.js"></script>
+  <script type="text/javascript" src="scripts/jquery.validate.js"></script>
   <script type="text/javascript" src="scripts/lastmod.js"></script>
 
-  <!--script type="text/javascript" src="http://api.recaptcha.net/js/recaptcha_ajax.js"></script-->
-  <script type="text/javascript" src="scripts/validate.js"></script>
-
   <script type="text/javascript">
+  $.validator.setDefaults({
+    submitHandler: function() { alert("submitted!"); }
+  });
+
+  $(document).ready(function() {
+    $("#user_data").validate();
+  }); 
+
     function Enable(id) {
-      element = document.getElementById(id);
+      var element = document.getElementById(id);
       element.disabled = false;
     }
     function Disable(id) {
-      element = document.getElementById(id);
+      var element = document.getElementById(id);
       element.disabled = true;
     }
     function Display(id) {
-      element = document.getElementById(id);
+      var element = document.getElementById(id);
       element.style.display = "inline";
     }
     function Hide(id) {
-      element = document.getElementById(id);
+      var element = document.getElementById(id);
       element.style.display = "none";
     }
     function isYear(n) {
@@ -71,118 +83,27 @@
       Disable('inputother');
     }
 
-    function checkForm(id) {
-      form = document.getElementById(id);
-      var is_valid = new Boolean(true);
-      if (form.schoolbutton[1].checked) { // external institution
-        if (form.schoolname.value === "") { document.getElementById('schoolname_warning').innerHTML = "Please enter your institution name"; Display('schoolname_warning'); is_valid = false; }
-        else { Hide('schoolname_warning'); }
-      }
-      if (form.author.value === "") { document.getElementById('author_warning').innerHTML = "Please enter your name"; Display('author_warning'); is_valid = false; }
-      else { Hide('author_warning'); }
-      if (form.title.value === "") { document.getElementById('title_warning').innerHTML = "Please enter the title of your work"; Display('title_warning'); is_valid = false; }
-      else { Hide('title_warning'); }
-      if (form.schoolbutton[1].checked) { // external institution
-        if (form.otherdeptname.value === "") { document.getElementById('dept_warning').innerHTML = "Please enter your affiliation"; Display('dept_warning'); is_valid = false; }
-        else { Hide('dept_warning'); }
-      }
-
-      return is_valid;
-    }
-
-  function showRecaptcha(element) {
-    document.getElementById('recaptcha_div').innerHTML = "<div style='font-size:8pt; font-weight: bold;'><img style='vertical-align: middle;' src='images/loadingbar.gif' border='0' alt='Loading...' \/>&nbsp;Loading...<\/div>";
-    Recaptcha.create("6LfKlAMAAAAAAHF19dEqWBe0grDtPQvAei22VY_e", element, {
-        theme: "clean",
-        tabindex: 0,
-        callback: Recaptcha.focus_response_field
-    });
-  }
-
-  function destroyRecaptchaWidget() {
-    Recaptcha.destroy();
-  }
-
   function checkSubmission() {
-    document.getElementById('recaptcha_div').innerHTML = "<div style='font-size:8pt; font-weight: bold;'><img style='vertical-align: middle;' src='images/loadingbar.gif' border='0' alt='Loading...' \/>&nbsp;Loading...<\/div>";
+    document.getElementById('recaptcha_div').innerHTML = "<div style='font-size:8pt; font-weight: bold;'><img style='vertical-align: middle;' src='images/loadingbar.gif' border='0' alt='Loading...' \/><\/div>";
     var isvalid = checkForm('user_data');
     if (isvalid) {
       Hide('init_submit');
       Hide('init_clear');
-      Display('final_submit');
-      Display('cancel_submit');
-      showRecaptcha('recaptcha_div');
     } else {
      document.getElementById('recaptcha_div').innerHTML = ""; 
     }
   }
 
-  function xmlhttpPost(strURL) {
-    var xmlHttpReq = false;
-    var self = this;
-    // Mozilla/Safari
-    if (window.XMLHttpRequest) {
-        self.xmlHttpReq = new XMLHttpRequest();
-    }
-    // IE
-    else if (window.ActiveXObject) {
-        self.xmlHttpReq = new ActiveXObject("Microsoft.XMLHTTP");
-    }
-    self.xmlHttpReq.open('POST', strURL, true);
-    self.xmlHttpReq.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    self.xmlHttpReq.onreadystatechange = function() {
-        if (self.xmlHttpReq.readyState == 4) {
-            updatepage(self.xmlHttpReq.responseText);
-        }
-    }
-    self.open('GET', strURL, true);
-    self.xmlHttpReq.send(null);
-}
-
-function xmlhttpRecaptcha() {
-var ipStr = '<!--#echo var="REMOTE_ADDR"-->';
-  var strURL = "http://api-verify.recaptcha.net/verify?privatekey=6LfKlAMAAAAAAHF19dEqWBe0grDtPQvAei22VY_e;" + ipStr;
-            alert(strURL);
-    var xmlHttpReq = false;
-    var self = this;
-    // Mozilla/Safari
-    if (window.XMLHttpRequest) {
-        self.xmlHttpReq = new XMLHttpRequest();
-    }
-    // IE
-    else if (window.ActiveXObject) {
-        self.xmlHttpReq = new ActiveXObject("Microsoft.XMLHTTP");
-    }
-    self.xmlHttpReq.open('POST', strURL, true);
-    self.xmlHttpReq.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    self.xmlHttpReq.onreadystatechange = function() {
-        if (self.xmlHttpReq.readyState == 4) { // done
-            updatepage(self.xmlHttpReq.responseText);
-        }
-    }
-    self.open('GET', strURL, true);
-    self.xmlHttpReq.send(null);
-}
-
-  function checkContent(value) {
-    document.getElementById('schoolname_warning').innerHTML = "OK!";
-    Display('schoolname_warning'); 
-  }
-
-  function validateAction() {
-    form = document.getElementById('user_data');
-    if (Recaptcha.get_response()) {
-      Hide('user_data');
-      document.getElementById('response_to_submission').innerHTML = "<div style='font-size:8pt; font-weight: bold;'><img style='vertical-align: middle;' src='images/loadingbar.gif' border='0' alt='Loading...' \/>&nbsp;Checking...<\/div><p>Thank you for submitting your information to CoppeTeX!<\/p>";
-//      xmlhttpPost("../cgi-bin/save_user.py");
-      Recaptcha.destroy();
-    } else {
-      document.getElementById('recaptcha_error_div').innerHTML = "<div style='color: red; font-size:8pt;'>Wrong text.<\/div>";
-      Recaptcha.reload();
-    }
-  }
-
   </script>
+  <style type="text/css">
+  #user_data label.error {
+    text-align: left;
+    width: auto;
+    display: block;
+    margin: 0px 0px 6px 0px;
+    font-size: 8pt;
+  }
+  </style>
 </head>
 
 <body>
@@ -245,7 +166,7 @@ src="http://www.google.com/coop/cse/brand?form=searchbox_014050451544240989057%3
   <h1>Download CoppeTeX</h1>
 
   <div id="response_to_submission"></div>
-  <form method="post" id="user_data" action="" style="line-height: 150%;">
+  <form method="post" id="user_data" action="../coppetex/cgi-bin/save_user.py" style="line-height: 150%;">
 
   <p>Before downloading CoppeTeX, we would like to ask you to fill in the
   following optional form with details of your publication.  We emphasize that
@@ -254,23 +175,20 @@ src="http://www.google.com/coop/cse/brand?form=searchbox_014050451544240989057%3
   <fieldset>
   <legend>User Information</legend>
   <div>
-  <label style="width: 150px;">School:</label> <input type="radio" name="schoolbutton" checked value="Universidade Federal do Rio de Janeiro" onClick="Hide('otherdept');Display('coppedept');Disable('inputother');"> COPPE/UFRJ <input type="radio" name="schoolbutton" onClick="Hide('coppedept');Display('otherdept');Enable('inputother');"> Other: <input maxlength="2048" id="inputother" type="text" name="schoolname" size="33" onblur="validate(this.value, this.id);" disabled>
-  <span id="schoolname_warning" style="color: red; display: none;"></span>
+  <label style="width: 150px;">School:</label> <input type="radio" name="schoolbutton" checked value="Universidade Federal do Rio de Janeiro" onClick="Hide('otherdept');Display('coppedept');Disable('inputother');Disable('otherdept');"> COPPE/UFRJ <input type="radio" id="otherschool" name="schoolbutton" onClick="Hide('coppedept');Display('otherdept');Enable('inputother');Enable('otherdept');"> Other: <input maxlength="2048" id="inputother" type="text" name="schoolname" size="28" disabled class="required">
   </div>
   <div>
   <label>Author's name:</label>
-  <input maxlength="2048" type="text" id="authorfield" name="author" size="50">
-  <span id="author_warning" style="color: red; display: none;"></span>
+  <input maxlength="2048" type="text" id="authorfield" name="author" size="50" class="required">
   </div>
   <div>
-  <label>Subject:</label>
-  <input maxlength="2048" type="text" name="title" size="50">
-  <span id="title_warning" style="color: red; display: none;"></span>
-  <span id="doctype_text" style="color: red;"></span>
+  <label>Thesis title:</label>
+  <input maxlength="2048" type="text" name="title" size="50" class="required">
   </div>
   <div>
   <label>Department:</label>
     <select id="coppedept" name="dept">
+      <option value="" style="font-style: italic;" selected>Choose your department&nbsp;...</option>
       <option value="Programa de Engenharia Biom{\' e}dica">Biomedical Engineering (PEB)</option>
       <option value="Programa de Engenharia Civil">Civil Engineering (PEC)</option>
       <option value="Programa de Engenharia El{\' e}trica">Electrical Engineering (PEE)</option>
@@ -284,21 +202,17 @@ src="http://www.google.com/coop/cse/brand?form=searchbox_014050451544240989057%3
       <option value="Programa de Engenharia de Sistemas e Computa{\c c}{\~ a}o">Systems Engineering and Computer Science (PESC)</option>
       <option value="Programa de Engenharia de Transportes">Transportation Engineering (PET)</option>
     </select>
-    <input id="otherdept" maxlength="2048" type="text" name="otherdeptname" size="50" style="display: none;">
-    <span id="dept_warning" style="color: red; display: none;"></span></div>
+    <input id="otherdept" maxlength="2048" type="text" name="otherdeptname" size="50" style="display: none;" disabled class="required">
   <div>
-  <label>Degree:</label>
+  <label>Thesis degree:</label>
   <select name="doctype">
     <option value="msc">Master of Science</option>
     <option value="dsc">Doctor of Science</option>
   </select>
   </div>
-  <div id="recaptcha_div"></div><div id="recaptcha_error_div"></div>
   <div>
-  <input type="button" value="Submit" id="init_submit" onClick="checkSubmission();">
-  <input type="reset" value="Clear" id="init_clear" onClick="clearForm();">
-  <input type="submit" value="Submit" id="final_submit" style="display: none;" onClick="validateAction();">
-  <input type="button" value="Cancel" id="cancel_submit" style="display: none;" onClick="Hide('final_submit');Hide(this.id);Display('init_submit');Display('init_clear');destroyRecaptchaWidget();">
+  <input type="submit" value="Submit" id="submit">
+  <input type="reset" value="Clear" id="clear">
   </div>
   </fieldset>
   </form>
