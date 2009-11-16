@@ -35,11 +35,14 @@
 
 #footer div.comments {
   float: left;
+  width: 50%;
   font-family: arial, sans-serif;
 }
 
 #footer div.validators {
+  width: 50%;
   float: right;
+  text-align: right;
 }
 
 #footer img {
