@@ -66,3 +66,18 @@
   font-size: 90%;
   color: gray;
 }
+
+.error {
+  text-align: right;
+  clear: right;
+  color: red;
+}
+
+form.user_data label.error, label.error {
+  text-align: left;
+  width: auto;
+  display: block;
+  margin: 0px 0px 6px 0px;
+  font-size: 8pt;
+}
+
