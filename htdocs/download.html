@@ -22,10 +22,13 @@
   <link href="style/latest-news.css" rel="stylesheet" type="text/css" media="all">
   <link href="style/downloads.css" rel="stylesheet" type="text/css" media="all">
 
+  <script type="text/javascript" src="http://www.google.com/jsapi"></script>
   <script type="text/javascript" src="scripts/jquery-1.3.2.js"></script>
   <script type="text/javascript" src="scripts/jquery.validate.js"></script>
   <script type="text/javascript" src="scripts/user.data.js"></script>
   <script type="text/javascript" src="scripts/lastmod.js"></script>
+  <script type="text/javascript" src="scripts/latest.news.js"></script>
+  <script type="text/javascript" src="scripts/latest.release.js"></script>
 </head>
 
 <body>
@@ -54,19 +57,9 @@ src="http://www.google.com/coop/cse/brand?form=searchbox_014050451544240989057%3
 
 <div id="infobar">
   <h1 style="color: #63b412; font-size: 11pt; font-weight: bold;">Latest News&nbsp;<a href="http://sourceforge.net/export/rss2_projnews.php?group_id=199659"><img src="images/feed-icon.png" style="border: none;" alt="Subscribe the CoppeTeX RSS feed"></a></h1>
-    <dl id="latest-news-list">
-    <dt>Nov 08</dt>
-      <dd><a href="https://sourceforge.net/forum/forum.php?forum_id=885566">CoppeTeX Release 2.0.1.</a></dd>
-    <dt>Oct 08</dt>
-      <dd><a href="https://sourceforge.net/forum/forum.php?forum_id=879594">CoppeTeX Release 2.0.</a></dd>
-    <dt>Sep 08</dt>
-      <dd><a href="#">CoppeTeX 2.0 with new format rules is coming soon...</a></dd>
-    <dt>Jun 08</dt>
-      <dd><a href="https://sourceforge.net/forum/forum.php?forum_id=834849">CoppeTeX Release 1.0.</a></dd>
-    <dt>Oct 07</dt>
-      <dd><a href="https://sourceforge.net/forum/forum.php?forum_id=749961">Project Website.</a></dd>
-    </dl>
-    <p>View <a href="https://sourceforge.net/news/?group_id=199659">more...</a></p>
+
+  <div id="news"></div>
+  <p>View <a href="https://sourceforge.net/news/?group_id=199659">more...</a></p>
 
   <h1 style="margin-top: 1em; padding-top: 1em; border-top: dotted 1pt #cecece; color: #63b412; font-size: 11pt; font-weight: bold;">Help &amp; Support</h1>
   <p>We have a <a href="mailing-list.html">mailing list</a> where you can ask the CoppeTeX team and users about any problem you are experiencing.</p>
@@ -86,6 +79,8 @@ src="http://www.google.com/coop/cse/brand?form=searchbox_014050451544240989057%3
 
 <div id="content">
   <h1>Download CoppeTeX</h1>
+
+  <div id="release"></div>
 
   <div id="loading" style="display: none;"><img src="images/loading.gif" alt="Loading..."></div>
   <p id="response_to_submission" style="display: none;">Thank you for submitting your information to CoppeTeX!</p>
@@ -177,12 +172,12 @@ src="http://www.google.com/coop/cse/brand?form=searchbox_014050451544240989057%3
     </thead>
     <tbody>
     <tr class="downloads-item">
-      <td class="downloads-filename"><a href="http://downloads.sourceforge.net/coppetex/coppetex-2.0.1.tar.gz?use_mirror=">coppetex-2.0.1.tar.gz</a></td>
+      <td class="downloads-filename"><a href="http://downloads.sourceforge.net/coppetex/coppetex-2.1.tar.gz?use_mirror=">coppetex-2.1.tar.gz</a></td>
       <td class="downloads-size">356600</td>
       <td class="downloads-date">11/08/2008</td>
     </tr>
     <tr class="downloads-item">
-      <td class="downloads-filename"><a href="http://downloads.sourceforge.net/coppetex/coppetex-2.0.1.zip?use_mirror=">coppetex-2.0.1.zip</a></td>
+      <td class="downloads-filename"><a href="http://downloads.sourceforge.net/coppetex/coppetex-2.1.zip?use_mirror=">coppetex-2.1.zip</a></td>
       <td class="downloads-size">352543</td>
       <td class="downloads-date">11/08/2008</td>
     </tr>
@@ -235,12 +230,12 @@ src="http://www.google.com/coop/cse/brand?form=searchbox_014050451544240989057%3
     </thead>
     <tbody>
     <tr class="downloads-item">
-      <td class="downloads-filename"><a href="http://downloads.sourceforge.net/coppetex/coppetex-2.0.1-src.tar.gz?use_mirror=">coppetex-2.0.1-src.tar.gz</a></td>
+      <td class="downloads-filename"><a href="http://downloads.sourceforge.net/coppetex/coppetex-2.1-src.tar.gz?use_mirror=">coppetex-2.1-src.tar.gz</a></td>
       <td class="downloads-size">102451</td>
       <td class="downloads-date">11/08/2008</td>
     </tr>
     <tr class="downloads-item">
-      <td class="downloads-filename"><a href="http://downloads.sourceforge.net/coppetex/coppetex-2.0.1-src.zip?use_mirror=">coppetex-2.0.1-src.zip</a></td>
+      <td class="downloads-filename"><a href="http://downloads.sourceforge.net/coppetex/coppetex-2.1-src.zip?use_mirror=">coppetex-2.1-src.zip</a></td>
       <td class="downloads-size">103591</td>
       <td class="downloads-date">11/08/2008</td>
     </tr>

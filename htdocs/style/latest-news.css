@@ -43,3 +43,12 @@
   font-size: 10pt;
 }
 
+.news-entry {
+  margin: 10px 0px 0px 0px;
+}
+
+.news-author {
+  font-size: 8pt;
+  color: gray;
+  margin: 0px 0px 5px 0px;
+}
