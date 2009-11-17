@@ -183,7 +183,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % and bugs to. More details can be found at
 % \url{http://coppetex.sourceforge.net/mailing-list.html}.
 % 
-% \section{User Interface}
+% \section{User interface}
 %
 % \DescribeMacro{\frontmatter}
 % \DescribeMacro{\mainmatter}
@@ -211,6 +211,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % automatically constructed by the |\maketitle| command.
 %
 % \subsection*{Front face}
+%
 % The front face is unnumbered. There, it is not allowed to use
 % hyphenation~\cite{TNR08a}. It is constructed by calling |\maketitle|.
 % Next, it is described the commands used to
@@ -270,7 +271,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % Systems Engineering and Computer Science (PESC), and
 % Transportation Engineering (PET).
 % You must specify your department using one of the above abbreviations,
-% e.g., |\department{PEB}|.
+% e.g., |\department{PEC}|.
 %
 % \DescribeMacro{\date}
 % This macro is used to set the month and year of defense.
@@ -290,18 +291,21 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % Usually, six words are enough.
 %
 % \subsection*{Cataloging details}
+%
 % This page contains cataloging information useful for librarians.
 % Fortunately, it is automatically generated from the data you entered
 % at the time you call |\maketitle|.
 % It is not needed in qualifying exams, though.
 % 
 % \subsection*{Dedication (optional)}
+%
 % \DescribeMacro{\dedication}
 % This macro was added for convenience. The input text is placed
 % at the right bottom of a blank page. It is emphasized and in normal
 % size.
 %
 % \subsection*{Abstracts}
+%
 % \DescribeEnv{abstract}
 % \DescribeEnv{foreignabstract}
 % As stated by the Academic Registry~\cite{TNR08a}, abstracts must be in
@@ -310,6 +314,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % |foreignabstract|.
 % 
 % \subsection*{Lists of symbols and abbreviations (optional)}
+%
 % \DescribeMacro{\abbrev}
 % \DescribeMacro{\symbl}
 % The lists of symbols and abbreviations are optional, although highly
@@ -347,6 +352,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % twice to get the references solved and you are done.
 %
 % \subsection*{References}
+%
 % It is well known that bibliography databases can be easily maintained with
 % the aid of \BibTeX. Thus, the \CoppeTeX\ project designed two \BibTeX\ styles,
 % |coppe-plain.bst| and |coppe-unsrt.bst|.
@@ -372,16 +378,13 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %
 % Since the addition of a front cover with a Minerva's picture,
 % it is required to use a package to enable graphics inclusion.
-% You may choose among three standard graphical drivers,
-% |dvips|, |pdftex| and |dvipdfm|, just passing it as a class option.
-% The \CoppeTeX\ loads |graphicx| using the |dvips| driver by default, so
-% you mustn't load it by yourself.
-%
-% If you would like
-% to generate a PDF output, we encourage the use of pdf\TeX.
-% Remember that pdf\TeX\ turns the default graphics extension to PDF.
+% You may choose among two standard graphical drivers,
+% |pdftex| and |dvips|, just passing its name as a class option.
+% Because the PDF is the leading format for publishing digital
+% documents, \CoppeTeX\ loads the |pdftex| driver by default.
 %
 % \section{Hyperref}
+%
 % When working with PDF's, there is the possibility to add extra information
 % to the file as the author's name, document title, subject, keywords, etc.
 % This is easily done with the |hyperref| package.
@@ -389,28 +392,18 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % The |coppe| class loads |hyperref| by default and fills in all the document
 % properties.
 % 
-% \section{Useful tips}
+% \section{Quick, dirty, but useful tips}
 %
-% \textbf{Printing}. To get your work correctly printed,
-% you must ensure that any page scaling option (e.g., fit or shrink to printable
-% area) isn't enabled. This options often comes in print dialogs of document
-% visualization softwares.
-%
-% \textbf{Pictures}. The default picture format of \LaTeX\ is the
+% \paragraph{Pictures.} The default picture format of \LaTeX\ is the
 % Encapsulated PostScript (EPS). If you use pdf\TeX, the default format becomes
-% the PDF.
-% The package |graphicx| enables handling other formats like
-% JPEG, PNG and GIF. In this case, you must provide the bounding box of your
-% picture. There are two ways of doing this: pass an option to the
-% |\includegraphics| command (e.g.,
-% |\includegraphics[bb = 0 0 35 28]{picture.png}|),
-% or provide a file with extension |bb| containing
-% the bounding box values (e.g., |%%BoundingBox: 0 0 9 12|).
-% This file will be automatically read by \LaTeX.
+% the PDF, but you can equally load PNG files.
+% For such, you must enter the name of your image file without extension,
+% e.g., |\includegraphics{filename}|, and |pdftex| will firstly look for
+% a file called |filename.pdf| and after for file |filename.png|.
 %
-% \textbf{Fonts}. The default font in \LaTeX\ is the Computer Modern.
-% If you would like to try its enhanced version, consider using the package
-% |lmodern|.
+% \paragraph{Fonts.} The default font in \LaTeX\ is the Computer Modern.
+% If you would like to try its enhanced version, consider using the
+% |lmodern| package.
 % To use Times, it is recommended to load the package |mathptmx|, rather than
 % the deprecated |times|. There is also an enhanced Times version available
 % with the |tgtermes| package. You can still use the Arial font face with the
@@ -418,7 +411,13 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % |\usepackage[T1]{fontenc}|. This command will tell \LaTeX\ to use high-quality
 % PostScript Type1 fonts.
 %
-% \section{A Simple Example}
+% \paragraph{Printing.} To get your work correctly printed,
+% you must ensure that any page scaling option (e.g., fit or shrink to printable
+% area) isn't enabled. This kind of option often comes in print dialogs of document
+% visualization softwares.
+%
+% \section{A simple example}
+%
 % \label{COPPE:SAMPLE}
 %    \begin{macrocode}
 %<*example>
@@ -434,24 +433,23 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \begin{document}
   \title{Título da Tese}
   \foreigntitle{Thesis Title}
-  \author{Author's First and Middle Names}{LastName}
-  \advisor{Prof.}{First Advisor's First and Middle Names}{LastName}{D.Sc.}
-  \advisor{Prof.}{Second Advisor's First and Middle Names}{LastName}{Ph.D.}
-  \advisor{Prof.}{Third Advisor's First and Middle Names}{LastName}{D.Sc.}
+  \author{Author's Name}{Surname}
+  \advisor{Prof.}{First Advisor's Name}{Surname}{D.Sc.}
+  \advisor{Prof.}{Second Advisor's Name}{Surname}{Ph.D.}
+  \advisor{Prof.}{Third Advisor's Name}{Surname}{D.Sc.}
 
-  \examiner{Prof.}{First Advisor's First and Middle Names LastName}{D.Sc.}
-  \examiner{Prof.}{Second Advisor's First and Middle Names LastName}{Ph.D.}
-  \examiner{Prof.}{First Examiner's Complete Name}{D.Sc.}
-  \examiner{Prof.}{Second Examiner's Complete Name}{Ph.D.}
-  \examiner{Prof.}{... Examiner's Complete Name}{D.Sc.}
-  \examiner{Prof.}{$n$-ésimo Examiner's Complete Name}{Ph.D.}
+  \examiner{Prof.}{First Advisor's Name Surname}{D.Sc.}
+  \examiner{Prof.}{Second Advisor's Name Surname}{Ph.D.}
+  \examiner{Prof.}{Third Examiner's Name Surname}{D.Sc.}
+  \examiner{Prof.}{Fourth Examiner's Name Surname}{Ph.D.}
+  \examiner{Prof.}{Fifth Examiner's Name Surname}{Ph.D.}
   \department{PEC}
-  \date{06}{2009}
+  \date{10}{2009}
 
-  \keyword{Primeira palavra-chave}
-  \keyword{Segunda palavra-chave}
-  \keyword{...}
-  \keyword{$n$-ésima palavra-chave}
+  \keyword{First Keyword}
+  \keyword{Second Keyword}
+  \keyword{Third Keyword}
+
   \maketitle
 
   \frontmatter
@@ -463,13 +461,13 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
  
   \begin{abstract}
 
-  Apresenta-se, nesta tese, os resultados obtidos durante os últimos 4 anos.
+  Apresenta-se, nesta tese, ...
 
   \end{abstract}
 
   \begin{foreignabstract}
 
-  In this work, we present some results obtained during the last four years.
+  In this work, we present ...
 
   \end{foreignabstract} 
 
@@ -487,35 +485,48 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   abreviatura deve ser definida antes de utilizada.\abbrev{COPPE}{Instituto
   Alberto Luiz Coimbra de Pós-graduação e Pesquisa de Engenharia}
 
-  Do mesmo modo, é imprescindível ainda definir os símbolos, tal como o
-  conjunto dos números reais $\mathbb{R}$ e o conjunto vazio $\emptyset$.
+  Do mesmo modo, é imprescindível definir os símbolos, tal como o conjunto dos
+  números reais $\mathbb{R}$ e o conjunto vazio $\emptyset$.
   \symbl{$\mathbb{R}$}{Conjunto dos números reais} \symbl{$\emptyset$}{Conjunto
   vazio}
 
   \chapter{Revisão Bibliográfica}
 
   Para ilustrar a completa adesão ao estilo de citações e listagem de
-  referências bibliográficas, citamos aqui alguns dos trabalhos contidos na
-  norma fornecida pela CPGP da COPPE.
+  referências bibliográficas, a Tabela~\ref{tab:citation} apresenta citações
+  de alguns dos trabalhos contidos na norma fornecida pela CPGP da COPPE,
+  utilizando o estilo numérico.
 
-  \begin{table}
-  \caption{Exemplos de citações utilizando três comandos diferentes.}
+  \begin{table}[h]
+  \caption{Exemplos de citações utilizando o comando padrão
+    \texttt{\textbackslash cite} do \LaTeX,
+    e os comandos \texttt{\textbackslash citet} e \texttt{\textbackslash citep},
+    definidos pelo pacote \texttt{natbib}.}
   \label{tab:citation}
   \centering
   \begin{tabular}{|c|c|c|c|}
+    \hline
     Tipo da Publicação & \verb|\cite| & \verb|\citet| & \verb|\citep|\\
     \hline
-    Livro & \cite{book-example} & \citet{book-example} & \citep{book-example}\\
-    Artigo & \cite{article-example} & \citet{article-example} & \citep{article-example}\\
-    Relatório & \cite{techreport-example} & \citet{techreport-example} & \citep{techreport-example}\\
-    Relatório & \cite{techreport-exampleIn} & \citet{techreport-exampleIn} & \citep{techreport-exampleIn}\\
-    Anais de Congresso & \cite{inproceedings-example} & \citet{inproceedings-example} & \citep{inproceedings-example}\\
-    Séries & \cite{incollection-example} & \citet{incollection-example} & \citep{incollection-example}\\
-    Em Livro & \cite{inbook-example} & \citet{inbook-example} & \citep{inbook-example}\\
-    Dissertação de mestrado & \cite{mastersthesis-example} & \citet{mastersthesis-example} & \citep{mastersthesis-example}\\
-    Tese de doutorado & \cite{phdthesis-example} & \citet{phdthesis-example} & \citep{phdthesis-example}\\
-    Manual & \cite{manual-example} & \citet{manual-example} & \citep{manual-example}\\
-    Outros & \cite{misc-example} & \citet{misc-example} & \citep{misc-example}\\
+    Livro & \cite{book-example} & \citet{book-example} &
+      \citep{book-example}\\
+    Artigo & \cite{article-example} & \citet{article-example} &
+      \citep{article-example}\\
+    Relatório & \cite{techreport-example} & \citet{techreport-example} &
+      \citep{techreport-example}\\
+    Relatório & \cite{techreport-exampleIn} & \citet{techreport-exampleIn} &
+      \citep{techreport-exampleIn}\\
+    Anais de Congresso & \cite{inproceedings-example} &
+      \citet{inproceedings-example} & \citep{inproceedings-example}\\
+    Séries & \cite{incollection-example} & \citet{incollection-example} &
+      \citep{incollection-example}\\
+    Em Livro & \cite{inbook-example} & \citet{inbook-example} &
+      \citep{inbook-example}\\
+    Dissertação de mestrado & \cite{mastersthesis-example} &
+      \citet{mastersthesis-example} & \citep{mastersthesis-example}\\
+    Tese de doutorado & \cite{phdthesis-example} & \citet{phdthesis-example} &
+      \citep{phdthesis-example}\\
+    \hline
   \end{tabular}
   \end{table}
 
@@ -528,7 +539,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \bibliography{example}
 
   \appendix
-  \chapter{Código Fonte}
+  \chapter{Algumas Demonstrações}
 \end{document}
 %</example>
 %    \end{macrocode}
@@ -538,6 +549,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \section{Implementation}
 %
 % \subsection{The `\texttt{coppe.cls}' file}
+%
 %    \begin{macrocode}
 %<*class>
 \def\filename{coppe.dtx}
@@ -789,10 +801,9 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \end{macro}
 %
 % \begin{macro}{\frontmatter}
-% Para os números de páginas do frontmatter e do mainmatter aparecerem
-% na ficha catalográfica, utilizou-se uma referência. Assim, mesmo com
-% uma main vazia, será necessário re-executar o \LaTeX\ para obter as
-% referências corretas.
+% The number of pages for both frontmatter and mainmatter printed
+% in the cataloging details page is computed by means of simple
+% \LaTeX\ labels.
 %    \begin{macrocode}
 \renewcommand\frontmatter{%
   \cleardoublepage
@@ -860,23 +871,26 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \frontcover@maintext
   \end{minipage}\par
   \vspace*{7.5mm}
+  \nohyphens{%
   \begin{tabularx}{80mm}[b]{@{}l@{ }X@{}}
     \local@advisorstring: &
     \count1=0
     \toks@={}
     \@whilenum \count1<\@advisor \do{%
     \ifcase\count1 % same as \ifnum0=\count1
-      \toks@=\expandafter{\csname CoppeAdvisorName:\the\count1\expandafter\endcsname\expandafter\space\csname CoppeAdvisorSurname:\the\count1\endcsname\\}
+      \toks@=\expandafter{\csname CoppeAdvisorName:\the\count1%
+        \expandafter\endcsname\expandafter\space\csname CoppeAdvisorSurname:\the\count1\endcsname\\}
     \else
       \toks@=\expandafter\expandafter\expandafter{%
-        \expandafter\the\expandafter\toks@
-        \expandafter&\expandafter\space
-        \csname CoppeAdvisorName:\the\count1\expandafter\endcsname\expandafter\space\csname CoppeAdvisorSurname:\the\count1\endcsname\\
+        \expandafter\the\expandafter\toks@%
+        \expandafter&\expandafter\space%
+        \csname CoppeAdvisorName:\the\count1\expandafter\endcsname%
+        \expandafter\space\csname CoppeAdvisorSurname:\the\count1\endcsname\\
       }%
     \fi
     \advance\count1 by 1}
     \the\toks@
-  \end{tabularx}\par
+  \end{tabularx}}\par
   \end{flushright}
   \vspace*{\fill}
   \begin{center}
@@ -984,6 +998,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
       % the spacing between it and the next paragraph becomes smaller.
       % Should we manually introduce a fixed space? But how could we know that
       % a name was split? Is this happening yet?
+      \nohyphens{%
       \begin{tabularx}{100mm}[b]{@{}l@{ }X@{}}
         \local@advisorstring: &
         \count1=0
@@ -1000,7 +1015,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
         \fi
         \advance\count1 by 1}
         \the\toks@
-      \end{tabularx}\par
+      \end{tabularx}}\par
       \nohyphens{\local@doctype\ ({\MakeLowercase\@degreename}) --
       UFRJ/COPPE/Programa de \local@deptname, \number\year.}\par
       \bibname: p. \pageref{bib:begin} -- \pageref{bib:end}.\par
@@ -1394,6 +1409,7 @@ postamble
 %    \end{macrocode}
 %
 % \section*{Acknowledgments}
+%
 % The authors would like to thank the National Council for Scientific and
 % Technological Development (CNPq). They are also grateful to
 % Alvaro Cuno for setting up the initial SVN repository,
