@@ -48,7 +48,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \end{document}
 %</driver> \fi
 %
-%% \CheckSum{1315}
+%% \CheckSum{1398}
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
 %%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
@@ -79,6 +79,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \changes{v0.4}{2008/04/12}{Beta documentation.}
 % \changes{v1.0}{2008/06/10}{First \CoppeTeX\ release.}
 % \changes{v2.0}{2008/09/07}{\CoppeTeX\ release 2.0.}
+% \changes{v2.1}{2009/11/17}{\CoppeTeX\ release 2.1: Matching the new rules.}
 %
 % \DoNotIndex{\!,\',\.,\>,\^,\`,\',\~,\=,\\,\\\~,\\\^,\\ }
 % \DoNotIndex{\@arabic,\@auxout,\@biblabel,\@bsphack,\@clubpenalty,\@empty}
@@ -155,7 +156,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % on text
 % composition without worrying about margins sizes,
 % line spacing, paper size, vertical and horizontal alignment, etc.
-% The \CoppeTeX\ project comprehends also \BibTeX\ and Makeindex style files
+% The \CoppeTeX\ project comprehends also \BibTeX\ and MakeIndex style files
 % for creating lists of references, symbols and abbreviations.
 % Although there aren't official guidelines to write qualifying
 % exams, we provide this option just for convenience, as this exam is a requisite
@@ -178,7 +179,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %
 % \section{Support}
 %
-% We provide a mailing list where users can send questions, comments,
+% We maintain a mailing list where users can send questions, comments,
 % and bugs to. More details can be found at
 % \url{http://coppetex.sourceforge.net/mailing-list.html}.
 % 
@@ -246,10 +247,10 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % Thus, it is required to enter the names of all examiners using the |\examiner| macro.
 % The examiners' names are entered differently:
 % \begin{verbatim}
-%   \examiner{Title}{First Examiner's Complete Name}{Degree}
-%   \examiner{Title}{Second Examiner's Complete Name}{Degree}
+%   \examiner{Title}{First Examiner's Name Surname}{Degree}
+%   \examiner{Title}{Second Examiner's Name Surname}{Degree}
 %   ...
-%   \examiner{Title}{n-th Examiner's Complete Name}{Degree}
+%   \examiner{Title}{N-th Examiner's Name Surname}{Degree}
 % \end{verbatim}
 %
 % Remember that all names must be given before calling |\maketitle|.
@@ -269,7 +270,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % Systems Engineering and Computer Science (PESC), and
 % Transportation Engineering (PET).
 % You must specify your department using one of the above abbreviations,
-% e.g. |\department{PEB}|.
+% e.g., |\department{PEB}|.
 %
 % \DescribeMacro{\date}
 % This macro is used to set the month and year of defense.
@@ -284,7 +285,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %   \keyword{First Keyword}
 %   \keyword{Second Keyword}
 %   ...
-%   \keyword{n-th Keyword}
+%   \keyword{N-th Keyword}
 % \end{verbatim}
 % Usually, six words are enough.
 %
@@ -292,18 +293,18 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % This page contains cataloging information useful for librarians.
 % Fortunately, it is automatically generated from the data you entered
 % at the time you call |\maketitle|.
-% It is not needed in qualifying exams.
+% It is not needed in qualifying exams, though.
 % 
 % \subsection*{Dedication (optional)}
 % \DescribeMacro{\dedication}
 % This macro was added for convenience. The input text is placed
 % at the right bottom of a blank page. It is emphasized and in normal
-% size. It is numbered with roman digits.
+% size.
 %
 % \subsection*{Abstracts}
 % \DescribeEnv{abstract}
 % \DescribeEnv{foreignabstract}
-% As stated by the Academic Registry~\cite{TNR08a}, the abstracts must be in
+% As stated by the Academic Registry~\cite{TNR08a}, abstracts must be in
 % one page each. Still, it is recommended that they should be only one
 % paragraph long. They must be defined inside the environments |abstract| and
 % |foreignabstract|.
@@ -311,11 +312,12 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \subsection*{Lists of symbols and abbreviations (optional)}
 % \DescribeMacro{\abbrev}
 % \DescribeMacro{\symbl}
-% The lists of symbols and abbreviations are optionals. It is recommended
+% The lists of symbols and abbreviations are optional, although highly
+% recommended. It is a good practice
 % to define a symbol/abbreviation in its first occurrence in the text.
 % To define a symbol use
-% |\symbl{Some Symbol}{Some Symbol Definition}|, and for abbreviations
-% |\abbrev{Some Abbreviation}{Some Abbreviation Definition}|.
+% |\symbl{Symbol}{Symbol Definition}|, and for abbreviations
+% |\abbrev{Abbreviation}{Abbreviation Definition}|.
 % These commands are called \emph{dummy}, since they don't output anything at
 % the place they are executed, just an entry in the correspondent list.
 %
@@ -324,29 +326,29 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \DescribeMacro{\printloabbreviations}
 % \DescribeMacro{\printlosymbols}
 % These lists are lexicographically sorted by using the MakeIndex program,
-% which is part of any \LaTeX\ implementation. Makeindex needs  two commands 
+% which is part of any \LaTeX\ implementation. MakeIndex needs  two commands 
 % to create a final sorted list: one which generates a list of entries and the 
 % other that indicates the position where the list will be printed out.  
-% To generate the lists of symbols and abbreviations, the |coppe| class has
+% To generate the lists of symbols and abbreviations, the |coppe| class provides
 % the commands |\makeloabbreviations| and |\makelosymbols|, respectively.
 % They must be called in the document preamble. The commands |\printlosymbols| 
 % and |\printloabbreviations| have to be invoked at the point where you want 
-% the respective lists appear, e.g. following the list of tables as showed in 
+% these lists appear, e.g., following the list of tables as showed in 
 % the example. Once you call |latex|, it will be created two files with 
-% extensions |abx| and |syx|, which contain makeindex input data. They must be 
-% processed with |makeindex| command in order to get the lists correctly 
+% extensions |abx| and |syx|, which contain MakeIndex input data. They must be 
+% processed with |makeindex| in order to get the lists correctly 
 % produced, redirecting the output to files with extension |lab| and |los| 
 % respectively:
 % \begin{verbatim} 
 %   makeindex -s coppe.ist -o example.lab example.abx
 %   makeindex -s coppe.ist -o example.los example.syx 
 % \end{verbatim}
-% Note the option |-s| with the style file |coppe.ist|. Rerun |latex| twice to 
-% get the references correctly solved and you are done. 
+% Note the |-s| option for specifying the style |coppe.ist|. Now, rerun |latex|
+% twice to get the references solved and you are done.
 %
 % \subsection*{References}
-% It is well known that bibliography databases can be easily maintained when
-% using \BibTeX. Thus, the \CoppeTeX\ project designed two \BibTeX\ styles,
+% It is well known that bibliography databases can be easily maintained with
+% the aid of \BibTeX. Thus, the \CoppeTeX\ project designed two \BibTeX\ styles,
 % |coppe-plain.bst| and |coppe-unsrt.bst|.
 % The |coppe-plain.bst| creates a list of references alphabetically sorted.
 % The later is a numbered style,
@@ -362,14 +364,14 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \end{verbatim}
 %
 % Run in sequence \LaTeX, \BibTeX, and twice again \LaTeX\ to resolve
-% reference issues.
-% These styles are |natbib| compatible.
-% This means that you can use the commands |\citet| and |\citep|.
+% reference. These styles are |natbib| compatible.
+% This means that you can freely use the commands |\citet| and |\citep|,
+% as well as any other |natbib| feature.
 %
 % \section{Graphics driver}
 %
 % Since the addition of a front cover with a Minerva's picture,
-% it is required to use a package to enable graphical inclusion.
+% it is required to use a package to enable graphics inclusion.
 % You may choose among three standard graphical drivers,
 % |dvips|, |pdftex| and |dvipdfm|, just passing it as a class option.
 % The \CoppeTeX\ loads |graphicx| using the |dvips| driver by default, so
@@ -390,7 +392,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \section{Useful tips}
 %
 % \textbf{Printing}. To get your work correctly printed,
-% you must ensure that any page scaling option (e.g. fit or shrink to printable
+% you must ensure that any page scaling option (e.g., fit or shrink to printable
 % area) isn't enabled. This options often comes in print dialogs of document
 % visualization softwares.
 %
@@ -400,10 +402,10 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % The package |graphicx| enables handling other formats like
 % JPEG, PNG and GIF. In this case, you must provide the bounding box of your
 % picture. There are two ways of doing this: pass an option to the
-% |\includegraphics| command (e.g.
+% |\includegraphics| command (e.g.,
 % |\includegraphics[bb = 0 0 35 28]{picture.png}|),
 % or provide a file with extension |bb| containing
-% the bounding box values (e.g. |%%BoundingBox: 0 0 9 12|).
+% the bounding box values (e.g., |%%BoundingBox: 0 0 9 12|).
 % This file will be automatically read by \LaTeX.
 %
 % \textbf{Fonts}. The default font in \LaTeX\ is the Computer Modern.
@@ -539,8 +541,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %    \begin{macrocode}
 %<*class>
 \def\filename{coppe.dtx}
-\def\fileversion{v2.0}
-\def\filedate{2007/03/01}
+\def\fileversion{v2.1}
+\def\filedate{2009/11/17}
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{coppe}[\filedate\ \fileversion\ COPPE Dissertations and Thesis]
 \LoadClass[12pt,a4paper,oneside]{book}
