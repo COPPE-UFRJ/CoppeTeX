@@ -1,14 +1,5 @@
-Documentation
--------------
-
-Review and improve the documentation at all.
-
-Better thesis example.
-
 Implementation
 --------------
-
-Fix authors' names hyphenation.
 
 As we are trying to have a generic implementation, we should define language
 options and make the Portuguese and English the default ones.
