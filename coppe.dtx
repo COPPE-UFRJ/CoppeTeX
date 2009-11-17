@@ -879,7 +879,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \@whilenum \count1<\@advisor \do{%
     \ifcase\count1 % same as \ifnum0=\count1
       \toks@=\expandafter{\csname CoppeAdvisorName:\the\count1%
-        \expandafter\endcsname\expandafter\space\csname CoppeAdvisorSurname:\the\count1\endcsname\\}
+        \expandafter\endcsname\expandafter\space%
+        \csname CoppeAdvisorSurname:\the\count1\endcsname\\}
     \else
       \toks@=\expandafter\expandafter\expandafter{%
         \expandafter\the\expandafter\toks@%
@@ -1005,12 +1006,15 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
         \toks@={}
         \@whilenum \count1<\@advisor \do{%
         \ifcase\count1 % same as \ifnum0=\count1
-          \toks@=\expandafter{\csname CoppeAdvisorName:\the\count1\expandafter\endcsname\expandafter\space\csname CoppeAdvisorSurname:\the\count1\endcsname\\}
+          \toks@=\expandafter{\csname CoppeAdvisorName:\the\count1%
+          \expandafter\endcsname\expandafter\space%
+          \csname CoppeAdvisorSurname:\the\count1\endcsname\\}
         \else
           \toks@=\expandafter\expandafter\expandafter{%
             \expandafter\the\expandafter\toks@
             \expandafter&\expandafter\space
-            \csname CoppeAdvisorName:\the\count1\expandafter\endcsname\expandafter\space\csname CoppeAdvisorSurname:\the\count1\endcsname\\
+            \csname CoppeAdvisorName:\the\count1\expandafter\endcsname%
+            \expandafter\space\csname CoppeAdvisorSurname:\the\count1\endcsname\\
           }%
         \fi
         \advance\count1 by 1}
@@ -1025,7 +1029,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
         \number\count2. \csname CoppeKeyword:\the\count1 \endcsname.
         \advance\count1 by 1
         \advance\count2 by 1}
-      I. \csname CoppeAdvisorSurname:0\endcsname,\ \csname CoppeAdvisorName:0\endcsname%
+      I. \csname CoppeAdvisorSurname:0\endcsname,%
+      \ \csname CoppeAdvisorName:0\endcsname%
       \ifthenelse{\equal{\@advisor}{1}}{}{\emph{~et~al.}}.
       II. \local@universityname, COPPE, Programa de \local@deptname.
       III. T{\' i}tulo.}
@@ -1075,12 +1080,15 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \toks@={}
     \@whilenum \count1<\@advisor \do{%
     \ifcase\count1 % same as \ifnum0=\count1
-      \toks@=\expandafter{\csname CoppeAdvisorName:\the\count1\expandafter\endcsname\expandafter\space\csname CoppeAdvisorSurname:\the\count1\endcsname\\}
+      \toks@=\expandafter{\csname CoppeAdvisorName:\the\count1%
+      \expandafter\endcsname\expandafter\space%
+      \csname CoppeAdvisorSurname:\the\count1\endcsname\\}
     \else
       \toks@=\expandafter\expandafter\expandafter{%
         \expandafter\the\expandafter\toks@
         \expandafter&\expandafter\space
-        \csname CoppeAdvisorName:\the\count1\expandafter\endcsname\expandafter\space\csname CoppeAdvisorSurname:\the\count1\endcsname\\
+        \csname CoppeAdvisorName:\the\count1\expandafter\endcsname%
+        \expandafter\space\csname CoppeAdvisorSurname:\the\count1\endcsname\\
       }%
     \fi
     \advance\count1 by 1}
@@ -1118,12 +1126,15 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \toks@={}
     \@whilenum \count1<\@advisor \do{%
     \ifcase\count1 % same as \ifnum0=\count1
-      \toks@=\expandafter{\csname CoppeAdvisorName:\the\count1\expandafter\endcsname\expandafter\space\csname CoppeAdvisorSurname:\the\count1\endcsname\\}
+      \toks@=\expandafter{\csname CoppeAdvisorName:\the\count1%
+      \expandafter\endcsname\expandafter\space%
+      \csname CoppeAdvisorSurname:\the\count1\endcsname\\}
     \else
       \toks@=\expandafter\expandafter\expandafter{%
         \expandafter\the\expandafter\toks@
         \expandafter&\expandafter\space
-        \csname CoppeAdvisorName:\the\count1\expandafter\endcsname\expandafter\space\csname CoppeAdvisorSurname:\the\count1\endcsname\\
+        \csname CoppeAdvisorName:\the\count1\expandafter\endcsname%
+        \expandafter\space\csname CoppeAdvisorSurname:\the\count1\endcsname\\
       }%
     \fi
     \advance\count1 by 1}
