@@ -48,7 +48,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \end{document}
 %</driver> \fi
 %
-%% \CheckSum{1400}
+%% \CheckSum{1391}
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
 %%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
@@ -370,29 +370,43 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \end{verbatim}
 %
 % Run in sequence \LaTeX, \BibTeX, and twice again \LaTeX\ to resolve
-% reference. These styles are |natbib| compatible.
-% This means that you can freely use the commands |\citet| and |\citep|,
-% as well as any other |natbib| feature.
+% reference.  These styles are |natbib| compatible.  This means that you can
+% freely issue the commands |\citet| and |\citep|, as well as any other
+% |natbib| feature.
 %
-% \section{Graphics driver}
+% \section{Class options}
 %
-% Since the addition of a front cover with a Minerva's picture,
-% it is required to use a package to enable graphics inclusion.
-% You may choose among two standard graphical drivers,
-% |pdftex| and |dvips|, just passing its name as a class option.
-% Because the PDF is the leading format for publishing digital
-% documents, \CoppeTeX\ loads the |pdftex| driver by default.
+% There are some options users can specify in order to customize the appearance
+% of the output produced by the |coppe| class. These options can be passed to
+% |coppe| as follows: |\documentclass[option1, option2]{coppe}|.
+% In which follows, we give a brief description of all supported options.
 %
-% \section{Hyperref}
+% \begin{description}
 %
-% When working with PDF's, there is the possibility to add extra information
-% to the file as the author's name, document title, subject, keywords, etc.
-% This is easily done with the |hyperref| package.
-% It is also useful to enable hyperlinks.
-% The |coppe| class loads |hyperref| by default and fills in all the document
-% properties.
-% 
-% \section{Quick, dirty, but useful tips}
+%   \item[\texttt{dsc, msc, dscexam}] The |coppe| class is able to produce
+%   thesis, dissertations, and qualifying exams, which are enabled by the
+%   |dsc|, |msc|, and |dscexam| options, respectively.
+%
+%   \item[\texttt{pdftex, dvips}] Since the addition of a front cover with
+%   Minerva's picture, it is required to use a package to enable graphics
+%   inclusion. This requires the specification of a graphical driver for
+%   handling image files.  You may choose between two standard graphical
+%   drivers, |pdftex| and |dvips|, just passing its name as a class option.
+%   Because the PDF is the leading format for publishing digital documents,
+%   \CoppeTeX\ loads the |pdftex| driver by default.
+%
+%   \item[\texttt{doublespacing}] The default line spacing is one-and-a-half.
+%   For enabling double spacing between lines, use the |doublespacing| option.
+%
+%   \item[\texttt{numbers}] The default citation style is the author-year
+%   scheme, which must be followed by the use of its corresponding \BibTeX\
+%   style, namely, the |coppe-plain.bst| file.  For numbered citations, specify
+%   the option |numbers| to the |coppe| class.  In this case, it is
+%   mandatory the use of |coppe-unsrt.bst|, as the bibliography style.
+%
+% \end{description}
+%
+% \section{Quick, useful tips}
 %
 % \paragraph{Pictures.} The default picture format of \LaTeX\ is the
 % Encapsulated PostScript (EPS). If you use pdf\TeX, the default format becomes
@@ -411,6 +425,14 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % |\usepackage[T1]{fontenc}|. This command will tell \LaTeX\ to use high-quality
 % PostScript Type1 fonts.
 %
+% \paragraph{Hyperref.}
+%
+% When working with PDF's, there is the possibility to add extra information to
+% the file as the author's name, document title, subject, keywords, etc.  This
+% is easily done with the |hyperref| package.  It is also useful to enable
+% hyperlinks.  Fortunately, the |coppe| class loads |hyperref| by default and
+% fills in all the document properties for you.
+%
 % \paragraph{Printing.} To get your work correctly printed,
 % you must ensure that any page scaling option (e.g., fit or shrink to printable
 % area) isn't enabled. This kind of option often comes in print dialogs of document
@@ -421,7 +443,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \label{COPPE:SAMPLE}
 %    \begin{macrocode}
 %<*example>
-\documentclass[dsc,pdftex,onehalfspacing]{coppe}
+\documentclass[dsc,pdftex,numbers,doublespacing]{coppe}
 \usepackage[T1]{fontenc}
 \usepackage[latin1]{inputenc}
 \usepackage{amsmath,amssymb}
@@ -499,35 +521,29 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 
   \begin{table}[h]
   \caption{Exemplos de citações utilizando o comando padrão
-    \texttt{\textbackslash cite} do \LaTeX,
-    e os comandos \texttt{\textbackslash citet} e \texttt{\textbackslash citep},
+    \texttt{\textbackslash cite} do \LaTeX\ e
+    o comando \texttt{\textbackslash citet},
     definidos pelo pacote \texttt{natbib}.}
   \label{tab:citation}
   \centering
-  \begin{tabular}{|c|c|c|c|}
+  {\footnotesize
+  \begin{tabular}{|c|c|c|}
     \hline
-    Tipo da Publicação & \verb|\cite| & \verb|\citet| & \verb|\citep|\\
+    Tipo da Publicação & \verb|\cite| & \verb|\citet|\\
     \hline
-    Livro & \cite{book-example} & \citet{book-example} &
-      \citep{book-example}\\
-    Artigo & \cite{article-example} & \citet{article-example} &
-      \citep{article-example}\\
-    Relatório & \cite{techreport-example} & \citet{techreport-example} &
-      \citep{techreport-example}\\
-    Relatório & \cite{techreport-exampleIn} & \citet{techreport-exampleIn} &
-      \citep{techreport-exampleIn}\\
+    Livro & \cite{book-example} & \citet{book-example}\\
+    Artigo & \cite{article-example} & \citet{article-example}\\
+    Relatório & \cite{techreport-example} & \citet{techreport-example}\\
+    Relatório & \cite{techreport-exampleIn} & \citet{techreport-exampleIn}\\
     Anais de Congresso & \cite{inproceedings-example} &
-      \citet{inproceedings-example} & \citep{inproceedings-example}\\
-    Séries & \cite{incollection-example} & \citet{incollection-example} &
-      \citep{incollection-example}\\
-    Em Livro & \cite{inbook-example} & \citet{inbook-example} &
-      \citep{inbook-example}\\
+      \citet{inproceedings-example}\\
+    Séries & \cite{incollection-example} & \citet{incollection-example}\\
+    Em Livro & \cite{inbook-example} & \citet{inbook-example}\\
     Dissertação de mestrado & \cite{mastersthesis-example} &
-      \citet{mastersthesis-example} & \citep{mastersthesis-example}\\
-    Tese de doutorado & \cite{phdthesis-example} & \citet{phdthesis-example} &
-      \citep{phdthesis-example}\\
+      \citet{mastersthesis-example}\\
+    Tese de doutorado & \cite{phdthesis-example} & \citet{phdthesis-example}\\
     \hline
-  \end{tabular}
+  \end{tabular}}
   \end{table}
 
   \chapter{Método Proposto}
@@ -558,7 +574,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{coppe}[\filedate\ \fileversion\ COPPE Dissertations and Thesis]
 \LoadClass[12pt,a4paper,oneside]{book}
-\RequirePackage[numbers,sort&compress]{natbib}
+\RequirePackage[sort&compress]{natbib}
 \RequirePackage{hyphenat}
 \RequirePackage{lastpage}
 \RequirePackage{hyperref}
@@ -580,8 +596,6 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \newboolean{maledoc}
 \setboolean{maledoc}{false}
 \setboolean{isdraft}{false}
-\newboolean{needbb}
-\setboolean{needbb}{false}
 %
 \DeclareOption{msc}{%
   \newcommand{\@degree}{M.Sc.}
@@ -612,25 +626,21 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \setboolean{isdraft}{true}
   \ClassWarning{coppe}{draft mode is ON}%
 }
-\DeclareOption{dvips}{%
-  \PassOptionsToPackage{dvips}{hyperref,graphicx}
-}
-\DeclareOption{dvipdfm}{%
-  \PassOptionsToPackage{dvipdfm}{hyperref,graphicx}
-  \setboolean{needbb}{true}
+\DeclareOption{numbers}{%
+  \PassOptionsToPackage{numbers}{natbib}
 }
 \DeclareOption{pdftex}{%
   \PassOptionsToPackage{pdftex}{hyperref,graphicx}
   \PassOptionsToPackage{plainpages=false,pdfpagelabels}{hyperref}
 }
+\DeclareOption{dvips}{%
+  \PassOptionsToPackage{dvips}{hyperref,graphicx}
+}
 %    \end{macrocode}
-% Here is the default one-and-a-half line spacing. We provide the option
-% |onehalfspacing| just for completion.
+% Here is the default one-and-a-half line spacing.
+% Users can change to double spacing by passing the |doublespacing| option.
 %    \begin{macrocode}
 \onehalfspacing
-\DeclareOption{onehalfspacing}{
-}
-%
 \DeclareOption{doublespacing}{%
   \doublespacing
 }
@@ -854,10 +864,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \begin{flushleft}
   \setlength\baselineskip{0pt}
   \setlength\parskip{1mm}
-  \makebox[20mm][c]{%
-    \ifthenelse{\boolean{needbb}}{%
-      \includegraphics[bb = -1 -1 48 64]{minerva}}{%
-      \includegraphics{minerva}}}\par
+  \makebox[20mm][c]{\includegraphics{minerva}}\par
   \makebox[20mm][c]{\bf\sf\small COPPE/UFRJ}
   \end{flushleft}
   \begin{center}
@@ -1121,7 +1128,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \vspace*{\fill}
   \noindent%
   \begin{tabularx}{\textwidth}[b]{@{}l@{ }X@{}}
-    \local@advisorstring: &
+    \foreign@advisorstring: &
     \count1=0
     \toks@={}
     \@whilenum \count1<\@advisor \do{%
@@ -1346,11 +1353,10 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \newcommand\local@advisorstring{Orientador}
 \newcommand\foreign@advisorstring{Advisor}
 \ifthenelse{\boolean{maledoc}}{%
-  \newcommand\local@approvedname{Aprovado por}%
+  \newcommand\local@approvedname{Examinado por}%
 }{%
-  \newcommand\local@approvedname{Aprovada por}%
+  \newcommand\local@approvedname{Examinada por}%
 }
-\newcommand\foreign@approvedname{Approved by}
 \newcommand\local@universityname{Universidade Federal do Rio de Janeiro}
 \newcommand\local@deptstring{Programa}
 \newcommand\foreign@deptstring{Department}
