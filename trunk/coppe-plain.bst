@@ -67,7 +67,7 @@ INTEGERS { output.state before.all mid.sentence after.sentence after.block }
 FUNCTION {capify}
 { duplicate$ empty$
     { pop$ "" }
-    { "\MakeUppercase{ " swap$ * "}" * }
+    { "\MakeUppercase{" swap$ * "}" * }
   if$
 }
 
