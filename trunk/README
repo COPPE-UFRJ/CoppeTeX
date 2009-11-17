@@ -50,7 +50,8 @@ files:
 
   3. README: describe the CoppeTeX package.
 
-  4. coppe-unsrt.bst: unsorted BibTeX style, Natbib compatible.
+  4. coppe-{plain,unsrt}.bst: alphabetically sorted and unsorted numbered
+     BibTeX styles, Natbib compatible.
 
   5. coppe.dtx: main source file; contains the documentation, a sample
      thesis and a Makeindex style.
@@ -58,6 +59,8 @@ files:
   7. coppe.ins: used to strip out the coppe document class from `coppe.dtx'.
 
   8. minerva.[eps,pdf]: images included in the front cover.
+
+  9. example.bib: sample BibTeX database for being used by example.tex.
 
 A release package should contains only the following files:
 
@@ -67,14 +70,15 @@ A release package should contains only the following files:
 
   3. coppe.cls: the main file. It is a LaTeX document class.
 
-  4. coppe-unsrt.bst: unsorted BibTeX style.
+  4. coppe-{plain,unsrt}.bst: alphabetically sorted and unsorted numbered
+     BibTeX styles, Natbib compatible.
 
   5. coppe.ist: Makeindex style for creating lists of symbols
      and abbreviations.
 
   6. coppe.pdf: CoppeTeX documentation.
 
-  7. example.tex: sample thesis using coppe class.
+  7. example.{tex,bib}: sample thesis using coppe class.
 
   8. minerva.[eps, pdf]: images included in the front cover.
 
@@ -126,5 +130,3 @@ Please, send any comments, suggestions, questions and bugs to our mailing list
 Have a good thesis,
   CoppeTeX team.
   http://coppetex.sourceforge.net
-
-                                             Rio de Janeiro, 13 June 2009.
