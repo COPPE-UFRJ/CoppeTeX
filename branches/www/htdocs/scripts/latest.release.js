@@ -53,7 +53,7 @@ function renderReleases(result) {
     var pubdate = new Date( $(this).find("pubDate").text() );
 
     // append row to 'table'
-    $("table[name='" + table + "']").append('<tr class="downloads-item">' +
+    $("table[id='" + table + "']").append('<tr class="downloads-item">' +
         "<td class='downloads-filename'><a href='" + url + "'>" + archive + "</a></td>" +
         "<td class='downloads-size'>" + size + "</td>" +
         "<td class='downloads-date'>" + pubdate.getMonth() + "/" + pubdate.getDate() + "/" + pubdate.getFullYear() + "</td></tr>");
