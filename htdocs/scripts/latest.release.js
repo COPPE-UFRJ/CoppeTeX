@@ -1,51 +1,67 @@
 google.load("feeds", "1");
+var version = "2.1";
 
-function showReleases(url, opt_noTitle) {
+function showReleases(url) {
+  $("#loadingpackages").show()
+  $("#loadingsources").show()
   var feed = new google.feeds.Feed(url);
+  feed.setResultFormat(google.feeds.Feed.XML_FORMAT);
+  feed.setNumEntries(-1);
   feed.load(function(result) {
-    renderReleases(result, opt_noTitle);
+    renderReleases(result);
   });
 }
 
-function renderReleases(result, opt_noTitle) {
-  if (!result.feed || !result.feed.entries) return;
+function renderReleases(result) {
+  if (!result) return;
 
-  // these two correspond to the sources snapshot and pure release
-  var baseurl = "https://sourceforge.net/projects/coppetex/files/CoppeTeX";
-  var extensions = new Array(".tar.gz", ".zip");
-  for (var i = 0; i < 2; i++) {
-    var entry = result.feed.entries[i];
-    var title = new String(entry.title);
-    var content = new String(entry.content);
-    var exp = /\d+\.\d+(\.\d+)?/g;
-    var version = title.match(exp);
-    exp = / Sources Snapshot/gi;
-    var type = title.match(exp);
-    var when = new Date(result.feed.entries[i].publishedDate);
-    var archive = 'coppetex-' + version;
-    var table = "packages";
-    if (type != null) {
+  var radical = new String("coppetex-");
+  var items = $(result.xmlDocument).find("item");
+  var i = items.length - 6;
+  // render links at the corresponding table
+  $(items).slice(i).each(function() {
+    var title = new String($(this).find("title").text());
+
+    // get archive name
+    var start = title.indexOf(radical + version);
+    var archive = title.substring(start);
+
+    // determine the type of data, dist, sources, or template
+    start = title.indexOf(radical + version) + radical.length + version.length;
+    var end = title.indexOf(".", start);
+    var opt = title.substring(start, end);
+
+    // determine table name
+    var table;
+    if (opt == '') {
+      table = "packages";
+      if ( $("#loadingpackages").is(":visible") ) {
+        $("#loadingpackages").hide();
+      }
+    } else if (opt == '-src') {
       table = "sources";
-      archive = archive + '-src';
+      if ( $("#loadingsources").is(":visible") ) {
+        $("#loadingsources").hide();
+      }
     } else {
-      type = '';
+      return;
     }
 
-    $(extensions).each(function() {
-    var start = content.indexOf(archive + this + " (") + archive.length + this.length + 2;
-    var end = content.indexOf(" bytes", start);
-    var size = content.substring(start,end);
+    // get details about the file
+    var url = $(this).find("link").text();
+    var size = $(this).find("media\\:content").attr("filesize");
+    var pubdate = new Date( $(this).find("pubDate").text() );
 
+    // append row to 'table'
     $("table[name='" + table + "']").append('<tr class="downloads-item">' +
-      "<td class='downloads-filename'><a href='" + baseurl + type + "/" + version + "/" + archive + this + "/download'>" + archive + this + "</a></td>" +
-      "<td class='downloads-size'>" + size + "</td>" +
-      "<td class='downloads-date'>" + when.getMonth() + "/" + when.getDate() + "/" + when.getFullYear() + "</td></tr>");
-    });
-  }
+        "<td class='downloads-filename'><a href='" + url + "'>" + archive + "</a></td>" +
+        "<td class='downloads-size'>" + size + "</td>" +
+        "<td class='downloads-date'>" + pubdate.getMonth() + "/" + pubdate.getDate() + "/" + pubdate.getFullYear() + "</td></tr>");
+  });
 }
 
 function initRelease() {
-  var url = "https://sourceforge.net/export/rss2_projfiles.php?group_id=199659&rss_fulltext=1";
+  var url = "https://sourceforge.net/api/file/index/project-id/199659/rss";
   showReleases(url);
 }
 
