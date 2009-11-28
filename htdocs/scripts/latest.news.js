@@ -5,6 +5,7 @@ function NewsPreview(container) {
 }
 
 NewsPreview.prototype.show = function(url, opt_noTitle) {
+  $("#loadingnews").show();
   var feed = new google.feeds.Feed(url);
   var preview = this;
   feed.load(function(result) {
@@ -20,7 +21,10 @@ NewsPreview.prototype.render_ = function(result, opt_noTitle) {
 
   var news = this.createDiv_(this.container_, "news");
 
-//  for (var i = 0; i < result.feed.entries.length; i++) {
+  if ( $("#loadingnews").is(":visible") ) {
+    $("#loadingnews").hide();
+  }
+
   for (var i = 0; i < 3; i++) {
     var entry = result.feed.entries[i];
     var div = this.createDiv_(news, "news-entry");
@@ -61,6 +65,7 @@ NewsPreview.prototype.createElement_ = function(tagName, parent, className,
 }
 
 function initNews() {
+//  var url = "https://sourceforge.net/api/news/index/project-id/199659/rss";
   var url = "https://sourceforge.net/export/rss2_projnews.php?group_id=199659";
   var news = new NewsPreview(document.getElementById("news"));
   news.show(url);
