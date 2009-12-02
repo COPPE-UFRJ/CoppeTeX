@@ -33,7 +33,6 @@
 %<*driver>
 \documentclass[a4paper]{ltxdoc}
 \usepackage[T1]{fontenc}
-\usepackage[latin1]{inputenc}
 \usepackage[colorlinks={true},breaklinks={true}]{hyperref}
 \usepackage{lmodern}
 \usepackage{url}
@@ -80,6 +79,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \changes{v1.0}{2008/06/10}{First \CoppeTeX\ release.}
 % \changes{v2.0}{2008/09/07}{\CoppeTeX\ release 2.0.}
 % \changes{v2.1}{2009/11/17}{\CoppeTeX\ release 2.1: Matching the new rules.}
+% \changes{v2.1.1}{2009/11/19}{Removed |inputenc| dependence, by removing all
+% non-ASCII characters, and changed all files to the UTF-8 encoding.}
 %
 % \DoNotIndex{\!,\',\.,\>,\^,\`,\',\~,\=,\\,\\\~,\\\^,\\ }
 % \DoNotIndex{\@arabic,\@auxout,\@biblabel,\@bsphack,\@clubpenalty,\@empty}
@@ -445,7 +446,6 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %<*example>
 \documentclass[dsc,pdftex,numbers]{coppe}
 \usepackage[T1]{fontenc}
-\usepackage[latin1]{inputenc}
 \usepackage{amsmath,amssymb}
 \usepackage{lmodern}
 
@@ -453,7 +453,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \makeloabbreviations
 
 \begin{document}
-  \title{Título da Tese}
+  \title{T\'itulo da Tese}
   \foreigntitle{Thesis Title}
  \author{Nome do Autor}{Sobrenome}
   \advisor{Prof.}{Nome do Primeiro Orientador}{Sobrenome}{D.Sc.}
@@ -475,7 +475,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \maketitle
 
   \frontmatter
-  \dedication{A alguém cujo valor é digno desta dedicatória.}
+  \dedication{A algu\'em cujo valor \'e digno desta dedicat\'oria.}
 
   \chapter*{Agradecimentos}
 
@@ -500,27 +500,27 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \printloabbreviations
  
   \mainmatter
-  \chapter{Introdução}
+  \chapter{Introdu{\c c}\~ao}
 
-  Segundo a norma de formatação de teses e dissertações do Instituto Alberto
-  Luiz Coimbra de Pós-graduação e Pesquisa de Engenharia (COPPE), toda
+  Segundo a norma de formata{\c c}\~ao de teses e disserta{\c c}\~oes do Instituto Alberto
+  Luiz Coimbra de P\'os-gradua{\c c}\~ao e Pesquisa de Engenharia (COPPE), toda
   abreviatura deve ser definida antes de utilizada.\abbrev{COPPE}{Instituto
-  Alberto Luiz Coimbra de Pós-graduação e Pesquisa de Engenharia}
+  Alberto Luiz Coimbra de P\'os-gradua{\c c}\~ao e Pesquisa de Engenharia}
 
-  Do mesmo modo, é imprescindível definir os símbolos, tal como o conjunto dos
-  números reais $\mathbb{R}$ e o conjunto vazio $\emptyset$.
-  \symbl{$\mathbb{R}$}{Conjunto dos números reais} \symbl{$\emptyset$}{Conjunto
+  Do mesmo modo, \'e imprescind\'ivel definir os s\'imbolos, tal como o conjunto dos
+  n\'umeros reais $\mathbb{R}$ e o conjunto vazio $\emptyset$.
+  \symbl{$\mathbb{R}$}{Conjunto dos n\'umeros reais} \symbl{$\emptyset$}{Conjunto
   vazio}
 
-  \chapter{Revisão Bibliográfica}
+  \chapter{Revis\~ao Bibliogr\'afica}
 
-  Para ilustrar a completa adesão ao estilo de citações e listagem de
-  referências bibliográficas, a Tabela~\ref{tab:citation} apresenta citações
+  Para ilustrar a completa ades\~ao ao estilo de cita{\c c}\~oes e listagem de
+  refer\^encias bibliogr\'aficas, a Tabela~\ref{tab:citation} apresenta cita{\c c}\~oes
   de alguns dos trabalhos contidos na norma fornecida pela CPGP da COPPE,
-  utilizando o estilo numérico.
+  utilizando o estilo num\'erico.
 
   \begin{table}[h]
-  \caption{Exemplos de citações utilizando o comando padrão
+  \caption{Exemplos de cita{\c c}\~oes utilizando o comando padr\~ao
     \texttt{\textbackslash cite} do \LaTeX\ e
     o comando \texttt{\textbackslash citet},
     definidos pelo pacote \texttt{natbib}.}
@@ -529,33 +529,33 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   {\footnotesize
   \begin{tabular}{|c|c|c|}
     \hline
-    Tipo da Publicação & \verb|\cite| & \verb|\citet|\\
+    Tipo da Publica{\c c}\~ao & \verb|\cite| & \verb|\citet|\\
     \hline
     Livro & \cite{book-example} & \citet{book-example}\\
     Artigo & \cite{article-example} & \citet{article-example}\\
-    Relatório & \cite{techreport-example} & \citet{techreport-example}\\
-    Relatório & \cite{techreport-exampleIn} & \citet{techreport-exampleIn}\\
+    Relat\'orio & \cite{techreport-example} & \citet{techreport-example}\\
+    Relat\'orio & \cite{techreport-exampleIn} & \citet{techreport-exampleIn}\\
     Anais de Congresso & \cite{inproceedings-example} &
       \citet{inproceedings-example}\\
-    Séries & \cite{incollection-example} & \citet{incollection-example}\\
+    S\'eries & \cite{incollection-example} & \citet{incollection-example}\\
     Em Livro & \cite{inbook-example} & \citet{inbook-example}\\
-    Dissertação de mestrado & \cite{mastersthesis-example} &
+    Disserta{\c c}\~ao de mestrado & \cite{mastersthesis-example} &
       \citet{mastersthesis-example}\\
     Tese de doutorado & \cite{phdthesis-example} & \citet{phdthesis-example}\\
     \hline
   \end{tabular}}
   \end{table}
 
-  \chapter{Método Proposto}
-  \chapter{Resultados e Discussões}
-  \chapter{Conclusões}
+  \chapter{M\'etodo Proposto}
+  \chapter{Resultados e Discuss\~oes}
+  \chapter{Conclus\~oes}
 
   \backmatter
   \bibliographystyle{coppe-unsrt}
   \bibliography{example}
 
   \appendix
-  \chapter{Algumas Demonstrações}
+  \chapter{Algumas Demonstra{\c c}\~oes}
 \end{document}
 %</example>
 %    \end{macrocode}
@@ -982,7 +982,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %    \end{macrocode}
 %
 % \begin{macro}{\makecatalog}
-% When the document has illustrations, it is required to insert '': il.;´´
+% When the document has illustrations, it is required to insert ``: il.;''
 % between the number of pages of the textual part and the page dimension.
 % We have created a label to flag the existence of lists of figures. It is
 % checked to be undefined using the
@@ -1430,7 +1430,7 @@ postamble
 % The authors would like to thank the National Council for Scientific and
 % Technological Development (CNPq). They are also grateful to
 % Alvaro Cuno for setting up the initial SVN repository,
-% Caio Graco and Paula Faragó for being the first \CoppeTeX\ users and for
+% Caio Graco and Paula Farag\'o for being the first \CoppeTeX\ users and for
 % their feedbacks, and
 % professor Fernando Lizarralde and Heiko Oberdiek for helpful comments.
 %
