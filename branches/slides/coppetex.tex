@@ -20,63 +20,65 @@
 % $URL$
 % $Id$
 %
-% Author(s): Vicente Helano
+% Author(s): Vicente H. F. Batista <helano@coc.ufrj.br>
 
-\documentclass[style=coppe,mode=present,paper=a4paper]{powerdot}
+\documentclass[hyperref={pdfpagelabels=false}]{beamer}
 \usepackage[T1]{fontenc}
+\usepackage{lmodern}
 \usepackage{color,subfigure,rotating,multirow}
 \usepackage{amssymb}
 
 \def\CoppeTeX{{\rm C\kern-.05em{\sc o\kern-.025em p\kern-.025em
-p\kern-.025em e}}\kern-.08em\TeX}
+p\kern-.025em e}}\kern-.08em{\rm\TeX}}
 
-\title{%
-\begin{center}
-\includegraphics[scale=0.5]{images/logo}
-\end{center}
-\begin{center}
-\normalsize\fontfamily{cmr}%
-A \LaTeX\ framework for writing thesis and dissertations\\
-at COPPE/UFRJ
-\end{center}}
-\author{Vicente Helano F. Batista}
+\usetheme{Warsaw}
+\usefonttheme[onlymath]{serif}
+\definecolor{peclight}{RGB}{184,221,147}
+\definecolor{pecdark}{RGB}{0,128,0}
+\setbeamercolor{palette primary}{bg=pecdark}
+\setbeamercolor{palette quaternary}{bg=peclight}
+
+\title[The \CoppeTeX\ toolkit]{The \CoppeTeX\ toolkit for writing thesis and dissertations}
+\author[\CoppeTeX\ team]{Vicente H. F. Batista\inst{1} \and George O. Ainsworth Jr.\inst{1} \and\\Paulo L. da C. Laje\inst{2}}
+\institute[COPPE/UFRJ]{\inst{1}Programa de Engenharia Civil \and \inst{2}Programa de Engenharia Qu\'imica \and Universidade Federal do Rio de Janeiro/COPPE}
 \date{\today}
-
-\pdsetup{
-  randomdots,
-  dprop={dotstyle=ocircle,linewidth=.25pt},
-  dmindots=5,dmaxdots=5,
-  dminsize=600pt,dmaxsize=700pt,
-  dbright=50
-}
+\subject{LaTeX document class}
+\keywords{LaTeX, document class, COPPE, UFRJ, thesis, dissertation}
 
 \begin{document}
-\maketitle
+\begin{frame}
+  \titlepage
+\end{frame}
 
-\begin{slide}{Introduction}
+\section*{Outline}
+\begin{frame}
+  \tableofcontents
+\end{frame}
+
+\begin{frame}{Introduction}
 \vspace*{1cm}
 \begin{itemize}
 \item Why ``framework''?
 \end{itemize}
-\end{slide}
+\end{frame}
 
-\begin{slide}{The Idea}
+\begin{frame}{The Idea}
 \vspace*{1cm}
 \begin{itemize}
 \item Introduce commands and evironments to represent the semantics of a thesis
 \end{itemize}
-\end{slide}
+\end{frame}
 
-\begin{slide}{Who is working on it?}
+\begin{frame}{Who is working on it?}
 \vspace*{1cm}
 \begin{itemize}
-\item Vicente Helano
+\item Vicente Batista
 \item George Ainsworth Jr.\pause
-\item Past contributors:
+\item Paulo Laje
 \end{itemize}
-\end{slide}
+\end{frame}
 
-\begin{slide}{\LaTeX\ intro in 30 seconds}
+\begin{frame}{\LaTeX\ intro in 30 seconds}
 \vspace*{1cm}
 \begin{itemize}
 \item \LaTeX\ is not a WYSWYG software
@@ -90,18 +92,18 @@ at COPPE/UFRJ
 \hline
 \end{tabular}
 \end{center}
-\end{slide}
+\end{frame}
 
-\begin{slide}{IDE's}
+\begin{frame}{IDE's}
 \vspace*{1cm}
 I like using...
 \begin{table}
 \begin{tabular}{ccc}
   OS & \LaTeX\ distro & IDE's\\
   \hline
-  \includegraphics[bb=0 0 266 314,width=.1\textwidth]{images/linux-logo.png} & teTeX & Vim\\
-  \includegraphics[bb=0 0 266 314,width=.1\textwidth]{images/apple-logo.png} & MacTeX & Vim\\
-  \includegraphics[bb=0 0 266 314,width=.1\textwidth]{images/windows-logo.png} & MikTeX & Vim\\
+  \includegraphics[width=.1\textwidth]{images/linux-logo.png} & teTeX & Vim\\
+  \includegraphics[width=.1\textwidth]{images/apple-logo.png} & MacTeX & Vim\\
+  \includegraphics[width=.1\textwidth]{images/windows-logo.png} & MikTeX & Vim\\
 \end{tabular}
 \end{table}
 \begin{itemize}
@@ -109,50 +111,50 @@ I like using...
 \item[MacOS] TextMate, Vi(m)
 \item[Windows] WinEdt, Winshell, TeXnic, LEd, Winefish
 \end{itemize}
-\end{slide}
+\end{frame}
 
 
-\begin{slide}{\CoppeTeX}
+\begin{frame}{\CoppeTeX}
 \vspace*{1cm}
 \begin{itemize}
 \item Getting yourself out of formatting details
 \item Eye-candy documents
 \item Portability
 \end{itemize}
-\end{slide}
+\end{frame}
 
-\begin{slide}{Support}
+\begin{frame}{Support}
 \vspace*{1cm}
 \begin{itemize}
 \item Users' manual for \texttt{coppe}
 \item Mailing list \texttt{coppetex-users@lists.sourceforge.net}???
 \end{itemize}
-\end{slide}
+\end{frame}
 
-\begin{slide}{Known Issues}
+\begin{frame}{Known Issues}
 \vspace*{1cm}
 \begin{itemize}
 \item \texttt{fncychap} restart chapter and section counters in appendix
 \item \texttt{natbib} generates empty citations
 \item Anymore?
 \end{itemize}
-\end{slide}
+\end{frame}
 
-\begin{slide}{Tips}
+\begin{frame}{Tips}
 \vspace*{1cm}
 \begin{itemize}
 \item Use our mailing list
 \item ISO-8859-1 vs. UTF-8: you can use \texttt{iconv} to switch between them
 \item pdf\TeX: native TrueType and Type 1 fonts, micro-typographic extensions, direct access to intrinsic PDF features (by Hàn The Thành)
 \end{itemize}
-\end{slide}
+\end{frame}
 
-\begin{slide}{That's all, Folks!}
+\begin{frame}{That's all, Folks!}
 \vspace*{\fill}
 \begin{center}
 \Huge Thanks!
 \end{center}
 \vspace*{\fill}
-\end{slide}
+\end{frame}
 
 \end{document}
