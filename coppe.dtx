@@ -569,7 +569,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %    \begin{macrocode}
 %<*class>
 \def\filename{coppe.dtx}
-\def\fileversion{v2.1}
+\def\fileversion{v2.1.1}
 \def\filedate{2009/11/17}
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{coppe}[\filedate\ \fileversion\ COPPE Dissertations and Thesis]
@@ -1038,7 +1038,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
         \advance\count2 by 1}
       I. \csname CoppeAdvisorSurname:0\endcsname,%
       \ \csname CoppeAdvisorName:0\endcsname%
-      \ifthenelse{\equal{\@advisor}{1}}{}{\emph{~et~al.}}.
+      \ifthenelse{\@advisor>1}{\ \emph{et~al.}{}}.
       II. \local@universityname, COPPE, Programa de \local@deptname.
       III. T{\' i}tulo.}
     \end{minipage}}
