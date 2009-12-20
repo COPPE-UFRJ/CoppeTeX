@@ -1,0 +1,19 @@
+Implementation
+--------------
+
+As we are trying to have a generic implementation, we should define language
+options and make the Portuguese and English the default ones.
+
+Move string definitions to other files grouped by language.  Use babel
+standard: portuges.sty includes portuges.ldf.
+
+Turning our class robust and conflict-free.  This would require rewrite it
+adding a prefix to all macro command we have defined so far.
+
+Adding Features
+---------------
+
+Now, we are living in the Natbib realm, but with fixed rules.  We need to
+create a command, e.g., \biboptions{...},  so as to pass options to natbib.
+It would be interesting to have the same for hyperref.
+
