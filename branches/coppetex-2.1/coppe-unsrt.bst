@@ -1118,7 +1118,7 @@ FUNCTION {format.lab.names}
         'skip$
         { s #2 "{ff }{vv }{ll}{ jj}" format.name$ "others" =
             { " et~al." emphasize * }
-            { " e" * s #2 "{vv~}{ll}" format.name$ capify * }
+            { " e " * s #2 "{vv~}{ll}" format.name$ capify * }
           if$
         }
       if$
