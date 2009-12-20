@@ -350,7 +350,7 @@ FUNCTION {format.full.names}
               if$
               t "others" =
                 { " et~al." * }
-                { " and " * t * }
+                { " e " * t * }
               if$
             }
           if$
