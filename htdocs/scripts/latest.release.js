@@ -1,5 +1,5 @@
 google.load("feeds", "1");
-var version = "2.1";
+var version = "2.1.1";
 
 function showReleases(url) {
   $("#loadingpackages").show()
