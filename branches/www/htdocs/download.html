@@ -78,69 +78,12 @@ src="http://www.google.com/coop/cse/brand?form=searchbox_014050451544240989057%3
 <div id="content">
   <h1>Download CoppeTeX</h1>
 
-  <div id="loading" style="display: none;"><img src="images/loading.gif" alt="Loading..."></div>
-  <p id="response_to_submission" style="display: none;">Thank you for submitting your information to CoppeTeX!</p>
-  
-  <form method="post" id="user_data" action="" style="line-height: 150%;">
-  <p>Before downloading CoppeTeX, we would like to ask you to fill in the
-  following optional form with details of your publication.  We emphasize that
-  your data won't be used for any other purposes rather than statistical ones.</p>
-  <fieldset>
-  <legend>User Information</legend>
-  <p>
-  <label style="width: 150px;">School:</label>
-  <input type="radio" id="ufrj" name="school" checked value="UFRJ"> COPPE/UFRJ
-  <input type="radio" id="otherschool" name="school"> Other:<br>
-  <input maxlength="2048" id="schoolname" type="text" name="schoolname" size="50" disabled class="required" style="color: black; text-align: left;">
-  </p>
-  <p>
-  <label for="author">Author's name:</label><br>
-  <input maxlength="2048" type="text" id="author" name="author" size="50" class="required" style="color: black; text-align: left;">
-  </p>
-  <p>
-  <label for="title">Thesis title:</label><br>
-  <input maxlength="2048" type="text" id="title" name="title" size="50" class="required" style="color: black; text-align: left;">
-  </p>
-  <p>
-  <label>Department:</label><br>
-    <select id="dept" name="dept" class="required" style="color: black; text-align: left;">
-      <option value="" style="font-style: italic;" selected>Choose your department&nbsp;...</option>
-      <option value="Programa de Engenharia Biom{\' e}dica">Biomedical Engineering (PEB)</option>
-      <option value="Programa de Engenharia Civil">Civil Engineering (PEC)</option>
-      <option value="Programa de Engenharia El{\' e}trica">Electrical Engineering (PEE)</option>
-      <option value="Programa de Engenharia Mec{\^ a}nica">Mechanical Engineering (PEM)</option>
-      <option value="Programa de Engenharia Metal{\' u}rgica e de Materiais">Metallurgical and Materials Science Engineering (PEMM)</option>
-      <option value="Programa de Engenharia Nuclear">Nuclear Engineering (PEN)</option>
-      <option value="Programa de Engenharia Oce{\^ a}nica">Ocean Engineering (PENO)</option>
-      <option value="Programa de Planejamento Energ{\' e}tico">Energy Planning (PPE)</option>
-      <option value="Programa de Engenharia de Produ{\c c}{\~ a}o">Production Engineering (PEP)</option>
-      <option value="Programa de Engenharia Qu{\' i}mica">Chemical Engineering (PEQ)</option>
-      <option value="Programa de Engenharia de Sistemas e Computa{\c c}{\~ a}o">Systems Engineering and Computer Science (PESC)</option>
-      <option value="Programa de Engenharia de Transportes">Transportation Engineering (PET)</option>
-    </select>
-    <input id="otherdept" maxlength="2048" type="text" name="otherdept" size="50" style="display: none; color: black; text-align: left;" disabled class="required">
-  </p>
-  <p>
-  <label for="degree">Thesis degree:</label>
-  <select id="degree" name="degree" class="required" style="color: black; text-align: left;">
-    <option value="" style="font-style: italic;" selected>Choose a degree&nbsp;...</option>
-    <option value="msc">Master of Science</option>
-    <option value="dsc">Doctor of Science</option>
-  </select>
-  </p>
-  <p>
-  <input type="submit" value="Submit" id="submit" class="submit">
-  <input type="reset" value="Reset" id="clear" onClick="restoreDefaults();">
-  </p>
-  </fieldset>
-  </form>
-
   <p>
 
   The CoppeTeX project was conceived in the hope that it will be useful for
   you.  We will be grateful if you acknowledge the CoppeTeX project in your
   publications. To do so, you should use the <code style="display:
-  inline;">\CoppeTeX</code> macro, which is already defined in the file
+  inline;">\CoppeTeX</code> macro, which is defined in the file
   coppe.cls.
 
   </p>
