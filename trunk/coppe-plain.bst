@@ -281,7 +281,7 @@ FUNCTION {format.issn}
 FUNCTION {format.url}
 { url empty$
     { "" }
-    { new.block "Dispon{\' i}vel em: <\url{" url * "}>" * }
+    { new.block "Dispon{\' i}vel em: \textless\url{" url * "}\textgreater " * }
   if$
 }
 
@@ -830,6 +830,7 @@ FUNCTION {booklet}
   author format.key output
   format.year "year" output.check
   format.intitle "title" output.check
+  end.quote.title
   howpublished address new.block.checkb
   howpublished output
   address output
@@ -1000,6 +1001,7 @@ FUNCTION {misc}
   format.year output
   title howpublished new.block.checkb
   format.intitle output
+  end.quote.title
   howpublished new.block.checka
   howpublished output
   format.month output
@@ -1076,7 +1078,7 @@ FUNCTION {unpublished}
   author format.key output
   format.year output
   format.title "title" output.check
-  new.block
+  end.quote.title
   note "note" output.check
   format.month output
   format.url output
