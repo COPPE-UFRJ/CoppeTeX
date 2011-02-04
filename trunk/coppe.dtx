@@ -32,9 +32,7 @@
 % \iffalse
 %<*driver>
 \documentclass[a4paper]{ltxdoc}
-\usepackage[T1]{fontenc}
 \usepackage[colorlinks={true},breaklinks={true}]{hyperref}
-\usepackage{lmodern}
 \usepackage{url}
 
 \def\CoppeTeX{{\rm C\kern-.05em{\sc o\kern-.025em p\kern-.025em
@@ -47,7 +45,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \end{document}
 %</driver> \fi
 %
-%% \CheckSum{1391}
+%% \CheckSum{1430}
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
 %%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
@@ -444,10 +442,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \label{COPPE:SAMPLE}
 %    \begin{macrocode}
 %<*example>
-\documentclass[dsc,pdftex,numbers]{coppe}
-\usepackage[T1]{fontenc}
+\documentclass[dsc,numbers]{coppe}
 \usepackage{amsmath,amssymb}
-\usepackage{lmodern}
 
 \makelosymbols
 \makeloabbreviations
@@ -455,7 +451,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \begin{document}
   \title{T\'itulo da Tese}
   \foreigntitle{Thesis Title}
- \author{Nome do Autor}{Sobrenome}
+  \author{Nome do Autor}{Sobrenome}
   \advisor{Prof.}{Nome do Primeiro Orientador}{Sobrenome}{D.Sc.}
   \advisor{Prof.}{Nome do Segundo Orientador}{Sobrenome}{Ph.D.}
   \advisor{Prof.}{Nome do Terceiro Orientador}{Sobrenome}{D.Sc.}
@@ -523,7 +519,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \caption{Exemplos de cita{\c c}\~oes utilizando o comando padr\~ao
     \texttt{\textbackslash cite} do \LaTeX\ e
     o comando \texttt{\textbackslash citet},
-    definidos pelo pacote \texttt{natbib}.}
+    fornecido pelo pacote \texttt{natbib}.}
   \label{tab:citation}
   \centering
   {\footnotesize
@@ -577,13 +573,13 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \RequirePackage[sort&compress]{natbib}
 \RequirePackage{hyphenat}
 \RequirePackage{lastpage}
-\RequirePackage{hyperref}
 \RequirePackage[english,brazil]{babel}
 \RequirePackage{ifthen}
 \RequirePackage{graphicx}
 \RequirePackage{setspace}
 \RequirePackage{tabularx}
 \RequirePackage{eqparbox}
+\RequirePackage{ltxcmds}
 \RequirePackage[a4paper,bindingoffset=0.0cm,vcentering=true,%
 top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
 \def\CoppeTeX{{\rm C\kern-.05em{\sc o\kern-.025em p\kern-.025em
@@ -628,13 +624,6 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 }
 \DeclareOption{numbers}{%
   \PassOptionsToPackage{numbers}{natbib}
-}
-\DeclareOption{pdftex}{%
-  \PassOptionsToPackage{pdftex}{hyperref,graphicx}
-  \PassOptionsToPackage{plainpages=false,pdfpagelabels}{hyperref}
-}
-\DeclareOption{dvips}{%
-  \PassOptionsToPackage{dvips}{hyperref,graphicx}
 }
 %    \end{macrocode}
 % Here is the default one-and-a-half line spacing.
@@ -764,7 +753,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \end{macro}
 %
 % \begin{macro}{\date}
-% This code enables makes easy to switch from dates in different languages.
+% This code makes easy to switch from dates in different languages.
 %    \begin{macrocode}
 \renewcommand\date[2]{%
   \month=#1
@@ -832,8 +821,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \begin{macro}{\mainmatter}
 %    \begin{macrocode}
 \renewcommand\mainmatter{%
-  \immediate\write\@auxout{%
-    \string\newlabel{front:pageno}{{}{\Roman{page}}{}{page.\roman{page}}{}}}
+  \coppe@mainBegin
   \cleardoublepage
   \@mainmattertrue
   \pagestyle{plain}
@@ -858,28 +846,29 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \begin{macro}{\maketitle}
 %    \begin{macrocode}
 \renewcommand\maketitle{%
-\pagenumbering{alph}
-\config@hypersetup
+  \pagenumbering{alph}
+  \ltx@ifpackageloaded{hyperref}{\coppe@hypersetup}{}%
   \begin{titlepage}
   \begin{flushleft}
+  \vspace*{1.5mm}
   \setlength\baselineskip{0pt}
   \setlength\parskip{1mm}
-  \makebox[20mm][c]{\includegraphics{minerva}}\par
-  \makebox[20mm][c]{\bf\sf\small COPPE/UFRJ}
+  \makebox[20mm][c]{\hspace{4.8cm}\includegraphics{coppe-logo}}
   \end{flushleft}
+  \vspace{1.05cm}
   \begin{center}
   \nohyphens{\MakeUppercase\local@title}\par
-  \vspace*{28mm}
+  \vspace*{3cm}
   \nohyphens{\@authname\ \@authsurn}\par
   \end{center}
-  \vspace*{16mm}
+  \vspace*{2.1cm}
   \begin{flushright}
-  \begin{minipage}{80mm}
+  \begin{minipage}{8.45cm}
   \frontcover@maintext
   \end{minipage}\par
   \vspace*{7.5mm}
   \nohyphens{%
-  \begin{tabularx}{80mm}[b]{@{}l@{ }X@{}}
+  \begin{tabularx}{8.45cm}[b]{@{}l@{ }X@{}}
     \local@advisorstring: &
     \count1=0
     \toks@={}
@@ -911,6 +900,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %    \end{macrocode}
 % \changes{v0.3}{2008/03/07}{Added number of examiners test.}
 % \changes{v0.3}{2008/03/07}{Generalization.}
+% \changes{v2.2}{2011/02/04}{Using |ltxcmds| to check if |hyperref| was loaded.}
 % \end{macro}
 %
 %    \begin{macrocode}
@@ -938,9 +928,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \vspace*{\fill}
   \frontpage@bottomtext}
 %    \end{macrocode}
-%
 %    \begin{macrocode}
-\newcommand\config@hypersetup{%
+\newcommand\coppe@hypersetup{%
 \begingroup
   % changes to \toks@ and \count@ are kept local;
   % it's not necessary for them, but it is usually the case
@@ -973,7 +962,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \hypersetup{%
   pdfauthor={\@authname\ \@authsurn},
   pdftitle={\local@title},
- pdfsubject={\local@doctype\ de \@degreename\ em \local@deptname\ da COPPE/UFRJ},
+  pdfsubject={\local@doctype\ de \@degreename\ em \local@deptname\ da COPPE/UFRJ},
   pdfcreator={LaTeX with CoppeTeX toolkit},
   breaklinks={true},
   raiselinks={true},
@@ -1168,8 +1157,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \begin{macro}{\listoffigures}
 %    \begin{macrocode}
 \renewcommand\listoffigures{%
-  \immediate\write\@auxout{%
-  \string\newlabel{cat:lofflag}{{}{:~il.;}{}{page.\roman{page}}{}}}
+    \coppe@hasLof
     \if@twocolumn
       \@restonecoltrue\onecolumn
     \else
@@ -1281,13 +1269,43 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %    \end{macrocode}
 %
 %    \begin{macrocode}
+% Some macros used to generate cataloging information.
+\AtBeginDocument{%
+  \ltx@ifpackageloaded{hyperref}{
+    \def\coppe@bibEnd{%
+      \immediate\write\@auxout{%
+        \string\newlabel{bib:end}{{}{\arabic{page}}{}{page.\arabic{page}}{}}}}%
+    \def\coppe@bibBegin{%
+      \immediate\write\@auxout{%
+        \string\newlabel{bib:begin}{{}{\arabic{page}}{}{page.\arabic{page}}{}}}}%
+    \def\coppe@mainBegin{%
+      \immediate\write\@auxout{%
+        \string\newlabel{front:pageno}{{}{\Roman{page}}{}{page.\roman{page}}{}}}}%
+    \def\coppe@hasLof{%
+      \immediate\write\@auxout{%
+        \string\newlabel{cat:lofflag}{{}{:~il.;}{}{page.\roman{page}}{}}}}%
+  }{%
+    \def\coppe@bibEnd{%
+      \immediate\write\@auxout{%
+      \string\newlabel{bib:end}{{}{\arabic{page}}{}}}}%
+    \def\coppe@bibBegin{%
+      \immediate\write\@auxout{%
+      \string\newlabel{bib:begin}{{}{\arabic{page}}{}}}}%
+    \def\coppe@mainBegin{%
+      \immediate\write\@auxout{%
+        \string\newlabel{front:pageno}{{}{\Roman{page}}{}}}}%
+    \def\coppe@hasLof{%
+      \immediate\write\@auxout{%
+        \string\newlabel{cat:lofflag}{{}{:~il.;}{}}}}%
+  }%
+}
 \newdimen\bibindent%
 \setlength\bibindent{1.5em}%
 \renewenvironment{thebibliography}[1]%
-     {\chapter*{\bibname}%
+     {\onehalfspacing%
+      \chapter*{\bibname}%
       \addcontentsline{toc}{chapter}{\bibname}%
-      \immediate\write\@auxout{%
-      \string\newlabel{bib:begin}{{}{\arabic{page}}{}{page.\arabic{page}}{}}}%
+      \coppe@bibBegin
       \list{\@biblabel{\@arabic\c@enumiv}}%
            {\setlength{\labelwidth}{0ex}%
             \setlength{\leftmargin}{9.0ex}%
@@ -1304,8 +1322,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
       \sfcode`\.\@m}%
      {\def\@noitemerr%
        {\@latex@warning{Empty `thebibliography' environment}}%
-      \immediate\write\@auxout{%
-      \string\newlabel{bib:end}{{}{\arabic{page}}{}{page.\arabic{page}}{}}}%
+       \coppe@bibEnd
       \endlist}
 %    \end{macrocode}
 %
