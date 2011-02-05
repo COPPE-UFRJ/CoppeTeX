@@ -45,7 +45,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \end{document}
 %</driver> \fi
 %
-%% \CheckSum{1431}
+%% \CheckSum{1411}
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
 %%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
@@ -311,10 +311,10 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %
 % \DescribeEnv{abstract}
 % \DescribeEnv{foreignabstract}
-% As stated by the Academic Registry~\cite{TNR08a}, abstracts must be in
-% one page each. Still, it is recommended that they should be only one
-% paragraph long. They must be defined inside the environments |abstract| and
-% |foreignabstract|.
+% As stated by the Academic Registry~\cite{TNR08a}, abstracts must be in one
+% page each, with at most 250 words. We recommended that they should
+% be only one paragraph long. They must be defined inside the environments
+% |abstract| and |foreignabstract|.
 % 
 % \subsection*{Lists of symbols and abbreviations (optional)}
 %
@@ -390,14 +390,6 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %   thesis, dissertations, and qualifying exams, which are enabled by the
 %   |dsc|, |msc|, and |dscexam| options, respectively.
 %
-%   \item[\texttt{pdftex, dvips}] Since the addition of a front cover with
-%   Minerva's picture, it is required to use a package to enable graphics
-%   inclusion. This requires the specification of a graphical driver for
-%   handling image files.  You may choose between two standard graphical
-%   drivers, |pdftex| and |dvips|, just passing its name as a class option.
-%   Because the PDF is the leading format for publishing digital documents,
-%   \CoppeTeX\ loads the |pdftex| driver by default.
-%
 %   \item[\texttt{doublespacing}] The default line spacing is one-and-a-half.
 %   For enabling double spacing between lines, use the |doublespacing| option.
 %
@@ -412,11 +404,13 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \section{Quick, useful tips}
 %
 % \paragraph{Pictures.} The default picture format of \LaTeX\ is the
-% Encapsulated PostScript (EPS). If you use pdf\TeX, the default format becomes
+% Encapsulated PostScript (EPS). If you use pdf\LaTeX, the default format becomes
 % the PDF, but you can equally load PNG files.
 % For such, you must enter the name of your image file without extension,
-% e.g., |\includegraphics{filename}|, and |pdftex| will firstly look for
+% e.g., |\includegraphics{filename}|, and |pdflatex| will firstly look for
 % a file called |filename.pdf| and after for file |filename.png|.
+% For producing high quality pictures with embedded fonts we recommend the
+% Ipe drawing software at \url{http://ipe7.sourceforge.net/}.
 %
 % \paragraph{Fonts.} The default font in \LaTeX\ is the Computer Modern.
 % If you would like to try its enhanced version, consider using the
@@ -424,17 +418,15 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % To use Times, it is recommended to load the package |mathptmx|, rather than
 % the deprecated |times|. There is also an enhanced Times version available
 % with the |tgtermes| package. You can still use the Arial font face with the
-% package |uarial|. Before including these packages you should call
-% |\usepackage[T1]{fontenc}|. This command will tell \LaTeX\ to use high-quality
-% PostScript Type1 fonts.
+% package |uarial|.
 %
 % \paragraph{Hyperref.}
 %
 % When working with PDF's, there is the possibility to add extra information to
 % the file as the author's name, document title, subject, keywords, etc.  This
 % is easily done with the |hyperref| package.  It is also useful to enable
-% hyperlinks.  Fortunately, the |coppe| class loads |hyperref| by default and
-% fills in all the document properties for you.
+% hyperlinks.  Fortunately, the |coppe| class will do this automatically if
+% |hyperref| is loaded.
 %
 % \paragraph{Printing.} To get your work correctly printed,
 % you must ensure that any page scaling option (e.g., fit or shrink to printable
@@ -448,6 +440,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %<*example>
 \documentclass[dsc,numbers]{coppe}
 \usepackage{amsmath,amssymb}
+\usepackage{hyperref}
 
 \makelosymbols
 \makeloabbreviations
@@ -502,22 +495,23 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \mainmatter
   \chapter{Introdu{\c c}\~ao}
 
-  Segundo a norma de formata{\c c}\~ao de teses e disserta{\c c}\~oes do Instituto Alberto
-  Luiz Coimbra de P\'os-gradua{\c c}\~ao e Pesquisa de Engenharia (COPPE), toda
-  abreviatura deve ser definida antes de utilizada.\abbrev{COPPE}{Instituto
-  Alberto Luiz Coimbra de P\'os-gradua{\c c}\~ao e Pesquisa de Engenharia}
+  Segundo a norma de formata{\c c}\~ao de teses e disserta{\c c}\~oes do
+  Instituto Alberto Luiz Coimbra de P\'os-gradua{\c c}\~ao e Pesquisa de
+  Engenharia (COPPE), toda abreviatura deve ser definida antes de
+  utilizada.\abbrev{COPPE}{Instituto Alberto Luiz Coimbra de P\'os-gradua{\c
+  c}\~ao e Pesquisa de Engenharia}
 
-  Do mesmo modo, \'e imprescind\'ivel definir os s\'imbolos, tal como o conjunto dos
-  n\'umeros reais $\mathbb{R}$ e o conjunto vazio $\emptyset$.
-  \symbl{$\mathbb{R}$}{Conjunto dos n\'umeros reais} \symbl{$\emptyset$}{Conjunto
-  vazio}
+  Do mesmo modo, \'e imprescind\'ivel definir os s\'imbolos, tal como o
+  conjunto dos n\'umeros reais $\mathbb{R}$ e o conjunto vazio $\emptyset$.
+  \symbl{$\mathbb{R}$}{Conjunto dos n\'umeros reais}
+  \symbl{$\emptyset$}{Conjunto vazio}
 
   \chapter{Revis\~ao Bibliogr\'afica}
 
   Para ilustrar a completa ades\~ao ao estilo de cita{\c c}\~oes e listagem de
-  refer\^encias bibliogr\'aficas, a Tabela~\ref{tab:citation} apresenta cita{\c c}\~oes
-  de alguns dos trabalhos contidos na norma fornecida pela CPGP da COPPE,
-  utilizando o estilo num\'erico.
+  refer\^encias bibliogr\'aficas, a Tabela~\ref{tab:citation} apresenta cita{\c
+  c}\~oes de alguns dos trabalhos contidos na norma fornecida pela CPGP da
+  COPPE, utilizando o estilo num\'erico.
 
   \begin{table}[h]
   \caption{Exemplos de cita{\c c}\~oes utilizando o comando padr\~ao
@@ -592,11 +586,10 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %    \end{macrocode}
 %
 %    \begin{macrocode}
-\newboolean{isdraft}
 \newboolean{maledoc}
 \setboolean{maledoc}{false}
-\setboolean{isdraft}{false}
 %
+% Definiton of class options.
 \DeclareOption{msc}{%
   \newcommand{\@degree}{M.Sc.}
   \newcommand{\@degreename}{Mestrado}
@@ -622,10 +615,6 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \newcommand\local@doctype{Tese}
   \newcommand\foreign@doctype{Thesis}
 }
-\DeclareOption{draft}{%
-  \setboolean{isdraft}{true}
-  \ClassWarning{coppe}{draft mode is ON}%
-}
 \DeclareOption{numbers}{%
   \PassOptionsToPackage{numbers}{natbib}
 }
@@ -642,13 +631,6 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %    \begin{macrocode}
 \ProcessOptions\relax
 %    \end{macrocode}
-%
-% \begin{macro}{\university}
-% Set the university name.
-%    \begin{macrocode}
-\newcommand\university[1]{%
-  \renewcommand\local@universityname{#1}
-}
 %
 % \begin{macro}{\department}
 % This macro is used to set the author's affiliation. There are twelve options
@@ -698,7 +680,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %
 %
 % \begin{macro}{\title}
-% Used to enter the foreign title.
+% Used to enter the title in Brazilian Portuguese.
 %    \begin{macrocode}
 \renewcommand\title[1]{%
   \global\def\local@title{#1}%
@@ -716,7 +698,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \end{macro}
 %
 % \begin{macro}{\advisor}
-% Defines globally the title, name and academic degree of the advisor.
+% Defines globally the title, name and academic degree of the advisors.
 %    \begin{macrocode}
 \newcount\@advisor\@advisor0
 \newcommand\advisor[4]{%
@@ -779,17 +761,6 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \newcommand\foreign@monthname{\ifcase\month\or
   January\or February\or March\or April\or May\or June\or
   July\or August\or September\or October\or November\or December\fi}
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{\place}
-% Used to enter the place of defense.
-%    \begin{macrocode}
-\newcommand\place[3]{%
-  \renewcommand\local@cityname{#1}
-  \renewcommand\local@statename{#2}
-  \renewcommand\local@countryname{#3}
-}
 %    \end{macrocode}
 % \end{macro}
 %
@@ -1448,12 +1419,10 @@ postamble
 %
 % \section*{Acknowledgments}
 %
-% The authors would like to thank the National Council for Scientific and
-% Technological Development (CNPq). They are also grateful to
-% Alvaro Cuno for setting up the initial SVN repository,
-% Caio Graco and Paula Farag\'o for being the first \CoppeTeX\ users and for
-% their feedbacks, and
-% professor Fernando Lizarralde and Heiko Oberdiek for helpful comments.
+% Thanks to all \CoppeTeX\ users who have reported their experience with this
+% class.  We also thank to professor Fernando Lizarralde and Heiko Oberdiek for
+% their helpful comments. The authors would like to thank the National Council for
+% Scientific and Technological Development (CNPq) of Brazil.
 %
 % \nocite{*}
 % \bibliographystyle{plain}
