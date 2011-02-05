@@ -1,11 +1,11 @@
 %
 % This is file `coppe-plain.bst',
-% A modification of `unsrtnat.bst' for use with natbib package 
+% A modification of `plainnat.bst' for use with natbib package 
 %
 % Numbered BibTeX style for using with CoppeTeX package.
 % It is Natbib compatible.
 %
-% Copyright (C) 2009 CoppeTeX Project and any individual authors listed
+% Copyright (C) 2011 CoppeTeX Project and any individual authors listed
 % elsewhere in this file.
 %
 % This program is free software; you can redistribute it and/or modify
@@ -24,10 +24,8 @@
 % $URL$
 % $Id$
 %
-% Author(s): Vicente Helano <helano@coc.ufrj.br>
+% Author(s): Vicente H. F. Batista
 %
-% TODO:
-%   1. Verify the use of cross-references.
 
 ENTRY
   { address
