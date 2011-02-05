@@ -58,7 +58,7 @@ files:
 
   7. coppe.ins: used to strip out the coppe document class from `coppe.dtx'.
 
-  8. minerva.[eps,pdf]: images included in the front cover.
+  8. coppe-logo.[eps,pdf]: images included in the front cover.
 
   9. example.bib: sample BibTeX database for being used by example.tex.
 
@@ -80,7 +80,7 @@ A release package should contains only the following files:
 
   7. example.{tex,bib}: sample thesis using coppe class.
 
-  8. minerva.[eps, pdf]: images included in the front cover.
+  8. coppe-logo.[eps, pdf]: images included in the front cover.
 
 
 Installing
