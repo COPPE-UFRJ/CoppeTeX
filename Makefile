@@ -3,7 +3,7 @@
 #
 # It should be used to strip the CoppeTeX class and its documentation.
 #
-# Copyright (C) 2008 CoppeTeX Project and any individual authors listed
+# Copyright (C) 2011 CoppeTeX Project and any individual authors listed
 # elsewhere in this file.
 #
 # This program is free software; you can redistribute it and/or modify
@@ -22,22 +22,19 @@
 # $URL$
 # $Id$
 #
-# Author(s): Vicente Helano,
-#            George Ainsworth
+# Author(s): Vicente H. F. Batista
 #
 
 PROGRAM_NAME=CoppeTeX Makefile
 PACKAGE_NAME=coppe
 DOC_SOURCE=coppe.dtx
-VERSION="1.0"
-AUTHORS=Vicente Helano and George Ainsworth Jr.
-COPYRIGHT_YEAR=2007
+VERSION="2.2"
+AUTHORS=Vicente H. F. Batista and George O. Ainsworth Jr.
+COPYRIGHT_YEAR=2011
 PACKAGE_BUGREPORT="helano@users.sourceforge.net"
 
-TEX = latex
+TEX = pdflatex
 BIBTEX = bibtex
-DVIPS = dvips
-DVIPDF = dvipdfm
 MAKEIDX = makeindex
 _printf=printf
 _rm=rm
@@ -50,13 +47,14 @@ DOCDIR=$(DESTDIR)/doc/latex/coppe
 
 TEXFLAGS  = 
 BIBTEXFLAGS = -terse
-DVIPSFLAGS = -Ppdf -G0 -q -t A4 
-DVIPDFMFLAGS = -c -r 300 -p a4
 IDXFLAGS = -q -s gind.ist
 GLOFLAGS = -q -s gglo.ist
 LSTFLAGS = -q -s coppe.ist
 
-.SUFFIXES: .tex .dvi .dtx
+DIST_CONTENT=coppe.cls coppe.ist coppe.pdf coppe-plain.bst coppe-unsrt.bst COPYING example.bib example.tex coppe-logo.eps coppe-logo.pdf README
+DISTSRC_CONTENT=coppe.bib coppe.dtx coppe.ins coppe-plain.bst coppe-unsrt.bst COPYING example.bib Makefile coppe-logo.eps coppe-logo.pdf README
+
+.SUFFIXES: .tex .dtx
 
 all:
 	@${_printf} "make: unknown target\n"
@@ -82,9 +80,7 @@ doc: $(PACKAGE_NAME).dtx
 
 class: $(PACKAGE_NAME).cls
 
-example: example.tex example.dvi
-
-install: doc class example
+install: doc class example.pdf
 	@if [ "$(DESTDIR)" == "" ]; then \
 	  $(_printf) "error: empty detination directory.\n"; \
 	  make help; \
@@ -94,12 +90,12 @@ install: doc class example
 	  rm -rf $(CLSDIR); \
 	fi
 	mkdir -vp $(CLSDIR)
-	cp -vp $(PACKAGE_NAME).cls minerva.eps minerva.pdf $(CLSDIR)/
+	cp -vp $(PACKAGE_NAME).cls coppe-logo.eps coppe-logo.pdf $(CLSDIR)/
 	if [ -d "$(BSTDIR)" ]; then \
 	  rm -rf $(BSTDIR); \
 	fi
 	mkdir -vp $(BSTDIR)
-	cp -vp $(PACKAGE_NAME)-unsrt.bst $(BSTDIR)/
+	cp -vp $(PACKAGE_NAME)-*.bst $(BSTDIR)/
 	if [ -d "$(ISTDIR)" ]; then \
 	  rm -rf $(ISTDIR); \
 	fi
@@ -109,24 +105,12 @@ install: doc class example
 	  rm -rf $(DOCDIR); \
 	fi
 	mkdir -vp $(DOCDIR)
-	cp -vp README COPYING $(PACKAGE_NAME).dvi \
+	cp -vp README COPYING $(PACKAGE_NAME).pdf \
 		example.tex example.pdf $(DOCDIR)
-
-dist: distclean
-	@${_tar} -jcvf $(PACKAGE_NAME).tar.bz2 ./*
-
-distclean: clean
-	@$(_rm) -f $(PACKAGE_NAME).cls example.pdf example.ps example.dvi \
-             example.tex *~ coppe.pdf coppe.ps coppe.dvi
-
-clean:
-	@$(_rm) -f *.log *.aux *.dvi *.ist *.idx *.blg *.bbl *.glo *.bz2 \
-		         *.toc *.lof *.lot *.syx *.abx *.lab *.ilg *.los *.ind \
-						 *.gls *.out
 
 help:
 	@${_printf} "Usage: make [TARGET]\n" "${PROGRAM_NAME}"
-	@${_printf} "Generate various output formats from LaTeX sources.\n"
+	@${_printf} "CoppeTeX development Makefile.\n"
 	@${_printf} "\n"
 	@${_printf} "  doc          generate the \`%s' documentation\n" \
 	            ${PACKAGE_NAME}
@@ -134,10 +118,10 @@ help:
 		          ${PACKAGE_NAME} 
 	@${_printf} "from \`%s'\n" ${DOC_SOURCE}
 	@${_printf} "%s\n" \
-           "  example      generate a DVI file from \`example.tex'" \
+           "  example.pdf  generate a PDF file from \`example.tex'" \
            "  dist         create a compressed archive from sources" \
            "  clean        remove auxiliary archives" \
-	   "  install      install class in DESTDIR" \
+	         "  install      install class in DESTDIR" \
            "  help         display this message and exit" \
            "  version      print version information and exit"
 	@${_printf} "\n"
@@ -155,13 +139,7 @@ version:
 $(PACKAGE_NAME).cls example.tex %.ist: $(PACKAGE_NAME).ins
 	@$(TEX) $(TEXFLAGS) $<
 
-$(PACKAGE_NAME).dvi: $(PACKAGE_NAME).dtx
-	@$(TEX) $(TEXFLAGS) $<
-	@$(BIBTEX) $(BIBTEXFLAGS) $(PACKAGE_NAME).aux
-	@$(TEX) $(TEXFLAGS) $<
-	@$(TEX) $(TEXFLAGS) $<
-
-%.dvi: %.tex
+%.pdf: %.tex
 	@$(TEX) $(TEXFLAGS) $<
 	@if grep -s "There were undefined references" $(basename $<).log; then \
 	  $(BIBTEX) $(BIBTEXFLAGS) $(basename $<).aux; \
@@ -183,4 +161,24 @@ $(PACKAGE_NAME).dvi: $(PACKAGE_NAME).dtx
 		let "i--"; \
 	done
 
-.PHONY: all doc class example dist help version clean distclean
+dist: distclean class doc example.pdf
+	mkdir coppetex-$(VERSION) && cp $(DIST_CONTENT) coppetex-$(VERSION)/
+	@${_tar} -zcvf coppetex-$(VERSION).tar.gz coppetex-$(VERSION)
+	rm -rf coppetex-$(VERSION)
+
+
+distsrc: distclean class doc example.pdf
+	mkdir coppetex-$(VERSION)-src && cp $(DIST_CONTENT) coppetex-$(VERSION)-src/
+	@${_tar} -zcvf coppetex-$(VERSION)-src.tar.gz coppetex-$(VERSION)-src
+	rm -rf coppetex-$(VERSION)-src
+
+.PHONY: clean distclean
+
+distclean: clean
+	@$(_rm) -f $(PACKAGE_NAME).cls example.pdf \
+             example.tex *~ coppe.pdf
+
+clean:
+	@$(_rm) -f *.log *.aux *.ist *.idx *.blg *.bbl *.glo *.bz2 \
+		         *.toc *.lof *.lot *.syx *.abx *.lab *.ilg *.los *.ind \
+						 *.gls *.out *~
