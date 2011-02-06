@@ -25,9 +25,6 @@
 #
 # Author(s): Vicente Helano <helano@inbox.com>
 #
-# TODO
-#   - automatic update downloads page
-#
 
 TEX=latex
 #TMPDIR=`mktemp -d coppetex.XXXXXXXXXX`
@@ -41,6 +38,10 @@ if [ "$1" == "" ]; then
   exit 1
 fi
 
+printf "%s: creating release number %s.\n" $0 ${VERSION}
+exit 0
+
+echo $0": exporting tag" ${VERSION}
 svn --force export ${SVNROOT}/tags/coppetex-${VERSION} $TMPDIR > /dev/null
 if [ "$?" != "0" ]; then
   printf "%s: invalid version number\n" "$0"
@@ -51,11 +52,11 @@ cd $TMPDIR
 svn --force export ${SVNROOT}/branches/template ${PROJECT}-${VERSION}-template > /dev/null
 
 mkdir ${PROJECT}-${VERSION}{,-src}
-DISTFILES='coppe.bib coppe.cls coppe.ist coppe.pdf coppe-unsrt.bst COPYING minerva.pdf minerva.eps example.tex example.pdf README'
-SRCFILES='coppe.bib coppe.ins COPYING minerva.eps README coppe.dtx coppe-unsrt.bst Makefile minerva.pdf'
-TEMPLATEFILES='coppe.cls coppe.ist coppe-unsrt.bst COPYING README minerva.pdf minerva.eps coppe.pdf'
+DISTFILES='coppe.bib coppe.cls coppe.ist coppe.pdf coppe-unsrt.bst COPYING coppe-logo.pdf coppe-logo.eps example.tex example.pdf README'
+SRCFILES='coppe.bib coppe.ins COPYING coppe-logo.eps README coppe.dtx coppe-unsrt.bst Makefile coppe-logo.pdf'
+TEMPLATEFILES='coppe.cls coppe.ist coppe-unsrt.bst COPYING README coppe-logo.pdf coppe-logo.eps coppe.pdf'
 
-make example doc
+make example.pdf doc
 pdflatex coppe.dtx
 pdflatex coppe.dtx
 
