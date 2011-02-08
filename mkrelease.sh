@@ -1,10 +1,11 @@
 #!/bin/sh
 #
-# This is file `build_packages.sh'
+# This is file `mkrelease.sh'
 #
-# Automatically generates CoppeTeX packages for a specific release.
+# Automatically generates sourceforge project releases from Subversion
+# repositories.
 #
-# Copyright (C) 2008 CoppeTeX Project and any individual authors listed
+# Copyright (C) 2011 CoppeTeX Project and any individual authors listed
 # elsewhere in this file.
 #
 # This program is free software; you can redistribute it and/or modify
@@ -23,60 +24,46 @@
 # $URL$
 # $Id$
 #
-# Author(s): Vicente Helano <helano@inbox.com>
+# Author(s): Vicente H. F. Batista
 #
 
 TEX=latex
-#TMPDIR=`mktemp -d coppetex.XXXXXXXXXX`
-TMPDIR=coppetex-release
 PROJECT=coppetex
 SVNROOT=https://coppetex.svn.sourceforge.net/svnroot/coppetex
 VERSION=$1
 
 if [ "$1" == "" ]; then
-  printf "%s: missing version number\n" "$0"
+  printf "%s: missing version number.\n" "$0"
   exit 1
 fi
 
-printf "%s: creating release number %s.\n" $0 ${VERSION}
-exit 0
+TMPDIR=`mktemp -d coppetex.XXXXXXXXXX`
 
-echo $0": exporting tag" ${VERSION}
-svn --force export ${SVNROOT}/tags/coppetex-${VERSION} $TMPDIR > /dev/null
-if [ "$?" != "0" ]; then
-  printf "%s: invalid version number\n" "$0"
+# Do we have a new branch or a new tag?
+RELKIND=`echo ${VERSION} | tr -dc '.' | wc -c`
+BRANCH=''
+
+if [ "${RELKIND}" -eq "1" ]; then # We need to create a branch
+  BRANCH=${VERSION}
+elif [ "${RELKIND}" -eq "2" ]; then
+  BRANCH=${VERSION%.*}
+else
+  printf "%s: invalid version number.\n" $0
   exit 1
 fi
 
-cd $TMPDIR
-svn --force export ${SVNROOT}/branches/template ${PROJECT}-${VERSION}-template > /dev/null
+if [ "${BRANCH}" == "${VERSION}" ]; then
+  printf "%s: creating branch number %s.\n" $0 ${VERSION}
+  svn copy ${SVNROOT}/trunk \
+      ${SVNROOT}/branches/${PROJECT}-${VERSION} \
+      -m "Branching CoppeTeX ${VERSION}."
+fi
 
-mkdir ${PROJECT}-${VERSION}{,-src}
-DISTFILES='coppe.bib coppe.cls coppe.ist coppe.pdf coppe-unsrt.bst COPYING coppe-logo.pdf coppe-logo.eps example.tex example.pdf README'
-SRCFILES='coppe.bib coppe.ins COPYING coppe-logo.eps README coppe.dtx coppe-unsrt.bst Makefile coppe-logo.pdf'
-TEMPLATEFILES='coppe.cls coppe.ist coppe-unsrt.bst COPYING README coppe-logo.pdf coppe-logo.eps coppe.pdf'
-
-make example.pdf doc
-pdflatex coppe.dtx
-pdflatex coppe.dtx
-
-cp ${DISTFILES} ${PROJECT}-${VERSION} && \
-cp ${SRCFILES} ${PROJECT}-${VERSION}-src && \
-cp ${TEMPLATEFILES} ${PROJECT}-${VERSION}-template
-
-tar -zcvf coppetex-${VERSION}-src.tar.gz coppetex-${VERSION}-src/*
-zip coppetex-${VERSION}-src.zip coppetex-${VERSION}-src/*
-tar -zcvf coppetex-${VERSION}.tar.gz coppetex-${VERSION}/*
-zip coppetex-${VERSION}.zip coppetex-${VERSION}/*
-tar -zcvf coppetex-${VERSION}-template.tar.gz coppetex-${VERSION}-template/*
-zip coppetex-${VERSION}-template.zip coppetex-${VERSION}-template/*
+printf "%s: creating tag number %s.\n" $0 ${VERSION}
+svn copy ${SVNROOT}/branches/${PROJECT}-${BRANCH} \
+    ${SVNROOT}/tags/${PROJECT}-${VERSION} \
+    -m "Tagging CoppeTeX ${VERSION}."
 
 cd ..
-
-# send files
-#PACKAGES='coppetex-1.0.tar.gz coppetex-1.0.zip coppetex-1.0-src.tar.gz coppetex-1.0-src.zip'
-#for i in ${PACKAGES}; do
-#  scp $i helano@frs.sourceforge.net:uploads/${i}
-#done
 
 exit 0
