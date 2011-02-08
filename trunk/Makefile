@@ -119,7 +119,6 @@ help:
 	@${_printf} "from \`%s'\n" ${DOC_SOURCE}
 	@${_printf} "%s\n" \
            "  example.pdf  generate a PDF file from \`example.tex'" \
-           "  dist         create a compressed archive from sources" \
            "  clean        remove auxiliary archives" \
 	         "  install      install class in DESTDIR" \
            "  help         display this message and exit" \
@@ -161,22 +160,7 @@ $(PACKAGE_NAME).cls example.tex %.ist: $(PACKAGE_NAME).ins
 		let "i--"; \
 	done
 
-dist: distclean class doc example.pdf
-	mkdir coppetex-$(VERSION) && cp $(DIST_CONTENT) coppetex-$(VERSION)/
-	@${_tar} -zcvf coppetex-$(VERSION).tar.gz coppetex-$(VERSION)
-	rm -rf coppetex-$(VERSION)
-
-
-distsrc: distclean class doc example.pdf
-	mkdir coppetex-$(VERSION)-src && cp $(DIST_CONTENT) coppetex-$(VERSION)-src/
-	@${_tar} -zcvf coppetex-$(VERSION)-src.tar.gz coppetex-$(VERSION)-src
-	rm -rf coppetex-$(VERSION)-src
-
-.PHONY: clean distclean
-
-distclean: clean
-	@$(_rm) -f $(PACKAGE_NAME).cls example.pdf \
-             example.tex *~ coppe.pdf
+.PHONY: clean
 
 clean:
 	@$(_rm) -f *.log *.aux *.ist *.idx *.blg *.bbl *.glo *.bz2 \
