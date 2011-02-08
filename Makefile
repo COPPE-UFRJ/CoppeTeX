@@ -165,4 +165,4 @@ $(PACKAGE_NAME).cls example.tex %.ist: $(PACKAGE_NAME).ins
 clean:
 	@$(_rm) -f *.log *.aux *.ist *.idx *.blg *.bbl *.glo *.bz2 \
 		         *.toc *.lof *.lot *.syx *.abx *.lab *.ilg *.los *.ind \
-						 *.gls *.out *~
+						 *.gls *.out *~ coppe.pdf coppe.cls example.pdf example.tex
