@@ -45,7 +45,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \end{document}
 %</driver> \fi
 %
-%% \CheckSum{1411}
+%% \CheckSum{1417}
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
 %%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
@@ -843,7 +843,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \end{minipage}\par
   \vspace*{7.5mm}
   \nohyphens{%
-  \begin{tabularx}{8.45cm}[b]{@{}l@{ }X@{}}
+  \begin{tabularx}{8.45cm}[b]{@{}l@{ }>{\raggedright\arraybackslash}X@{}}
     \local@advisorstring: &
     \count1=0
     \toks@={}
@@ -971,7 +971,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
       % Should we manually introduce a fixed space? But how could we know that
       % a name was split? Is this happening yet?
       \nohyphens{%
-      \begin{tabularx}{100mm}[b]{@{}l@{ }X@{}}
+      \begin{tabularx}{100mm}[b]{@{}l@{ }>{\raggedright\arraybackslash}X@{}}
         \local@advisorstring: &
         \count1=0
         \toks@={}
@@ -1041,11 +1041,9 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \vspace*{7mm}
     \local@monthname/\number\year
   \end{center}\par
-% Old style
-%  \vspace*{3mm}
   \vspace*{\fill}
   \noindent%
-  \begin{tabularx}{\textwidth}[b]{@{}l@{ }X@{}}
+  \begin{tabularx}{\textwidth}[b]{@{}l@{ }>{\raggedright\arraybackslash}X@{}}
     \local@advisorstring: &
     \count1=0
     \toks@={}
@@ -1087,11 +1085,9 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \vspace*{7mm}
     \foreign@monthname/\number\year
   \end{center}\par
-% Old style
-%  \vspace*{3mm}
   \vspace*{\fill}
   \noindent%
-  \begin{tabularx}{\textwidth}[b]{@{}l@{ }X@{}}
+  \begin{tabularx}{\textwidth}[b]{@{}l@{ }>{\raggedright\arraybackslash}X@{}}
     \foreign@advisorstring: &
     \count1=0
     \toks@={}
