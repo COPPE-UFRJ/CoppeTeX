@@ -17,7 +17,7 @@ function renderReleases(result) {
 
   var radical = new String("coppetex-");
   var items = $(result.xmlDocument).find("item");
-  var i = items.length - 8;
+  var i = items.length - 6;
   // render links at the corresponding table
   $(items).slice(i).each(function() {
     var title = new String($(this).find("title").text());
