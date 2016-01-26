@@ -32,8 +32,8 @@
 % \iffalse
 %<*driver>
 \documentclass[a4paper]{ltxdoc}
+\usepackage[T1]{fontenc}
 \usepackage[colorlinks={true},breaklinks={true}]{hyperref}
-\usepackage{url}
 
 \def\CoppeTeX{{\rm C\kern-.05em{\sc o\kern-.025em p\kern-.025em
 p\kern-.025em e}}\kern-.08em
@@ -45,7 +45,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \end{document}
 %</driver> \fi
 %
-%% \CheckSum{1417}
+%% \CheckSum{1416}
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
 %%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
@@ -80,6 +80,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \changes{v2.1.1}{2009/11/19}{Removed |inputenc| dependence, by removing all
 % non-ASCII characters, and changed all files to the UTF-8 encoding.}
 % \changes{v2.2}{2011/02/04}{Matching new guidelines, including new logo.}
+% \changes{v2.2.1}{2016/01/26}{Fixed problem with \texttt|eqparbox| at
+% signature page.}
 %
 % \DoNotIndex{\!,\',\.,\>,\^,\`,\',\~,\=,\\,\\\~,\\\^,\\ }
 % \DoNotIndex{\@arabic,\@auxout,\@biblabel,\@bsphack,\@clubpenalty,\@empty}
@@ -113,7 +115,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \DoNotIndex{\theenumiv,\thepage,\thispagestyle,\twocolumn,\typeout, \edef}
 % \DoNotIndex{\usecounter,\usepackage,\value,\vfill,\vskip,\vspace, \count@}
 % \DoNotIndex{\widowpenalty,\write,\year,\z@, \appendix, \@ifundefined}
-% \DoNotIndex{\bibliography, \bibliographystyle, \eqparbox, \fboxsep, \fill}
+% \DoNotIndex{\bibliography, \bibliographystyle, \eqmakebox, \fboxsep, \fill}
 % \DoNotIndex{\fontfamily, \framebox, \hypersetup, \includegraphics}
 % \DoNotIndex{\MakeLowercase, \noexpand, \PassOptionsToPackage, \protect}
 % \DoNotIndex{\raggedleft, \roman, \small, \space, \TeX, \textbf, \x}
@@ -183,8 +185,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \section{Support}
 %
 % We maintain a mailing list where users can send questions, comments,
-% and bugs to. More details can be found at
-% \url{http://coppetex.sourceforge.net/mailing-list.html}.
+% and bugs to. More details can be found
+% \href{http://coppetex.sourceforge.net/mailing-list.html}{here}.
 % 
 % \section{User interface}
 %
@@ -410,7 +412,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % e.g., |\includegraphics{filename}|, and |pdflatex| will firstly look for
 % a file called |filename.pdf| and after for file |filename.png|.
 % For producing high quality pictures with embedded fonts we recommend the
-% Ipe drawing software at \url{http://ipe7.sourceforge.net/}.
+% Ipe drawing software available \href{http://ipe7.sourceforge.net/}{here}.
 %
 % \paragraph{Fonts.} The default font in \LaTeX\ is the Computer Modern.
 % If you would like to try its enhanced version, consider using the
@@ -894,9 +896,9 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
         \count1=0
         \@whilenum \count1<\@examiner \do {
             \vskip26\p@ \baselineskip12pt
-        \eqparbox{signture@list}{\hrulefill}\\
-        \eqparbox{signture@list}{\protect\centering%
-            \ \ \ \csname CoppeExaminer:\the\count1 \endcsname\ \ \ }\\
+        \eqmakebox[signture@list][c]{\hrulefill}\\
+        \eqmakebox[signture@list][c]{%
+            \ \ \ \protect\csname CoppeExaminer:\the\count1 \endcsname\ \ \ }\\
             \advance\count1 by 1}
   \end{flushright}
      \end{center}
