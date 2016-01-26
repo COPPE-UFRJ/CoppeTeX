@@ -1,5 +1,5 @@
 google.load("feeds", "1");
-var version = "2.2";
+var version = "2.2.1";
 
 function showReleases(url) {
   $("#loadingpackages").show()
@@ -16,10 +16,9 @@ function renderReleases(result) {
   if (!result) return;
 
   var radical = new String("coppetex-");
-  var items = $(result.xmlDocument).find("item");
-  var i = items.length - 6;
+  var items = $(result.xmlDocument).find("item:lt(6)"); // get the first 6 items
   // render links at the corresponding table
-  $(items).slice(i).each(function() {
+  $(items).slice(0).each(function() {
     var title = new String($(this).find("title").text());
 
     // get archive name
@@ -43,20 +42,20 @@ function renderReleases(result) {
       if ( $("#loadingsources").is(":visible") ) {
         $("#loadingsources").hide();
       }
-    } else {
+    } else { // unknown option
       return;
     }
 
     // get details about the file
     var url = $(this).find("link").text();
     var size = $(this).find("media\\:content").attr("filesize");
-    var pubdate = new Date( $(this).find("pubDate").text() );
+    var pubdate = new String( $(this).find("pubDate").text() );
 
     // append row to 'table'
     $("table[id='" + table + "']").append('<tr class="downloads-item">' +
         "<td class='downloads-filename'><a href='" + url + "'>" + archive + "</a></td>" +
         "<td class='downloads-size'>" + size + "</td>" +
-        "<td class='downloads-date'>" + pubdate.getMonth() + "/" + pubdate.getDate() + "/" + pubdate.getFullYear() + "</td></tr>");
+        "<td class='downloads-date'>" + pubdate + "</td></tr>");
   });
 }
 
