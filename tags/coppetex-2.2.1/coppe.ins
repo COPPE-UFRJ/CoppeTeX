@@ -1,0 +1,109 @@
+%
+% This is file `coppe.ins'.
+%
+% It uses the docstrip utility to generate the `coppe'
+% document class and a sample manuscript `example.tex'
+% from file `coppe.dtx'.
+%
+% Copyright (C) 2011 CoppeTeX Project and any individual authors listed
+% elsewhere in this file.
+%
+% This program is free software; you can redistribute it and/or modify
+% it under the terms of the GNU General Public License version 3 as
+% published by the Free Software Foundation.
+%
+% This program is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+% GNU General Public License version 3 for more details.
+%
+% You should have received a copy of the GNU General Public License
+% version 3 along with this package (see COPYING file).
+% If not, see <http://www.gnu.org/licenses/>.
+%
+% $URL$
+% $Id$
+%
+% Author(s): Vicente H. F. Batista
+%            George O. Ainsworth Jr.
+%
+
+\input docstrip
+
+\keepsilent
+\askforoverwritefalse
+
+\declarepreamble\classpreamble
+
+This is the `coppe' document class used for composition of LaTeX
+monographs (master and PhD thesis, and PhD qualifying exams)
+satisfying the requirements of the Coordination of Research and
+Graduate Courses in Engineering at the Federal University of
+Rio de Janeiro.
+
+Copyright (C) 2008 Vicente Helano and George Ainsworth Jr.
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License version 3 as
+published by the Free Software Foundation.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License version 3 for more details.
+
+You should have received a copy of the GNU General Public License
+version 3 along with this package (see COPYING file).
+If not, see <http://www.gnu.org/licenses/>.
+
+Author(s): Vicente Helano,
+           George Ainsworth
+
+\endpreamble
+
+\declarepreamble\glossarypreamble
+
+This is the makeindex style for creating ordered glossaries
+when using the `coppe' document class.
+
+Copyright (C) 2008 Vicente Helano and George Ainsworth Jr.
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License version 3 as
+published by the Free Software Foundation.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License version 3 for more details.
+
+You should have received a copy of the GNU General Public License
+version 3 along with this package (see COPYING file).
+If not, see <http://www.gnu.org/licenses/>.
+
+Author(s): Vicente Helano,
+           George Ainsworth
+
+\endpreamble
+
+\declarepreamble\examplepreamble
+
+This is a sample monograph which illustrates the use of `coppe' document
+class and `coppe-unsrt' BibTeX style.
+
+\endpreamble
+
+\postamble
+% end of `coppe' customized files
+\endpostamble
+
+\usedir{tex/latex/coppe}
+\generate{%
+  \usepreamble\glossarypreamble
+  \file{coppe.ist}{\from{coppe.dtx}{glossary}}%
+  \usepreamble\examplepreamble
+  \file{example.tex}{\from{coppe.dtx}{example}}%
+  \usepreamble\classpreamble
+  \file{coppe.cls}{\from{coppe.dtx}{class}}%
+}
+\endbatchfile
