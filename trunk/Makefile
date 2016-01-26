@@ -135,7 +135,13 @@ version:
 	@${_printf} "published by the Free Software Foundation.\n"
 	@${_printf} "See COPYING for more details.\n"
 
-$(PACKAGE_NAME).cls example.tex %.ist: $(PACKAGE_NAME).ins
+$(PACKAGE_NAME).cls: $(PACKAGE_NAME).ins
+	@$(TEX) $(TEXFLAGS) $<
+
+example.tex: $(PACKAGE_NAME).ins
+	@$(TEX) $(TEXFLAGS) $<
+
+%.ist: $(PACKAGE_NAME).ins
 	@$(TEX) $(TEXFLAGS) $<
 
 %.pdf: %.tex
