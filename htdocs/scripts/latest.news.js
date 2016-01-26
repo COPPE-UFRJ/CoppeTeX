@@ -65,7 +65,6 @@ NewsPreview.prototype.createElement_ = function(tagName, parent, className,
 }
 
 function initNews() {
-//  var url = "https://sourceforge.net/api/news/index/project-id/199659/rss";
   var url = "https://sourceforge.net/export/rss2_projnews.php?group_id=199659";
   var news = new NewsPreview(document.getElementById("news"));
   news.show(url);
