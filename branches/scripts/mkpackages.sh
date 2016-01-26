@@ -28,7 +28,7 @@
 
 TEX=latex
 PROJECT=coppetex
-SVNROOT=https://coppetex.svn.sourceforge.net/svnroot/coppetex
+SVNROOT=https://svn.code.sf.net/p/coppetex/code
 VERSION=$1
 
 if [ "$1" == "" ]; then
