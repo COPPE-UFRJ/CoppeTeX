@@ -1,7 +1,5 @@
 # CoppeTeX
 
-## Introduction
-
 This project provides a LaTeX document class suitable for writing academic
 dissertations and thesis according to the formatting rules established by the
 Alberto Luiz Coimbra Institute for Graduate Studies and Research in Engineering
