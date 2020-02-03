@@ -75,7 +75,7 @@ doc: $(PACKAGE_NAME).dtx
 	while grep "Rerun to get cross-references right" $(basename $<).log && \
 	  [ $$i -gt 0 ] ; do \
 	  $(TEX) $(TEXFLAGS) $< ; \
-		let "i--"; \
+	  let "i--"; \
 	done
 
 class: $(PACKAGE_NAME).cls
