@@ -723,10 +723,11 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %    \begin{macrocode}
 \newcount\@examiner\@examiner0
 \newcommand\examiner[3]{%
-  \global\@namedef{CoppeExaminer:\expandafter\the\@examiner}{#1\ #2, #3}
+  \global\@namedef{CoppeExaminer:\expandafter\the\@examiner}{#1\ #2}
   \global\advance\@examiner by 1
 }
 %    \end{macrocode}
+% \changes{v3.0}{2020/02/03}{Examiners expansion without degree.}
 % \end{macro}
 %
 % \begin{macro}{\author}
@@ -889,22 +890,52 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \end{center}\par
   \vspace*{4mm}
   \frontpage@maintext
-  \vspace*{8mm}
-  \noindent\local@approvedname:\par
-     \begin{center}
-  \begin{flushright}
-        \count1=0
-        \@whilenum \count1<\@examiner \do {
-            \vskip26\p@ \baselineskip12pt
-        \eqmakebox[signture@list][c]{\hrulefill}\\
-        \eqmakebox[signture@list][c]{%
-            \ \ \ \protect\csname CoppeExaminer:\the\count1 \endcsname\ \ \ }\\
-            \advance\count1 by 1}
-  \end{flushright}
-     \end{center}
+  \vspace*{16mm}
+  \nohyphens{%
+  \noindent\begin{tabularx}{\textwidth}[b]{@{}l@{ }>{\raggedright\arraybackslash}X@{}}
+    \local@advisorstring: &
+    \count1=0
+    \toks@={}
+    \@whilenum \count1<\@advisor \do{%
+    \ifcase\count1 % same as \ifnum0=\count1
+      \toks@=\expandafter{\csname CoppeAdvisorName:\the\count1%
+        \expandafter\endcsname\expandafter\space%
+        \csname CoppeAdvisorSurname:\the\count1\endcsname\\}
+    \else
+      \toks@=\expandafter\expandafter\expandafter{%
+        \expandafter\the\expandafter\toks@%
+        \expandafter&\expandafter\space%
+        \csname CoppeAdvisorName:\the\count1\expandafter\endcsname%
+        \expandafter\space\csname CoppeAdvisorSurname:\the\count1\endcsname\\
+      }%
+    \fi
+    \advance\count1 by 1}
+    \the\toks@
+  \end{tabularx}\par
+  \vspace*{20mm}
+  \noindent\begin{tabularx}{\textwidth}[b]{@{}l@{ }>{\raggedright\arraybackslash}X@{}}
+    Aprovada por: &
+    \count1=0
+    \toks@={}
+    \@whilenum \count1<\@examiner \do{%
+    \ifcase\count1 % same as \ifnum0=\count1
+      \toks@=\expandafter{\csname CoppeExaminer:\the\count1%
+        \expandafter\endcsname\expandafter\\}
+    \else
+      \toks@=\expandafter\expandafter\expandafter{%
+        \expandafter\the\expandafter\toks@%
+        \expandafter&\expandafter\space%
+        \csname CoppeExaminer:\the\count1\expandafter\endcsname%
+        \expandafter\space\\
+      }%
+    \fi
+    \advance\count1 by 1}
+    \the\toks@
+    \end{tabularx}}\par
   \vspace*{\fill}
   \frontpage@bottomtext}
 %    \end{macrocode}
+% \changes{v3.0}{2020/02/03}{New approval page layout.}
 %    \begin{macrocode}
 \newcommand\coppe@hypersetup{%
 \begingroup
@@ -1367,7 +1398,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \noindent {\MakeUppercase\local@doctype}
   \ifthenelse{\boolean{maledoc}}{SUBMETIDO}{SUBMETIDA}
   \sloppy\nohyphens{AO CORPO DOCENTE DO INSTITUTO ALBERTO LUIZ COIMBRA
-  DE P{\' O}S-GRADUA{\c C}{\~ A}O E PESQUISA DE ENGENHARIA (COPPE) DA
+  DE P{\' O}S-GRADUA{\c C}{\~ A}O E PESQUISA DE ENGENHARIA DA
   UNIVERSIDADE FEDERAL DO RIO DE JANEIRO COMO PARTE DOS REQUISITOS
   NECESS{\' A}RIOS PARA A OBTEN{\c C}{\~ A}O DO GRAU DE
   {\MakeUppercase\local@degname} EM CI{\^E}NCIAS EM
