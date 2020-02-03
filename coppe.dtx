@@ -5,7 +5,7 @@
 % It uses the doc utility to generate documentations for the 'coppe'
 % document class and the 'coppe-unsrt' BibTeX style.
 %
-% Copyright (C) 2011 CoppeTeX Project and any individual authors listed
+% Copyright (C) 2020 CoppeTeX Project and any individual authors listed
 % elsewhere in this file.
 %
 % This program is free software; you can redistribute it and/or modify
@@ -21,10 +21,7 @@
 % version 3 along with this package (see COPYING file).
 % If not, see <http://www.gnu.org/licenses/>.
 %
-% $URL$
-% $Id$
-%
-% Author(s): Vicente H. F. Batista
+% Author(s): Vicente Helano
 %            George O. Ainsworth Jr.
 %
 % \fi
@@ -565,15 +562,14 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %    \begin{macrocode}
 %<*class>
 \def\filename{coppe.dtx}
-\def\fileversion{v2.2}
-\def\filedate{2011/02/08}
+\def\fileversion{v3.0}
+\def\filedate{2020/03/02}
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{coppe}[\filedate\ \fileversion\ COPPE Dissertations and Thesis]
 \LoadClass[12pt,a4paper,oneside]{book}
 \RequirePackage[sort&compress]{natbib}
 \RequirePackage{hyphenat}
 \RequirePackage{lastpage}
-\RequirePackage[english,brazil]{babel}
 \RequirePackage{ifthen}
 \RequirePackage{graphicx}
 \RequirePackage{setspace}
@@ -591,7 +587,11 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \newboolean{maledoc}
 \setboolean{maledoc}{false}
 %
-% Definiton of class options.
+% Class options.
+% If you are writing a text in English, you must turn ``English'' on.
+% Otherwise, Portuguese is considered the main language.
+\newif\if@english\@englishfalse
+\DeclareOption{english}{\@englishtrue}
 \DeclareOption{msc}{%
   \newcommand{\@degree}{M.Sc.}
   \newcommand{\@degreename}{Mestrado}
@@ -632,7 +632,16 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %
 %    \begin{macrocode}
 \ProcessOptions\relax
+\if@english
+  \RequirePackage[english]{babel}
+\else
+  \RequirePackage[english,brazil]{babel}
+\fi
+\addto{\captionsenglish}{%
+  \renewcommand{\bibname}{References}
+}
 %    \end{macrocode}
+% \changes{v3.0}{2020/03/02}{Added support for monographs in English.}
 %
 % \begin{macro}{\department}
 % This macro is used to set the author's affiliation. There are twelve options
@@ -676,8 +685,12 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \ifthenelse{\equal{#1}{PET}}
     {\global\def\local@deptname{Engenharia de Transportes}
      \global\def\foreign@deptname{Transportation Engineering}}{}
+  \ifthenelse{\equal{#1}{PENT}}
+    {\global\def\local@deptname{Engenharia de Nanotecnologia}
+      \global\def\foreign@deptname{Nanotechnology Engineering}}{}
 }
 %    \end{macrocode}
+% \changes{v3.0}{2020/03/02}{Added new course on Nanotechnology.}
 % \end{macro}
 %
 %
@@ -835,7 +848,12 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \end{flushleft}
   \vspace{1.05cm}
   \begin{center}
-  \nohyphens{\MakeUppercase\local@title}\par
+  \nohyphens{%
+    \if@english
+      \MakeUppercase\foreign@title
+    \else
+      \MakeUppercase\local@title
+    \fi}\par
   \vspace*{3cm}
   \nohyphens{\@authname\ \@authsurn}\par
   \end{center}
@@ -884,7 +902,12 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %    \begin{macrocode}
 \newcommand\makefrontpage{%
   \begin{center}
-    \sloppy\nohyphens{\MakeUppercase\local@title}\par
+    \sloppy\nohyphens{
+      \if@english
+        \MakeUppercase\foreign@title
+      \else
+        \MakeUppercase\local@title
+      \fi}\par
     \vspace*{7mm}
     {\@authname\ \@authsurn}\par
   \end{center}\par
@@ -994,7 +1017,12 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
       \setlength{\parindent}{5mm}
       \noindent\sloppy\nohyphens\@authsurn,
       \nohyphens\@authname\par
-      \nohyphens{\local@title/\@authname\ \@authsurn. -- \local@cityname:
+      \nohyphens{%
+        \if@english
+          \foreign@title%
+        \else
+          \local@title%
+        \fi/\@authname\ \@authsurn. -- \local@cityname:
       UFRJ/COPPE, \number\year.}\par
       \pageref{front:pageno},
       \pageref{LastPage}
@@ -1026,7 +1054,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
       \end{tabularx}}\par
       \nohyphens{\local@doctype\ ({\MakeLowercase\@degreename}) --
       UFRJ/COPPE/Programa de \local@deptname, \number\year.}\par
-      \bibname: p. \pageref{bib:begin} -- \pageref{bib:end}.\par
+      Refer{\^ e}ncias Bibliogr{\' a}ficas: p. \pageref{bib:begin} -- \pageref{bib:end}.\par
       \count1=0
       \count2=1
       \nohyphens{\@whilenum \count1<\value{keywords} \do {%
@@ -1367,9 +1395,15 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \columnsep 35\p@
   \let\item\@idxitem}
   {\if@restonecol\onecolumn\else\clearpage\fi}
-\newcommand\glossaryname{Glossary}
-\newcommand\listabbreviationname{Lista de Abreviaturas}
-\newcommand\listsymbolname{Lista de S{\' i}mbolos}
+\if@english
+  \newcommand\listabbreviationname{List of Abbreviations}
+  \newcommand\listsymbolname{List of Symbols}
+  \newcommand\glossaryname{Glossary}
+\else
+  \newcommand\listabbreviationname{Lista de Abreviaturas}
+  \newcommand\listsymbolname{Lista de S{\' i}mbolos}
+  \newcommand\glossaryname{Gloss{\' a}rio}
+\fi
 %
 \newcommand\local@advisorstring{Orientador}
 \newcommand\foreign@advisorstring{Advisor}
