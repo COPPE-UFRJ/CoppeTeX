@@ -11,39 +11,27 @@ dissertation/thesis guidelines. Among these elements, there are a front cover,
 a title page, cataloging details, native and foreign languages abstracts, table
 of contents, and list of bibliographic references.
 
-Although it is tied to the COPPE/UFRJ guidelines, it can be easily ported to
-standards of other institutions.
-
-
-## When Conceived
-
-It was conceived in January 2007, during the D.Sc. studies of Vicente Helano
-and George Ainsworth at Federal University of Rio de Janeiro/COPPE.
+Although it is tied to the COPPE/UFRJ guidelines, it can be easily ported to other institutions.
 
 
 ## How Much
 
-``This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License version 3 as
-published by the Free Software Foundation.''
+> This program is free software; you can redistribute it and/or modify
+> it under the terms of the GNU General Public License version 3 as
+> published by the Free Software Foundation.
 
 
-Archive Content
----------------
+### Content
 
 The development of this class follows the Comprehensive TeX Archive
-Network (CTAN) standards, so it distributes a '.ins' file, '.dtx', and
-README, to assist its users during installation and use.
-
-If you have downloaded the sources, you should have received the following
-files:
+Network (CTAN) standards. It is basically composed by an installation file ('coppe.ins') and the main source file ('coppe.dtx'). The full sources contain:
 
   1. COPYING: full text of the GNU General Policy License version 3.
 
   2. Makefile: used to extract the coppe class and build the
      documentation and a sample thesis.
 
-  3. README: describe the CoppeTeX package.
+  3. README.md: describe the CoppeTeX package.
 
   4. coppe-{plain,unsrt}.bst: alphabetically sorted and unsorted numbered
      BibTeX styles, Natbib compatible.
@@ -57,11 +45,11 @@ files:
 
   9. example.bib: sample BibTeX database for being used by example.tex.
 
-A release package should contains only the following files:
+Our release packages contain the following files:
 
   1. COPYING: full text of the GNU General Policy License version 3.
 
-  2. README: describe the CoppeTeX package.
+  2. README.md: describe the CoppeTeX package.
 
   3. coppe.cls: the main file. It is a LaTeX document class.
 
@@ -81,11 +69,10 @@ A release package should contains only the following files:
 ## Installing
 
 If you have some experience with LaTeX classes and packages, you won't have any
-difficult when installing CoppeTeX. It should be installed as any other LaTeX
+difficulty when installing CoppeTeX. It should be installed as any other LaTeX
 package you have ever used. So, you can save your time skipping this section.
 
-The impatient user should get a thesis template at
-<http://coppetex.sourceforge.net/doc.html#thesistemplate>.
+The impatient user should get a thesis template [here](#).
 
 For the enthusiastic newbies, we give here succinct instructions for installing
 the CoppeTeX bundle.
@@ -94,7 +81,7 @@ There exist two possible ways of obtaining CoppeTeX. You can download a release
 or the sources. Each of these has its own installation method. We describe both
 in the following sections.
 
-From releases:
+### From releases
 
 Suppose TEXMF is a variable which stores the path of your local LaTeX tree.
 Then you should copy the files coppe.cls, coppe.ist and coppe-unsrt.bst to
@@ -103,11 +90,13 @@ respectively. The image files minerva.eps and minerva.pdf go into the same
 directory as coppe.cls. In the end, you have to type 'texhash' to update your
 LaTeX tree and to make CoppeTeX visible to your LaTeX compiler.
 
-From sources:
+### From sources
 
 For installing from sources, type:
 
+```bash
   latex coppe.ins
+´´´
 
 and you will get all the files you need. They are all stripped out from
 coppe.dtx. Now, you should follow the instructions in the 'From releases'
