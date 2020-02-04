@@ -96,7 +96,7 @@ For installing from sources, type:
 
 ```bash
   latex coppe.ins
-´´´
+```
 
 and you will get all the files you need. They are all stripped out from
 coppe.dtx. Now, you should follow the instructions in the 'From releases'
