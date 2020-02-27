@@ -31,6 +31,7 @@
 \documentclass[a4paper]{ltxdoc}
 \usepackage[T1]{fontenc}
 \usepackage[colorlinks={true},breaklinks={true}]{hyperref}
+\usepackage{breakurl}
 
 \def\CoppeTeX{{\rm C\kern-.05em{\sc o\kern-.025em p\kern-.025em
 p\kern-.025em e}}\kern-.08em
@@ -42,7 +43,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \end{document}
 %</driver> \fi
 %
-%% \CheckSum{1416}
+%% \CheckSum{1579}
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
 %%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
@@ -162,7 +163,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % for creating lists of references, symbols and abbreviations.
 % Although there aren't official guidelines to write qualifying
 % exams, we provide this option just for convenience, as this exam is a requisite
-% to obtain the DSc degree.
+% to obtain the DSc degree and, for some of the programs, the MSc degree.
 %
 % In which follows, it is described the user interface
 % of the |coppe| class. Some details about using the style files cited above
@@ -184,6 +185,10 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % We maintain a mailing list where users can send questions, comments,
 % and bugs to. More details can be found
 % \href{http://coppetex.sourceforge.net/mailing-list.html}{here}.
+%
+% However, as the project maintenance was transferred to a new repository,
+% bug reports, as well as new feature requests, should be directed to 
+% \burl{https://github.com/COPPE-UFRJ/CoppeTeX}.
 % 
 % \section{User interface}
 %
@@ -432,6 +437,11 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % area) isn't enabled. This kind of option often comes in print dialogs of document
 % visualization softwares.
 %
+% \paragraph{Quotation} \DescribeMacro{longquote} To quote text larger than three 
+% lines, according to ABNT, you must increase the left margin to 4 cm, do not use
+% quotation marks, and use a smaller font. The |coppe| class provides the |longquote|
+% environment to easily make these adjustments.
+%
 % \section{A simple example}
 %
 % \label{COPPE:SAMPLE}
@@ -506,7 +516,15 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \symbl{$\emptyset$}{Conjunto vazio}
   
   \begin{longquote}
-  Um exemplo de citação longa nas regras da ABNT (4cm de recuo e fonte menor) feita com o ambiente  \verb=\longquote= The primary objective of this investigation was to determine the feasibility of detecting corrosion in aluminum Naval aircraft components with neutron radiographic interrogation and the use of standard corrosion penetrameters. Secondary objectives included the determination of the effect of object thickness on image quality, the defining of minimum levels of detectability and a preliminary investigation of a means whereby the degree of corrosion could be quantified with neutron radiographic data. \citep{techreport-exampleIn}
+  Um exemplo de citação longa nas regras da ABNT (4cm de recuo e fonte menor)
+  feita com o ambiente  \verb=longquote= The primary objective of this 
+  investigation was to determine the feasibility of detecting corrosion in 
+  aluminum Naval aircraft components with neutron radiographic interrogation 
+  and the use of standard corrosion penetrameters. Secondary objectives 
+  included the determination of the effect of object thickness on image quality,
+  the defining of minimum levels of detectability and a preliminary investigation
+  of a means whereby the degree of corrosion could be quantified with neutron
+  radiographic data. \cite{article-example}
   \end{longquote}
   
 
