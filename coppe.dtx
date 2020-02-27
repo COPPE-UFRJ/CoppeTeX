@@ -43,7 +43,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \end{document}
 %</driver> \fi
 %
-%% \CheckSum{1579}
+%% \CheckSum{1580}
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
 %%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
@@ -390,9 +390,9 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %
 % \begin{description}
 %
-%   \item[\texttt{dsc, msc, dscexam}] The |coppe| class is able to produce
+%   \item[\texttt{dsc, msc, dscexam, mscexam}] The |coppe| class is able to produce
 %   thesis, dissertations, and qualifying exams, which are enabled by the
-%   |dsc|, |msc|, and |dscexam| options, respectively.
+%   |dsc|, |msc|, |mscexam|, and |dscexam| options, respectively.
 %
 %   \item[\texttt{doublespacing}] The default line spacing is one-and-a-half.
 %   For enabling double spacing between lines, use the |doublespacing| option.
@@ -1391,6 +1391,21 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
       \endlist}
 %    \end{macrocode}
 %
+% \begin{environment}{longquote}
+%    \begin{macrocode}
+\newlength{\recuolongquote}%
+\setlength{\recuolongquote}{4cm}%
+\newenvironment*{longquote}[1][default]{%
+	\list{}%
+	\footnotesize%
+	\addtolength{\leftskip}{\recuolongquote}%
+	\item[]%
+	\singlespacing%
+	\ifthenelse{\not\equal{#1}{default}}{\itshape\selectlanguage{#1}}{}%
+}{\endlist}%
+%    \end{macrocode}
+% \end{environment}
+%
 %    \begin{macrocode}
 \newenvironment{theglossary}{%
   \if@twocolumn%
@@ -1437,17 +1452,6 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \newcommand\listsymbolname{Lista de S{\' i}mbolos}
   \newcommand\glossaryname{Gloss{\' a}rio}
 \fi
-%
-\newlength{\recuolongquote}%
-\setlength{\recuolongquote}{4cm}%
-\newenvironment*{longquote}[1][default]{%
-	\list{}%
-	\footnotesize%
-	\addtolength{\leftskip}{\recuolongquote}%
-	\item[]%
-	\singlespacing%
-	\ifthenelse{\not\equal{#1}{default}}{\itshape\selectlanguage{#1}}{}%
-}{\endlist}%
 %
 \newcommand\local@advisorstring{Orientador}
 \newcommand\foreign@advisorstring{Advisor}
