@@ -504,6 +504,11 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   conjunto dos n\'umeros reais $\mathbb{R}$ e o conjunto vazio $\emptyset$.
   \symbl{$\mathbb{R}$}{Conjunto dos n\'umeros reais}
   \symbl{$\emptyset$}{Conjunto vazio}
+  
+  \begin{longquote}
+  Um exemplo de citação longa nas regras da ABNT (4cm de recuo e fonte menor) feita com o ambiente  \verb=\longquote= The primary objective of this investigation was to determine the feasibility of detecting corrosion in aluminum Naval aircraft components with neutron radiographic interrogation and the use of standard corrosion penetrameters. Secondary objectives included the determination of the effect of object thickness on image quality, the defining of minimum levels of detectability and a preliminary investigation of a means whereby the degree of corrosion could be quantified with neutron radiographic data. \citep{techreport-exampleIn}
+  \end{longquote}
+  
 
   \chapter{Revis\~ao Bibliogr\'afica}
 
@@ -1404,6 +1409,17 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \newcommand\listsymbolname{Lista de S{\' i}mbolos}
   \newcommand\glossaryname{Gloss{\' a}rio}
 \fi
+%
+\newlength{\recuolongquote}%
+\setlength{\recuolongquote}{4cm}%
+\newenvironment*{longquote}[1][default]{%
+	\list{}%
+	\footnotesize%
+	\addtolength{\leftskip}{\recuolongquote}%
+	\item[]%
+	\singlespacing%
+	\ifthenelse{\not\equal{#1}{default}}{\itshape\selectlanguage{#1}}{}%
+}{\endlist}%
 %
 \newcommand\local@advisorstring{Orientador}
 \newcommand\foreign@advisorstring{Advisor}
