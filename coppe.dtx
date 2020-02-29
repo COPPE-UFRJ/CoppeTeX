@@ -43,7 +43,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \end{document}
 %</driver> \fi
 %
-%% \CheckSum{1580}
+%% \CheckSum{1613}
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
 %%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
@@ -405,6 +405,17 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %
 % \end{description}
 %
+% \subsection{Changing document identification}% 
+% \DescribeMacro{\freeconfig}
+% The user could \emph{optionally} use the command |freeconfig| to modify
+% the parameters that print the document identification. The command 
+% |freeconfig| needs all those paramerters, which are  degree initials, 
+% degree name, title, foreign title, local doctype, and foreign doctype as 
+% in the following example:
+% \begin{verbatim}
+%     \freeconfig{Dr.}{Philosophiae Doctor}{PhD}{Doutor}{Dissertation}{Tese}
+% \end{verbatim}
+%
 % \section{Quick, useful tips}
 %
 % \paragraph{Pictures.} The default picture format of \LaTeX\ is the
@@ -450,6 +461,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \documentclass[dsc,numbers]{coppe}
 \usepackage{amsmath,amssymb}
 \usepackage{hyperref}
+
+
 
 \makelosymbols
 \makeloabbreviations
@@ -821,6 +834,26 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \global\addtocounter{keywords}{1}
 }
 %    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\freeconfig}
+% This command allows easy changing of core class parameters.
+%   \begin{macrocode}
+\newcommand\freeconfig[6]{%
+	\providecommand\@degree{}
+	\renewcommand\@degree{#1}
+	\providecommand\@degreename{}
+	\renewcommand\@degreename{#2}
+	\providecommand\local@degname{}
+	\renewcommand\local@degname{#3}
+	\providecommand\foreign@degname{}
+	\renewcommand\foreign@degname{#4}
+	\providecommand\local@doctype{}
+	\renewcommand\local@doctype{#5}
+	\providecommand\foreign@doctype{}
+	\renewcommand\foreign@doctype{#6}%
+}
+%   \end{macrocode}
 % \end{macro}
 %
 % \begin{macro}{\frontmatter}
