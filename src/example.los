@@ -1,0 +1,6 @@
+
+\begin{theglossary}
+  \makeatletter
+  \item [$\emptyset$] Conjunto vazio, p. \hyperpage{1}
+  \item [$\mathbb{R}$] Conjunto dos n\'umeros reais, p. \hyperpage{1}
+  \end{theglossary}
