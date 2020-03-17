@@ -1,3 +1,4 @@
+#!/bin/bash
 #
 # This is file `Makefile'.
 #
@@ -24,7 +25,7 @@
 #
 # Author(s): Vicente H. F. Batista
 #
-
+SHELL := /bin/bash
 PROGRAM_NAME=CoppeTeX Makefile
 PACKAGE_NAME=coppe
 DOC_SOURCE=coppe.dtx
@@ -32,6 +33,9 @@ VERSION="2.2"
 AUTHORS=Vicente H. F. Batista and George O. Ainsworth Jr.
 COPYRIGHT_YEAR=2011
 PACKAGE_BUGREPORT="helano@users.sourceforge.net"
+
+DESTDIR=../dist
+SOURCEDIR=
 
 TEX = pdflatex
 BIBTEX = bibtex
@@ -41,24 +45,28 @@ _rm=rm
 _tar=tar
 
 CLSDIR=$(DESTDIR)/tex/latex/coppe
+CLSDIR=$(DESTDIR)
 BSTDIR=$(DESTDIR)/bibtex/bst/coppe
 ISTDIR=$(DESTDIR)/makeindex/coppe
 DOCDIR=$(DESTDIR)/doc/latex/coppe
+DOCDIR=$(DESTDIR)
 
-TEXFLAGS  = 
+TEXFLAGS  =
 BIBTEXFLAGS = -terse
 IDXFLAGS = -q -s gind.ist
 GLOFLAGS = -q -s gglo.ist
 LSTFLAGS = -q -s coppe.ist
 
-DIST_CONTENT=coppe.cls coppe.ist coppe.pdf coppe-plain.bst coppe-unsrt.bst COPYING example.bib example.tex coppe-logo.eps coppe-logo.pdf README
-DISTSRC_CONTENT=coppe.bib coppe.dtx coppe.ins coppe-plain.bst coppe-unsrt.bst COPYING example.bib Makefile coppe-logo.eps coppe-logo.pdf README
+
+#DIST_CONTENT=coppe.cls coppe.ist coppe.pdf coppe-plain.bst coppe-unsrt.bst COPYING example.bib example.tex coppe-logo.eps coppe-logo.pdf README
+#DISTSRC_CONTENT=coppe.bib coppe.dtx coppe.ins coppe-plain.bst coppe-unsrt.bst COPYING example.bib Makefile coppe-logo.eps coppe-logo.pdf README
 
 .SUFFIXES: .tex .dtx
 
 all:
+	@${_printf} "${PROGRAM_NAME}.\n"
 	@${_printf} "make: unknown target\n"
-	@${_printf} "Try \`make help' for more information.\n" >&2
+	@${_printf} "Try \'make help' for more information.\n" >&2
 
 doc: $(PACKAGE_NAME).dtx
 	@$(TEX) $(TEXFLAGS) $<
@@ -77,6 +85,8 @@ doc: $(PACKAGE_NAME).dtx
 	  $(TEX) $(TEXFLAGS) $< ; \
 	  let "i--"; \
 	done
+	mkdir -vp "${DESTDIR}"
+	cp $(basename $<).pdf "${DESTDIR}/"
 
 class: $(PACKAGE_NAME).cls
 
@@ -105,7 +115,8 @@ install: doc class example.pdf
 	  rm -rf $(DOCDIR); \
 	fi
 	mkdir -vp $(DOCDIR)
-	cp -vp README COPYING $(PACKAGE_NAME).pdf \
+	@${_printf} "Copying files from root directory.\n"
+	cp -vp ../README.md ../COPYING $(PACKAGE_NAME).pdf \
 		example.tex example.pdf $(DOCDIR)
 
 help:
@@ -120,7 +131,7 @@ help:
 	@${_printf} "%s\n" \
            "  example.pdf  generate a PDF file from \`example.tex'" \
            "  clean        remove auxiliary archives" \
-	         "  install      install class in DESTDIR" \
+	       "  install      install class in DESTDIR" \
            "  help         display this message and exit" \
            "  version      print version information and exit"
 	@${_printf} "\n"
@@ -137,10 +148,12 @@ version:
 
 $(PACKAGE_NAME).cls: $(PACKAGE_NAME).ins
 	@$(TEX) $(TEXFLAGS) $<
+	mkdir -vp "${DESTDIR}"
+	cp $(basename $<).cls "${DESTDIR}/" 
 
 example.tex: $(PACKAGE_NAME).ins
 	@$(TEX) $(TEXFLAGS) $<
-
+	
 %.ist: $(PACKAGE_NAME).ins
 	@$(TEX) $(TEXFLAGS) $<
 
@@ -165,6 +178,8 @@ example.tex: $(PACKAGE_NAME).ins
 	  $(TEX) $(TEXFLAGS) $< ; \
 		let "i--"; \
 	done
+	mkdir -vp "${DESTDIR}"
+	cp $(basename $<).pdf "${DESTDIR}/"
 
 .PHONY: clean
 
