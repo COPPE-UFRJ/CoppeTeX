@@ -34,8 +34,7 @@ AUTHORS=Vicente H. F. Batista and George O. Ainsworth Jr.
 COPYRIGHT_YEAR=2011
 PACKAGE_BUGREPORT="helano@users.sourceforge.net"
 
-DESTDIR=
-BUILDDIR=../dist
+DESTDIR=../dist
 SOURCEDIR=
 
 TEX = pdflatex
@@ -46,9 +45,11 @@ _rm=rm
 _tar=tar
 
 CLSDIR=$(DESTDIR)/tex/latex/coppe
+CLSDIR=$(DESTDIR)
 BSTDIR=$(DESTDIR)/bibtex/bst/coppe
 ISTDIR=$(DESTDIR)/makeindex/coppe
 DOCDIR=$(DESTDIR)/doc/latex/coppe
+DOCDIR=$(DESTDIR)
 
 TEXFLAGS  =
 BIBTEXFLAGS = -terse
@@ -84,11 +85,10 @@ doc: $(PACKAGE_NAME).dtx
 	  $(TEX) $(TEXFLAGS) $< ; \
 	  let "i--"; \
 	done
-	mkdir -vp "${BUILDDIR}"
-	cp $(basename $<).pdf "${BUILDDIR}/"
+	mkdir -vp "${DESTDIR}"
+	cp $(basename $<).pdf "${DESTDIR}/"
 
 class: $(PACKAGE_NAME).cls
-
 
 install: doc class example.pdf
 	@if [ "$(DESTDIR)" == "" ]; then \
@@ -100,7 +100,7 @@ install: doc class example.pdf
 	  rm -rf $(CLSDIR); \
 	fi
 	mkdir -vp $(CLSDIR)
-	cp -vp $(PACKAGE_NAME).cls coppe-logo.eps coppe-logo.pdf coppe.ist $(CLSDIR)/
+	cp -vp $(PACKAGE_NAME).cls coppe-logo.eps coppe-logo.pdf $(CLSDIR)/
 	if [ -d "$(BSTDIR)" ]; then \
 	  rm -rf $(BSTDIR); \
 	fi
@@ -117,25 +117,7 @@ install: doc class example.pdf
 	mkdir -vp $(DOCDIR)
 	@${_printf} "Copying files from root directory.\n"
 	cp -vp ../README.md ../COPYING $(PACKAGE_NAME).pdf \
-		example.tex example.pdf example.bib $(DOCDIR)
-
-build: doc class example.pdf
-	@if [ "$(BUILDDIR)" == "" ]; then \
-	  $(_printf) "error: empty build directory.\n"; \
-	  make help; \
-	  exit 1; \
-	fi
-	if [ -d "$(BUILDDIR)" ]; then \
-	  rm -rf $(BUILDDIR); \
-	fi
-	mkdir -vp $(BUILDDIR)
-	@${_printf} "Copying class files.\n"
-	cp -vp $(PACKAGE_NAME).cls $(PACKAGE_NAME)-*.bst $(PACKAGE_NAME).ist \
-		$(PACKAGE_NAME)-logo.*  $(PACKAGE_NAME).pdf $(BUILDDIR)
-	@${_printf} "Copying example files.\n"
-	cp -vp example.tex example.pdf example.bib $(BUILDDIR)
-	@${_printf} "Copying files from root directory.\n"
-	cp -vp ../README.md ../COPYING $(BUILDDIR)
+		example.tex example.pdf $(DOCDIR)
 
 help:
 	@${_printf} "Usage: make [TARGET]\n" "${PROGRAM_NAME}"
@@ -148,7 +130,6 @@ help:
 	@${_printf} "from \`%s'\n" ${DOC_SOURCE}
 	@${_printf} "%s\n" \
            "  example.pdf  generate a PDF file from \`example.tex'" \
-           "  build        build class files in BUILDDIR [../dist]"\
            "  clean        remove auxiliary archives" \
 	       "  install      install class in DESTDIR" \
            "  help         display this message and exit" \
