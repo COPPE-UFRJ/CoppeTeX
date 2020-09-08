@@ -13,6 +13,12 @@ of contents, and list of bibliographic references.
 
 Although it is tied to the COPPE/UFRJ guidelines, it can be easily ported to other institutions.
 
+This version follows the document:
+Norma para a Elaboração Gráfica de Teses/Dissertações COPPE/UFRJ
+Aprovada pela CPGP em 15 de julho de 2008 
+Com correção no Anexo III, páginas 19 e 20, em 01/10/2009
+(Revisada em 10/09/2010)
+(Revisada em 26/11/2019 – Alteração da Folha Aprovação, Anexo III, páginas 22 e 23) 
 
 ## How Much
 
