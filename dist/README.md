@@ -102,6 +102,15 @@ and you will get all the files you need. They are all stripped out from
 coppe.dtx. Now, you should follow the instructions in the 'From releases'
 section.
 
+## Jupyter integration
+
+To include Jupyter notebooks in your document, you can use the `\include{}`
+command with the local [`jupyter.sty`](./jupyter.sty) style. Simply save your Jupyter notebook
+as LaTeX (using File > Download As > LaTeX) or using pandoc, delete the preamble
+(leave only the content between `\begin{document}` and `\end{document}`) and
+include it in your document. For examples, see the [`notebook.tex`](./notebook.tex) example file
+and line 153 of the [`example.tex`](./example.tex) file.
+
 
 ## Help & Support
 
