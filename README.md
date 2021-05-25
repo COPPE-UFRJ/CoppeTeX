@@ -13,7 +13,7 @@ of contents, and list of bibliographic references.
 
 Although it is tied to the COPPE/UFRJ guidelines, it can be easily ported to other institutions.
 
-This version follows the document:
+This version follows the [document](https://registro.daac.coppe.ufrj.br/wp-content/uploads/2020/09/Normas-de-Elaboracao.pdf):
 
 > Norma para a Elaboração Gráfica de Teses/Dissertações COPPE/UFRJ
 >  Aprovada pela CPGP em 15 de julho de 2008 
