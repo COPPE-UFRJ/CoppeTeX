@@ -307,7 +307,7 @@ FUNCTION {format.title}
 { title empty$
     { "" }
     { title
-      "\enquote{" swap$ *
+      "\coppeenquote{" swap$ *
       non.stop
         { "}, " * }
         { "} " * }
@@ -320,7 +320,7 @@ FUNCTION {format.intitle}
 { title empty$
     { "" }
     { title
-      "\enquote{" swap$ *
+      "\coppeenquote{" swap$ *
       non.stop
         { "}. " * }
         { "} " * }
@@ -1446,7 +1446,7 @@ FUNCTION {begin.bib}
   write$ newline$
   "  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi"
   write$ newline$
-    "\newcommand{\enquote}[1]{``#1''}"
+    "\newcommand{\coppeenquote}[1]{``#1''}"
   write$ newline$
 }
 
