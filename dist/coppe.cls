@@ -72,6 +72,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \setboolean{maledoc}{false}
 \newif\if@english\@englishfalse
 \DeclareOption{english}{\@englishtrue}
+\newboolean{isTCC}
+\setboolean{isTCC}{false}
 \DeclareOption{tcc}{%
  \newcommand{\@degree}{B.Sc.}
   \newcommand{\@degreename}{Bacharelado}
@@ -80,6 +82,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \setboolean{maledoc}{true}
   \newcommand\local@doctype{Projeto de Gradua{\c c}{\~ a}o}
   \newcommand\foreign@doctype{Undergraduate Project}
+  \setboolean{isTCC}{true}
 }
 \DeclareOption{msc}{%
   \newcommand{\@degree}{M.Sc.}
@@ -761,12 +764,20 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \newcommand\local@statename{RJ}
 \newcommand\local@countryname{Brasil}
 \newcommand\frontcover@maintext{
-  \sloppy\nohyphens{\local@doctype\ de \@degreename\
-  \ifthenelse{\boolean{maledoc}}{apresentado}{apresentada}
-  ao Programa de P{\' o}s-gradua{\c c}{\~ a}o em \local@deptname,
-  COPPE, da \local@universityname, como parte dos requisitos
-  necess{\' a}rios {\` a} obten{\c c}{\~ a}o do t{\' i}tulo de
-  \local@degname\ em \local@deptname.}
+  \ifthenelse{\boolean{isTCC}}{
+    \sloppy\nohyphens{\local@doctype\
+    \ifthenelse{\boolean{maledoc}}{apresentado}{apresentada}
+    ao curso de \local@deptname\ da Escola Polit{\' e}cnica, \local@universityname,
+    como parte dos requisitos necess{\' a}rios {\` a} obten{\c c}{\~ a}o do t{\' i}tulo de
+    \local@degname.}
+  }{
+    \sloppy\nohyphens{\local@doctype\ de \@degreename\
+    \ifthenelse{\boolean{maledoc}}{apresentado}{apresentada}
+    ao Programa de P{\' o}s-gradua{\c c}{\~ a}o em \local@deptname,
+    COPPE, da \local@universityname, como parte dos requisitos
+    necess{\' a}rios {\` a} obten{\c c}{\~ a}o do t{\' i}tulo de
+    \local@degname\ em \local@deptname.}
+  }
 }
 \newcommand\frontpage@maintext{
   \noindent {\MakeUppercase\local@doctype}
