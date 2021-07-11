@@ -629,6 +629,15 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % Otherwise, Portuguese is considered the main language.
 \newif\if@english\@englishfalse
 \DeclareOption{english}{\@englishtrue}
+\DeclareOption{tcc}{%
+ \newcommand{\@degree}{B.Sc.}
+  \newcommand{\@degreename}{Bacharelado}
+  \newcommand{\local@degname}{Engenheiro}
+  \newcommand{\foreign@degname}{Engineer}
+  \setboolean{maledoc}{true}
+  \newcommand\local@doctype{Projeto de Gradua{\c c}{\~ a}o}
+  \newcommand\foreign@doctype{Undergraduate Project}
+}
 \DeclareOption{msc}{%
   \newcommand{\@degree}{M.Sc.}
   \newcommand{\@degreename}{Mestrado}
