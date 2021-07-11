@@ -79,7 +79,6 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \DeclareOption{tcc}{%
  \newcommand{\@degree}{B.Sc.}
   \newcommand{\@degreename}{Bacharelado}
-  \newcommand{\local@degname}{Engenheiro}
   \ifthenelse{\boolean{maleauthor}}{
     \newcommand{\local@degname}{Engenheiro}
   }{
