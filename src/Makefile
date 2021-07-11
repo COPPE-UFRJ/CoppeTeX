@@ -100,7 +100,7 @@ install: doc class example.pdf
 	  rm -rf $(CLSDIR); \
 	fi
 	mkdir -vp $(CLSDIR)
-	cp -vp $(PACKAGE_NAME).cls coppe-logo.eps coppe-logo.pdf coppe.ist $(CLSDIR)/
+	cp -vp $(PACKAGE_NAME).cls coppe-logo.eps coppe-logo.pdf poli-logo.eps poli-logo.pdf coppe.ist $(CLSDIR)/
 	if [ -d "$(BSTDIR)" ]; then \
 	  rm -rf $(BSTDIR); \
 	fi
