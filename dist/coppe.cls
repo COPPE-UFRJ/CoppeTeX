@@ -68,6 +68,8 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
 \def\CoppeTeX{{\rm C\kern-.05em{\sc o\kern-.025em p\kern-.025em
 p\kern-.025em e}}\kern-.08em
 T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
+\newboolean{maleauthor}
+\setboolean{maleauthor}{false}
 \newboolean{maledoc}
 \setboolean{maledoc}{false}
 \newif\if@english\@englishfalse
@@ -78,6 +80,11 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
  \newcommand{\@degree}{B.Sc.}
   \newcommand{\@degreename}{Bacharelado}
   \newcommand{\local@degname}{Engenheiro}
+  \ifthenelse{\boolean{maleauthor}}{
+    \newcommand{\local@degname}{Engenheiro}
+  }{
+    \newcommand{\local@degname}{Engenheira}
+  }
   \newcommand{\foreign@degname}{Engineer}
   \setboolean{maledoc}{true}
   \newcommand\local@doctype{Projeto de Gradua{\c c}{\~ a}o}
