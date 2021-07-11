@@ -180,7 +180,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \ifthenelse{\equal{#1}{PENT}}
     {\global\def\local@deptname{Engenharia de Nanotecnologia}
       \global\def\foreign@deptname{Nanotechnology Engineering}}{}
-    \ifthenelse{\equal{#1}{EEL}}
+    \ifthenelse{\equal{#1}{ELE}}
     {\global\def\local@deptname{Engenharia Eletr{\^ o}nica e de Computa{\c c}{\~ a}o}
      \global\def\local@career{{\MakeUppercase\local@degname} \ifthenelse{\boolean{maleauthor}}{ELETR{\^ O}NICO}{ELETR{\^ O}NICA} E DE COMPUTA{\c C}{\~ A}O}
       \global\def\foreign@deptname{Electronic and Computer Engineering}}{}
