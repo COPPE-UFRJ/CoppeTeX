@@ -180,6 +180,11 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \ifthenelse{\equal{#1}{PENT}}
     {\global\def\local@deptname{Engenharia de Nanotecnologia}
       \global\def\foreign@deptname{Nanotechnology Engineering}}{}
+    \ifthenelse{\equal{#1}{EEL}}
+    {\global\def\local@deptname{Engenharia Eletr{\^ o}nica e de Computa{\c c}{\~ a}o}
+     \global\def\local@career{{\MakeUppercase\local@degname} \ifthenelse{\boolean{maleauthor}}{ELETR{\^ O}NICO}{ELETR{\^ O}NICA} E DE COMPUTA{\c C}{\~ A}O}
+      \global\def\foreign@deptname{Electronic and Computer Engineering}}{}
+
 }
 \renewcommand\title[1]{%
   \global\def\local@title{#1}%
@@ -786,6 +791,14 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   }
 }
 \newcommand\frontpage@maintext{
+  \ifthenelse{\boolean{isTCC}}{
+    \noindent {\MakeUppercase\local@doctype}
+    \ifthenelse{\boolean{maledoc}}{SUBMETIDO}{SUBMETIDA}
+    \sloppy\nohyphens{AO CORPO DOCENTE DO CURSO DE {\MakeUppercase\local@deptname} DA
+    ESCOLA POLIT{\'E}CNICA DA UNIVERSIDADE FEDERAL DO RIO DE JANEIRO COMO PARTE DOS REQUISITOS
+    NECESS{\' A}RIOS PARA A OBTEN{\c C}{\~ A}O DO GRAU DE
+    {\local@career.\par}}%
+  }{
   \noindent {\MakeUppercase\local@doctype}
   \ifthenelse{\boolean{maledoc}}{SUBMETIDO}{SUBMETIDA}
   \sloppy\nohyphens{AO CORPO DOCENTE DO INSTITUTO ALBERTO LUIZ COIMBRA
@@ -794,6 +807,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   NECESS{\' A}RIOS PARA A OBTEN{\c C}{\~ A}O DO GRAU DE
   {\MakeUppercase\local@degname} EM CI{\^E}NCIAS EM
   {\MakeUppercase\local@deptname.\par}}%
+}
 }
 \newcommand\frontpage@bottomtext{%
   \begin{center}
