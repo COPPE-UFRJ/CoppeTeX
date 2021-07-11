@@ -818,14 +818,14 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \newcommand\abstract@toptext{%
   \noindent Resumo \ifthenelse{\boolean{maledoc}}{do}{da}
   \local@doctype\ \ifthenelse{\boolean{maledoc}}{apresentado}{apresentada}
-  \sloppy\nohyphens{{\` a} COPPE/UFRJ como parte dos requisitos
+  \sloppy\nohyphens{{\` a} \ifthenelse{\boolean{isTCC}}{POLI}{COPPE}/UFRJ como parte dos requisitos
   necess{\' a}rios para a obten{\c c}{\~ a}o do grau de
-  \local@degname\ em Ci{\^ e}ncias (\@degree)}
+  \local@degname\ifthenelse{\boolean{isTCC}}{.}{ em Ci{\^ e}ncias (\@degree)}}
 }
 \newcommand\foreignabstract@toptext{%
   \noindent \sloppy\nohyphens{Abstract of \foreign@doctype\ presented to
-  COPPE/UFRJ as a partial fulfillment of the requirements for the
-  degree of \foreign@degname\ of Science (\@degree)}
+  \ifthenelse{\boolean{isTCC}}{POLI}{COPPE}/UFRJ as a partial fulfillment of the requirements for the
+  degree of \foreign@degname\ifthenelse{\boolean{isTCC}}{.}{ of Science (\@degree)}}
 }
 %% 
 %%
