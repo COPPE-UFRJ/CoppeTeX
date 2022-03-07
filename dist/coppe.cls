@@ -30,7 +30,7 @@
 %% Author(s): Vicente Helano,
 %%            George Ainsworth
 %% 
-%% \CheckSum{1613}
+%% \CheckSum{1620}
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
 %%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
@@ -48,8 +48,8 @@
 %%   Right brace   \}     Tilde         \~}
 %%
 \def\filename{coppe.dtx}
-\def\fileversion{v3.0}
-\def\filedate{2020/03/02}
+\def\fileversion{v3.1}
+\def\filedate{2022/03/07}
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{coppe}[\filedate\ \fileversion\ COPPE Dissertations and Thesis]
 \LoadClass[12pt,a4paper,oneside]{book}
@@ -60,6 +60,7 @@
 \RequirePackage{graphicx}
 \RequirePackage{setspace}
 \RequirePackage{tabularx}
+\RequirePackage{etoolbox}
 \RequirePackage{eqparbox}
 \RequirePackage{ltxcmds}
 \RequirePackage[T1]{fontenc}
@@ -586,25 +587,26 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \def\makelosymbols{%
   \newwrite\@losfile
   \immediate\openout\@losfile=\jobname.syx
-  \def\symbl{\@bsphack\begingroup
-             \@sanitize
-             \@wrlos}\typeout
+  \newcommand\symbl[3][]{\@bsphack\begingroup
+  \ifstrempty{##1}{\def\@tempsymbl{##2=}}{\def\@tempsymbl{##1=}}%
+             \@sanitize%
+             \@wrlos{\@tempsymbl}{##2}{##3}}\typeout%
   {Writing index of symbols file \jobname.syx}%
-  \let\makelosymbols\@empty
-}
+  \let\makelosymbols\@empty%
+}%
 \@onlypreamble\makelosymbols
 \AtBeginDocument{%
 \@ifpackageloaded{hyperref}{%
-  \def\@wrlos#1#2{%
+  \newcommand\@wrlos[3]{%
     \protected@write\@losfile{}%
-      {\string\indexentry{[#1] #2|hyperpage}{\thepage}}%
-    \endgroup
+      {\string\indexentry{#1[#2] #3|hyperpage}{\thepage}}%
+    \endgroup%
     \@esphack}}{%
-  \def\@wrlos#1#2{%
+  \newcommand\@wrlos[3]{%
     \protected@write\@losfile{}%
-      {\string\indexentry{[#1] #2}{\thepage}}%
-    \endgroup
-    \@esphack}}}
+      {\string\indexentry{#1[#2] #3}{\thepage}}%
+    \endgroup%
+    \@esphack}}}%
 \newcommand\printloabbreviations{%
 \renewcommand\glossaryname{\listabbreviationname}%
 \@input@{\jobname.lab}}

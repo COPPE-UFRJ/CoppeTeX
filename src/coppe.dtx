@@ -23,6 +23,7 @@
 %
 % Author(s): Vicente Helano
 %            George O. Ainsworth Jr.
+%            Geraldo Xexéo
 %
 % \fi
 %
@@ -43,7 +44,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \end{document}
 %</driver> \fi
 %
-%% \CheckSum{1613}
+%% \CheckSum{1620}
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
 %%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
@@ -80,6 +81,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \changes{v2.2}{2011/02/04}{Matching new guidelines, including new logo.}
 % \changes{v2.2.1}{2016/01/26}{Fixed problem with \texttt|eqparbox| at
 % signature page.}
+%
 %
 % \DoNotIndex{\!,\',\.,\>,\^,\`,\',\~,\=,\\,\\\~,\\\^,\\ }
 % \DoNotIndex{\@arabic,\@auxout,\@biblabel,\@bsphack,\@clubpenalty,\@empty}
@@ -124,7 +126,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \GetFileInfo{coppe}
 %
 % \title{The |coppe| document class}
-% \author{Vicente H. F. Batista \and George O. Ainsworth Jr.}
+% \author{Vicente H. F. Batista \and George O. Ainsworth Jr. \and Geraldo Xexéo}
 %
 % \maketitle
 %
@@ -187,9 +189,9 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \href{http://coppetex.sourceforge.net/mailing-list.html}{here}.
 %
 % However, as the project maintenance was transferred to a new repository,
-% bug reports, as well as new feature requests, should be directed to 
+% bug reports, as well as new feature requests, should be directed to
 % \burl{https://github.com/COPPE-UFRJ/CoppeTeX}.
-% 
+%
 % \section{User interface}
 %
 % \DescribeMacro{\frontmatter}
@@ -211,7 +213,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % You must invoke the |\frontmatter| macro immediately after the |\maketitle|
 % one. The |\mainmatter| command comes right before the first chapter,
 % and |\backmatter| must be typed before the list of references.
-% 
+%
 % \subsection*{Front cover}
 %
 % This element was recently introduced by the Academic Registry. It is
@@ -303,7 +305,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % Fortunately, it is automatically generated from the data you entered
 % at the time you call |\maketitle|.
 % It is not needed in qualifying exams, though.
-% 
+%
 % \subsection*{Dedication (optional)}
 %
 % \DescribeMacro{\dedication}
@@ -319,7 +321,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % page each, with at most 250 words. We recommended that they should
 % be only one paragraph long. They must be defined inside the environments
 % |abstract| and |foreignabstract|.
-% 
+%
 % \subsection*{Lists of symbols and abbreviations (optional)}
 %
 % \DescribeMacro{\abbrev}
@@ -328,7 +330,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % recommended. It is a good practice
 % to define a symbol/abbreviation in its first occurrence in the text.
 % To define a symbol use
-% |\symbl{Symbol}{Symbol Definition}|, and for abbreviations
+% |\symbl[alphabetic symbol]{Symbol}{Symbol Definition}|, and for abbreviations
 % |\abbrev{Abbreviation}{Abbreviation Definition}|.
 % These commands are called \emph{dummy}, since they don't output anything at
 % the place they are executed, just an entry in the correspondent list.
@@ -338,22 +340,23 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \DescribeMacro{\printloabbreviations}
 % \DescribeMacro{\printlosymbols}
 % These lists are lexicographically sorted by using the MakeIndex program,
-% which is part of any \LaTeX\ implementation. MakeIndex needs  two commands 
-% to create a final sorted list: one which generates a list of entries and the 
-% other that indicates the position where the list will be printed out.  
+% which is part of any \LaTeX\ implementation. For |\symbl|, if the optional parameter is provided, it will used as sort key, otherwise |Symbol| will be used as sort key, what can result in an undesirable order if it contains \LaTeX commands.
+% MakeIndex needs  two commands
+% to create a final sorted list: one which generates a list of entries and the
+% other that indicates the position where the list will be printed out.
 % To generate the lists of symbols and abbreviations, the |coppe| class provides
 % the commands |\makeloabbreviations| and |\makelosymbols|, respectively.
-% They must be called in the document preamble. The commands |\printlosymbols| 
-% and |\printloabbreviations| have to be invoked at the point where you want 
-% these lists appear, e.g., following the list of tables as showed in 
-% the example. Once you call |latex|, it will be created two files with 
-% extensions |abx| and |syx|, which contain MakeIndex input data. They must be 
-% processed with |makeindex| in order to get the lists correctly 
-% produced, redirecting the output to files with extension |lab| and |los| 
+% They must be called in the document preamble. The commands |\printlosymbols|
+% and |\printloabbreviations| have to be invoked at the point where you want
+% these lists appear, e.g., following the list of tables as showed in
+% the example. Once you call |latex|, it will be created two files with
+% extensions |abx| and |syx|, which contain MakeIndex input data. They must be
+% processed with |makeindex| in order to get the lists correctly
+% produced, redirecting the output to files with extension |lab| and |los|
 % respectively:
-% \begin{verbatim} 
+% \begin{verbatim}
 %   makeindex -s coppe.ist -o example.lab example.abx
-%   makeindex -s coppe.ist -o example.los example.syx 
+%   makeindex -s coppe.ist -o example.los example.syx
 % \end{verbatim}
 % Note the |-s| option for specifying the style |coppe.ist|. Now, rerun |latex|
 % twice to get the references solved and you are done.
@@ -405,12 +408,12 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %
 % \end{description}
 %
-% \subsection{Changing document identification}% 
+% \subsection{Changing document identification}%
 % \DescribeMacro{\freeconfig}
 % The user could \emph{optionally} use the command |freeconfig| to modify
-% the parameters that print the document identification. The command 
-% |freeconfig| needs all those paramerters, which are  degree initials, 
-% degree name, title, foreign title, local doctype, and foreign doctype as 
+% the parameters that print the document identification. The command
+% |freeconfig| needs all those paramerters, which are  degree initials,
+% degree name, title, foreign title, local doctype, and foreign doctype as
 % in the following example:
 % \begin{verbatim}
 %     \freeconfig{Dr.}{Philosophiae Doctor}{PhD}{Doutor}{Dissertation}{Tese}
@@ -448,7 +451,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % area) isn't enabled. This kind of option often comes in print dialogs of document
 % visualization softwares.
 %
-% \paragraph{Quotation} \DescribeMacro{longquote} To quote text larger than three 
+% \paragraph{Quotation} \DescribeMacro{longquote} To quote text larger than three
 % lines, according to ABNT, you must increase the left margin to 4 cm, do not use
 % quotation marks, and use a smaller font. The |coppe| class provides the |longquote|
 % environment to easily make these adjustments.
@@ -495,7 +498,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \chapter*{Agradecimentos}
 
   Gostaria de agradecer a todos.
- 
+
   \begin{abstract}
 
   Apresenta-se, nesta tese, ...
@@ -506,14 +509,14 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 
   In this work, we present ...
 
-  \end{foreignabstract} 
+  \end{foreignabstract}
 
   \tableofcontents
   \listoffigures
   \listoftables
   \printlosymbols
   \printloabbreviations
- 
+
   \mainmatter
   \chapter{Introdu{\c c}\~ao}
 
@@ -527,19 +530,19 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   conjunto dos n\'umeros reais $\mathbb{R}$ e o conjunto vazio $\emptyset$.
   \symbl{$\mathbb{R}$}{Conjunto dos n\'umeros reais}
   \symbl{$\emptyset$}{Conjunto vazio}
-  
+
   \begin{longquote}
   Um exemplo de citação longa nas regras da ABNT (4cm de recuo e fonte menor)
-  feita com o ambiente  \verb=longquote= The primary objective of this 
-  investigation was to determine the feasibility of detecting corrosion in 
-  aluminum Naval aircraft components with neutron radiographic interrogation 
-  and the use of standard corrosion penetrameters. Secondary objectives 
+  feita com o ambiente  \verb=longquote= The primary objective of this
+  investigation was to determine the feasibility of detecting corrosion in
+  aluminum Naval aircraft components with neutron radiographic interrogation
+  and the use of standard corrosion penetrameters. Secondary objectives
   included the determination of the effect of object thickness on image quality,
   the defining of minimum levels of detectability and a preliminary investigation
   of a means whereby the degree of corrosion could be quantified with neutron
   radiographic data. \cite{article-example}
   \end{longquote}
-  
+
 
   \chapter{Revis\~ao Bibliogr\'afica}
 
@@ -577,6 +580,14 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 
   \chapter{M\'etodo Proposto}
   \chapter{Resultados e Discuss\~oes}
+  A  Lista de Símbolos precisa usar comandos específicos. Aqui vamos usar os símbolos $\alpha$ e $\beta$.
+  \symbl[beta]{Beta}{A palavra Beta more e corrigida}
+  \symbl[zzbeta]{$\beta$}{A letra $\beta$ corrigida}
+  \symbl{beta}{A palavra beta}
+  \symbl{alpha}{A palavra alpha}
+  \symbl[alpha]{Alpha}{A palavra Alpha}
+  \symbl[zzalpha]{$\alpha$}{A letra $\alpha$ corrigida}
+  \symbl[marco]{Marco}{A palavra Marco corrigida}
   \chapter{Conclus\~oes}
 
   \backmatter
@@ -598,8 +609,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %    \begin{macrocode}
 %<*class>
 \def\filename{coppe.dtx}
-\def\fileversion{v3.0}
-\def\filedate{2020/03/02}
+\def\fileversion{v3.1}
+\def\filedate{2022/03/07}
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{coppe}[\filedate\ \fileversion\ COPPE Dissertations and Thesis]
 \LoadClass[12pt,a4paper,oneside]{book}
@@ -610,6 +621,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \RequirePackage{graphicx}
 \RequirePackage{setspace}
 \RequirePackage{tabularx}
+\RequirePackage{etoolbox}
 \RequirePackage{eqparbox}
 \RequirePackage{ltxcmds}
 \RequirePackage[T1]{fontenc}
@@ -737,6 +749,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 }
 %    \end{macrocode}
 % \changes{v3.0}{2020/03/02}{Added new course on Nanotechnology.}
+% \changes{v3.1}{2022/03/07}{Included a sort key in symbl}
 % \end{macro}
 %
 %
@@ -1303,12 +1316,13 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \def\makelosymbols{%
   \newwrite\@losfile
   \immediate\openout\@losfile=\jobname.syx
-  \def\symbl{\@bsphack\begingroup
-             \@sanitize
-             \@wrlos}\typeout
+  \newcommand\symbl[3][]{\@bsphack\begingroup
+  \ifstrempty{##1}{\def\@tempsymbl{##2=}}{\def\@tempsymbl{##1=}}%
+             \@sanitize%
+             \@wrlos{\@tempsymbl}{##2}{##3}}\typeout%
   {Writing index of symbols file \jobname.syx}%
-  \let\makelosymbols\@empty
-}
+  \let\makelosymbols\@empty%
+}%
 \@onlypreamble\makelosymbols
 %    \end{macrocode}
 % \end{macro}
@@ -1316,16 +1330,16 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %    \begin{macrocode}
 \AtBeginDocument{%
 \@ifpackageloaded{hyperref}{%
-  \def\@wrlos#1#2{%
+  \newcommand\@wrlos[3]{%
     \protected@write\@losfile{}%
-      {\string\indexentry{[#1] #2|hyperpage}{\thepage}}%
-    \endgroup
+      {\string\indexentry{#1[#2] #3|hyperpage}{\thepage}}%
+    \endgroup%
     \@esphack}}{%
-  \def\@wrlos#1#2{%
+  \newcommand\@wrlos[3]{%
     \protected@write\@losfile{}%
-      {\string\indexentry{[#1] #2}{\thepage}}%
-    \endgroup
-    \@esphack}}}
+      {\string\indexentry{#1[#2] #3}{\thepage}}%
+    \endgroup%
+    \@esphack}}}%
 %    \end{macrocode}
 %
 % \begin{macro}{\printloabbreviations}
