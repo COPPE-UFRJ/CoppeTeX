@@ -33,7 +33,7 @@ Network (CTAN) standards. It is basically composed by an installation file ('cop
 
   3. README.md: describe the CoppeTeX package.
 
-  4. coppe-{plain,unsrt}.bst: alphabetically sorted and unsorted numbered
+  4. [en-]coppe-{plain,unsrt}.bst: alphabetically sorted and unsorted numbered
      BibTeX styles, Natbib compatible.
 
   5. coppe.dtx: main source file; contains the documentation, a sample
