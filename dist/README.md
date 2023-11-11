@@ -34,7 +34,7 @@ Network (CTAN) standards. It is basically composed by an installation file ('cop
   3. README.md: describe the CoppeTeX package.
 
   4. [en-]coppe-{plain,unsrt}.bst: alphabetically sorted and unsorted numbered
-     BibTeX styles, Natbib compatible.
+     BibTeX styles, Natbib compatible. Versions for English and Brazilian Portuguese.
 
   5. coppe.dtx: main source file; contains the documentation, a sample
      thesis and a Makeindex style.
