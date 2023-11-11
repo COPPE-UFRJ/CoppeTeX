@@ -54,16 +54,19 @@ Our release packages contain the following files:
   3. coppe.cls: the main file. It is a LaTeX document class.
 
   4. coppe-{plain,unsrt}.bst: alphabetically sorted and unsorted numbered
-     BibTeX styles, Natbib compatible.
+     BibTeX styles, Natbib compatible (for Brazilian Portuguese).
 
-  5. coppe.ist: Makeindex style for creating lists of symbols
+  5. en-coppe-{plain,unsrt}.bst: alphabetically sorted and unsorted numbered
+     BibTeX styles, Natbib compatible (for English).
+
+  6. coppe.ist: Makeindex style for creating lists of symbols
      and abbreviations.
 
-  6. coppe.pdf: CoppeTeX documentation.
+  7. coppe.pdf: CoppeTeX documentation.
 
-  7. example.{tex,bib}: sample thesis using coppe class.
+  8. example.{tex,bib}: sample thesis using coppe class.
 
-  8. coppe-logo.[eps, pdf]: images included in the front cover.
+  9. coppe-logo.[eps, pdf]: images included in the front cover.
 
 
 ## Installing
