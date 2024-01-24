@@ -9,7 +9,7 @@
 %% This is a sample monograph which illustrates the use of `coppe' document
 %% class and `coppe-unsrt' BibTeX style.
 %% 
-%% \CheckSum{1620}
+%% \CheckSum{1646}
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
 %%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
@@ -46,8 +46,8 @@
   \examiner{Prof.}{Nome do Terceiro Examinador Sobrenome}{D.Sc.}
   \examiner{Prof.}{Nome do Quarto Examinador Sobrenome}{Ph.D.}
   \examiner{Prof.}{Nome do Quinto Examinador Sobrenome}{Ph.D.}
-  \department{PEC}
-  \date{02}{2011}
+  \department{PESC}
+  \date{01}{2024}
 
   \keyword{Primeira palavra-chave}
   \keyword{Segunda palavra-chave}
@@ -87,7 +87,7 @@
   Instituto Alberto Luiz Coimbra de P\'os-gradua{\c c}\~ao e Pesquisa de
   Engenharia (COPPE), toda abreviatura deve ser definida antes de
   utilizada.\abbrev{COPPE}{Instituto Alberto Luiz Coimbra de P\'os-gradua{\c
-  c}\~ao e Pesquisa de Engenharia}
+  c}\~ao e Pesquisa de Engenharia}.
 
   Do mesmo modo, \'e imprescind\'ivel definir os s\'imbolos, tal como o
   conjunto dos n\'umeros reais $\mathbb{R}$ e o conjunto vazio $\emptyset$.
@@ -142,6 +142,9 @@
 
   \chapter{M\'etodo Proposto}
   \chapter{Resultados e Discuss\~oes}
+
+  \section{Algumas Demonstra{\c c}\~oes}
+
   A  Lista de Símbolos precisa usar comandos específicos. Aqui vamos usar os símbolos $\alpha$ e $\beta$.
   \symbl[beta]{Beta}{A palavra Beta more e corrigida}
   \symbl[zzbeta]{$\beta$}{A letra $\beta$ corrigida}
@@ -150,6 +153,16 @@
   \symbl[alpha]{Alpha}{A palavra Alpha}
   \symbl[zzalpha]{$\alpha$}{A letra $\alpha$ corrigida}
   \symbl[marco]{Marco}{A palavra Marco corrigida}
+
+  A Lista de Abreviações segue, a partir de 2024, a mesma regra, e aqui seguem alguns exemplos.
+  \abbrev{GoT}{Game of Thrones}
+  \abbrev[GOT]{GoT}{Game of Thrones ordenado como GOT}
+  \abbrev[iot]{IoT}{IoT ordenado como iot}
+  \abbrev[IoT]{IoT}{IoT ordenado como IoT}
+  \abbrev[IOT]{IoT}{IoT ordenado como IOT}
+  \abbrev{IoT}{IoT com ordenação default}
+  \abbrev[ITU]{ITU}{ITU mesmo}
+
   \chapter{Conclus\~oes}
 
   \backmatter
@@ -157,7 +170,7 @@
   \bibliography{example}
 
   \appendix
-  \chapter{Algumas Demonstra{\c c}\~oes}
+
 \end{document}
 %% 
 %%

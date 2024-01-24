@@ -29,10 +29,10 @@ SHELL := /bin/bash
 PROGRAM_NAME=CoppeTeX Makefile
 PACKAGE_NAME=coppe
 DOC_SOURCE=coppe.dtx
-VERSION="2.2"
-AUTHORS=Vicente H. F. Batista and George O. Ainsworth Jr.
-COPYRIGHT_YEAR=2011
-PACKAGE_BUGREPORT="helano@users.sourceforge.net"
+VERSION="3.2"
+AUTHORS=Vicente H. F. Batista and George O. Ainsworth Jr. and Geraldo Xexéo and Eduardo Mangeli
+COPYRIGHT_YEAR=2023
+PACKAGE_BUGREPORT="https://github.com/COPPE-UFRJ/CoppeTeX/issues"
 
 DESTDIR=
 BUILDDIR=../dist
@@ -57,8 +57,8 @@ GLOFLAGS = -q -s gglo.ist
 LSTFLAGS = -q -s coppe.ist
 
 
-#DIST_CONTENT=coppe.cls coppe.ist coppe.pdf coppe-plain.bst coppe-unsrt.bst COPYING example.bib example.tex coppe-logo.eps coppe-logo.pdf README
-#DISTSRC_CONTENT=coppe.bib coppe.dtx coppe.ins coppe-plain.bst coppe-unsrt.bst COPYING example.bib Makefile coppe-logo.eps coppe-logo.pdf README
+#DIST_CONTENT=coppe.cls coppe.ist coppe.pdf coppe-plain.bst coppe-unsrt.bst COPYING example.bib example.tex coppe-logo.eps coppe-logo.pdf README en-coppe-plain.bst en-coppe-unsrt.bst
+#DISTSRC_CONTENT=coppe.bib coppe.dtx coppe.ins coppe-plain.bst coppe-unsrt.bst COPYING example.bib Makefile coppe-logo.eps coppe-logo.pdf README en-coppe-plain.bst en-coppe-unsrt.bst
 
 .SUFFIXES: .tex .dtx
 

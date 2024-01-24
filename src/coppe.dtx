@@ -5,7 +5,7 @@
 % It uses the doc utility to generate documentations for the 'coppe'
 % document class and the 'coppe-unsrt' BibTeX style.
 %
-% Copyright (C) 2020 CoppeTeX Project and any individual authors listed
+% Copyright (C) 2024 CoppeTeX Project and any individual authors listed
 % elsewhere in this file.
 %
 % This program is free software; you can redistribute it and/or modify
@@ -24,6 +24,7 @@
 % Author(s): Vicente Helano
 %            George O. Ainsworth Jr.
 %            Geraldo Xexéo
+%            Eduardo Mangeli
 %
 % \fi
 %
@@ -44,7 +45,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \end{document}
 %</driver> \fi
 %
-%% \CheckSum{1620}
+%% \CheckSum{1646}
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
 %%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
@@ -83,9 +84,10 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % signature page.}
 % \changes{v2.2.2}{2023/05/04}{Fixed some text constants in .bib and documented
 % it here.}
+% \changes{v3.2}{2023/11/11}{Fixed version problem between cls and dtx.}
+% \changes{v3.3}{2024/01/24}{Extend abrev to work like symb and accept a sorting key}
 %
-%
-% \DoNotIndex{\!,\',\.,\>,\^,\`,\',\=,\\,\\\^,\\ }
+% \DoNotIndex{\!,\',\.,\>,\^,\`,\',\=,\\}
 % \DoNotIndex{\@arabic,\@auxout,\@biblabel,\@bsphack,\@clubpenalty,\@empty}
 % \DoNotIndex{\@esphack,\@idxitem,\@ifpackageloaded,\@input@,\@latex@warning}
 % \DoNotIndex{\@m,\@mainmatterfalse,\@mainmattertrue,\@makeschapterhead}
@@ -128,7 +130,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \GetFileInfo{coppe}
 %
 % \title{The |coppe| document class}
-% \author{Vicente H. F. Batista \and George O. Ainsworth Jr. \and Geraldo Xexéo}
+% \author{Vicente H. F. Batista \and George O. Ainsworth Jr. \and Geraldo Xexéo \and Eduardo Mangeli}
 %
 % \maketitle
 %
@@ -333,7 +335,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % to define a symbol/abbreviation in its first occurrence in the text.
 % To define a symbol use
 % |\symbl[alphabetic symbol]{Symbol}{Symbol Definition}|, and for abbreviations
-% |\abbrev{Abbreviation}{Abbreviation Definition}|.
+% |\abbrev[alphabetic symbol]{Abbreviation}{Abbreviation Definition}|.
 % These commands are called \emph{dummy}, since they don't output anything at
 % the place they are executed, just an entry in the correspondent list.
 %
@@ -342,7 +344,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \DescribeMacro{\printloabbreviations}
 % \DescribeMacro{\printlosymbols}
 % These lists are lexicographically sorted by using the MakeIndex program,
-% which is part of any \LaTeX\ implementation. For |\symbl|, if the optional parameter is provided, it will used as sort key, otherwise |Symbol| will be used as sort key, what can result in an undesirable order if it contains \LaTeX commands.
+% which is part of any \LaTeX\ implementation. For |\symbl|, if the optional parameter is provided, it will used as sort key. This was later, in 2024, implemented also for |\abbrev|, otherwise |Symbol|, or |Abreviation| will be used as sort key, what can result in an undesirable order if it contains \LaTeX commands, mathematical symbols, or mix of uppercase and lowercase.
 % MakeIndex needs  two commands
 % to create a final sorted list: one which generates a list of entries and the
 % other that indicates the position where the list will be printed out.
@@ -490,8 +492,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \examiner{Prof.}{Nome do Terceiro Examinador Sobrenome}{D.Sc.}
   \examiner{Prof.}{Nome do Quarto Examinador Sobrenome}{Ph.D.}
   \examiner{Prof.}{Nome do Quinto Examinador Sobrenome}{Ph.D.}
-  \department{PEC}
-  \date{02}{2011}
+  \department{PESC}
+  \date{01}{2024}
 
   \keyword{Primeira palavra-chave}
   \keyword{Segunda palavra-chave}
@@ -531,12 +533,13 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   Instituto Alberto Luiz Coimbra de P\'os-gradua{\c c}\~ao e Pesquisa de
   Engenharia (COPPE), toda abreviatura deve ser definida antes de
   utilizada.\abbrev{COPPE}{Instituto Alberto Luiz Coimbra de P\'os-gradua{\c
-  c}\~ao e Pesquisa de Engenharia}
+  c}\~ao e Pesquisa de Engenharia}.
 
   Do mesmo modo, \'e imprescind\'ivel definir os s\'imbolos, tal como o
   conjunto dos n\'umeros reais $\mathbb{R}$ e o conjunto vazio $\emptyset$.
   \symbl{$\mathbb{R}$}{Conjunto dos n\'umeros reais}
   \symbl{$\emptyset$}{Conjunto vazio}
+
 
   \begin{longquote}
   Um exemplo de citação longa nas regras da ABNT (4cm de recuo e fonte menor)
@@ -587,6 +590,9 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 
   \chapter{M\'etodo Proposto}
   \chapter{Resultados e Discuss\~oes}
+
+  \section{Algumas Demonstra{\c c}\~oes}
+
   A  Lista de Símbolos precisa usar comandos específicos. Aqui vamos usar os símbolos $\alpha$ e $\beta$.
   \symbl[beta]{Beta}{A palavra Beta more e corrigida}
   \symbl[zzbeta]{$\beta$}{A letra $\beta$ corrigida}
@@ -595,6 +601,17 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \symbl[alpha]{Alpha}{A palavra Alpha}
   \symbl[zzalpha]{$\alpha$}{A letra $\alpha$ corrigida}
   \symbl[marco]{Marco}{A palavra Marco corrigida}
+
+  A Lista de Abreviações segue, a partir de 2024, a mesma regra, e aqui seguem alguns exemplos.
+  \abbrev{GoT}{Game of Thrones}
+  \abbrev[GOT]{GoT}{Game of Thrones ordenado como GOT}
+  \abbrev[iot]{IoT}{IoT ordenado como iot}
+  \abbrev[IoT]{IoT}{IoT ordenado como IoT}
+  \abbrev[IOT]{IoT}{IoT ordenado como IOT}
+  \abbrev{IoT}{IoT com ordenação default}
+  \abbrev[ITU]{ITU}{ITU mesmo}
+
+
   \chapter{Conclus\~oes}
 
   \backmatter
@@ -602,7 +619,10 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \bibliography{example}
 
   \appendix
-  \chapter{Algumas Demonstra{\c c}\~oes}
+
+
+
+
 \end{document}
 %</example>
 %    \end{macrocode}
@@ -616,8 +636,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %    \begin{macrocode}
 %<*class>
 \def\filename{coppe.dtx}
-\def\fileversion{v3.1}
-\def\filedate{2022/03/07}
+\def\fileversion{v3.2}
+\def\filedate{2023/11/11}
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{coppe}[\filedate\ \fileversion\ COPPE Dissertations and Thesis]
 \LoadClass[12pt,a4paper,oneside]{book}
@@ -700,7 +720,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \if@english
   \RequirePackage[english]{babel}
 \else
-  \RequirePackage[english,brazil]{babel}
+  \RequirePackage[english,brazilian]{babel}
 \fi
 \addto{\captionsenglish}{%
   \renewcommand{\bibname}{References}
@@ -1362,9 +1382,10 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \def\makeloabbreviations{%
   \newwrite\@labfile
   \immediate\openout\@labfile=\jobname.abx
-  \def\abbrev{\@bsphack\begingroup
+   \newcommand\abbrev[3][]{\@bsphack\begingroup
+              \ifstrempty{##1}{\def\@tempsymbl{##2=}}{\def\@tempsymbl{##1=}}
               \@sanitize
-              \@wrlab}\typeout
+              \@wrlab{\@tempsymbl}{##2}{##3}}\typeout
   {Writing index of abbreviations file \jobname.abx}%
   \let\makeloabbreviations\@empty
 }
@@ -1375,16 +1396,30 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %    \begin{macrocode}
 \AtBeginDocument{%
 \@ifpackageloaded{hyperref}{%
-  \def\@wrlab#1#2{%
+  \newcommand\@wrlab[3]{%
     \protected@write\@labfile{}%
-      {\string\indexentry{[#1] #2|hyperpage}{\thepage}}%
-    \endgroup
+      {\string\indexentry{#1[#2] #3|hyperpage}{\thepage}}%
+    \endgroup%
     \@esphack}}{%
-  \def\@wrlab#1#2{%
+  \newcommand\@wrlab[3]{%
     \protected@write\@labfile{}%
-      {\string\indexentry{[#1] #2}{\arabic{page}}}%
-    \endgroup
-    \@esphack}}}
+      {\string\indexentry{#1[#2] #3}{\thepage}}%
+    \endgroup%
+    \@esphack}}}%
+%    \end{macrocode}
+%%%%    \begin{macrocode}
+%%%% \AtBeginDocument{%
+%%%% \@ifpackageloaded{hyperref}{%
+%%%%   \def\@wrlab#1#2{%
+%%%% \protected@write\@labfile{}%
+%%%%       {\string\indexentry{[#1] #2|hyperpage}{\thepage}}%
+%%%%     \endgroup
+%%%%     \@esphack}}{%
+%%%%   \def\@wrlab#1#2{%
+%%%%     \protected@write\@labfile{}%
+%%%%       {\string\indexentry{[#1] #2}{\arabic{page}}}%
+%%%%     \endgroup
+%%%%     \@esphack}}}
 %    \end{macrocode}
 %
 %    \begin{macrocode}

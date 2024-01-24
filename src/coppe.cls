@@ -13,6 +13,7 @@
 %% Rio de Janeiro.
 %% 
 %% Copyright (C) 2008 Vicente Helano and George Ainsworth Jr.
+%% Copyright (C) 2023 Vicente Helano and George Ainsworth Jr. and Geraldo Xexéo and Eduardo Mangeli
 %% 
 %% This program is free software; you can redistribute it and/or modify
 %% it under the terms of the GNU General Public License version 3 as
@@ -29,8 +30,10 @@
 %% 
 %% Author(s): Vicente Helano,
 %%            George Ainsworth
+%%            Geraldo Xexéo
+%%            Eduardo Mangeli
 %% 
-%% \CheckSum{1620}
+%% \CheckSum{1646}
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
 %%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
@@ -48,8 +51,8 @@
 %%   Right brace   \}     Tilde         \~}
 %%
 \def\filename{coppe.dtx}
-\def\fileversion{v3.1}
-\def\filedate{2022/03/07}
+\def\fileversion{v3.2}
+\def\filedate{2023/11/11}
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{coppe}[\filedate\ \fileversion\ COPPE Dissertations and Thesis]
 \LoadClass[12pt,a4paper,oneside]{book}
@@ -118,7 +121,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \if@english
   \RequirePackage[english]{babel}
 \else
-  \RequirePackage[english,brazil]{babel}
+  \RequirePackage[english,brazilian]{babel}
 \fi
 \addto{\captionsenglish}{%
   \renewcommand{\bibname}{References}
@@ -613,25 +616,39 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \def\makeloabbreviations{%
   \newwrite\@labfile
   \immediate\openout\@labfile=\jobname.abx
-  \def\abbrev{\@bsphack\begingroup
+   \newcommand\abbrev[3][]{\@bsphack\begingroup
+              \ifstrempty{##1}{\def\@tempsymbl{##2=}}{\def\@tempsymbl{##1=}}
               \@sanitize
-              \@wrlab}\typeout
+              \@wrlab{\@tempsymbl}{##2}{##3}}\typeout
   {Writing index of abbreviations file \jobname.abx}%
   \let\makeloabbreviations\@empty
 }
 \@onlypreamble\makeloabbreviations
 \AtBeginDocument{%
 \@ifpackageloaded{hyperref}{%
-  \def\@wrlab#1#2{%
+  \newcommand\@wrlab[3]{%
     \protected@write\@labfile{}%
-      {\string\indexentry{[#1] #2|hyperpage}{\thepage}}%
-    \endgroup
+      {\string\indexentry{#1[#2] #3|hyperpage}{\thepage}}%
+    \endgroup%
     \@esphack}}{%
-  \def\@wrlab#1#2{%
+  \newcommand\@wrlab[3]{%
     \protected@write\@labfile{}%
-      {\string\indexentry{[#1] #2}{\arabic{page}}}%
-    \endgroup
-    \@esphack}}}
+      {\string\indexentry{#1[#2] #3}{\thepage}}%
+    \endgroup%
+    \@esphack}}}%
+%%%%    \begin{macrocode}
+%%%% \AtBeginDocument{%
+%%%% \@ifpackageloaded{hyperref}{%
+%%%%   \def\@wrlab#1#2{%
+%%%% \protected@write\@labfile{}%
+%%%%       {\string\indexentry{[#1] #2|hyperpage}{\thepage}}%
+%%%%     \endgroup
+%%%%     \@esphack}}{%
+%%%%   \def\@wrlab#1#2{%
+%%%%     \protected@write\@labfile{}%
+%%%%       {\string\indexentry{[#1] #2}{\arabic{page}}}%
+%%%%     \endgroup
+%%%%     \@esphack}}}
 \AtBeginDocument{%
   \ltx@ifpackageloaded{hyperref}{
     \def\coppe@bibEnd{%

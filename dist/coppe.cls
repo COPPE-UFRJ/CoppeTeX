@@ -13,6 +13,7 @@
 %% Rio de Janeiro.
 %% 
 %% Copyright (C) 2008 Vicente Helano and George Ainsworth Jr.
+%% Copyright (C) 2023 Vicente Helano and George Ainsworth Jr. and Geraldo Xexéo and Eduardo Mangeli
 %% 
 %% This program is free software; you can redistribute it and/or modify
 %% it under the terms of the GNU General Public License version 3 as
@@ -29,6 +30,8 @@
 %% 
 %% Author(s): Vicente Helano,
 %%            George Ainsworth
+%%            Geraldo Xexéo
+%%            Eduardo Mangeli
 %% 
 %% \CheckSum{1620}
 %% \CharacterTable
@@ -48,8 +51,8 @@
 %%   Right brace   \}     Tilde         \~}
 %%
 \def\filename{coppe.dtx}
-\def\fileversion{v3.1}
-\def\filedate{2022/03/07}
+\def\fileversion{v3.2}
+\def\filedate{2023/11/11}
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{coppe}[\filedate\ \fileversion\ COPPE Dissertations and Thesis]
 \LoadClass[12pt,a4paper,oneside]{book}
@@ -118,7 +121,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \if@english
   \RequirePackage[english]{babel}
 \else
-  \RequirePackage[english,brazil]{babel}
+  \RequirePackage[english,brazilian]{babel}
 \fi
 \addto{\captionsenglish}{%
   \renewcommand{\bibname}{References}
