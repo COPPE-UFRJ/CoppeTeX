@@ -10,6 +10,7 @@
 %% when using the `coppe' document class.
 %% 
 %% Copyright (C) 2008 Vicente Helano and George Ainsworth Jr.
+%% Copyright (C) 2023 Vicente Helano and George Ainsworth Jr. and Geraldo Xexéo and Eduardo Mangeli
 %% 
 %% This program is free software; you can redistribute it and/or modify
 %% it under the terms of the GNU General Public License version 3 as
@@ -26,8 +27,10 @@
 %% 
 %% Author(s): Vicente Helano,
 %%            George Ainsworth
+%%            Geraldo Xexéo
+%%            Eduardo Mangeli
 %% 
-%% \CheckSum{1620}
+%% \CheckSum{1646}
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
 %%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z

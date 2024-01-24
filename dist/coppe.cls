@@ -33,7 +33,7 @@
 %%            Geraldo Xexéo
 %%            Eduardo Mangeli
 %% 
-%% \CheckSum{1620}
+%% \CheckSum{1646}
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
 %%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
@@ -616,25 +616,39 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \def\makeloabbreviations{%
   \newwrite\@labfile
   \immediate\openout\@labfile=\jobname.abx
-  \def\abbrev{\@bsphack\begingroup
+   \newcommand\abbrev[3][]{\@bsphack\begingroup
+              \ifstrempty{##1}{\def\@tempsymbl{##2=}}{\def\@tempsymbl{##1=}}
               \@sanitize
-              \@wrlab}\typeout
+              \@wrlab{\@tempsymbl}{##2}{##3}}\typeout
   {Writing index of abbreviations file \jobname.abx}%
   \let\makeloabbreviations\@empty
 }
 \@onlypreamble\makeloabbreviations
 \AtBeginDocument{%
 \@ifpackageloaded{hyperref}{%
-  \def\@wrlab#1#2{%
+  \newcommand\@wrlab[3]{%
     \protected@write\@labfile{}%
-      {\string\indexentry{[#1] #2|hyperpage}{\thepage}}%
-    \endgroup
+      {\string\indexentry{#1[#2] #3|hyperpage}{\thepage}}%
+    \endgroup%
     \@esphack}}{%
-  \def\@wrlab#1#2{%
+  \newcommand\@wrlab[3]{%
     \protected@write\@labfile{}%
-      {\string\indexentry{[#1] #2}{\arabic{page}}}%
-    \endgroup
-    \@esphack}}}
+      {\string\indexentry{#1[#2] #3}{\thepage}}%
+    \endgroup%
+    \@esphack}}}%
+%%%%    \begin{macrocode}
+%%%% \AtBeginDocument{%
+%%%% \@ifpackageloaded{hyperref}{%
+%%%%   \def\@wrlab#1#2{%
+%%%% \protected@write\@labfile{}%
+%%%%       {\string\indexentry{[#1] #2|hyperpage}{\thepage}}%
+%%%%     \endgroup
+%%%%     \@esphack}}{%
+%%%%   \def\@wrlab#1#2{%
+%%%%     \protected@write\@labfile{}%
+%%%%       {\string\indexentry{[#1] #2}{\arabic{page}}}%
+%%%%     \endgroup
+%%%%     \@esphack}}}
 \AtBeginDocument{%
   \ltx@ifpackageloaded{hyperref}{
     \def\coppe@bibEnd{%
