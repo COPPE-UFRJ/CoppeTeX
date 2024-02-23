@@ -24,3 +24,5 @@ src/coppe.aux
 *.hd
 *.hd
 src/example.synctex.gz
+src/example.fdb_latexmk
+src/example.fls
