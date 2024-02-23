@@ -51,7 +51,7 @@
 %%   Right brace   \}     Tilde         \~}
 %%
 \def\filename{coppe.dtx}
-\def\fileversion{v3.3}
+\def\fileversion{v3.4}
 \def\filedate{2024/01/24}
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{coppe}[\filedate\ \fileversion\ COPPE Dissertations and Thesis]
