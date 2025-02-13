@@ -119,7 +119,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 }
 \ProcessOptions\relax
 \if@english
-  \RequirePackage[english]{babel}
+  \RequirePackage[brazilian,english]{babel}
 \else
   \RequirePackage[english,brazilian]{babel}
 \fi

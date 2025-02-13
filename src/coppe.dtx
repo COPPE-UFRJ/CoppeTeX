@@ -418,6 +418,11 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %   the option |numbers| to the |coppe| class.  In this case, it is
 %   mandatory the use of |coppe-unsrt.bst|, as the bibliography style.
 %
+%   \item[\texttt{english}] Coppe\TeX\  uses Babel. The default language
+%    is Portuguese (actually \verb|brazilian|), with English being the second language. If option \verb|english| is
+%    used, English becomes the main language and Portuguese the secondary. Look at the Babel package
+%    to switch between languages.
+%
 % \end{description}
 %
 % \subsection{Changing document identification}%
@@ -555,6 +560,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 
   Este documento não substitui, mas complementa, o documento que descreve a classe.
 
+
+
 \chapter{Configurações Iniciais}
 
    A primeira coisa a fazer é escolher o tipo de documento. Isso é feito como uma opção no comando inicial do arquivo, \verb|documentclass|. A classe \verb|coppe| suporta quatro formatos: tese de doutorado (\verb|dsc|), dissertação de mestrado (\verb|msc|), exame de qualificação de doutorado (\verb|dscexam|) e exame de qualificação de mestrado (\verb|mscexam|). Na verdade, o padrão da Coppe não cobre os exames de qualificação, mas é interessante seguir o padrão nesses casos também.
@@ -562,6 +569,16 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
    Como pode ser visto nesse documento, muita coisa pode ser configurada, o que gerará o tratamento correto segundo as normas da COPPE. Para isso, logo após o \verb|\begin{document}| várias variáveis devem receber valor. Isso é feito com os comandos descritos que aparecem nesse exemplo.
 
    Recomendo ler o documento ``The \verb*|coppe| document class'' para entender melhor todas as opções disponíveis.
+
+\section{Linguagem principal do texto}
+
+  Essa classe considera que o texto principal está em português e algumas partes específicas, como o \textit{abstract}, estão em inglês. Caso o texto principal seja em inglês as seguintes opções devem ser usadas:
+ \begin{itemize}
+ \item A opção \verb|english| deve ser usada no comando \verb|\documentclass|.
+ \item Os estilos de bibliografia usados devem ser \verb|en-coppe-plain.bst| ou \verb|en-coppe-unsrt.bst|
+ \end{itemize}
+
+  A variação de linguagem, em inglês ou português apenas, já é suportada pela classe Coppe\TeX  com o pacote Babel. Não é necessário incluí-lo.
 
 
 \section{Por que usar o \LaTeX}
@@ -1137,7 +1154,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %    \begin{macrocode}
 \ProcessOptions\relax
 \if@english
-  \RequirePackage[english]{babel}
+  \RequirePackage[brazilian,english]{babel}
 \else
   \RequirePackage[english,brazilian]{babel}
 \fi
@@ -1146,6 +1163,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 }
 %    \end{macrocode}
 % \changes{v3.0}{2020/03/02}{Added support for monographs in English.}
+% \changes{v3.4.1}{2025/02/13}{Fix english option to consider brazilian a second language, describe it in document}
 %
 % \begin{macro}{\department}
 % This macro is used to set the author's affiliation. There are twelve options
