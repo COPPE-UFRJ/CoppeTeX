@@ -46,7 +46,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \end{document}
 %</driver> \fi
 %
-%% \CheckSum{1648}
+%% \CheckSum{1653}
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
 %%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
@@ -368,6 +368,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % Note the |-s| option for specifying the style |coppe.ist|. Now, rerun |latex|
 % twice to get the references solved and you are done.
 %
+%
 % \subsection*{References}
 %
 % It is well known that bibliography databases can be easily maintained with
@@ -395,6 +396,32 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % reference.  These styles are |natbib| compatible.  This means that you can
 % freely issue the commands |\citet| and |\citep|, as well as any other
 % |natbib| feature.
+%
+% \subsection*{Appendix and Annex (Optional)}
+%
+% \DescribeMacro{\appendix}
+% \DescribeMacro{\annex}
+% Appendices and annexes are optional chapters that are part of the back matter.
+% The \verb|\appendix| command is a standard \LaTeX\ command used before all appendices.
+% \CoppeTeX\ introduces the \verb|\annex| command, which should be used only in
+% the back matter (i.e., after the \verb|\backmatter| command) and only after all
+% existing \verb|\appendix| chapters. This restriction is due to implementation constraints.
+%
+% Therefore, the order for backmatter is:
+%
+% \begin{verbatim}
+% \backmatter
+% \bibliographystyle{coppe-plain}
+% \bibliography{main}
+% \appendix
+% \chapter{An Appendix}
+% \chapter{Another Appendix}
+% \annex
+% \chapter{First Annex}
+% \chapter{Second Annex}
+% \end{verbatim}
+%
+% Annex was introduced in v3.5
 %
 % \section{Class options}
 %
@@ -1030,9 +1057,10 @@ Este é o conteúdo do meu textbox sem título. Você pode adicionar qualquer te
 
 
 
-  \chapter{Conclus\~oes}
+  \chapter{Conclusões}
 
   \backmatter
+
   \bibliographystyle{coppe-unsrt}
   \bibliography{example}
 
@@ -1047,9 +1075,9 @@ Segundo a norma da ABNT (Associação Brasileira de Normas Técnicas), a defini�
 Apêndice: O apêndice é um texto ou documento elaborado pelo autor do trabalho com o objetivo de complementar sua argumentação, sem que seja essencial para a compreensão do conteúdo principal do documento. O uso de apêndices é indicado para incluir dados detalhados como questionários, modelos de formulários utilizados na pesquisa, descrições extensas de métodos ou técnicas, entre outros. Os apêndices são identificados por letras maiúsculas consecutivas, travessão e pelos respectivos títulos. A inclusão de apêndices visa a fornecer informações adicionais que possam ajudar na compreensão do estudo, mas cuja presença no texto principal poderia distrair ou desviar a atenção do leitor dos argumentos principais.
 
 
-\renewcommand{\appendixname}{Anexo}
-\appendix
+\chapter{Outro apêndice}
 
+\annex
 
 
 \chapter{Um Anexo}
@@ -1058,6 +1086,13 @@ Segundo a norma da ABNT (Associação Brasileira de Normas Técnicas), a defini�
 
 
 Anexo: O anexo, por sua vez, consiste em um texto ou documento não elaborado pelo autor, que serve de fundamentação, comprovação e ilustração. O uso de anexos é apropriado para materiais como cópias de artigos, legislação, documentos históricos, fotografias, mapas, entre outros, que tenham relevância para o entendimento do trabalho do autor. Assim como os apêndices, os anexos são identificados por letras maiúsculas consecutivas, travessão e pelos respectivos títulos. Eles são utilizados para enriquecer o trabalho com informações de suporte, garantindo que o leitor tenha acesso a documentos complementares importantes para a validação dos argumentos apresentados no texto principal.
+
+No modelo \CoppeTeX os anexos devem obrigtoriamente vir depois dos apêndices e usam o comando novo (versão 3.5 em diante) \verb|\annex|
+
+
+\chapter{Outro Anexo}
+
+
 \end{document}
 
 %</example>
@@ -2054,6 +2089,10 @@ postamble
 "\n  \\end{theglossary}\n"
 %</glossary>
 %    \end{macrocode}
+%    \begin{macrocode}
+\newcommand{\annex}{\renewcommand{\appendixname}{Anexo}\appendix}
+%    \end{macrocode}
+% \changes{v3.5}{2024/02/23}{New command annex}
 %
 % \section*{Acknowledgments}
 %
