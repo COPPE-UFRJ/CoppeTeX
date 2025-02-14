@@ -46,7 +46,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \end{document}
 %</driver> \fi
 %
-%% \CheckSum{1653}
+%% \CheckSum{1656}
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
 %%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
@@ -132,7 +132,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \GetFileInfo{coppe}
 %
 % \title{The |coppe| document class \\
-% Version 3.4 }
+% Version 3.5.1 }
 % \author{Vicente H. F. Batista \and George O. Ainsworth Jr. \and Geraldo Xexéo \and Eduardo Mangeli}
 %
 % \maketitle
@@ -2090,9 +2090,15 @@ postamble
 %</glossary>
 %    \end{macrocode}
 %    \begin{macrocode}
-\newcommand{\annex}{\renewcommand{\appendixname}{Anexo}\appendix}
+\newcommand{\annex}{
+    \iflanguage{brazilian}
+        {\renewcommand{\appendixname}{Anexo}}
+        {\renewcommand{\appendixname}{Annex}}
+    \appendix
+}
 %    \end{macrocode}
 % \changes{v3.5}{2024/02/23}{New command annex}
+% \changes{v3.5.1}{2024/02/23}{New command annex now supports brazilian or english}
 %
 % \section*{Acknowledgments}
 %
