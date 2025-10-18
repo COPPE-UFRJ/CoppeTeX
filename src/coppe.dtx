@@ -134,8 +134,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \GetFileInfo{coppe}
 %
 % \title{The |coppe| document class \\
-% Version 3.5.1 }
-% \author{Vicente H. F. Batista \and George O. Ainsworth Jr. \and Geraldo Xexéo \and Eduardo Mangeli}
+% Version 4.0 }
+% \author{Geraldo Xexéo, Vicente H. F. Batista \and George O. Ainsworth Jr. \and Eduardo Mangeli}
 %
 % \maketitle
 %
@@ -1148,7 +1148,6 @@ No modelo \CoppeTeX os anexos devem obrigtoriamente vir depois dos apêndices e 
 \RequirePackage{ltxcmds}    % Low-level LaTeX kernel helpers used by other packages and internal code
 \RequirePackage{expl3}      % LaTeX3 programming layer (token lists, properties, sequences, etc.)
 \RequirePackage{xparse}     % High-level interface to define commands/environments (\NewDocumentCommand)
-\RequirePackage{setspace}   % Used to control spacing and font size in different environments
 \ExplSyntaxOn               % Enable LaTeX3 (expl3) syntax for subsequent definitions
 %    \end{macrocode}
 % Font is T1 for latin, should we drop it for LuaLaTeX?
@@ -1222,69 +1221,15 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %    \begin{macrocode}
 \newboolean{maledoc}
 \setboolean{maledoc}{false}
-%    \end{macrocode}
-%
-
-
-
-
-
-
-% Class options.
-% If you are writing a text in English, you must turn ``English'' on.
-% Otherwise, Portuguese is considered the main language.
-\newif\if@english\@englishfalse
-\DeclareOption{english}{\@englishtrue}
-\DeclareOption{msc}{%
-  \newcommand{\@degree}{M.Sc.}
-  \newcommand{\@degreename}{Mestrado}
-  \newcommand{\local@degname}{Mestre}
-  \newcommand{\foreign@degname}{Master}
-  \newcommand\local@doctype{Disserta{\c c}{\~ a}o}
-  \newcommand\foreign@doctype{Dissertation}
+\ExplSyntaxOn
+\cs_new:Npn \coppe_degperson_main:
+{
+	\bool_if:NTF \maledoc
+	{ \coppe_str_get:nn { degperson / \coppe@degree / m } { \l_coppe_lang_main_tl } }
+	{ \coppe_str_get:nn { degperson / \coppe@degree / f } { \l_coppe_lang_main_tl } }
 }
-\DeclareOption{dscexam}{%
-  \newcommand{\@degree}{D.Sc.}
-  \newcommand{\@degreename}{Doutorado}
-  \newcommand{\local@degname}{Doutor}
-  \newcommand{\foreign@degname}{Doctor}
-  \setboolean{maledoc}{true}
-  \newcommand\local@doctype{Exame de Qualifica{\c c}{\~ a}o}
-  \newcommand\foreign@doctype{Qualifying Exam}
-}
-\DeclareOption{mscexam}{%
- \newcommand{\@degree}{M.Sc.}
-  \newcommand{\@degreename}{Mestrado}
-  \newcommand{\local@degname}{Mestre}
-  \newcommand{\foreign@degname}{Master}
-  \setboolean{maledoc}{true}
-  \newcommand\local@doctype{Exame de Qualifica{\c c}{\~ a}o}
-  \newcommand\foreign@doctype{Qualifying Exam}
-}
-\DeclareOption{dsc}{%
-  \newcommand{\@degree}{D.Sc.}
-  \newcommand{\@degreename}{Doutorado}
-  \newcommand{\local@degname}{Doutor}
-  \newcommand{\foreign@degname}{Doctor}
-  \newcommand\local@doctype{Tese}
-  \newcommand\foreign@doctype{Thesis}
-}
-\DeclareOption{numbers}{%
-  \PassOptionsToPackage{numbers}{natbib}
-}
-%    \end{macrocode}
-
-%
-%    \begin{macrocode}
-\ProcessOptions\relax
-\if@english
-  \RequirePackage[brazilian,english]{babel}
-\else
-  \RequirePackage[english,brazilian]{babel}
-\fi
-\addto{\captionsenglish}{%
-  \renewcommand{\bibname}{References}
-}
+\ExplSyntaxOff
+\let\local@degname\coppe_degperson_main:
 %    \end{macrocode}
 % \changes{v3.0}{2020/03/02}{Added support for monographs in English.}
 % \changes{v3.4.1}{2025/02/13}{Fix english option to consider brazilian a second language, describe it in document}
@@ -1368,58 +1313,98 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \InputIfFileExists{coppe-lang-br.def}{}{\ClassWarning{coppe}{coppe-lang-br.def not found}}
 \InputIfFileExists{coppe-lang-en.def}{}{\ClassWarning{coppe}{coppe-lang-en.def not found}}
 \InputIfFileExists{coppe-lang-es.def}{}{\ClassWarning{coppe}{coppe-lang-es.def not found}}
+% ===== I18N glue (derive runtime strings from the data store) =====
+\ExplSyntaxOn
+
+% -- 2.1 Degree and doctype names from lang + degree option
+% Keys expected in lang files (already present):
+%   degname/msc, degname/phd, doctype/msc, doctype/phd
+% We expose legacy macros consumed by templates:
+\cs_new_protected:Npn \coppe_setup_degree_strings:
+{
+	% Degree name (e.g., Mestrado / Doutorado / Master / Doctorate)
+	\tl_gset:Nx \g_coppe_degreename_tl
+	{ \coppe_str_get:nn { degname / \coppe@degree } { \l_coppe_lang_main_tl } }
+	\tl_gset:Nx \g_coppe_degreename_second_tl
+	{ \coppe_str_get:nn { degname / \coppe@degree } { \l_coppe_lang_second_tl } }
+	
+	% Document type (e.g., Dissertação / Tese / Dissertation / Thesis)
+	\tl_gset:Nx \g_coppe_doctype_tl
+	{ \coppe_str_get:nn { doctype / \coppe@degree } { \l_coppe_lang_main_tl } }
+	\tl_gset:Nx \g_coppe_doctype_second_tl
+	{ \coppe_str_get:nn { doctype / \coppe@degree } { \l_coppe_lang_second_tl } }
+	
+	% Legacy macro shims (so the rest of the class continues to work)
+	\tl_gset_eq:NN \@degreename \g_coppe_degreename_tl
+	\tl_gset_eq:NN \local@doctype \g_coppe_doctype_tl
+}
+
+% -- 2.2 Months (use babel; no hard-coded month tables)
+\cs_new:Npn \coppe_month_main:
+{
+	\monthname % in whatever language is currently selected (we selected main above)
+}
+\cs_new_protected:Npn \coppe_month_second:
+{
+	\begingroup
+	\str_case:nnF { \l_coppe_lang_second_tl }
+	{ {br}{\selectlanguage{brazilian}}
+		{en}{\selectlanguage{english}}
+		{es}{\selectlanguage{spanish}} }
+	{ \selectlanguage{english} }
+	\monthname
+	\endgroup
+}
+
+% Legacy macro shims for month names:
+\cs_new:Npn \local@monthname   { \coppe_month_main: }
+\cs_new:Npn \foreign@monthname { \coppe_month_second: }
+
+% -- 2.3 Lists, glossary names, advisor/advisors label (dynamic)
+% We keep the legacy macros but back them with CoppeString lookups.
+\cs_new:Npn \coppe_listabbrev_main:   { \coppe_str_main:n   { listabbreviationname } }
+\cs_new:Npn \coppe_listsymbols_main:  { \coppe_str_main:n   { listsymbolname } }
+\cs_new:Npn \coppe_glossary_main:     { \coppe_str_main:n   { glossaryname } }
+
+% Dynamic advisor label (singular/plural) in main & second languages
+\cs_new:Npn \coppe_advisor_label_main:
+{
+	\int_compare:nNnTF { \@advisor } > { 1 }
+	{ \coppe_str_main:n { advisors_label } } % plural
+	{ \coppe_str_main:n { advisor_label } }  % singular
+}
+\cs_new:Npn \coppe_advisor_label_second:
+{
+	\int_compare:nNnTF { \@advisor } > { 1 }
+	{ \coppe_str_second:n { advisors_label } }
+	{ \coppe_str_second:n { advisor_label } }
+}
+
+% Legacy macro shims:
+\cs_new:Npn \listabbreviationname { \coppe_listabbrev_main: }
+\cs_new:Npn \listsymbolname       { \coppe_listsymbols_main: }
+\cs_new:Npn \glossaryname         { \coppe_glossary_main: }
+\cs_new:Npn \local@advisorstring  { \coppe_advisor_label_main: }
+\cs_new:Npn \foreign@advisorstring{ \coppe_advisor_label_second: }
+
+% -- 2.4 “Approved by” label (genderless in EN/ES; feminine in PT as default thesis wording)
+% You already created keys in lang files: approved_by.
+% Keep Portuguese feminine default (“Aprovada por”) as in the class, unless maledoc=true.
+\cs_new:Npn \coppe_approved_main:
+{
+	\coppe_str_main:n { approved_by }
+}
+
+\ExplSyntaxOff
+
+% Run the setup once we know degree/lang
+\AtBeginDocument{\coppe_setup_degree_strings:}
+
+% Keep the bibname tweak you had for English captions:
 %    \end{macrocode}
 %
-% \begin{macro}{\department}
-% This macro is used to set the author's affiliation. There are twelve options
-% which correspond to all academic units at COPPE/UFRJ. It defines the current
-% and the foreign names of these units.
-%    \begin{macrocode}
-\newcommand\department[1]{%
-  \ifthenelse{\equal{#1}{PEB}}
-    {\global\def\local@deptname{Engenharia Biom{\' e}dica}
-     \global\def\foreign@deptname{Biomedical Engineering}}{}
-  \ifthenelse{\equal{#1}{PEC}}
-    {\global\def\local@deptname{Engenharia Civil}
-     \global\def\foreign@deptname{Civil Engineering}}{}
-  \ifthenelse{\equal{#1}{PEE}}
-    {\global\def\local@deptname{Engenharia El{\' e}trica}
-     \global\def\foreign@deptname{Electrical Engineering}}{}
-  \ifthenelse{\equal{#1}{PEM}}
-    {\global\def\local@deptname{Engenharia Mec{\^ a}nica}
-     \global\def\foreign@deptname{Mechanical Engineering}}{}
-  \ifthenelse{\equal{#1}{PEMM}}
-    {\global\def\local@deptname{Engenharia Metal{\' u}rgica e de Materiais}
-\global\def\foreign@deptname{Metallurgical and Materials Engineering}}{}
-  \ifthenelse{\equal{#1}{PEN}}
-    {\global\def\local@deptname{Engenharia Nuclear}
-     \global\def\foreign@deptname{Nuclear Engineering}}{}
-  \ifthenelse{\equal{#1}{PENO}}
-    {\global\def\local@deptname{Engenharia Oce{\^ a}nica}
-     \global\def\foreign@deptname{Ocean Engineering}}{}
-  \ifthenelse{\equal{#1}{PPE}}
-    {\global\def\local@deptname{Planejamento Energ{\' e}tico}
-     \global\def\foreign@deptname{Energy Planning}}{}
-  \ifthenelse{\equal{#1}{PEP}}
-    {\global\def\local@deptname{Engenharia de Produ{\c c}{\~ a}o}
-     \global\def\foreign@deptname{Production Engineering}}{}
-  \ifthenelse{\equal{#1}{PEQ}}
-    {\global\def\local@deptname{Engenharia Qu{\' i}mica}
-     \global\def\foreign@deptname{Chemical Engineering}}{}
-  \ifthenelse{\equal{#1}{PESC}}
-    {\global\def\local@deptname{Engenharia de Sistemas e Computa{\c c}{\~ a}o}
-     \global\def\foreign@deptname{Systems Engineering and Computer Science}}{}
-  \ifthenelse{\equal{#1}{PET}}
-    {\global\def\local@deptname{Engenharia de Transportes}
-     \global\def\foreign@deptname{Transportation Engineering}}{}
-  \ifthenelse{\equal{#1}{PENT}}
-    {\global\def\local@deptname{Engenharia de Nanotecnologia}
-      \global\def\foreign@deptname{Nanotechnology Engineering}}{}
-}
-%    \end{macrocode}
 % \changes{v3.0}{2020/03/02}{Added new course on Nanotechnology.}
 % \changes{v3.1}{2022/03/07}{Included a sort key in symbl}
-% \end{macro}
 %
 %
 % \begin{macro}{\title}
@@ -2314,6 +2299,10 @@ postamble
 \coppe_str_set:nnn {listabbreviationname}{br}{Lista de Abreviaturas}
 \coppe_str_set:nnn {listsymbolname}{br}{Lista de Símbolos}
 \coppe_str_set:nnn {glossaryname}{br}{Glossário}
+\coppe_str_set:nnn {degperson/msc/m}{br}{Mestre}
+\coppe_str_set:nnn {degperson/msc/f}{br}{Mestra}
+\coppe_str_set:nnn {degperson/phd/m}{br}{Doutor}
+\coppe_str_set:nnn {degperson/phd/f}{br}{Doutora}
 \ExplSyntaxOff
 %</lang-br>
 %    \end{macrocode}
@@ -2354,6 +2343,10 @@ postamble
 \coppe_str_set:nnn {listabbreviationname}{en}{List of Abbreviations}
 \coppe_str_set:nnn {listsymbolname}{en}{List of Symbols}
 \coppe_str_set:nnn {glossaryname}{en}{Glossary}
+\coppe_str_set:nnn {degperson/msc/m}{en}{Master}
+\coppe_str_set:nnn {degperson/msc/f}{en}{Master}
+\coppe_str_set:nnn {degperson/phd/m}{en}{Doctor}
+\coppe_str_set:nnn {degperson/phd/f}{en}{Doctor}
 \ExplSyntaxOff
 %</lang-en>
 %    \end{macrocode}
@@ -2387,6 +2380,7 @@ postamble
 \coppe_str_set:nnn {doctype/msc}{es}{Tesis de maestría}
 \coppe_str_set:nnn {doctype/phd}{es}{Tesis doctoral}
 
+
 % --- Labels
 \coppe_str_set:nnn {advisor_label}{es}{Director}
 \coppe_str_set:nnn {advisors_label}{es}{Directores}
@@ -2394,6 +2388,10 @@ postamble
 \coppe_str_set:nnn {listabbreviationname}{es}{Lista de abreviaturas}
 \coppe_str_set:nnn {listsymbolname}{es}{Lista de símbolos}
 \coppe_str_set:nnn {glossaryname}{es}{Glosario}
+\coppe_str_set:nnn {degperson/msc/m}{es}{Maestro}
+\coppe_str_set:nnn {degperson/msc/f}{es}{Maestra}
+\coppe_str_set:nnn {degperson/phd/m}{es}{Doctor}
+\coppe_str_set:nnn {degperson/phd/f}{es}{Doctora}
 \ExplSyntaxOff
 %</lang-es>
 %    \end{macrocode}
