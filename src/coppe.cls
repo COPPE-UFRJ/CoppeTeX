@@ -51,29 +51,67 @@
 %%   Right brace   \}     Tilde         \~}
 %%
 \def\filename{coppe.dtx}
-\def\fileversion{v3.4}
-\def\filedate{2024/01/24}
-\NeedsTeXFormat{LaTeX2e}[1995/12/01]
+\def\fileversion{v4.0}
+\def\filedate{2025/10/18}
+\NeedsTeXFormat{LaTeX2e}[2023/11/01]
 \ProvidesClass{coppe}[\filedate\ \fileversion\ COPPE Dissertations and Thesis]
-\LoadClass[12pt,a4paper,oneside]{book}
-\RequirePackage[sort&compress]{natbib}
-\RequirePackage{hyphenat}
-\RequirePackage{lastpage}
-\RequirePackage{ifthen}
-\RequirePackage{graphicx}
-\RequirePackage{setspace}
-\RequirePackage{tabularx}
-\RequirePackage{etoolbox}
-\RequirePackage{eqparbox}
-\RequirePackage{ltxcmds}
-\RequirePackage[T1]{fontenc}
-\RequirePackage[a4paper,bindingoffset=0.0cm,vcentering=true,%
-top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
+\LoadClass[12pt,a4paper,twoside]{book}
+%% We are no longer using bibtex and natbib,
+%% migrating to biblatex
+%% \RequirePackage[sort&compress]{natbib}
+\RequirePackage{hyphenat}   % Hyphenation control (e.g., \hyp{} and disabling hyphenation in words)
+\RequirePackage{lastpage}   % Provides label/anchor for the last page (e.g., page X of \pageref{LastPage})
+\RequirePackage{ifthen}     % Basic conditional logic (\ifthenelse) for simple class/package switches
+\RequirePackage{graphicx}   % Graphics inclusion and scaling (\includegraphics, rotation, clipping)
+\RequirePackage{setspace}   % Line spacing control (\singlespacing, \onehalfspacing, \doublespacing)
+\RequirePackage{tabularx}   % Tables with automatic column width (X column) and full-width tabulars
+\RequirePackage{etoolbox}   % Robust programming tools: toggles, conditionals, patching (\apptocmd, \pretocmd)
+\RequirePackage{eqparbox}   % Equal-width boxes for aligned text blocks across lines/columns
+\RequirePackage{ltxcmds}    % Low-level LaTeX kernel helpers used by other packages and internal code
+\RequirePackage{expl3}      % LaTeX3 programming layer (token lists, properties, sequences, etc.)
+\RequirePackage{xparse}     % High-level interface to define commands/environments (\NewDocumentCommand)
+\RequirePackage{setspace}   % Used to control spacing and font size in different environments
+\ExplSyntaxOn               % Enable LaTeX3 (expl3) syntax for subsequent definitions
+\RequirePackage[T1]{fontenc} % CHECK LuaLaTeX compatibility
+\RequirePackage{kvoptions} % Drop traditional options
+\SetupKeyvalOptions{family=coppe, prefix=coppe@}
+\DeclareStringOption[br]{lang}   % br | en | es |
+\DeclareStringOption[msc]{degree}% msc | phd | qual | proposal
+\DeclareStringOption[number]{bibtype} % number | alpha
+\DeclareBoolOption[false]{doublespacing} % oneandhalfspace | doublespace
+\ProcessKeyvalOptions*
+
+\newcommand*\bindingoffset{0mm}
+\newcommand*\setbindingoffset[1]{\renewcommand*\bindingoffset{#1}}
+\RequirePackage[a4paper, % Brazilian standard
+bindingoffset=\bindingoffset, % There are no instructions for binding offset, but we have to make a command to change this
+%%vcentering=true,%
+top=3cm,
+bottom=2cm,
+inner=3.0cm,
+outer=2.0cm]{geometry}
 \def\CoppeTeX{{\rm C\kern-.05em{\sc o\kern-.025em p\kern-.025em
 p\kern-.025em e}}\kern-.08em
 T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
+\onehalfspacing   % UFRJ/ABNT require 1.5 lines
+\ifcoppe@doublespacing % can make it easer to comment
+\doublespacing
+\fi
+\AtBeginEnvironment{quotation}{\singlespacing\small}
+\AtEndEnvironment{quotation}{\onehalfspacing\normalsize}
+\AtBeginEnvironment{quote}{\singlespacing\small}
+\AtEndEnvironment{quote}{\onehalfspacing\normalsize}
+\AtBeginEnvironment{figure}{\singlespacing\small}
+\AtEndEnvironment{figure}{\onehalfspacing\normalsize}
+\AtBeginEnvironment{table}{\singlespacing\small}
+\AtEndEnvironment{table}{\onehalfspacing\normalsize}
+\AtBeginEnvironment{thebibliography}{\singlespacing}
+\AtEndEnvironment{thebibliography}{\onehalfspacing}
+
+
 \newboolean{maledoc}
 \setboolean{maledoc}{false}
+
 \newif\if@english\@englishfalse
 \DeclareOption{english}{\@englishtrue}
 \DeclareOption{msc}{%
@@ -113,10 +151,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \DeclareOption{numbers}{%
   \PassOptionsToPackage{numbers}{natbib}
 }
-\onehalfspacing
-\DeclareOption{doublespacing}{%
-  \doublespacing
-}
+
 \ProcessOptions\relax
 \if@english
   \RequirePackage[brazilian,english]{babel}
@@ -807,10 +842,10 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   degree of \foreign@degname\ of Science (\@degree)}
 }
 \newcommand{\annex}{
-    \iflanguage{brazilian}
-        {\renewcommand{\appendixname}{Anexo}}
-        {\renewcommand{\appendixname}{Annex}}
-    \appendix
+\iflanguage{brazilian}
+{\renewcommand{\appendixname}{Anexo}}
+{\renewcommand{\appendixname}{Annex}}
+\appendix
 }
 %% 
 %%

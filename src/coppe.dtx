@@ -5,7 +5,7 @@
 % It uses the doc utility to generate documentations for the 'coppe'
 % document class and the 'coppe-unsrt' BibTeX style.
 %
-% Copyright (C) 2024 CoppeTeX Project and any individual authors listed
+% Copyright (C) 2024,2025 CoppeTeX Project and any individual authors listed
 % elsewhere in this file.
 %
 % This program is free software; you can redistribute it and/or modify
@@ -21,10 +21,10 @@
 % version 3 along with this package (see COPYING file).
 % If not, see <http://www.gnu.org/licenses/>.
 %
-% Author(s): Vicente Helano
+% Author(s): Geraldo Xexéo (v3 and v4 most recent)
+%			 Vicente Helano (original v1.0)
 %            George O. Ainsworth Jr.
-%            Geraldo Xexéo
-%            Eduardo Mangeli
+%            Eduardo Mangeli (v3)
 %
 % \fi
 %
@@ -32,6 +32,7 @@
 %<*driver>
 \documentclass[a4paper]{ltxdoc}
 \usepackage[T1]{fontenc}
+
 \usepackage[colorlinks={true},breaklinks={true}]{hyperref}
 
 \usepackage{breakurl}
@@ -88,6 +89,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \changes{v3.2}{2023/11/11}{Fixed version problem between cls and dtx.}
 % \changes{v3.3}{2024/01/24}{Extend abrev to work like symb and accept a sorting key}
 % \changes{v3.4}{2024/02/22}{Some examples for figures, tables, longtables, etc.}
+% \changes{v4.0}{2025/10/18}{A lot of changes to follow new ABNT and UFRJ rules}
 %
 % \DoNotIndex{\!,\',\.,\>,\^,\`,\',\=,\\}
 % \DoNotIndex{\@arabic,\@auxout,\@biblabel,\@bsphack,\@clubpenalty,\@empty}
@@ -174,10 +176,13 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % exams, we provide this option just for convenience, as this exam is a requisite
 % to obtain the DSc degree and, for some of the programs, the MSc degree.
 %
-% In which follows, it is described the user interface
-% of the |coppe| class. Some details about using the style files cited above
-% are also given. We use the term \emph{thesis} to generally refer to
-% dissertation, qualifying exam, and thesis itself.
+%
+% The following sections describes the user interface of the |coppe| class. 
+% It also provides details on the use of the style files mentioned above. 
+% Throughout this document, the term \emph{thesis} is used generically to 
+% refer to a dissertation, qualifying exam, or thesis proper.
+%
+% In 2025, a new version of ABNT and rules from UFRJ were included in this package.
 %
 % \section{License}
 %
@@ -217,26 +222,27 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % back matter usually consists of bibliographic references,
 % appendices and index.
 %
-% You must invoke the |\frontmatter| macro immediately after the |\maketitle|
-% one. The |\mainmatter| command comes right before the first chapter,
+%\textbf{ You must invoke the} |\frontmatter| \textbf{macro immediately after the} |\maketitle| command.
+% The |\mainmatter| command comes right before the first chapter,
 % and |\backmatter| must be typed before the list of references.
 %
 % \subsection*{Front cover}
 %
-% This element was recently introduced by the Academic Registry. It is
+% This element was introduced by the Academic Registry. It is
 % automatically constructed by the |\maketitle| command.
 %
 % \subsection*{Front face}
 %
-% The front face is unnumbered. There, it is not allowed to use
+% The front face is unnumbered. There, the document is not allowed to use
 % hyphenation~\cite{TNR08a}. It is constructed by calling |\maketitle|.
 % Next, it is described the commands used to
 % enter the information required to create it.
 %
 % \DescribeMacro{\author}
-% The |\author| command was redefined. Here, it takes two arguments: the
+% The |\author| command in \CoppeTeX takes two arguments: the
 % author's first names and surname, e.g., |\author{First Names}{Surname}|.
-% The words should be typed with only first letters in uppercase.
+% The words should be typed with only first letters in uppercase. This will
+% reflect also in the \textit{Ficha Catalogrática}.
 %
 % \DescribeMacro{\title}
 % \DescribeMacro{\foreigntitle}
@@ -245,7 +251,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % Brazilian Portuguese and English.  The |babel| package is automatically
 % loaded by |coppe.cls|, so you do not need to load it again. The Brazilian
 % Portuguese is the main language and the English is only required for the
-% foreign abstract.
+% foreign abstract. It is also possible to use Spanish.
 %
 % \DescribeMacro{\advisor}
 % \DescribeMacro{\examiner}
@@ -273,7 +279,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % Remember that all names must be given before calling |\maketitle|.
 %
 % \DescribeMacro{\department}
-% The Alberto Luiz Coimbra institute is divided into 12 academic units:
+% The Alberto Luiz Coimbra institute is divided into 13 academic units:
 % Biomedical Engineering (PEB),
 % Civil Engineering (PEC),
 % Electrical Engineering (PEE),
@@ -283,6 +289,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % Ocean Engineering (PENO),
 % Energy Planning (PPE),
 % Production Engineering (PEP),
+% Nano Technology (PENT),
 % Chemical Engineering (PEQ),
 % Systems Engineering and Computer Science (PESC), and
 % Transportation Engineering (PET).
@@ -1102,38 +1109,127 @@ No modelo \CoppeTeX os anexos devem obrigtoriamente vir depois dos apêndices e 
 %
 % \section{Implementation}
 %
-% \subsection{The `\texttt{coppe.cls}' file}
+% The `\texttt{coppe.cls}' file}
 %
-%    \begin{macrocode}
 %<*class>
+% Name of the class, version and date
+%    \begin{macrocode}
 \def\filename{coppe.dtx}
-\def\fileversion{v3.4}
-\def\filedate{2024/01/24}
-\NeedsTeXFormat{LaTeX2e}[1995/12/01]
+\def\fileversion{v4.0}
+\def\filedate{2025/10/18}
+%    \end{macrocode}
+% Requires a new Kernel
+%    \begin{macrocode}
+\NeedsTeXFormat{LaTeX2e}[2023/11/01]
+%    \end{macrocode}
+% Class provided
+%    \begin{macrocode}
 \ProvidesClass{coppe}[\filedate\ \fileversion\ COPPE Dissertations and Thesis]
-\LoadClass[12pt,a4paper,oneside]{book}
-\RequirePackage[sort&compress]{natbib}
-\RequirePackage{hyphenat}
-\RequirePackage{lastpage}
-\RequirePackage{ifthen}
-\RequirePackage{graphicx}
-\RequirePackage{setspace}
-\RequirePackage{tabularx}
-\RequirePackage{etoolbox}
-\RequirePackage{eqparbox}
-\RequirePackage{ltxcmds}
-\RequirePackage[T1]{fontenc}
-\RequirePackage[a4paper,bindingoffset=0.0cm,vcentering=true,%
-top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
+%    \end{macrocode}
+% Base class is book, \CoppeTeX is now twosided, due to \citep{normasibi}
+% \citep{normassibi} asks form 12pt
+%    \begin{macrocode}
+\LoadClass[12pt,a4paper,twoside]{book}
+%    \end{macrocode}
+%% We are no longer using bibtex and natbib, 
+%% migrating to biblatex
+%% \RequirePackage[sort&compress]{natbib}
+% \section{Packages used
+% Packages that are used (general)
+%    \begin{macrocode}
+\RequirePackage{hyphenat}   % Hyphenation control (e.g., \hyp{} and disabling hyphenation in words)
+\RequirePackage{lastpage}   % Provides label/anchor for the last page (e.g., page X of \pageref{LastPage})
+\RequirePackage{ifthen}     % Basic conditional logic (\ifthenelse) for simple class/package switches
+\RequirePackage{graphicx}   % Graphics inclusion and scaling (\includegraphics, rotation, clipping)
+\RequirePackage{setspace}   % Line spacing control (\singlespacing, \onehalfspacing, \doublespacing)
+\RequirePackage{tabularx}   % Tables with automatic column width (X column) and full-width tabulars
+\RequirePackage{etoolbox}   % Robust programming tools: toggles, conditionals, patching (\apptocmd, \pretocmd)
+\RequirePackage{eqparbox}   % Equal-width boxes for aligned text blocks across lines/columns
+\RequirePackage{ltxcmds}    % Low-level LaTeX kernel helpers used by other packages and internal code
+\RequirePackage{expl3}      % LaTeX3 programming layer (token lists, properties, sequences, etc.)
+\RequirePackage{xparse}     % High-level interface to define commands/environments (\NewDocumentCommand)
+\RequirePackage{setspace}   % Used to control spacing and font size in different environments
+\ExplSyntaxOn               % Enable LaTeX3 (expl3) syntax for subsequent definitions
+%    \end{macrocode}
+% Font is T1 for latin, should we drop it for LuaLaTeX?
+%    \begin{macrocode}
+\RequirePackage[T1]{fontenc} % CHECK LuaLaTeX compatibility
+%    \end{macrocode}
+% \section{Options Processing}
+% We start with option processing, using the kvoptions package.
+% This is new in v4.0 and traditional options should be dropped
+%    \begin{macrocode}
+\RequirePackage{kvoptions} % Drop traditional options
+\SetupKeyvalOptions{family=coppe, prefix=coppe@}
+%    \end{macrocode}
+% This are my options now: language, degree and bibtype
+%    \begin{macrocode}
+\DeclareStringOption[br]{lang}   % br | en | es | 
+\DeclareStringOption[msc]{degree}% msc | phd | qual | proposal
+\DeclareStringOption[number]{bibtype} % number | alpha
+\DeclareBoolOption[false]{doublespacing} % oneandhalfspace | doublespace
+\ProcessKeyvalOptions*
+%    \end{macrocode}
+
+% \section{Geometry}
+% Geometry is defined in \citep{normasibi}
+% Instead of using left and right we use inner and outer, thinking in binding terms
+%    \begin{macrocode}
+\newcommand*\bindingoffset{0mm}
+\newcommand*\setbindingoffset[1]{\renewcommand*\bindingoffset{#1}}
+\RequirePackage[a4paper, % Brazilian standard
+bindingoffset=\bindingoffset, % There are no instructions for binding offset, but we have to make a command to change this
+%%vcentering=true,%
+top=3cm,
+bottom=2cm,
+inner=3.0cm,
+outer=2.0cm]{geometry}
+% This is a macro for our
 \def\CoppeTeX{{\rm C\kern-.05em{\sc o\kern-.025em p\kern-.025em
 p\kern-.025em e}}\kern-.08em
 T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %    \end{macrocode}
+% \section{Spacing and Font Size}
+% Here is the default one-and-a-half line spacing.
+% Users can change to double spacing by passing the |doublespacing| option.
+%
+%    \begin{macrocode}
+% --- Global rule (main text)
+\onehalfspacing   % UFRJ/ABNT require 1.5 lines
+\ifcoppe@doublespacing % can make it easer to comment
+\doublespacing
+\fi
+% --- Local overrides for special environments
+\AtBeginEnvironment{quotation}{\singlespacing\small}
+\AtEndEnvironment{quotation}{\onehalfspacing\normalsize}
+\AtBeginEnvironment{quote}{\singlespacing\small}
+\AtEndEnvironment{quote}{\onehalfspacing\normalsize}
+\AtBeginEnvironment{figure}{\singlespacing\small}
+\AtEndEnvironment{figure}{\onehalfspacing\normalsize}
+\AtBeginEnvironment{table}{\singlespacing\small}
+\AtEndEnvironment{table}{\onehalfspacing\normalsize}
+\AtBeginEnvironment{thebibliography}{\singlespacing}
+\AtEndEnvironment{thebibliography}{\onehalfspacing}
+%    \end{macrocode}
+
+
+
+
+% \section{Male or Female?}
+
+
 %
 %    \begin{macrocode}
 \newboolean{maledoc}
 \setboolean{maledoc}{false}
+%    \end{macrocode}
 %
+
+
+
+
+
+
 % Class options.
 % If you are writing a text in English, you must turn ``English'' on.
 % Otherwise, Portuguese is considered the main language.
@@ -1177,14 +1273,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \PassOptionsToPackage{numbers}{natbib}
 }
 %    \end{macrocode}
-% Here is the default one-and-a-half line spacing.
-% Users can change to double spacing by passing the |doublespacing| option.
-%    \begin{macrocode}
-\onehalfspacing
-\DeclareOption{doublespacing}{%
-  \doublespacing
-}
-%    \end{macrocode}
+
 %
 %    \begin{macrocode}
 \ProcessOptions\relax
@@ -1199,6 +1288,87 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %    \end{macrocode}
 % \changes{v3.0}{2020/03/02}{Added support for monographs in English.}
 % \changes{v3.4.1}{2025/02/13}{Fix english option to consider brazilian a second language, describe it in document}
+%
+% \subsection{I18N Engine}
+%    \begin{macrocode}
+% =========================
+% Core localization (no if's)
+% =========================
+\ExplSyntaxOn
+% --- Public options (assume you've already set them with kvoptions)
+% \coppe@lang = br|en|es  (default br)
+% Secondary language rule: pt -> en, en|es -> pt (br)
+\tl_new:N \l_coppe_lang_main_tl
+\tl_new:N \l_coppe_lang_second_tl
+\tl_set:Nn \l_coppe_lang_main_tl { \coppe@lang }
+\cs_new_protected:Npn \coppe_set_secondary_lang:
+{
+	\str_case:nnF { \coppe@lang }
+	{
+		{br}{ \tl_set:Nn \l_coppe_lang_second_tl { en } }
+		{en}{ \tl_set:Nn \l_coppe_lang_second_tl { br } }
+		{es}{ \tl_set:Nn \l_coppe_lang_second_tl { br } }
+	}{ \tl_set:Nn \l_coppe_lang_second_tl { en } }
+}
+\coppe_set_secondary_lang:
+
+% --- Select babel's main language using lang=
+% Load all and select the main one so hyphenation is correct.
+\RequirePackage[spanish,english,brazilian]{babel}
+\str_case:nnF { \coppe@lang }
+{
+	{br}{\selectlanguage{brazilian}}
+	{en}{\selectlanguage{english}}
+	{es}{\selectlanguage{spanish}}
+}{\selectlanguage{brazilian}} % default
+
+% --- String stores (per-domain) using expl3 props
+% Generic strings (UI labels, doc types, degree names...)
+\prop_new:N \g_coppe_strings_prop
+% Department full names (key = program code like PESC, value = localized name)
+\prop_new:N \g_coppe_dept_prop
+
+% Setters used by language modules
+\cs_new_protected:Npn \coppe_str_set:nnn #1#2#3
+{ % #1 = key (e.g., doctype/msc), #2 = lang (br|en|es), #3 = value
+	\prop_gput:Nnx \g_coppe_strings_prop { #1 / #2 } { #3 } }
+\cs_new_protected:Npn \coppe_dept_set:nnn #1#2#3
+{ % #1 = PESC, #2 = lang, #3 = localized name
+	\prop_gput:Nnx \g_coppe_dept_prop { #1 / #2 } { #3 } }
+
+% Getters
+\cs_new:Npn \coppe_str_get:nn #1#2
+{ \prop_item:Nn \g_coppe_strings_prop { #1 / #2 } }
+\cs_new:Npn \coppe_dept_get:nn #1#2
+{ \prop_item:Nn \g_coppe_dept_prop   { #1 / #2 } }
+
+% Convenience: in current and secondary language
+\cs_new:Npn \coppe_str_main:n   #1 { \coppe_str_get:nn  { #1 } { \l_coppe_lang_main_tl } }
+\cs_new:Npn \coppe_str_second:n #1 { \coppe_str_get:nn  { #1 } { \l_coppe_lang_second_tl } }
+\cs_new:Npn \coppe_dept_main:n  #1 { \coppe_dept_get:nn { #1 } { \l_coppe_lang_main_tl } }
+\cs_new:Npn \coppe_dept_second:n#1 { \coppe_dept_get:nn { #1 } { \l_coppe_lang_second_tl } }
+
+% Public document commands (you’ll use these throughout)
+\NewDocumentCommand{\CoppeString}{m}{\coppe_str_main:n{#1}}
+\NewDocumentCommand{\CoppeStringSecond}{m}{\coppe_str_second:n{#1}}
+
+% Department setter API (replaces big if-then cascades)
+% \department{PESC} will set \local@deptname (main) and \foreign@deptname (second)
+\NewDocumentCommand{\department}{m}{
+	\global\def\local@deptname   {\coppe_dept_main:n{#1}}
+	\global\def\foreign@deptname {\coppe_dept_second:n{#1}}
+}
+
+% Titles/labels that depend on language:
+% Example keys you'll use later: degname/msc, doctype/msc, advisor_label, etc.
+\ExplSyntaxOff
+%    \end{macrocode}
+%    \begin{macrocode}
+% \subsection{I18N Languages}
+\InputIfFileExists{coppe-lang-br.def}{}{\ClassWarning{coppe}{coppe-lang-br.def not found}}
+\InputIfFileExists{coppe-lang-en.def}{}{\ClassWarning{coppe}{coppe-lang-en.def not found}}
+\InputIfFileExists{coppe-lang-es.def}{}{\ClassWarning{coppe}{coppe-lang-es.def not found}}
+%    \end{macrocode}
 %
 % \begin{macro}{\department}
 % This macro is used to set the author's affiliation. There are twelve options
@@ -2069,36 +2239,17 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 }
 %
 %    \end{macrocode}
-%
 %    \begin{macrocode}
-%</class>
-%    \end{macrocode}
-%
-%    \begin{macrocode}
-%<*glossary>
-actual '='
-quote '!'
-level '>'
-%%%% delim_0   ", p. "
-delim_0 "\\dotfill "
-lethead_flag  0
-headings_flag 0
-preamble
-"\n\\begin{theglossary}\n  \\makeatletter"
-postamble
-"\n  \\end{theglossary}\n"
-%</glossary>
-%    \end{macrocode}
-%    \begin{macrocode}
-\newcommand{\annex}{
-    \iflanguage{brazilian}
-        {\renewcommand{\appendixname}{Anexo}}
-        {\renewcommand{\appendixname}{Annex}}
-    \appendix
-}
-%    \end{macrocode}
 % \changes{v3.5}{2024/02/23}{New command annex}
 % \changes{v3.5.1}{2024/02/23}{New command annex now supports brazilian or english}
+\newcommand{\annex}{
+	\iflanguage{brazilian}
+	{\renewcommand{\appendixname}{Anexo}}
+	{\renewcommand{\appendixname}{Annex}}
+	\appendix
+}
+%    \end{macrocode}
+%
 %
 % \section*{Acknowledgments}
 %
@@ -2113,4 +2264,138 @@ postamble
 % \Finale
 % \PrintChanges
 % \PrintIndex
+%</class>
+%<*glossary>
+actual '='
+quote '!'
+level '>'
+%%%% delim_0   ", p. "
+delim_0 "\\dotfill "
+lethead_flag  0
+headings_flag 0
+preamble
+"\n\\begin{theglossary}\n  \\makeatletter"
+postamble
+"\n  \\end{theglossary}\n"
+%</glossary>
+% =========================================================
+% Brazilian Portuguese localization data
+% =========================================================
+%    \begin{macrocode}
+%<*lang-br>
+\ProvidesFile{coppe-lang-br.def}[2025/10/18 CoppeTeX localization: Brazilian Portuguese]
+
+\ExplSyntaxOn
+% --- Departments
+\coppe_dept_set:nnn {PESC}{br}{Engenharia de Sistemas e Computação}
+\coppe_dept_set:nnn {PEB} {br}{Engenharia Biomédica}
+\coppe_dept_set:nnn {PEC} {br}{Engenharia Civil}
+\coppe_dept_set:nnn {PEE} {br}{Engenharia Elétrica}
+\coppe_dept_set:nnn {PEM} {br}{Engenharia Mecânica}
+\coppe_dept_set:nnn {PEMM}{br}{Engenharia Metalúrgica e de Materiais}
+\coppe_dept_set:nnn {PEN} {br}{Engenharia Nuclear}
+\coppe_dept_set:nnn {PENO}{br}{Engenharia Oceânica}
+\coppe_dept_set:nnn {PPE} {br}{Planejamento Energético}
+\coppe_dept_set:nnn {PEP} {br}{Engenharia de Produção}
+\coppe_dept_set:nnn {PEQ} {br}{Engenharia Química}
+\coppe_dept_set:nnn {PET} {br}{Engenharia de Transportes}
+\coppe_dept_set:nnn {PENT}{br}{Engenharia de Nanotecnologia}
+
+% --- Degree & doc types
+\coppe_str_set:nnn {degname/msc}{br}{Mestrado}
+\coppe_str_set:nnn {degname/phd}{br}{Doutorado}
+\coppe_str_set:nnn {doctype/msc}{br}{Dissertação}
+\coppe_str_set:nnn {doctype/phd}{br}{Tese}
+
+% --- Labels
+\coppe_str_set:nnn {advisor_label}{br}{Orientador}
+\coppe_str_set:nnn {advisors_label}{br}{Orientadores}
+\coppe_str_set:nnn {approved_by}{br}{Aprovada por}
+\coppe_str_set:nnn {listabbreviationname}{br}{Lista de Abreviaturas}
+\coppe_str_set:nnn {listsymbolname}{br}{Lista de Símbolos}
+\coppe_str_set:nnn {glossaryname}{br}{Glossário}
+\ExplSyntaxOff
+%</lang-br>
+%    \end{macrocode}
+
+% =========================================================
+% English localization data
+% =========================================================
+%    \begin{macrocode}
+%<*lang-en>
+\ProvidesFile{coppe-lang-en.def}[2025/10/18 CoppeTeX localization: English]
+
+\ExplSyntaxOn
+% --- Departments
+\coppe_dept_set:nnn {PESC}{en}{Systems Engineering and Computer Science}
+\coppe_dept_set:nnn {PEB} {en}{Biomedical Engineering}
+\coppe_dept_set:nnn {PEC} {en}{Civil Engineering}
+\coppe_dept_set:nnn {PEE} {en}{Electrical Engineering}
+\coppe_dept_set:nnn {PEM} {en}{Mechanical Engineering}
+\coppe_dept_set:nnn {PEMM}{en}{Metallurgical and Materials Engineering}
+\coppe_dept_set:nnn {PEN} {en}{Nuclear Engineering}
+\coppe_dept_set:nnn {PENO}{en}{Ocean Engineering}
+\coppe_dept_set:nnn {PPE} {en}{Energy Planning}
+\coppe_dept_set:nnn {PEP} {en}{Production Engineering}
+\coppe_dept_set:nnn {PEQ} {en}{Chemical Engineering}
+\coppe_dept_set:nnn {PET} {en}{Transportation Engineering}
+\coppe_dept_set:nnn {PENT}{en}{Nanotechnology Engineering}
+
+% --- Degree & doc types
+\coppe_str_set:nnn {degname/msc}{en}{Master}
+\coppe_str_set:nnn {degname/phd}{en}{Doctorate}
+\coppe_str_set:nnn {doctype/msc}{en}{Dissertation}
+\coppe_str_set:nnn {doctype/phd}{en}{Thesis}
+
+% --- Labels
+\coppe_str_set:nnn {advisor_label}{en}{Advisor}
+\coppe_str_set:nnn {advisors_label}{en}{Advisors}
+\coppe_str_set:nnn {approved_by}{en}{Approved by}
+\coppe_str_set:nnn {listabbreviationname}{en}{List of Abbreviations}
+\coppe_str_set:nnn {listsymbolname}{en}{List of Symbols}
+\coppe_str_set:nnn {glossaryname}{en}{Glossary}
+\ExplSyntaxOff
+%</lang-en>
+%    \end{macrocode}
+
+% =========================================================
+% Spanish localization data
+% =========================================================
+%    \begin{macrocode}
+%<*lang-es>
+\ProvidesFile{coppe-lang-es.def}[2025/10/18 CoppeTeX localization: Spanish]
+
+\ExplSyntaxOn
+% --- Departments
+\coppe_dept_set:nnn {PESC}{es}{Ingeniería de Sistemas y Computación}
+\coppe_dept_set:nnn {PEB} {es}{Ingeniería Biomédica}
+\coppe_dept_set:nnn {PEC} {es}{Ingeniería Civil}
+\coppe_dept_set:nnn {PEE} {es}{Ingeniería Eléctrica}
+\coppe_dept_set:nnn {PEM} {es}{Ingeniería Mecánica}
+\coppe_dept_set:nnn {PEMM}{es}{Ingeniería Metalúrgica y de Materiales}
+\coppe_dept_set:nnn {PEN} {es}{Ingeniería Nuclear}
+\coppe_dept_set:nnn {PENO}{es}{Ingeniería Oceánica}
+\coppe_dept_set:nnn {PPE} {es}{Planificación Energética}
+\coppe_dept_set:nnn {PEP} {es}{Ingeniería de Producción}
+\coppe_dept_set:nnn {PEQ} {es}{Ingeniería Química}
+\coppe_dept_set:nnn {PET} {es}{Ingeniería de Transportes}
+\coppe_dept_set:nnn {PENT}{es}{Ingeniería de Nanotecnología}
+
+% --- Degree & doc types
+\coppe_str_set:nnn {degname/msc}{es}{Maestría}
+\coppe_str_set:nnn {degname/phd}{es}{Doctorado}
+\coppe_str_set:nnn {doctype/msc}{es}{Tesis de maestría}
+\coppe_str_set:nnn {doctype/phd}{es}{Tesis doctoral}
+
+% --- Labels
+\coppe_str_set:nnn {advisor_label}{es}{Director}
+\coppe_str_set:nnn {advisors_label}{es}{Directores}
+\coppe_str_set:nnn {approved_by}{es}{Aprobada por}
+\coppe_str_set:nnn {listabbreviationname}{es}{Lista de abreviaturas}
+\coppe_str_set:nnn {listsymbolname}{es}{Lista de símbolos}
+\coppe_str_set:nnn {glossaryname}{es}{Glosario}
+\ExplSyntaxOff
+%</lang-es>
+%    \end{macrocode}
+
 \endinput
