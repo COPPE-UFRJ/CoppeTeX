@@ -1,0 +1,608 @@
+%% --------------------------------------------------------------------
+%% COPPE Multi-language BibLaTeX style (PT/EN/ES) — ABNT/SiBI (NUMERIC)
+%% Usa o mesmo layout de referências do coppe.bbx, porém com citação numérica.
+%% Regras-chave:
+%% - Sem aspas; sem itálico geral (apenas “In:” e “et al.” em itálico).
+%% - Periódicos e monografias em NEGRITO; artigos/partes em romano.
+%% - Autores: SOBRENOME em MAIÚSCULAS; prenomes em caps normal.
+%% - URL via \href (mesma fonte; sem \url/verbatim).
+%% - DATAS: SEMPRE após os dados de publicação e ANTES de URL/DOI/eprint.
+%% - NOTE: sempre o ÚLTIMO campo (quando existir).
+%% - Numeração: base numeric, sorting=none (ordem de citação).
+%% --------------------------------------------------------------------
+\ProvidesFile{coppe-numeric.bbx}[2025/09/13 COPPE BibLaTeX style (PT/EN/ES, ABNT, numeric)]
+
+% Base: numeric (apenas para a mecânica de rótulos/ordenação de números)
+\RequireBibliographyStyle{numeric}
+
+% Opções coerentes com o layout e com numeração por ordem de citação
+\ExecuteBibliographyOptions{
+  maxnames=3,
+  minnames=1,
+  giveninits=false,
+  date=year,
+  terseinits=false,
+  uniquename=false,
+  isbn=false,
+  url=true,
+  doi=true,
+  eprint=true,
+  sorting=none % garante que os [n] sigam a ordem de citação
+}
+
+% --------------------------------------------------------------------
+% NOMES (ABNT): SOBRENOME em MAIÚSCULAS; prenomes em caps normal
+% --------------------------------------------------------------------
+\newbibmacro*{coppe:name-fg-caps}{%
+  \ifblank{\namepartprefix}{}{\mkbibnameprefix{\namepartprefix}\space}%
+  \mkbibnamefamily{\MakeUppercase{\namepartfamily}}%
+  \ifblank{\namepartsuffix}{}{\addspace\mkbibnamesuffix{\namepartsuffix}}%
+  \ifblank{\namepartgiven}{}{\addcomma\space\mkbibnamegiven{\namepartgiven}}%
+}
+\DeclareNameFormat{author}{\usebibmacro{coppe:name-fg-caps}}
+\DeclareNameFormat{editor}{\usebibmacro{coppe:name-fg-caps}}
+\DeclareNameFormat{translator}{\usebibmacro{coppe:name-fg-caps}}
+\DeclareNameFormat{byeditor}{\usebibmacro{coppe:name-fg-caps}}
+\DeclareNameFormat{holder}{\usebibmacro{coppe:name-fg-caps}}
+\DeclareNameFormat{director}{\usebibmacro{coppe:name-fg-caps}}
+\DeclareNameFormat{producer}{\usebibmacro{coppe:name-fg-caps}}
+
+% --------------------------------------------------------------------
+% FIELD FORMATS (sem aspas/sem itálico em títulos)
+% --------------------------------------------------------------------
+\DeclareFieldFormat{title}{#1}
+\DeclareFieldFormat[article]{title}{#1}
+\DeclareFieldFormat[incollection]{title}{#1}
+\DeclareFieldFormat[inbook]{title}{#1}
+\DeclareFieldFormat[inproceedings]{title}{#1}
+\DeclareFieldFormat[book]{title}{#1}
+\DeclareFieldFormat[thesis]{title}{#1}
+\DeclareFieldFormat[manual]{title}{#1}
+\DeclareFieldFormat[report]{title}{#1}
+\DeclareFieldFormat[standard]{title}{#1}
+\DeclareFieldFormat[online]{title}{#1}
+\DeclareFieldFormat[misc]{title}{#1}
+\DeclareFieldFormat[unpublished]{title}{#1}
+\DeclareFieldFormat[patent]{title}{#1}
+\DeclareFieldFormat[video]{title}{#1}
+\DeclareFieldFormat[audio]{title}{#1}
+\DeclareFieldFormat[dataset]{title}{#1}
+\DeclareFieldFormat[software]{title}{#1}
+\DeclareFieldFormat[legislation]{title}{#1}
+\DeclareFieldFormat{booktitle}{#1}
+\DeclareFieldFormat{maintitle}{#1}
+\DeclareFieldFormat{journaltitle}{#1}
+\DeclareFieldFormat{eventtitle}{#1}
+\DeclareFieldFormat{subtitle}{#1}
+\DeclareFieldFormat{titleaddon}{#1}
+
+% Formatos usados quando o título aparece em citações/labels (evita aspas/itálico)
+\DeclareFieldFormat{citetitle}{#1}
+\DeclareFieldFormat{labeltitle}{#1}
+\DeclareFieldFormat{shorttitle}{#1}
+\DeclareFieldFormat{shorthand}{#1}
+
+% URL com \href (sem \url/verbatim)
+\DeclareFieldFormat{url}{\bibstring{url}\addcolon\space\href{#1}{#1}}
+
+% DOI clicável
+\DeclareFieldFormat{doi}{%
+  \bibstring{doi}\addcolon\space%
+  \ifhyperref{\href{https://doi.org/#1}{#1}}{#1}%
+}
+
+% --------------------------------------------------------------------
+% SOURCEMAP: preencher autor com organization/institution quando vazio
+% --------------------------------------------------------------------
+\DeclareSourcemap{
+  \maps[datatype=bibtex]{
+    \map{
+      \step[fieldsource=author, match=\regexp{.+}, final]
+      \step[fieldsource=organization, fieldset=author, origfieldval]
+    }
+    \map{
+      \step[fieldsource=author, match=\regexp{.+}, final]
+      \step[fieldsource=institution, fieldset=author, origfieldval]
+    }
+  }
+}
+
+% --------------------------------------------------------------------
+% Strings especiais: “In:” e “et al.” em itálico
+% --------------------------------------------------------------------
+\renewbibmacro*{in:}{%
+  \printtext{\mkbibemph{\bibstring{in}}\addcolon\space}%
+}
+
+\DefineBibliographyStrings{brazilian}{andothers = {\mkbibemph{et al.}}}
+
+
+% --------------------------------------------------------------------
+% MACROS de layout (iguais ao coppe.bbx)
+% --------------------------------------------------------------------
+% Responsabilidades (trad./ed.) logo após o título
+\newbibmacro*{coppe:respaftertitle}{%
+  \ifnameundef{translator}{}{%
+    \setunit{\adddot\space}\printtext{\bibstring{translator}\addspace\printnames{translator}}}%
+  \ifnameundef{editor}{}{%
+    \setunit{\adddot\space}\printtext{\bibstring{editor}\addspace\printnames{editor}}}%
+}
+
+% Helper de NEGRITO para títulos “host”
+\newcommand*\coppe@titlebold[1]{\textbf{#1}}
+
+% Título monográfico (livros/teses/manuais/anais) em NEGRITO
+\newcommand*\coppe@printtitlemono{%
+  \printtext[title]{\coppe@titlebold{\printfield[titlecase]{title}}}%
+}
+
+% Título de periódico (revista/jornal) em NEGRITO
+\newcommand*\coppe@printtitleserial{%
+  \printtext[title]{\coppe@titlebold{\printfield[titlecase]{journaltitle}}}%
+}
+
+% Host (maintitle/booktitle) em NEGRITO
+\newbibmacro*{coppe:maintitle+booktitle-bold}{%
+  \iffieldundef{maintitle}{}{%
+    \printtext[title]{\coppe@titlebold{\printfield[titlecase]{maintitle}}}%
+    \newunit\newblock
+  }%
+  \printtext[title]{\coppe@titlebold{\printfield[titlecase]{booktitle}}}%
+}
+\newbibmacro*{coppe:booktitle-bold}{%
+  \printtext[title]{\coppe@titlebold{\printfield[titlecase]{booktitle}}}%
+}
+
+% Nomes do HOST logo após “In:”
+\newbibmacro*{coppe:hostnames}{%
+  \ifnameundef{bookauthor}{%
+    \ifnameundef{editor}{}{%
+      \printnames{editor}\addspace\printtext{(\bibstring{editor})}%
+    }%
+  }{%
+    \printnames{bookauthor}%
+  }%
+}
+
+% Páginas com rótulo "p."
+\newbibmacro*{coppe:pages}{%
+  \iffieldundef{pages}{}{%
+    \printtext{p.\addspace\printfield{pages}}%
+  }%
+}
+
+% Volume / n. / eid
+\newbibmacro*{coppe:volnumeid}{%
+  \iffieldundef{volume}{}{\printfield{volume}\setunit{\addcomma\space}}%
+  \iffieldundef{number}{}{\bibstring{number}\addspace\printfield{number}\setunit{\addcomma\space}}%
+  \printfield{eid}%
+}
+
+% Data de publicação unificada (usa date se existir; senão year)
+\newbibmacro*{coppe:pubdate}{%
+  \iffieldundef{date}
+    {\iffieldundef{year}{}{\printfield{year}}}
+    {\printdate}%
+}
+
+% Local : Editora, data
+\newbibmacro*{publisher+location+date}{%
+  \iffieldundef{location}{%
+    \iffieldundef{publisher}{}{%
+      \printlist{publisher}\setunit{\addcomma\space}}%
+    \usebibmacro{coppe:pubdate}%
+  }{%
+    \printlist{location}%
+    \iffieldundef{publisher}{%
+      \setunit{\addcomma\space}\usebibmacro{coppe:pubdate}%
+    }{%
+      \setunit{\addcolon\space}\printlist{publisher}\setunit{\addcomma\space}\usebibmacro{coppe:pubdate}%
+    }%
+  }%
+}
+
+% URL + Acesso
+\renewbibmacro*{url+urldate}{%
+  \iffieldundef{url}{}{%
+    \printfield{url}%
+    \setunit{\addperiod\space}%
+    \printurldate%
+  }%
+}
+
+% DOI + eprint + URL (antes de note)
+\newbibmacro*{doi+eprint+url}{%
+  \iffieldundef{doi}{}{\printfield{doi}\newunit\newblock}%
+  \iffieldundef{eprint}{}{\usebibmacro{eprint}\newunit\newblock}%
+  \iffieldundef{url}{}{\usebibmacro{url+urldate}}%
+}
+
+% Fecho da entrada
+\newbibmacro*{finentry}{\finentry}
+
+% --------------------------------------------------------------------
+% Pessoas SEM data acoplada (independe do estilo numérico)
+% --------------------------------------------------------------------
+\renewbibmacro*{author}{\ifnameundef{author}{}{\printnames{author}}}
+\renewbibmacro*{editor}{\ifnameundef{editor}{}{\printnames{editor}}}
+\renewbibmacro*{translator}{\ifnameundef{translator}{}{\printnames{translator}}}
+\renewbibmacro*{editor+others}{%
+  \ifnameundef{editor}{}{\printnames{editor}\addspace\printtext{(\bibstring{editor})}}}
+\renewbibmacro*{author/editor+others}{%
+  \ifnameundef{author}{\usebibmacro{editor+others}}{\printnames{author}}}
+\renewbibmacro*{author/translator+others}{%
+  \ifnameundef{author}
+    {\ifnameundef{translator}{\usebibmacro{editor+others}}%
+      {\printnames{translator}\addspace\printtext{(\bibstring{translator})}}}
+    {\printnames{author}}}
+
+% --------------------------------------------------------------------
+% DRIVERS (iguais ao coppe.bbx; diferem apenas a base numérica do estilo)
+% Datas SEMPRE depois do bloco de publicação e ANTES de DOI/eprint/URL.
+% NOTE sempre por último.
+% --------------------------------------------------------------------
+
+% ARTICLE
+\DeclareBibliographyDriver{article}{%
+  \usebibmacro{bibindex}\usebibmacro{begentry}%
+  \usebibmacro{author/translator+others}\setunit{\labelnamepunct}\newblock
+  \usebibmacro{title}\usebibmacro{coppe:respaftertitle}\newunit\newblock
+  \iffieldequalstr{entrysubtype}{newspaper}{%
+    \coppe@printtitleserial%
+    \iffieldundef{location}{}{\setunit{\addcomma\space}\printlist{location}}%
+    \iffieldundef{pages}{}{\setunit{\addcomma\space}\usebibmacro{coppe:pages}}%
+    \setunit{\addcomma\space}\usebibmacro{coppe:pubdate}%
+    \newunit\newblock\usebibmacro{doi+eprint+url}%
+  }{%
+    \iffieldequalstr{entrysubtype}{magazineonline}{%
+      \coppe@printtitleserial%
+      \iffieldundef{location}{}{\setunit{\addcomma\space}\printlist{location}}%
+      \iffieldundef{pages}{}{\setunit{\addcomma\space}\usebibmacro{coppe:pages}}%
+      \setunit{\addcomma\space}\usebibmacro{coppe:pubdate}%
+      \newunit\newblock\usebibmacro{doi+eprint+url}%
+    }{%
+      \iffieldequalstr{entrysubtype}{dou}{%
+        \coppe@printtitleserial%
+        \iffieldundef{dousection}{}{\setunit{\addcomma\space}\printfield{dousection}}%
+        \iffieldundef{number}{}{\setunit{\addcomma\space}\printfield{number}}%
+        \iffieldundef{location}{}{\setunit{\addcomma\space}\printlist{location}}%
+        \iffieldundef{pages}{}{\setunit{\addcomma\space}\usebibmacro{coppe:pages}}%
+        \setunit{\addcomma\space}\usebibmacro{coppe:pubdate}%
+        \newunit\newblock\usebibmacro{doi+eprint+url}%
+      }{%
+        % científico
+        \coppe@printtitleserial%
+        \iffieldundef{location}{}{\setunit{\addcomma\space}\printlist{location}}%
+        \setunit{\addcomma\space}\usebibmacro{coppe:volnumeid}%
+        \iffieldundef{pages}{}{\setunit{\addcomma\space}\usebibmacro{coppe:pages}}%
+        \setunit{\addcomma\space}\usebibmacro{coppe:pubdate}%
+        \newunit\newblock\usebibmacro{doi+eprint+url}%
+      }%
+    }%
+  }%
+  \newunit\newblock\iffieldundef{note}{}{\,\printfield{note}}%
+  \usebibmacro{finentry}%
+}
+
+% BOOK
+\DeclareBibliographyDriver{book}{%
+  \usebibmacro{bibindex}\usebibmacro{begentry}%
+  \usebibmacro{author/editor+others}\setunit{\labelnamepunct}\newblock
+  \coppe@printtitlemono\usebibmacro{coppe:respaftertitle}%
+  \iffieldundef{edition}{}{\setunit{\adddot\space}\printfield{edition}}%
+  \newunit\newblock
+  \iffieldundef{series}{}{%
+    \printfield{series}%
+    \iffieldundef{number}{}{\setunit{\addcomma\space}\printfield{number}}%
+    \newunit\newblock
+  }%
+  \usebibmacro{publisher+location+date}\newunit\newblock
+  \usebibmacro{doi+eprint+url}%
+  \newunit\newblock\iffieldundef{note}{}{\,\printfield{note}}%
+  \usebibmacro{finentry}%
+}
+
+% INCOLLECTION
+\DeclareBibliographyDriver{incollection}{%
+  \usebibmacro{bibindex}\usebibmacro{begentry}%
+  \usebibmacro{author/translator+others}\setunit{\labelnamepunct}\newblock
+  \usebibmacro{title}\usebibmacro{coppe:respaftertitle}\newunit\newblock
+  \usebibmacro{in:}\usebibmacro{coppe:hostnames}%
+  \setunit{\adddot\space}\usebibmacro{coppe:maintitle+booktitle-bold}\newunit
+  \iffieldundef{edition}{}{\setunit{\adddot\space}\printfield{edition}}%
+  \newunit\newblock
+  \usebibmacro{publisher+location+date}\newunit\newblock
+  \usebibmacro{chapter+pages}\newunit\newblock
+  \usebibmacro{doi+eprint+url}%
+  \newunit\newblock\iffieldundef{note}{}{\,\printfield{note}}%
+  \usebibmacro{finentry}%
+}
+
+% INBOOK
+\DeclareBibliographyDriver{inbook}{%
+  \usebibmacro{bibindex}\usebibmacro{begentry}%
+  \usebibmacro{author/translator+others}\setunit{\labelnamepunct}\newblock
+  \usebibmacro{title}\usebibmacro{coppe:respaftertitle}\newunit\newblock
+  \usebibmacro{in:}\usebibmacro{coppe:hostnames}%
+  \setunit{\adddot\space}\usebibmacro{coppe:maintitle+booktitle-bold}%
+  \iffieldundef{edition}{}{\setunit{\adddot\space}\printfield{edition}}%
+  \newunit\newblock
+  \usebibmacro{publisher+location+date}\newunit\newblock
+  \usebibmacro{chapter+pages}\newunit\newblock
+  \usebibmacro{doi+eprint+url}%
+  \newunit\newblock\iffieldundef{note}{}{\,\printfield{note}}%
+  \usebibmacro{finentry}%
+}
+
+% INPROCEEDINGS
+\DeclareBibliographyDriver{inproceedings}{%
+  \usebibmacro{bibindex}\usebibmacro{begentry}%
+  \usebibmacro{author/translator+others}\setunit{\labelnamepunct}\newblock
+  \usebibmacro{title}\usebibmacro{coppe:respaftertitle}\newunit\newblock
+  \usebibmacro{in:}\usebibmacro{coppe:hostnames}%
+  \setunit{\adddot\space}\usebibmacro{coppe:booktitle-bold}%
+  \iffieldundef{eventtitle}{}{\setunit{\addcomma\space}\printfield{eventtitle}}%
+  \iffieldundef{eventdate}{}{\setunit{\addcomma\space}\printeventdate}%
+  \newunit\newblock
+  \usebibmacro{publisher+location+date}\newunit\newblock
+  \usebibmacro{chapter+pages}\newunit\newblock
+  \usebibmacro{doi+eprint+url}%
+  \newunit\newblock\iffieldundef{note}{}{\,\printfield{note}}%
+  \usebibmacro{finentry}%
+}
+
+% PROCEEDINGS
+\DeclareBibliographyDriver{proceedings}{%
+  \usebibmacro{bibindex}\usebibmacro{begentry}%
+  \usebibmacro{editor+others}\setunit{\labelnamepunct}\newblock
+  \coppe@printtitlemono%
+  \iffieldundef{eventtitle}{}{\setunit{\addspace}\printfield{eventtitle}}%
+  \iffieldundef{eventdate}{}{\setunit{\addspace}\printeventdate}%
+  \newunit\newblock
+  \usebibmacro{publisher+location+date}\newunit\newblock
+  \usebibmacro{doi+eprint+url}%
+  \newunit\newblock\iffieldundef{note}{}{\,\printfield{note}}%
+  \usebibmacro{finentry}%
+}
+
+% THESIS
+\DeclareBibliographyDriver{thesis}{%
+  \usebibmacro{bibindex}\usebibmacro{begentry}%
+  \usebibmacro{author}\setunit{\labelnamepunct}\newblock
+  \coppe@printtitlemono\usebibmacro{coppe:respaftertitle}\newunit
+  \printfield{type}%
+  \iffieldundef{institution}{}{\setunit{\addspace}\printlist{institution}}%
+  \iffieldundef{location}{}{\setunit{\addcomma\space}\printlist{location}}%
+  \setunit{\addcomma\space}\usebibmacro{coppe:pubdate}%
+  \newunit\newblock\usebibmacro{doi+eprint+url}%
+  \newunit\newblock\iffieldundef{note}{}{\,\printfield{note}}%
+  \usebibmacro{finentry}%
+}
+
+% REPORT
+\DeclareBibliographyDriver{report}{%
+  \usebibmacro{bibindex}\usebibmacro{begentry}%
+  \usebibmacro{author/editor+others}\setunit{\labelnamepunct}\newblock
+  \usebibmacro{title}\usebibmacro{coppe:respaftertitle}\newunit
+  \iffieldequalstr{entrysubtype}{edital}{%
+    \printlist{institution}%
+    \iffieldundef{institution}{}{\setunit{\addcomma\space}}%
+    \iffieldundef{number}{}{\printfield{number}}%
+    \iffieldundef{location}{}{\setunit{\addcomma\space}\printlist{location}}%
+    \setunit{\addcomma\space}\usebibmacro{coppe:pubdate}%
+    \newunit\newblock\usebibmacro{doi+eprint+url}%
+  }{%
+    \printlist{institution}%
+    \iffieldundef{institution}{%
+      \iffieldundef{organization}{}{\setunit{\addcomma\space}\printlist{organization}}%
+    }{\setunit{\addcomma\space}}%
+    \printfield{type}%
+    \iffieldundef{number}{}{\setunit{\addspace}\printfield{number}}%
+    \iffieldundef{location}{}{\setunit{\addcomma\space}\printlist{location}}%
+    \setunit{\addcomma\space}\usebibmacro{coppe:pubdate}%
+    \newunit\newblock\usebibmacro{doi+eprint+url}%
+  }%
+  \newunit\newblock\iffieldundef{note}{}{\,\printfield{note}}%
+  \usebibmacro{finentry}%
+}
+
+% LEGISLATION
+\DeclareBibliographyDriver{legislation}{%
+  \usebibmacro{bibindex}\usebibmacro{begentry}%
+  \iffieldundef{institution}{}{\printfield{institution}\adddot\space}%
+  \printfield[titlecase]{title}%
+  \iffieldundef{type}{}{\setunit{\addspace}\printfield{type}}%
+  \iffieldundef{number}{}{\setunit{\addspace}\printfield{number}}%
+  \newunit\newblock
+  \printlist{location}\iffieldundef{location}{}{\setunit{\addcomma\space}}%
+  \usebibmacro{coppe:pubdate}%
+  \newunit\newblock\usebibmacro{doi+eprint+url}%
+  \newunit\newblock\iffieldundef{note}{}{\,\printfield{note}}%
+  \usebibmacro{finentry}%
+}
+
+% STANDARD
+\DeclareBibliographyDriver{standard}{%
+  \usebibmacro{bibindex}\usebibmacro{begentry}%
+  \printfield[titlecase]{title}%
+  \iffieldundef{type}{}{\setunit{\addspace}\printfield{type}}%
+  \iffieldundef{number}{}{\setunit{\addspace}\printfield{number}}%
+  \newunit\newblock
+  \printlist{organization}%
+  \iffieldundef{organization}{}{\setunit{\addcomma\space}}%
+  \printfield{edition}%
+  \iffieldundef{location}{}{\setunit{\addcomma\space}\printlist{location}}%
+  \setunit{\addcomma\space}\usebibmacro{coppe:pubdate}%
+  \newunit\newblock\usebibmacro{doi+eprint+url}%
+  \newunit\newblock\iffieldundef{note}{}{\,\printfield{note}}%
+  \usebibmacro{finentry}%
+}
+
+% ONLINE
+\DeclareBibliographyDriver{online}{%
+  \usebibmacro{bibindex}\usebibmacro{begentry}%
+  \ifnameundef{author}{\printlist{organization}}{\usebibmacro{author/translator+others}}%
+  \setunit{\labelnamepunct}\newblock
+  \usebibmacro{title}\usebibmacro{coppe:respaftertitle}\newunit\newblock
+  \iffieldundef{location}{}{\printlist{location}\setunit{\addcomma\space}}%
+  \usebibmacro{coppe:pubdate}%
+  \newunit\newblock\usebibmacro{doi+eprint+url}%
+  \newunit\newblock\iffieldundef{note}{}{\,\printfield{note}}%
+  \usebibmacro{finentry}%
+}
+
+% MANUAL
+\DeclareBibliographyDriver{manual}{%
+  \usebibmacro{bibindex}\usebibmacro{begentry}%
+  \ifnameundef{author}{\printlist{organization}}{\usebibmacro{author/translator+others}}%
+  \setunit{\labelnamepunct}\newblock
+  \coppe@printtitlemono\usebibmacro{coppe:respaftertitle}%
+  \iffieldundef{edition}{}{\setunit{\adddot\space}\printfield{edition}}%
+  \newunit\newblock
+  \iffieldundef{location}{}{\printlist{location}\setunit{\addcomma\space}}%
+  \usebibmacro{coppe:pubdate}%
+  \newunit\newblock\usebibmacro{doi+eprint+url}%
+  \newunit\newblock\iffieldundef{note}{}{\,\printfield{note}}%
+  \usebibmacro{finentry}%
+}
+
+% DATASET
+\DeclareBibliographyDriver{dataset}{%
+  \usebibmacro{bibindex}\usebibmacro{begentry}%
+  \ifnameundef{author}{\printlist{organization}}{\usebibmacro{author/translator+others}}%
+  \setunit{\labelnamepunct}\newblock
+  \usebibmacro{title}%
+  \iffieldundef{version}{}{\setunit{\addspace}\printfield{version}}%
+  \newunit\newblock
+  \iffieldundef{publisher}{}{\printlist{publisher}\setunit{\addcomma\space}}%
+  \usebibmacro{coppe:pubdate}%
+  \newunit\newblock\usebibmacro{doi+eprint+url}%
+  \newunit\newblock\iffieldundef{note}{}{\,\printfield{note}}%
+  \usebibmacro{finentry}%
+}
+
+% SOFTWARE
+\DeclareBibliographyDriver{software}{%
+  \usebibmacro{bibindex}\usebibmacro{begentry}%
+  \ifnameundef{author}{\printlist{organization}}{\usebibmacro{author/translator+others}}%
+  \setunit{\labelnamepunct}\newblock
+  \usebibmacro{title}%
+  \iffieldundef{version}{}{\setunit{\addspace}\printfield{version}}%
+  \newunit\newblock
+  \iffieldundef{publisher}{}{\printlist{publisher}\setunit{\addcomma\space}}%
+  \usebibmacro{coppe:pubdate}%
+  \newunit\newblock\usebibmacro{doi+eprint+url}%
+  \newunit\newblock\iffieldundef{note}{}{\,\printfield{note}}%
+  \usebibmacro{finentry}%
+}
+
+% PATENT
+\DeclareBibliographyDriver{patent}{%
+  \usebibmacro{bibindex}\usebibmacro{begentry}%
+  \usebibmacro{author}\setunit{\labelnamepunct}\newblock
+  \usebibmacro{title}%
+  \iffieldundef{number}{}{\setunit{\addspace}\printfield{number}}%
+  \iffieldundef{holder}{}{\setunit{\addspace}\printnames{holder}}%
+  \newunit\newblock
+  \iffieldundef{location}{}{\printlist{location}\setunit{\addcomma\space}}%
+  \usebibmacro{coppe:pubdate}%
+  \newunit\newblock\usebibmacro{doi+eprint+url}%
+  \newunit\newblock\iffieldundef{note}{}{\,\printfield{note}}%
+  \usebibmacro{finentry}%
+}
+
+% VIDEO / AUDIO
+\DeclareBibliographyDriver{video}{%
+  \usebibmacro{bibindex}\usebibmacro{begentry}%
+  \ifnameundef{author}{\printlist{organization}}{\usebibmacro{author/translator+others}}%
+  \setunit{\labelnamepunct}\newblock
+  \usebibmacro{title}%
+  \iffieldundef{series}{}{\setunit{\addspace}\printfield{series}}%
+  \iffieldundef{number}{}{\setunit{\addspace}\printfield{number}}%
+  \newunit\newblock
+  \usebibmacro{coppe:pubdate}%
+  \newunit\newblock\usebibmacro{doi+eprint+url}%
+  \newunit\newblock\iffieldundef{note}{}{\,\printfield{note}}%
+  \usebibmacro{finentry}%
+}
+\DeclareBibliographyDriver{audio}{%
+  \usebibmacro{bibindex}\usebibmacro{begentry}%
+  \ifnameundef{author}{\printlist{organization}}{\usebibmacro{author/translator+others}}%
+  \setunit{\labelnamepunct}\newblock
+  \usebibmacro{title}%
+  \iffieldundef{series}{}{\setunit{\addspace}\printfield{series}}%
+  \iffieldundef{number}{}{\setunit{\addspace}\printfield{number}}%
+  \newunit\newblock
+  \usebibmacro{coppe:pubdate}%
+  \newunit\newblock\usebibmacro{doi+eprint+url}%
+  \newunit\newblock\iffieldundef{note}{}{\,\printfield{note}}%
+  \usebibmacro{finentry}%
+}
+
+% ARTWORK / IMAGE
+\newbibmacro*{coppe:artworklike}{%
+  \ifnameundef{author}{\printlist{organization}}{\usebibmacro{author/translator+others}}%
+  \setunit{\labelnamepunct}\newblock
+  \usebibmacro{title}\newunit\newblock
+  \iffieldundef{location}{}{\printlist{location}\setunit{\addcomma\space}}%
+  \usebibmacro{coppe:pubdate}\newunit\newblock
+  \usebibmacro{doi+eprint+url}%
+}
+\DeclareBibliographyDriver{artwork}{%
+  \usebibmacro{bibindex}\usebibmacro{begentry}\usebibmacro{coppe:artworklike}%
+  \newunit\newblock\iffieldundef{note}{}{\,\printfield{note}}%
+  \usebibmacro{finentry}}
+\DeclareBibliographyDriver{image}{%
+  \usebibmacro{bibindex}\usebibmacro{begentry}\usebibmacro{coppe:artworklike}%
+  \newunit\newblock\iffieldundef{note}{}{\,\printfield{note}}%
+  \usebibmacro{finentry}}
+
+% PRESSRELEASE
+\DeclareBibliographyDriver{pressrelease}{%
+  \usebibmacro{bibindex}\usebibmacro{begentry}%
+  \printlist{organization}\setunit{\labelnamepunct}\newblock
+  \usebibmacro{title}\newunit\newblock
+  \usebibmacro{coppe:pubdate}%
+  \newunit\newblock\usebibmacro{doi+eprint+url}%
+  \newunit\newblock\iffieldundef{note}{}{\,\printfield{note}}%
+  \usebibmacro{finentry}%
+}
+
+% LETTER
+\DeclareBibliographyDriver{letter}{%
+  \usebibmacro{bibindex}\usebibmacro{begentry}%
+  \usebibmacro{author}\setunit{\labelnamepunct}\newblock
+  \usebibmacro{title}%
+  \iffieldundef{type}{}{\setunit{\addspace}\printfield{type}}%
+  \iffieldundef{recipient}{}{\setunit{\addspace}\printnames{recipient}}%
+  \newunit\newblock
+  \usebibmacro{coppe:pubdate}%
+  \newunit\newblock\usebibmacro{doi+eprint+url}%
+  \newunit\newblock\iffieldundef{note}{}{\,\printfield{note}}%
+  \usebibmacro{finentry}%
+}
+
+% UNPUBLISHED
+\DeclareBibliographyDriver{unpublished}{%
+  \usebibmacro{bibindex}\usebibmacro{begentry}%
+  \usebibmacro{author}\setunit{\labelnamepunct}\newblock
+  \usebibmacro{title}\newunit\newblock
+  \usebibmacro{coppe:pubdate}%
+  \newunit\newblock\usebibmacro{doi+eprint+url}%
+  \newunit\newblock\iffieldundef{note}{}{\,\printfield{note}}%
+  \usebibmacro{finentry}%
+}
+
+% MISC
+\DeclareBibliographyDriver{misc}{%
+  \usebibmacro{bibindex}\usebibmacro{begentry}%
+  \ifnameundef{author}{\printlist{organization}}{\usebibmacro{author/translator+others}}%
+  \setunit{\labelnamepunct}\newblock
+  \usebibmacro{title}\newunit\newblock
+  \usebibmacro{coppe:pubdate}%
+  \newunit\newblock\usebibmacro{doi+eprint+url}%
+  \newunit\newblock\iffieldundef{note}{}{\,\printfield{note}}%
+  \usebibmacro{finentry}%
+}
+
+\endinput

@@ -1,10 +1,10 @@
 %%
-%% This is file `coppe.bib',
+%% This is file `coppe-lang-en.def',
 %% generated with the docstrip utility.
 %%
 %% The original source files were:
 %%
-%% coppe.dtx  (with options: `bibs')
+%% coppe.dtx  (with options: `lang-en')
 %% 
 %% This is the `coppe' document class used for composition of LaTeX
 %% monographs (master and PhD thesis, and PhD qualifying exams)
@@ -50,69 +50,38 @@
 %%   Grave accent  \`     Left brace    \{     Vertical bar  \|
 %%   Right brace   \}     Tilde         \~}
 %%
-\ProvidesFile{coppe.bib}[2025/10/18 CoppeTeX v4.0 Biblatex File]
+\ProvidesFile{Coppe-lang-en.def}[2025/10/18 CoppeTeX v4.0 localization: English]
+\ExplSyntaxOn
+\Coppe_dept_set:nnn {PESC}{en}{Systems Engineering and Computer Science}
+\Coppe_dept_set:nnn {PEB} {en}{Biomedical Engineering}
+\Coppe_dept_set:nnn {PEC} {en}{Civil Engineering}
+\Coppe_dept_set:nnn {PEE} {en}{Electrical Engineering}
+\Coppe_dept_set:nnn {PEM} {en}{Mechanical Engineering}
+\Coppe_dept_set:nnn {PEMM}{en}{Metallurgical and Materials Engineering}
+\Coppe_dept_set:nnn {PEN} {en}{Nuclear Engineering}
+\Coppe_dept_set:nnn {PENO}{en}{Ocean Engineering}
+\Coppe_dept_set:nnn {PPE} {en}{Energy Planning}
+\Coppe_dept_set:nnn {PEP} {en}{Production Engineering}
+\Coppe_dept_set:nnn {PEQ} {en}{Chemical Engineering}
+\Coppe_dept_set:nnn {PET} {en}{Transportation Engineering}
+\Coppe_dept_set:nnn {PENT}{en}{Nanotechnology Engineering}
 
-@book{ KNU86a,
-author = "Donald E. Knuth",
-title = "The {{\TeX}book}",
-publisher = "Addison-Wesley",
-address = "Reading, MA",
-year = "1984",
-}
+\Coppe_str_set:nnn {degname/msc}{en}{Master}
+\Coppe_str_set:nnn {degname/phd}{en}{Doctorate}
+\Coppe_str_set:nnn {doctype/msc}{en}{Dissertation}
+\Coppe_str_set:nnn {doctype/phd}{en}{Thesis}
 
-@book{ KNT69a,
-author = "Leslie Lamport",
-title = "{\LaTeX \rm:} {A} Document Preparation System",
-publisher = "Addison-Wesley",
-address = "Reading, MA",
-year = 1986
-}
-
-@manual{ TNR08a,
-author = "CPGP/Coppe/UFRJ",
-title = "Norma para a Elabora{\c c}\~ao Gr\'afica de Teses",
-address = "Rio de Janeiro, RJ, Brasil",
-month = "Julho",
-year = 2008,
-note = "Revisada em 10/09/2010",
-}
-
-@unpublished{ PAT88a,
-author = "Oren Patashnik",
-title = "BibTeXing",
-note = "Documentation for general Bib\TeX\ users",
-month = feb,
-year = 1988
-}
-
-@unpublished{ PAT88b,
-author = "Oren Patashnik",
-title = "Designing BibTeX Styles",
-note = "The part of BibTeX 's documentation
-that's not meant for general users",
-month = feb,
-year = 1988
-}
-
-@book{ WW79a,
-author = "Strunk, Jr., William and E. B. White",
-title = "The Elements of Style",
-publisher = "Macmillan",
-edition = 3,
-year = 1979
-}
-
-@misc{TeX:FAQ,
-title = "{\TeX} {Frequently} {Asked} {Questions}",
-url = "\\http://www.tex.ac.uk/cgi-bin/texfaq2html?introduction=yes",
-key = "TeX FAQ",
-}
-
-@misc{normassibi,
-title = {Normas SIBI}
-author = {{SIBI}}
-year = 2025
-}
+\Coppe_str_set:nnn {advisor_label}{en}{Advisor}
+\Coppe_str_set:nnn {advisors_label}{en}{Advisors}
+\Coppe_str_set:nnn {approved_by}{en}{Approved by}
+\Coppe_str_set:nnn {listabbreviationname}{en}{List of Abbreviations}
+\Coppe_str_set:nnn {listsymbolname}{en}{List of Symbols}
+\Coppe_str_set:nnn {glossaryname}{en}{Glossary}
+\Coppe_str_set:nnn {degperson/msc/m}{en}{Master}
+\Coppe_str_set:nnn {degperson/msc/f}{en}{Master}
+\Coppe_str_set:nnn {degperson/phd/m}{en}{Doctor}
+\Coppe_str_set:nnn {degperson/phd/f}{en}{Doctor}
+\ExplSyntaxOff
 %% 
 %%
-%% End of file `coppe.bib'.
+%% End of file `coppe-lang-en.def'.

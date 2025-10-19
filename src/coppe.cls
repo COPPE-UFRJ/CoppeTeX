@@ -33,7 +33,7 @@
 %%            Geraldo Xexéo
 %%            Eduardo Mangeli
 %% 
-%% \CheckSum{1656}
+%% \CheckSum{1564}
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
 %%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
@@ -54,11 +54,8 @@
 \def\fileversion{v4.0}
 \def\filedate{2025/10/18}
 \NeedsTeXFormat{LaTeX2e}[2023/11/01]
-\ProvidesClass{coppe}[\filedate\ \fileversion\ COPPE Dissertations and Thesis]
+\ProvidesClass{Coppe}[\filedate\ \fileversion\ Coppe Dissertations and Thesis]
 \LoadClass[12pt,a4paper,twoside]{book}
-%% We are no longer using bibtex and natbib,
-%% migrating to biblatex
-%% \RequirePackage[sort&compress]{natbib}
 \RequirePackage{hyphenat}   % Hyphenation control (e.g., \hyp{} and disabling hyphenation in words)
 \RequirePackage{lastpage}   % Provides label/anchor for the last page (e.g., page X of \pageref{LastPage})
 \RequirePackage{ifthen}     % Basic conditional logic (\ifthenelse) for simple class/package switches
@@ -70,11 +67,11 @@
 \RequirePackage{ltxcmds}    % Low-level LaTeX kernel helpers used by other packages and internal code
 \RequirePackage{expl3}      % LaTeX3 programming layer (token lists, properties, sequences, etc.)
 \RequirePackage{xparse}     % High-level interface to define commands/environments (\NewDocumentCommand)
-\RequirePackage{setspace}   % Used to control spacing and font size in different environments
+\RequirePackage[spanish,english,brazilian]{babel} % Languages!
 \ExplSyntaxOn               % Enable LaTeX3 (expl3) syntax for subsequent definitions
 \RequirePackage[T1]{fontenc} % CHECK LuaLaTeX compatibility
 \RequirePackage{kvoptions} % Drop traditional options
-\SetupKeyvalOptions{family=coppe, prefix=coppe@}
+\SetupKeyvalOptions{family=Coppe, prefix=Coppe@}
 \DeclareStringOption[br]{lang}   % br | en | es |
 \DeclareStringOption[msc]{degree}% msc | phd | qual | proposal
 \DeclareStringOption[number]{bibtype} % number | alpha
@@ -94,7 +91,7 @@ outer=2.0cm]{geometry}
 p\kern-.025em e}}\kern-.08em
 T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \onehalfspacing   % UFRJ/ABNT require 1.5 lines
-\ifcoppe@doublespacing % can make it easer to comment
+\ifCoppe@doublespacing % can make it easer to comment
 \doublespacing
 \fi
 \AtBeginEnvironment{quotation}{\singlespacing\small}
@@ -112,96 +109,154 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \newboolean{maledoc}
 \setboolean{maledoc}{false}
 
-\newif\if@english\@englishfalse
-\DeclareOption{english}{\@englishtrue}
-\DeclareOption{msc}{%
-  \newcommand{\@degree}{M.Sc.}
-  \newcommand{\@degreename}{Mestrado}
-  \newcommand{\local@degname}{Mestre}
-  \newcommand{\foreign@degname}{Master}
-  \newcommand\local@doctype{Disserta{\c c}{\~ a}o}
-  \newcommand\foreign@doctype{Dissertation}
-}
-\DeclareOption{dscexam}{%
-  \newcommand{\@degree}{D.Sc.}
-  \newcommand{\@degreename}{Doutorado}
-  \newcommand{\local@degname}{Doutor}
-  \newcommand{\foreign@degname}{Doctor}
-  \setboolean{maledoc}{true}
-  \newcommand\local@doctype{Exame de Qualifica{\c c}{\~ a}o}
-  \newcommand\foreign@doctype{Qualifying Exam}
-}
-\DeclareOption{mscexam}{%
- \newcommand{\@degree}{M.Sc.}
-  \newcommand{\@degreename}{Mestrado}
-  \newcommand{\local@degname}{Mestre}
-  \newcommand{\foreign@degname}{Master}
-  \setboolean{maledoc}{true}
-  \newcommand\local@doctype{Exame de Qualifica{\c c}{\~ a}o}
-  \newcommand\foreign@doctype{Qualifying Exam}
-}
-\DeclareOption{dsc}{%
-  \newcommand{\@degree}{D.Sc.}
-  \newcommand{\@degreename}{Doutorado}
-  \newcommand{\local@degname}{Doutor}
-  \newcommand{\foreign@degname}{Doctor}
-  \newcommand\local@doctype{Tese}
-  \newcommand\foreign@doctype{Thesis}
-}
-\DeclareOption{numbers}{%
-  \PassOptionsToPackage{numbers}{natbib}
+\ExplSyntaxOn
+
+\cs_new:Npn \Coppe_degperson_main:
+{
+\bool_if:NTF \maledoc
+{ \Coppe_str_get:nn { degperson / \Coppe@degree / m } { \l_Coppe_lang_main_tl } }
+{ \Coppe_str_get:nn { degperson / \Coppe@degree / f } { \l_Coppe_lang_main_tl } }
 }
 
-\ProcessOptions\relax
-\if@english
-  \RequirePackage[brazilian,english]{babel}
-\else
-  \RequirePackage[english,brazilian]{babel}
-\fi
-\addto{\captionsenglish}{%
-  \renewcommand{\bibname}{References}
+\let\local@degname\Coppe_degperson_main:
+
+\ExplSyntaxOff
+\ExplSyntaxOn
+\tl_new:N \l_Coppe_lang_main_tl
+\tl_new:N \l_Coppe_lang_second_tl
+\tl_set:Nn \l_Coppe_lang_main_tl { \Coppe@lang }
+\cs_new_protected:Npn \Coppe_set_secondary_lang:
+{
+\str_case:nnF { \Coppe@lang }
+{
+{br}{ \tl_set:Nn \l_Coppe_lang_second_tl { en } }
+{en}{ \tl_set:Nn \l_Coppe_lang_second_tl { br } }
+{es}{ \tl_set:Nn \l_Coppe_lang_second_tl { br } }
+}{ \tl_set:Nn \l_Coppe_lang_second_tl { en } }
 }
-\newcommand\department[1]{%
-  \ifthenelse{\equal{#1}{PEB}}
-    {\global\def\local@deptname{Engenharia Biom{\' e}dica}
-     \global\def\foreign@deptname{Biomedical Engineering}}{}
-  \ifthenelse{\equal{#1}{PEC}}
-    {\global\def\local@deptname{Engenharia Civil}
-     \global\def\foreign@deptname{Civil Engineering}}{}
-  \ifthenelse{\equal{#1}{PEE}}
-    {\global\def\local@deptname{Engenharia El{\' e}trica}
-     \global\def\foreign@deptname{Electrical Engineering}}{}
-  \ifthenelse{\equal{#1}{PEM}}
-    {\global\def\local@deptname{Engenharia Mec{\^ a}nica}
-     \global\def\foreign@deptname{Mechanical Engineering}}{}
-  \ifthenelse{\equal{#1}{PEMM}}
-    {\global\def\local@deptname{Engenharia Metal{\' u}rgica e de Materiais}
-\global\def\foreign@deptname{Metallurgical and Materials Engineering}}{}
-  \ifthenelse{\equal{#1}{PEN}}
-    {\global\def\local@deptname{Engenharia Nuclear}
-     \global\def\foreign@deptname{Nuclear Engineering}}{}
-  \ifthenelse{\equal{#1}{PENO}}
-    {\global\def\local@deptname{Engenharia Oce{\^ a}nica}
-     \global\def\foreign@deptname{Ocean Engineering}}{}
-  \ifthenelse{\equal{#1}{PPE}}
-    {\global\def\local@deptname{Planejamento Energ{\' e}tico}
-     \global\def\foreign@deptname{Energy Planning}}{}
-  \ifthenelse{\equal{#1}{PEP}}
-    {\global\def\local@deptname{Engenharia de Produ{\c c}{\~ a}o}
-     \global\def\foreign@deptname{Production Engineering}}{}
-  \ifthenelse{\equal{#1}{PEQ}}
-    {\global\def\local@deptname{Engenharia Qu{\' i}mica}
-     \global\def\foreign@deptname{Chemical Engineering}}{}
-  \ifthenelse{\equal{#1}{PESC}}
-    {\global\def\local@deptname{Engenharia de Sistemas e Computa{\c c}{\~ a}o}
-     \global\def\foreign@deptname{Systems Engineering and Computer Science}}{}
-  \ifthenelse{\equal{#1}{PET}}
-    {\global\def\local@deptname{Engenharia de Transportes}
-     \global\def\foreign@deptname{Transportation Engineering}}{}
-  \ifthenelse{\equal{#1}{PENT}}
-    {\global\def\local@deptname{Engenharia de Nanotecnologia}
-      \global\def\foreign@deptname{Nanotechnology Engineering}}{}
+\Coppe_set_secondary_lang:
+\cs_new:Npn \Coppe_title_main:
+{
+\str_case:nnF { \l_Coppe_lang_main_tl }
+{ {br}{\local@title} {pt}{\local@title} {en}{\foreign@title} {es}{\foreign@title} }
+{\local@title}
 }
+\cs_new:Npn \Coppe_title_second:
+{
+\str_case:nnF { \l_Coppe_lang_second_tl }
+{ {br}{\local@title} {pt}{\local@title} {en}{\foreign@title} {es}{\foreign@title} }
+{\foreign@title}
+}
+
+
+\str_case:nnF { \Coppe@lang }
+{
+{br}{\selectlanguage{brazilian}}
+{en}{\selectlanguage{english}}
+{es}{\selectlanguage{spanish}}
+}{\selectlanguage{brazilian}} % default
+
+\prop_new:N \g_Coppe_strings_prop
+\prop_new:N \g_Coppe_dept_prop
+
+\cs_new_protected:Npn \Coppe_str_set:nnn #1#2#3
+{ % #1 = key (e.g., doctype/msc), #2 = lang (br|en|es), #3 = value
+\prop_gput:Nnx \g_Coppe_strings_prop { #1 / #2 } { #3 } }
+\cs_new_protected:Npn \Coppe_dept_set:nnn #1#2#3
+{ % #1 = PESC, #2 = lang, #3 = localized name
+\prop_gput:Nnx \g_Coppe_dept_prop { #1 / #2 } { #3 } }
+
+\cs_new:Npn \Coppe_str_get:nn #1#2
+{ \prop_item:Nn \g_Coppe_strings_prop { #1 / #2 } }
+\cs_new:Npn \Coppe_dept_get:nn #1#2
+{ \prop_item:Nn \g_Coppe_dept_prop   { #1 / #2 } }
+
+\cs_new:Npn \Coppe_str_main:n   #1 { \Coppe_str_get:nn  { #1 } { \l_Coppe_lang_main_tl } }
+\cs_new:Npn \Coppe_str_second:n #1 { \Coppe_str_get:nn  { #1 } { \l_Coppe_lang_second_tl } }
+\cs_new:Npn \Coppe_dept_main:n  #1 { \Coppe_dept_get:nn { #1 } { \l_Coppe_lang_main_tl } }
+\cs_new:Npn \Coppe_dept_second:n#1 { \Coppe_dept_get:nn { #1 } { \l_Coppe_lang_second_tl } }
+
+\NewDocumentCommand{\CoppeString}{m}{\Coppe_str_main:n{#1}}
+\NewDocumentCommand{\CoppeStringSecond}{m}{\Coppe_str_second:n{#1}}
+
+\NewDocumentCommand{\department}{m}{
+\global\def\local@deptname   {\Coppe_dept_main:n{#1}}
+\global\def\foreign@deptname {\Coppe_dept_second:n{#1}}
+}
+
+\ExplSyntaxOff
+\InputIfFileExists{Coppe-lang-br.def}{}{\ClassWarning{Coppe}{Coppe-lang-br.def not found}}
+\InputIfFileExists{Coppe-lang-en.def}{}{\ClassWarning{Coppe}{Coppe-lang-en.def not found}}
+\InputIfFileExists{Coppe-lang-es.def}{}{\ClassWarning{Coppe}{Coppe-lang-es.def not found}}
+\ExplSyntaxOn
+\cs_new_protected:Npn \Coppe_setup_degree_strings:
+{
+\tl_gset:Nx \g_Coppe_degreename_tl
+{ \Coppe_str_get:nn { degname / \Coppe@degree } { \l_Coppe_lang_main_tl } }
+\tl_gset:Nx \g_Coppe_degreename_second_tl
+{ \Coppe_str_get:nn { degname / \Coppe@degree } { \l_Coppe_lang_second_tl } }
+
+\tl_gset:Nx \g_Coppe_doctype_tl
+{ \Coppe_str_get:nn { doctype / \Coppe@degree } { \l_Coppe_lang_main_tl } }
+\tl_gset:Nx \g_Coppe_doctype_second_tl
+{ \Coppe_str_get:nn { doctype / \Coppe@degree } { \l_Coppe_lang_second_tl } }
+
+\tl_gset_eq:NN \@degreename \g_Coppe_degreename_tl
+\tl_gset_eq:NN \local@doctype \g_Coppe_doctype_tl
+}
+
+\cs_new:Npn \Coppe_month_main:
+{
+\monthname % in whatever language is currently selected (we selected main above)
+}
+\cs_new_protected:Npn \Coppe_month_second:
+{
+\begingroup
+\str_case:nnF { \l_Coppe_lang_second_tl }
+{ {br}{\selectlanguage{brazilian}}
+{en}{\selectlanguage{english}}
+{es}{\selectlanguage{spanish}} }
+{ \selectlanguage{english} }
+\monthname
+\endgroup
+}
+
+\cs_new:Npn \local@monthname   { \Coppe_month_main: }
+\cs_new:Npn \foreign@monthname { \Coppe_month_second: }
+
+\cs_new:Npn \Coppe_listabbrev_main:   { \Coppe_str_main:n   { listabbreviationname } }
+\cs_new:Npn \Coppe_listsymbols_main:  { \Coppe_str_main:n   { listsymbolname } }
+\cs_new:Npn \Coppe_glossary_main:     { \Coppe_str_main:n   { glossaryname } }
+
+\cs_new:Npn \Coppe_advisor_label_main:
+{
+\int_compare:nNnTF { \@advisor } > { 1 }
+{ \Coppe_str_main:n { advisors_label } } % plural
+{ \Coppe_str_main:n { advisor_label } }  % singular
+}
+\cs_new:Npn \Coppe_advisor_label_second:
+{
+\int_compare:nNnTF { \@advisor } > { 1 }
+{ \Coppe_str_second:n { advisors_label } }
+{ \Coppe_str_second:n { advisor_label } }
+}
+
+\cs_new:Npn \listabbreviationname { \Coppe_listabbrev_main: }
+\cs_new:Npn \listsymbolname       { \Coppe_listsymbols_main: }
+\cs_new:Npn \glossaryname         { \Coppe_glossary_main: }
+\cs_new:Npn \local@advisorstring  { \Coppe_advisor_label_main: }
+\cs_new:Npn \foreign@advisorstring{ \Coppe_advisor_label_second: }
+
+\cs_new:Npn \Coppe_approved_main:
+{
+\Coppe_str_main:n { approved_by }
+}
+
+\AtBeginDocument{\Coppe_setup_degree_strings:}
+
+\ExplSyntaxOff
+
+
 \renewcommand\title[1]{%
   \global\def\local@title{#1}%
 }
@@ -233,12 +288,6 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \month=#1
   \year=#2
 }
-\newcommand\local@monthname{\ifcase\month\or
-  Janeiro\or Fevereiro\or Mar{\c c}o\or Abril\or Maio\or Junho\or
-  Julho\or Agosto\or Setembro\or Outubro\or Novembro\or Dezembro\fi}
-\newcommand\foreign@monthname{\ifcase\month\or
-  January\or February\or March\or April\or May\or June\or
-  July\or August\or September\or October\or November\or December\fi}
 \newcounter{keywords}
 \newcommand\keyword[1]{%
   \global\@namedef{CoppeKeyword:\expandafter\the\c@keywords}{#1}
@@ -267,10 +316,10 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \makefrontpage
   \clearpage
   \pagestyle{plain}
-  \ifthenelse{\boolean{maledoc}}{}{\makecatalog}%
+  \makecatalog%
 }
 \renewcommand\mainmatter{%
-  \coppe@mainBegin
+  \Coppe@mainBegin
   \cleardoublepage
   \@mainmattertrue
   \pagestyle{plain}
@@ -283,24 +332,21 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \fi}
 \renewcommand\maketitle{%
   \pagenumbering{alph}
-  \ltx@ifpackageloaded{hyperref}{\coppe@hypersetup}{}%
+  \ltx@ifpackageloaded{hyperref}{\Coppe@hypersetup}{}%
   \begin{titlepage}
   \begin{flushleft}
   \vspace*{1.5mm}
   \setlength\baselineskip{0pt}
   \setlength\parskip{1mm}
-  \makebox[20mm][c]{\hspace{4.8cm}\includegraphics{coppe-logo}}
+  \makebox[20mm][c]{\hspace{4.8cm}\includegraphics{Coppe-logo}}
   \end{flushleft}
   \vspace{1.05cm}
   \begin{center}
-  \nohyphens{%
-    \if@english
-      \MakeUppercase\foreign@title
-    \else
-      \MakeUppercase\local@title
-    \fi}\par
-  \vspace*{3cm}
-  \nohyphens{\@authname\ \@authsurn}\par
+\nohyphens{\MakeUppercase{\Coppe_title_main:}}\par
+\str_if_eq:VnF \l_Coppe_lang_second_tl {\l_Coppe_lang_main_tl}
+{ \vspace{2mm}\nohyphens{\MakeUppercase{\Coppe_title_second:}}\par }
+\vspace*{3cm}
+\nohyphens{\@authname\ \@authsurn}\par
   \end{center}
   \vspace*{2.1cm}
   \begin{flushright}
@@ -340,62 +386,37 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \global\let\and\relax}
 \newcommand\makefrontpage{%
   \begin{center}
-    \sloppy\nohyphens{
-      \if@english
-        \MakeUppercase\foreign@title
-      \else
-        \MakeUppercase\local@title
-      \fi}\par
-    \vspace*{7mm}
-    {\@authname\ \@authsurn}\par
-  \end{center}\par
-  \vspace*{4mm}
-  \frontpage@maintext
-  \vspace*{16mm}
-  \nohyphens{%
-  \noindent\begin{tabularx}{\textwidth}[b]{@{}l@{ }>{\raggedright\arraybackslash}X@{}}
-    \local@advisorstring: &
-    \count1=0
-    \toks@={}
-    \@whilenum \count1<\@advisor \do{%
-    \ifcase\count1 % same as \ifnum0=\count1
-      \toks@=\expandafter{\csname CoppeAdvisorName:\the\count1%
-        \expandafter\endcsname\expandafter\space%
-        \csname CoppeAdvisorSurname:\the\count1\endcsname\\}
-    \else
-      \toks@=\expandafter\expandafter\expandafter{%
-        \expandafter\the\expandafter\toks@%
-        \expandafter&\expandafter\space%
-        \csname CoppeAdvisorName:\the\count1\expandafter\endcsname%
-        \expandafter\space\csname CoppeAdvisorSurname:\the\count1\endcsname\\
-      }%
-    \fi
-    \advance\count1 by 1}
-    \the\toks@
-  \end{tabularx}\par
-  \vspace*{20mm}
-  \noindent\begin{tabularx}{\textwidth}[b]{@{}l@{ }>{\raggedright\arraybackslash}X@{}}
-    Aprovada por: &
-    \count1=0
-    \toks@={}
-    \@whilenum \count1<\@examiner \do{%
-    \ifcase\count1 % same as \ifnum0=\count1
-      \toks@=\expandafter{\csname CoppeExaminer:\the\count1%
-        \expandafter\endcsname\expandafter\\}
-    \else
-      \toks@=\expandafter\expandafter\expandafter{%
-        \expandafter\the\expandafter\toks@%
-        \expandafter&\expandafter\space%
-        \csname CoppeExaminer:\the\count1\expandafter\endcsname%
-        \expandafter\space\\
-      }%
-    \fi
-    \advance\count1 by 1}
-    \the\toks@
-    \end{tabularx}}\par
+\sloppy\nohyphens{\MakeUppercase{\Coppe_title_main:}}\par
+\str_if_eq:VnF \l_Coppe_lang_second_tl {\l_Coppe_lang_main_tl}
+{ \vspace{2mm}\sloppy\nohyphens{\MakeUppercase{\Coppe_title_second:}}\par }
+\vspace*{7mm}
+{\@authname\ \@authsurn}\par
+\end{center}\par
+\vspace*{4mm}
+\frontpage@maintext
+\vspace*{16mm}
+\vspace*{20mm}
+\noindent\begin{tabularx}{\textwidth}[b]{@{}l@{ }>{\raggedright\arraybackslash}X@{}}
+\Coppe_approved_main:  & % <-- i18n “Approved by”
+\count1=0
+\toks@={}
+\@whilenum \count1<\@examiner \do{%
+\ifcase\count1
+\toks@=\expandafter{\csname CoppeExaminer:\the\count1\endcsname\\}
+\else
+\toks@=\expandafter\expandafter\expandafter{%
+\expandafter\the\expandafter\toks@
+\expandafter&\expandafter\space
+\csname CoppeExaminer:\the\count1\endcsname\\
+}%
+\fi
+\advance\count1 by 1}
+\the\toks@
+\end{tabularx}\par
+
   \vspace*{\fill}
   \frontpage@bottomtext}
-\newcommand\coppe@hypersetup{%
+\newcommand\Coppe@hypersetup{%
 \begingroup
   % changes to \toks@ and \count@ are kept local;
   % it's not necessary for them, but it is usually the case
@@ -428,7 +449,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \hypersetup{%
   pdfauthor={\@authname\ \@authsurn},
   pdftitle={\local@title},
-  pdfsubject={\local@doctype\ de \@degreename\ em \local@deptname\ da COPPE/UFRJ},
+  pdfsubject={\local@doctype\ de \@degreename\ em \local@deptname\ da Coppe/UFRJ},
   pdfcreator={LaTeX with CoppeTeX toolkit},
   breaklinks={true},
   raiselinks={true},
@@ -449,7 +470,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
         \else
           \local@title%
         \fi/\@authname\ \@authsurn. -- \local@cityname:
-      UFRJ/COPPE, \number\year.}\par
+      UFRJ/Coppe, \number\year.}\par
       \pageref{front:pageno},
       \pageref{LastPage}
       p.\@ifundefined{r@cat:lofflag}{}{\pageref{cat:lofflag}} $29,7$cm.\par
@@ -479,7 +500,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
         \the\toks@
       \end{tabularx}}\par
       \nohyphens{\local@doctype\ ({\MakeLowercase\@degreename}) --
-      UFRJ/COPPE/Programa de \local@deptname, \number\year.}\par
+      UFRJ/Coppe/Programa de \local@deptname, \number\year.}\par
       Refer{\^ e}ncias Bibliogr{\' a}ficas: p. \pageref{bib:begin} -- \pageref{bib:end}.\par
       \count1=0
       \count2=1
@@ -490,7 +511,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
       I. \csname CoppeAdvisorSurname:0\endcsname,%
       \ \csname CoppeAdvisorName:0\endcsname%
       \ifthenelse{\@advisor>1}{\ \emph{et~al.}{}}.
-      II. \local@universityname, COPPE, Programa de \local@deptname.
+      II. \local@universityname, Coppe, Programa de \local@deptname.
       III. T{\' i}tulo.}
     \end{minipage}}
   \end{center}
@@ -543,19 +564,22 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \noindent\local@deptstring: \local@deptname\par
   \vspace*{7mm}}{\vspace*{\fill}}
 \newenvironment{foreignabstract}{%
-  \clearpage
-  \thispagestyle{plain}
-  \begin{otherlanguage}{english}
-  \foreignabstract@toptext\par
-  \vspace*{8.6mm}
-  \begin{center}
-    \sloppy\nohyphens{\MakeUppercase\foreign@title}\par
-    \vspace*{13.2mm}
-    \@authname\ \@authsurn \par
-    \vspace*{7mm}
-    \foreign@monthname/\number\year
-  \end{center}\par
-  \vspace*{\fill}
+\clearpage
+\thispagestyle{plain}
+\begingroup
+\str_case:nnF { \l_Coppe_lang_second_tl }
+{ {br}{\selectlanguage{brazilian}} {en}{\selectlanguage{english}} {es}{\selectlanguage{spanish}} }
+{ \selectlanguage{english} }
+\foreignabstract@toptext\par
+\vspace*{8.6mm}
+\begin{center}
+\sloppy\nohyphens{\MakeUppercase{\Coppe_title_second:}}\par
+\vspace*{13.2mm}
+\@authname\ \@authsurn \par
+\vspace*{7mm}
+\foreign@monthname/\number\year
+\end{center}\par
+\vspace*{\fill}
   \noindent%
   \begin{tabularx}{\textwidth}[b]{@{}l@{ }>{\raggedright\arraybackslash}X@{}}
     \foreign@advisorstring: &
@@ -576,23 +600,15 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \fi
     \advance\count1 by 1}
     \the\toks@
-  \end{tabularx}\par
+  \end{tabularx}
   \vspace*{2mm}
   \noindent\foreign@deptstring: \foreign@deptname\par
   \vspace*{7mm}}{%
-  \end{otherlanguage}
-  \vspace*{\fill}
-  \global\let\@author\@empty
-  \global\let\@date\@empty
-  \global\let\foreign@title\@empty
-  \global\let\foreign@title\relax
-  \global\let\local@title\@empty
-  \global\let\local@title\relax
-  \global\let\author\relax
-  \global\let\author\relax
-  \global\let\date\relax}
+  \endgroup % restore original language
+\vspace*{\fill}
+}
 \renewcommand\listoffigures{%
-    \coppe@hasLof
+    \Coppe@hasLof
     \if@twocolumn
       \@restonecoltrue\onecolumn
     \else
@@ -686,29 +702,29 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %%%%     \@esphack}}}
 \AtBeginDocument{%
   \ltx@ifpackageloaded{hyperref}{
-    \def\coppe@bibEnd{%
+    \def\Coppe@bibEnd{%
       \immediate\write\@auxout{%
         \string\newlabel{bib:end}{{}{\arabic{page}}{}{page.\arabic{page}}{}}}}%
-    \def\coppe@bibBegin{%
+    \def\Coppe@bibBegin{%
       \immediate\write\@auxout{%
         \string\newlabel{bib:begin}{{}{\arabic{page}}{}{page.\arabic{page}}{}}}}%
-    \def\coppe@mainBegin{%
+    \def\Coppe@mainBegin{%
       \immediate\write\@auxout{%
         \string\newlabel{front:pageno}{{}{\Roman{page}}{}{page.\roman{page}}{}}}}%
-    \def\coppe@hasLof{%
+    \def\Coppe@hasLof{%
       \immediate\write\@auxout{%
         \string\newlabel{cat:lofflag}{{}{:~il.;}{}{page.\roman{page}}{}}}}%
   }{%
-    \def\coppe@bibEnd{%
+    \def\Coppe@bibEnd{%
       \immediate\write\@auxout{%
       \string\newlabel{bib:end}{{}{\arabic{page}}{}}}}%
-    \def\coppe@bibBegin{%
+    \def\Coppe@bibBegin{%
       \immediate\write\@auxout{%
       \string\newlabel{bib:begin}{{}{\arabic{page}}{}}}}%
-    \def\coppe@mainBegin{%
+    \def\Coppe@mainBegin{%
       \immediate\write\@auxout{%
         \string\newlabel{front:pageno}{{}{\Roman{page}}{}}}}%
-    \def\coppe@hasLof{%
+    \def\Coppe@hasLof{%
       \immediate\write\@auxout{%
         \string\newlabel{cat:lofflag}{{}{:~il.;}{}}}}%
   }%
@@ -719,7 +735,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
      {\onehalfspacing%
       \chapter*{\bibname}%
       \addcontentsline{toc}{chapter}{\bibname}%
-      \coppe@bibBegin
+      \Coppe@bibBegin
       \list{\@biblabel{\@arabic\c@enumiv}}%
            {\setlength{\labelwidth}{0ex}%
             \setlength{\leftmargin}{9.0ex}%
@@ -736,7 +752,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
       \sfcode`\.\@m}%
      {\def\@noitemerr%
        {\@latex@warning{Empty `thebibliography' environment}}%
-       \coppe@bibEnd
+       \Coppe@bibEnd
       \endlist}
 \newlength{\recuolongquote}%
 \setlength{\recuolongquote}{4cm}%
@@ -783,22 +799,6 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \columnsep 35\p@
   \let\item\@idxitem}
   {\if@restonecol\onecolumn\else\clearpage\fi}
-\if@english
-  \newcommand\listabbreviationname{List of Abbreviations}
-  \newcommand\listsymbolname{List of Symbols}
-  \newcommand\glossaryname{Glossary}
-\else
-  \newcommand\listabbreviationname{Lista de Abreviaturas}
-  \newcommand\listsymbolname{Lista de S{\' i}mbolos}
-  \newcommand\glossaryname{Gloss{\' a}rio}
-\fi
-\newcommand\local@advisorstring{Orientador}
-\newcommand\foreign@advisorstring{Advisor}
-\ifthenelse{\boolean{maledoc}}{%
-  \newcommand\local@approvedname{Examinado por}%
-}{%
-  \newcommand\local@approvedname{Examinada por}%
-}
 \newcommand\local@universityname{Universidade Federal do Rio de Janeiro}
 \newcommand\local@deptstring{Programa}
 \newcommand\foreign@deptstring{Department}
@@ -809,7 +809,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \sloppy\nohyphens{\local@doctype\ de \@degreename\
   \ifthenelse{\boolean{maledoc}}{apresentado}{apresentada}
   ao Programa de P{\' o}s-gradua{\c c}{\~ a}o em \local@deptname,
-  COPPE, da \local@universityname, como parte dos requisitos
+  Coppe, da \local@universityname, como parte dos requisitos
   necess{\' a}rios {\` a} obten{\c c}{\~ a}o do t{\' i}tulo de
   \local@degname\ em \local@deptname.}
 }
@@ -832,13 +832,13 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \newcommand\abstract@toptext{%
   \noindent Resumo \ifthenelse{\boolean{maledoc}}{do}{da}
   \local@doctype\ \ifthenelse{\boolean{maledoc}}{apresentado}{apresentada}
-  \sloppy\nohyphens{{\` a} COPPE/UFRJ como parte dos requisitos
+  \sloppy\nohyphens{{\` a} Coppe/UFRJ como parte dos requisitos
   necess{\' a}rios para a obten{\c c}{\~ a}o do grau de
   \local@degname\ em Ci{\^ e}ncias (\@degree)}
 }
 \newcommand\foreignabstract@toptext{%
   \noindent \sloppy\nohyphens{Abstract of \foreign@doctype\ presented to
-  COPPE/UFRJ as a partial fulfillment of the requirements for the
+  Coppe/UFRJ as a partial fulfillment of the requirements for the
   degree of \foreign@degname\ of Science (\@degree)}
 }
 \newcommand{\annex}{

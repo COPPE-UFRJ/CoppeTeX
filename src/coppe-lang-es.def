@@ -1,10 +1,10 @@
 %%
-%% This is file `coppe.bib',
+%% This is file `coppe-lang-es.def',
 %% generated with the docstrip utility.
 %%
 %% The original source files were:
 %%
-%% coppe.dtx  (with options: `bibs')
+%% coppe.dtx  (with options: `lang-es')
 %% 
 %% This is the `coppe' document class used for composition of LaTeX
 %% monographs (master and PhD thesis, and PhD qualifying exams)
@@ -50,69 +50,36 @@
 %%   Grave accent  \`     Left brace    \{     Vertical bar  \|
 %%   Right brace   \}     Tilde         \~}
 %%
-\ProvidesFile{coppe.bib}[2025/10/18 CoppeTeX v4.0 Biblatex File]
-
-@book{ KNU86a,
-author = "Donald E. Knuth",
-title = "The {{\TeX}book}",
-publisher = "Addison-Wesley",
-address = "Reading, MA",
-year = "1984",
-}
-
-@book{ KNT69a,
-author = "Leslie Lamport",
-title = "{\LaTeX \rm:} {A} Document Preparation System",
-publisher = "Addison-Wesley",
-address = "Reading, MA",
-year = 1986
-}
-
-@manual{ TNR08a,
-author = "CPGP/Coppe/UFRJ",
-title = "Norma para a Elabora{\c c}\~ao Gr\'afica de Teses",
-address = "Rio de Janeiro, RJ, Brasil",
-month = "Julho",
-year = 2008,
-note = "Revisada em 10/09/2010",
-}
-
-@unpublished{ PAT88a,
-author = "Oren Patashnik",
-title = "BibTeXing",
-note = "Documentation for general Bib\TeX\ users",
-month = feb,
-year = 1988
-}
-
-@unpublished{ PAT88b,
-author = "Oren Patashnik",
-title = "Designing BibTeX Styles",
-note = "The part of BibTeX 's documentation
-that's not meant for general users",
-month = feb,
-year = 1988
-}
-
-@book{ WW79a,
-author = "Strunk, Jr., William and E. B. White",
-title = "The Elements of Style",
-publisher = "Macmillan",
-edition = 3,
-year = 1979
-}
-
-@misc{TeX:FAQ,
-title = "{\TeX} {Frequently} {Asked} {Questions}",
-url = "\\http://www.tex.ac.uk/cgi-bin/texfaq2html?introduction=yes",
-key = "TeX FAQ",
-}
-
-@misc{normassibi,
-title = {Normas SIBI}
-author = {{SIBI}}
-year = 2025
-}
+\ProvidesFile{coppe-lang-es.def}[2025/10/18 CoppeTeX v4.0 localization: Spanish]
+\ExplSyntaxOn
+\Coppe_dept_set:nnn {PESC}{es}{Ingeniería de Sistemas y Computación}
+\Coppe_dept_set:nnn {PEB} {es}{Ingeniería Biomédica}
+\Coppe_dept_set:nnn {PEC} {es}{Ingeniería Civil}
+\Coppe_dept_set:nnn {PEE} {es}{Ingeniería Eléctrica}
+\Coppe_dept_set:nnn {PEM} {es}{Ingeniería Mecánica}
+\Coppe_dept_set:nnn {PEMM}{es}{Ingeniería Metalúrgica y de Materiales}
+\Coppe_dept_set:nnn {PEN} {es}{Ingeniería Nuclear}
+\Coppe_dept_set:nnn {PENO}{es}{Ingeniería Oceánica}
+\Coppe_dept_set:nnn {PPE} {es}{Planificación Energética}
+\Coppe_dept_set:nnn {PEP} {es}{Ingeniería de Producción}
+\Coppe_dept_set:nnn {PEQ} {es}{Ingeniería Química}
+\Coppe_dept_set:nnn {PET} {es}{Ingeniería de Transportes}
+\Coppe_dept_set:nnn {PENT}{es}{Ingeniería de Nanotecnología}
+\Coppe_str_set:nnn {degname/msc}{es}{Maestría}
+\Coppe_str_set:nnn {degname/phd}{es}{Doctorado}
+\Coppe_str_set:nnn {doctype/msc}{es}{Tesis de maestría}
+\Coppe_str_set:nnn {doctype/phd}{es}{Tesis doctoral}
+\Coppe_str_set:nnn {advisor_label}{es}{Director}
+\Coppe_str_set:nnn {advisors_label}{es}{Directores}
+\Coppe_str_set:nnn {approved_by}{es}{Aprobada por}
+\Coppe_str_set:nnn {listabbreviationname}{es}{Lista de abreviaturas}
+\Coppe_str_set:nnn {listsymbolname}{es}{Lista de símbolos}
+\Coppe_str_set:nnn {glossaryname}{es}{Glosario}
+\Coppe_str_set:nnn {degperson/msc/m}{es}{Maestro}
+\Coppe_str_set:nnn {degperson/msc/f}{es}{Maestra}
+\Coppe_str_set:nnn {degperson/phd/m}{es}{Doctor}
+\Coppe_str_set:nnn {degperson/phd/f}{es}{Doctora}
+\ExplSyntaxOff
 %% 
 %%
-%% End of file `coppe.bib'.
+%% End of file `coppe-lang-es.def'.
