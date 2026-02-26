@@ -1,0 +1,5 @@
+\frametitle{Equation example}
+  \begin{equation*}
+    \mathrm{i}\hslash\frac{\partial}{\partial t}\Psi(\mathbf{r},t) =
+    -\frac{\hslash^2}{2m}\nabla^2\Psi(\mathbf{r},t) + V(\mathbf{r})\Psi(\mathbf{r},t)
+  \end{equation*}

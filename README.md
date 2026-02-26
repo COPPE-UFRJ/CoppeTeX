@@ -115,3 +115,8 @@ section.
 ## Help & Support
 
 Please, send any comments, suggestions, questions and bugs to our [mailing list](http://coppetex.sourceforge.net/mailing-list.html).
+
+
+## Add-ons
+
+Now there is also Beamer template providade by prof. Jean-David Caprace

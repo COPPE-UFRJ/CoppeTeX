@@ -1,0 +1,190 @@
+%\documentclass[light,simpletitlepage]{coppebeamer} % options: simpletitlepage (default) or backgroundpicturetitlepage
+\documentclass[light,backgroundpicturetitlepage]{coppebeamer}
+\settitlebackground{figures/background_figure} % no extension: .png/.jpg/.pdf
+% \documentclass[t]{coppebeamer} % use "t" option for top alignment (content anchored at top)
+
+% Notes handling (optional)
+\usepackage{pgfpages}
+\setbeameroption{hide notes} % slides only
+% \setbeameroption{show only notes}
+% \setbeameroption{show notes on second screen=right}
+
+% Common packages
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usetikzlibrary{calc}
+\usepackage{tikz}
+
+% ------------------------------------------------------------------
+% Metadata
+% ------------------------------------------------------------------
+\title[Short title]{Presentation Title}
+\subtitle{Presentation Subtitle}
+\author{Author}
+\institute[COPPE/UFRJ]{COPPE -- Universidade Federal do Rio de Janeiro}
+\setdepartment{Programa de Pós-Graduação em Engenharia Oceânica}
+\date{\today}
+
+% Optional: show an outline frame at the beginning of each section
+\AtBeginSection[]
+{
+  \begin{frame}[plain,noframenumbering]
+    \frametitle{Outline}
+    \tableofcontents[currentsection]
+  \end{frame}
+}
+
+\begin{document}
+
+% ------------------------------------------------------------------
+% Cover / title page
+% ------------------------------------------------------------------
+\begin{frame}[plain]
+  \maketitle
+  \note[item]{Optional presenter note for the title slide.}
+\end{frame}
+
+% ------------------------------------------------------------------
+% Table of contents
+% ------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Outline}
+  \tableofcontents
+\end{frame}
+
+% ------------------------------------------------------------------
+\section{Introduction}
+
+\begin{frame}
+  \frametitle{Motivation}
+  \begin{itemize}[<+->]
+    \item State the problem in one sentence.
+    \item Why it matters (impact / stakeholders / urgency).
+    \item Your approach (high level).
+    \item Expected contribution.
+  \end{itemize}
+  \note[item]{Keep this slide crisp: 4 bullets max.}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Key message}
+  \begin{block}{Take-away}
+    Write the main message here. If people remember only one thing, it is this.
+  \end{block}
+\end{frame}
+
+% ------------------------------------------------------------------
+\section{Method}
+
+\begin{frame}
+  \frametitle{Two-column layout}
+  \begin{columns}[T]
+    \begin{column}{0.55\textwidth}
+      \begin{itemize}
+        \item Left column for text.
+        \item Use short bullets.
+        \item Highlight with \alert{alert}.
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.4\textwidth}
+      \centering
+      \includegraphics[width=\linewidth]{figures/Mycena_interrupta.jpg}
+      {\footnotesize Figure caption.}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Equation example}
+  \begin{equation*}
+    \mathrm{i}\hslash\frac{\partial}{\partial t}\Psi(\mathbf{r},t) =
+    -\frac{\hslash^2}{2m}\nabla^2\Psi(\mathbf{r},t) + V(\mathbf{r})\Psi(\mathbf{r},t)
+  \end{equation*}
+\end{frame}
+
+% ------------------------------------------------------------------
+\section{Results}
+
+\begin{frame}
+  \frametitle{A simple table}
+  \begin{table}
+    \centering
+    \begin{tabular}{lrr}
+      \toprule
+      Item & Value A & Value B \\
+      \midrule
+      Baseline & 1.00 & 2.00 \\
+      Proposed & 0.85 & 2.40 \\
+      \bottomrule
+    \end{tabular}
+  \end{table}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Conclusion}
+  \begin{enumerate}
+    \item What you did (1 line).
+    \item What you found (1 line).
+    \item Why it matters / next steps (1 line).
+  \end{enumerate}
+\end{frame}
+
+% ------------------------------------------------------------------
+\section*{Thank you}
+
+\begin{frame}[plain]
+  \centering
+  \vspace{10mm}
+  {\LARGE Thank you!}
+
+  \vspace{6mm}
+  {\large Questions?}
+
+  \vspace{8mm}
+  {\footnotesize
+  \texttt{email@ppg.ufrj.br} \\
+  COPPE/UFRJ
+  }
+\end{frame}
+
+% --------------------------------------------------
+% Thank you / Closing slide (with photo + logo)
+% --------------------------------------------------
+\begin{frame}[plain]
+\begin{tikzpicture}[remember picture,overlay]
+
+  % COPPE logo (top-right)
+  \node[anchor=north east,xshift=-8mm,yshift=-6mm]
+    at (current page.north east) {%
+    \includegraphics[height=10mm]{logos/COPPE-LOGO-PNG}%
+  };
+
+  % Presenter photo (bottom-left)
+  % Recommended: square image, ~500x500px 
+\node[anchor=center, xshift=0.3\paperwidth, yshift=0.45\paperheight] at (current page.south west) {%
+
+        \begin{tikzpicture}
+        \clip (0,0) circle (1.8cm);
+        \node[anchor=center] at (0,0) {\includegraphics[height=3.6cm]{figures/presenter-photo}};
+        %\draw[coppeAccent,line width=0.6pt] (0,0) circle (1.8cm);
+        \end{tikzpicture}
+  };
+
+\end{tikzpicture}
+
+\begin{tikzpicture}[remember picture,overlay]
+  \node[anchor=center, align=center, text width=0.48\paperwidth]
+    at ($(current page.south west)!0.67!(current page.south east)+(0,0.4\paperheight)$) {%
+      {\usebeamerfont{title}\color{coppeAccent} Thank you!}\par\vspace{4mm}
+      {\usebeamerfont{subtitle} Questions?}\par\vspace{6mm}
+      {\usebeamerfont{author} Author name}\par\vspace{2mm}
+      {\usebeamerfont{institute} COPPE/UFRJ}\par\vspace{1mm}
+      {\usebeamerfont{date}\texttt{email@ppg.ufrj.br}}%
+  };
+\end{tikzpicture}
+
+
+\end{frame}
+
+
+\end{document}

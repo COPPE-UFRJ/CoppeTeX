@@ -1,0 +1,48 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{coppecolor}[2026/01/30]
+
+\RequirePackage{xcolor}
+
+% =========================================================
+% COPPE / UFRJ brand palette (from COPPE brand manual)
+% ---------------------------------------------------------
+% Primary:  COPPE Wine      #8A2432
+% Neutral:  COPPE Gray      #6F6F6E
+% Neutral:  COPPE Graphite  #333333
+% Accent:   COPPE Teal      #016079
+% =========================================================
+
+% --- Brand colors (preferred names) ---
+\definecolor{coppeWine}{HTML}{8A2432}
+\definecolor{coppeGray}{HTML}{6F6F6E}
+\definecolor{coppeGraphite}{HTML}{333333}
+\definecolor{coppeAccent}{HTML}{016079}
+
+% --- Useful supporting tones (safe additions) ---
+\definecolor{coppeLightGray}{HTML}{DADADA}
+\definecolor{coppeOffWhite}{HTML}{F7F7F7}
+\definecolor{coppeBlack}{RGB}{0,0,0}
+
+
+
+
+% =========================================================
+% Compatibility aliases (keep LUT names alive for Pass B)
+% ---------------------------------------------------------
+% These ensure the existing LUT class compiles while we
+% gradually replace color usage inside the .cls.
+% =========================================================
+
+% Contrast colours (LUT legacy names)
+\colorlet{green}{coppeAccent}          % LUT green -> COPPE teal accent
+\colorlet{pink}{coppeWine}             % LUT pink  -> COPPE wine
+\definecolor{orange}{RGB}{255,134,33}  % keep LUT orange as a utility highlight
+\definecolor{black}{RGB}{0,0,0}        % keep true black
+
+% Other colors (LUT legacy names)
+\colorlet{grey}{coppeLightGray}        % LUT grey used often as light background fill
+\colorlet{lightgrey}{coppeLightGray}   % LUT lightgrey
+\colorlet{viridian}{coppeAccent}       % LUT viridian -> COPPE accent
+
+\colorlet{gr}{coppeGray}               % LUT "gr" looks like medium gray
+\colorlet{rdbu7}{coppeAccent}          % LUT "rdbu7" blue -> COPPE accent
