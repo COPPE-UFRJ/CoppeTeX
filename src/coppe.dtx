@@ -2,8 +2,8 @@
 %
 % This is file `coppe.dtx'.
 %
-% It uses the doc utility to generate documentations for the 'coppe'
-% document class and the 'coppe-unsrt' BibTeX style.
+% It uses the doc utility to generate documentation for the 'coppe'
+% document class and its biblatex/biber bibliography style.
 %
 % Copyright (C) 2024 CoppeTeX Project and any individual authors listed
 % elsewhere in this file.
@@ -46,7 +46,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \end{document}
 %</driver> \fi
 %
-%% \CheckSum{1656}
+%% \CheckSum{1642}
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
 %%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
@@ -371,31 +371,31 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %
 % \subsection*{References}
 %
-% It is well known that bibliography databases can be easily maintained with
-% the aid of \BibTeX. Thus, the \CoppeTeX\ project designed two \BibTeX\ styles,
-% |coppe-plain.bst| and |coppe-unsrt.bst|.
-% The |coppe-plain.bst| creates a list of references alphabetically sorted.
-% The later is a numbered style,
-% which sorts references by the order of citation.
-% To use them,
-% you have to select either |coppe-plain| or |coppe-unsrt| as the \BibTeX\ style and
-% include your \BibTeX\ references
-% without the |bib| extension, as in the following
-% example:
+% \CoppeTeX\ produces citations and the reference list with |biblatex| and the
+% |biber| backend, through its own bibliography style implementing the
+% post-2020 ABNT NBR~6023 rules. The class loads this style automatically:
+% there is no |\bibliographystyle| to set and no \BibTeX\ |.bst| file to choose
+% (the former |coppe-plain| and |coppe-unsrt| \BibTeX\ styles have been retired).
+%
+% By default, citations follow the author--date style, e.g., ``Chartier
+% (2002)''. Passing the |numbers| class option switches to the numeric style,
+% in which citations are bracketed numbers and the reference list is numbered
+% in order of citation (unsorted).
+%
+% Declare your bibliography database in the preamble with |\addbibresource| and
+% print the list where it should appear with |\printbibliography|:
 % \begin{verbatim}
-%   \bibliographystyle{coppe-unsrt}
-%   \bibliography{example}
+%   \addbibresource{example.bib}   % in the preamble
+%   ...
+%   \printbibliography             % where the list goes
 % \end{verbatim}
+% Entry types and fields may be written in English (|@book|, |title|, |author|)
+% or with their unaccented Portuguese synonyms (|@livro|, |titulo|, |autor|).
 %
-% As of May 4th, 2023, there are new bibliograhic styles for english,
-% |en-coppe-plain.bst| and |en-coppe-plain.bst|, that uses other
-% string constants, such as ``Technical Report'' instead of ``Relatório Técnico''.
-%
-%
-% Run in sequence \LaTeX, \BibTeX, and twice again \LaTeX\ to resolve
-% reference.  These styles are |natbib| compatible.  This means that you can
-% freely issue the commands |\citet| and |\citep|, as well as any other
-% |natbib| feature.
+% Run in sequence \LaTeX, |biber|, and twice again \LaTeX\ to resolve the
+% citations and references. The style is |natbib| compatible (via the |biblatex|
+% |natbib=true| option), so you may freely issue |\citet| and |\citep|, as well
+% as the other |natbib| commands.
 %
 % \subsection*{Appendix and Annex (Optional)}
 %
@@ -411,8 +411,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %
 % \begin{verbatim}
 % \backmatter
-% \bibliographystyle{coppe-plain}
-% \bibliography{main}
+% \printbibliography
 % \appendix
 % \chapter{An Appendix}
 % \chapter{Another Appendix}
@@ -439,11 +438,10 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %   \item[\texttt{doublespacing}] The default line spacing is one-and-a-half.
 %   For enabling double spacing between lines, use the |doublespacing| option.
 %
-%   \item[\texttt{numbers}] The default citation style is the author-year
-%   scheme, which must be followed by the use of its corresponding \BibTeX\
-%   style, namely, the |coppe-plain.bst| file.  For numbered citations, specify
-%   the option |numbers| to the |coppe| class.  In this case, it is
-%   mandatory the use of |coppe-unsrt.bst|, as the bibliography style.
+%   \item[\texttt{numbers}] The default citation style is the author--date
+%   scheme. For numbered citations, specify the |numbers| option to the |coppe|
+%   class; the reference list is then numbered in order of citation (unsorted).
+%   The matching |biblatex| style is selected automatically in either case.
 %
 %   \item[\texttt{english}] Coppe\TeX\  uses Babel. The default language
 %    is Portuguese (actually \verb|brazilian|), with English being the second language. If option \verb|english| is
@@ -515,6 +513,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \usepackage{hyperref}
 \usepackage{listings} % para usar listagens
 
+\addbibresource{example.bib}% base de referências (biblatex/biber)
 
 \makelosymbols
 \makeloabbreviations
@@ -602,7 +601,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   Essa classe considera que o texto principal está em português e algumas partes específicas, como o \textit{abstract}, estão em inglês. Caso o texto principal seja em inglês as seguintes opções devem ser usadas:
  \begin{itemize}
  \item A opção \verb|english| deve ser usada no comando \verb|\documentclass|.
- \item Os estilos de bibliografia usados devem ser \verb|en-coppe-plain.bst| ou \verb|en-coppe-unsrt.bst|
+ \item A bibliografia segue automaticamente o idioma do Babel (português ou inglês); não é preciso escolher um estilo separado.
  \end{itemize}
 
   A variação de linguagem, em inglês ou português apenas, já é suportada pela classe Coppe\TeX  com o pacote Babel. Não é necessário incluí-lo.
@@ -1061,8 +1060,7 @@ Este é o conteúdo do meu textbox sem título. Você pode adicionar qualquer te
 
   \backmatter
 
-  \bibliographystyle{coppe-unsrt}
-  \bibliography{example}
+  \printbibliography
 
 
 
@@ -1112,7 +1110,8 @@ No modelo \CoppeTeX os anexos devem obrigtoriamente vir depois dos apêndices e 
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{coppe}[\filedate\ \fileversion\ COPPE Dissertations and Thesis]
 \LoadClass[12pt,a4paper,oneside]{book}
-\RequirePackage[sort&compress]{natbib}
+% The bibliography engine (biblatex+biber) is loaded further below, after babel,
+% so the numbers class option can select the citation style at load time.
 \RequirePackage{hyphenat}
 \RequirePackage{lastpage}
 \RequirePackage{ifthen}
@@ -1173,9 +1172,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \newcommand\local@doctype{Tese}
   \newcommand\foreign@doctype{Thesis}
 }
-\DeclareOption{numbers}{%
-  \PassOptionsToPackage{numbers}{natbib}
-}
+\newif\if@coppenumeric\@coppenumericfalse
+\DeclareOption{numbers}{\@coppenumerictrue}
 %    \end{macrocode}
 % Here is the default one-and-a-half line spacing.
 % Users can change to double spacing by passing the |doublespacing| option.
@@ -1196,6 +1194,33 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \addto{\captionsenglish}{%
   \renewcommand{\bibname}{References}
 }
+% Bibliography engine: the full coppe BibLaTeX/biber ABNT style, replacing the
+% former natbib+bibtex setup. Loaded here, after babel, so its language strings
+% map correctly. The numbers option selects the numeric style; otherwise the
+% author-date default is used. natbib=true keeps \citet/\citep available.
+\if@coppenumeric
+  \RequirePackage[backend=biber,datamodel=coppe,%
+    bibstyle=coppe-numeric,citestyle=coppe-numeric,natbib=true]{biblatex}
+\else
+  \RequirePackage[backend=biber,datamodel=coppe,%
+    bibstyle=coppe,citestyle=coppe,natbib=true]{biblatex}
+\fi
+% Reference-list heading: a chapter titled with \bibname (so it still follows
+% babel and the english option) and added to the table of contents, matching
+% the previous thebibliography behaviour.
+\defbibheading{bibliography}[\bibname]{%
+  \chapter*{#1}%
+  \addcontentsline{toc}{chapter}{#1}}
+% The catalog page range (bib:begin/bib:end) was written by the old
+% thebibliography redefinition, which biblatex's \printbibliography does not
+% use. biblatex offers \AtBeginBibliography but no end counterpart, so the
+% begin label uses that hook and the end label is emitted by wrapping
+% \printbibliography to write it just after the reference list.
+\AtBeginBibliography{\coppe@bibBegin}
+\let\coppe@orig@printbibliography\printbibliography
+\renewcommand\printbibliography[1][]{%
+  \coppe@orig@printbibliography[#1]%
+  \coppe@bibEnd}
 %    \end{macrocode}
 % \changes{v3.0}{2020/03/02}{Added support for monographs in English.}
 % \changes{v3.4.1}{2025/02/13}{Fix english option to consider brazilian a second language, describe it in document}
@@ -1925,31 +1950,11 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
         \string\newlabel{cat:lofflag}{{}{:~il.;}{}}}}%
   }%
 }
-\newdimen\bibindent%
-\setlength\bibindent{1.5em}%
-\renewenvironment{thebibliography}[1]%
-     {\onehalfspacing%
-      \chapter*{\bibname}%
-      \addcontentsline{toc}{chapter}{\bibname}%
-      \coppe@bibBegin
-      \list{\@biblabel{\@arabic\c@enumiv}}%
-           {\setlength{\labelwidth}{0ex}%
-            \setlength{\leftmargin}{9.0ex}%
-            \setlength{\itemindent}{-9.0ex}%
-            \advance\leftmargin\labelsep%
-            \@openbib@code%
-            \usecounter{enumiv}%
-            \let\p@enumiv\@empty%
-            \renewcommand\theenumiv{\@arabic\c@enumiv}}%
-      \sloppy%
-      \clubpenalty4000%
-      \@clubpenalty \clubpenalty%
-      \widowpenalty4000%
-      \sfcode`\.\@m}%
-     {\def\@noitemerr%
-       {\@latex@warning{Empty `thebibliography' environment}}%
-       \coppe@bibEnd
-      \endlist}
+% The reference list is now produced by biblatex's \printbibliography (see the
+% bibliography setup after babel, above). The former thebibliography
+% redefinition and its \bibindent are no longer used and have been removed; the
+% bib:begin/bib:end catalog labels are now written by \AtBeginBibliography /
+% \AtEndBibliography via \coppe@bibBegin and \coppe@bibEnd, defined just above.
 %    \end{macrocode}
 %
 % \begin{environment}{longquote}

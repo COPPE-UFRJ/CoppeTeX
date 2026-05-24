@@ -39,7 +39,7 @@ BUILDDIR=../dist
 SOURCEDIR=
 
 TEX = pdflatex
-BIBTEX = bibtex
+BIBER = biber
 MAKEIDX = makeindex
 _printf=printf
 _rm=rm
@@ -51,7 +51,6 @@ ISTDIR=$(DESTDIR)/makeindex/coppe
 DOCDIR=$(DESTDIR)/doc/latex/coppe
 
 TEXFLAGS  =
-BIBTEXFLAGS = -terse
 IDXFLAGS = -q -s gind.ist
 GLOFLAGS = -q -s gglo.ist
 LSTFLAGS = -q -s coppe.ist
@@ -69,9 +68,6 @@ all:
 
 doc: $(PACKAGE_NAME).dtx
 	@$(TEX) $(TEXFLAGS) $<
-	@if grep -s "There were undefined references" $(basename $<).log; then \
-	  $(BIBTEX) $(BIBTEXFLAGS) $(basename $<).aux; \
-	fi
 	@if grep -s '$(basename $<).idx' $(basename $<).log; then \
 	  $(MAKEIDX) $(IDXFLAGS) $(basename $<).idx -o $(basename $<).ind;\
 	fi
@@ -100,12 +96,10 @@ install: doc class example.pdf
 	  rm -rf $(CLSDIR); \
 	fi
 	mkdir -vp $(CLSDIR)
-	cp -vp $(PACKAGE_NAME).cls coppe-logo.eps coppe-logo.pdf coppe.ist $(CLSDIR)/
-	if [ -d "$(BSTDIR)" ]; then \
-	  rm -rf $(BSTDIR); \
-	fi
-	mkdir -vp $(BSTDIR)
-	cp -vp $(PACKAGE_NAME)-*.bst $(BSTDIR)/
+	cp -vp $(PACKAGE_NAME).cls coppe-logo.eps coppe-logo.pdf coppe.ist \
+		$(PACKAGE_NAME).bbx $(PACKAGE_NAME).cbx $(PACKAGE_NAME).dbx \
+		$(PACKAGE_NAME)-numeric.bbx $(PACKAGE_NAME)-numeric.cbx \
+		brazilian-$(PACKAGE_NAME).lbx english-$(PACKAGE_NAME).lbx $(CLSDIR)/
 	if [ -d "$(ISTDIR)" ]; then \
 	  rm -rf $(ISTDIR); \
 	fi
@@ -130,7 +124,10 @@ build: doc class example.pdf
 	fi
 	mkdir -vp $(BUILDDIR)
 	@${_printf} "Copying class files.\n"
-	cp -vp $(PACKAGE_NAME).cls $(PACKAGE_NAME)-*.bst $(PACKAGE_NAME).ist \
+	cp -vp $(PACKAGE_NAME).cls $(PACKAGE_NAME).ist \
+		$(PACKAGE_NAME).bbx $(PACKAGE_NAME).cbx $(PACKAGE_NAME).dbx \
+		$(PACKAGE_NAME)-numeric.bbx $(PACKAGE_NAME)-numeric.cbx \
+		brazilian-$(PACKAGE_NAME).lbx english-$(PACKAGE_NAME).lbx \
 		$(PACKAGE_NAME)-logo.*  $(PACKAGE_NAME).pdf $(BUILDDIR)
 	@${_printf} "Copying example files.\n"
 	cp -vp example.tex example.pdf example.bib $(BUILDDIR)
@@ -178,8 +175,8 @@ example.tex: $(PACKAGE_NAME).ins
 
 %.pdf: %.tex
 	@$(TEX) $(TEXFLAGS) $<
-	@if grep -s "There were undefined references" $(basename $<).log; then \
-	  $(BIBTEX) $(BIBTEXFLAGS) $(basename $<).aux; \
+	@if [ -f $(basename $<).bcf ]; then \
+	  $(BIBER) $(basename $<); \
 	fi
 	@if grep -s '$(basename $<).idx' $(basename $<).log; then \
 	  $(MAKEIDX) $(IDXFLAGS) $(basename $<).idx -o $(basename $<).ind;\

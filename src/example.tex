@@ -6,8 +6,8 @@
 %%
 %% coppe.dtx  (with options: `example')
 %% 
-%% This is a sample monograph which illustrates the use of `coppe' document
-%% class and `coppe-unsrt' BibTeX style.
+%% This is a sample monograph which illustrates the use of the `coppe' document
+%% class and its biblatex/biber bibliography style.
 %% 
 %% \CheckSum{1656}
 %% \CharacterTable
@@ -35,6 +35,8 @@
 \usepackage{amsmath,amssymb}
 \usepackage{hyperref}
 \usepackage{listings} % para usar listagens
+
+\addbibresource{example.bib}% base de referências (biblatex/biber)
 
 \makelosymbols
 \makeloabbreviations
@@ -120,7 +122,7 @@
   Essa classe considera que o texto principal está em português e algumas partes específicas, como o \textit{abstract}, estão em inglês. Caso o texto principal seja em inglês as seguintes opções devem ser usadas:
  \begin{itemize}
  \item A opção \verb|english| deve ser usada no comando \verb|\documentclass|.
- \item Os estilos de bibliografia usados devem ser \verb|en-coppe-plain.bst| ou \verb|en-coppe-unsrt.bst|
+ \item A bibliografia segue automaticamente o idioma do Babel (português ou inglês); não é preciso escolher um estilo separado.
  \end{itemize}
 
   A variação de linguagem, em inglês ou português apenas, já é suportada pela classe Coppe\TeX  com o pacote Babel. Não é necessário incluí-lo.
@@ -557,8 +559,7 @@ Este é o conteúdo do meu textbox sem título. Você pode adicionar qualquer te
 
   \backmatter
 
-  \bibliographystyle{coppe-unsrt}
-  \bibliography{example}
+  \printbibliography
 
 \appendix
 

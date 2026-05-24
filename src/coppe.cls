@@ -56,7 +56,6 @@
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{coppe}[\filedate\ \fileversion\ COPPE Dissertations and Thesis]
 \LoadClass[12pt,a4paper,oneside]{book}
-\RequirePackage[sort&compress]{natbib}
 \RequirePackage{hyphenat}
 \RequirePackage{lastpage}
 \RequirePackage{ifthen}
@@ -110,9 +109,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \newcommand\local@doctype{Tese}
   \newcommand\foreign@doctype{Thesis}
 }
-\DeclareOption{numbers}{%
-  \PassOptionsToPackage{numbers}{natbib}
-}
+\newif\if@coppenumeric\@coppenumericfalse
+\DeclareOption{numbers}{\@coppenumerictrue}
 \onehalfspacing
 \DeclareOption{doublespacing}{%
   \doublespacing
@@ -126,6 +124,21 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \addto{\captionsenglish}{%
   \renewcommand{\bibname}{References}
 }
+\if@coppenumeric
+  \RequirePackage[backend=biber,datamodel=coppe,%
+    bibstyle=coppe-numeric,citestyle=coppe-numeric,natbib=true]{biblatex}
+\else
+  \RequirePackage[backend=biber,datamodel=coppe,%
+    bibstyle=coppe,citestyle=coppe,natbib=true]{biblatex}
+\fi
+\defbibheading{bibliography}[\bibname]{%
+  \chapter*{#1}%
+  \addcontentsline{toc}{chapter}{#1}}
+\AtBeginBibliography{\coppe@bibBegin}
+\let\coppe@orig@printbibliography\printbibliography
+\renewcommand\printbibliography[1][]{%
+  \coppe@orig@printbibliography[#1]%
+  \coppe@bibEnd}
 \newcommand\department[1]{%
   \ifthenelse{\equal{#1}{PEB}}
     {\global\def\local@deptname{Engenharia Biom{\' e}dica}
@@ -678,31 +691,6 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
         \string\newlabel{cat:lofflag}{{}{:~il.;}{}}}}%
   }%
 }
-\newdimen\bibindent%
-\setlength\bibindent{1.5em}%
-\renewenvironment{thebibliography}[1]%
-     {\onehalfspacing%
-      \chapter*{\bibname}%
-      \addcontentsline{toc}{chapter}{\bibname}%
-      \coppe@bibBegin
-      \list{\@biblabel{\@arabic\c@enumiv}}%
-           {\setlength{\labelwidth}{0ex}%
-            \setlength{\leftmargin}{9.0ex}%
-            \setlength{\itemindent}{-9.0ex}%
-            \advance\leftmargin\labelsep%
-            \@openbib@code%
-            \usecounter{enumiv}%
-            \let\p@enumiv\@empty%
-            \renewcommand\theenumiv{\@arabic\c@enumiv}}%
-      \sloppy%
-      \clubpenalty4000%
-      \@clubpenalty \clubpenalty%
-      \widowpenalty4000%
-      \sfcode`\.\@m}%
-     {\def\@noitemerr%
-       {\@latex@warning{Empty `thebibliography' environment}}%
-       \coppe@bibEnd
-      \endlist}
 \newlength{\recuolongquote}%
 \setlength{\recuolongquote}{4cm}%
 \newenvironment*{longquote}[1][default]{%
