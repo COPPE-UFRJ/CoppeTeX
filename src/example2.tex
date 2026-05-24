@@ -1,0 +1,27 @@
+% example2.tex -- CoppeTeX 4.0 BibLaTeX/biber ABNT engine proof (numeric, unsorted).
+% Same data as example1.bib, but the numeric citation style (coppe-numeric):
+% in-text references become bracketed numbers and the reference list is in
+% citation order (ABNT NBR 10520), i.e. unsorted -- deliberately cited in a
+% non-alphabetical order so the citation-order numbering is visible.
+% Standalone (article class) while the coppe class integration is in progress.
+% Build: pdflatex example2 ; biber example2 ; pdflatex example2 ; pdflatex example2
+\documentclass[12pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage[brazilian]{babel}
+\usepackage[backend=biber,datamodel=coppe,bibstyle=coppe-numeric,citestyle=coppe-numeric,natbib=true]{biblatex}
+\addbibresource{example1.bib}
+\begin{document}
+\section*{CoppeTeX 4.0 --- prova do motor BibLaTeX/ABNT (num\'erico, n\~ao ordenado)}
+
+Cita\c{c}\~oes num\'ericas em ordem de apari\c{c}\~ao (n\~ao alfab\'etica):
+disserta\c{c}\~ao \autocite{the1}; livro \autocite{book1}; videogame \autocite{civ6};
+artigo \autocite{art1}; cap\'itulo \autocite{inc1}; trabalho de evento \autocite{inp1};
+tese de doutorado \autocite{tesedsc}; relat\'orio \autocite{rep1};
+sin\^onimo em portugu\^es \autocite{livpt}; entrada por t\'itulo \autocite{misc1}.
+
+Cita\c{c}\~ao comprimida (\texttt{numeric-comp}): \autocite{the1,book1,civ6}.
+
+Comandos \texttt{natbib}: \citet{art1} e \citep{book1}.
+
+\printbibliography
+\end{document}

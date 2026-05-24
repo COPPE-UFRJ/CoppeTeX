@@ -24,6 +24,10 @@ NBR 6023** (per `specs/manual2024.pdf`)._
     plus `\citetapud`/`\citepapud` for *apud* citation-of-citation (§4.1.2.2.1).
   - `brazilian-coppe.lbx` / `english-coppe.lbx` — strings (Disponível em / Acesso em,
     thesis type words mscdiss/dscthesis/phdthesis/tcc, In).
+  - `coppe-numeric.cbx` / `coppe-numeric.bbx` — opt-in numeric style: bracketed
+    `[n]` cites (`numeric-comp`, with compression) + an `[n]`-labelled list in
+    citation order (`sorting=none` = ABNT NBR 10520 numeric = the "unsorted"
+    requirement). Reuses all of `coppe.bbx`; proven in `src/example2.pdf`.
 - **Proof:** `src/example1.pdf` (see `src/examples.md`) compiles cleanly and renders
   correct ABNT for book, article, incollection, inproceedings, thesis, report, misc,
   the thesis family, PT-synonym entries, a corporate-author videogame, entry-by-title,
@@ -35,7 +39,8 @@ author-date citations with normal-caps names · EN + PT entry-type/field synonym
 thesis family (generic `@thesis`/`@dissertation` need `type`; specific
 `@masterdissertation`/`@dscthesis`/`@phdthesis`/`@tcc` preset a babel-aware type) ·
 `@report` · custom `@videogame` + corporate author · ABNT list layout ·
-*apud* citation-of-citation (`\citetapud`/`\citepapud`, §4.1.2.2.1).
+*apud* citation-of-citation (`\citetapud`/`\citepapud`, §4.1.2.2.1) ·
+numeric + unsorted styles (`coppe-numeric`, citation-order list, proven in `example2`).
 
 ## Remaining (next steps)
 
@@ -51,8 +56,10 @@ thesis family (generic `@thesis`/`@dissertation` need `type`; specific
    (todo §39–42: "generated from coppe.dtx"). Currently they live as direct `src/`
    files.
 4. **Build scripts** `doall.bat` / `Makefile` / `latexmkrc`: bibtex → biber.
-5. **Numeric + unsorted citation styles** (todo §21–22): add `coppe-numeric.cbx`
-   (+ number labels in the bbx), selected by the existing `numbers` class option.
+5. **Numeric + unsorted — engine done** (todo §21–22): `coppe-numeric.{cbx,bbx}`
+   exist and are proven in `example2`. Still TODO: wire selection to the existing
+   `numbers` class option (part of the gated cls integration, item 1) instead of
+   the explicit `bibstyle`/`citestyle=coppe-numeric` the standalone example uses.
 6. **Formatting refinements:** entry-by-title first-word CAPS; incollection editor
    `(org.)`; exact thesis `(Mestrado em <course>)` parenthetical using the `course`
    field; custom drivers for game/videogame/movie/tvshow (render `platform`/`artist`/
