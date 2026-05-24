@@ -9,6 +9,8 @@ number described in the table below.
 | # | File | Demonstrates | Status |
 |---|------|--------------|--------|
 | 0 | `example0.pdf` | **Baseline.** Current (pre-change) build of the original `example.tex`, using the legacy BibTeX + natbib bibliography (`coppe-unsrt`). Captured before any CoppeTeX 4.0 bibliography change so later builds can be diffed to prove *only* the bibliography changed (todo §20). | baseline captured |
+| 1 | `example1.pdf` | **Engine proof (author-date).** Standalone document (article class, while the `coppe` class integration is in progress) exercising the new BibLaTeX/biber ABNT engine: core types (`book`, `article`, `incollection`, `inproceedings`, `thesis`, `report`, `misc`), the thesis family (`@dscthesis` → "Tese de Doutorado"), English+Portuguese field synonyms (`@livro` with `autor`/`titulo`/`edicao`/…), a custom `@videogame` with corporate author, entry-by-title, and `natbib` `\citet`/`\citep`. Build: `pdflatex example1 ; biber example1 ; pdflatex example1 ; pdflatex example1`. | working |
 
-_Examples 1+ are added during implementation (Stage 4): each exercises specific
-reference types and citation styles under the new BibLaTeX/biber ABNT engine._
+_Numeric + unsorted citation styles, the `coppe` class integration, and exotic-type
+drivers are the next examples. The engine files are `src/coppe.{dbx,bbx,cbx}` and
+`src/{brazilian,english}-coppe.lbx` (to be generated from `coppe.dtx`)._

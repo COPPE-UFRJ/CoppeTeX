@@ -1,0 +1,24 @@
+% example1.bib -- CoppeTeX 4.0 BibLaTeX/biber ABNT engine proof.
+% Exercises the core entry types, English+Portuguese field synonyms, the thesis
+% family, a technical report, and a custom videogame type (corporate author).
+@book{book1, author={Castro, C. M.}, title={A prática da pesquisa}, location={São Paulo}, publisher={Mc Graw-Hill}, date={1978}, pagetotal={156}}
+
+@article{art1, author={Iesan, D.}, title={Existence theorems in the theory of mixtures}, journaltitle={Journal of Elasticity}, volume={42}, number={2}, pages={145-163}, date={1996}}
+
+@incollection{inc1, author={Romano, Giovanni}, title={Imagens da juventude na era moderna}, editor={Levi, G. and Schmidt, J.}, booktitle={História dos jovens 2}, location={São Paulo}, publisher={Companhia das Letras}, date={1996}, pages={7-16}}
+
+@inproceedings{inp1, author={Cordeiro, Rosa Inês de N.}, title={Descrição e representação de fotografias}, eventtitle={Congresso Brasileiro de Biblioteconomia}, booktitle={Anais}, location={Salvador}, publisher={APBEB}, date={1991}, pages={1008-1022}}
+
+@thesis{the1, author={Leite, Sonia}, title={Memória da comunidade da Serrinha}, type={Dissertação (Mestrado em Memória Social)}, institution={Universidade do Rio de Janeiro}, location={Rio de Janeiro}, date={1997}, pagetotal={203}}
+
+@dscthesis{tesedsc, author={Paes Junior, H. R.}, title={Influência da espessura da camada intrínseca}, institution={COPPE/UFRJ}, location={Rio de Janeiro}, date={1994}, pagetotal={120}}
+
+@report{rep1, author={Maestrello, L.}, title={Two-point correlations of sound pressure in the far field of a jet}, number={TM X-72835}, institution={NASA}, date={1976}}
+
+@videogame{civ6, author={{Firaxis Games}}, title={Sid Meier's Civilization VI}, publisher={2K Games}, platform={PC}, date={2016}}
+
+% Portuguese field-name synonyms (autor/titulo/edicao/local/editora/ano):
+@livro{livpt, autor={Silva, José Américo M. da}, titulo={Criança também faz programa}, edicao={3}, local={Rio de Janeiro}, editora={Campus}, ano={1958}}
+
+% Entry by title (no author/editor):
+@misc{misc1, title={Guia da Ernst \& Young para desenvolver o seu plano de negócios}, location={Rio de Janeiro}, publisher={Record}, date={1987}}
