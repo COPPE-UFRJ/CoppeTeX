@@ -35,3 +35,4 @@ specs/*.txt
 *.run.xml
 *page-*.png
 *.synctex.gz
+/ABNT
