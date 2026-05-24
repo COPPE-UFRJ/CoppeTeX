@@ -1,0 +1,34 @@
+\ProvidesFile{coppe-numeric.bbx}[2026/05/24 v0.1 CoppeTeX ABNT numeric bibliography]
+% Numeric reference list for the ABNT numeric system (NBR 10520). It reuses the
+% full coppe ABNT style (drivers, CAPS surnames, bold titles, "In:", p./f.,
+% the PT->EN source map and the language mappings) and only adds the [n] list
+% label and the numeric sorting on top.
+\RequireBibliographyStyle{coppe}
+
+% ABNT numeric system lists references in the order they are first cited
+% (NBR 10520), i.e. unsorted. Override with sorting=nty for an alphabetical
+% numbered list. 'labelnumber' generates the [n] field.
+\ExecuteBibliographyOptions{labelnumber,sorting=none}
+
+% Bracketed labels, both in the list and for any shorthand entries.
+\DeclareFieldFormat{labelnumberwidth}{\mkbibbrackets{#1}}
+\DeclareFieldFormat{shorthandwidth}{\mkbibbrackets{#1}}
+
+% Reference list driven by the [n] label (copied from biblatex's numeric.bbx),
+% keeping the ABNT blank line between entries via \bibitemsep set in coppe.bbx.
+\defbibenvironment{bibliography}
+  {\list
+     {\printtext[labelnumberwidth]{%
+        \printfield{labelprefix}%
+        \printfield{labelnumber}}}
+     {\setlength{\labelwidth}{\labelnumberwidth}%
+      \setlength{\leftmargin}{\labelwidth}%
+      \setlength{\labelsep}{\biblabelsep}%
+      \addtolength{\leftmargin}{\labelsep}%
+      \setlength{\itemsep}{\bibitemsep}%
+      \setlength{\parsep}{\bibparsep}}%
+      \renewcommand*{\makelabel}[1]{\hss##1}}
+  {\endlist}
+  {\item}
+
+\endinput

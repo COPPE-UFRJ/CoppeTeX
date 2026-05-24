@@ -1,0 +1,14 @@
+\ProvidesFile{coppe.dbx}[2026/05/23 v0.2 CoppeTeX ABNT datamodel]
+% Custom entry types beyond biblatex's standard datamodel (games + TV).
+\DeclareDatamodelEntrytypes{game,videogame,boardgame,tvshow}
+% Custom fields.
+\DeclareDatamodelFields[type=field,datatype=literal]{course}      % "(... em <course>)"
+\DeclareDatamodelFields[type=field,datatype=literal]{coppedegree} % degree word
+\DeclareDatamodelFields[type=field,datatype=literal]{platform}    % videogame platform
+\DeclareDatamodelFields[type=list,datatype=literal]{artist}       % game/illustration art
+\DeclareDatamodelFields[type=list,datatype=literal]{director}     % movie/tvshow/video
+\DeclareDatamodelFields[type=list,datatype=literal]{producer}
+\DeclareDatamodelEntryfields{course,coppedegree}
+\DeclareDatamodelEntryfields[game,videogame,boardgame,software,movie,tvshow,video]%
+  {artist,platform,director,producer,version}
+\endinput
