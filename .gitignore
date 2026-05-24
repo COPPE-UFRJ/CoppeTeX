@@ -26,3 +26,7 @@ src/coppe.aux
 src/example.synctex.gz
 src/example.fdb_latexmk
 src/example.fls
+
+# CoppeTeX 4.0 working artifacts
+_scratch/
+specs/*.txt
