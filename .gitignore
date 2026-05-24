@@ -30,3 +30,8 @@ src/example.fls
 # CoppeTeX 4.0 working artifacts
 _scratch/
 specs/*.txt
+*.log
+*.bcf
+*.run.xml
+*page-*.png
+*.synctex.gz
