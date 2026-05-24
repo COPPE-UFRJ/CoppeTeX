@@ -20,7 +20,8 @@ NBR 6023** (per `specs/manual2024.pdf`)._
     surname CAPS, bold titles, `In:` for parts, `p.`/`f.`, article `v./n./p.` with
     no "In:", entry-by-title, plus a **biber source map** (PT→EN type/field synonyms
     and the thesis family) and the `type` bibstring resolver.
-  - `coppe.cbx` — author-date citations (`authoryear-comp`, normal-caps names).
+  - `coppe.cbx` — author-date citations (`authoryear-comp`, normal-caps names),
+    plus `\citetapud`/`\citepapud` for *apud* citation-of-citation (§4.1.2.2.1).
   - `brazilian-coppe.lbx` / `english-coppe.lbx` — strings (Disponível em / Acesso em,
     thesis type words mscdiss/dscthesis/phdthesis/tcc, In).
 - **Proof:** `src/example1.pdf` (see `src/examples.md`) compiles cleanly and renders
@@ -33,7 +34,8 @@ NBR 6023** (per `specs/manual2024.pdf`)._
 author-date citations with normal-caps names · EN + PT entry-type/field synonyms ·
 thesis family (generic `@thesis`/`@dissertation` need `type`; specific
 `@masterdissertation`/`@dscthesis`/`@phdthesis`/`@tcc` preset a babel-aware type) ·
-`@report` · custom `@videogame` + corporate author · ABNT list layout.
+`@report` · custom `@videogame` + corporate author · ABNT list layout ·
+*apud* citation-of-citation (`\citetapud`/`\citepapud`, §4.1.2.2.1).
 
 ## Remaining (next steps)
 

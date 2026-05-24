@@ -2,4 +2,19 @@
 % Author-date is the CoppeTeX 4.0 default. authoryear-comp gives compressed
 % author-year cites with normal-caps names (post-2020 rule) out of the box.
 \RequireCitationStyle{authoryear-comp}
+
+% --- apud: citation of a citation (ABNT NBR 6023 §4.1.2.2.1) ----------------
+% The reference list entry is the CITING work (the one actually consulted).
+%   \citetapud[<page>]{original}{citing} -> Original (yr) apud Citing (yr[, page])
+%   \citepapud[<page>]{original}{citing} -> (Original, yr apud Citing, yr[, page])
+% #1 = optional postnote (page/loc) on the citing work; #2 = original (not
+% accessed); #3 = work consulted. "apud" is a latin expression -> italic (§4.1.2.2).
+\DeclareRobustCommand{\citetapud}[3][]{%
+  \citeauthor{#2}\space(\citeyear{#2})\space\mkbibemph{apud}\space\textcite[#1]{#3}}
+\DeclareRobustCommand{\citepapud}[3][]{%
+  \mkbibparens{%
+    \citeauthor{#2}\addcomma\space\citeyear{#2}\space
+    \mkbibemph{apud}\space
+    \citeauthor{#3}\addcomma\space\citeyear{#3}%
+    \ifblank{#1}{}{\addcomma\space#1}}}
 \endinput
