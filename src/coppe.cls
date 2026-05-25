@@ -155,12 +155,6 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \fi
 \RequirePackage{csquotes}
 \newcommand{\citacao}[1]{\enquote{#1}}
-\addto{\captionsenglish}{%
-  \renewcommand{\bibname}{References}
-}
-\addto{\captionsbrazilian}{%
-  \renewcommand{\bibname}{Refer\^encias}
-}
 \if@coppenumeric
   \RequirePackage[backend=biber,datamodel=coppe,%
     bibstyle=coppe-numeric,citestyle=coppe-numeric,natbib=true]{biblatex}
@@ -168,9 +162,9 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \RequirePackage[backend=biber,datamodel=coppe,%
     bibstyle=coppe,citestyle=coppe,natbib=true]{biblatex}
 \fi
-\defbibheading{bibliography}[\bibname]{%
-  \chapter*{#1}%
-  \addcontentsline{toc}{chapter}{#1}}
+\defbibheading{bibliography}{%
+  \chapter*{\iflanguage{brazilian}{Refer\^encias}{References}}%
+  \addcontentsline{toc}{chapter}{\iflanguage{brazilian}{Refer\^encias}{References}}}
 \AtBeginBibliography{\coppe@bibBegin}
 \let\coppe@orig@printbibliography\printbibliography
 \renewcommand\printbibliography[1][]{%

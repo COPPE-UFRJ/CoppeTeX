@@ -29,6 +29,8 @@
 % Uppercase the surname (family + prefix) only inside the bibliography list;
 % citations keep normal caps (post-2020 rule).
 \AtBeginBibliography{%
+  \singlespacing                        % entries single-spaced internally (2.4)
+  \setlength{\bibitemsep}{\baselineskip}% one blank line between entries (2.4)
   \renewcommand*{\mkbibnamefamily}[1]{\MakeUppercase{#1}}%
   \renewcommand*{\mkbibnameprefix}[1]{\MakeUppercase{#1}}%
 }

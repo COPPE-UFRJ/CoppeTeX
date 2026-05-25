@@ -1271,15 +1271,6 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % Portuguese alias for short, inline quotations (proposta P3).
 \RequirePackage{csquotes}
 \newcommand{\citacao}[1]{\enquote{#1}}
-% Reference-list heading: "References" (English) / "Referencias" (Brazilian).
-% manual2024 (3.1.4.1) requires the post-textual list to be titled
-% "Referencias", not "Bibliografia".
-\addto{\captionsenglish}{%
-  \renewcommand{\bibname}{References}
-}
-\addto{\captionsbrazilian}{%
-  \renewcommand{\bibname}{Refer\^encias}
-}
 % Bibliography engine: the full coppe BibLaTeX/biber ABNT style, replacing the
 % former natbib+bibtex setup. Loaded here, after babel, so its language strings
 % map correctly. The numbers option selects the numeric style; otherwise the
@@ -1291,12 +1282,16 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \RequirePackage[backend=biber,datamodel=coppe,%
     bibstyle=coppe,citestyle=coppe,natbib=true]{biblatex}
 \fi
-% Reference-list heading: a chapter titled with \bibname (so it still follows
-% babel and the english option) and added to the table of contents, matching
-% the previous thebibliography behaviour.
-\defbibheading{bibliography}[\bibname]{%
-  \chapter*{#1}%
-  \addcontentsline{toc}{chapter}{#1}}
+% Reference-list heading "Referencias" (pt) / "References" (en) -- manual2024
+% 3.1.4.1 requires the post-textual list to be titled "Referencias", not
+% "Bibliografia" (babel's default \bibname). The title is set directly with
+% \iflanguage so it is correct in BOTH the chapter heading and the .toc entry:
+% \iflanguage resolves to plain text and survives the write to the .toc, whereas
+% biblatex's \bibstring does not, and babel's \bibname caption override proved
+% unreliable here. Evaluated in the body, the current language is settled.
+\defbibheading{bibliography}{%
+  \chapter*{\iflanguage{brazilian}{Refer\^encias}{References}}%
+  \addcontentsline{toc}{chapter}{\iflanguage{brazilian}{Refer\^encias}{References}}}
 % The catalog page range (bib:begin/bib:end) was written by the old
 % thebibliography redefinition, which biblatex's \printbibliography does not
 % use. biblatex offers \AtBeginBibliography but no end counterpart, so the
