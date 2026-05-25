@@ -1105,11 +1105,11 @@ No modelo \CoppeTeX os anexos devem obrigtoriamente vir depois dos apêndices e 
 %    \begin{macrocode}
 %<*class>
 \def\filename{coppe.dtx}
-\def\fileversion{v3.4}
-\def\filedate{2024/01/24}
+\def\fileversion{v3.8}
+\def\filedate{2026/05/24}
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{coppe}[\filedate\ \fileversion\ COPPE Dissertations and Thesis]
-\LoadClass[12pt,a4paper,oneside]{book}
+\LoadClass[12pt,a4paper,twoside]{book}
 % The bibliography engine (biblatex+biber) is loaded further below, after babel,
 % so the numbers class option can select the citation style at load time.
 \RequirePackage{hyphenat}
@@ -1122,8 +1122,40 @@ No modelo \CoppeTeX os anexos devem obrigtoriamente vir depois dos apêndices e 
 \RequirePackage{eqparbox}
 \RequirePackage{ltxcmds}
 \RequirePackage[T1]{fontenc}
-\RequirePackage[a4paper,bindingoffset=0.0cm,vcentering=true,%
-top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
+% manual2024 margins: 3cm top, 2cm bottom, mirrored 3cm inner / 2cm outer for
+% two-sided printing -- realised as inner=outer=2cm plus a 1cm bindingoffset.
+\RequirePackage[a4paper,twoside,bindingoffset=1cm,%
+top=3cm,bottom=2cm,inner=2cm,outer=2cm]{geometry}
+\RequirePackage{titlesec}
+% --- Section heading formats (manual2024 2.6 / proposta P22) -----------------
+% chapter (numbered): "N  TITLE", ALL CAPS, bold, flush left (no "Capitulo N").
+\titleformat{\chapter}[hang]
+  {\normalfont\Large\bfseries}{\thechapter}{1ex}{\MakeUppercase}
+\titlespacing*{\chapter}{0pt}{10pt}{1.5\baselineskip}
+% chapter (unnumbered): centred ALL CAPS bold (errata, lists, resumo, sumario,
+% referencias, glossario, ... -- unnumbered headings are centred, P29-P30).
+\titleformat{name=\chapter,numberless}[hang]
+  {\normalfont\Large\bfseries\filcenter}{}{0pt}{\MakeUppercase}
+\titlespacing*{name=\chapter,numberless}{0pt}{10pt}{1.5\baselineskip}
+% section: ALL CAPS, normal weight.
+\titleformat{\section}
+  {\normalfont\large\bfseries}{\thesection}{1ex}{\MakeUppercase}
+% subsection: bold (author writes Title Case).
+\titleformat{\subsection}
+  {\normalfont\bfseries}{\thesubsection}{1ex}{}
+% subsubsection: bold italic.
+\titleformat{\subsubsection}
+  {\normalfont\bfseries\itshape}{\thesubsubsection}{1ex}{}
+% --- Captions (manual2024 2.10-2.11 / proposta P6): smaller font, ABNT
+%     "Figura 1 -- titulo" travessao separator (sources handled by \source). ---
+\RequirePackage{caption}
+\captionsetup{font=footnotesize,labelsep=endash}
+% --- alineas: list keyed by lowercase letters a) b) c); subitems with "--"
+%     (manual2024 2.6 / proposta P24). ----------------------------------------
+\RequirePackage{enumitem}
+\newlist{alineas}{enumerate}{2}
+\setlist[alineas,1]{label=\alph*),leftmargin=1.8em,itemsep=0pt}
+\setlist[alineas,2]{label=--,leftmargin=1.8em,itemsep=0pt}
 \def\CoppeTeX{{\rm C\kern-.05em{\sc o\kern-.025em p\kern-.025em
 p\kern-.025em e}}\kern-.08em
 T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
@@ -1191,8 +1223,18 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \else
   \RequirePackage[english,brazilian]{babel}
 \fi
+% Quotation marks: csquotes gives the language-aware \enquote; \citacao is its
+% Portuguese alias for short, inline quotations (proposta P3).
+\RequirePackage{csquotes}
+\newcommand{\citacao}[1]{\enquote{#1}}
+% Reference-list heading: "References" (English) / "Referencias" (Brazilian).
+% manual2024 (3.1.4.1) requires the post-textual list to be titled
+% "Referencias", not "Bibliografia".
 \addto{\captionsenglish}{%
   \renewcommand{\bibname}{References}
+}
+\addto{\captionsbrazilian}{%
+  \renewcommand{\bibname}{Refer\^encias}
 }
 % Bibliography engine: the full coppe BibLaTeX/biber ABNT style, replacing the
 % former natbib+bibtex setup. Loaded here, after babel, so its language strings

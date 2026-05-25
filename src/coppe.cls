@@ -33,7 +33,7 @@
 %%            Geraldo Xexéo
 %%            Eduardo Mangeli
 %% 
-%% \CheckSum{1656}
+%% \CheckSum{1642}
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
 %%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
@@ -51,11 +51,11 @@
 %%   Right brace   \}     Tilde         \~}
 %%
 \def\filename{coppe.dtx}
-\def\fileversion{v3.4}
-\def\filedate{2024/01/24}
+\def\fileversion{v3.8}
+\def\filedate{2026/05/24}
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{coppe}[\filedate\ \fileversion\ COPPE Dissertations and Thesis]
-\LoadClass[12pt,a4paper,oneside]{book}
+\LoadClass[12pt,a4paper,twoside]{book}
 \RequirePackage{hyphenat}
 \RequirePackage{lastpage}
 \RequirePackage{ifthen}
@@ -66,8 +66,27 @@
 \RequirePackage{eqparbox}
 \RequirePackage{ltxcmds}
 \RequirePackage[T1]{fontenc}
-\RequirePackage[a4paper,bindingoffset=0.0cm,vcentering=true,%
-top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
+\RequirePackage[a4paper,twoside,bindingoffset=1cm,%
+top=3cm,bottom=2cm,inner=2cm,outer=2cm]{geometry}
+\RequirePackage{titlesec}
+\titleformat{\chapter}[hang]
+  {\normalfont\Large\bfseries}{\thechapter}{1ex}{\MakeUppercase}
+\titlespacing*{\chapter}{0pt}{10pt}{1.5\baselineskip}
+\titleformat{name=\chapter,numberless}[hang]
+  {\normalfont\Large\bfseries\filcenter}{}{0pt}{\MakeUppercase}
+\titlespacing*{name=\chapter,numberless}{0pt}{10pt}{1.5\baselineskip}
+\titleformat{\section}
+  {\normalfont\large\bfseries}{\thesection}{1ex}{\MakeUppercase}
+\titleformat{\subsection}
+  {\normalfont\bfseries}{\thesubsection}{1ex}{}
+\titleformat{\subsubsection}
+  {\normalfont\bfseries\itshape}{\thesubsubsection}{1ex}{}
+\RequirePackage{caption}
+\captionsetup{font=footnotesize,labelsep=endash}
+\RequirePackage{enumitem}
+\newlist{alineas}{enumerate}{2}
+\setlist[alineas,1]{label=\alph*),leftmargin=1.8em,itemsep=0pt}
+\setlist[alineas,2]{label=--,leftmargin=1.8em,itemsep=0pt}
 \def\CoppeTeX{{\rm C\kern-.05em{\sc o\kern-.025em p\kern-.025em
 p\kern-.025em e}}\kern-.08em
 T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
@@ -121,8 +140,13 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \else
   \RequirePackage[english,brazilian]{babel}
 \fi
+\RequirePackage{csquotes}
+\newcommand{\citacao}[1]{\enquote{#1}}
 \addto{\captionsenglish}{%
   \renewcommand{\bibname}{References}
+}
+\addto{\captionsbrazilian}{%
+  \renewcommand{\bibname}{Refer\^encias}
 }
 \if@coppenumeric
   \RequirePackage[backend=biber,datamodel=coppe,%
