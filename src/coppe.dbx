@@ -51,16 +51,18 @@
 %%   Right brace   \}     Tilde         \~}
 %%
 \ProvidesFile{coppe.dbx}[2026/05/23 v0.2 CoppeTeX ABNT datamodel]
-\DeclareDatamodelEntrytypes{game,videogame,boardgame,tvshow}
+\DeclareDatamodelEntrytypes{game,videogame,boardgame,tvshow,map}
 \DeclareDatamodelFields[type=field,datatype=literal]{course}      % "(... em <course>)"
 \DeclareDatamodelFields[type=field,datatype=literal]{coppedegree} % degree word
 \DeclareDatamodelFields[type=field,datatype=literal]{platform}    % videogame platform
+\DeclareDatamodelFields[type=field,datatype=literal]{scale}       % map scale (escala)
 \DeclareDatamodelFields[type=list,datatype=literal]{artist}       % game/illustration art
 \DeclareDatamodelFields[type=list,datatype=literal]{director}     % movie/tvshow/video
 \DeclareDatamodelFields[type=list,datatype=literal]{producer}
 \DeclareDatamodelEntryfields{course,coppedegree}
 \DeclareDatamodelEntryfields[game,videogame,boardgame,software,movie,tvshow,video]%
   {artist,platform,director,producer,version}
+\DeclareDatamodelEntryfields[map]{scale}
 %% 
 %%
 %% End of file `coppe.dbx'.

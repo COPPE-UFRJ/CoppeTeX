@@ -1138,6 +1138,9 @@ $s \leftarrow 0$\;
 
   \backmatter
 
+  % Tipos exóticos da ABNT (NBR 6023): patente, legislação, norma, mapa,
+  % partitura --- declarados via sinônimos em português em example.bib.
+  \nocite{patente-example,legislacao-example,norma-example,mapa-example,partitura-example}
   \printbibliography
 
 
@@ -2447,18 +2450,24 @@ postamble
 %    \begin{macrocode}
 %<*dbx>
 \ProvidesFile{coppe.dbx}[2026/05/23 v0.2 CoppeTeX ABNT datamodel]
-% Custom entry types beyond biblatex's standard datamodel (games + TV).
-\DeclareDatamodelEntrytypes{game,videogame,boardgame,tvshow}
+% Custom entry types beyond biblatex's standard datamodel (games, TV, maps).
+% map = cartographic document (NBR 6023 4.2.12); biblatex has no native @map.
+% The remaining ABNT "exotic" types (legislation, jurisdiction, legal, patent,
+% standard, music, audio, image, artwork, video, dataset, letter, periodical,
+% performance) are already in biblatex's standard datamodel.
+\DeclareDatamodelEntrytypes{game,videogame,boardgame,tvshow,map}
 % Custom fields.
 \DeclareDatamodelFields[type=field,datatype=literal]{course}      % "(... em <course>)"
 \DeclareDatamodelFields[type=field,datatype=literal]{coppedegree} % degree word
 \DeclareDatamodelFields[type=field,datatype=literal]{platform}    % videogame platform
+\DeclareDatamodelFields[type=field,datatype=literal]{scale}       % map scale (escala)
 \DeclareDatamodelFields[type=list,datatype=literal]{artist}       % game/illustration art
 \DeclareDatamodelFields[type=list,datatype=literal]{director}     % movie/tvshow/video
 \DeclareDatamodelFields[type=list,datatype=literal]{producer}
 \DeclareDatamodelEntryfields{course,coppedegree}
 \DeclareDatamodelEntryfields[game,videogame,boardgame,software,movie,tvshow,video]%
   {artist,platform,director,producer,version}
+\DeclareDatamodelEntryfields[map]{scale}
 %</dbx>
 %<*bbx>
 \ProvidesFile{coppe.bbx}[2026/05/23 v0.1 CoppeTeX ABNT bibliography style]
@@ -2555,6 +2564,24 @@ postamble
 \DeclareBibliographyDriver{videogame}{\usedriver{}{misc}}
 \DeclareBibliographyDriver{boardgame}{\usedriver{}{misc}}
 \DeclareBibliographyDriver{tvshow}{\usedriver{}{misc}}
+% Cartographic document (map): rendered like a book (author/title/imprenta).
+\DeclareBibliographyDriver{map}{\usedriver{}{book}}
+% Exotic ABNT types that biblatex's standard style leaves without a driver:
+% give each a baseline (book-like for published docs: norma/partitura; misc for
+% the rest) so they print. Per-type ABNT refinements can follow later.
+\DeclareBibliographyDriver{standard}{\usedriver{}{book}}
+\DeclareBibliographyDriver{music}{\usedriver{}{book}}
+\DeclareBibliographyDriver{legislation}{\usedriver{}{misc}}
+\DeclareBibliographyDriver{jurisdiction}{\usedriver{}{misc}}
+\DeclareBibliographyDriver{legal}{\usedriver{}{misc}}
+\DeclareBibliographyDriver{audio}{\usedriver{}{misc}}
+\DeclareBibliographyDriver{video}{\usedriver{}{misc}}
+\DeclareBibliographyDriver{movie}{\usedriver{}{misc}}
+\DeclareBibliographyDriver{software}{\usedriver{}{misc}}
+\DeclareBibliographyDriver{image}{\usedriver{}{misc}}
+\DeclareBibliographyDriver{artwork}{\usedriver{}{misc}}
+\DeclareBibliographyDriver{performance}{\usedriver{}{misc}}
+\DeclareBibliographyDriver{dataset}{\usedriver{}{misc}}
 
 % --- biber source map: Portuguese synonyms (entry types + fields) + thesis family ---
 \DeclareSourcemap{%
@@ -2581,6 +2608,24 @@ postamble
     \map{\step[typesource=filme,typetarget=movie]}
     \map{\step[typesource=serietv,typetarget=tvshow]}
     \map{\step[typesource=programadetv,typetarget=tvshow]}
+    % Exotic ABNT types (NBR 6023 4.2.5-4.2.14); targets are biblatex-native
+    % except map (declared in coppe.dbx).
+    \map{\step[typesource=legislacao,typetarget=legislation]}
+    \map{\step[typesource=atonormativo,typetarget=legislation]}
+    \map{\step[typesource=jurisprudencia,typetarget=jurisdiction]}
+    \map{\step[typesource=documentojuridico,typetarget=legal]}
+    \map{\step[typesource=documentocivil,typetarget=legal]}
+    \map{\step[typesource=norma,typetarget=standard]}
+    \map{\step[typesource=partitura,typetarget=music]}
+    \map{\step[typesource=iconografico,typetarget=image]}
+    \map{\step[typesource=obradearte,typetarget=artwork]}
+    \map{\step[typesource=tridimensional,typetarget=artwork]}
+    \map{\step[typesource=cartografico,typetarget=map]}
+    \map{\step[typesource=mapa,typetarget=map]}
+    \map{\step[typesource=audiovisual,typetarget=video]}
+    \map{\step[typesource=conjuntodedados,typetarget=dataset]}
+    \map{\step[typesource=fasciculo,typetarget=suppperiodical]}
+    \map{\step[typesource=trabalhoapresentado,typetarget=unpublished]}
     % thesis family: retype to thesis and preset the (babel-aware) type word
     \map{\step[typesource=tese,typetarget=thesis]}
     \map{\step[typesource=dissertacao,typetarget=thesis]}
@@ -2616,6 +2661,7 @@ postamble
     \map{\step[fieldsource=diretor,fieldtarget=director]}
     \map{\step[fieldsource=produtor,fieldtarget=producer]}
     \map{\step[fieldsource=versao,fieldtarget=version]}
+    \map{\step[fieldsource=escala,fieldtarget=scale]}
   }%
 }
 
