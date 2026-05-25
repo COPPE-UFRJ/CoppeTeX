@@ -121,10 +121,57 @@
 
 \DeclareFieldFormat{type}{\ifbibstring{#1}{\bibstring{#1}}{#1}}
 
-\DeclareBibliographyDriver{game}{\usedriver{}{misc}}
-\DeclareBibliographyDriver{videogame}{\usedriver{}{misc}}
-\DeclareBibliographyDriver{boardgame}{\usedriver{}{misc}}
-\DeclareBibliographyDriver{tvshow}{\usedriver{}{misc}}
+\DeclareFieldFormat{course}{\mkbibparens{\iflanguage{brazilian}{em\addspace}{in\addspace}#1}}
+\DeclareBibliographyDriver{thesis}{%
+  \usebibmacro{bibindex}\usebibmacro{begentry}%
+  \usebibmacro{author}%
+  \setunit{\labelnamepunct}\newblock
+  \usebibmacro{title}%
+  \newunit\newblock
+  \printfield{type}\setunit*{\addspace}\printfield{course}%
+  \newunit\newblock
+  \printlist{institution}%
+  \setunit*{\addcomma\space}\printlist{location}%
+  \setunit*{\addcomma\space}\printdate%
+  \newunit\newblock
+  \printfield{pagetotal}%
+  \newunit\newblock
+  \printfield{note}%
+  \newunit\newblock
+  \usebibmacro{url+urldate}%
+  \usebibmacro{finentry}}
+\newbibmacro*{coppe:media}{%
+  \iflistundef{artist}{}{\setunit{\addperiod\space}%
+    \printtext{\iflanguage{brazilian}{Ilustra\c{c}\~ao}{Art}\addcolon\space}\printlist{artist}}%
+  \iffieldundef{platform}{}{\setunit{\addperiod\space}%
+    \printtext{\iflanguage{brazilian}{Plataforma}{Platform}\addcolon\space}\printfield{platform}}%
+  \iflistundef{director}{}{\setunit{\addperiod\space}%
+    \printtext{\iflanguage{brazilian}{Dire\c{c}\~ao}{Directed by}\addcolon\space}\printlist{director}}%
+  \iflistundef{producer}{}{\setunit{\addperiod\space}%
+    \printtext{\iflanguage{brazilian}{Produ\c{c}\~ao}{Produced by}\addcolon\space}\printlist{producer}}}
+\newbibmacro*{coppe:mediadriver}{%
+  \usebibmacro{bibindex}\usebibmacro{begentry}%
+  \usebibmacro{author/translator+others}%
+  \setunit{\labelnamepunct}\newblock
+  \usebibmacro{title}%
+  \newunit\newblock
+  \usebibmacro{coppe:media}%
+  \newunit\newblock
+  \printlist{publisher}%
+  \setunit*{\addcomma\space}\printlist{location}%
+  \setunit*{\addcomma\space}\printdate%
+  \newunit\newblock
+  \printfield{version}%
+  \newunit\newblock
+  \printfield{note}%
+  \newunit\newblock
+  \usebibmacro{url+urldate}%
+  \usebibmacro{finentry}}
+\DeclareBibliographyDriver{game}{\usebibmacro{coppe:mediadriver}}
+\DeclareBibliographyDriver{videogame}{\usebibmacro{coppe:mediadriver}}
+\DeclareBibliographyDriver{boardgame}{\usebibmacro{coppe:mediadriver}}
+\DeclareBibliographyDriver{movie}{\usebibmacro{coppe:mediadriver}}
+\DeclareBibliographyDriver{tvshow}{\usebibmacro{coppe:mediadriver}}
 \DeclareBibliographyDriver{map}{\usedriver{}{book}}
 \DeclareBibliographyDriver{standard}{\usedriver{}{book}}
 \DeclareBibliographyDriver{music}{\usedriver{}{book}}
@@ -133,7 +180,6 @@
 \DeclareBibliographyDriver{legal}{\usedriver{}{misc}}
 \DeclareBibliographyDriver{audio}{\usedriver{}{misc}}
 \DeclareBibliographyDriver{video}{\usedriver{}{misc}}
-\DeclareBibliographyDriver{movie}{\usedriver{}{misc}}
 \DeclareBibliographyDriver{software}{\usedriver{}{misc}}
 \DeclareBibliographyDriver{image}{\usedriver{}{misc}}
 \DeclareBibliographyDriver{artwork}{\usedriver{}{misc}}

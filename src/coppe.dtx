@@ -1143,6 +1143,7 @@ $s \leftarrow 0$\;
   % Tipos exóticos da ABNT (NBR 6023): patente, legislação, norma, mapa,
   % partitura --- declarados via sinônimos em português em example.bib.
   \nocite{patente-example,legislacao-example,norma-example,mapa-example,partitura-example}
+  \nocite{videogame-example,filme-example}
   \printbibliography
 
 
@@ -2561,11 +2562,60 @@ postamble
 % --- type field: resolve a known bibliography string (babel-aware), else literal ---
 \DeclareFieldFormat{type}{\ifbibstring{#1}{\bibstring{#1}}{#1}}
 
-% --- custom entry types reuse existing drivers for now (refine later) ---
-\DeclareBibliographyDriver{game}{\usedriver{}{misc}}
-\DeclareBibliographyDriver{videogame}{\usedriver{}{misc}}
-\DeclareBibliographyDriver{boardgame}{\usedriver{}{misc}}
-\DeclareBibliographyDriver{tvshow}{\usedriver{}{misc}}
+% --- Thesis: "<type> (em <course>)" using the custom course field (ABNT). ---
+\DeclareFieldFormat{course}{\mkbibparens{\iflanguage{brazilian}{em\addspace}{in\addspace}#1}}
+\DeclareBibliographyDriver{thesis}{%
+  \usebibmacro{bibindex}\usebibmacro{begentry}%
+  \usebibmacro{author}%
+  \setunit{\labelnamepunct}\newblock
+  \usebibmacro{title}%
+  \newunit\newblock
+  \printfield{type}\setunit*{\addspace}\printfield{course}%
+  \newunit\newblock
+  \printlist{institution}%
+  \setunit*{\addcomma\space}\printlist{location}%
+  \setunit*{\addcomma\space}\printdate%
+  \newunit\newblock
+  \printfield{pagetotal}%
+  \newunit\newblock
+  \printfield{note}%
+  \newunit\newblock
+  \usebibmacro{url+urldate}%
+  \usebibmacro{finentry}}
+% --- Games / audiovisual: render the custom fields (artist, platform,
+%     director, producer, version) the generic misc driver ignores. ---
+\newbibmacro*{coppe:media}{%
+  \iflistundef{artist}{}{\setunit{\addperiod\space}%
+    \printtext{\iflanguage{brazilian}{Ilustra\c{c}\~ao}{Art}\addcolon\space}\printlist{artist}}%
+  \iffieldundef{platform}{}{\setunit{\addperiod\space}%
+    \printtext{\iflanguage{brazilian}{Plataforma}{Platform}\addcolon\space}\printfield{platform}}%
+  \iflistundef{director}{}{\setunit{\addperiod\space}%
+    \printtext{\iflanguage{brazilian}{Dire\c{c}\~ao}{Directed by}\addcolon\space}\printlist{director}}%
+  \iflistundef{producer}{}{\setunit{\addperiod\space}%
+    \printtext{\iflanguage{brazilian}{Produ\c{c}\~ao}{Produced by}\addcolon\space}\printlist{producer}}}
+\newbibmacro*{coppe:mediadriver}{%
+  \usebibmacro{bibindex}\usebibmacro{begentry}%
+  \usebibmacro{author/translator+others}%
+  \setunit{\labelnamepunct}\newblock
+  \usebibmacro{title}%
+  \newunit\newblock
+  \usebibmacro{coppe:media}%
+  \newunit\newblock
+  \printlist{publisher}%
+  \setunit*{\addcomma\space}\printlist{location}%
+  \setunit*{\addcomma\space}\printdate%
+  \newunit\newblock
+  \printfield{version}%
+  \newunit\newblock
+  \printfield{note}%
+  \newunit\newblock
+  \usebibmacro{url+urldate}%
+  \usebibmacro{finentry}}
+\DeclareBibliographyDriver{game}{\usebibmacro{coppe:mediadriver}}
+\DeclareBibliographyDriver{videogame}{\usebibmacro{coppe:mediadriver}}
+\DeclareBibliographyDriver{boardgame}{\usebibmacro{coppe:mediadriver}}
+\DeclareBibliographyDriver{movie}{\usebibmacro{coppe:mediadriver}}
+\DeclareBibliographyDriver{tvshow}{\usebibmacro{coppe:mediadriver}}
 % Cartographic document (map): rendered like a book (author/title/imprenta).
 \DeclareBibliographyDriver{map}{\usedriver{}{book}}
 % Exotic ABNT types that biblatex's standard style leaves without a driver:
@@ -2578,7 +2628,6 @@ postamble
 \DeclareBibliographyDriver{legal}{\usedriver{}{misc}}
 \DeclareBibliographyDriver{audio}{\usedriver{}{misc}}
 \DeclareBibliographyDriver{video}{\usedriver{}{misc}}
-\DeclareBibliographyDriver{movie}{\usedriver{}{misc}}
 \DeclareBibliographyDriver{software}{\usedriver{}{misc}}
 \DeclareBibliographyDriver{image}{\usedriver{}{misc}}
 \DeclareBibliographyDriver{artwork}{\usedriver{}{misc}}
