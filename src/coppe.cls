@@ -83,6 +83,36 @@ top=3cm,bottom=2cm,inner=2cm,outer=2cm]{geometry}
   {\normalfont\bfseries\itshape}{\thesubsubsection}{1ex}{}
 \RequirePackage{caption}
 \captionsetup{font=footnotesize,labelsep=endash}
+\RequirePackage{float}
+\floatstyle{plaintop}
+\restylefloat{figure}
+\restylefloat{table}
+\providecommand{\quadroname}{\iflanguage{brazilian}{Quadro}{Frame}}
+\providecommand{\listquadroname}{%
+  \iflanguage{brazilian}{Lista de Quadros}{List of Frames}}
+\newfloat{quadro}{htbp}{loq}[chapter]
+\floatname{quadro}{\quadroname}
+\providecommand{\quadroautorefname}{\quadroname}
+\let\l@quadro\l@figure
+\newcommand\listofquadros{%
+  \chapter*{\listquadroname}%
+  \addcontentsline{toc}{chapter}{\listquadroname}%
+  \@mkboth{\MakeUppercase\listquadroname}{\MakeUppercase\listquadroname}%
+  \@starttoc{loq}}
+\newcommand{\cpsourcename}{\iflanguage{brazilian}{Fonte}{Source}}
+\newcommand{\cpsource}[1]{%
+  \par\addvspace{\smallskipamount}%
+  {\footnotesize\singlespacing\centering\cpsourcename: #1\par}}
+\let\cpfonte\cpsource
+\@ifundefined{source}{\let\source\cpsource}{}%
+\@ifundefined{fonte}{\let\fonte\cpsource}{}%
+\newcommand{\newcoppefloat}[3]{%
+  {\floatstyle{plaintop}\newfloat{#1}{htbp}{lo#1}}%
+  \floatname{#1}{#2}%
+  \expandafter\newcommand\csname listof#1s\endcsname{%
+    \chapter*{#3}\addcontentsline{toc}{chapter}{#3}%
+    \@mkboth{\MakeUppercase{#3}}{\MakeUppercase{#3}}%
+    \@starttoc{lo#1}}}
 \RequirePackage{enumitem}
 \newlist{alineas}{enumerate}{2}
 \setlist[alineas,1]{label=\alph*),leftmargin=1.8em,itemsep=0pt}

@@ -18,6 +18,7 @@ src/coppe.aux
 *.out
 *.lot
 *.lof
+*.loq
 *.syx
 *.toc
 *.abx

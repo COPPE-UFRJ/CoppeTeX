@@ -585,6 +585,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \tableofcontents
   \listoffigures
   \listoftables
+  \listofquadros
   \printlosymbols
   \printloabbreviations
 
@@ -688,9 +689,9 @@ Grande parte dos problemas de iniciantes, e veteranos, em \LaTeX é da localiza�
 
 A regra geral de posicionamento é que uma figura ou quadro só pode aparecer a partir da mesma página onde é citado pela primeira vez, nunca antes. Normalmente eu sigo a ordem de preferência aqui, fim da página, topo da página, isto é \verb*|hbt|. Se desejado, pode ser usado o \verb*|p|, que coloca os floats em uma página única. Para forçar mais o posicionamento, é possível usar o pacote \verb*|float| e usar a opção \verb*|H|. Além disso é possível usar o pacote \verb*|placeins| que permite tanto definir que \textit{floats} devem sempre ser colocados na mesma seção ou outra regra, quanto usar o comando \verb*|FlaotBarrier|, que obriga a todos os \textit{floats} aparecerem.
 
-\textbf{Segundo a norma da ABNT, as legendas} \verb|\caption| \textbf{das figuras e quadros ficam em baixo deles, enquanto as legendas das tabelas ficam em cima. }
+\textbf{Pela norma atual (manual2024), a legenda} \verb|\caption| \textbf{de toda ilustração --- figura, tabela ou quadro --- fica \emph{acima} dela}, com o número em algarismos arábicos, travessão e o título. \textbf{A fonte é obrigatória e fica \emph{abaixo}}, indicada com \verb|\source{...}| (sinônimo: \verb|\fonte{...}|), em letra menor; ela não numera nem avança nenhum contador. Se outro pacote já definir \verb|\source| ou \verb|\fonte|, use \verb|\cpsource| / \verb|\cpfonte|.
 
-Quadros são opcionais. Quando usados, tabelas passam a só conter números, enquanto quadros contém números e outras coisas. \textbf{O CoppeTeX ainda não suporta quadros!}
+Quadros são ilustrações cujos dados são delimitados por linhas em \emph{todas} as bordas (ao contrário das tabelas, com linhas só no topo e na base). O CoppeTeX oferece o float \verb|quadro| (sinônimo em inglês: \verb|frame|) e o comando \verb|\listofquadros| para a lista correspondente. Para criar outros floats com a mesma regra (legenda acima, \verb|\source| abaixo e uma \verb|\listof...|), use \verb|\newcoppefloat{nome}{Nome}{Título da Lista}|.
 
 
 \section{Tabelas e Figuras Padrão}
@@ -714,6 +715,7 @@ Vamos ver uma tabela padrão, como a \autoref{tab:exemplo_numeros}.
 10 & 11 & 12 \\ % Quarta linha de dados
 \hline % Linha inferior
 \end{tabular}
+\fonte{Elabora\c{c}\~ao pr\'opria.} % fonte obrigatoria, abaixo do float
 \end{table}
 
 
@@ -722,10 +724,29 @@ Já a \autoref{fig:exemplo_figura} é uma figura padrão, com controle da largur
 
 \begin{figure}[ht]
 \centering % Centraliza a figura
-\includegraphics[width=0.5\textwidth]{coppe-logo.pdf} % Inclui a imagem com metade da largura do texto
-\caption{Exemplo de Figura com Legenda Abaixo} % Legenda da figura
+\caption{Exemplo de Figura com Legenda Acima} % Legenda em cima (norma atual)
 \label{fig:exemplo_figura} % Etiqueta para referência cruzada
+\includegraphics[width=0.5\textwidth]{coppe-logo.pdf} % Inclui a imagem com metade da largura do texto
+\source{COPPE/UFRJ.} % fonte obrigatoria, abaixo da figura
 \end{figure}
+
+Quadros têm a mesma regra (legenda acima, fonte abaixo), mas com linhas em todas as bordas. O \autoref{qua:exemplo} ilustra o float \verb|quadro|.
+
+\begin{quadro}[ht]
+\centering
+\caption{Exemplo de Quadro}
+\label{qua:exemplo}
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Ilustração} & \textbf{Delimitação} \\
+\hline
+Tabela & Linhas apenas no topo e na base. \\
+\hline
+Quadro & Linhas em todas as bordas. \\
+\hline
+\end{tabular}
+\fonte{Elabora\c{c}\~ao pr\'opria.}
+\end{quadro}
 
 
 
@@ -1173,6 +1194,51 @@ top=3cm,bottom=2cm,inner=2cm,outer=2cm]{geometry}
 %     "Figura 1 -- titulo" travessao separator (sources handled by \source). ---
 \RequirePackage{caption}
 \captionsetup{font=footnotesize,labelsep=endash}
+% --- Floats: caption on TOP and a mandatory "Fonte:" line at the bottom.
+%     manual2024 2.10-2.11 (R46/R51: identification on top; R48/R52: the source
+%     at the bottom is mandatory). The float package's plaintop style forces the
+%     caption above the body for figure, table and the new quadro float. -------
+\RequirePackage{float}
+\floatstyle{plaintop}
+\restylefloat{figure}
+\restylefloat{table}
+% New "quadro" float -- "Quadro" (pt) / "Frame" (en) (R53) -- with its own list
+% file (.loq). A quadro's data is bordered on all sides (drawn by the author),
+% unlike a tabela (rules on top and bottom only).
+\providecommand{\quadroname}{\iflanguage{brazilian}{Quadro}{Frame}}
+\providecommand{\listquadroname}{%
+  \iflanguage{brazilian}{Lista de Quadros}{List of Frames}}
+\newfloat{quadro}{htbp}{loq}[chapter]
+\floatname{quadro}{\quadroname}
+\providecommand{\quadroautorefname}{\quadroname}
+% Format the Lista de Quadros entries exactly like the Lista de Figuras ones
+% (float's own \l@quadro lays the number/title out incorrectly).
+\let\l@quadro\l@figure
+\newcommand\listofquadros{%
+  \chapter*{\listquadroname}%
+  \addcontentsline{toc}{chapter}{\listquadroname}%
+  \@mkboth{\MakeUppercase\listquadroname}{\MakeUppercase\listquadroname}%
+  \@starttoc{loq}}
+% \source / \fonte: the illustration source (ABNT-mandatory). Typeset below the
+% float as a smaller, single-spaced, centred line; it does NOT advance any
+% caption counter. \cpsource/\cpfonte are clash-safe aliases (the rename rule);
+% the label is "Fonte" (pt) / "Source" (en).
+\newcommand{\cpsourcename}{\iflanguage{brazilian}{Fonte}{Source}}
+\newcommand{\cpsource}[1]{%
+  \par\addvspace{\smallskipamount}%
+  {\footnotesize\singlespacing\centering\cpsourcename: #1\par}}
+\let\cpfonte\cpsource
+\@ifundefined{source}{\let\source\cpsource}{}%
+\@ifundefined{fonte}{\let\fonte\cpsource}{}%
+% \newcoppefloat{env}{caption name}{list title}: declare an extra caption-on-top
+% float (e.g. "picture") that supports \source and gains a \listof<env>s command.
+\newcommand{\newcoppefloat}[3]{%
+  {\floatstyle{plaintop}\newfloat{#1}{htbp}{lo#1}}%
+  \floatname{#1}{#2}%
+  \expandafter\newcommand\csname listof#1s\endcsname{%
+    \chapter*{#3}\addcontentsline{toc}{chapter}{#3}%
+    \@mkboth{\MakeUppercase{#3}}{\MakeUppercase{#3}}%
+    \@starttoc{lo#1}}}
 % --- alineas: list keyed by lowercase letters a) b) c); subitems with "--"
 %     (manual2024 2.6 / proposta P24). ----------------------------------------
 \RequirePackage{enumitem}
