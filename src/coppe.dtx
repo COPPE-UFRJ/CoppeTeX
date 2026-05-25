@@ -545,17 +545,40 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 
   \chapter*{Agradecimentos}
 
-  Gostaria de agradecer a todos.
+  Gostaria de agradecer a todos os que contribu\'iram para este trabalho:
+  orientadores, colegas, familiares e \`as ag\^encias de fomento. Lorem ipsum
+  dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
+  ut labore et dolore magna aliqua.
 
   \begin{abstract}
 
-  Apresenta-se, nesta tese, ...
+  Apresenta-se, nesta tese, um exemplo de resumo. Lorem ipsum dolor sit amet,
+  consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+  dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+  ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+  in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+  pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
+  officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis
+  iste natus error sit voluptatem accusantium doloremque laudantium, totam rem
+  aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae
+  vitae dicta sunt explicabo, nemo enim ipsam voluptatem quia voluptas sit
+  aspernatur aut odit aut fugit.
 
   \end{abstract}
 
   \begin{foreignabstract}
 
-  In this work, we present ...
+  In this work, we present an example abstract. Lorem ipsum dolor sit amet,
+  consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+  dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+  ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+  in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+  pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
+  officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis
+  iste natus error sit voluptatem accusantium doloremque laudantium, totam rem
+  aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae
+  vitae dicta sunt explicabo, nemo enim ipsam voluptatem quia voluptas sit
+  aspernatur aut odit aut fugit.
 
   \end{foreignabstract}
 
@@ -1163,6 +1186,16 @@ top=3cm,bottom=2cm,inner=2cm,outer=2cm]{geometry}
 \RequirePackage{fancyhdr}
 \fancypagestyle{coppe}{\fancyhf{}\fancyhead[RO,LE]{\thepage}%
   \renewcommand{\headrulewidth}{0pt}}
+% Blank pages inserted by \cleardoublepage (two-sided) must be empty: no page
+% number may leak onto them (e.g. the verso right after the cover).
+\renewcommand{\cleardoublepage}{%
+  \clearpage
+  \if@twoside
+    \ifodd\c@page\else
+      \hbox{}\thispagestyle{empty}\newpage
+      \if@twocolumn\hbox{}\newpage\fi
+    \fi
+  \fi}
 \def\CoppeTeX{{\rm C\kern-.05em{\sc o\kern-.025em p\kern-.025em
 p\kern-.025em e}}\kern-.08em
 T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
@@ -1456,7 +1489,10 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \@mainmatterfalse
   \pagenumbering{roman}
   \thispagestyle{empty}
-  \setcounter{page}{2}
+  % folha de rosto = counted page 1 (ABNT: the capa is not counted). An odd
+  % start keeps the page-counter parity aligned with the physical (recto) side,
+  % so \cleardoublepage lands every pre-textual element on an odd (front) page.
+  \setcounter{page}{1}
   \makefrontpage
   \clearpage
   \if@copperoman
@@ -1758,7 +1794,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % This is a specialization of the abstract in the article standard class.
 %    \begin{macrocode}
 \newenvironment{abstract}{%
-  \clearpage
+  \cleardoublepage
   \thispagestyle{plain}
   \abstract@toptext\par
   \vspace*{8.6mm}
@@ -1769,7 +1805,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \vspace*{7mm}
     \local@monthname/\number\year
   \end{center}\par
-  \vspace*{\fill}
+  \vspace*{1.5cm}
   \noindent%
   \begin{tabularx}{\textwidth}[b]{@{}l@{ }>{\raggedright\arraybackslash}X@{}}
     \local@advisorstring: &
@@ -1801,7 +1837,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \begin{environment}{foreignabstract}
 %    \begin{macrocode}
 \newenvironment{foreignabstract}{%
-  \clearpage
+  \cleardoublepage
   \thispagestyle{plain}
   \begin{otherlanguage}{english}
   \foreignabstract@toptext\par
@@ -1813,7 +1849,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \vspace*{7mm}
     \foreign@monthname/\number\year
   \end{center}\par
-  \vspace*{\fill}
+  \vspace*{1.5cm}
   \noindent%
   \begin{tabularx}{\textwidth}[b]{@{}l@{ }>{\raggedright\arraybackslash}X@{}}
     \foreign@advisorstring: &

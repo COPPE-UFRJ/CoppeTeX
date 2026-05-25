@@ -90,6 +90,14 @@ top=3cm,bottom=2cm,inner=2cm,outer=2cm]{geometry}
 \RequirePackage{fancyhdr}
 \fancypagestyle{coppe}{\fancyhf{}\fancyhead[RO,LE]{\thepage}%
   \renewcommand{\headrulewidth}{0pt}}
+\renewcommand{\cleardoublepage}{%
+  \clearpage
+  \if@twoside
+    \ifodd\c@page\else
+      \hbox{}\thispagestyle{empty}\newpage
+      \if@twocolumn\hbox{}\newpage\fi
+    \fi
+  \fi}
 \def\CoppeTeX{{\rm C\kern-.05em{\sc o\kern-.025em p\kern-.025em
 p\kern-.025em e}}\kern-.08em
 T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
@@ -270,7 +278,10 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \@mainmatterfalse
   \pagenumbering{roman}
   \thispagestyle{empty}
-  \setcounter{page}{2}
+  % folha de rosto = counted page 1 (ABNT: the capa is not counted). An odd
+  % start keeps the page-counter parity aligned with the physical (recto) side,
+  % so \cleardoublepage lands every pre-textual element on an odd (front) page.
+  \setcounter{page}{1}
   \makefrontpage
   \clearpage
   \if@copperoman
@@ -524,7 +535,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \end{flushright}}
 
 \newenvironment{abstract}{%
-  \clearpage
+  \cleardoublepage
   \thispagestyle{plain}
   \abstract@toptext\par
   \vspace*{8.6mm}
@@ -535,7 +546,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \vspace*{7mm}
     \local@monthname/\number\year
   \end{center}\par
-  \vspace*{\fill}
+  \vspace*{1.5cm}
   \noindent%
   \begin{tabularx}{\textwidth}[b]{@{}l@{ }>{\raggedright\arraybackslash}X@{}}
     \local@advisorstring: &
@@ -561,7 +572,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \noindent\local@deptstring: \local@deptname\par
   \vspace*{7mm}}{\vspace*{\fill}}
 \newenvironment{foreignabstract}{%
-  \clearpage
+  \cleardoublepage
   \thispagestyle{plain}
   \begin{otherlanguage}{english}
   \foreignabstract@toptext\par
@@ -573,7 +584,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \vspace*{7mm}
     \foreign@monthname/\number\year
   \end{center}\par
-  \vspace*{\fill}
+  \vspace*{1.5cm}
   \noindent%
   \begin{tabularx}{\textwidth}[b]{@{}l@{ }>{\raggedright\arraybackslash}X@{}}
     \foreign@advisorstring: &
