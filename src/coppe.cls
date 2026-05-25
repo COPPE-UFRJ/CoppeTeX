@@ -52,7 +52,7 @@
 %%
 \def\filename{coppe.dtx}
 \def\fileversion{v3.8}
-\def\filedate{2026/05/24}
+\def\filedate{2026/05/25}
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{coppe}[\filedate\ \fileversion\ COPPE Dissertations and Thesis]
 \LoadClass[12pt,a4paper,twoside]{book}
@@ -69,9 +69,14 @@
 \RequirePackage[a4paper,twoside,bindingoffset=1cm,%
 top=3cm,bottom=2cm,inner=2cm,outer=2cm]{geometry}
 \RequirePackage{titlesec}
+\newif\if@coppeappendix \@coppeappendixfalse
 \titleformat{\chapter}[hang]
-  {\normalfont\Large\bfseries}{\thechapter}{1ex}{\MakeUppercase}
+  {\normalfont\Large\bfseries}
+  {\if@coppeappendix\MakeUppercase{\appendixname}\ \thechapter\ \textendash\else\thechapter\fi}
+  {1ex}{\MakeUppercase}
 \titlespacing*{\chapter}{0pt}{10pt}{1.5\baselineskip}
+\let\coppe@orig@appendix\appendix
+\renewcommand\appendix{\coppe@orig@appendix\@coppeappendixtrue}
 \titleformat{name=\chapter,numberless}[hang]
   {\normalfont\Large\bfseries\filcenter}{}{0pt}{\MakeUppercase}
 \titlespacing*{name=\chapter,numberless}{0pt}{10pt}{1.5\baselineskip}
@@ -113,6 +118,9 @@ top=3cm,bottom=2cm,inner=2cm,outer=2cm]{geometry}
     \chapter*{#3}\addcontentsline{toc}{chapter}{#3}%
     \@mkboth{\MakeUppercase{#3}}{\MakeUppercase{#3}}%
     \@starttoc{lo#1}}}
+\let\coppe@orig@footnotetext\@footnotetext
+\long\def\@footnotetext#1{\coppe@orig@footnotetext{\singlespacing#1}}
+\renewcommand\footnoterule{\kern-3\p@\hrule\@width 5cm\kern 2.6\p@}
 \RequirePackage{enumitem}
 \newlist{alineas}{enumerate}{2}
 \setlist[alineas,1]{label=\alph*),leftmargin=1.8em,itemsep=0pt}
@@ -724,6 +732,27 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
       {\string\indexentry{#1[#2] #3}{\thepage}}%
     \endgroup%
     \@esphack}}}%
+\newcommand\newsigla[3]{%
+  \@namedef{coppe@sigla@s@#1}{#2}%
+  \@namedef{coppe@sigla@l@#1}{#3}}
+\newcommand\coppe@sigla@reg[1]{%
+  \@ifundefined{abbrev}{}%
+    {\abbrev{\@nameuse{coppe@sigla@s@#1}}{\@nameuse{coppe@sigla@l@#1}}}}
+\newcommand\coppe@sigla@full[1]{%
+  \@nameuse{coppe@sigla@l@#1}\space(\@nameuse{coppe@sigla@s@#1})}
+\newcommand\coppe@sigla@undef[1]{%
+  \PackageWarning{coppe}{Sigla '#1' nao declarada com \string\newsigla}%
+  \textbf{??#1??}}
+\newcommand\coppe@sigla@first[1]{%
+  \global\@namedef{coppe@sigla@done@#1}{}\coppe@sigla@reg{#1}\coppe@sigla@full{#1}}
+\newcommand\coppe@sigla@norm[1]{%
+  \@ifundefined{coppe@sigla@s@#1}{\coppe@sigla@undef{#1}}%
+    {\@ifundefined{coppe@sigla@done@#1}{\coppe@sigla@first{#1}}%
+      {\@nameuse{coppe@sigla@s@#1}}}}
+\newcommand\coppe@sigla@star[1]{%
+  \@ifundefined{coppe@sigla@s@#1}{\coppe@sigla@undef{#1}}%
+    {\global\@namedef{coppe@sigla@done@#1}{}\coppe@sigla@full{#1}}}
+\newcommand\sigla{\@ifstar\coppe@sigla@star\coppe@sigla@norm}
 %%%%    \begin{macrocode}
 %%%% \AtBeginDocument{%
 %%%% \@ifpackageloaded{hyperref}{%
@@ -812,11 +841,11 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \let\item\@idxitem}
   {\if@restonecol\onecolumn\else\clearpage\fi}
 \if@english
-  \newcommand\listabbreviationname{List of Abbreviations}
+  \newcommand\listabbreviationname{List of Abbreviations and Acronyms}
   \newcommand\listsymbolname{List of Symbols}
   \newcommand\glossaryname{Glossary}
 \else
-  \newcommand\listabbreviationname{Lista de Abreviaturas}
+  \newcommand\listabbreviationname{Lista de Abreviaturas e Siglas}
   \newcommand\listsymbolname{Lista de S{\' i}mbolos}
   \newcommand\glossaryname{Gloss{\' a}rio}
 \fi
