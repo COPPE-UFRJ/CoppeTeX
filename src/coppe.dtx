@@ -46,7 +46,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \end{document}
 %</driver> \fi
 %
-%% \CheckSum{1642}
+%% \CheckSum{0}
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
 %%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
@@ -2206,7 +2206,6 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \endgroup%
     \@esphack}}}%
 %    \end{macrocode}
-% \end{macro}
 %
 % \begin{macro}{\newsigla}
 % \begin{macro}{\sigla}
@@ -2432,12 +2431,304 @@ postamble
 %</glossary>
 %    \end{macrocode}
 %    \begin{macrocode}
+%<*class>
 \newcommand{\annex}{
     \iflanguage{brazilian}
         {\renewcommand{\appendixname}{Anexo}}
         {\renewcommand{\appendixname}{Annex}}
     \appendix
 }
+%</class>
+%    \end{macrocode}
+% \subsection*{BibLaTeX style files}
+%
+% Generated from this .dtx by coppe.ins (one docstrip module each).
+%
+%    \begin{macrocode}
+%<*dbx>
+\ProvidesFile{coppe.dbx}[2026/05/23 v0.2 CoppeTeX ABNT datamodel]
+% Custom entry types beyond biblatex's standard datamodel (games + TV).
+\DeclareDatamodelEntrytypes{game,videogame,boardgame,tvshow}
+% Custom fields.
+\DeclareDatamodelFields[type=field,datatype=literal]{course}      % "(... em <course>)"
+\DeclareDatamodelFields[type=field,datatype=literal]{coppedegree} % degree word
+\DeclareDatamodelFields[type=field,datatype=literal]{platform}    % videogame platform
+\DeclareDatamodelFields[type=list,datatype=literal]{artist}       % game/illustration art
+\DeclareDatamodelFields[type=list,datatype=literal]{director}     % movie/tvshow/video
+\DeclareDatamodelFields[type=list,datatype=literal]{producer}
+\DeclareDatamodelEntryfields{course,coppedegree}
+\DeclareDatamodelEntryfields[game,videogame,boardgame,software,movie,tvshow,video]%
+  {artist,platform,director,producer,version}
+%</dbx>
+%<*bbx>
+\ProvidesFile{coppe.bbx}[2026/05/23 v0.1 CoppeTeX ABNT bibliography style]
+% ABNT reference list keeps the date at the end (imprenta), same for author-date
+% and numeric modes, so we derive from the standard style, not authoryear.
+\RequireBibliographyStyle{standard}
+
+% Note: standard style never dashes repeated authors, which already matches the
+% post-2020 ABNT rule (repeat the entry in full), so no 'dashed' option is needed.
+\ExecuteBibliographyOptions{%
+  maxbibnames=99,      % ABNT 4.3.1.3: list all authors by default
+  giveninits=false,
+  uniquename=false,
+  uniquelist=false,
+  labeldateparts=true, % needed for author-date extradate (1999a/1999b)
+  sorting=nyt,
+}
+
+% Language strings (Disponível em / Acesso em / In, etc.)
+\DeclareLanguageMapping{brazilian}{brazilian-coppe}
+\DeclareLanguageMapping{english}{english-coppe}
+
+% --- Names: all reversed "FAMILY, Given", separated by ";" in the list ---
+\DeclareNameAlias{author}{family-given}
+\DeclareNameAlias{editor}{family-given}
+\DeclareNameAlias{translator}{family-given}
+\DeclareNameAlias{default}{family-given}
+\DeclareDelimFormat[bib,biblist]{multinamedelim}{\addsemicolon\space}
+\DeclareDelimFormat[bib,biblist]{finalnamedelim}{\addsemicolon\space}
+
+% Uppercase the surname (family + prefix) only inside the bibliography list;
+% citations keep normal caps (post-2020 rule).
+\AtBeginBibliography{%
+  \singlespacing                        % entries single-spaced internally (2.4)
+  \setlength{\bibitemsep}{\baselineskip}% one blank line between entries (2.4)
+  \renewcommand*{\mkbibnamefamily}[1]{\MakeUppercase{#1}}%
+  \renewcommand*{\mkbibnameprefix}[1]{\MakeUppercase{#1}}%
+}
+
+% --- Titles: bold for whole-document types; plain for parts; entry-by-title
+%     (no author/editor) -> not bold, first significant word in CAPS (ABNT 4.2). ---
+% entry-by-title: plain (not bold). TODO: first significant word in CAPS (ABNT 4.2)
+% once a robustly-tested uppercase-first-word macro is in place.
+\DeclareFieldFormat{title}{%
+  \ifboolexpr{ test {\ifnameundef{labelname}} }
+    {#1}%
+    {\mkbibbold{#1}}}
+\DeclareFieldFormat[article,incollection,inbook,inproceedings,suppperiodical,review]{title}{#1}
+\DeclareFieldFormat[thesis]{title}{\mkbibbold{#1}}
+\DeclareFieldFormat{journaltitle}{\mkbibbold{#1}}
+\DeclareFieldFormat{booktitle}{\mkbibbold{#1}}
+\DeclareFieldFormat{maintitle}{\mkbibbold{#1}}
+
+% --- Pages: ABNT uses "p." (also for ranges); theses use "f." for pagetotal ---
+\DeclareFieldFormat{pagetotal}{#1\addnbspace p\adddot}
+\DeclareFieldFormat[thesis]{pagetotal}{#1\addnbspace f\adddot}
+\DeclareFieldFormat{pages}{p\adddot\addnbspace#1}
+
+% --- Periodical volume / number prefixes ---
+\DeclareFieldFormat[article]{volume}{v\adddot\addnbspace#1}
+\DeclareFieldFormat[article]{number}{n\adddot\addnbspace#1}
+
+% --- "In:" before host title (incollection/inproceedings/inbook) ---
+\renewbibmacro*{in:}{\printtext{\bibstring{in}\addcolon\space}}
+
+% --- Online: "Disponível em: <url>." + "Acesso em: <date>." via lbx strings ---
+\DeclareFieldFormat{url}{\bibstring{availablefrom}\addcolon\space\url{#1}}
+
+% --- ABNT article driver: no "In:"; Journal, Local, v., n., p., date, DOI/URL ---
+\DeclareBibliographyDriver{article}{%
+  \usebibmacro{bibindex}%
+  \usebibmacro{begentry}%
+  \usebibmacro{author/translator+others}%
+  \setunit{\labelnamepunct}\newblock
+  \usebibmacro{title}%
+  \newunit\newblock
+  \printfield{journaltitle}%
+  \setunit{\addcomma\space}\printlist{location}%
+  \setunit{\addcomma\space}\printfield{volume}%
+  \setunit{\addcomma\space}\printfield{number}%
+  \setunit{\addcomma\space}\printfield{pages}%
+  \setunit{\addcomma\space}\printdate%
+  \newunit\newblock
+  \printfield{doi}%
+  \newunit\newblock
+  \usebibmacro{url+urldate}%
+  \usebibmacro{finentry}}
+
+% --- type field: resolve a known bibliography string (babel-aware), else literal ---
+\DeclareFieldFormat{type}{\ifbibstring{#1}{\bibstring{#1}}{#1}}
+
+% --- custom entry types reuse existing drivers for now (refine later) ---
+\DeclareBibliographyDriver{game}{\usedriver{}{misc}}
+\DeclareBibliographyDriver{videogame}{\usedriver{}{misc}}
+\DeclareBibliographyDriver{boardgame}{\usedriver{}{misc}}
+\DeclareBibliographyDriver{tvshow}{\usedriver{}{misc}}
+
+% --- biber source map: Portuguese synonyms (entry types + fields) + thesis family ---
+\DeclareSourcemap{%
+  \maps[datatype=bibtex]{%
+    % entry-type PT synonyms -> canonical English
+    \map{\step[typesource=livro,typetarget=book]}
+    \map{\step[typesource=artigo,typetarget=article]}
+    \map{\step[typesource=artigodejornal,typetarget=article]}
+    \map{\step[typesource=partedelivro,typetarget=incollection]}
+    \map{\step[typesource=emlivro,typetarget=inbook]}
+    \map{\step[typesource=verbete,typetarget=inreference]}
+    \map{\step[typesource=anais,typetarget=proceedings]}
+    \map{\step[typesource=trabalhodeevento,typetarget=inproceedings]}
+    \map{\step[typesource=periodico,typetarget=periodical]}
+    \map{\step[typesource=relatorio,typetarget=report]}
+    \map{\step[typesource=relatoriotecnico,typetarget=report]}
+    \map{\step[typesource=manual,typetarget=manual]}
+    \map{\step[typesource=correspondencia,typetarget=letter]}
+    \map{\step[typesource=patente,typetarget=patent]}
+    \map{\step[typesource=diverso,typetarget=misc]}
+    \map{\step[typesource=jogo,typetarget=game]}
+    \map{\step[typesource=jogoeletronico,typetarget=videogame]}
+    \map{\step[typesource=jogodetabuleiro,typetarget=boardgame]}
+    \map{\step[typesource=filme,typetarget=movie]}
+    \map{\step[typesource=serietv,typetarget=tvshow]}
+    \map{\step[typesource=programadetv,typetarget=tvshow]}
+    % thesis family: retype to thesis and preset the (babel-aware) type word
+    \map{\step[typesource=tese,typetarget=thesis]}
+    \map{\step[typesource=dissertacao,typetarget=thesis]}
+    \map{\step[typesource=masterdissertation,typetarget=thesis,final]\step[fieldset=type,fieldvalue=mscdiss]}
+    \map{\step[typesource=mscdissertation,typetarget=thesis,final]\step[fieldset=type,fieldvalue=mscdiss]}
+    \map{\step[typesource=dissertacaomestrado,typetarget=thesis,final]\step[fieldset=type,fieldvalue=mscdiss]}
+    \map{\step[typesource=dscthesis,typetarget=thesis,final]\step[fieldset=type,fieldvalue=dscthesis]}
+    \map{\step[typesource=tesedoutorado,typetarget=thesis,final]\step[fieldset=type,fieldvalue=dscthesis]}
+    \map{\step[typesource=phdthesis,typetarget=thesis,final]\step[fieldset=type,fieldvalue=phdthesis]}
+    \map{\step[typesource=tesephd,typetarget=thesis,final]\step[fieldset=type,fieldvalue=phdthesis]}
+    \map{\step[typesource=tcc,typetarget=thesis,final]\step[fieldset=type,fieldvalue=tcc]}
+    % field PT synonyms (unaccented) -> canonical English
+    \map{\step[fieldsource=titulo,fieldtarget=title]}
+    \map{\step[fieldsource=subtitulo,fieldtarget=subtitle]}
+    \map{\step[fieldsource=autor,fieldtarget=author]}
+    \map{\step[fieldsource=editora,fieldtarget=publisher]}
+    \map{\step[fieldsource=local,fieldtarget=location]}
+    \map{\step[fieldsource=ano,fieldtarget=year]}
+    \map{\step[fieldsource=data,fieldtarget=date]}
+    \map{\step[fieldsource=edicao,fieldtarget=edition]}
+    \map{\step[fieldsource=paginas,fieldtarget=pages]}
+    \map{\step[fieldsource=numero,fieldtarget=number]}
+    \map{\step[fieldsource=tradutor,fieldtarget=translator]}
+    \map{\step[fieldsource=organizador,fieldtarget=editor]}
+    \map{\step[fieldsource=instituicao,fieldtarget=institution]}
+    \map{\step[fieldsource=tipo,fieldtarget=type]}
+    \map{\step[fieldsource=nota,fieldtarget=note]}
+    \map{\step[fieldsource=dataacesso,fieldtarget=urldate]}
+    \map{\step[fieldsource=curso,fieldtarget=course]}
+    \map{\step[fieldsource=grau,fieldtarget=coppedegree]}
+    \map{\step[fieldsource=artista,fieldtarget=artist]}
+    \map{\step[fieldsource=plataforma,fieldtarget=platform]}
+    \map{\step[fieldsource=diretor,fieldtarget=director]}
+    \map{\step[fieldsource=produtor,fieldtarget=producer]}
+    \map{\step[fieldsource=versao,fieldtarget=version]}
+  }%
+}
+
+% --- ABNT list layout: flush left, single spacing, blank line between entries ---
+\setlength{\bibhang}{0pt}
+\setlength{\bibitemsep}{\baselineskip}
+
+%</bbx>
+%<*cbx>
+\ProvidesFile{coppe.cbx}[2026/05/23 v0.1 CoppeTeX ABNT author-date citations]
+% Author-date is the CoppeTeX 4.0 default. authoryear-comp gives compressed
+% author-year cites with normal-caps names (post-2020 rule) out of the box.
+\RequireCitationStyle{authoryear-comp}
+
+% --- NBR 10520:2023 author separator -----------------------------------------
+% Parenthetical citations separate authors with ";" -> (Silva; Souza, 2020).
+% Narrative citations (\textcite, natbib \citet) keep comma + "e/and" ->
+% Silva, Souza e Oliveira (2020). The reference list keeps its own ";" via
+% coppe.bbx ([bib,biblist]); these contextless formats cover the cite side.
+\DeclareDelimFormat{multinamedelim}{\addsemicolon\space}
+\DeclareDelimFormat{finalnamedelim}{\addsemicolon\space}
+\DeclareDelimFormat[textcite]{multinamedelim}{\addcomma\space}
+\DeclareDelimFormat[textcite]{finalnamedelim}{\addspace\bibstring{and}\space}
+
+% --- apud: citation of a citation (ABNT NBR 6023 §4.1.2.2.1) ----------------
+% The reference list entry is the CITING work (the one actually consulted).
+%   \citetapud[<page>]{original}{citing} -> Original (yr) apud Citing (yr[, page])
+%   \citepapud[<page>]{original}{citing} -> (Original, yr apud Citing, yr[, page])
+% #1 = optional postnote (page/loc) on the citing work; #2 = original (not
+% accessed); #3 = work consulted. "apud" is a latin expression -> italic (§4.1.2.2).
+\DeclareRobustCommand{\citetapud}[3][]{%
+  \citeauthor{#2}\space(\citeyear{#2})\space\mkbibemph{apud}\space\textcite[#1]{#3}}
+\DeclareRobustCommand{\citepapud}[3][]{%
+  \mkbibparens{%
+    \citeauthor{#2}\addcomma\space\citeyear{#2}\space
+    \mkbibemph{apud}\space
+    \citeauthor{#3}\addcomma\space\citeyear{#3}%
+    \ifblank{#1}{}{\addcomma\space\mkpageprefix[pagination]{#1}}}}
+%</cbx>
+%<*lbxbr>
+\ProvidesFile{brazilian-coppe.lbx}[2026/05/23 v0.1 CoppeTeX brazilian strings]
+\InheritBibliographyExtras{brazilian}
+\NewBibliographyString{availablefrom,mscdiss,dscthesis,tcc}
+\DeclareBibliographyStrings{%
+  inherit       = {brazilian},
+  availablefrom = {{Dispon\'{\i}vel em}{Dispon\'{\i}vel em}},
+  urlseen       = {{Acesso em}{Acesso em}},
+  in            = {{In}{In}},
+  mscdiss       = {{Disserta\c{c}\~{a}o de Mestrado}{Disserta\c{c}\~{a}o de Mestrado}},
+  dscthesis     = {{Tese de Doutorado}{Tese de Doutorado}},
+  phdthesis     = {{Tese de Doutorado}{Tese de Doutorado}},
+  tcc           = {{Trabalho de Conclus\~{a}o de Curso}{Trabalho de Conclus\~{a}o de Curso}},
+}
+%</lbxbr>
+%<*lbxen>
+\ProvidesFile{english-coppe.lbx}[2026/05/23 v0.1 CoppeTeX english strings]
+\InheritBibliographyExtras{english}
+\NewBibliographyString{availablefrom,mscdiss,dscthesis,tcc}
+\DeclareBibliographyStrings{%
+  inherit       = {english},
+  availablefrom = {{Available from}{Available from}},
+  urlseen       = {{Access on}{Access on}},
+  in            = {{In}{In}},
+  mscdiss       = {{M\adddot Sc\adddot\ Dissertation}{M\adddot Sc\adddot\ Diss\adddot}},
+  dscthesis     = {{D\adddot Sc\adddot\ Thesis}{D\adddot Sc\adddot\ Thesis}},
+  phdthesis     = {{Ph\adddot D\adddot\ Thesis}{Ph\adddot D\adddot\ Thesis}},
+  tcc           = {{Undergraduate Thesis}{Undergraduate Thesis}},
+}
+%</lbxen>
+%<*numbbx>
+\ProvidesFile{coppe-numeric.bbx}[2026/05/24 v0.1 CoppeTeX ABNT numeric bibliography]
+% Numeric reference list for the ABNT numeric system (NBR 10520). It reuses the
+% full coppe ABNT style (drivers, CAPS surnames, bold titles, "In:", p./f.,
+% the PT->EN source map and the language mappings) and only adds the [n] list
+% label and the numeric sorting on top.
+\RequireBibliographyStyle{coppe}
+
+% ABNT numeric system lists references in the order they are first cited
+% (NBR 10520), i.e. unsorted. Override with sorting=nty for an alphabetical
+% numbered list. 'labelnumber' generates the [n] field.
+\ExecuteBibliographyOptions{labelnumber,sorting=none}
+
+% Bracketed labels, both in the list and for any shorthand entries.
+\DeclareFieldFormat{labelnumberwidth}{\mkbibbrackets{#1}}
+\DeclareFieldFormat{shorthandwidth}{\mkbibbrackets{#1}}
+
+% Reference list driven by the [n] label (copied from biblatex's numeric.bbx),
+% keeping the ABNT blank line between entries via \bibitemsep set in coppe.bbx.
+\defbibenvironment{bibliography}
+  {\list
+     {\printtext[labelnumberwidth]{%
+        \printfield{labelprefix}%
+        \printfield{labelnumber}}}
+     {\setlength{\labelwidth}{\labelnumberwidth}%
+      \setlength{\leftmargin}{\labelwidth}%
+      \setlength{\labelsep}{\biblabelsep}%
+      \addtolength{\leftmargin}{\labelsep}%
+      \setlength{\itemsep}{\bibitemsep}%
+      \setlength{\parsep}{\bibparsep}}%
+      \renewcommand*{\makelabel}[1]{\hss##1}}
+  {\endlist}
+  {\item}
+
+%</numbbx>
+%<*numcbx>
+\ProvidesFile{coppe-numeric.cbx}[2026/05/24 v0.1 CoppeTeX ABNT numeric citations]
+% Numeric citation system (ABNT NBR 10520): in-text references are bracketed
+% numbers [1], compressed and sorted within a single cite group. This is the
+% opt-in alternative to the author-date default (coppe.cbx); it pairs with
+% bibstyle=coppe-numeric. With the biblatex natbib option, \citep -> [1] and
+% \citet -> Author [1].
+\RequireCitationStyle{numeric-comp}
+%</numcbx>
 %    \end{macrocode}
 % \changes{v3.5}{2024/02/23}{New command annex}
 % \changes{v3.5.1}{2024/02/23}{New command annex now supports brazilian or english}
