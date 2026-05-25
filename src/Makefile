@@ -96,7 +96,7 @@ install: doc class example.pdf
 	  rm -rf $(CLSDIR); \
 	fi
 	mkdir -vp $(CLSDIR)
-	cp -vp $(PACKAGE_NAME).cls coppe-logo.eps coppe-logo.pdf coppe.ist \
+	cp -vp $(PACKAGE_NAME).cls coppe-logo.eps coppe-logo.pdf ufrj-logo.pdf coppe.ist \
 		$(PACKAGE_NAME).bbx $(PACKAGE_NAME).cbx $(PACKAGE_NAME).dbx \
 		$(PACKAGE_NAME)-numeric.bbx $(PACKAGE_NAME)-numeric.cbx \
 		brazilian-$(PACKAGE_NAME).lbx english-$(PACKAGE_NAME).lbx $(CLSDIR)/
@@ -128,7 +128,7 @@ build: doc class example.pdf
 		$(PACKAGE_NAME).bbx $(PACKAGE_NAME).cbx $(PACKAGE_NAME).dbx \
 		$(PACKAGE_NAME)-numeric.bbx $(PACKAGE_NAME)-numeric.cbx \
 		brazilian-$(PACKAGE_NAME).lbx english-$(PACKAGE_NAME).lbx \
-		$(PACKAGE_NAME)-logo.*  $(PACKAGE_NAME).pdf $(BUILDDIR)
+		$(PACKAGE_NAME)-logo.* ufrj-logo.pdf $(PACKAGE_NAME).pdf $(BUILDDIR)
 	@${_printf} "Copying example files.\n"
 	cp -vp example.tex example.pdf example.bib $(BUILDDIR)
 	@${_printf} "Copying files from root directory.\n"

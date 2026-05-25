@@ -35,6 +35,7 @@ copy /Y coppe.ist ..\dist\ >nul
 copy /Y coppe.pdf ..\dist\ >nul
 copy /Y coppe-logo.eps ..\dist\ >nul
 copy /Y coppe-logo.pdf ..\dist\ >nul
+copy /Y ufrj-logo.pdf ..\dist\ >nul
 copy /Y example.tex ..\dist\ >nul
 copy /Y example.bib ..\dist\ >nul
 copy /Y example.pdf ..\dist\ >nul

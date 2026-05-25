@@ -87,6 +87,9 @@ top=3cm,bottom=2cm,inner=2cm,outer=2cm]{geometry}
 \newlist{alineas}{enumerate}{2}
 \setlist[alineas,1]{label=\alph*),leftmargin=1.8em,itemsep=0pt}
 \setlist[alineas,2]{label=--,leftmargin=1.8em,itemsep=0pt}
+\RequirePackage{fancyhdr}
+\fancypagestyle{coppe}{\fancyhf{}\fancyhead[RO,LE]{\thepage}%
+  \renewcommand{\headrulewidth}{0pt}}
 \def\CoppeTeX{{\rm C\kern-.05em{\sc o\kern-.025em p\kern-.025em
 p\kern-.025em e}}\kern-.08em
 T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
@@ -130,6 +133,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 }
 \newif\if@coppenumeric\@coppenumericfalse
 \DeclareOption{numbers}{\@coppenumerictrue}
+\newif\if@copperoman\@copperomanfalse
+\DeclareOption{numeraisromanos}{\@copperomantrue}
 \onehalfspacing
 \DeclareOption{doublespacing}{%
   \doublespacing
@@ -268,14 +273,23 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \setcounter{page}{2}
   \makefrontpage
   \clearpage
-  \pagestyle{plain}
+  \if@copperoman
+    \fancypagestyle{plain}{\fancyhf{}\fancyhead[RO,LE]{\thepage}%
+      \renewcommand{\headrulewidth}{0pt}}%
+    \pagestyle{coppe}%
+  \else
+    \fancypagestyle{plain}{\fancyhf{}\renewcommand{\headrulewidth}{0pt}}%
+    \pagestyle{empty}%
+  \fi
   \ifthenelse{\boolean{maledoc}}{}{\makecatalog}%
 }
 \renewcommand\mainmatter{%
   \coppe@mainBegin
   \cleardoublepage
   \@mainmattertrue
-  \pagestyle{plain}
+  \fancypagestyle{plain}{\fancyhf{}\fancyhead[RO,LE]{\thepage}%
+    \renewcommand{\headrulewidth}{0pt}}%
+  \pagestyle{coppe}%
   \pagenumbering{arabic}}
 \renewcommand\backmatter{%
   \if@openright
@@ -291,7 +305,9 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \vspace*{1.5mm}
   \setlength\baselineskip{0pt}
   \setlength\parskip{1mm}
-  \makebox[20mm][c]{\hspace{4.8cm}\includegraphics{coppe-logo}}
+  \makebox[\linewidth]{%
+    \includegraphics[height=2cm]{ufrj-logo}\hfill
+    \includegraphics[height=2cm]{coppe-logo}}
   \end{flushleft}
   \vspace{1.05cm}
   \begin{center}
