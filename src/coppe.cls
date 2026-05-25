@@ -193,6 +193,92 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \fi
 \RequirePackage{csquotes}
 \newcommand{\citacao}[1]{\enquote{#1}}
+\RequirePackage{xcolor}
+\RequirePackage{listings}
+\RequirePackage{fancyvrb}
+\definecolor{deepblue}{rgb}{0,0,0.5}
+\definecolor{deepred}{rgb}{0.6,0,0}
+\definecolor{deepgreen}{rgb}{0,0.5,0}
+\DeclareFixedFont{\ttb}{T1}{txtt}{bx}{n}{10}
+\DeclareFixedFont{\ttm}{T1}{txtt}{m}{n}{10}
+\newcommand{\gxnumbersep}{0.5em}
+\lstset{captionpos=t,extendedchars=true,basicstyle=\ttfamily,inputencoding=utf8,%
+  literate=%
+  {ã}{{\~{a}}}1 {á}{{\'{a}}}1 {â}{{\^{a}}}1 {à}{{\`{a}}}1 {é}{{\'{e}}}1%
+  {è}{{\`{e}}}1 {ê}{{\^{e}}}1 {î}{{\^{i}}}1 {í}{{\'{i}}}1 {ô}{{\^{o}}}1%
+  {ó}{{\'{o}}}1 {õ}{{\~{o}}}1 {û}{{\^{u}}}1 {ú}{{\'{u}}}1 {ç}{{\c{c}}}1%
+  {Ç}{{\c{C}}}1 {À}{{\`{A}}}1 {Â}{{\^{A}}}1 {Á}{{\'{A}}}1 {É}{{\'{E}}}1%
+  {Ê}{{\^{E}}}1 {Í}{{\'{I}}}1 {Ó}{{\'{O}}}1 {Ô}{{\^{O}}}1 {Õ}{{\~{O}}}1%
+  {Ú}{{\'{U}}}1%
+}
+\AtBeginDocument{%
+  \renewcommand\lstlistingname{\iflanguage{brazilian}{Programa}{Program}}%
+  \renewcommand\lstlistlistingname{%
+    \iflanguage{brazilian}{Lista de Programas}{List of Programs}}}
+\newcommand\listofprogramas{%
+  \chapter*{\lstlistlistingname}%
+  \addcontentsline{toc}{chapter}{\lstlistlistingname}%
+  \@mkboth{\MakeUppercase\lstlistlistingname}{\MakeUppercase\lstlistlistingname}%
+  \@starttoc{lol}}
+\newcommand\pythonstyle{\lstset{language=Python,basicstyle=\ttm,numbers=left,%
+  numberstyle=\small\ttfamily,numbersep=\gxnumbersep,commentstyle=\color{purple},%
+  morekeywords={self,as},keywordstyle=\ttb\color{deepblue},%
+  emph={MyClass,__init__},emphstyle=\ttb\color{deepred},%
+  stringstyle=\color{deepgreen},frame=tb,showstringspaces=false,%
+  extendedchars=true,firstnumber=auto,inputencoding=utf8,breaklines=true,%
+  escapechar=`,postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space}}}
+\lstnewenvironment{python}[1][]{\pythonstyle\lstset{#1}%
+  \csname\@lst @SetFirstNumber\endcsname}{\csname\@lst @SaveFirstNumber\endcsname}
+\newcommand\pythoninline[1]{{\pythonstyle\lstinline!#1!}}
+\newcommand\pythonexternal[2][]{{\pythonstyle\lstinputlisting[#1]{#2}}}
+\newcommand\xmlstyle{\lstset{language=XML,basicstyle=\ttm,numbers=left,%
+  numberstyle=\small\ttfamily,numbersep=\gxnumbersep,%
+  morekeywords={xs:schema,xs:element,xs:sequence,xs:complexType},%
+  keywordstyle=\ttb\color{deepblue},%
+  emph={name,type,attributeFormDefault,elementFormDefault,xmlns:xs},%
+  emphstyle=\ttb\color{deepred},stringstyle=\color{deepgreen},frame=tb,%
+  showstringspaces=false,extendedchars=true,inputencoding=utf8,breaklines=true,%
+  postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space}}}
+\lstnewenvironment{xml}[1][]{\xmlstyle\lstset{#1}}{}
+\newcommand\htmlstyle{\lstset{language=HTML,basicstyle=\ttm,numbers=left,%
+  numberstyle=\small\ttfamily,numbersep=\gxnumbersep,%
+  keywordstyle=\ttb\color{deepblue},emphstyle=\ttb\color{deepred},%
+  stringstyle=\color{deepgreen},frame=tb,showstringspaces=false,%
+  extendedchars=true,inputencoding=utf8,breaklines=true,%
+  postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space}}}
+\lstnewenvironment{html}[1][]{\htmlstyle\lstset{#1}}{}
+\newcommand\prologstyle{\lstset{language=Prolog,basicstyle=\ttm,numbers=left,%
+  numberstyle=\small\ttfamily,numbersep=\gxnumbersep,commentstyle=\color{purple},%
+  keywordstyle=\ttb\color{deepblue},emph={MyClass,__init__},%
+  emphstyle=\ttb\color{deepred},stringstyle=\color{deepgreen},frame=tb,%
+  showstringspaces=false,extendedchars=true,firstnumber=auto,inputencoding=utf8,%
+  breaklines=true,escapechar=`,%
+  postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space}}}
+\lstnewenvironment{prolog}[1][]{\prologstyle\lstset{#1}%
+  \csname\@lst @SetFirstNumber\endcsname}{\csname\@lst @SaveFirstNumber\endcsname}
+\newcommand\javastyle{\lstset{language=Java,basicstyle=\ttm,numbers=left,%
+  numberstyle=\small\ttfamily,numbersep=\gxnumbersep,commentstyle=\color{purple},%
+  morekeywords={self,as},keywordstyle=\ttb\color{deepblue},%
+  emphstyle=\ttb\color{deepred},stringstyle=\color{deepgreen},frame=tb,%
+  showstringspaces=false,extendedchars=true,firstnumber=auto,inputencoding=utf8,%
+  breaklines=true,escapechar=`,%
+  postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space}}}
+\lstnewenvironment{java}[1][]{\javastyle\lstset{#1}%
+  \csname\@lst @SetFirstNumber\endcsname}{\csname\@lst @SaveFirstNumber\endcsname}
+\newcommand\javainline[1]{{\javastyle\lstinline!#1!}}
+\newcommand\javaexternal[2][]{{\javastyle\lstinputlisting[#1]{#2}}}
+\DefineVerbatimEnvironment{gxoutput}{Verbatim}%
+  {frame=lines,numbers=left,numbersep=\gxnumbersep}
+\DefineVerbatimEnvironment{gxoutputs}{Verbatim}%
+  {frame=lines,numbers=left,numbersep=\gxnumbersep,fontsize=\small}
+\renewcommand{\theFancyVerbLine}{{\small\ttfamily\arabic{FancyVerbLine}}}
+\if@english
+  \RequirePackage[linesnumbered,lined,algochapter,ruled]{algorithm2e}
+\else
+  \RequirePackage[portuguese,linesnumbered,lined,algochapter,ruled]{algorithm2e}
+\fi
+\SetKwFor{Para}{para}{faça}{fim do para}
+\SetKwFor{Enquanto}{enquanto}{faça}{fim do enquanto}
 \if@coppenumeric
   \RequirePackage[backend=biber,datamodel=coppe,%
     bibstyle=coppe-numeric,citestyle=coppe-numeric,natbib=true]{biblatex}

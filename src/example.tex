@@ -34,7 +34,6 @@
 \usepackage[most]{tcolorbox} % caixas de texto
 \usepackage{amsmath,amssymb}
 \usepackage{hyperref}
-\usepackage{listings} % para usar listagens
 
 \addbibresource{example.bib}% base de referências (biblatex/biber)
 
@@ -109,6 +108,8 @@
   \listoffigures
   \listoftables
   \listofquadros
+  \listofprogramas
+  \listofalgorithms
   \printlosymbols
   \printloabbreviations
 
@@ -575,6 +576,33 @@ Este é o conteúdo do meu textbox sem título. Você pode adicionar qualquer te
     \caption{Figura com Textbox simples}
     \label{fig:figura_com_textbox}
 \end{figure}
+
+\section{Listagens de código e algoritmos}
+
+O CoppeTeX traz embutido o suporte a listagens de programas (pacote \verb|listings|) e a algoritmos (\verb|algorithm2e|). A legenda fica no topo (``Programa N''), como em qualquer ilustração, e a lista correspondente é gerada por \verb|\listofprogramas|. O \autoref{prog:exemplo} mostra um exemplo em Python.
+
+\begin{python}[caption={Exemplo de programa em Python},label=prog:exemplo]
+def saudacao(nome):
+    # imprime uma saudação acentuada
+    print(f"Olá, {nome}!")
+
+saudacao("COPPE")
+\end{python}
+\source{Elaboração própria.}
+
+Há estilos prontos também para \verb|java|, \verb|xml|, \verb|html| e \verb|prolog|, comandos \verb|\pythoninline|/\verb|\javainline| para código no meio do texto, e os ambientes \verb|gxoutput|/\verb|gxoutputs| para a saída dos programas. Para algoritmos, use o ambiente \verb|algorithm| com as palavras-chave em português \verb|\Para| e \verb|\Enquanto|, como no \autoref{alg:soma}.
+
+\begin{algorithm}[H]
+\caption{Soma dos elementos de um vetor}
+\label{alg:soma}
+\Dados{vetor $v$ com $n$ elementos}
+\Resultado{soma $s$ dos elementos de $v$}
+$s \leftarrow 0$\;
+\Para{$i \leftarrow 1$ \Ate{} $n$}{
+  $s \leftarrow s + v[i]$\;
+}
+\Retorna $s$\;
+\end{algorithm}
 
   \chapter{Método Proposto}
   \chapter{Resultados e Discuss\~oes}
