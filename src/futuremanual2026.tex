@@ -1,0 +1,316 @@
+%% futuremanual2026.tex
+%%
+%% Manual de elaboração gráfica de teses e dissertações COPPE/UFRJ, escrito com
+%% a própria classe coppe (v3.8) e seus estilos BibLaTeX/biber. Substitui o
+%% antigo oldmanual.pdf, em conformidade com o manual2024 (UFRJ/SiBI) e com as
+%% normas ABNT NBR 6023, NBR 10520, NBR 14724 e NBR 6027.
+%%
+%% Compilação:  pdflatex futuremanual2026 ; biber futuremanual2026 ;
+%%              makeindex -s coppe.ist -o futuremanual2026.lab futuremanual2026.abx ;
+%%              makeindex -s coppe.ist -o futuremanual2026.los futuremanual2026.syx ;
+%%              pdflatex futuremanual2026 ; pdflatex futuremanual2026
+\documentclass[dsc]{coppe}
+
+\usepackage{booktabs}
+\usepackage{hyperref}
+
+\addbibresource{example.bib}
+
+\makelosymbols
+\makeloabbreviations
+
+% Siglas usadas ao longo do manual.
+\newsigla{abnt}{ABNT}{Associação Brasileira de Normas Técnicas}
+\newsigla{coppe}{COPPE}{Instituto Alberto Luiz Coimbra de Pós-Graduação e Pesquisa de Engenharia}
+\newsigla{ufrj}{UFRJ}{Universidade Federal do Rio de Janeiro}
+\newsigla{cpgp}{CPGP}{Comissão de Pós-Graduação e Pesquisa de Engenharia}
+
+\begin{document}
+  \title{Manual de Elaboração de Teses e Dissertações COPPE/UFRJ}
+  \foreigntitle{COPPE/UFRJ Thesis and Dissertation Manual}
+  \author{Comissão de}{Pós-Graduação}
+  \advisor{Prof.}{Coordenador do}{Programa}{D.Sc.}
+  \examiner{Prof.}{Primeiro Membro da Comissão}{D.Sc.}
+  \examiner{Prof.}{Segundo Membro da Comissão}{Ph.D.}
+  \examiner{Prof.}{Terceiro Membro da Comissão}{D.Sc.}
+  \department{PESC}
+  \date{05}{2026}
+
+  \keyword{Normalização}
+  \keyword{Teses e dissertações}
+  \keyword{ABNT}
+
+  \maketitle
+
+  \frontmatter
+  \dedication{A toda a comunidade da COPPE, que faz da pós-graduação em
+  engenharia uma referência.}
+
+  \chapter*{Agradecimentos}
+
+  Este manual reúne, em um único documento, as regras de apresentação gráfica de
+  teses e dissertações da COPPE e as demonstra com a classe \CoppeTeX.
+  Agradecemos a todos os usuários que, ao longo dos anos, reportaram problemas e
+  sugeriram melhorias, e às normas da ABNT que fundamentam estas recomendações.
+
+  \begin{abstract}
+
+  Este documento é o manual de elaboração gráfica de teses e dissertações da
+  COPPE/UFRJ. Ele substitui a versão anterior das normas e está em conformidade
+  com o \emph{Manual para Elaboração e Normalização de Trabalhos Acadêmicos} da
+  UFRJ e com as normas da ABNT \mbox{NBR~6023}, \mbox{NBR~10520},
+  \mbox{NBR~14724} e \mbox{NBR~6027}. Além de enunciar as regras, o manual as
+  aplica: ele próprio foi composto com a classe \CoppeTeX, servindo
+  simultaneamente de norma e de exemplo. São cobertos o formato gráfico, a
+  estrutura do trabalho, a formatação de títulos, ilustrações, tabelas e quadros,
+  as citações, as referências, as siglas e símbolos, as listagens de código e os
+  apêndices e anexos.
+
+  \end{abstract}
+
+  \begin{foreignabstract}
+
+  This document is the COPPE/UFRJ manual for the graphic presentation of theses
+  and dissertations. It supersedes the previous norms and complies with UFRJ's
+  academic-work normalization manual and with the Brazilian standards ABNT
+  NBR~6023, NBR~10520, NBR~14724 and NBR~6027. Besides stating the rules, the
+  manual applies them: it was itself typeset with the \CoppeTeX\ class, serving
+  at once as the norm and as a worked example. It covers the page format, the
+  structure of the work, the formatting of headings, illustrations, tables and
+  frames, citations, references, acronyms and symbols, code listings, and
+  appendices and annexes.
+
+  \end{foreignabstract}
+
+  \tableofcontents
+  \listoffigures
+  \listoftables
+  \listofquadros
+  \listofprogramas
+  \listofalgorithms
+  \printlosymbols
+  \printloabbreviations
+
+  \mainmatter
+
+  \chapter{Introdução}
+
+  Este manual estabelece as regras de apresentação gráfica de teses e
+  dissertações defendidas na \sigla{coppe} da \sigla{ufrj} e as demonstra usando
+  a classe \CoppeTeX\ (versão 3.8). Ele substitui as normas anteriores e está
+  alinhado ao \emph{Manual para Elaboração e Normalização de Trabalhos
+  Acadêmicos} da \sigla{ufrj} e às normas da \sigla{abnt}: \mbox{NBR~14724}
+  (estrutura), \mbox{NBR~6027} (sumário), \mbox{NBR~10520} (citações) e
+  \mbox{NBR~6023} (referências).
+
+  \section{A quem se destina}
+
+  Destina-se a estudantes de mestrado e doutorado, orientadores e à secretaria
+  acadêmica. O documento é, ele mesmo, um trabalho válido segundo as normas que
+  descreve: sua margem, paginação, títulos, legendas e referências seguem
+  exatamente as regras enunciadas nos capítulos seguintes.
+
+  \section{Como usar a classe \CoppeTeX}
+
+  Basta declarar \verb|\documentclass[dsc]{coppe}| (ou \verb|msc|, \verb|mscexam|,
+  \verb|dscexam|) e, opcionalmente, as opções \verb|numbers| (citações
+  numéricas), \verb|numeraisromanos| (numeração romana na parte pré-textual),
+  \verb|doublespacing| e \verb|english|. A bibliografia usa BibLaTeX com o motor
+  \texttt{biber}; declare a base com \verb|\addbibresource| e imprima a lista com
+  \verb|\printbibliography|.
+
+  \chapter{Formato gráfico}
+
+  \section{Papel, fonte e margens}
+
+  O trabalho usa papel \textbf{A4}, fonte de corpo \textbf{12\,pt} e impressão em
+  frente e verso (\emph{anverso} e \emph{verso}). As margens são
+  \textbf{espelhadas}: superior 3\,cm, inferior 2\,cm, interna 3\,cm e externa
+  2\,cm. A parte pré-textual é impressa apenas no anverso.
+
+  \section{Espaçamento}
+
+  O texto usa entrelinhas de \textbf{1,5}. Usam \textbf{espaço simples}: as
+  citações longas, as notas de rodapé\footnote{Como esta: as notas ficam em corpo
+  menor, espaço simples e separadas do texto por um filete de 5\,cm.}, as
+  referências, as legendas, as fontes e os dados da folha de rosto e da ficha
+  catalográfica.
+
+  \section{Paginação}
+
+  A contagem inicia na primeira folha textual, em algarismos arábicos, no canto
+  superior \emph{externo} (à direita no anverso, à esquerda no verso). A opção
+  \verb|numeraisromanos| numera a parte pré-textual em algarismos romanos.
+
+  \chapter{Estrutura do trabalho}
+
+  A estrutura segue a \mbox{NBR~14724}, na ordem:
+
+  \begin{alineas}
+    \item elementos pré-textuais: capa, folha de rosto (com a ficha catalográfica
+      no verso), errata, folha de aprovação, dedicatória, agradecimentos,
+      epígrafe, resumo, \emph{abstract}, listas de ilustrações, tabelas, quadros,
+      programas, algoritmos, abreviaturas e siglas, símbolos, e sumário;
+    \item elementos textuais: introdução, desenvolvimento e conclusão;
+    \item elementos pós-textuais: referências (obrigatórias), glossário,
+      apêndices, anexos e índice.
+  \end{alineas}
+
+  Os títulos sem indicativo numérico (agradecimentos, listas, resumo, sumário,
+  referências, glossário, apêndices, anexos, índice) são centralizados; os
+  numerados são alinhados à esquerda. Os níveis de seção têm formatos distintos:
+  capítulo em caixa alta e negrito; seção em caixa alta; subseção em negrito;
+  subsubseção em negrito itálico.
+
+  \chapter{Ilustrações, tabelas e quadros}
+
+  Toda ilustração tem a \textbf{legenda no topo} --- a palavra designativa, o
+  número em arábicos, o travessão e o título --- e a \textbf{fonte logo abaixo},
+  obrigatória mesmo para produção própria. Na \CoppeTeX, a fonte é dada por
+  \verb|\source{...}| (ou \verb|\fonte{...}|), que não numera nem avança
+  contadores.
+
+  \begin{figure}[ht]
+    \centering
+    \caption{Exemplo de figura com legenda no topo}
+    \label{fig:exemplo}
+    \includegraphics[width=0.35\textwidth]{coppe-logo}
+    \fonte{COPPE/UFRJ.}
+  \end{figure}
+
+  Tabelas (\autoref{tab:exemplo}) apresentam dados numéricos e têm linhas apenas
+  no topo e na base; \emph{quadros} (\autoref{qua:exemplo}) são fechados por
+  linhas em todas as bordas.
+
+  \begin{table}[ht]
+    \centering
+    \caption{Exemplo de tabela}
+    \label{tab:exemplo}
+    \begin{tabular}{lcc}
+      \toprule
+      Elemento & Legenda & Fonte \\
+      \midrule
+      Figura & topo & abaixo \\
+      Tabela & topo & abaixo \\
+      Quadro & topo & abaixo \\
+      \bottomrule
+    \end{tabular}
+    \fonte{Elaboração própria.}
+  \end{table}
+
+  \begin{quadro}[ht]
+    \centering
+    \caption{Exemplo de quadro}
+    \label{qua:exemplo}
+    \begin{tabular}{|l|l|}
+      \hline
+      \textbf{Ilustração} & \textbf{Delimitação} \\
+      \hline
+      Tabela & Linhas no topo e na base. \\
+      \hline
+      Quadro & Linhas em todas as bordas. \\
+      \hline
+    \end{tabular}
+    \fonte{Elaboração própria.}
+  \end{quadro}
+
+  Para outros tipos de ilustração, \verb|\newcoppefloat{nome}{Nome}{Título da Lista}|
+  cria um novo \emph{float} com a mesma regra (legenda no topo, fonte abaixo) e a
+  respectiva lista.
+
+  \chapter{Citações}
+
+  As citações seguem a \mbox{NBR~10520:2023}. Os nomes aparecem em caixa normal e
+  o ponto final encerra a frase, fora da citação. Há a forma narrativa, como em
+  \citet{article-example}, e a parenthética \citep{book-example}. Em citações
+  parentéticas com vários autores usa-se ponto e vírgula como separador. A
+  expressão \emph{apud} (citação de citação) é grafada em itálico, como em
+  \citepapud{phdthesis-example}{techreport-example}. Para aspas conforme o
+  idioma, use \verb|\citacao{...}| --- por exemplo, \citacao{a forma segue a
+  função}.
+
+  \chapter{Elaboração das referências}
+
+  As referências seguem a \mbox{NBR~6023} e são geradas por BibLaTeX/biber. O
+  estilo padrão é autor-data; a opção de classe \verb|numbers| ativa o estilo
+  numérico, em que a lista é ordenada pela ordem de citação. Os tipos de entrada
+  têm nomes em inglês com sinônimos em português (\verb|@livro| = \verb|@book|,
+  \verb|titulo| = \verb|title|), cobrindo livros, artigos, trabalhos em eventos,
+  relatórios técnicos, teses e dissertações, e tipos menos comuns. A lista
+  pós-textual chama-se \textbf{Referências}, com sobrenomes em caixa alta, espaço
+  simples interno e uma linha em branco entre entradas.
+
+  \nocite{*}
+
+  \chapter{Siglas, abreviaturas e símbolos}
+
+  As siglas são declaradas com \verb|\newsigla{chave}{SIGLA}{forma extensa}| e
+  usadas com \verb|\sigla{chave}|: na primeira ocorrência imprime-se a forma
+  extensa seguida da sigla entre parênteses, registrando-a automaticamente na
+  Lista de Abreviaturas e Siglas; nas demais, apenas a sigla. Abreviaturas e
+  símbolos são registrados com \verb|\abbrev| e \verb|\symbl|.
+
+  \symbl[A]{$A$}{área de uma figura}
+  \symbl[V]{$V$}{volume de um sólido}
+  \abbrev{p.}{página}
+  \abbrev{ed.}{edição}
+
+  \chapter{Listagens de código e algoritmos}
+
+  Programas usam o ambiente de listagem, com legenda no topo (\autoref{prog:ex}) e
+  a lista correspondente em \verb|\listofprogramas|.
+
+  \begin{python}[caption={Olá, COPPE, em Python},label=prog:ex]
+def saudacao(nome):
+    print(f"Olá, {nome}!")
+
+saudacao("COPPE")
+  \end{python}
+  \fonte{Elaboração própria.}
+
+  Algoritmos usam o ambiente \verb|algorithm| (\autoref{alg:ex}), com palavras em
+  português e a lista em \verb|\listofalgorithms|.
+
+  \begin{algorithm}[H]
+    \caption{Máximo de um vetor}
+    \label{alg:ex}
+    \Dados{vetor $v$ com $n$ elementos}
+    \Resultado{maior elemento $m$}
+    $m \leftarrow v[1]$\;
+    \Para{$i \leftarrow 2$ \Ate{} $n$}{
+      \Se{$v[i] > m$}{$m \leftarrow v[i]$\;}
+    }
+    \Retorna $m$\;
+  \end{algorithm}
+
+  \chapter{Conclusão}
+
+  Este manual demonstra, no próprio formato, as regras de apresentação gráfica da
+  \sigla{coppe}/\sigla{ufrj} e os recursos da classe \CoppeTeX. Recomenda-se
+  mantê-lo como referência durante a redação e a revisão do trabalho.
+
+  \appendix
+
+  \chapter{Referência rápida de comandos}
+
+  \begin{alineas}
+    \item ilustrações: \verb|\source| / \verb|\fonte|, ambiente \verb|quadro|,
+      \verb|\listofquadros|, \verb|\newcoppefloat|;
+    \item siglas: \verb|\newsigla|, \verb|\sigla|, \verb|\sigla*|;
+    \item listas: ambiente \verb|alineas|, \verb|\listofprogramas|,
+      \verb|\listofalgorithms|;
+    \item citações: \verb|\citacao|, \verb|\citetapud|, \verb|\citepapud|.
+  \end{alineas}
+
+  \annex
+
+  \chapter{Normas de referência}
+
+  As regras deste manual derivam das normas da ABNT \mbox{NBR~14724},
+  \mbox{NBR~6027}, \mbox{NBR~10520} e \mbox{NBR~6023}, e do manual de
+  normalização da UFRJ.
+
+  \backmatter
+  \printbibliography
+
+\end{document}

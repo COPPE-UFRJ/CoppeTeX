@@ -19,6 +19,15 @@ makeindex -s coppe.ist -o example.los example.syx
 pdflatex example.tex
 pdflatex example.tex
 
+:: --- Manual (futuremanual2026.pdf): the COPPE thesis norms written with the
+:: coppe class; same build chain as the example (biblatex + lists). ---
+pdflatex futuremanual2026.tex
+biber futuremanual2026
+makeindex -s coppe.ist -o futuremanual2026.lab futuremanual2026.abx
+makeindex -s coppe.ist -o futuremanual2026.los futuremanual2026.syx
+pdflatex futuremanual2026.tex
+pdflatex futuremanual2026.tex
+
 :: --- Sync the minimal distributable set from src to ..\dist ---
 :: Only the files an end user needs: the class, the biblatex style files, the
 :: makeindex style, the logos, the manual, the example, and the docs. Build
