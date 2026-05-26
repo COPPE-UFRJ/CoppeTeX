@@ -119,6 +119,37 @@
   \usebibmacro{url+urldate}%
   \usebibmacro{finentry}}
 
+\newbibmacro*{coppe:bookeditor}{%
+  \ifnameundef{editor}
+    {}
+    {\printnames{editor}%
+     \setunit*{\addspace}\printtext{\mkbibparens{\usebibmacro{editorstrg}}}%
+     \clearname{editor}%
+     \setunit{\adddot\space}}}
+\newbibmacro*{coppe:partdriver}{%
+  \usebibmacro{bibindex}\usebibmacro{begentry}%
+  \usebibmacro{author/translator+others}%
+  \setunit{\labelnamepunct}\newblock
+  \usebibmacro{title}%
+  \newunit\newblock
+  \usebibmacro{in:}%
+  \usebibmacro{coppe:bookeditor}%
+  \printfield{booktitle}%
+  \newunit\newblock
+  \printfield{edition}%
+  \newunit\newblock
+  \printlist{location}%
+  \setunit*{\addcolon\space}\printlist{publisher}%
+  \setunit*{\addcomma\space}\printdate%
+  \newunit\newblock
+  \printfield{pages}%
+  \setunit{\addcomma\space}\printfield{chapter}%
+  \newunit\newblock
+  \usebibmacro{url+urldate}%
+  \usebibmacro{finentry}}
+\DeclareBibliographyDriver{incollection}{\usebibmacro{coppe:partdriver}}
+\DeclareBibliographyDriver{inbook}{\usebibmacro{coppe:partdriver}}
+
 \DeclareFieldFormat{type}{\ifbibstring{#1}{\bibstring{#1}}{#1}}
 
 \DeclareFieldFormat{course}{\mkbibparens{\iflanguage{brazilian}{em\addspace}{in\addspace}#1}}

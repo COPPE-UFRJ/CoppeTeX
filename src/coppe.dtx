@@ -2559,6 +2559,40 @@ postamble
   \usebibmacro{url+urldate}%
   \usebibmacro{finentry}}
 
+% --- incollection: ABNT puts the host organizer before the booktitle, as
+%     "AUTOR. Parte. In: ORGANIZADOR (Org.). Booktitle. Local: Editora, ano,
+%     p. X-Y." The organizer role string is "Org./Orgs." (see the .lbx). ---
+\newbibmacro*{coppe:bookeditor}{%
+  \ifnameundef{editor}
+    {}
+    {\printnames{editor}%
+     \setunit*{\addspace}\printtext{\mkbibparens{\usebibmacro{editorstrg}}}%
+     \clearname{editor}%
+     \setunit{\adddot\space}}}
+\newbibmacro*{coppe:partdriver}{%
+  \usebibmacro{bibindex}\usebibmacro{begentry}%
+  \usebibmacro{author/translator+others}%
+  \setunit{\labelnamepunct}\newblock
+  \usebibmacro{title}%
+  \newunit\newblock
+  \usebibmacro{in:}%
+  \usebibmacro{coppe:bookeditor}%
+  \printfield{booktitle}%
+  \newunit\newblock
+  \printfield{edition}%
+  \newunit\newblock
+  \printlist{location}%
+  \setunit*{\addcolon\space}\printlist{publisher}%
+  \setunit*{\addcomma\space}\printdate%
+  \newunit\newblock
+  \printfield{pages}%
+  \setunit{\addcomma\space}\printfield{chapter}%
+  \newunit\newblock
+  \usebibmacro{url+urldate}%
+  \usebibmacro{finentry}}
+\DeclareBibliographyDriver{incollection}{\usebibmacro{coppe:partdriver}}
+\DeclareBibliographyDriver{inbook}{\usebibmacro{coppe:partdriver}}
+
 % --- type field: resolve a known bibliography string (babel-aware), else literal ---
 \DeclareFieldFormat{type}{\ifbibstring{#1}{\bibstring{#1}}{#1}}
 
@@ -2761,6 +2795,8 @@ postamble
   availablefrom = {{Dispon\'{\i}vel em}{Dispon\'{\i}vel em}},
   urlseen       = {{Acesso em}{Acesso em}},
   in            = {{In}{In}},
+  editor        = {{Organizador}{Org\adddot}},
+  editors       = {{Organizadores}{Orgs\adddot}},
   mscdiss       = {{Disserta\c{c}\~{a}o de Mestrado}{Disserta\c{c}\~{a}o de Mestrado}},
   dscthesis     = {{Tese de Doutorado}{Tese de Doutorado}},
   phdthesis     = {{Tese de Doutorado}{Tese de Doutorado}},
