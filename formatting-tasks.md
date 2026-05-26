@@ -2,7 +2,7 @@
 
 Single, actionable list for **Phase 2 (formatting)**, reconciling:
 - `rules.md` — rules extracted from `manual2024.pdf` ch. 1–3 (`R#`);
-- `specs/propostaregrasmanual2024.txt` — the user's LaTeX-implementation proposal (`P#`);
+- `instrucoesClaude/propostaregrasmanual2024.txt` — the user's LaTeX-implementation proposal (`P#`);
 - the **current `src/coppe.cls`** state (audited).
 
 Guiding rule (proposta P0): **keep the original behaviour; change only where the new rule differs.** Each task is marked **KEEP** (already compliant), **CHANGE** (modify existing), or **ADD** (new), with the target value and where it lives in `coppe.cls`.
