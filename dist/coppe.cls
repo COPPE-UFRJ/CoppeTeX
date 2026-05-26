@@ -33,7 +33,7 @@
 %%            Geraldo Xexéo
 %%            Eduardo Mangeli
 %% 
-%% \CheckSum{1656}
+%% \CheckSum{0}
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
 %%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
@@ -51,11 +51,11 @@
 %%   Right brace   \}     Tilde         \~}
 %%
 \def\filename{coppe.dtx}
-\def\fileversion{v3.4}
-\def\filedate{2024/01/24}
+\def\fileversion{v3.8}
+\def\filedate{2026/05/25}
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{coppe}[\filedate\ \fileversion\ COPPE Dissertations and Thesis]
-\LoadClass[12pt,a4paper,oneside]{book}
+\LoadClass[12pt,a4paper,twoside]{book}
 \RequirePackage{hyphenat}
 \RequirePackage{lastpage}
 \RequirePackage{ifthen}
@@ -66,8 +66,76 @@
 \RequirePackage{eqparbox}
 \RequirePackage{ltxcmds}
 \RequirePackage[T1]{fontenc}
-\RequirePackage[a4paper,bindingoffset=0.0cm,vcentering=true,%
-top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
+\RequirePackage[a4paper,twoside,bindingoffset=1cm,%
+top=3cm,bottom=2cm,inner=2cm,outer=2cm]{geometry}
+\RequirePackage{titlesec}
+\newif\if@coppeappendix \@coppeappendixfalse
+\titleformat{\chapter}[hang]
+  {\normalfont\Large\bfseries}
+  {\if@coppeappendix\MakeUppercase{\appendixname}\ \thechapter\ \textendash\else\thechapter\fi}
+  {1ex}{\MakeUppercase}
+\titlespacing*{\chapter}{0pt}{10pt}{1.5\baselineskip}
+\let\coppe@orig@appendix\appendix
+\renewcommand\appendix{\coppe@orig@appendix\@coppeappendixtrue}
+\titleformat{name=\chapter,numberless}[hang]
+  {\normalfont\Large\bfseries\filcenter}{}{0pt}{\MakeUppercase}
+\titlespacing*{name=\chapter,numberless}{0pt}{10pt}{1.5\baselineskip}
+\titleformat{\section}
+  {\normalfont\large\bfseries}{\thesection}{1ex}{\MakeUppercase}
+\titleformat{\subsection}
+  {\normalfont\bfseries}{\thesubsection}{1ex}{}
+\titleformat{\subsubsection}
+  {\normalfont\bfseries\itshape}{\thesubsubsection}{1ex}{}
+\RequirePackage{caption}
+\captionsetup{font=footnotesize,labelsep=endash}
+\RequirePackage{float}
+\floatstyle{plaintop}
+\restylefloat{figure}
+\restylefloat{table}
+\providecommand{\quadroname}{\iflanguage{brazilian}{Quadro}{Frame}}
+\providecommand{\listquadroname}{%
+  \iflanguage{brazilian}{Lista de Quadros}{List of Frames}}
+\newfloat{quadro}{htbp}{loq}[chapter]
+\floatname{quadro}{\quadroname}
+\providecommand{\quadroautorefname}{\quadroname}
+\let\l@quadro\l@figure
+\newcommand\listofquadros{%
+  \chapter*{\listquadroname}%
+  \addcontentsline{toc}{chapter}{\listquadroname}%
+  \@mkboth{\MakeUppercase\listquadroname}{\MakeUppercase\listquadroname}%
+  \@starttoc{loq}}
+\newcommand{\cpsourcename}{\iflanguage{brazilian}{Fonte}{Source}}
+\newcommand{\cpsource}[1]{%
+  \par\addvspace{\smallskipamount}%
+  {\footnotesize\singlespacing\centering\cpsourcename: #1\par}}
+\let\cpfonte\cpsource
+\@ifundefined{source}{\let\source\cpsource}{}%
+\@ifundefined{fonte}{\let\fonte\cpsource}{}%
+\newcommand{\newcoppefloat}[3]{%
+  {\floatstyle{plaintop}\newfloat{#1}{htbp}{lo#1}}%
+  \floatname{#1}{#2}%
+  \expandafter\newcommand\csname listof#1s\endcsname{%
+    \chapter*{#3}\addcontentsline{toc}{chapter}{#3}%
+    \@mkboth{\MakeUppercase{#3}}{\MakeUppercase{#3}}%
+    \@starttoc{lo#1}}}
+\let\coppe@orig@footnotetext\@footnotetext
+\long\def\@footnotetext#1{\coppe@orig@footnotetext{\singlespacing#1}}
+\renewcommand\footnoterule{\kern-3\p@\hrule\@width 5cm\kern 2.6\p@}
+\RequirePackage{enumitem}
+\newlist{alineas}{enumerate}{2}
+\setlist[alineas,1]{label=\alph*),leftmargin=1.8em,itemsep=0pt}
+\setlist[alineas,2]{label=--,leftmargin=1.8em,itemsep=0pt}
+\RequirePackage{fancyhdr}
+\fancypagestyle{coppe}{\fancyhf{}\fancyhead[RO,LE]{\thepage}%
+  \renewcommand{\headrulewidth}{0pt}}
+\renewcommand{\cleardoublepage}{%
+  \clearpage
+  \if@twoside
+    \ifodd\c@page\else
+      \hbox{}\thispagestyle{empty}\newpage
+      \if@twocolumn\hbox{}\newpage\fi
+    \fi
+  \fi}
 \def\CoppeTeX{{\rm C\kern-.05em{\sc o\kern-.025em p\kern-.025em
 p\kern-.025em e}}\kern-.08em
 T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
@@ -111,6 +179,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 }
 \newif\if@coppenumeric\@coppenumericfalse
 \DeclareOption{numbers}{\@coppenumerictrue}
+\newif\if@copperoman\@copperomanfalse
+\DeclareOption{numeraisromanos}{\@copperomantrue}
 \onehalfspacing
 \DeclareOption{doublespacing}{%
   \doublespacing
@@ -121,9 +191,94 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \else
   \RequirePackage[english,brazilian]{babel}
 \fi
-\addto{\captionsenglish}{%
-  \renewcommand{\bibname}{References}
+\RequirePackage{csquotes}
+\newcommand{\citacao}[1]{\enquote{#1}}
+\RequirePackage{xcolor}
+\RequirePackage{listings}
+\RequirePackage{fancyvrb}
+\definecolor{deepblue}{rgb}{0,0,0.5}
+\definecolor{deepred}{rgb}{0.6,0,0}
+\definecolor{deepgreen}{rgb}{0,0.5,0}
+\DeclareFixedFont{\ttb}{T1}{txtt}{bx}{n}{10}
+\DeclareFixedFont{\ttm}{T1}{txtt}{m}{n}{10}
+\newcommand{\gxnumbersep}{0.5em}
+\lstset{captionpos=t,extendedchars=true,basicstyle=\ttfamily,inputencoding=utf8,%
+  literate=%
+  {ã}{{\~{a}}}1 {á}{{\'{a}}}1 {â}{{\^{a}}}1 {à}{{\`{a}}}1 {é}{{\'{e}}}1%
+  {è}{{\`{e}}}1 {ê}{{\^{e}}}1 {î}{{\^{i}}}1 {í}{{\'{i}}}1 {ô}{{\^{o}}}1%
+  {ó}{{\'{o}}}1 {õ}{{\~{o}}}1 {û}{{\^{u}}}1 {ú}{{\'{u}}}1 {ç}{{\c{c}}}1%
+  {Ç}{{\c{C}}}1 {À}{{\`{A}}}1 {Â}{{\^{A}}}1 {Á}{{\'{A}}}1 {É}{{\'{E}}}1%
+  {Ê}{{\^{E}}}1 {Í}{{\'{I}}}1 {Ó}{{\'{O}}}1 {Ô}{{\^{O}}}1 {Õ}{{\~{O}}}1%
+  {Ú}{{\'{U}}}1%
 }
+\AtBeginDocument{%
+  \renewcommand\lstlistingname{\iflanguage{brazilian}{Programa}{Program}}%
+  \renewcommand\lstlistlistingname{%
+    \iflanguage{brazilian}{Lista de Programas}{List of Programs}}}
+\newcommand\listofprogramas{%
+  \chapter*{\lstlistlistingname}%
+  \addcontentsline{toc}{chapter}{\lstlistlistingname}%
+  \@mkboth{\MakeUppercase\lstlistlistingname}{\MakeUppercase\lstlistlistingname}%
+  \@starttoc{lol}}
+\newcommand\pythonstyle{\lstset{language=Python,basicstyle=\ttm,numbers=left,%
+  numberstyle=\small\ttfamily,numbersep=\gxnumbersep,commentstyle=\color{purple},%
+  morekeywords={self,as},keywordstyle=\ttb\color{deepblue},%
+  emph={MyClass,__init__},emphstyle=\ttb\color{deepred},%
+  stringstyle=\color{deepgreen},frame=tb,showstringspaces=false,%
+  extendedchars=true,firstnumber=auto,inputencoding=utf8,breaklines=true,%
+  escapechar=`,postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space}}}
+\lstnewenvironment{python}[1][]{\pythonstyle\lstset{#1}%
+  \csname\@lst @SetFirstNumber\endcsname}{\csname\@lst @SaveFirstNumber\endcsname}
+\newcommand\pythoninline[1]{{\pythonstyle\lstinline!#1!}}
+\newcommand\pythonexternal[2][]{{\pythonstyle\lstinputlisting[#1]{#2}}}
+\newcommand\xmlstyle{\lstset{language=XML,basicstyle=\ttm,numbers=left,%
+  numberstyle=\small\ttfamily,numbersep=\gxnumbersep,%
+  morekeywords={xs:schema,xs:element,xs:sequence,xs:complexType},%
+  keywordstyle=\ttb\color{deepblue},%
+  emph={name,type,attributeFormDefault,elementFormDefault,xmlns:xs},%
+  emphstyle=\ttb\color{deepred},stringstyle=\color{deepgreen},frame=tb,%
+  showstringspaces=false,extendedchars=true,inputencoding=utf8,breaklines=true,%
+  postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space}}}
+\lstnewenvironment{xml}[1][]{\xmlstyle\lstset{#1}}{}
+\newcommand\htmlstyle{\lstset{language=HTML,basicstyle=\ttm,numbers=left,%
+  numberstyle=\small\ttfamily,numbersep=\gxnumbersep,%
+  keywordstyle=\ttb\color{deepblue},emphstyle=\ttb\color{deepred},%
+  stringstyle=\color{deepgreen},frame=tb,showstringspaces=false,%
+  extendedchars=true,inputencoding=utf8,breaklines=true,%
+  postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space}}}
+\lstnewenvironment{html}[1][]{\htmlstyle\lstset{#1}}{}
+\newcommand\prologstyle{\lstset{language=Prolog,basicstyle=\ttm,numbers=left,%
+  numberstyle=\small\ttfamily,numbersep=\gxnumbersep,commentstyle=\color{purple},%
+  keywordstyle=\ttb\color{deepblue},emph={MyClass,__init__},%
+  emphstyle=\ttb\color{deepred},stringstyle=\color{deepgreen},frame=tb,%
+  showstringspaces=false,extendedchars=true,firstnumber=auto,inputencoding=utf8,%
+  breaklines=true,escapechar=`,%
+  postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space}}}
+\lstnewenvironment{prolog}[1][]{\prologstyle\lstset{#1}%
+  \csname\@lst @SetFirstNumber\endcsname}{\csname\@lst @SaveFirstNumber\endcsname}
+\newcommand\javastyle{\lstset{language=Java,basicstyle=\ttm,numbers=left,%
+  numberstyle=\small\ttfamily,numbersep=\gxnumbersep,commentstyle=\color{purple},%
+  morekeywords={self,as},keywordstyle=\ttb\color{deepblue},%
+  emphstyle=\ttb\color{deepred},stringstyle=\color{deepgreen},frame=tb,%
+  showstringspaces=false,extendedchars=true,firstnumber=auto,inputencoding=utf8,%
+  breaklines=true,escapechar=`,%
+  postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space}}}
+\lstnewenvironment{java}[1][]{\javastyle\lstset{#1}%
+  \csname\@lst @SetFirstNumber\endcsname}{\csname\@lst @SaveFirstNumber\endcsname}
+\newcommand\javainline[1]{{\javastyle\lstinline!#1!}}
+\newcommand\javaexternal[2][]{{\javastyle\lstinputlisting[#1]{#2}}}
+\DefineVerbatimEnvironment{gxoutput}{Verbatim}%
+  {frame=lines,numbers=left,numbersep=\gxnumbersep}
+\DefineVerbatimEnvironment{gxoutputs}{Verbatim}%
+  {frame=lines,numbers=left,numbersep=\gxnumbersep,fontsize=\small}
+\renewcommand{\theFancyVerbLine}{{\small\ttfamily\arabic{FancyVerbLine}}}
+\if@english
+  \RequirePackage[linesnumbered,lined,algochapter,ruled]{algorithm2e}
+\else
+  \RequirePackage[portuguese,linesnumbered,lined,algochapter,ruled]{algorithm2e}
+\fi
+\SetKwFor{Para}{para}{faça}{fim do para}
+\SetKwFor{Enquanto}{enquanto}{faça}{fim do enquanto}
 \if@coppenumeric
   \RequirePackage[backend=biber,datamodel=coppe,%
     bibstyle=coppe-numeric,citestyle=coppe-numeric,natbib=true]{biblatex}
@@ -131,9 +286,9 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \RequirePackage[backend=biber,datamodel=coppe,%
     bibstyle=coppe,citestyle=coppe,natbib=true]{biblatex}
 \fi
-\defbibheading{bibliography}[\bibname]{%
-  \chapter*{#1}%
-  \addcontentsline{toc}{chapter}{#1}}
+\defbibheading{bibliography}{%
+  \chapter*{\iflanguage{brazilian}{Refer\^encias}{References}}%
+  \addcontentsline{toc}{chapter}{\iflanguage{brazilian}{Refer\^encias}{References}}}
 \AtBeginBibliography{\coppe@bibBegin}
 \let\coppe@orig@printbibliography\printbibliography
 \renewcommand\printbibliography[1][]{%
@@ -241,17 +396,29 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \@mainmatterfalse
   \pagenumbering{roman}
   \thispagestyle{empty}
-  \setcounter{page}{2}
+  % folha de rosto = counted page 1 (ABNT: the capa is not counted). An odd
+  % start keeps the page-counter parity aligned with the physical (recto) side,
+  % so \cleardoublepage lands every pre-textual element on an odd (front) page.
+  \setcounter{page}{1}
   \makefrontpage
   \clearpage
-  \pagestyle{plain}
+  \if@copperoman
+    \fancypagestyle{plain}{\fancyhf{}\fancyhead[RO,LE]{\thepage}%
+      \renewcommand{\headrulewidth}{0pt}}%
+    \pagestyle{coppe}%
+  \else
+    \fancypagestyle{plain}{\fancyhf{}\renewcommand{\headrulewidth}{0pt}}%
+    \pagestyle{empty}%
+  \fi
   \ifthenelse{\boolean{maledoc}}{}{\makecatalog}%
 }
 \renewcommand\mainmatter{%
   \coppe@mainBegin
   \cleardoublepage
   \@mainmattertrue
-  \pagestyle{plain}
+  \fancypagestyle{plain}{\fancyhf{}\fancyhead[RO,LE]{\thepage}%
+    \renewcommand{\headrulewidth}{0pt}}%
+  \pagestyle{coppe}%
   \pagenumbering{arabic}}
 \renewcommand\backmatter{%
   \if@openright
@@ -267,7 +434,9 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \vspace*{1.5mm}
   \setlength\baselineskip{0pt}
   \setlength\parskip{1mm}
-  \makebox[20mm][c]{\hspace{4.8cm}\includegraphics{coppe-logo}}
+  \makebox[\linewidth]{%
+    \includegraphics[height=2cm]{ufrj-logo}\hfill
+    \includegraphics[height=2cm]{coppe-logo}}
   \end{flushleft}
   \vspace{1.05cm}
   \begin{center}
@@ -484,7 +653,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \end{flushright}}
 
 \newenvironment{abstract}{%
-  \clearpage
+  \cleardoublepage
   \thispagestyle{plain}
   \abstract@toptext\par
   \vspace*{8.6mm}
@@ -495,7 +664,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \vspace*{7mm}
     \local@monthname/\number\year
   \end{center}\par
-  \vspace*{\fill}
+  \vspace*{1.5cm}
   \noindent%
   \begin{tabularx}{\textwidth}[b]{@{}l@{ }>{\raggedright\arraybackslash}X@{}}
     \local@advisorstring: &
@@ -521,7 +690,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \noindent\local@deptstring: \local@deptname\par
   \vspace*{7mm}}{\vspace*{\fill}}
 \newenvironment{foreignabstract}{%
-  \clearpage
+  \cleardoublepage
   \thispagestyle{plain}
   \begin{otherlanguage}{english}
   \foreignabstract@toptext\par
@@ -533,7 +702,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \vspace*{7mm}
     \foreign@monthname/\number\year
   \end{center}\par
-  \vspace*{\fill}
+  \vspace*{1.5cm}
   \noindent%
   \begin{tabularx}{\textwidth}[b]{@{}l@{ }>{\raggedright\arraybackslash}X@{}}
     \foreign@advisorstring: &
@@ -649,6 +818,27 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
       {\string\indexentry{#1[#2] #3}{\thepage}}%
     \endgroup%
     \@esphack}}}%
+\newcommand\newsigla[3]{%
+  \@namedef{coppe@sigla@s@#1}{#2}%
+  \@namedef{coppe@sigla@l@#1}{#3}}
+\newcommand\coppe@sigla@reg[1]{%
+  \@ifundefined{abbrev}{}%
+    {\abbrev{\@nameuse{coppe@sigla@s@#1}}{\@nameuse{coppe@sigla@l@#1}}}}
+\newcommand\coppe@sigla@full[1]{%
+  \@nameuse{coppe@sigla@l@#1}\space(\@nameuse{coppe@sigla@s@#1})}
+\newcommand\coppe@sigla@undef[1]{%
+  \PackageWarning{coppe}{Sigla '#1' nao declarada com \string\newsigla}%
+  \textbf{??#1??}}
+\newcommand\coppe@sigla@first[1]{%
+  \global\@namedef{coppe@sigla@done@#1}{}\coppe@sigla@reg{#1}\coppe@sigla@full{#1}}
+\newcommand\coppe@sigla@norm[1]{%
+  \@ifundefined{coppe@sigla@s@#1}{\coppe@sigla@undef{#1}}%
+    {\@ifundefined{coppe@sigla@done@#1}{\coppe@sigla@first{#1}}%
+      {\@nameuse{coppe@sigla@s@#1}}}}
+\newcommand\coppe@sigla@star[1]{%
+  \@ifundefined{coppe@sigla@s@#1}{\coppe@sigla@undef{#1}}%
+    {\global\@namedef{coppe@sigla@done@#1}{}\coppe@sigla@full{#1}}}
+\newcommand\sigla{\@ifstar\coppe@sigla@star\coppe@sigla@norm}
 %%%%    \begin{macrocode}
 %%%% \AtBeginDocument{%
 %%%% \@ifpackageloaded{hyperref}{%
@@ -737,11 +927,11 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \let\item\@idxitem}
   {\if@restonecol\onecolumn\else\clearpage\fi}
 \if@english
-  \newcommand\listabbreviationname{List of Abbreviations}
+  \newcommand\listabbreviationname{List of Abbreviations and Acronyms}
   \newcommand\listsymbolname{List of Symbols}
   \newcommand\glossaryname{Glossary}
 \else
-  \newcommand\listabbreviationname{Lista de Abreviaturas}
+  \newcommand\listabbreviationname{Lista de Abreviaturas e Siglas}
   \newcommand\listsymbolname{Lista de S{\' i}mbolos}
   \newcommand\glossaryname{Gloss{\' a}rio}
 \fi

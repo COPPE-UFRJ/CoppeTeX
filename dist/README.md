@@ -13,6 +13,18 @@ of contents, and list of bibliographic references.
 
 Although it is tied to the COPPE/UFRJ guidelines, it can be easily ported to other institutions.
 
+This version follows the [document](https://registro.daac.coppe.ufrj.br/wp-content/uploads/2020/09/Normas-de-Elaboracao.pdf):
+
+> Original: Norma para a Elaboração Gráfica de Teses/Dissertações COPPE/UFRJ
+>  Aprovada pela CPGP em 15 de julho de 2008 
+> Com correção no Anexo III, páginas 19 e 20, em 01/10/2009
+> (Revisada em 10/09/2010)
+> (Revisada em 26/11/2019 – Alteração da Folha Aprovação, Anexo III, páginas 22 e 23) 
+
+
+
+
+
 
 ## How Much
 
@@ -33,8 +45,8 @@ Network (CTAN) standards. It is basically composed by an installation file ('cop
 
   3. README.md: describe the CoppeTeX package.
 
-  4. [en-]coppe-{plain,unsrt}.bst: alphabetically sorted and unsorted numbered
-     BibTeX styles, Natbib compatible. Versions for English and Brazilian Portuguese.
+  4. coppe-{plain,unsrt}.bst: alphabetically sorted and unsorted numbered
+     BibTeX styles, Natbib compatible.
 
   5. coppe.dtx: main source file; contains the documentation, a sample
      thesis and a Makeindex style.
@@ -54,19 +66,16 @@ Our release packages contain the following files:
   3. coppe.cls: the main file. It is a LaTeX document class.
 
   4. coppe-{plain,unsrt}.bst: alphabetically sorted and unsorted numbered
-     BibTeX styles, Natbib compatible (for Brazilian Portuguese).
+     BibTeX styles, Natbib compatible.
 
-  5. en-coppe-{plain,unsrt}.bst: alphabetically sorted and unsorted numbered
-     BibTeX styles, Natbib compatible (for English).
-
-  6. coppe.ist: Makeindex style for creating lists of symbols
+  5. coppe.ist: Makeindex style for creating lists of symbols
      and abbreviations.
 
-  7. coppe.pdf: CoppeTeX documentation.
+  6. coppe.pdf: CoppeTeX documentation.
 
-  8. example.{tex,bib}: sample thesis using coppe class.
+  7. example.{tex,bib}: sample thesis using coppe class.
 
-  9. coppe-logo.[eps, pdf]: images included in the front cover.
+  8. coppe-logo.[eps, pdf]: images included in the front cover.
 
 
 ## Installing
@@ -109,3 +118,8 @@ section.
 ## Help & Support
 
 Please, send any comments, suggestions, questions and bugs to our [mailing list](http://coppetex.sourceforge.net/mailing-list.html).
+
+
+## Add-ons
+
+Now there is also Beamer template providade by prof. Jean-David Caprace

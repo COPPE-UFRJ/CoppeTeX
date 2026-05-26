@@ -1,21 +1,63 @@
+%%
+%% This is file `coppe-numeric.bbx',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% coppe.dtx  (with options: `numbbx')
+%% 
+%% This is the `coppe' document class used for composition of LaTeX
+%% monographs (master and PhD thesis, and PhD qualifying exams)
+%% satisfying the requirements of the Coordination of Research and
+%% Graduate Courses in Engineering at the Federal University of
+%% Rio de Janeiro.
+%% 
+%% Copyright (C) 2008 Vicente Helano and George Ainsworth Jr.
+%% Copyright (C) 2024 Vicente Helano and George Ainsworth Jr. and Geraldo Xexéo and Eduardo Mangeli
+%% 
+%% This program is free software; you can redistribute it and/or modify
+%% it under the terms of the GNU General Public License version 3 as
+%% published by the Free Software Foundation.
+%% 
+%% This program is distributed in the hope that it will be useful,
+%% but WITHOUT ANY WARRANTY; without even the implied warranty of
+%% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+%% GNU General Public License version 3 for more details.
+%% 
+%% You should have received a copy of the GNU General Public License
+%% version 3 along with this package (see COPYING file).
+%% If not, see <http://www.gnu.org/licenses/>.
+%% 
+%% Author(s): Vicente Helano,
+%%            George Ainsworth
+%%            Geraldo Xexéo
+%%            Eduardo Mangeli
+%% 
+%% \CheckSum{0}
+%% \CharacterTable
+%%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+%%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+%%   Digits        \0\1\2\3\4\5\6\7\8\9
+%%   Exclamation   \!     Double quote  \"     Hash (number) \#
+%%   Dollar        \$     Percent       \%     Ampersand     \&
+%%   Acute accent  \'     Left paren    \(     Right paren   \)
+%%   Asterisk      \*     Plus          \+     Comma         \,
+%%   Minus         \-     Point         \.     Solidus       \/
+%%   Colon         \:     Semicolon     \;     Less than     \<
+%%   Equals        \=     Greater than  \>     Question mark \?
+%%   Commercial at \@     Left bracket  \[     Backslash     \\
+%%   Right bracket \]     Circumflex    \^     Underscore    \_
+%%   Grave accent  \`     Left brace    \{     Vertical bar  \|
+%%   Right brace   \}     Tilde         \~}
+%%
 \ProvidesFile{coppe-numeric.bbx}[2026/05/24 v0.1 CoppeTeX ABNT numeric bibliography]
-% Numeric reference list for the ABNT numeric system (NBR 10520). It reuses the
-% full coppe ABNT style (drivers, CAPS surnames, bold titles, "In:", p./f.,
-% the PT->EN source map and the language mappings) and only adds the [n] list
-% label and the numeric sorting on top.
 \RequireBibliographyStyle{coppe}
 
-% ABNT numeric system lists references in the order they are first cited
-% (NBR 10520), i.e. unsorted. Override with sorting=nty for an alphabetical
-% numbered list. 'labelnumber' generates the [n] field.
 \ExecuteBibliographyOptions{labelnumber,sorting=none}
 
-% Bracketed labels, both in the list and for any shorthand entries.
 \DeclareFieldFormat{labelnumberwidth}{\mkbibbrackets{#1}}
 \DeclareFieldFormat{shorthandwidth}{\mkbibbrackets{#1}}
 
-% Reference list driven by the [n] label (copied from biblatex's numeric.bbx),
-% keeping the ABNT blank line between entries via \bibitemsep set in coppe.bbx.
 \defbibenvironment{bibliography}
   {\list
      {\printtext[labelnumberwidth]{%
@@ -31,4 +73,6 @@
   {\endlist}
   {\item}
 
-\endinput
+%% 
+%%
+%% End of file `coppe-numeric.bbx'.

@@ -9,7 +9,7 @@
 %% This is a sample monograph which illustrates the use of the `coppe' document
 %% class and its biblatex/biber bibliography style.
 %% 
-%% \CheckSum{1656}
+%% \CheckSum{0}
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
 %%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
@@ -34,7 +34,6 @@
 \usepackage[most]{tcolorbox} % caixas de texto
 \usepackage{amsmath,amssymb}
 \usepackage{hyperref}
-\usepackage{listings} % para usar listagens
 
 \addbibresource{example.bib}% base de referências (biblatex/biber)
 
@@ -68,25 +67,53 @@
 
   \chapter*{Agradecimentos}
 
-  Gostaria de agradecer a todos.
+  Gostaria de agradecer a todos os que contribu\'iram para este trabalho:
+  orientadores, colegas, familiares e \`as ag\^encias de fomento. Lorem ipsum
+  dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
+  ut labore et dolore magna aliqua.
 
   \begin{abstract}
 
-  Apresenta-se, nesta tese, ...
+  Apresenta-se, nesta tese, um exemplo de resumo. Lorem ipsum dolor sit amet,
+  consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+  dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+  ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+  in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+  pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
+  officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis
+  iste natus error sit voluptatem accusantium doloremque laudantium, totam rem
+  aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae
+  vitae dicta sunt explicabo, nemo enim ipsam voluptatem quia voluptas sit
+  aspernatur aut odit aut fugit.
 
   \end{abstract}
 
   \begin{foreignabstract}
 
-  In this work, we present ...
+  In this work, we present an example abstract. Lorem ipsum dolor sit amet,
+  consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+  dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+  ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+  in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+  pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
+  officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis
+  iste natus error sit voluptatem accusantium doloremque laudantium, totam rem
+  aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae
+  vitae dicta sunt explicabo, nemo enim ipsam voluptatem quia voluptas sit
+  aspernatur aut odit aut fugit.
 
   \end{foreignabstract}
 
-  \tableofcontents
+  % Ordem pre-textual (NBR 14724/6027, R55): listas (ilustracoes, tabelas,
+  % abreviaturas e siglas, simbolos) ANTES do sumario; sumario por ultimo.
   \listoffigures
   \listoftables
-  \printlosymbols
+  \listofquadros
+  \listofprogramas
+  \listofalgorithms
   \printloabbreviations
+  \printlosymbols
+  \tableofcontents
 
   \mainmatter
   \chapter{Introdução}
@@ -184,9 +211,9 @@ Grande parte dos problemas de iniciantes, e veteranos, em \LaTeX é da localiza�
 
 A regra geral de posicionamento é que uma figura ou quadro só pode aparecer a partir da mesma página onde é citado pela primeira vez, nunca antes. Normalmente eu sigo a ordem de preferência aqui, fim da página, topo da página, isto é \verb*|hbt|. Se desejado, pode ser usado o \verb*|p|, que coloca os floats em uma página única. Para forçar mais o posicionamento, é possível usar o pacote \verb*|float| e usar a opção \verb*|H|. Além disso é possível usar o pacote \verb*|placeins| que permite tanto definir que \textit{floats} devem sempre ser colocados na mesma seção ou outra regra, quanto usar o comando \verb*|FlaotBarrier|, que obriga a todos os \textit{floats} aparecerem.
 
-\textbf{Segundo a norma da ABNT, as legendas} \verb|\caption| \textbf{das figuras e quadros ficam em baixo deles, enquanto as legendas das tabelas ficam em cima. }
+\textbf{Pela norma atual (manual2024), a legenda} \verb|\caption| \textbf{de toda ilustração --- figura, tabela ou quadro --- fica \emph{acima} dela}, com o número em algarismos arábicos, travessão e o título. \textbf{A fonte é obrigatória e fica \emph{abaixo}}, indicada com \verb|\source{...}| (sinônimo: \verb|\fonte{...}|), em letra menor; ela não numera nem avança nenhum contador. Se outro pacote já definir \verb|\source| ou \verb|\fonte|, use \verb|\cpsource| / \verb|\cpfonte|.
 
-Quadros são opcionais. Quando usados, tabelas passam a só conter números, enquanto quadros contém números e outras coisas. \textbf{O CoppeTeX ainda não suporta quadros!}
+Quadros são ilustrações cujos dados são delimitados por linhas em \emph{todas} as bordas (ao contrário das tabelas, com linhas só no topo e na base). O CoppeTeX oferece o float \verb|quadro| (sinônimo em inglês: \verb|frame|) e o comando \verb|\listofquadros| para a lista correspondente. Para criar outros floats com a mesma regra (legenda acima, \verb|\source| abaixo e uma \verb|\listof...|), use \verb|\newcoppefloat{nome}{Nome}{Título da Lista}|.
 
 \section{Tabelas e Figuras Padrão}
 
@@ -209,16 +236,36 @@ Vamos ver uma tabela padrão, como a \autoref{tab:exemplo_numeros}.
 10 & 11 & 12 \\ % Quarta linha de dados
 \hline % Linha inferior
 \end{tabular}
+\fonte{Elabora\c{c}\~ao pr\'opria.} % fonte obrigatoria, abaixo do float
 \end{table}
 
 Já a \autoref{fig:exemplo_figura} é uma figura padrão, com controle da largura.
 
 \begin{figure}[ht]
 \centering % Centraliza a figura
-\includegraphics[width=0.5\textwidth]{coppe-logo.pdf} % Inclui a imagem com metade da largura do texto
-\caption{Exemplo de Figura com Legenda Abaixo} % Legenda da figura
+\caption{Exemplo de Figura com Legenda Acima} % Legenda em cima (norma atual)
 \label{fig:exemplo_figura} % Etiqueta para referência cruzada
+\includegraphics[width=0.5\textwidth]{coppe-logo.pdf} % Inclui a imagem com metade da largura do texto
+\source{COPPE/UFRJ.} % fonte obrigatoria, abaixo da figura
 \end{figure}
+
+Quadros têm a mesma regra (legenda acima, fonte abaixo), mas com linhas em todas as bordas. O \autoref{qua:exemplo} ilustra o float \verb|quadro|.
+
+\begin{quadro}[ht]
+\centering
+\caption{Exemplo de Quadro}
+\label{qua:exemplo}
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Ilustração} & \textbf{Delimitação} \\
+\hline
+Tabela & Linhas apenas no topo e na base. \\
+\hline
+Quadro & Linhas em todas as bordas. \\
+\hline
+\end{tabular}
+\fonte{Elabora\c{c}\~ao pr\'opria.}
+\end{quadro}
 
 \section{Tabelas mais elegantes}
 
@@ -532,6 +579,33 @@ Este é o conteúdo do meu textbox sem título. Você pode adicionar qualquer te
     \label{fig:figura_com_textbox}
 \end{figure}
 
+\section{Listagens de código e algoritmos}
+
+O CoppeTeX traz embutido o suporte a listagens de programas (pacote \verb|listings|) e a algoritmos (\verb|algorithm2e|). A legenda fica no topo (``Programa N''), como em qualquer ilustração, e a lista correspondente é gerada por \verb|\listofprogramas|. O \autoref{prog:exemplo} mostra um exemplo em Python.
+
+\begin{python}[caption={Exemplo de programa em Python},label=prog:exemplo]
+def saudacao(nome):
+    # imprime uma saudação acentuada
+    print(f"Olá, {nome}!")
+
+saudacao("COPPE")
+\end{python}
+\source{Elaboração própria.}
+
+Há estilos prontos também para \verb|java|, \verb|xml|, \verb|html| e \verb|prolog|, comandos \verb|\pythoninline|/\verb|\javainline| para código no meio do texto, e os ambientes \verb|gxoutput|/\verb|gxoutputs| para a saída dos programas. Para algoritmos, use o ambiente \verb|algorithm| com as palavras-chave em português \verb|\Para| e \verb|\Enquanto|, como no \autoref{alg:soma}.
+
+\begin{algorithm}[H]
+\caption{Soma dos elementos de um vetor}
+\label{alg:soma}
+\Dados{vetor $v$ com $n$ elementos}
+\Resultado{soma $s$ dos elementos de $v$}
+$s \leftarrow 0$\;
+\Para{$i \leftarrow 1$ \Ate{} $n$}{
+  $s \leftarrow s + v[i]$\;
+}
+\Retorna $s$\;
+\end{algorithm}
+
   \chapter{Método Proposto}
   \chapter{Resultados e Discuss\~oes}
 
@@ -555,10 +629,19 @@ Este é o conteúdo do meu textbox sem título. Você pode adicionar qualquer te
   \abbrev{IoT}{IoT com ordenação default}
   \abbrev[ITU]{ITU}{ITU mesmo}
 
+  \newsigla{ufrj}{UFRJ}{Universidade Federal do Rio de Janeiro}
+  \newsigla{cpgp}{CPGP}{Comissão de Pós-Graduação e Pesquisa de Engenharia}
+
+  As siglas (manual2024, seção 2.8) são expandidas na primeira ocorrência e registradas automaticamente na lista. Declaradas com \verb|\newsigla|, basta usá-las: a \sigla{ufrj} oferece vários cursos de pós-graduação, e este programa segue as normas da \sigla{cpgp}. Em menções seguintes aparecem apenas as siglas, como \sigla{ufrj} e \sigla{cpgp}; use \verb|\sigla*| para forçar a forma extensa.
+
   \chapter{Conclusões}
 
   \backmatter
 
+  % Tipos exóticos da ABNT (NBR 6023): patente, legislação, norma, mapa,
+  % partitura --- declarados via sinônimos em português em example.bib.
+  \nocite{patente-example,legislacao-example,norma-example,mapa-example,partitura-example}
+  \nocite{videogame-example,filme-example}
   \printbibliography
 
 \appendix
@@ -584,12 +667,6 @@ No modelo \CoppeTeX os anexos devem obrigtoriamente vir depois dos apêndices e 
 
 \end{document}
 
-\newcommand{\annex}{
-    \iflanguage{brazilian}
-        {\renewcommand{\appendixname}{Anexo}}
-        {\renewcommand{\appendixname}{Annex}}
-    \appendix
-}
 %% 
 %%
 %% End of file `example.tex'.

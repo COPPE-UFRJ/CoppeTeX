@@ -1,10 +1,58 @@
+%%
+%% This is file `coppe.bbx',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% coppe.dtx  (with options: `bbx')
+%% 
+%% This is the `coppe' document class used for composition of LaTeX
+%% monographs (master and PhD thesis, and PhD qualifying exams)
+%% satisfying the requirements of the Coordination of Research and
+%% Graduate Courses in Engineering at the Federal University of
+%% Rio de Janeiro.
+%% 
+%% Copyright (C) 2008 Vicente Helano and George Ainsworth Jr.
+%% Copyright (C) 2024 Vicente Helano and George Ainsworth Jr. and Geraldo Xexéo and Eduardo Mangeli
+%% 
+%% This program is free software; you can redistribute it and/or modify
+%% it under the terms of the GNU General Public License version 3 as
+%% published by the Free Software Foundation.
+%% 
+%% This program is distributed in the hope that it will be useful,
+%% but WITHOUT ANY WARRANTY; without even the implied warranty of
+%% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+%% GNU General Public License version 3 for more details.
+%% 
+%% You should have received a copy of the GNU General Public License
+%% version 3 along with this package (see COPYING file).
+%% If not, see <http://www.gnu.org/licenses/>.
+%% 
+%% Author(s): Vicente Helano,
+%%            George Ainsworth
+%%            Geraldo Xexéo
+%%            Eduardo Mangeli
+%% 
+%% \CheckSum{0}
+%% \CharacterTable
+%%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+%%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+%%   Digits        \0\1\2\3\4\5\6\7\8\9
+%%   Exclamation   \!     Double quote  \"     Hash (number) \#
+%%   Dollar        \$     Percent       \%     Ampersand     \&
+%%   Acute accent  \'     Left paren    \(     Right paren   \)
+%%   Asterisk      \*     Plus          \+     Comma         \,
+%%   Minus         \-     Point         \.     Solidus       \/
+%%   Colon         \:     Semicolon     \;     Less than     \<
+%%   Equals        \=     Greater than  \>     Question mark \?
+%%   Commercial at \@     Left bracket  \[     Backslash     \\
+%%   Right bracket \]     Circumflex    \^     Underscore    \_
+%%   Grave accent  \`     Left brace    \{     Vertical bar  \|
+%%   Right brace   \}     Tilde         \~}
+%%
 \ProvidesFile{coppe.bbx}[2026/05/23 v0.1 CoppeTeX ABNT bibliography style]
-% ABNT reference list keeps the date at the end (imprenta), same for author-date
-% and numeric modes, so we derive from the standard style, not authoryear.
 \RequireBibliographyStyle{standard}
 
-% Note: standard style never dashes repeated authors, which already matches the
-% post-2020 ABNT rule (repeat the entry in full), so no 'dashed' option is needed.
 \ExecuteBibliographyOptions{%
   maxbibnames=99,      % ABNT 4.3.1.3: list all authors by default
   giveninits=false,
@@ -14,11 +62,9 @@
   sorting=nyt,
 }
 
-% Language strings (Disponível em / Acesso em / In, etc.)
 \DeclareLanguageMapping{brazilian}{brazilian-coppe}
 \DeclareLanguageMapping{english}{english-coppe}
 
-% --- Names: all reversed "FAMILY, Given", separated by ";" in the list ---
 \DeclareNameAlias{author}{family-given}
 \DeclareNameAlias{editor}{family-given}
 \DeclareNameAlias{translator}{family-given}
@@ -26,17 +72,13 @@
 \DeclareDelimFormat[bib,biblist]{multinamedelim}{\addsemicolon\space}
 \DeclareDelimFormat[bib,biblist]{finalnamedelim}{\addsemicolon\space}
 
-% Uppercase the surname (family + prefix) only inside the bibliography list;
-% citations keep normal caps (post-2020 rule).
 \AtBeginBibliography{%
+  \singlespacing                        % entries single-spaced internally (2.4)
+  \setlength{\bibitemsep}{\baselineskip}% one blank line between entries (2.4)
   \renewcommand*{\mkbibnamefamily}[1]{\MakeUppercase{#1}}%
   \renewcommand*{\mkbibnameprefix}[1]{\MakeUppercase{#1}}%
 }
 
-% --- Titles: bold for whole-document types; plain for parts; entry-by-title
-%     (no author/editor) -> not bold, first significant word in CAPS (ABNT 4.2). ---
-% entry-by-title: plain (not bold). TODO: first significant word in CAPS (ABNT 4.2)
-% once a robustly-tested uppercase-first-word macro is in place.
 \DeclareFieldFormat{title}{%
   \ifboolexpr{ test {\ifnameundef{labelname}} }
     {#1}%
@@ -47,22 +89,17 @@
 \DeclareFieldFormat{booktitle}{\mkbibbold{#1}}
 \DeclareFieldFormat{maintitle}{\mkbibbold{#1}}
 
-% --- Pages: ABNT uses "p." (also for ranges); theses use "f." for pagetotal ---
 \DeclareFieldFormat{pagetotal}{#1\addnbspace p\adddot}
 \DeclareFieldFormat[thesis]{pagetotal}{#1\addnbspace f\adddot}
 \DeclareFieldFormat{pages}{p\adddot\addnbspace#1}
 
-% --- Periodical volume / number prefixes ---
 \DeclareFieldFormat[article]{volume}{v\adddot\addnbspace#1}
 \DeclareFieldFormat[article]{number}{n\adddot\addnbspace#1}
 
-% --- "In:" before host title (incollection/inproceedings/inbook) ---
 \renewbibmacro*{in:}{\printtext{\bibstring{in}\addcolon\space}}
 
-% --- Online: "Disponível em: <url>." + "Acesso em: <date>." via lbx strings ---
 \DeclareFieldFormat{url}{\bibstring{availablefrom}\addcolon\space\url{#1}}
 
-% --- ABNT article driver: no "In:"; Journal, Local, v., n., p., date, DOI/URL ---
 \DeclareBibliographyDriver{article}{%
   \usebibmacro{bibindex}%
   \usebibmacro{begentry}%
@@ -82,16 +119,73 @@
   \usebibmacro{url+urldate}%
   \usebibmacro{finentry}}
 
-% --- type field: resolve a known bibliography string (babel-aware), else literal ---
 \DeclareFieldFormat{type}{\ifbibstring{#1}{\bibstring{#1}}{#1}}
 
-% --- custom entry types reuse existing drivers for now (refine later) ---
-\DeclareBibliographyDriver{game}{\usedriver{}{misc}}
-\DeclareBibliographyDriver{videogame}{\usedriver{}{misc}}
-\DeclareBibliographyDriver{boardgame}{\usedriver{}{misc}}
-\DeclareBibliographyDriver{tvshow}{\usedriver{}{misc}}
+\DeclareFieldFormat{course}{\mkbibparens{\iflanguage{brazilian}{em\addspace}{in\addspace}#1}}
+\DeclareBibliographyDriver{thesis}{%
+  \usebibmacro{bibindex}\usebibmacro{begentry}%
+  \usebibmacro{author}%
+  \setunit{\labelnamepunct}\newblock
+  \usebibmacro{title}%
+  \newunit\newblock
+  \printfield{type}\setunit*{\addspace}\printfield{course}%
+  \newunit\newblock
+  \printlist{institution}%
+  \setunit*{\addcomma\space}\printlist{location}%
+  \setunit*{\addcomma\space}\printdate%
+  \newunit\newblock
+  \printfield{pagetotal}%
+  \newunit\newblock
+  \printfield{note}%
+  \newunit\newblock
+  \usebibmacro{url+urldate}%
+  \usebibmacro{finentry}}
+\newbibmacro*{coppe:media}{%
+  \iflistundef{artist}{}{\setunit{\addperiod\space}%
+    \printtext{\iflanguage{brazilian}{Ilustra\c{c}\~ao}{Art}\addcolon\space}\printlist{artist}}%
+  \iffieldundef{platform}{}{\setunit{\addperiod\space}%
+    \printtext{\iflanguage{brazilian}{Plataforma}{Platform}\addcolon\space}\printfield{platform}}%
+  \iflistundef{director}{}{\setunit{\addperiod\space}%
+    \printtext{\iflanguage{brazilian}{Dire\c{c}\~ao}{Directed by}\addcolon\space}\printlist{director}}%
+  \iflistundef{producer}{}{\setunit{\addperiod\space}%
+    \printtext{\iflanguage{brazilian}{Produ\c{c}\~ao}{Produced by}\addcolon\space}\printlist{producer}}}
+\newbibmacro*{coppe:mediadriver}{%
+  \usebibmacro{bibindex}\usebibmacro{begentry}%
+  \usebibmacro{author/translator+others}%
+  \setunit{\labelnamepunct}\newblock
+  \usebibmacro{title}%
+  \newunit\newblock
+  \usebibmacro{coppe:media}%
+  \newunit\newblock
+  \printlist{publisher}%
+  \setunit*{\addcomma\space}\printlist{location}%
+  \setunit*{\addcomma\space}\printdate%
+  \newunit\newblock
+  \printfield{version}%
+  \newunit\newblock
+  \printfield{note}%
+  \newunit\newblock
+  \usebibmacro{url+urldate}%
+  \usebibmacro{finentry}}
+\DeclareBibliographyDriver{game}{\usebibmacro{coppe:mediadriver}}
+\DeclareBibliographyDriver{videogame}{\usebibmacro{coppe:mediadriver}}
+\DeclareBibliographyDriver{boardgame}{\usebibmacro{coppe:mediadriver}}
+\DeclareBibliographyDriver{movie}{\usebibmacro{coppe:mediadriver}}
+\DeclareBibliographyDriver{tvshow}{\usebibmacro{coppe:mediadriver}}
+\DeclareBibliographyDriver{map}{\usedriver{}{book}}
+\DeclareBibliographyDriver{standard}{\usedriver{}{book}}
+\DeclareBibliographyDriver{music}{\usedriver{}{book}}
+\DeclareBibliographyDriver{legislation}{\usedriver{}{misc}}
+\DeclareBibliographyDriver{jurisdiction}{\usedriver{}{misc}}
+\DeclareBibliographyDriver{legal}{\usedriver{}{misc}}
+\DeclareBibliographyDriver{audio}{\usedriver{}{misc}}
+\DeclareBibliographyDriver{video}{\usedriver{}{misc}}
+\DeclareBibliographyDriver{software}{\usedriver{}{misc}}
+\DeclareBibliographyDriver{image}{\usedriver{}{misc}}
+\DeclareBibliographyDriver{artwork}{\usedriver{}{misc}}
+\DeclareBibliographyDriver{performance}{\usedriver{}{misc}}
+\DeclareBibliographyDriver{dataset}{\usedriver{}{misc}}
 
-% --- biber source map: Portuguese synonyms (entry types + fields) + thesis family ---
 \DeclareSourcemap{%
   \maps[datatype=bibtex]{%
     % entry-type PT synonyms -> canonical English
@@ -116,6 +210,24 @@
     \map{\step[typesource=filme,typetarget=movie]}
     \map{\step[typesource=serietv,typetarget=tvshow]}
     \map{\step[typesource=programadetv,typetarget=tvshow]}
+    % Exotic ABNT types (NBR 6023 4.2.5-4.2.14); targets are biblatex-native
+    % except map (declared in coppe.dbx).
+    \map{\step[typesource=legislacao,typetarget=legislation]}
+    \map{\step[typesource=atonormativo,typetarget=legislation]}
+    \map{\step[typesource=jurisprudencia,typetarget=jurisdiction]}
+    \map{\step[typesource=documentojuridico,typetarget=legal]}
+    \map{\step[typesource=documentocivil,typetarget=legal]}
+    \map{\step[typesource=norma,typetarget=standard]}
+    \map{\step[typesource=partitura,typetarget=music]}
+    \map{\step[typesource=iconografico,typetarget=image]}
+    \map{\step[typesource=obradearte,typetarget=artwork]}
+    \map{\step[typesource=tridimensional,typetarget=artwork]}
+    \map{\step[typesource=cartografico,typetarget=map]}
+    \map{\step[typesource=mapa,typetarget=map]}
+    \map{\step[typesource=audiovisual,typetarget=video]}
+    \map{\step[typesource=conjuntodedados,typetarget=dataset]}
+    \map{\step[typesource=fasciculo,typetarget=suppperiodical]}
+    \map{\step[typesource=trabalhoapresentado,typetarget=unpublished]}
     % thesis family: retype to thesis and preset the (babel-aware) type word
     \map{\step[typesource=tese,typetarget=thesis]}
     \map{\step[typesource=dissertacao,typetarget=thesis]}
@@ -151,11 +263,13 @@
     \map{\step[fieldsource=diretor,fieldtarget=director]}
     \map{\step[fieldsource=produtor,fieldtarget=producer]}
     \map{\step[fieldsource=versao,fieldtarget=version]}
+    \map{\step[fieldsource=escala,fieldtarget=scale]}
   }%
 }
 
-% --- ABNT list layout: flush left, single spacing, blank line between entries ---
 \setlength{\bibhang}{0pt}
 \setlength{\bibitemsep}{\baselineskip}
 
-\endinput
+%% 
+%%
+%% End of file `coppe.bbx'.
