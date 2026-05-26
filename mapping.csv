@@ -63,3 +63,17 @@ FIELD,4.2.2,Destinatario (carta),recipient,destinatario,,DEFER,new,"renders Dest
 FIELD,4.2.5,Depositante (patente),holder,depositante,,DEFER,std,"patent applicant",
 FIELD,4.2.5,Procurador (patente),agent,procurador,,DEFER,new,"patent agent",
 FIELD,4.2.3.1,Periodicidade,note,periodicidade,,DEFER,std,"Mensal/Trimestral",
+ENTRY,custom,Jogo,game,jogo,,CORE,new,"author=designer (pessoal/corporativo); artist",OK
+ENTRY,custom,Jogo eletronico,videogame,jogoeletronico,videogame,CORE,new,"game + platform",OK
+ENTRY,custom,Jogo de tabuleiro,boardgame,jogodetabuleiro,,CORE,new,"as game",OK
+ENTRY,4.2.9,Filme,movie,filme,,CORE,new,"director/producer; entry by title",OK
+ENTRY,custom,Programa de TV/serie,tvshow,programadetv,serietv,CORE,new,"entry by title; director/producer",OK
+ENTRY,custom,Software,software,software,,CORE,std,"(PUBLISHER, YEAR) fallback; version",OK
+FIELD,4.3.8.3,Curso (do grau),course,curso,,CORE,new,"renders (Mestrado em <curso>)",OK
+FIELD,4.3.8.3,Grau academico,coppedegree,grau,,CORE,new,"degree word",OK
+FIELD,custom,Artista/ilustrador (jogo/AV),artist,artista,,CORE,new,"renders Ilustracao:",OK
+FIELD,custom,Plataforma (videogame),platform,plataforma,,CORE,new,"renders Plataforma:",OK
+FIELD,custom,Diretor (filme/TV),director,diretor,,CORE,new,"renders Direcao:",OK
+FIELD,custom,Produtor (filme/TV),producer,produtor,,CORE,new,"renders Producao:",OK
+FIELD,custom,Versao (jogo/software),version,versao,,CORE,std,"renders Versao",OK
+FIELD,4.2.12,Escala (mapa),scale,escala,,DEFER,new,"map scale",OK
