@@ -1,0 +1,245 @@
+\usepackage{listings}
+
+\renewcommand{\lstlistlistingname}{Lista de Programas}
+\renewcommand{\lstlistingname}{Programa}
+
+\DeclareFixedFont{\ttb}{T1}{txtt}{bx}{n}{10} % for bold
+\DeclareFixedFont{\ttm}{T1}{txtt}{m}{n}{10}  % for normal
+
+\newcommand{\gxnumbersep}{0.5em}
+
+% um set default para listagens
+\lstset{extendedchars=true,%
+    basicstyle=\ttfamily,%
+    inputencoding=utf8,%
+    literate=%
+    {ã}{{\~{a}}}1%
+    {á}{{\'{a}}}1%
+    {â}{{\^{a}}}1%
+    {à}{{\`{a}}}1%
+    {é}{{\'{e}}}1%
+    {è}{{\`{e}}}1%
+    {ê}{{\^{e}}}1%
+    {î}{{\^{i}}}1%
+    {í}{{\'{i}}}1%
+    {ô}{{\^{o}}}1%
+    {ó}{{\'{o}}}1%
+    {õ}{{\~{o}}}1%
+    {û}{{\^{u}}}1%
+    {ú}{{\'{u}}}1%
+    {ç}{{\c{c}}}1%
+    {Ç}{{\c{C}}}1%
+    {À}{{\`{A}}}1%
+    {Â}{{\^{A}}}1%
+    {Á}{{\'{A}}}1%
+    {É}{{\'{E}}}1%
+    {Ê}{{\^{E}}}1%
+    {Í}{{\'{I}}}1%
+    {Ó}{{\'{O}}}1%
+    {Ô}{{\^{O}}}1%
+    {Õ}{{\~{O}}}1%
+    {Ú}{{\'{U}}}1%
+}
+%   https://tex.stackexchange.com/questions/83882/how-to-highlight-python-syntax-in-latex-listings-lstinputlistings-command
+\definecolor{deepblue}{rgb}{0,0,0.5}
+\definecolor{deepred}{rgb}{0.6,0,0}
+\definecolor{deepgreen}{rgb}{0,0.5,0}
+
+\newcommand\pythonstyle{\lstset{%
+        language=Python,%
+        basicstyle=\ttm,%
+        %basicstyle=\scriptsize,
+        numbers=left,%
+        numberstyle=\small\ttfamily, %
+        numbersep=\gxnumbersep,%
+        commentstyle=\color{purple},
+        morekeywords={self,as},              % Add keywords here
+        keywordstyle=\ttb\color{deepblue},%
+        emph={MyClass,__init__},          % Custom highlighting
+        emphstyle=\ttb\color{deepred},    % Custom highlighting style
+        stringstyle=\color{deepgreen},%
+        frame=tb,                         % Any extra options here
+        showstringspaces=false,%
+        extendedchars=true,%
+        firstnumber = auto,%
+        inputencoding=utf8,%
+        breaklines=true,%
+        escapechar=`,%
+        postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space}
+ }}
+
+
+%
+\makeatletter
+    \lstnewenvironment{python}[1][]
+    {   \pythonstyle
+        \lstset{#1}
+        \csname\@lst @SetFirstNumber\endcsname
+    }
+    {     \csname \@lst @SaveFirstNumber\endcsname
+    }
+\makeatother
+    % Python for inline
+    \newcommand\pythoninline[1]{{\pythonstyle\lstinline!#1!}}
+%
+% Python for external files
+\newcommand\pythonexternal[2][]{{
+        \pythonstyle
+        \lstinputlisting[#1]{#2}}}
+
+
+\newcommand\xmlstyle{\lstset{%
+        language=XML,%
+        basicstyle=\ttm,%
+        %basicstyle=\scriptsize,
+        numbers=left,%
+        numberstyle=\small\ttfamily, %
+        numbersep=\gxnumbersep,%
+        morekeywords={xs:schema,xs:element,xs:sequence,xs:complexType},              % Add keywords here
+        keywordstyle=\ttb\color{deepblue},%
+        emph={name,type,attributeFormDefault,elementFormDefault,
+        xmlns:xs},          % Custom highlighting
+        emphstyle=\ttb\color{deepred},    % Custom highlighting style
+        stringstyle=\color{deepgreen},%
+        frame=tb,                         % Any extra options here
+        showstringspaces=false,%
+        extendedchars=true,%
+        inputencoding=utf8,%
+        breaklines=true,%
+        postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space}
+}}
+
+
+  \lstnewenvironment{xml}[1][]
+{   \xmlstyle
+    \lstset{#1}
+}
+{}
+
+\newcommand\htmlstyle{\lstset{%
+        language=HTML,%
+        basicstyle=\ttm,%
+        %basicstyle=\scriptsize,
+        numbers=left,%
+        numberstyle=\small\ttfamily, %
+        numbersep=\gxnumbersep,%
+        %morekeywords={},              % Add keywords here
+        keywordstyle=\ttb\color{deepblue},%
+        %emph={},          % Custom highlighting
+        emphstyle=\ttb\color{deepred},    % Custom highlighting style
+        stringstyle=\color{deepgreen},%
+        frame=tb,                         % Any extra options here
+        showstringspaces=false,%
+        extendedchars=true,%
+        inputencoding=utf8,%
+        breaklines=true,%
+        postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space}
+}}
+
+
+\lstnewenvironment{html}[1][]
+{   \htmlstyle
+    \lstset{#1}
+}
+{}
+
+
+
+\DefineVerbatimEnvironment{gxoutput}{Verbatim}{%
+frame=lines,numbers=left,numbersep=\gxnumbersep}
+\renewcommand{\theFancyVerbLine}{%
+{\small\ttfamily \arabic{FancyVerbLine}}}
+
+\DefineVerbatimEnvironment{gxoutputs}{Verbatim}{%
+frame=lines,numbers=left,numbersep=\gxnumbersep,
+fontsize=\small}
+\renewcommand{\theFancyVerbLine}{%
+{\small\ttfamily \arabic{FancyVerbLine}}}
+
+
+
+
+
+\newcommand\prologstyle{\lstset{%
+        language=Prolog,%
+        basicstyle=\ttm,%
+        %basicstyle=\scriptsize,
+        numbers=left,%
+        numberstyle=\small\ttfamily, %
+        numbersep=\gxnumbersep,%
+        commentstyle=\color{purple},
+%        morekeywords={self,as},              % Add keywords here
+        keywordstyle=\ttb\color{deepblue},%
+        emph={MyClass,__init__},          % Custom highlighting
+        emphstyle=\ttb\color{deepred},    % Custom highlighting style
+        stringstyle=\color{deepgreen},%
+        frame=tb,                         % Any extra options here
+        showstringspaces=false,%
+        extendedchars=true,%
+        firstnumber = auto,%
+        inputencoding=utf8,%
+        breaklines=true,%
+        escapechar=`,%
+        postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space}
+ }}
+
+\makeatletter
+    \lstnewenvironment{prolog}[1][]
+    {   \prologstyle
+        \lstset{#1}
+        \csname\@lst @SetFirstNumber\endcsname
+    }
+    {     \csname \@lst @SaveFirstNumber\endcsname
+    }
+\makeatother
+
+
+
+\newcommand\javastyle{\lstset{%
+		language=Java,%
+		basicstyle=\ttm,%
+		%basicstyle=\scriptsize,
+		numbers=left,%
+		numberstyle=\small\ttfamily, %
+		numbersep=\gxnumbersep,%
+		commentstyle=\color{purple},
+		morekeywords={self,as},              % Add keywords here
+		keywordstyle=\ttb\color{deepblue},%
+%		emph={MyClass,__init__},          % Custom highlighting
+		emphstyle=\ttb\color{deepred},    % Custom highlighting style
+		stringstyle=\color{deepgreen},%
+		frame=tb,                         % Any extra options here
+		showstringspaces=false,%
+		extendedchars=true,%
+		firstnumber = auto,%
+		inputencoding=utf8,%
+		breaklines=true,%
+		escapechar=`,%
+		postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space}
+}}
+
+
+%
+\makeatletter
+\lstnewenvironment{java}[1][]
+{   \javastyle
+	\lstset{#1}
+	\csname\@lst @SetFirstNumber\endcsname
+}
+{     \csname \@lst @SaveFirstNumber\endcsname
+}
+\makeatother
+% java for inline
+\newcommand\javainline[1]{{\javastyle\lstinline!#1!}}
+%
+% java for external files
+\newcommand\javaexternal[2][]{{
+		\javastyle
+		\lstinputlisting[#1]{#2}}}
+
+% ALGORITHM 2E Settings
+
+\usepackage[portuguese,linesnumbered,lined,algochapter,ruled ]{algorithm2e}
+\SetKwFor{Para}{para}{faça}{fim do para}
+\SetKwFor{Enquanto}{enquanto}{faça}{fim do enquanto}
+

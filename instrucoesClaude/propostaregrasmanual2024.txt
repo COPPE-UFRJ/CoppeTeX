@@ -1,0 +1,90 @@
+# Regras de formatação
+0. Comece mantendo as regras originais, só modifique se a regra nova for diferente
+1. O papel é a4, usar a4paper na classe coppe.cls
+2. A fonte é 12pt
+3. Usar o \enquote e o comando \citacao como mapeamento para portugues
+4. Citações com mais de 3 linhas devem usar \footnotesize 
+5. Notas de rodapé deve usar \footnotesize
+6. Legendas, captions, sources ou fontes devem usar \footnotesiza
+7. Citação com mais de 3 linhas: recuadas 4cm da margem esquerda
+8. Elementos pretextuais são sempre na frente da folha
+9. Elementos pretextuais, em geral, não usam o verso (fica em branco)
+10. O verso da folha de rosto contém a ficha catalográfica
+11. Elementos textuais e pós-textuais usam frente e verso da folha, configuração LaTeX twoside
+12. Em todas as folhas: margem superior de 3cm
+13. Em todas as folhas: margem inferior de 2cm
+13. Em todas as folhas: margem esquerda e direita de 2cm
+14. Em todas as folhas: bindingoffset de 1cm 
+15. Usar o pacote geometry
+16. Usar o pacote babel, se o texto for em portugues, use sempre brazilian
+17. Espaçamento entre as linhas de 1,5 linhas ,se possível \usepackage{setspace}
+\onehalfspacing
+18. Citações podem serão longas quando tiverem mais de 3 linhas
+18. Devem usar espaçamento de 1 linha, citações com mais de 3 linhas
+19. Devem usar espaço simples: referências, captions, fontes e legendas, ficha catalografica e dados da folha de rosto
+20. Referências devem ser separadas por 1 linha (distância pós parágrafo na referencia)
+21. Notas de rodapé  dentro das margens, ficando
+separadas do texto por um espaço simples de entre as linhas e por filete de 5 cm, a
+partir da margem esquerda2. As notas devem ser alinhadas, a partir da segunda
+linha da mesma nota, abaixo da primeira letra da primeira palavra, de forma a
+destacar o número expoente, sem espaço entre elas e com fonte menor
+22. Regras para o sumário
+hapter: todas maíúsculas, bold
+section: todas maiúsculas em normal
+subsection: as primeiras letras de cada palavra em maiúscula, 
+em bold
+subsubsection: as primeiras letrsa de cada palavra em maiúscula, em bold e itálico
+subsubsubsection: itálico, só a primeira
+palavra inicia em maiúscula
+23. Usar ou criar definições até subsubsubsection
+24. Criar uma lista de itens para alíneas, que são ordenadas alfabeticamente por letras minusculas
+25. A numeração é colocada a
+partir da primeira folha da parte textual, em algarismos arábicos, no canto superior
+direito da folha, a 2cm da borda superior, ficando o último algarismo a 2cm da borda
+direita da folha.
+26. Quando o trabalho for digitado em anverso e verso, a numeração das páginas deve ser colocada sempre no canto superior externo, ou seja, no anverso no canto
+superior direito e no verso no canto superior esquerdo. 
+27. É necessário ter um comando para siglas que as coloquem na lista de abreviaturas e siglas Quando aparecem pela primeira vez no texto, devem ser precedidas pela
+forma completa e colocadas entre parênteses
+28. A folha de rosto terá dois logos, uma da ufrj e um da coppe,o logo da coppe é o mesmo usado, o da ufrj é o usado hoje em specs/ufrj-logo.pdf
+29. Algumas seções recebem um indicativo numérico e estão alinhadas a esquerda, quando sem indicativo numérico, os títulos devem estar centralizados
+30. Não tem indicativo numérico: errata; agradecimentos; lista de ilustrações; lista de tabelas;  lista de abreviaturas e siglas;  lista de símbolos;  resumo;  sumário;  referências;  glossário;  apêndice (s);  anexo (s);  índice (s);
+
+#Paginação
+Todas as folhas ou páginas, a partir da folha de rosto,
+ devem ser contadas sequencialmente, mas não numeradas. O verso da folha de rosto, que contém a ficha catalográfica, não pode ser contado ou numerado. 
+
+A numeração é colocada a
+partir da primeira folha da parte textual, em algarismos arábicos, no canto superior
+direito da folha, a 2cm da borda superior, ficando o último algarismo a 2cm da borda
+direita da folha.
+
+# Ordem correta das seções 
+## pre textual
+CAPA (obrigatório)
+Folha de rosto (obrigatório)
+Errata (opcional)
+Folha de Aprovação
+Dedicatária (opcional)
+Agradecimento (opcional)
+Epígrafe (opcional)
+Resumo (obrigatório)
+Abstract (obrigatório)
+Lista de ilustrações (opcional)
+Lista de tabelas (opcional)
+Lista de abreviaturas e siglas (opcional)
+Lista de símbolos (opcional)
+Sumário (obrigatório)
+## Parte Textual
+Composta de \chapters numerados a partir do número 1, que podem ser compostos de section, subsection, ... até subsubsubsection
+## Parte pós textual
+Referências - com um espaçamento normal interno mas uma linha extra entre elas
+Glossário (opcional)
+Apêndices (opcionais) - Os apêndices são identificados por letras maiúsculas consecutivas,
+travessão e pelos respectivos títulos
+Anexos (opcionais) - Os apêndices são identificados por letras maiúsculas consecutivas,
+travessão e pelos respectivos títulos
+índice (opcional)
+
+Os formatos dos títulos de capítulo, apêndice, anexo (e os formatos internos de seção, etc...) devem ser os mesmos 
+
