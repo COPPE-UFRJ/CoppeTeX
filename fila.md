@@ -26,11 +26,12 @@ Legenda: `[x]` concluído · `[~]` em andamento · `[ ]` pendente.
 - [x] #16 capítulo de floats — `\source`/`\fonte` em TODOS os floats (incl. longtable e sidewaystable) + seções 4.4 Subfiguras (subcaption), 4.5 Imagens (graphicx/eps/svg), 4.6 Introdução ao tikz, 4.7 Float vs. inline.
 - [x] #17 capítulo "Referências cruzadas, notas e índices" — \label/\ref/\autoref/\pageref, notas de rodapé, hyperref/bookmarks, \url/\href, índice (makeindex + latexmk/Perl/Strawberry), traduções "tradução nossa" (NBR 10520).
 
+- [x] #18 listings & algoritmos — seção 6.1: float Programa, `\pythoninline` inline, bloco `gxoutput` de saída, linguagens (java/xml/html/prolog) e algoritmo em PT (\Para/\Ate/\Enquanto).
+
 ## Em andamento
 - (nenhuma)
 
 ## Pendente (ordem da fila)
-- [ ] #18 capítulo de listings & algoritmos (como implementados)
 - [ ] #19 capítulo de truques LaTeX (magic comments `% !TeX`, espaço engolido, scoping, `\clearpage` vs `\newpage`, latexmkrc)
 - [ ] #20 remover resíduos do bibtex (`.bst` e temporários)
 - [ ] #21 formato de data ABNT — remover "de…de" → "25 abr. 1999" (NBR 6023 §4.3.5.5.2; alto impacto visual)
