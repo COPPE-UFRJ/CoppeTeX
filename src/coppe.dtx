@@ -1392,7 +1392,7 @@ $s \leftarrow 0$\;
   % partitura --- declarados via sinônimos em português em example.bib.
   \nocite{patente-example,legislacao-example,norma-example,mapa-example,partitura-example}
   \nocite{jurisprudencia-example}
-  \nocite{videogame-example,filme-example,semautor-example}
+  \nocite{videogame-example,filme-example,semautor-example,semautorart-example}
   \nocite{jornalcaderno-example,jornal-example}
   \printbibliography
 
@@ -2883,13 +2883,27 @@ postamble
 
 % --- Titles: bold for whole-document types; plain for parts; entry-by-title
 %     (no author/editor) -> not bold, first word in CAPS (ABNT 4.2). ---
-% \coppeUCtitle uppercases the first word of the title. The delimited macros
-% split off the first word; \coppeUCtitleB strips the trailing-space sentinel
-% so no spurious space is left before the following punctuation.
+% \coppeUCtitle uppercases the first SIGNIFICANT word of the title (ABNT 4.2).
+% If the title starts with an article (o/a/os/as/um/uma/uns/umas, the/an), the
+% article AND the next word are uppercased; otherwise just the first word. The
+% delimited macros split off words; \coppeUCkeep strips the trailing-space
+% sentinel so no spurious space is left before the following punctuation.
 \protected\def\coppeUCtitle#1{\coppeUCtitleA#1 \coppeUCstop}
 \protected\def\coppeUCtitleA#1 #2\coppeUCstop{%
-  \MakeUppercase{#1}\ifblank{#2}{}{\space\coppeUCtitleB#2\coppeUCstop}}
-\protected\def\coppeUCtitleB#1 \coppeUCstop{#1}
+  \coppeUCifart{#1}
+    {\MakeUppercase{#1}\ifblank{#2}{}{\space\coppeUCtitleB#2\coppeUCstop}}%
+    {\MakeUppercase{#1}\ifblank{#2}{}{\space\coppeUCkeep#2\coppeUCstop}}}
+\protected\def\coppeUCtitleB#1 #2\coppeUCstop{%
+  \MakeUppercase{#1}\ifblank{#2}{}{\space\coppeUCkeep#2\coppeUCstop}}
+\protected\def\coppeUCkeep#1 \coppeUCstop{#1}
+% \coppeUCifart{word}{if-article}{if-not}: case-insensitive membership test.
+\protected\def\coppeUCifart#1{%
+  \begingroup
+  \lowercase{\def\coppeUC@w{#1}}%
+  \edef\coppeUC@w{,\coppeUC@w,}%
+  \expandafter\in@\expandafter{\coppeUC@w}{,a,o,as,os,um,uma,uns,umas,the,an,}%
+  \ifin@\aftergroup\@firstoftwo\else\aftergroup\@secondoftwo\fi
+  \endgroup}
 \DeclareFieldFormat{title}{%
   \ifboolexpr{ test {\ifnameundef{labelname}} }
     {#1}%

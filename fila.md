@@ -36,11 +36,13 @@ Legenda: `[x]` concluído · `[~]` em andamento · `[ ]` pendente.
 
 - [x] #22 jurisprudência + partitura — driver de jurisprudência com jurisdição/órgão (CAIXA ALTA), título da decisão, "Relator:" (campo `relator` novo) e data ABNT; partitura ganha a nota de meio "1 partitura" (`addendum`). Exemplo de jurisprudência adicionado.
 
+- [x] #23 títulos iniciados por artigo (B3) — artigo + 1ª palavra significativa em CAIXA ALTA ("AS NORMAS de…"); `\coppeUCtitle` estendido com teste de artigo (`\coppeUCifart`).
+
 ## Em andamento
 - (nenhuma)
 
 ## Pendente (ordem da fila)
-- [ ] #23 títulos iniciados por artigo (B3): "A HISTÓRIA…" (artigo + 1ª palavra significativa)
+- **Fila concluída — #1 a #23 todos feitos.**
 
 ## Pós-fila
 - [ ] Sincronizar `dist/` e regenerar `coppe.pdf`/`example.pdf` via `doall.bat`.
