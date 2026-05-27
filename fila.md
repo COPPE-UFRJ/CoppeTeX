@@ -24,12 +24,12 @@ Legenda: `[x]` concluído · `[~]` em andamento · `[ ]` pendente.
 - [x] #15 `latexmkrc` (biber + makeindex `coppe.ist` p/ listas .lab/.los; engine configurável) — funciona local e no Overleaf; verificado com `latexmk` (biber + listas automáticos); adicionado ao `doall.bat`→`dist/`. Doc detalhada fica no #19.
 
 - [x] #16 capítulo de floats — `\source`/`\fonte` em TODOS os floats (incl. longtable e sidewaystable) + seções 4.4 Subfiguras (subcaption), 4.5 Imagens (graphicx/eps/svg), 4.6 Introdução ao tikz, 4.7 Float vs. inline.
+- [x] #17 capítulo "Referências cruzadas, notas e índices" — \label/\ref/\autoref/\pageref, notas de rodapé, hyperref/bookmarks, \url/\href, índice (makeindex + latexmk/Perl/Strawberry), traduções "tradução nossa" (NBR 10520).
 
 ## Em andamento
 - (nenhuma)
 
-## Pendente (ordem da fila) (`\source` em todos incl. longtable/rotated, subcaption, imagens/graphicx/svg, tikz, tabelas)
-- [ ] #17 capítulo de referências (footnotes, hyperref/bookmarks, URLs com quebra, índices/perl, traduções "tradução nossa")
+## Pendente (ordem da fila)
 - [ ] #18 capítulo de listings & algoritmos (como implementados)
 - [ ] #19 capítulo de truques LaTeX (magic comments `% !TeX`, espaço engolido, scoping, `\clearpage` vs `\newpage`, latexmkrc)
 - [ ] #20 remover resíduos do bibtex (`.bst` e temporários)
