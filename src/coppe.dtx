@@ -793,6 +793,7 @@ Atualmente a tendência é usar tabelas mais leves, como \autoref{tab:exemplo_nu
 10 & 11 & 12 \\ % Quarta linha de dados
 \bottomrule % Linha inferior
 \end{tabular}
+\fonte{Elabora\c{c}\~ao pr\'opria.}
 \end{table}
 
 \section{Tabelas Longas ou Largas}
@@ -826,6 +827,7 @@ Dado 2.1 & Dado 2.2 & Dado 2.3 & Dado 2.4 & Dado 2.5 & Dado 2.6 & Dado 2.7 & Dad
 Dado 3.1 & Dado 3.2 & Dado 3.3 & Dado 3.4 & Dado 3.5 & Dado 3.6 & Dado 3.7 & Dado 3.8 \\
 \bottomrule
 \end{tabular}
+\fonte{Elabora\c{c}\~ao pr\'opria.}
 \end{table}
 
 O comando \verb|\resizebox{width}{height}{content}| permite ajustar o tamanho de qualquer coisa, inclusive uma tabela, como na \autoref{tab:examplerb}. No caso, estou fazendo a tabela ficar maior, para ocupar o espaço, mas funciona para qualquer tamanho.
@@ -844,6 +846,7 @@ Dados 5 & Dados 6 & Dados 7 & Dados 8 \\
 \bottomrule
 \end{tabular}%
 }
+\fonte{Elabora\c{c}\~ao pr\'opria.}
 \end{table}
 
 
@@ -863,6 +866,7 @@ Item 1 & Item 2 & Item 3 \\
 Item 4 & Item 5 & Item 6 \\
 \bottomrule
 \end{tabular}
+\fonte{Elabora\c{c}\~ao pr\'opria.}
 \end{sidewaystable}
 
 Se a tabela for muito longa, o ambiente \verb|longtable| é o ideal. Ele fornece comandos para \textit{headers}, cabeçalhos, e \textit{footers} tanto no ínicio e no fim da tabela, como em todas as páginas. A \autoref{tab:longa} fornece um exemplo de 3 páginas.
@@ -998,6 +1002,7 @@ Se a tabela for muito longa, o ambiente \verb|longtable| é o ideal. Ele fornece
 
 % Repetir linhas semelhantes conforme necessário para estender a tabela por 3 páginas
 \end{longtable}
+\fonte{Elabora\c{c}\~ao pr\'opria.}% a longtable não é float: a fonte vem após o ambiente
 
   \chapter{Using BibLaTeX}
   \label{cap:biblatex}
@@ -1033,6 +1038,7 @@ Se a tabela for muito longa, o ambiente \verb|longtable| é o ideal. Ele fornece
     Tese de doutorado & \cite{phdthesis-example} & \citet{phdthesis-example}\\
     \hline
   \end{tabular}}
+  \fonte{Elabora\c{c}\~ao pr\'opria.}
   \end{table}
 
  \begin{table}[h]
@@ -1060,6 +1066,7 @@ Se a tabela for muito longa, o ambiente \verb|longtable| é o ideal. Ele fornece
     Tese de doutorado & \cite{phdthesis-example} & \citet{phdthesis-example}\\
     \bottomrule
   \end{tabular}}
+  \fonte{Elabora\c{c}\~ao pr\'opria.}
   \end{table}
 
   \section{Comandos de citação}
@@ -1135,6 +1142,7 @@ Este é o conteúdo do meu textbox sem título. Você pode adicionar qualquer te
     \end{tikzpicture}
     \caption{Figura com Textbox}
     \label{fig:figura_com_textbox1}
+    \fonte{Elabora\c{c}\~ao pr\'opria.}
 \end{figure}
 
 
@@ -1145,6 +1153,7 @@ Este é o conteúdo do meu textbox sem título. Você pode adicionar qualquer te
 \end{tcolorbox}
     \caption{Figura com Textbox simples}
     \label{fig:figura_com_textbox}
+    \fonte{Elabora\c{c}\~ao pr\'opria.}
 \end{figure}
 
 \section{Listagens de código e algoritmos}

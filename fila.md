@@ -24,10 +24,9 @@ Legenda: `[x]` concluído · `[~]` em andamento · `[ ]` pendente.
 - [x] #15 `latexmkrc` (biber + makeindex `coppe.ist` p/ listas .lab/.los; engine configurável) — funciona local e no Overleaf; verificado com `latexmk` (biber + listas automáticos); adicionado ao `doall.bat`→`dist/`. Doc detalhada fica no #19.
 
 ## Em andamento
-- (nenhuma)
+- [~] #16 capítulo de floats — **`\source`/`\fonte` adicionado a TODOS os floats** (Tabela 4.2, larga, redimensionada, sidewaystable, longtable, tabelas de citação 5.1/5.2, figuras textbox) — 13 linhas "Fonte:" no PDF. Falta: seções dedicadas de subcaption, imagens (graphicx/svg), introdução a tikz, e float vs. inline.
 
-## Pendente (ordem da fila)
-- [ ] #16 capítulo de floats (`\source` em todos incl. longtable/rotated, subcaption, imagens/graphicx/svg, tikz, tabelas)
+## Pendente (ordem da fila) (`\source` em todos incl. longtable/rotated, subcaption, imagens/graphicx/svg, tikz, tabelas)
 - [ ] #17 capítulo de referências (footnotes, hyperref/bookmarks, URLs com quebra, índices/perl, traduções "tradução nossa")
 - [ ] #18 capítulo de listings & algoritmos (como implementados)
 - [ ] #19 capítulo de truques LaTeX (magic comments `% !TeX`, espaço engolido, scoping, `\clearpage` vs `\newpage`, latexmkrc)
