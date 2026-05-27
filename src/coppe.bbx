@@ -79,10 +79,18 @@
   \renewcommand*{\mkbibnameprefix}[1]{\MakeUppercase{#1}}%
 }
 
+\protected\def\coppeUCtitle#1{\coppeUCtitleA#1 \coppeUCstop}
+\protected\def\coppeUCtitleA#1 #2\coppeUCstop{%
+  \MakeUppercase{#1}\ifblank{#2}{}{\space\coppeUCtitleB#2\coppeUCstop}}
+\protected\def\coppeUCtitleB#1 \coppeUCstop{#1}
 \DeclareFieldFormat{title}{%
   \ifboolexpr{ test {\ifnameundef{labelname}} }
     {#1}%
     {\mkbibbold{#1}}}
+\DeclareFieldFormat{titlecase}{%
+  \ifboolexpr{ test {\ifnameundef{labelname}} }
+    {\coppeUCtitle{#1}}%
+    {#1}}
 \DeclareFieldFormat[article,incollection,inbook,inproceedings,suppperiodical,review]{title}{#1}
 \DeclareFieldFormat[thesis]{title}{\mkbibbold{#1}}
 \DeclareFieldFormat{journaltitle}{\mkbibbold{#1}}

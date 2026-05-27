@@ -1143,7 +1143,7 @@ $s \leftarrow 0$\;
   % Tipos exóticos da ABNT (NBR 6023): patente, legislação, norma, mapa,
   % partitura --- declarados via sinônimos em português em example.bib.
   \nocite{patente-example,legislacao-example,norma-example,mapa-example,partitura-example}
-  \nocite{videogame-example,filme-example}
+  \nocite{videogame-example,filme-example,semautor-example}
   \printbibliography
 
 
@@ -2511,13 +2511,26 @@ postamble
 }
 
 % --- Titles: bold for whole-document types; plain for parts; entry-by-title
-%     (no author/editor) -> not bold, first significant word in CAPS (ABNT 4.2). ---
-% entry-by-title: plain (not bold). TODO: first significant word in CAPS (ABNT 4.2)
-% once a robustly-tested uppercase-first-word macro is in place.
+%     (no author/editor) -> not bold, first word in CAPS (ABNT 4.2). ---
+% \coppeUCtitle uppercases the first word of the title. The delimited macros
+% split off the first word; \coppeUCtitleB strips the trailing-space sentinel
+% so no spurious space is left before the following punctuation.
+\protected\def\coppeUCtitle#1{\coppeUCtitleA#1 \coppeUCstop}
+\protected\def\coppeUCtitleA#1 #2\coppeUCstop{%
+  \MakeUppercase{#1}\ifblank{#2}{}{\space\coppeUCtitleB#2\coppeUCstop}}
+\protected\def\coppeUCtitleB#1 \coppeUCstop{#1}
 \DeclareFieldFormat{title}{%
   \ifboolexpr{ test {\ifnameundef{labelname}} }
     {#1}%
     {\mkbibbold{#1}}}
+% First word of the title in CAPS for entry-by-title (ABNT 4.2). The titlecase
+% format receives the RAW title text (the title format above only sees the
+% field-printing commands), so \coppeUCtitle can split off and uppercase the
+% first word here.
+\DeclareFieldFormat{titlecase}{%
+  \ifboolexpr{ test {\ifnameundef{labelname}} }
+    {\coppeUCtitle{#1}}%
+    {#1}}
 \DeclareFieldFormat[article,incollection,inbook,inproceedings,suppperiodical,review]{title}{#1}
 \DeclareFieldFormat[thesis]{title}{\mkbibbold{#1}}
 \DeclareFieldFormat{journaltitle}{\mkbibbold{#1}}
