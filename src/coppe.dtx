@@ -2577,6 +2577,9 @@ postamble
     {#1}}
 \DeclareFieldFormat[article,incollection,inbook,inproceedings,suppperiodical,review]{title}{#1}
 \DeclareFieldFormat[thesis]{title}{\mkbibbold{#1}}
+% biblatex's standard style quotes patent (and unpublished) titles; ABNT bolds
+% the title of a whole document, so override those back to bold.
+\DeclareFieldFormat[patent]{title}{\mkbibbold{#1}}
 \DeclareFieldFormat{journaltitle}{\mkbibbold{#1}}
 \DeclareFieldFormat{booktitle}{\mkbibbold{#1}}
 \DeclareFieldFormat{maintitle}{\mkbibbold{#1}}
@@ -2721,6 +2724,34 @@ postamble
 \DeclareBibliographyDriver{tvshow}{\usebibmacro{coppe:mediadriver}}
 % Cartographic document (map): rendered like a book (author/title/imprenta).
 \DeclareBibliographyDriver{map}{\usedriver{}{book}}
+% Patent (NBR 6023 4.2.5): inventor. \textbf{title}. Depositante: holder. type
+% number. date. The holder (depositante) is printed in normal case, not the
+% ALL-CAPS family treatment the bibliography gives the leading author.
+\newbibmacro*{coppe:depositor}{%
+  \ifnameundef{holder}
+    {}
+    {\printtext{\bibstring{depositor}\addcolon\space}%
+     \begingroup
+       \def\mkbibnamefamily##1{##1}%
+       \def\mkbibnameprefix##1{##1}%
+       \printnames{holder}%
+     \endgroup}}
+\DeclareBibliographyDriver{patent}{%
+  \usebibmacro{bibindex}%
+  \usebibmacro{begentry}%
+  \usebibmacro{author/translator+others}%
+  \setunit{\labelnamepunct}\newblock
+  \usebibmacro{title}%
+  \newunit\newblock
+  \usebibmacro{coppe:depositor}%
+  \newunit\newblock
+  \printfield{type}%
+  \setunit*{\addspace}\printfield{number}%
+  \newunit\newblock
+  \printdate%
+  \newunit\newblock
+  \usebibmacro{url+urldate}%
+  \usebibmacro{finentry}}
 % Exotic ABNT types that biblatex's standard style leaves without a driver:
 % give each a baseline (book-like for published docs: norma/partitura; misc for
 % the rest) so they print. Per-type ABNT refinements can follow later.
@@ -2861,7 +2892,7 @@ postamble
 %<*lbxbr>
 \ProvidesFile{brazilian-coppe.lbx}[2026/05/23 v0.1 CoppeTeX brazilian strings]
 \InheritBibliographyExtras{brazilian}
-\NewBibliographyString{availablefrom,mscdiss,dscthesis,tcc}
+\NewBibliographyString{availablefrom,mscdiss,dscthesis,tcc,depositor}
 \DeclareBibliographyStrings{%
   inherit       = {brazilian},
   availablefrom = {{Dispon\'{\i}vel em}{Dispon\'{\i}vel em}},
@@ -2869,6 +2900,7 @@ postamble
   in            = {{In}{In}},
   editor        = {{Organizador}{Org\adddot}},
   editors       = {{Organizadores}{Orgs\adddot}},
+  depositor     = {{Depositante}{Depositante}},
   mscdiss       = {{Disserta\c{c}\~{a}o de Mestrado}{Disserta\c{c}\~{a}o de Mestrado}},
   dscthesis     = {{Tese de Doutorado}{Tese de Doutorado}},
   phdthesis     = {{Tese de Doutorado}{Tese de Doutorado}},
@@ -2878,12 +2910,13 @@ postamble
 %<*lbxen>
 \ProvidesFile{english-coppe.lbx}[2026/05/23 v0.1 CoppeTeX english strings]
 \InheritBibliographyExtras{english}
-\NewBibliographyString{availablefrom,mscdiss,dscthesis,tcc}
+\NewBibliographyString{availablefrom,mscdiss,dscthesis,tcc,depositor}
 \DeclareBibliographyStrings{%
   inherit       = {english},
   availablefrom = {{Available from}{Available from}},
   urlseen       = {{Access on}{Access on}},
   in            = {{In}{In}},
+  depositor     = {{Depositor}{Depositor}},
   mscdiss       = {{M\adddot Sc\adddot\ Dissertation}{M\adddot Sc\adddot\ Diss\adddot}},
   dscthesis     = {{D\adddot Sc\adddot\ Thesis}{D\adddot Sc\adddot\ Thesis}},
   phdthesis     = {{Ph\adddot D\adddot\ Thesis}{Ph\adddot D\adddot\ Thesis}},
