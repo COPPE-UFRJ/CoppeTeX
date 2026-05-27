@@ -35,6 +35,17 @@
 \usepackage[colorlinks={true},breaklinks={true}]{hyperref}
 
 \usepackage{breakurl}
+\usepackage{hologo}
+% Render the TeX-family logos via hologo (CoppeTeX is a custom logo, kept).
+\def\TeX{\hologo{TeX}}
+\def\LaTeX{\hologo{LaTeX}}
+\def\LaTeXe{\hologo{LaTeXe}}
+\def\BibTeX{\hologo{BibTeX}}
+\def\pdfLaTeX{\hologo{pdfLaTeX}}
+\def\pdfTeX{\hologo{pdfTeX}}
+\def\LuaLaTeX{\hologo{LuaLaTeX}}
+\def\XeLaTeX{\hologo{XeLaTeX}}
+\def\MiKTeX{\hologo{MiKTeX}}
 
 \def\CoppeTeX{{\rm C\kern-.05em{\sc o\kern-.025em p\kern-.025em
 p\kern-.025em e}}\kern-.08em
@@ -446,7 +457,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %   class; the reference list is then numbered in order of citation (unsorted).
 %   The matching |biblatex| style is selected automatically in either case.
 %
-%   \item[\texttt{english}] Coppe\TeX\  uses Babel. The default language
+%   \item[\texttt{english}] \CoppeTeX\  uses Babel. The default language
 %    is Portuguese (actually \verb|brazilian|), with English being the second language. If option \verb|english| is
 %    used, English becomes the main language and Portuguese the secondary. Look at the Babel package
 %    to switch between languages.
@@ -467,7 +478,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \section{Quick, useful tips}
 %
 % \paragraph{Pictures.} The default picture format of \LaTeX\ is the
-% Encapsulated PostScript (EPS). If you use pdf\LaTeX, the default format becomes
+% Encapsulated PostScript (EPS). If you use \hologo{pdfLaTeX}, the default format becomes
 % the PDF, but you can equally load PNG files.
 % For such, you must enter the name of your image file without extension,
 % e.g., |\includegraphics{filename}|, and |pdflatex| will firstly look for
@@ -635,7 +646,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
  \item A bibliografia segue automaticamente o idioma do Babel (português ou inglês); não é preciso escolher um estilo separado.
  \end{itemize}
 
-  A variação de linguagem, em inglês ou português apenas, já é suportada pela classe Coppe\TeX  com o pacote Babel. Não é necessário incluí-lo.
+  A variação de linguagem, em inglês ou português apenas, já é suportada pela classe \CoppeTeX  com o pacote Babel. Não é necessário incluí-lo.
 
 
 \section{Por que usar o \LaTeX}
@@ -650,7 +661,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 
   Existem muitos tutoriais de \LaTeX, mas basicamente, em 2024, ele é usado em dois ambientes:
   \begin{enumerate}
-  \item Na sua máquina, instalando uma versão completa como o Mik\TeX, típico do Windows, ou simplesmente os pacotes padrão do Linux\footnote{Também existem versões para Mac, das quais eu não estou informado}.
+  \item Na sua máquina, instalando uma versão completa como o \hologo{MiKTeX}, típico do Windows, ou simplesmente os pacotes padrão do Linux\footnote{Também existem versões para Mac, das quais eu não estou informado}.
   \item Usar um ambiente na rede, como o Overleaf.
   \end{enumerate}
 
@@ -1212,6 +1223,16 @@ No modelo \CoppeTeX os anexos devem obrigtoriamente vir depois dos apêndices e 
 \RequirePackage{eqparbox}
 \RequirePackage{ltxcmds}
 \RequirePackage{hologo}        % TeX-family logos: \hologo{TeX}, \hologo{LaTeX}, ...
+% Render \TeX, \LaTeX and friends via hologo (\CoppeTeX is a custom logo, kept).
+\def\TeX{\hologo{TeX}}
+\def\LaTeX{\hologo{LaTeX}}
+\def\LaTeXe{\hologo{LaTeXe}}
+\def\BibTeX{\hologo{BibTeX}}
+\def\pdfLaTeX{\hologo{pdfLaTeX}}
+\def\pdfTeX{\hologo{pdfTeX}}
+\def\LuaLaTeX{\hologo{LuaLaTeX}}
+\def\XeLaTeX{\hologo{XeLaTeX}}
+\def\MiKTeX{\hologo{MiKTeX}}
 \RequirePackage[T1]{fontenc}
 % manual2024 margins: 3cm top, 2cm bottom, mirrored 3cm inner / 2cm outer for
 % two-sided printing -- realised as inner=outer=2cm plus a 1cm bindingoffset.
