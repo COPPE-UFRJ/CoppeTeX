@@ -32,6 +32,8 @@
 \usepackage{rotating}% rodando coisas, como tabelas
 \usepackage{longtable} % tabelas longas
 \usepackage[most]{tcolorbox} % caixas de texto
+\usepackage{tikz}            % gráficos vetoriais (o tcolorbox já o traz)
+\usepackage{subcaption}      % subfiguras/subtabelas (NÃO use subfig/subfigure)
 \usepackage{amsmath,amssymb}
 \DeclareMathOperator{\RMSE}{RMSE}% operadores próprios (cap. de matemática)
 \DeclareMathOperator{\diag}{diag}
@@ -491,6 +493,60 @@ Se a tabela for muito longa, o ambiente \verb|longtable| é o ideal. Ele fornece
 
 \end{longtable}
 \fonte{Elabora\c{c}\~ao pr\'opria.}% a longtable não é float: a fonte vem após o ambiente
+
+\section{Subfiguras (subcaption)}
+
+Para colocar várias imagens (ou tabelas) lado a lado, cada uma com sua própria legenda, use o pacote \verb|subcaption|. \textbf{Evite} \verb|subfigure| e \verb|subfig|: são obsoletos e conflitam com a configuração de legendas. A \autoref{fig:subs} traz duas subfiguras:
+
+\begin{figure}[ht]
+  \centering
+  \begin{subfigure}[b]{0.42\textwidth}
+    \centering\includegraphics[width=\linewidth]{example-image-a}
+    \caption{Primeira vista}\label{fig:sub-a}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0.42\textwidth}
+    \centering\includegraphics[width=\linewidth]{example-image-b}
+    \caption{Segunda vista}\label{fig:sub-b}
+  \end{subfigure}
+  \caption{Figura com duas subfiguras}
+  \label{fig:subs}
+  \fonte{Elabora\c{c}\~ao pr\'opria.}
+\end{figure}
+
+Referencie a figura inteira com \verb|\autoref{fig:subs}| e cada parte com \verb|\autoref{fig:sub-a}| (\autoref{fig:sub-a}).
+
+\section{Imagens (graphicx)}
+
+A classe já carrega o \verb|graphicx|. Insira imagens com \verb|\includegraphics|; as opções mais úteis são:
+\begin{itemize}
+  \item \verb|[width=0.8\textwidth]| ou \verb|[scale=0.5]| --- tamanho;
+  \item \verb|[angle=90]| --- rotação;
+  \item \verb|[trim=l b r t, clip]| --- recorte (corta as bordas \emph{esquerda, baixo, direita, topo}).
+\end{itemize}
+Formatos aceitos com \hologo{pdfLaTeX}/\hologo{LuaLaTeX}: \texttt{pdf}, \texttt{png}, \texttt{jpg}. Arquivos \texttt{eps} são convertidos automaticamente (\texttt{epstopdf}). Imagens \texttt{svg} exigem um programa externo (ex.: Inkscape) ou o pacote \verb|svg| com \verb|--shell-escape|; o mais simples é exportar o \texttt{svg} para \texttt{pdf} antes de incluí-lo.
+
+\section{Introdução ao tikz}
+
+O \verb|tikz| (disponível também via \verb|tcolorbox|) desenha gráficos vetoriais no próprio \LaTeX. Um exemplo simples:
+
+\begin{figure}[ht]
+  \centering
+  \begin{tikzpicture}
+    \node[draw, rounded corners] (a) at (0,0) {Início};
+    \node[draw, rounded corners] (b) at (4,0) {Fim};
+    \draw[->, thick] (a) -- (b) node[midway, above] {processo};
+  \end{tikzpicture}
+  \caption{Diagrama simples em tikz}
+  \label{fig:tikz}
+  \fonte{Elabora\c{c}\~ao pr\'opria.}
+\end{figure}
+
+Para gráficos de dados (curvas, barras), veja o \verb|pgfplots|, construído sobre o \verb|tikz|.
+
+\section{Float ou direto no texto?}
+
+Colocar a tabela ou imagem dentro de \verb|figure|/\verb|table| (um \emph{float}) deixa o \LaTeX\ posicioná-la onde melhor couber (topo ou base da página), numerá-la e incluí-la na lista; em troca, a posição exata não é garantida. Colocá-la \emph{diretamente} no texto fixa a posição, mas perde a numeração, a legenda e a entrada na lista, além de poder gerar quebras de página ruins. Para teses, prefira sempre o float, com \verb|\caption| e \verb|\source|.
 
   \chapter{Using BibLaTeX}
   \label{cap:biblatex}
