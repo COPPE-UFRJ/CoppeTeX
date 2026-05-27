@@ -1391,6 +1391,7 @@ $s \leftarrow 0$\;
   % Tipos exóticos da ABNT (NBR 6023): patente, legislação, norma, mapa,
   % partitura --- declarados via sinônimos em português em example.bib.
   \nocite{patente-example,legislacao-example,norma-example,mapa-example,partitura-example}
+  \nocite{jurisprudencia-example}
   \nocite{videogame-example,filme-example,semautor-example}
   \nocite{jornalcaderno-example,jornal-example}
   \printbibliography
@@ -2820,11 +2821,13 @@ postamble
 \DeclareDatamodelFields[type=list,datatype=literal]{director}     % movie/tvshow/video
 \DeclareDatamodelFields[type=list,datatype=literal]{producer}
 \DeclareDatamodelFields[type=field,datatype=literal]{caderno}     % newspaper section
+\DeclareDatamodelFields[type=field,datatype=literal]{relator}     % jurisprudence rapporteur
 \DeclareDatamodelEntryfields{course,coppedegree}
 \DeclareDatamodelEntryfields[game,videogame,boardgame,software,movie,tvshow,video]%
   {artist,platform,director,producer,version}
 \DeclareDatamodelEntryfields[map]{scale}
 \DeclareDatamodelEntryfields[article]{caderno}
+\DeclareDatamodelEntryfields[jurisdiction]{relator}
 %</dbx>
 %<*bbx>
 \ProvidesFile{coppe.bbx}[2026/05/23 v3.8 CoppeTeX ABNT bibliography style]
@@ -3107,6 +3110,8 @@ postamble
   \setunit{\labelnamepunct}\newblock
   \usebibmacro{title}%
   \newunit\newblock
+  % Jurisprudência: "Relator: <nome>." after the decision title (NBR 6023).
+  \iffieldundef{relator}{}{\printtext{Relator\addcolon\space}\printfield{relator}\newunit\newblock}%
   \printlist{location}%
   \setunit{\addcomma\space}\printdate%
   \newunit\newblock

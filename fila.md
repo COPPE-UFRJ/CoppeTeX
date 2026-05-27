@@ -34,11 +34,12 @@ Legenda: `[x]` concluído · `[~]` em andamento · `[ ]` pendente.
 
 - [x] #21 formato de data ABNT — datas da bibliografia agora "dia mês. ano" sem "de" (ex.: "4 fev. 1992", "25 abr. 1999", "fev. 1996"); override de \mkbibdatelong/\mkbibdateshort via \AtBeginBibliography (escopo só na bibliografia).
 
+- [x] #22 jurisprudência + partitura — driver de jurisprudência com jurisdição/órgão (CAIXA ALTA), título da decisão, "Relator:" (campo `relator` novo) e data ABNT; partitura ganha a nota de meio "1 partitura" (`addendum`). Exemplo de jurisprudência adicionado.
+
 ## Em andamento
 - (nenhuma)
 
 ## Pendente (ordem da fila)
-- [ ] #22 driver de jurisprudência (decisão judicial) + nota de meio da partitura ("1 partitura")
 - [ ] #23 títulos iniciados por artigo (B3): "A HISTÓRIA…" (artigo + 1ª palavra significativa)
 
 ## Pós-fila

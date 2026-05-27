@@ -60,11 +60,13 @@
 \DeclareDatamodelFields[type=list,datatype=literal]{director}     % movie/tvshow/video
 \DeclareDatamodelFields[type=list,datatype=literal]{producer}
 \DeclareDatamodelFields[type=field,datatype=literal]{caderno}     % newspaper section
+\DeclareDatamodelFields[type=field,datatype=literal]{relator}     % jurisprudence rapporteur
 \DeclareDatamodelEntryfields{course,coppedegree}
 \DeclareDatamodelEntryfields[game,videogame,boardgame,software,movie,tvshow,video]%
   {artist,platform,director,producer,version}
 \DeclareDatamodelEntryfields[map]{scale}
 \DeclareDatamodelEntryfields[article]{caderno}
+\DeclareDatamodelEntryfields[jurisdiction]{relator}
 %% 
 %%
 %% End of file `coppe.dbx'.

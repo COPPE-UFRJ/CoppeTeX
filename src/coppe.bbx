@@ -275,6 +275,8 @@
   \setunit{\labelnamepunct}\newblock
   \usebibmacro{title}%
   \newunit\newblock
+  % Jurisprudência: "Relator: <nome>." after the decision title (NBR 6023).
+  \iffieldundef{relator}{}{\printtext{Relator\addcolon\space}\printfield{relator}\newunit\newblock}%
   \printlist{location}%
   \setunit{\addcomma\space}\printdate%
   \newunit\newblock
