@@ -59,10 +59,12 @@
 \DeclareDatamodelFields[type=list,datatype=literal]{artist}       % game/illustration art
 \DeclareDatamodelFields[type=list,datatype=literal]{director}     % movie/tvshow/video
 \DeclareDatamodelFields[type=list,datatype=literal]{producer}
+\DeclareDatamodelFields[type=field,datatype=literal]{caderno}     % newspaper section
 \DeclareDatamodelEntryfields{course,coppedegree}
 \DeclareDatamodelEntryfields[game,videogame,boardgame,software,movie,tvshow,video]%
   {artist,platform,director,producer,version}
 \DeclareDatamodelEntryfields[map]{scale}
+\DeclareDatamodelEntryfields[article]{caderno}
 %% 
 %%
 %% End of file `coppe.dbx'.

@@ -1147,6 +1147,7 @@ $s \leftarrow 0$\;
   % partitura --- declarados via sinônimos em português em example.bib.
   \nocite{patente-example,legislacao-example,norma-example,mapa-example,partitura-example}
   \nocite{videogame-example,filme-example,semautor-example}
+  \nocite{jornalcaderno-example,jornal-example}
   \printbibliography
 
 
@@ -2508,10 +2509,12 @@ postamble
 \DeclareDatamodelFields[type=list,datatype=literal]{artist}       % game/illustration art
 \DeclareDatamodelFields[type=list,datatype=literal]{director}     % movie/tvshow/video
 \DeclareDatamodelFields[type=list,datatype=literal]{producer}
+\DeclareDatamodelFields[type=field,datatype=literal]{caderno}     % newspaper section
 \DeclareDatamodelEntryfields{course,coppedegree}
 \DeclareDatamodelEntryfields[game,videogame,boardgame,software,movie,tvshow,video]%
   {artist,platform,director,producer,version}
 \DeclareDatamodelEntryfields[map]{scale}
+\DeclareDatamodelEntryfields[article]{caderno}
 %</dbx>
 %<*bbx>
 \ProvidesFile{coppe.bbx}[2026/05/23 v0.1 CoppeTeX ABNT bibliography style]
@@ -2593,7 +2596,12 @@ postamble
 % --- Online: "Disponível em: <url>." + "Acesso em: <date>." via lbx strings ---
 \DeclareFieldFormat{url}{\bibstring{availablefrom}\addcolon\space\url{#1}}
 
-% --- ABNT article driver: no "In:"; Journal, Local, v., n., p., date, DOI/URL ---
+% --- ABNT article driver: no "In:"; Journal, Local, v., n., p., date, DOI/URL.
+%     Newspapers (entrysubtype=newspaper, set by the @artigodejornal source map)
+%     differ: the newspaper name (journaltitle) and city, then either
+%       "<date>. <caderno>, p. <pages>"   (when a caderno/section is given), or
+%       "p. <pages>, <date>"              (page before date, when none),
+%     per NBR 6023 §4.2.3.6. ---
 \DeclareBibliographyDriver{article}{%
   \usebibmacro{bibindex}%
   \usebibmacro{begentry}%
@@ -2603,10 +2611,17 @@ postamble
   \newunit\newblock
   \printfield{journaltitle}%
   \setunit{\addcomma\space}\printlist{location}%
-  \setunit{\addcomma\space}\printfield{volume}%
-  \setunit{\addcomma\space}\printfield{number}%
-  \setunit{\addcomma\space}\printfield{pages}%
-  \setunit{\addcomma\space}\printdate%
+  \iffieldequalstr{entrysubtype}{newspaper}
+    {\iffieldundef{caderno}
+       {\setunit{\addcomma\space}\printfield{pages}%
+        \setunit{\addcomma\space}\printdate}%
+       {\setunit{\addcomma\space}\printdate%
+        \setunit{\adddot\space}\printfield{caderno}%
+        \setunit{\addcomma\space}\printfield{pages}}}%
+    {\setunit{\addcomma\space}\printfield{volume}%
+     \setunit{\addcomma\space}\printfield{number}%
+     \setunit{\addcomma\space}\printfield{pages}%
+     \setunit{\addcomma\space}\printdate}%
   \newunit\newblock
   \printfield{doi}%
   \newunit\newblock
@@ -2728,7 +2743,7 @@ postamble
     % entry-type PT synonyms -> canonical English
     \map{\step[typesource=livro,typetarget=book]}
     \map{\step[typesource=artigo,typetarget=article]}
-    \map{\step[typesource=artigodejornal,typetarget=article]}
+    \map{\step[typesource=artigodejornal,typetarget=article,final]\step[fieldset=entrysubtype,fieldvalue=newspaper]}
     \map{\step[typesource=partedelivro,typetarget=incollection]}
     \map{\step[typesource=emlivro,typetarget=inbook]}
     \map{\step[typesource=verbete,typetarget=inreference]}
@@ -2777,6 +2792,9 @@ postamble
     \map{\step[typesource=tesephd,typetarget=thesis,final]\step[fieldset=type,fieldvalue=phdthesis]}
     \map{\step[typesource=tcc,typetarget=thesis,final]\step[fieldset=type,fieldvalue=tcc]}
     % field PT synonyms (unaccented) -> canonical English
+    \map{\step[fieldsource=periodico,fieldtarget=journaltitle]}
+    \map{\step[fieldsource=revista,fieldtarget=journaltitle]}
+    \map{\step[fieldsource=jornal,fieldtarget=journaltitle]}
     \map{\step[fieldsource=titulo,fieldtarget=title]}
     \map{\step[fieldsource=subtitulo,fieldtarget=subtitle]}
     \map{\step[fieldsource=autor,fieldtarget=author]}

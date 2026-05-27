@@ -117,10 +117,17 @@
   \newunit\newblock
   \printfield{journaltitle}%
   \setunit{\addcomma\space}\printlist{location}%
-  \setunit{\addcomma\space}\printfield{volume}%
-  \setunit{\addcomma\space}\printfield{number}%
-  \setunit{\addcomma\space}\printfield{pages}%
-  \setunit{\addcomma\space}\printdate%
+  \iffieldequalstr{entrysubtype}{newspaper}
+    {\iffieldundef{caderno}
+       {\setunit{\addcomma\space}\printfield{pages}%
+        \setunit{\addcomma\space}\printdate}%
+       {\setunit{\addcomma\space}\printdate%
+        \setunit{\adddot\space}\printfield{caderno}%
+        \setunit{\addcomma\space}\printfield{pages}}}%
+    {\setunit{\addcomma\space}\printfield{volume}%
+     \setunit{\addcomma\space}\printfield{number}%
+     \setunit{\addcomma\space}\printfield{pages}%
+     \setunit{\addcomma\space}\printdate}%
   \newunit\newblock
   \printfield{doi}%
   \newunit\newblock
@@ -230,7 +237,7 @@
     % entry-type PT synonyms -> canonical English
     \map{\step[typesource=livro,typetarget=book]}
     \map{\step[typesource=artigo,typetarget=article]}
-    \map{\step[typesource=artigodejornal,typetarget=article]}
+    \map{\step[typesource=artigodejornal,typetarget=article,final]\step[fieldset=entrysubtype,fieldvalue=newspaper]}
     \map{\step[typesource=partedelivro,typetarget=incollection]}
     \map{\step[typesource=emlivro,typetarget=inbook]}
     \map{\step[typesource=verbete,typetarget=inreference]}
@@ -279,6 +286,9 @@
     \map{\step[typesource=tesephd,typetarget=thesis,final]\step[fieldset=type,fieldvalue=phdthesis]}
     \map{\step[typesource=tcc,typetarget=thesis,final]\step[fieldset=type,fieldvalue=tcc]}
     % field PT synonyms (unaccented) -> canonical English
+    \map{\step[fieldsource=periodico,fieldtarget=journaltitle]}
+    \map{\step[fieldsource=revista,fieldtarget=journaltitle]}
+    \map{\step[fieldsource=jornal,fieldtarget=journaltitle]}
     \map{\step[fieldsource=titulo,fieldtarget=title]}
     \map{\step[fieldsource=subtitulo,fieldtarget=subtitle]}
     \map{\step[fieldsource=autor,fieldtarget=author]}
