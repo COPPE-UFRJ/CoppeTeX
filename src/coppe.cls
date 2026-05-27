@@ -77,6 +77,42 @@ top=3cm,bottom=2cm,inner=2cm,outer=2cm]{geometry}
 \titlespacing*{\chapter}{0pt}{10pt}{1.5\baselineskip}
 \let\coppe@orig@appendix\appendix
 \renewcommand\appendix{\coppe@orig@appendix\@coppeappendixtrue}
+\newif\if@coppeannex \@coppeannexfalse
+\newcommand\coppe@tocapp[1]{%
+  \MakeUppercase{\iflanguage{brazilian}{Ap\^endice}{Appendix}}%
+  \nobreakspace#1\nobreakspace\textendash\nobreakspace}
+\newcommand\coppe@tocanx[1]{%
+  \MakeUppercase{\iflanguage{brazilian}{Anexo}{Annex}}%
+  \nobreakspace#1\nobreakspace\textendash\nobreakspace}
+\def\@chapter[#1]#2{%
+  \ifnum \c@secnumdepth >\m@ne
+    \if@mainmatter
+      \refstepcounter{chapter}%
+      \typeout{\@chapapp\space\thechapter.}%
+      \if@coppeappendix
+        \if@coppeannex
+          \addcontentsline{toc}{chapter}{\protect\coppe@tocanx{\thechapter}#1}%
+        \else
+          \addcontentsline{toc}{chapter}{\protect\coppe@tocapp{\thechapter}#1}%
+        \fi
+      \else
+        \addcontentsline{toc}{chapter}{\protect\numberline{\thechapter}#1}%
+      \fi
+    \else
+      \addcontentsline{toc}{chapter}{#1}%
+    \fi
+  \else
+    \addcontentsline{toc}{chapter}{#1}%
+  \fi
+  \chaptermark{#1}%
+  \addtocontents{lof}{\protect\addvspace{10\p@}}%
+  \addtocontents{lot}{\protect\addvspace{10\p@}}%
+  \if@twocolumn
+    \@topnewpage[\@makechapterhead{#2}]%
+  \else
+    \@makechapterhead{#2}%
+    \@afterheading
+  \fi}
 \titleformat{name=\chapter,numberless}[hang]
   {\normalfont\Large\bfseries\filcenter}{}{0pt}{\MakeUppercase}
 \titlespacing*{name=\chapter,numberless}{0pt}{10pt}{1.5\baselineskip}
@@ -1016,6 +1052,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
         {\renewcommand{\appendixname}{Anexo}}
         {\renewcommand{\appendixname}{Annex}}
     \appendix
+    \@coppeannextrue
 }
 %% 
 %%
