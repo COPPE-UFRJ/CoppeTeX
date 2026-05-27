@@ -2564,6 +2564,11 @@ postamble
 %</dbx>
 %<*bbx>
 \ProvidesFile{coppe.bbx}[2026/05/23 v0.1 CoppeTeX ABNT bibliography style]
+% The reference list is single-spaced (ABNT 2.4) via \singlespacing in
+% \AtBeginBibliography. coppe.cls already loads setspace, but the style must work
+% standalone too (e.g. \usepackage[bibstyle=coppe]{biblatex} in a plain article),
+% so load setspace here as well (idempotent).
+\RequirePackage{setspace}
 % ABNT reference list keeps the date at the end (imprenta), same for author-date
 % and numeric modes, so we derive from the standard style, not authoryear.
 \RequireBibliographyStyle{standard}

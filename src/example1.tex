@@ -1,24 +1,41 @@
+% !TeX TS-program = lualatex
+% !TeX encoding = UTF-8
+% !TeX spellcheck = pt_BR
+% !BIB TS-program = biber
 % example1.tex -- CoppeTeX 4.0 BibLaTeX/biber ABNT engine proof (author-date).
 % Standalone (article class) while the coppe class integration is in progress.
 % Build: pdflatex example1 ; biber example1 ; pdflatex example1 ; pdflatex example1
 \documentclass[12pt]{article}
 \usepackage[T1]{fontenc}
+
 \usepackage[brazilian]{babel}
 \usepackage[backend=biber,datamodel=coppe,bibstyle=coppe,citestyle=coppe,natbib=true]{biblatex}
 \addbibresource{example1.bib}
+
 \begin{document}
+	
 \section*{CoppeTeX 4.0 --- prova do motor BibLaTeX/ABNT (autor-data)}
 
-Tipos e cita\c{c}\~oes: livro \autocite{book1}; artigo \textcite{art1};
+Tipos e cita\c{c}\~oes: livro \autocite{the1}; artigo \textcite{art1};
 cap\'itulo \autocite{inc1}; trabalho de evento \autocite{inp1};
 disserta\c{c}\~ao \autocite[p.~10]{the1}; tese de doutorado \autocite{tesedsc};
-relat\'orio \autocite{rep1}; videogame \autocite{civ6};
+relat\'orio \autocite{rep1}; videogame \autocite{civ6}; 
 sin\^onimo em portugu\^es \autocite{livpt}; entrada por t\'itulo \autocite{misc1}.
 
-Comandos \texttt{natbib}: \citet{art1} e \citep{book1}.
+Pode citar \cite{rep1}.
 
-\textit{Apud} (cita\c{c}\~ao de cita\c{c}\~ao): \citetapud[p.~80]{the1}{inc1};
-\citepapud{book1}{art1}.
+Pode \citep[p. 12]{art1} e \citet[p. 15]{livpt}.
+
+Comandos \texttt{natbib}: \citet{art1} e \citep{the1}.
+
+\textit{Apud} (cita\c{c}\~ao de cita\c{c}\~ao):
+
+
+ \citetapud[p.~80]{Durkheim}{1893}{inc1};
+
+\citepapud{Weber}{1905}{art1}.
 
 \printbibliography
+
+
 \end{document}
