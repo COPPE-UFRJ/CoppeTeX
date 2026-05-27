@@ -50,7 +50,7 @@
 %%   Grave accent  \`     Left brace    \{     Vertical bar  \|
 %%   Right brace   \}     Tilde         \~}
 %%
-\ProvidesFile{coppe.cbx}[2026/05/23 v0.1 CoppeTeX ABNT author-date citations]
+\ProvidesFile{coppe.cbx}[2026/05/23 v3.8 CoppeTeX ABNT author-date citations]
 \RequireCitationStyle{authoryear-comp}
 
 \DeclareDelimFormat{multinamedelim}{\addsemicolon\space}
@@ -58,13 +58,11 @@
 \DeclareDelimFormat[textcite]{multinamedelim}{\addcomma\space}
 \DeclareDelimFormat[textcite]{finalnamedelim}{\addspace\bibstring{and}\space}
 
-\DeclareRobustCommand{\citetapud}[3][]{%
-  \citeauthor{#2}\space(\citeyear{#2})\space\mkbibemph{apud}\space\textcite[#1]{#3}}
-\DeclareRobustCommand{\citepapud}[3][]{%
-  \mkbibparens{%
-    \citeauthor{#2}\addcomma\space\citeyear{#2}\space
-    \mkbibemph{apud}\space
-    \citeauthor{#3}\addcomma\space\citeyear{#3}%
+\DeclareRobustCommand{\citetapud}[4][]{%
+  #2\space(#3)\space\mkbibemph{apud}\space\textcite[#1]{#4}}
+\DeclareRobustCommand{\citepapud}[4][]{%
+  \mkbibparens{#2\addcomma\space#3\space\mkbibemph{apud}\space
+    \citeauthor{#4}\addcomma\space\citeyear{#4}%
     \ifblank{#1}{}{\addcomma\space\mkpageprefix[pagination]{#1}}}}
 %% 
 %%

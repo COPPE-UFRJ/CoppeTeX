@@ -45,4 +45,4 @@ Legenda: `[x]` concluído · `[~]` em andamento · `[ ]` pendente.
 - **Fila concluída — #1 a #23 todos feitos.**
 
 ## Pós-fila
-- [ ] Sincronizar `dist/` e regenerar `coppe.pdf`/`example.pdf` via `doall.bat`.
+- [x] `dist/` sincronizado e `coppe.pdf` (64 p.) / `example.pdf` (75 p.) regenerados; `futuremanual2026` (54 p.) compila limpo com as mudanças. Fila 100% concluída.

@@ -65,6 +65,22 @@
 \RequirePackage{etoolbox}
 \RequirePackage{eqparbox}
 \RequirePackage{ltxcmds}
+\RequirePackage{hologo}        % TeX-family logos: \hologo{TeX}, \hologo{LaTeX}, ...
+\def\TeX{\hologo{TeX}}
+\def\LaTeX{\hologo{LaTeX}}
+\def\LaTeXe{\hologo{LaTeXe}}
+\def\BibTeX{\hologo{BibTeX}}
+\def\pdfLaTeX{\hologo{pdfLaTeX}}
+\def\pdfTeX{\hologo{pdfTeX}}
+\def\LuaLaTeX{\hologo{LuaLaTeX}}
+\def\XeLaTeX{\hologo{XeLaTeX}}
+\def\MiKTeX{\hologo{MiKTeX}}
+\RequirePackage{iftex}
+\ifPDFTeX
+  \RequirePackage[utf8]{inputenc}
+  \AtEndOfClass{\ClassWarningNoLine{coppe}{%
+    Although slower, you should try compiling with LuaLaTeX}}
+\fi
 \RequirePackage[T1]{fontenc}
 \RequirePackage[a4paper,twoside,bindingoffset=1cm,%
 top=3cm,bottom=2cm,inner=2cm,outer=2cm]{geometry}
@@ -77,6 +93,42 @@ top=3cm,bottom=2cm,inner=2cm,outer=2cm]{geometry}
 \titlespacing*{\chapter}{0pt}{10pt}{1.5\baselineskip}
 \let\coppe@orig@appendix\appendix
 \renewcommand\appendix{\coppe@orig@appendix\@coppeappendixtrue}
+\newif\if@coppeannex \@coppeannexfalse
+\newcommand\coppe@tocapp[1]{%
+  \MakeUppercase{\iflanguage{brazilian}{Ap\^endice}{Appendix}}%
+  \nobreakspace#1\nobreakspace\textendash\nobreakspace}
+\newcommand\coppe@tocanx[1]{%
+  \MakeUppercase{\iflanguage{brazilian}{Anexo}{Annex}}%
+  \nobreakspace#1\nobreakspace\textendash\nobreakspace}
+\def\@chapter[#1]#2{%
+  \ifnum \c@secnumdepth >\m@ne
+    \if@mainmatter
+      \refstepcounter{chapter}%
+      \typeout{\@chapapp\space\thechapter.}%
+      \if@coppeappendix
+        \if@coppeannex
+          \addcontentsline{toc}{chapter}{\protect\coppe@tocanx{\thechapter}#1}%
+        \else
+          \addcontentsline{toc}{chapter}{\protect\coppe@tocapp{\thechapter}#1}%
+        \fi
+      \else
+        \addcontentsline{toc}{chapter}{\protect\numberline{\thechapter}#1}%
+      \fi
+    \else
+      \addcontentsline{toc}{chapter}{#1}%
+    \fi
+  \else
+    \addcontentsline{toc}{chapter}{#1}%
+  \fi
+  \chaptermark{#1}%
+  \addtocontents{lof}{\protect\addvspace{10\p@}}%
+  \addtocontents{lot}{\protect\addvspace{10\p@}}%
+  \if@twocolumn
+    \@topnewpage[\@makechapterhead{#2}]%
+  \else
+    \@makechapterhead{#2}%
+    \@afterheading
+  \fi}
 \titleformat{name=\chapter,numberless}[hang]
   {\normalfont\Large\bfseries\filcenter}{}{0pt}{\MakeUppercase}
 \titlespacing*{name=\chapter,numberless}{0pt}{10pt}{1.5\baselineskip}
@@ -410,7 +462,6 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \fancypagestyle{plain}{\fancyhf{}\renewcommand{\headrulewidth}{0pt}}%
     \pagestyle{empty}%
   \fi
-  \ifthenelse{\boolean{maledoc}}{}{\makecatalog}%
 }
 \renewcommand\mainmatter{%
   \coppe@mainBegin
@@ -426,9 +477,36 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \else
     \clearpage
   \fi}
+\newcommand\makecover{%
+  \begin{titlepage}%
+  \centering
+  \makebox[\linewidth]{%
+    \includegraphics[height=2cm]{ufrj-logo}\hfill
+    \includegraphics[height=2cm]{coppe-logo}}\par
+  \vspace{1.5cm}
+  {\singlespacing
+   \MakeUppercase{\local@universityname}\par
+   \nohyphens{\MakeUppercase{Instituto Alberto Luiz Coimbra de
+     P{\' o}s-Gradua{\c c}{\~ a}o e Pesquisa de Engenharia (COPPE)}}\par
+   \MakeUppercase{Programa de \local@deptname}\par}
+  \vspace{\stretch{2}}
+  \textbf{\MakeUppercase{\@authname\ \@authsurn}}\par
+  \vspace{\stretch{2}}
+  \nohyphens{%
+    \if@english
+      \MakeUppercase\foreign@title
+    \else
+      \MakeUppercase\local@title
+    \fi}\par
+  \vspace{\stretch{3}}
+  \MakeUppercase{\local@cityname}\par
+  \number\year
+  \end{titlepage}%
+}
 \renewcommand\maketitle{%
   \pagenumbering{alph}
   \ltx@ifpackageloaded{hyperref}{\coppe@hypersetup}{}%
+  \makecover
   \begin{titlepage}
   \begin{flushleft}
   \vspace*{1.5mm}
@@ -483,6 +561,10 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \local@monthname\ de \number\year
   \end{center}
   \end{titlepage}
+  % Ficha catalográfica on the verso of the folha de rosto (NBR 14724, R57):
+  % the title page is a recto, so this lands on the immediately following verso,
+  % ahead of the approval sheet produced by \frontmatter.
+  \ifthenelse{\boolean{maledoc}}{}{\thispagestyle{empty}\makecatalog}%
   \global\let\maketitle\relax%
   \global\let\and\relax}
 \newcommand\makefrontpage{%
@@ -989,6 +1071,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
         {\renewcommand{\appendixname}{Anexo}}
         {\renewcommand{\appendixname}{Annex}}
     \appendix
+    \@coppeannextrue
 }
 %% 
 %%

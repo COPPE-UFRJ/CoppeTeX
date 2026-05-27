@@ -50,7 +50,8 @@
 %%   Grave accent  \`     Left brace    \{     Vertical bar  \|
 %%   Right brace   \}     Tilde         \~}
 %%
-\ProvidesFile{coppe.bbx}[2026/05/23 v0.1 CoppeTeX ABNT bibliography style]
+\ProvidesFile{coppe.bbx}[2026/05/23 v3.8 CoppeTeX ABNT bibliography style]
+\RequirePackage{setspace}
 \RequireBibliographyStyle{standard}
 
 \ExecuteBibliographyOptions{%
@@ -72,19 +73,46 @@
 \DeclareDelimFormat[bib,biblist]{multinamedelim}{\addsemicolon\space}
 \DeclareDelimFormat[bib,biblist]{finalnamedelim}{\addsemicolon\space}
 
+\protected\def\coppe@abntdate#1#2#3{%
+  \iffieldundef{#3}{}{\stripzeros{\thefield{#3}}\nobreakspace}%
+  \iffieldundef{#2}{}{\mkbibmonth{\thefield{#2}}\iffieldundef{#1}{}{\space}}%
+  \iffieldundef{#1}{}{\stripzeros{\thefield{#1}}}}
 \AtBeginBibliography{%
   \singlespacing                        % entries single-spaced internally (2.4)
   \setlength{\bibitemsep}{\baselineskip}% one blank line between entries (2.4)
   \renewcommand*{\mkbibnamefamily}[1]{\MakeUppercase{#1}}%
   \renewcommand*{\mkbibnameprefix}[1]{\MakeUppercase{#1}}%
+  \let\mkbibdatelong\coppe@abntdate     % ABNT date format (drop the "de")
+  \let\mkbibdateshort\coppe@abntdate
 }
 
+\protected\def\coppeUCtitle#1{\coppeUCtitleA#1 \coppeUCstop}
+\protected\def\coppeUCtitleA#1 #2\coppeUCstop{%
+  \coppeUCifart{#1}
+    {\MakeUppercase{#1}\ifblank{#2}{}{\space\coppeUCtitleB#2\coppeUCstop}}%
+    {\MakeUppercase{#1}\ifblank{#2}{}{\space\coppeUCkeep#2\coppeUCstop}}}
+\protected\def\coppeUCtitleB#1 #2\coppeUCstop{%
+  \MakeUppercase{#1}\ifblank{#2}{}{\space\coppeUCkeep#2\coppeUCstop}}
+\protected\def\coppeUCkeep#1 \coppeUCstop{#1}
+\protected\def\coppeUCifart#1{%
+  \begingroup
+  \lowercase{\def\coppeUC@w{#1}}%
+  \edef\coppeUC@w{,\coppeUC@w,}%
+  \expandafter\in@\expandafter{\coppeUC@w}{,a,o,as,os,um,uma,uns,umas,the,an,}%
+  \ifin@\aftergroup\@firstoftwo\else\aftergroup\@secondoftwo\fi
+  \endgroup}
 \DeclareFieldFormat{title}{%
   \ifboolexpr{ test {\ifnameundef{labelname}} }
     {#1}%
     {\mkbibbold{#1}}}
+\DeclareFieldFormat{titlecase}{%
+  \ifboolexpr{ test {\ifnameundef{labelname}} }
+    {\coppeUCtitle{#1}}%
+    {#1}}
 \DeclareFieldFormat[article,incollection,inbook,inproceedings,suppperiodical,review]{title}{#1}
 \DeclareFieldFormat[thesis]{title}{\mkbibbold{#1}}
+\DeclareFieldFormat[patent]{title}{\mkbibbold{#1}}
+\DeclareFieldFormat[legislation,jurisdiction,legal]{title}{#1}
 \DeclareFieldFormat{journaltitle}{\mkbibbold{#1}}
 \DeclareFieldFormat{booktitle}{\mkbibbold{#1}}
 \DeclareFieldFormat{maintitle}{\mkbibbold{#1}}
@@ -109,15 +137,53 @@
   \newunit\newblock
   \printfield{journaltitle}%
   \setunit{\addcomma\space}\printlist{location}%
-  \setunit{\addcomma\space}\printfield{volume}%
-  \setunit{\addcomma\space}\printfield{number}%
-  \setunit{\addcomma\space}\printfield{pages}%
-  \setunit{\addcomma\space}\printdate%
+  \iffieldequalstr{entrysubtype}{newspaper}
+    {\iffieldundef{caderno}
+       {\setunit{\addcomma\space}\printfield{pages}%
+        \setunit{\addcomma\space}\printdate}%
+       {\setunit{\addcomma\space}\printdate%
+        \setunit{\adddot\space}\printfield{caderno}%
+        \setunit{\addcomma\space}\printfield{pages}}}%
+    {\setunit{\addcomma\space}\printfield{volume}%
+     \setunit{\addcomma\space}\printfield{number}%
+     \setunit{\addcomma\space}\printfield{pages}%
+     \setunit{\addcomma\space}\printdate}%
   \newunit\newblock
   \printfield{doi}%
   \newunit\newblock
   \usebibmacro{url+urldate}%
   \usebibmacro{finentry}}
+
+\newbibmacro*{coppe:bookeditor}{%
+  \ifnameundef{editor}
+    {}
+    {\printnames{editor}%
+     \setunit*{\addspace}\printtext{\mkbibparens{\usebibmacro{editorstrg}}}%
+     \clearname{editor}%
+     \setunit{\adddot\space}}}
+\newbibmacro*{coppe:partdriver}{%
+  \usebibmacro{bibindex}\usebibmacro{begentry}%
+  \usebibmacro{author/translator+others}%
+  \setunit{\labelnamepunct}\newblock
+  \usebibmacro{title}%
+  \newunit\newblock
+  \usebibmacro{in:}%
+  \usebibmacro{coppe:bookeditor}%
+  \printfield{booktitle}%
+  \newunit\newblock
+  \printfield{edition}%
+  \newunit\newblock
+  \printlist{location}%
+  \setunit*{\addcolon\space}\printlist{publisher}%
+  \setunit*{\addcomma\space}\printdate%
+  \newunit\newblock
+  \printfield{pages}%
+  \setunit{\addcomma\space}\printfield{chapter}%
+  \newunit\newblock
+  \usebibmacro{url+urldate}%
+  \usebibmacro{finentry}}
+\DeclareBibliographyDriver{incollection}{\usebibmacro{coppe:partdriver}}
+\DeclareBibliographyDriver{inbook}{\usebibmacro{coppe:partdriver}}
 
 \DeclareFieldFormat{type}{\ifbibstring{#1}{\bibstring{#1}}{#1}}
 
@@ -172,12 +238,64 @@
 \DeclareBibliographyDriver{boardgame}{\usebibmacro{coppe:mediadriver}}
 \DeclareBibliographyDriver{movie}{\usebibmacro{coppe:mediadriver}}
 \DeclareBibliographyDriver{tvshow}{\usebibmacro{coppe:mediadriver}}
-\DeclareBibliographyDriver{map}{\usedriver{}{book}}
+\DeclareFieldFormat{scale}{\bibstring{coppescale}\addnbspace#1}
+\DeclareBibliographyDriver{map}{%
+  \usebibmacro{bibindex}\usebibmacro{begentry}%
+  \usebibmacro{author/translator+others}%
+  \setunit{\labelnamepunct}\newblock
+  \usebibmacro{title}%
+  \newunit\newblock
+  \printlist{location}%
+  \setunit*{\addcolon\space}\printlist{publisher}%
+  \setunit*{\addcomma\space}\printdate%
+  \newunit\newblock
+  \printfield{scale}%
+  \newunit\newblock
+  \usebibmacro{url+urldate}%
+  \usebibmacro{finentry}}
+\newbibmacro*{coppe:depositor}{%
+  \ifnameundef{holder}
+    {}
+    {\printtext{\bibstring{depositor}\addcolon\space}%
+     \begingroup
+       \def\mkbibnamefamily##1{##1}%
+       \def\mkbibnameprefix##1{##1}%
+       \printnames{holder}%
+     \endgroup}}
+\DeclareBibliographyDriver{patent}{%
+  \usebibmacro{bibindex}%
+  \usebibmacro{begentry}%
+  \usebibmacro{author/translator+others}%
+  \setunit{\labelnamepunct}\newblock
+  \usebibmacro{title}%
+  \newunit\newblock
+  \usebibmacro{coppe:depositor}%
+  \newunit\newblock
+  \printfield{type}%
+  \setunit*{\addspace}\printfield{number}%
+  \newunit\newblock
+  \printdate%
+  \newunit\newblock
+  \usebibmacro{url+urldate}%
+  \usebibmacro{finentry}}
 \DeclareBibliographyDriver{standard}{\usedriver{}{book}}
 \DeclareBibliographyDriver{music}{\usedriver{}{book}}
-\DeclareBibliographyDriver{legislation}{\usedriver{}{misc}}
-\DeclareBibliographyDriver{jurisdiction}{\usedriver{}{misc}}
-\DeclareBibliographyDriver{legal}{\usedriver{}{misc}}
+\newbibmacro*{coppe:legaldriver}{%
+  \usebibmacro{bibindex}\usebibmacro{begentry}%
+  \usebibmacro{author/translator+others}%
+  \setunit{\labelnamepunct}\newblock
+  \usebibmacro{title}%
+  \newunit\newblock
+  % Jurisprudência: "Relator: <nome>." after the decision title (NBR 6023).
+  \iffieldundef{relator}{}{\printtext{Relator\addcolon\space}\printfield{relator}\newunit\newblock}%
+  \printlist{location}%
+  \setunit{\addcomma\space}\printdate%
+  \newunit\newblock
+  \usebibmacro{url+urldate}%
+  \usebibmacro{finentry}}
+\DeclareBibliographyDriver{legislation}{\usebibmacro{coppe:legaldriver}}
+\DeclareBibliographyDriver{jurisdiction}{\usebibmacro{coppe:legaldriver}}
+\DeclareBibliographyDriver{legal}{\usebibmacro{coppe:legaldriver}}
 \DeclareBibliographyDriver{audio}{\usedriver{}{misc}}
 \DeclareBibliographyDriver{video}{\usedriver{}{misc}}
 \DeclareBibliographyDriver{software}{\usedriver{}{misc}}
@@ -191,7 +309,7 @@
     % entry-type PT synonyms -> canonical English
     \map{\step[typesource=livro,typetarget=book]}
     \map{\step[typesource=artigo,typetarget=article]}
-    \map{\step[typesource=artigodejornal,typetarget=article]}
+    \map{\step[typesource=artigodejornal,typetarget=article,final]\step[fieldset=entrysubtype,fieldvalue=newspaper]}
     \map{\step[typesource=partedelivro,typetarget=incollection]}
     \map{\step[typesource=emlivro,typetarget=inbook]}
     \map{\step[typesource=verbete,typetarget=inreference]}
@@ -240,6 +358,9 @@
     \map{\step[typesource=tesephd,typetarget=thesis,final]\step[fieldset=type,fieldvalue=phdthesis]}
     \map{\step[typesource=tcc,typetarget=thesis,final]\step[fieldset=type,fieldvalue=tcc]}
     % field PT synonyms (unaccented) -> canonical English
+    \map{\step[fieldsource=periodico,fieldtarget=journaltitle]}
+    \map{\step[fieldsource=revista,fieldtarget=journaltitle]}
+    \map{\step[fieldsource=jornal,fieldtarget=journaltitle]}
     \map{\step[fieldsource=titulo,fieldtarget=title]}
     \map{\step[fieldsource=subtitulo,fieldtarget=subtitle]}
     \map{\step[fieldsource=autor,fieldtarget=author]}

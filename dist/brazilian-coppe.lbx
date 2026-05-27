@@ -50,14 +50,18 @@
 %%   Grave accent  \`     Left brace    \{     Vertical bar  \|
 %%   Right brace   \}     Tilde         \~}
 %%
-\ProvidesFile{brazilian-coppe.lbx}[2026/05/23 v0.1 CoppeTeX brazilian strings]
+\ProvidesFile{brazilian-coppe.lbx}[2026/05/23 v3.8 CoppeTeX brazilian strings]
 \InheritBibliographyExtras{brazilian}
-\NewBibliographyString{availablefrom,mscdiss,dscthesis,tcc}
+\NewBibliographyString{availablefrom,mscdiss,dscthesis,tcc,depositor,coppescale}
 \DeclareBibliographyStrings{%
   inherit       = {brazilian},
   availablefrom = {{Dispon\'{\i}vel em}{Dispon\'{\i}vel em}},
   urlseen       = {{Acesso em}{Acesso em}},
   in            = {{In}{In}},
+  editor        = {{Organizador}{Org\adddot}},
+  editors       = {{Organizadores}{Orgs\adddot}},
+  depositor     = {{Depositante}{Depositante}},
+  coppescale    = {{Escala}{Escala}},
   mscdiss       = {{Disserta\c{c}\~{a}o de Mestrado}{Disserta\c{c}\~{a}o de Mestrado}},
   dscthesis     = {{Tese de Doutorado}{Tese de Doutorado}},
   phdthesis     = {{Tese de Doutorado}{Tese de Doutorado}},

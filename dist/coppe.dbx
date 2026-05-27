@@ -50,7 +50,7 @@
 %%   Grave accent  \`     Left brace    \{     Vertical bar  \|
 %%   Right brace   \}     Tilde         \~}
 %%
-\ProvidesFile{coppe.dbx}[2026/05/23 v0.2 CoppeTeX ABNT datamodel]
+\ProvidesFile{coppe.dbx}[2026/05/23 v3.8 CoppeTeX ABNT datamodel]
 \DeclareDatamodelEntrytypes{game,videogame,boardgame,tvshow,map}
 \DeclareDatamodelFields[type=field,datatype=literal]{course}      % "(... em <course>)"
 \DeclareDatamodelFields[type=field,datatype=literal]{coppedegree} % degree word
@@ -59,10 +59,14 @@
 \DeclareDatamodelFields[type=list,datatype=literal]{artist}       % game/illustration art
 \DeclareDatamodelFields[type=list,datatype=literal]{director}     % movie/tvshow/video
 \DeclareDatamodelFields[type=list,datatype=literal]{producer}
+\DeclareDatamodelFields[type=field,datatype=literal]{caderno}     % newspaper section
+\DeclareDatamodelFields[type=field,datatype=literal]{relator}     % jurisprudence rapporteur
 \DeclareDatamodelEntryfields{course,coppedegree}
 \DeclareDatamodelEntryfields[game,videogame,boardgame,software,movie,tvshow,video]%
   {artist,platform,director,producer,version}
 \DeclareDatamodelEntryfields[map]{scale}
+\DeclareDatamodelEntryfields[article]{caderno}
+\DeclareDatamodelEntryfields[jurisdiction]{relator}
 %% 
 %%
 %% End of file `coppe.dbx'.
