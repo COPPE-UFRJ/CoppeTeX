@@ -2862,11 +2862,20 @@ postamble
 
 % Uppercase the surname (family + prefix) only inside the bibliography list;
 % citations keep normal caps (post-2020 rule).
+% ABNT date (NBR 6023 §4.3.5.5.2): "dia mês. ano" -- without the brazilian "de"
+% between the parts (e.g. "4 fev. 1992", "abr. 1996"). #1=year, #2=month, #3=day
+% field names; the month stays abbreviated via \mkbibmonth.
+\protected\def\coppe@abntdate#1#2#3{%
+  \iffieldundef{#3}{}{\stripzeros{\thefield{#3}}\nobreakspace}%
+  \iffieldundef{#2}{}{\mkbibmonth{\thefield{#2}}\iffieldundef{#1}{}{\space}}%
+  \iffieldundef{#1}{}{\stripzeros{\thefield{#1}}}}
 \AtBeginBibliography{%
   \singlespacing                        % entries single-spaced internally (2.4)
   \setlength{\bibitemsep}{\baselineskip}% one blank line between entries (2.4)
   \renewcommand*{\mkbibnamefamily}[1]{\MakeUppercase{#1}}%
   \renewcommand*{\mkbibnameprefix}[1]{\MakeUppercase{#1}}%
+  \let\mkbibdatelong\coppe@abntdate     % ABNT date format (drop the "de")
+  \let\mkbibdateshort\coppe@abntdate
 }
 
 % --- Titles: bold for whole-document types; plain for parts; entry-by-title

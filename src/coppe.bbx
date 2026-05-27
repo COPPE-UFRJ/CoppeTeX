@@ -73,11 +73,17 @@
 \DeclareDelimFormat[bib,biblist]{multinamedelim}{\addsemicolon\space}
 \DeclareDelimFormat[bib,biblist]{finalnamedelim}{\addsemicolon\space}
 
+\protected\def\coppe@abntdate#1#2#3{%
+  \iffieldundef{#3}{}{\stripzeros{\thefield{#3}}\nobreakspace}%
+  \iffieldundef{#2}{}{\mkbibmonth{\thefield{#2}}\iffieldundef{#1}{}{\space}}%
+  \iffieldundef{#1}{}{\stripzeros{\thefield{#1}}}}
 \AtBeginBibliography{%
   \singlespacing                        % entries single-spaced internally (2.4)
   \setlength{\bibitemsep}{\baselineskip}% one blank line between entries (2.4)
   \renewcommand*{\mkbibnamefamily}[1]{\MakeUppercase{#1}}%
   \renewcommand*{\mkbibnameprefix}[1]{\MakeUppercase{#1}}%
+  \let\mkbibdatelong\coppe@abntdate     % ABNT date format (drop the "de")
+  \let\mkbibdateshort\coppe@abntdate
 }
 
 \protected\def\coppeUCtitle#1{\coppeUCtitleA#1 \coppeUCstop}

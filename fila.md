@@ -32,11 +32,12 @@ Legenda: `[x]` concluído · `[~]` em andamento · `[ ]` pendente.
 
 - [x] #20 removidos os 4 `.bst` retirados (coppe-plain/coppe-unsrt/en-coppe-plain/en-coppe-unsrt); projeto 100% biblatex+biber.
 
+- [x] #21 formato de data ABNT — datas da bibliografia agora "dia mês. ano" sem "de" (ex.: "4 fev. 1992", "25 abr. 1999", "fev. 1996"); override de \mkbibdatelong/\mkbibdateshort via \AtBeginBibliography (escopo só na bibliografia).
+
 ## Em andamento
 - (nenhuma)
 
 ## Pendente (ordem da fila)
-- [ ] #21 formato de data ABNT — remover "de…de" → "25 abr. 1999" (NBR 6023 §4.3.5.5.2; alto impacto visual)
 - [ ] #22 driver de jurisprudência (decisão judicial) + nota de meio da partitura ("1 partitura")
 - [ ] #23 títulos iniciados por artigo (B3): "A HISTÓRIA…" (artigo + 1ª palavra significativa)
 
