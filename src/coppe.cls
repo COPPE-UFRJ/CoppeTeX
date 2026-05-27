@@ -446,7 +446,6 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \fancypagestyle{plain}{\fancyhf{}\renewcommand{\headrulewidth}{0pt}}%
     \pagestyle{empty}%
   \fi
-  \ifthenelse{\boolean{maledoc}}{}{\makecatalog}%
 }
 \renewcommand\mainmatter{%
   \coppe@mainBegin
@@ -546,6 +545,10 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \local@monthname\ de \number\year
   \end{center}
   \end{titlepage}
+  % Ficha catalográfica on the verso of the folha de rosto (NBR 14724, R57):
+  % the title page is a recto, so this lands on the immediately following verso,
+  % ahead of the approval sheet produced by \frontmatter.
+  \ifthenelse{\boolean{maledoc}}{}{\thispagestyle{empty}\makecatalog}%
   \global\let\maketitle\relax%
   \global\let\and\relax}
 \newcommand\makefrontpage{%
