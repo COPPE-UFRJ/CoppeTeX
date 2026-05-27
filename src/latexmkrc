@@ -1,0 +1,27 @@
+# latexmkrc -- CoppeTeX build configuration (works locally and on Overleaf).
+#
+# Run with:  latexmk example      (or latexmk futuremanual2026, your thesis...)
+# latexmk reads this file automatically when it is in the build directory.
+# On Overleaf, place this file at the project root; Overleaf runs latexmk.
+#
+# Engine: pdfLaTeX by default (fast). For LuaLaTeX (recommended, full Unicode)
+# set $pdf_mode = 4 below, or use the "% !TeX program = lualatex" magic comment
+# / the Overleaf "Menu > Compiler" setting.
+$pdf_mode = 1;            # 1 = pdflatex | 4 = lualatex | 5 = xelatex
+
+# Bibliography: biblatex requires biber (NOT bibtex). latexmk detects the .bcf
+# and runs biber automatically; this just makes the choice explicit.
+$biber = 'biber %O %B';
+
+# CoppeTeX lists: the abbreviations list (.abx -> .lab) and the symbols list
+# (.syx -> .los) are built with the coppe.ist makeindex style. These custom
+# dependencies let latexmk -- and Overleaf -- build the lists automatically;
+# otherwise you must run makeindex by hand. Requires coppe.ist in the build dir.
+add_cus_dep('abx', 'lab', 0, 'coppe_make_lab');
+sub coppe_make_lab { return system "makeindex -s coppe.ist -o \"$_[0].lab\" \"$_[0].abx\""; }
+
+add_cus_dep('syx', 'los', 0, 'coppe_make_los');
+sub coppe_make_los { return system "makeindex -s coppe.ist -o \"$_[0].los\" \"$_[0].syx\""; }
+
+# Make "latexmk -c" clean the generated list files too.
+push @generated_exts, qw(abx lab syx los);

@@ -41,6 +41,7 @@ copy /Y coppe-numeric.cbx ..\dist\ >nul
 copy /Y brazilian-coppe.lbx ..\dist\ >nul
 copy /Y english-coppe.lbx ..\dist\ >nul
 copy /Y coppe.ist ..\dist\ >nul
+copy /Y latexmkrc ..\dist\ >nul
 copy /Y coppe.pdf ..\dist\ >nul
 copy /Y coppe-logo.eps ..\dist\ >nul
 copy /Y coppe-logo.pdf ..\dist\ >nul
