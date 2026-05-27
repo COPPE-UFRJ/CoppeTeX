@@ -65,6 +65,7 @@
 \RequirePackage{etoolbox}
 \RequirePackage{eqparbox}
 \RequirePackage{ltxcmds}
+\RequirePackage{hologo}        % TeX-family logos: \hologo{TeX}, \hologo{LaTeX}, ...
 \RequirePackage[T1]{fontenc}
 \RequirePackage[a4paper,twoside,bindingoffset=1cm,%
 top=3cm,bottom=2cm,inner=2cm,outer=2cm]{geometry}

@@ -132,7 +132,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \GetFileInfo{coppe}
 %
 % \title{The |coppe| document class \\
-% Version 3.5.1 }
+% Version 3.8 }
 % \author{Vicente H. F. Batista \and George O. Ainsworth Jr. \and Geraldo Xexéo \and Eduardo Mangeli}
 %
 % \maketitle
@@ -1211,6 +1211,7 @@ No modelo \CoppeTeX os anexos devem obrigtoriamente vir depois dos apêndices e 
 \RequirePackage{etoolbox}
 \RequirePackage{eqparbox}
 \RequirePackage{ltxcmds}
+\RequirePackage{hologo}        % TeX-family logos: \hologo{TeX}, \hologo{LaTeX}, ...
 \RequirePackage[T1]{fontenc}
 % manual2024 margins: 3cm top, 2cm bottom, mirrored 3cm inner / 2cm outer for
 % two-sided printing -- realised as inner=outer=2cm plus a 1cm bindingoffset.
@@ -2540,7 +2541,7 @@ postamble
 %
 %    \begin{macrocode}
 %<*dbx>
-\ProvidesFile{coppe.dbx}[2026/05/23 v0.2 CoppeTeX ABNT datamodel]
+\ProvidesFile{coppe.dbx}[2026/05/23 v3.8 CoppeTeX ABNT datamodel]
 % Custom entry types beyond biblatex's standard datamodel (games, TV, maps).
 % map = cartographic document (NBR 6023 4.2.12); biblatex has no native @map.
 % The remaining ABNT "exotic" types (legislation, jurisdiction, legal, patent,
@@ -2563,7 +2564,7 @@ postamble
 \DeclareDatamodelEntryfields[article]{caderno}
 %</dbx>
 %<*bbx>
-\ProvidesFile{coppe.bbx}[2026/05/23 v0.1 CoppeTeX ABNT bibliography style]
+\ProvidesFile{coppe.bbx}[2026/05/23 v3.8 CoppeTeX ABNT bibliography style]
 % The reference list is single-spaced (ABNT 2.4) via \singlespacing in
 % \AtBeginBibliography. coppe.cls already loads setspace, but the style must work
 % standalone too (e.g. \usepackage[bibstyle=coppe]{biblatex} in a plain article),
@@ -2941,7 +2942,7 @@ postamble
 
 %</bbx>
 %<*cbx>
-\ProvidesFile{coppe.cbx}[2026/05/23 v0.1 CoppeTeX ABNT author-date citations]
+\ProvidesFile{coppe.cbx}[2026/05/23 v3.8 CoppeTeX ABNT author-date citations]
 % Author-date is the CoppeTeX 4.0 default. authoryear-comp gives compressed
 % author-year cites with normal-caps names (post-2020 rule) out of the box.
 \RequireCitationStyle{authoryear-comp}
@@ -2974,7 +2975,7 @@ postamble
     \ifblank{#1}{}{\addcomma\space\mkpageprefix[pagination]{#1}}}}
 %</cbx>
 %<*lbxbr>
-\ProvidesFile{brazilian-coppe.lbx}[2026/05/23 v0.1 CoppeTeX brazilian strings]
+\ProvidesFile{brazilian-coppe.lbx}[2026/05/23 v3.8 CoppeTeX brazilian strings]
 \InheritBibliographyExtras{brazilian}
 \NewBibliographyString{availablefrom,mscdiss,dscthesis,tcc,depositor,coppescale}
 \DeclareBibliographyStrings{%
@@ -2993,7 +2994,7 @@ postamble
 }
 %</lbxbr>
 %<*lbxen>
-\ProvidesFile{english-coppe.lbx}[2026/05/23 v0.1 CoppeTeX english strings]
+\ProvidesFile{english-coppe.lbx}[2026/05/23 v3.8 CoppeTeX english strings]
 \InheritBibliographyExtras{english}
 \NewBibliographyString{availablefrom,mscdiss,dscthesis,tcc,depositor,coppescale}
 \DeclareBibliographyStrings{%
@@ -3010,7 +3011,7 @@ postamble
 }
 %</lbxen>
 %<*numbbx>
-\ProvidesFile{coppe-numeric.bbx}[2026/05/24 v0.1 CoppeTeX ABNT numeric bibliography]
+\ProvidesFile{coppe-numeric.bbx}[2026/05/24 v3.8 CoppeTeX ABNT numeric bibliography]
 % Numeric reference list for the ABNT numeric system (NBR 10520). It reuses the
 % full coppe ABNT style (drivers, CAPS surnames, bold titles, "In:", p./f.,
 % the PT->EN source map and the language mappings) and only adds the [n] list
@@ -3045,7 +3046,7 @@ postamble
 
 %</numbbx>
 %<*numcbx>
-\ProvidesFile{coppe-numeric.cbx}[2026/05/24 v0.1 CoppeTeX ABNT numeric citations]
+\ProvidesFile{coppe-numeric.cbx}[2026/05/24 v3.8 CoppeTeX ABNT numeric citations]
 % Numeric citation system (ABNT NBR 10520): in-text references are bracketed
 % numbers [1], compressed and sorted within a single cite group. This is the
 % opt-in alternative to the author-date default (coppe.cbx); it pairs with
