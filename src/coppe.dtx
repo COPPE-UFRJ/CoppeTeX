@@ -1233,6 +1233,16 @@ No modelo \CoppeTeX os anexos devem obrigtoriamente vir depois dos apêndices e 
 \def\LuaLaTeX{\hologo{LuaLaTeX}}
 \def\XeLaTeX{\hologo{XeLaTeX}}
 \def\MiKTeX{\hologo{MiKTeX}}
+% Engine-aware UTF-8 input: pdfLaTeX needs inputenc(utf8); LuaLaTeX (and XeTeX)
+% are UTF-8 native, so inputenc must NOT be loaded there (it would clash). Source
+% files may use accented Latin characters (áéíóú) directly. Under pdfLaTeX we also
+% suggest LuaLaTeX, which handles Unicode/fonts better (at the cost of speed).
+\RequirePackage{iftex}
+\ifPDFTeX
+  \RequirePackage[utf8]{inputenc}
+  \AtEndOfClass{\ClassWarningNoLine{coppe}{%
+    Although slower, you should try compiling with LuaLaTeX}}
+\fi
 \RequirePackage[T1]{fontenc}
 % manual2024 margins: 3cm top, 2cm bottom, mirrored 3cm inner / 2cm outer for
 % two-sided printing -- realised as inner=outer=2cm plus a 1cm bindingoffset.

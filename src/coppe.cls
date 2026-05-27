@@ -75,6 +75,12 @@
 \def\LuaLaTeX{\hologo{LuaLaTeX}}
 \def\XeLaTeX{\hologo{XeLaTeX}}
 \def\MiKTeX{\hologo{MiKTeX}}
+\RequirePackage{iftex}
+\ifPDFTeX
+  \RequirePackage[utf8]{inputenc}
+  \AtEndOfClass{\ClassWarningNoLine{coppe}{%
+    Although slower, you should try compiling with LuaLaTeX}}
+\fi
 \RequirePackage[T1]{fontenc}
 \RequirePackage[a4paper,twoside,bindingoffset=1cm,%
 top=3cm,bottom=2cm,inner=2cm,outer=2cm]{geometry}
