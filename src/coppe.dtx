@@ -524,6 +524,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \usepackage{longtable} % tabelas longas
 \usepackage[most]{tcolorbox} % caixas de texto
 \usepackage{amsmath,amssymb}
+\DeclareMathOperator{\RMSE}{RMSE}% operadores próprios (cap. de matemática)
+\DeclareMathOperator{\diag}{diag}
 \usepackage{hyperref}
 % listings, fancyvrb e algorithm2e já vêm carregados pela classe coppe (v3.8).
 
@@ -1171,6 +1173,61 @@ $s \leftarrow 0$\;
 }
 \Retorna $s$\;
 \end{algorithm}
+
+  \chapter{Escrevendo matemática}
+
+  A classe carrega \texttt{amsmath} e \texttt{amssymb}. Fórmulas no texto vão entre \verb|$...$|; fórmulas destacadas e numeradas usam o ambiente \verb|equation|.
+
+  \section{Alinhamento (align)}
+  O ambiente \verb|align| alinha equações pelo \verb|&| e numera cada linha (\verb|\\| quebra a linha; \verb|align*| não numera):
+  \begin{align}
+    f(x) &= (x+1)^2 \\
+         &= x^2 + 2x + 1 .
+  \end{align}
+
+  \section{Matrizes (matrix)}
+  O \texttt{amsmath} traz \verb|pmatrix|, \verb|bmatrix|, \verb|vmatrix|, entre outros:
+  \begin{equation}
+    A = \begin{bmatrix} a_{11} & a_{12} \\ a_{21} & a_{22} \end{bmatrix}
+    \qquad
+    \det A = \begin{vmatrix} a_{11} & a_{12} \\ a_{21} & a_{22} \end{vmatrix}
+  \end{equation}
+
+  \section{Subequações (subequations)}
+  Para numerar um grupo de equações sob o mesmo número, com letras (a), (b):
+  \begin{subequations}
+  \begin{align}
+    a &= b + c , \\
+    d &= e - f .
+  \end{align}
+  \end{subequations}
+
+  \section{Estruturas alinhadas (array)}
+  O \verb|array| monta estruturas dentro do modo matemático, como definições por partes:
+  \begin{equation}
+    |x| = \left\{ \begin{array}{ll}
+      x,  & \text{se } x \ge 0 , \\
+      -x, & \text{caso contrário.}
+    \end{array} \right.
+  \end{equation}
+
+  \section{Operadores (\textbackslash DeclareMathOperator)}
+  Para operadores com a tipografia correta (romano, espaçamento adequado), declare-os no preâmbulo:
+  \begin{verbatim}
+  \usepackage{amsmath}
+  \DeclareMathOperator{\RMSE}{RMSE}
+  \DeclareMathOperator{\diag}{diag}
+  \end{verbatim}
+  Assim, \verb|$\RMSE(y,\hat{y})$| produz $\RMSE(y,\hat{y})$, e \verb|$\diag(\lambda_1,\dots,\lambda_n)$| produz $\diag(\lambda_1,\dots,\lambda_n)$.
+
+  \section{Unicode e LuaLaTeX (unicode-math)}
+  Ao migrar para o \hologo{LuaLaTeX}, troque o \texttt{amssymb} pelo \texttt{unicode-math} e escolha uma fonte matemática OpenType:
+  \begin{verbatim}
+  \usepackage{amsmath}
+  \usepackage{unicode-math}
+  \setmathfont{Latin Modern Math}  % ou STIX Two Math, TeX Gyre Termes Math...
+  \end{verbatim}
+  O código clássico continua valendo ($\mathbb{R}$, $\int_a^b f(x)\,dx$, $\alpha$) e você ainda pode digitar os próprios símbolos Unicode no editor. A vantagem é que o PDF passa a indexar os símbolos em Unicode real: ao copiar uma fórmula do PDF, o significado dos símbolos é preservado.
 
   \chapter{Método Proposto}
   \chapter{Resultados e Discuss\~oes}

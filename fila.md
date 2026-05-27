@@ -19,13 +19,13 @@ Legenda: `[x]` concluído · `[~]` em andamento · `[ ]` pendente.
 - [x] #10 versão 3.8 unificada + `hologo` na classe — `9ccb47c`
 - [x] #11 logos `\TeX/\LaTeX/...` via `hologo` (classe + driver) — `263c614`
 - [x] #12 compatível com LuaLaTeX e pdfLaTeX (`iftex`, aviso pró-LuaLaTeX) — `2a4d234`
-- [x] #13 doc de bibliografia — cap. 5 "Using BibLaTeX": biber, normas ABNT, natbib opção, comandos de citação (args opcionais/"tradução nossa"/apud/múltiplas bibs) e catálogo de todos os tipos de entrada `.bib` com sinônimos PT — `4e9009b` + catálogo. (Resíduo opcional: seção equivalente de tipos no próprio `coppe.pdf`.)
+- [x] #13 doc de bibliografia — cap. 5 "Using BibLaTeX": biber, normas ABNT, natbib opção, comandos de citação (args opcionais/"tradução nossa"/apud/múltiplas bibs) e catálogo de todos os tipos de entrada `.bib` com sinônimos PT — `4e9009b`, `1fe1927`. (Resíduo opcional: seção equivalente de tipos no próprio `coppe.pdf`.)
+- [x] #14 capítulo "Escrevendo matemática" — align, matrix, subequations, array, `\DeclareMathOperator` (\RMSE/\diag) e nota unicode-math/LuaLaTeX
 
 ## Em andamento
 - (nenhuma)
 
 ## Pendente (ordem da fila)
-- [ ] #14 capítulo de matemática (align/matrix/subequations/array, `\DeclareMathOperator`, unicode-math)
 - [ ] #15 Overleaf × local (`latexmkrc` + perl, instruções nos dois)
 - [ ] #16 capítulo de floats (`\source` em todos incl. longtable/rotated, subcaption, imagens/graphicx/svg, tikz, tabelas)
 - [ ] #17 capítulo de referências (footnotes, hyperref/bookmarks, URLs com quebra, índices/perl, traduções "tradução nossa")
