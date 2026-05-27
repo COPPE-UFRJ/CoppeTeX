@@ -1329,6 +1329,30 @@ $s \leftarrow 0$\;
 
   Ao citar um trecho que você mesmo traduziu, coloque a tradução no corpo do texto e escreva ``tradução nossa'' na chamada; se a precisão do original importar, ponha-o em nota de rodapé. Segundo \citet[p.~45]{article-example}, a interpretação depende das práticas (tradução nossa).\footnote{Original: ``the interpretation depends on the practices''.} Veja também o parâmetro opcional de \verb|\citep| no Capítulo~\ref{cap:biblatex}.
 
+  \chapter{Truques de \LaTeX}
+
+  \section{Comentários mágicos (\texttt{\% !TeX})}
+  Linhas \verb|% !TeX| no topo do arquivo dizem ao editor (\hologo{TeX}studio, Overleaf, \hologo{TeX}works) como compilar. O padrão recomendado nesta classe:
+  \begin{verbatim}
+  % !TeX program = lualatex
+  % !TeX encoding = UTF-8
+  % !TeX spellcheck = pt_BR
+  % !BIB program = biber
+  \end{verbatim}
+  Com isso o documento compila igual em qualquer ambiente. O \texttt{latexmkrc} cumpre papel parecido para o \verb|latexmk|.
+
+  \section{Espaço engolido}
+  Um comando sem argumento engole o espaço seguinte: \verb|\LaTeX é bom| sai como ``\LaTeX é bom'' (coladinho). Para preservar o espaço use \verb|\LaTeX\ é| (barra-espaço), \verb|\LaTeX{} é| (chaves vazias) ou o pacote \verb|xspace| ao definir o comando (\verb|\newcommand\foo{...\xspace}|).
+
+  \section{Escopo (grupos)}
+  Chaves \verb|{...}| (ou \verb|\begingroup|\dots\verb|\endgroup|) criam um escopo: mudanças de fonte, espaçamento e até definições de pacotes ficam locais. Para reaproveitar um pseudocódigo escrito para um pacote de algoritmos diferente do seu, isole-o num grupo em vez de reescrevê-lo.
+
+  \section{Descarregar figuras: \texttt{\textbackslash clearpage} × \texttt{\textbackslash newpage}}
+  \verb|\newpage| apenas quebra a página e leva os floats pendentes adiante, acumulando-os. \verb|\clearpage| quebra a página \emph{e} despeja todos os floats em espera antes de continuar --- use-o para evitar o ``congestionamento'' de figuras no fim de um capítulo.
+
+  \section{\texttt{latexmkrc}, perl e Overleaf}
+  O \verb|latexmk| automatiza a compilação (roda \LaTeX, \verb|biber| e \verb|makeindex| quantas vezes for preciso) e lê o \texttt{latexmkrc} do diretório. Como o \verb|latexmk| é um script \emph{Perl}, no Windows instale o \emph{Strawberry Perl}; no Linux e no macOS o Perl já vem instalado. No Overleaf, o \verb|latexmk| roda sozinho e lê o \texttt{latexmkrc} do projeto.
+
   \chapter{Método Proposto}
   \chapter{Resultados e Discuss\~oes}
 
