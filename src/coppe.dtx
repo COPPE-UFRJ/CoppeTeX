@@ -690,6 +690,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 
   Em todo caso, \textbf{deve se tomar enorme atenção com as citações, para evitar ocorrer em plágio não intencional}.
 
+  Quando se cita uma obra por meio de outra (\textit{apud}), pela ABNT entra na lista de referências \emph{apenas a obra efetivamente consultada}. A obra original (não consultada) é informada como texto e \emph{não} é referenciada. Use \verb*|\citetapud{Autor original}{ano}{chave consultada}|, como em \citetapud{Drumond}{1953}{article-example}, ou a forma entre parênteses \verb*|\citepapud|, como em \citepapud[145]{Drumond}{1953}{article-example}. Note que, nas Referências, aparece somente a obra consultada.
+
 \chapter{Floats}
 
 Grande parte dos problemas de iniciantes, e veteranos, em \LaTeX é da localização dos \textit{floats}, como figuras e tabelas. Para o bom comportamente é importante que sempre que usar um comando do tipo \verb*|\begin{figure}[hbt]| não sejam esquecidas as opções de posicionamento.
@@ -2949,19 +2951,21 @@ postamble
 \DeclareDelimFormat[textcite]{multinamedelim}{\addcomma\space}
 \DeclareDelimFormat[textcite]{finalnamedelim}{\addspace\bibstring{and}\space}
 
-% --- apud: citation of a citation (ABNT NBR 6023 §4.1.2.2.1) ----------------
-% The reference list entry is the CITING work (the one actually consulted).
-%   \citetapud[<page>]{original}{citing} -> Original (yr) apud Citing (yr[, page])
-%   \citepapud[<page>]{original}{citing} -> (Original, yr apud Citing, yr[, page])
-% #1 = optional postnote (page/loc) on the citing work; #2 = original (not
-% accessed); #3 = work consulted. "apud" is a latin expression -> italic (§4.1.2.2).
-\DeclareRobustCommand{\citetapud}[3][]{%
-  \citeauthor{#2}\space(\citeyear{#2})\space\mkbibemph{apud}\space\textcite[#1]{#3}}
-\DeclareRobustCommand{\citepapud}[3][]{%
-  \mkbibparens{%
-    \citeauthor{#2}\addcomma\space\citeyear{#2}\space
-    \mkbibemph{apud}\space
-    \citeauthor{#3}\addcomma\space\citeyear{#3}%
+% --- apud: citation of a citation (ABNT NBR 6023 §4.1.2.2 / NBR 10520) ---------
+% ABNT lists only the work actually CONSULTED. So only the consulted work (#4, a
+% .bib key) is cited and enters the reference list; the ORIGINAL work (#2 author,
+% #3 year) was not consulted and is given as plain text -- it is never a cite key,
+% so it is never added to the bibliography.
+%   \citetapud[<page>]{<orig author>}{<orig year>}{<consulted key>}
+%     -> Orig Author (year) apud Consulted (yr[, page])        [narrative]
+%   \citepapud[<page>]{<orig author>}{<orig year>}{<consulted key>}
+%     -> (Orig Author, year apud CONSULTED, yr[, page])        [parenthetical]
+% #1 = optional postnote (page/loc) on the consulted work; "apud" is latin -> italic.
+\DeclareRobustCommand{\citetapud}[4][]{%
+  #2\space(#3)\space\mkbibemph{apud}\space\textcite[#1]{#4}}
+\DeclareRobustCommand{\citepapud}[4][]{%
+  \mkbibparens{#2\addcomma\space#3\space\mkbibemph{apud}\space
+    \citeauthor{#4}\addcomma\space\citeyear{#4}%
     \ifblank{#1}{}{\addcomma\space\mkpageprefix[pagination]{#1}}}}
 %</cbx>
 %<*lbxbr>
