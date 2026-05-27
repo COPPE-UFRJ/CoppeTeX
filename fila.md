@@ -19,10 +19,10 @@ Legenda: `[x]` concluído · `[~]` em andamento · `[ ]` pendente.
 - [x] #10 versão 3.8 unificada + `hologo` na classe — `9ccb47c`
 - [x] #11 logos `\TeX/\LaTeX/...` via `hologo` (classe + driver) — `263c614`
 - [x] #12 compatível com LuaLaTeX e pdfLaTeX (`iftex`, aviso pró-LuaLaTeX) — `2a4d234`
+- [x] #13 doc de bibliografia — cap. 5 "Using BibLaTeX": biber, normas ABNT, natbib opção, comandos de citação (args opcionais/"tradução nossa"/apud/múltiplas bibs) e catálogo de todos os tipos de entrada `.bib` com sinônimos PT — `4e9009b` + catálogo. (Resíduo opcional: seção equivalente de tipos no próprio `coppe.pdf`.)
 
 ## Em andamento
-- [~] #13 doc de bibliografia — cap. 5 "Using BibLaTeX" feito (`4e9009b`).
-  Falta: catálogo de **todos** os tipos de entrada `.bib` (no example e numa seção do `coppe.pdf`).
+- (nenhuma)
 
 ## Pendente (ordem da fila)
 - [ ] #14 capítulo de matemática (align/matrix/subequations/array, `\DeclareMathOperator`, unicode-math)

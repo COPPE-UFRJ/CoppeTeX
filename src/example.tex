@@ -564,6 +564,38 @@ Se a tabela for muito longa, o ambiente \verb|longtable| é o ideal. Ele fornece
 
   Para separar as referências (por tipo, capítulo ou tema), use o ambiente \verb|refsection| e vários \verb|\printbibliography| com filtros, como \verb|\printbibliography[type=article]| ou \verb|\printbibliography[keyword=lei]|. Cada chamada imprime um subconjunto das entradas citadas.
 
+  \section{Tipos de entrada bibliográfica}
+
+  Cada tipo de documento da ABNT corresponde a um tipo de entrada do BibLaTeX, com um sinônimo em português (sem acentos) que você pode usar no \texttt{.bib}. Todos os tipos abaixo estão demonstrados nas Referências deste documento (veja \texttt{example.bib}). Entre parênteses, os sinônimos em português.
+
+  \subsection{Tipos acadêmicos principais}
+  \begin{itemize}
+    \item Livro / monografia --- \verb|@book| (\verb|@livro|)
+    \item Artigo de periódico --- \verb|@article| (\verb|@artigo|); matéria de jornal --- \verb|@article| (\verb|@artigodejornal|)
+    \item Capítulo de livro --- \verb|@incollection| (\verb|@partedelivro|), \verb|@inbook| (\verb|@emlivro|); verbete --- \verb|@inreference| (\verb|@verbete|)
+    \item Evento no todo (anais) --- \verb|@proceedings| (\verb|@anais|); trabalho em evento --- \verb|@inproceedings| (\verb|@trabalhodeevento|)
+    \item Tese/dissertação --- \verb|@thesis| (\verb|@tese|, \verb|@dissertacao|); com tipo predefinido: \verb|@dissertacaomestrado|, \verb|@tesedoutorado|, \verb|@tesephd|, \verb|@tcc|
+    \item Relatório --- \verb|@report| (\verb|@relatorio|, \verb|@relatoriotecnico|); periódico no todo --- \verb|@periodical| (\verb|@periodico|)
+    \item Manual --- \verb|@manual|; diversos --- \verb|@misc| (\verb|@diverso|); página/site --- \verb|@online|
+  \end{itemize}
+
+  \subsection{Tipos especiais (ABNT §4.2.5--4.2.14)}
+  \begin{itemize}
+    \item Patente --- \verb|@patent| (\verb|@patente|)
+    \item Legislação / ato normativo --- \verb|@legislation| (\verb|@legislacao|, \verb|@atonormativo|); jurisprudência --- \verb|@jurisdiction| (\verb|@jurisprudencia|); documento jurídico/civil --- \verb|@legal| (\verb|@documentojuridico|, \verb|@documentocivil|)
+    \item Norma técnica --- \verb|@standard| (\verb|@norma|); partitura --- \verb|@music| (\verb|@partitura|)
+    \item Documento cartográfico (mapa) --- \verb|@map| (\verb|@mapa|, \verb|@cartografico|); iconográfico --- \verb|@image| (\verb|@iconografico|); obra de arte/3D --- \verb|@artwork| (\verb|@obradearte|, \verb|@tridimensional|)
+    \item Audiovisual --- \verb|@video| (\verb|@audiovisual|); filme --- \verb|@movie| (\verb|@filme|); correspondência --- \verb|@letter| (\verb|@correspondencia|); conjunto de dados --- \verb|@dataset| (\verb|@conjuntodedados|)
+  \end{itemize}
+
+  \subsection{Jogos e TV (tipos próprios da CoppeTeX)}
+  \begin{itemize}
+    \item Jogo --- \verb|@game| (\verb|@jogo|); de tabuleiro --- \verb|@boardgame| (\verb|@jogodetabuleiro|); eletrônico --- \verb|@videogame| (\verb|@jogoeletronico|)
+    \item Programa de TV / série --- \verb|@tvshow| (\verb|@programadetv|, \verb|@serietv|)
+  \end{itemize}
+
+  Os campos também aceitam sinônimos em português (sem acentos): \verb|autor|, \verb|titulo|, \verb|subtitulo|, \verb|editora|, \verb|local|, \verb|ano|, \verb|data|, \verb|paginas|, \verb|edicao|, \verb|numero|, \verb|periodico|/\verb|jornal|/\verb|revista|, \verb|caderno|, \verb|escala|, \verb|organizador|, \verb|tradutor|, entre outros. Sem autor nem organizador, a entrada é feita pelo título, com a 1ª palavra em CAIXA ALTA.
+
 \chapter{Alguns outros exemplo úteis}
 
 \begin{tcolorbox}[title=Meu Textbox]
