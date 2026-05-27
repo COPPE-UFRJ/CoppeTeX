@@ -186,6 +186,7 @@
   Como as listas de símbolos e de abreviaturas usamo o mesmo comando usado para criar índices, e também não há uma expectativa que a tese tenha um índice, se for desejado criar índices é necessário tanto criar, ou adotar, um novo arquivo \verb*|.ist|, que define o formato do índice, como alterar o \verb*|latexmkrc| para fazer também esse passo. Ou fazer o passo de rodar o \verb*|makeindex| na mão.
 
 \section{Citações}
+\label{sec:citacoes}
 
  Citações curtas podem ser feitas \quote{o comando quote} ou direto com ``duas crases e dois apóstrofos.'' Citações longas devem usar o comando \verb*|longuote|
 
@@ -484,18 +485,20 @@ Se a tabela for muito longa, o ambiente \verb|longtable| é o ideal. Ele fornece
 
 \end{longtable}
 
-  \chapter{Revis\~ao Bibliogr\'afica}
+  \chapter{Using BibLaTeX}
+  \label{cap:biblatex}
 
-  Para ilustrar a completa ades\~ao ao estilo de cita{\c c}\~oes e listagem de
-  refer\^encias bibliogr\'aficas, a Tabela~\ref{tab:citation} apresenta cita{\c
-  c}\~oes de alguns dos trabalhos contidos na norma fornecida pela CPGP da
-  COPPE, utilizando o estilo numérico. Tirando do comando inicial o parâmetro opcional numérico, ele usará o nome-ano.
+  Esta classe gera as referências com BibLaTeX e o \emph{backend} \texttt{biber}, no padrão ABNT (NBR~6023 para as referências e NBR~10520 para as citações), seguindo as normas da CPGP da COPPE. O antigo \hologo{BibTeX} e os arquivos \texttt{.bst} foram aposentados.
+
+  \textbf{É obrigatório compilar com \texttt{biber}} (e não com \hologo{BibTeX}). A sequência de compilação é: \hologo{LaTeX}, depois \texttt{biber}, e mais duas vezes \hologo{LaTeX}. Em editores como o \hologo{TeX}studio ou o Overleaf, configure o \emph{bibliography backend} como \texttt{biber} (veja o capítulo sobre \texttt{latexmkrc}).
+
+  Os comandos do \texttt{natbib} (\verb|\citet|, \verb|\citep|) continuam disponíveis porque a classe carrega o BibLaTeX com a opção \texttt{natbib=true}; assim, você pode usar tanto os comandos nativos do BibLaTeX (\verb|\autocite|, \verb|\textcite|) quanto os do \texttt{natbib}. As Tabelas~\ref{tab:citation} e~\ref{tab:citation1} apresentam \verb|\cite| e \verb|\citet| para vários tipos de obra contidos na norma da CPGP (a primeira com regras manuais, a segunda com \texttt{booktabs}), no estilo numérico. Tirando o parâmetro opcional numérico da classe, as citações passam de numéricas para autor-data.
 
   \begin{table}[h]
   \caption{Exemplos de cita{\c c}\~oes utilizando o comando padr\~ao
     \texttt{\textbackslash cite} do \LaTeX\ e
     o comando \texttt{\textbackslash citet},
-    fornecido pelo pacote \texttt{natbib}.}
+    disponível pela opção \texttt{natbib} do BibLaTeX.}
   \label{tab:citation}
   \centering
   {\footnotesize
@@ -522,7 +525,7 @@ Se a tabela for muito longa, o ambiente \verb|longtable| é o ideal. Ele fornece
   \caption{Exemplos de cita{\c c}\~oes utilizando o comando padr\~ao
     \texttt{\textbackslash cite} do \LaTeX\ e
     o comando \texttt{\textbackslash citet},
-    fornecido pelo pacote \texttt{natbib}. Além disso, usando o booktabs.}
+    disponível pela opção \texttt{natbib} do BibLaTeX. Além disso, usando o booktabs.}
   \label{tab:citation1}
   \centering
   {\footnotesize
@@ -544,6 +547,22 @@ Se a tabela for muito longa, o ambiente \verb|longtable| é o ideal. Ele fornece
     \bottomrule
   \end{tabular}}
   \end{table}
+
+  \section{Comandos de citação}
+
+  Os principais comandos são: \verb|\cite| (referência simples), \verb|\citet| (autor por extenso, ano entre parênteses --- ``citação no texto''), \verb|\citep| (tudo entre parênteses) e os nativos do BibLaTeX \verb|\autocite| e \verb|\textcite|. Por exemplo, \citet{article-example} tratou do tema, o que também aparece em \citep{article-example}.
+
+  \subsection{Parâmetro opcional: página e ``tradução nossa''}
+
+  Todos os comandos aceitam um parâmetro opcional para a localização (página, seção) e observações. Por exemplo, \verb|\citep[p.~45, tradução nossa]{chave}| produz \citep[p.~45, tradução nossa]{article-example}. Use ``tradução nossa'' quando você mesmo traduziu o trecho citado (NBR~10520): coloque a tradução no corpo do texto e, se a precisão lexical importar, o original em nota de rodapé.
+
+  \subsection{Citação de citação (\emph{apud})}
+
+  Para citar uma obra através de outra, use \verb|\citetapud| e \verb|\citepapud| (demonstrados na Seção~\ref{sec:citacoes}): pela ABNT, entra na lista de referências \emph{apenas} a obra efetivamente consultada; a obra original (não consultada) é informada como texto.
+
+  \subsection{Múltiplas bibliografias}
+
+  Para separar as referências (por tipo, capítulo ou tema), use o ambiente \verb|refsection| e vários \verb|\printbibliography| com filtros, como \verb|\printbibliography[type=article]| ou \verb|\printbibliography[keyword=lei]|. Cada chamada imprime um subconjunto das entradas citadas.
 
 \chapter{Alguns outros exemplo úteis}
 
