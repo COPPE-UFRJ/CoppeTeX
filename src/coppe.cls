@@ -426,9 +426,36 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \else
     \clearpage
   \fi}
+\newcommand\makecover{%
+  \begin{titlepage}%
+  \centering
+  \makebox[\linewidth]{%
+    \includegraphics[height=2cm]{ufrj-logo}\hfill
+    \includegraphics[height=2cm]{coppe-logo}}\par
+  \vspace{1.5cm}
+  {\singlespacing
+   \MakeUppercase{\local@universityname}\par
+   \nohyphens{\MakeUppercase{Instituto Alberto Luiz Coimbra de
+     P{\' o}s-Gradua{\c c}{\~ a}o e Pesquisa de Engenharia (COPPE)}}\par
+   \MakeUppercase{Programa de \local@deptname}\par}
+  \vspace{\stretch{2}}
+  \textbf{\MakeUppercase{\@authname\ \@authsurn}}\par
+  \vspace{\stretch{2}}
+  \nohyphens{%
+    \if@english
+      \MakeUppercase\foreign@title
+    \else
+      \MakeUppercase\local@title
+    \fi}\par
+  \vspace{\stretch{3}}
+  \MakeUppercase{\local@cityname}\par
+  \number\year
+  \end{titlepage}%
+}
 \renewcommand\maketitle{%
   \pagenumbering{alph}
   \ltx@ifpackageloaded{hyperref}{\coppe@hypersetup}{}%
+  \makecover
   \begin{titlepage}
   \begin{flushleft}
   \vspace*{1.5mm}
