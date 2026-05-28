@@ -19,7 +19,7 @@ Legenda: `[x]` concluído · `[~]` em andamento · `[ ]` pendente.
 - [x] #10 versão 3.8 unificada + `hologo` na classe — `9ccb47c`
 - [x] #11 logos `\TeX/\LaTeX/...` via `hologo` (classe + driver) — `263c614`
 - [x] #12 compatível com LuaLaTeX e pdfLaTeX (`iftex`, aviso pró-LuaLaTeX) — `2a4d234`
-- [x] #13 doc de bibliografia — cap. 5 "Using BibLaTeX": biber, normas ABNT, natbib opção, comandos de citação (args opcionais/"tradução nossa"/apud/múltiplas bibs) e catálogo de todos os tipos de entrada `.bib` com sinônimos PT — `4e9009b`, `1fe1927`. (Resíduo opcional: seção equivalente de tipos no próprio `coppe.pdf`.)
+- [x] #13 doc de bibliografia — cap. 5 "Using BibLaTeX": biber, normas ABNT, natbib opção, comandos de citação (args opcionais/"tradução nossa"/apud/múltiplas bibs) e catálogo de todos os tipos de entrada `.bib` com sinônimos PT (no `example.pdf` **e** numa seção "Reference entry types" do `coppe.pdf`).
 - [x] #14 capítulo "Escrevendo matemática" — align, matrix, subequations, array, `\DeclareMathOperator` (\RMSE/\diag) e nota unicode-math/LuaLaTeX
 - [x] #15 `latexmkrc` (biber + makeindex `coppe.ist` p/ listas .lab/.los; engine configurável) — funciona local e no Overleaf; verificado com `latexmk` (biber + listas automáticos); adicionado ao `doall.bat`→`dist/`. Doc detalhada fica no #19.
 
@@ -28,7 +28,7 @@ Legenda: `[x]` concluído · `[~]` em andamento · `[ ]` pendente.
 
 - [x] #18 listings & algoritmos — seção 6.1: float Programa, `\pythoninline` inline, bloco `gxoutput` de saída, linguagens (java/xml/html/prolog) e algoritmo em PT (\Para/\Ate/\Enquanto).
 
-- [x] #19 capítulo "Truques de LaTeX" — comentários mágicos (% !TeX), espaço engolido, escopo, \clearpage vs \newpage, latexmkrc/perl. (Inserir magic comments nos arquivos *gerados* é barrado pelo docstrip; `example1.tex` já os tem e o capítulo ensina o padrão.)
+- [x] #19 capítulo "Truques de LaTeX" — comentários mágicos (% !TeX), espaço engolido, escopo, \clearpage vs \newpage, latexmkrc/perl. Comentários mágicos adicionados a `example1.tex`/`example2.tex`/`futuremanual2026.tex`; o `example.tex` *gerado* não os carrega (limitação do docstrip — tentativa com modo verbatim falhou), mas os arquivos editados à mão sim, e o capítulo ensina o padrão.
 
 - [x] #20 removidos os 4 `.bst` retirados (coppe-plain/coppe-unsrt/en-coppe-plain/en-coppe-unsrt); projeto 100% biblatex+biber.
 

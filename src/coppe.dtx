@@ -411,6 +411,32 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % |natbib=true| option), so you may freely issue |\citet| and |\citep|, as well
 % as the other |natbib| commands.
 %
+% \subsection*{Reference entry types}
+%
+% Every ABNT document category maps to a |biblatex| entry type, each with an
+% unaccented Portuguese synonym (a worked example of every type is in the
+% sample manuscript's reference list):
+% \begin{description}
+% \item[Academic] |@book| (|@livro|); |@article| (|@artigo|); |@artigodejornal|
+%   (newspaper); |@incollection| (|@partedelivro|); |@inbook| (|@emlivro|);
+%   |@inreference| (|@verbete|); |@proceedings| (|@anais|); |@inproceedings|
+%   (|@trabalhodeevento|); |@thesis| (|@tese|/|@dissertacao|, with the presets
+%   |@dissertacaomestrado|, |@tesedoutorado|, |@tesephd|, |@tcc|); |@report|
+%   (|@relatorio|); |@periodical| (|@periodico|); |@manual|; |@misc| (|@diverso|);
+%   |@online|.
+% \item[Special (NBR 6023 \S4.2.5--4.2.14)] |@patent| (|@patente|);
+%   |@legislation| (|@legislacao|/|@atonormativo|); |@jurisdiction|
+%   (|@jurisprudencia|, with a |relator| field); |@legal| (|@documentojuridico|);
+%   |@standard| (|@norma|); |@music| (|@partitura|); |@map| (|@mapa|); |@image|
+%   (|@iconografico|); |@artwork| (|@obradearte|); |@video| (|@audiovisual|);
+%   |@movie| (|@filme|); |@letter| (|@correspondencia|); |@dataset|
+%   (|@conjuntodedados|).
+% \item[Games and TV] |@game| (|@jogo|); |@boardgame| (|@jogodetabuleiro|);
+%   |@videogame| (|@jogoeletronico|); |@tvshow| (|@programadetv|).
+% \end{description}
+% When an entry has no |author| or |editor|, it is entered by title, with the
+% first significant word (and a leading article) in capitals.
+%
 % \subsection*{Appendix and Annex (Optional)}
 %
 % \DescribeMacro{\appendix}
