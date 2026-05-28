@@ -40,3 +40,6 @@ specs/*.txt
 *.synctex.gz
 /ABNT
 /LaTeXManuals
+/LIXO
+/InstrucoesClaude
+/specs
