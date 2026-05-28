@@ -39,3 +39,4 @@ specs/*.txt
 *page-*.png
 *.synctex.gz
 /ABNT
+/LaTeXManuals
