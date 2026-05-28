@@ -1,0 +1,268 @@
+% NORMA_COPPE_2026.tex -- LaTeX source for the typeset PDF version of the
+% proposed minimal COPPE/UFRJ norm. Uses the article class on purpose:
+% this is a normative document about the coppe class, not a thesis, so
+% applying the coppe class itself to it would be confusing.
+%
+% Authoring source is NORMA_COPPE_2026.md at the repository root; this
+% file is a hand-typeset transcription kept readable as LaTeX without
+% pandoc.
+
+\documentclass[a4paper,11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[brazilian]{babel}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{microtype}
+\usepackage{url}
+\usepackage{parskip}
+\usepackage[hidelinks]{hyperref}
+
+\titleformat{\section}{\large\bfseries}{\thesection}{1ex}{}
+\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection}{1ex}{}
+
+\title{\bfseries Norma para a Elabora\c{c}\~ao Gr\'afica de Teses e
+       Disserta\c{c}\~oes da COPPE/UFRJ\\[2mm]
+       \large Edi\c{c}\~ao 2026 -- Proposta para aprecia\c{c}\~ao da CPGP}
+\author{}
+\date{Maio de 2026}
+
+\begin{document}
+\maketitle
+
+\noindent\textit{Esta Norma, quando aprovada, substitui a} Norma para a
+Elabora\c{c}\~ao Gr\'afica de Teses/Disserta\c{c}\~oes \textit{da
+COPPE/UFRJ aprovada pela CPGP em 15 de julho de 2008 e suas revis\~oes
+subsequentes (01/10/2009, 10/09/2010 e 26/11/2019).}
+
+\hrulefill
+
+\section{Documento base e implementa\c{c}\~ao de refer\^encia}
+
+\subsection{Documento base}
+
+A apresenta\c{c}\~ao gr\'afica de teses e disserta\c{c}\~oes da
+COPPE/UFRJ segue o \textbf{Manual para Elabora\c{c}\~ao e
+Normaliza\c{c}\~ao de Trabalhos Acad\^emicos} da UFRJ/SiBI, 9.\textsuperscript{a}
+edi\c{c}\~ao (Rio de Janeiro, 2025) -- doravante referido como
+\textit{Manual UFRJ 2025} -- em conjunto com as adapta\c{c}\~oes
+estabelecidas pela presente Norma.
+
+A presente Norma estabelece \textbf{apenas os elementos pr\'oprios da
+COPPE/UFRJ}. Todos os aspectos n\~ao tratados explicitamente aqui --
+formato do papel, margens, espa\c{c}amento, fonte, pagina\c{c}\~ao
+geral, equa\c{c}\~oes, tabelas, indicativos de se\c{c}\~ao, ortografia,
+siglas, ilustra\c{c}\~oes no caso geral, estrutura textual no caso
+geral, etc.\ -- devem seguir o \textit{Manual UFRJ 2025}.
+
+\subsection{Implementa\c{c}\~ao de refer\^encia}
+
+A \textbf{implementa\c{c}\~ao de refer\^encia} desta Norma \'e a classe
+LaTeX \texttt{coppe}, vers\~ao 4.0 e posteriores (\textbf{CoppeTeX
+4.x}), distribu\'ida em
+\url{https://github.com/COPPE-UFRJ/CoppeTeX}. A classe produz, sem
+configura\c{c}\~ao adicional por parte do autor, um documento aderente
+simultaneamente ao \textit{Manual UFRJ 2025} e \`a presente Norma. Seu
+uso \'e o caminho recomendado pela COPPE/UFRJ para a confec\c{c}\~ao do
+documento final.
+
+Quando houver d\'uvida quanto \`a apresenta\c{c}\~ao correta de algum
+elemento gr\'afico previsto pela presente Norma, a sa\'ida gerada pela
+vers\~ao mais recente do CoppeTeX 4.x prevalece como refer\^encia.
+
+\section{Identifica\c{c}\~ao institucional}
+
+\subsection{Capa e folha de rosto}
+
+A capa e a folha de rosto do trabalho exibem, na ordem:
+
+\begin{itemize}[leftmargin=2em]
+  \item \textbf{Universidade Federal do Rio de Janeiro};
+  \item \textbf{Instituto Alberto Luiz Coimbra de P\'os-Gradua\c{c}\~ao
+        e Pesquisa de Engenharia (COPPE)};
+  \item O nome do \textbf{Programa de P\'os-gradua\c{c}\~ao} em que o
+        trabalho foi defendido;
+  \item O nome completo do autor;
+  \item O t\'itulo do trabalho, no idioma principal (ver Se\c{c}\~ao 4);
+  \item A cidade (Rio de Janeiro) e o ano da defesa.
+\end{itemize}
+
+\subsection{Car\'ater da identidade institucional}
+
+Os elementos de identidade institucional -- o nome da Universidade, o
+nome do Instituto (COPPE), o nome do Programa de P\'os-gradua\c{c}\~ao,
+a cidade sede (Rio de Janeiro), o estado (RJ) e o pa\'is (Brasil) --
+\textbf{s\~ao sempre exibidos em portugu\^es}, independentemente do
+idioma principal do trabalho. Somente o t\'itulo do trabalho, na capa e
+na folha de rosto, acompanha o idioma principal.
+
+\subsection{Ficha catalogr\'afica}
+
+A ficha catalogr\'afica \'e gerada conforme as regras AACR2 e o
+\textit{Manual UFRJ 2025}, e figura no \textbf{verso da folha de rosto}.
+Acrescenta-se \`a ficha:
+
+\begin{itemize}[leftmargin=2em]
+  \item A indica\c{c}\~ao da institui\c{c}\~ao como \textbf{UFRJ/COPPE};
+  \item O nome do \textbf{Programa de P\'os-gradua\c{c}\~ao} em que o
+        trabalho foi defendido;
+  \item A indica\c{c}\~ao das p\'aginas iniciais e finais da lista de
+        Refer\^encias.
+\end{itemize}
+
+\subsection{Folha de aprova\c{c}\~ao}
+
+A folha de aprova\c{c}\~ao cont\'em o t\'itulo do trabalho, o nome do
+candidato, os nomes do(s) orientador(es) e dos membros da Banca
+Examinadora -- na ordem em que aprovaram o trabalho --, com espa\c{c}o
+para assinatura, e a data da defesa. A folha de aprova\c{c}\~ao
+\textbf{n\~ao \'e numerada}.
+
+\section{Resumos: estrutura de tr\^es idiomas}
+
+Em complemento ao previsto no \textit{Manual UFRJ 2025}, a presente
+Norma reconhece tr\^es posi\c{c}\~oes distintas para o resumo:
+
+\begin{enumerate}[leftmargin=2em]
+  \item \textbf{Resumo em idioma principal}, obrigat\'orio, no idioma
+        em que o trabalho foi redigido (ver Se\c{c}\~ao 4);
+  \item \textbf{Resumo em idioma estrangeiro} (\textit{foreign
+        abstract}), obrigat\'orio, por conven\c{c}\~ao em ingl\^es;
+        quando o idioma principal \'e o ingl\^es, este resumo \'e
+        redigido em portugu\^es;
+  \item \textbf{Resumo em portugu\^es}, opcional e adicional, requerido
+        apenas quando nenhum dos dois resumos anteriores seja em
+        portugu\^es -- caso t\'ipico de trabalhos com idioma principal
+        espanhol, franc\^es ou italiano. Destina-se \`a leitura pela
+        banca e pelos examinadores brasileiros.
+\end{enumerate}
+
+Cada resumo ocupa uma p\'agina pr\'opria, na ordem acima, dentro da
+se\c{c}\~ao pr\'e-textual.
+
+\section{Idioma principal do trabalho}
+
+O trabalho pode ser redigido em qualquer um dos seguintes idiomas
+principais:
+
+\begin{itemize}[leftmargin=2em]
+  \item \textbf{Portugu\^es};
+  \item \textbf{Ingl\^es};
+  \item \textbf{Espanhol};
+  \item \textbf{Franc\^es};
+  \item \textbf{Italiano};
+  \item Qualquer outro idioma reconhecido pela implementa\c{c}\~ao de
+        refer\^encia (CoppeTeX 4.x), mediante o pacote de
+        localiza\c{c}\~ao correspondente.
+\end{itemize}
+
+A escolha do idioma principal afeta a l\'ingua do corpo textual, das
+legendas, dos t\'itulos das se\c{c}\~oes pr\'e-textuais (Sum\'ario,
+Listas, Refer\^encias, etc.) e do t\'itulo do trabalho exibido na capa.
+A identidade institucional permanece em portugu\^es em qualquer idioma
+principal (ver Subse\c{c}\~ao 2.2).
+
+\section{Ilustra\c{c}\~oes pr\'oprias da COPPE/UFRJ}
+
+Em complemento \`as listas previstas no \textit{Manual UFRJ 2025}
+(Lista de Figuras, Lista de Tabelas, Lista de Abreviaturas e Siglas,
+Lista de S\'imbolos), a presente Norma reconhece:
+
+\begin{itemize}[leftmargin=2em]
+  \item \textbf{Lista de Quadros} -- para o tipo de ilustra\c{c}\~ao
+        ``quadro'', bordado em todos os lados, distinto de tabela (a
+        qual \'e delimitada apenas no topo e na base);
+  \item \textbf{Lista de Programas} -- para listagens de
+        c\'odigo-fonte;
+  \item \textbf{Lista de Algoritmos} -- para a apresenta\c{c}\~ao de
+        pseudo-c\'odigo.
+\end{itemize}
+
+Cada uma destas listas figura entre a Lista de Tabelas e a Lista de
+Abreviaturas, na se\c{c}\~ao pr\'e-textual, sempre que houver ao menos
+uma ocorr\^encia no corpo do trabalho.
+
+Para todas as ilustra\c{c}\~oes (figuras, tabelas, quadros, programas,
+algoritmos) a legenda figura \textbf{acima} da ilustra\c{c}\~ao, e a
+fonte \'e obrigat\'oria e figura \textbf{abaixo}, em corpo menor,
+espa\c{c}amento simples, centralizada, antecedida da palavra
+``Fonte:''\ (ou seu equivalente no idioma principal).
+
+\section{Ap\^endices e Anexos}
+
+Os cap\'itulos de Ap\^endice e de Anexo s\~ao apresentados, tanto no
+in\'icio do cap\'itulo quanto no Sum\'ario, no formato:
+
+\begin{quote}
+  \textbf{AP\^ENDICE A -- \textit{T\'itulo do ap\^endice}}\\[1mm]
+  \textbf{ANEXO A -- \textit{T\'itulo do anexo}}
+\end{quote}
+
+A palavra ``AP\^ENDICE''\ ou ``ANEXO''\ figura em caixa alta, seguida
+da letra identificadora (A, B, C, \ldots), de travess\~ao e do
+t\'itulo do cap\'itulo, respeitando o idioma principal do trabalho.
+
+\section{Numera\c{c}\~ao das p\'aginas pr\'e-textuais}
+
+A capa n\~ao \'e contada nem numerada. A folha de rosto inicia a
+contagem das p\'aginas pr\'e-textuais.
+
+Por \textbf{regra padr\~ao}, \textbf{os n\'umeros das p\'aginas
+pr\'e-textuais n\~ao s\~ao impressos}, embora sejam contados. \`A
+crit\'erio do autor, e de forma opcional, os n\'umeros das p\'aginas
+pr\'e-textuais podem ser impressos em algarismos romanos min\'usculos
+(iii, iv, v, \ldots) a partir da terceira p\'agina contada.
+
+A numera\c{c}\~ao ar\'abica, no canto superior externo da p\'agina,
+inicia em 1 na primeira p\'agina da parte textual.
+
+\section{Cita\c{c}\~oes e Refer\^encias Bibliogr\'aficas}
+
+A presente Norma adota integralmente as edi\c{c}\~oes mais recentes
+das normas ABNT pertinentes:
+
+\begin{itemize}[leftmargin=2em]
+  \item \textbf{NBR 6023} (Refer\^encias) em sua revis\~ao a partir de
+        2018;
+  \item \textbf{NBR 10520} (Cita\c{c}\~oes) em sua revis\~ao de 2023.
+\end{itemize}
+
+Os elementos da refer\^encia, os formatos das cita\c{c}\~oes e as
+regras gerais de apresenta\c{c}\~ao s\~ao os definidos pela ABNT
+vigente.
+
+Esta ado\c{c}\~ao constitui a \'unica diverg\^encia da presente Norma
+em rela\c{c}\~ao ao previsto no \textit{Manual UFRJ 2025} -- que
+reflete edi\c{c}\~oes anteriores das mesmas normas ABNT -- e ocorre na
+medida estrita das atualiza\c{c}\~oes posteriores a 2020 introduzidas
+pela pr\'opria ABNT.
+
+A implementa\c{c}\~ao de refer\^encia (CoppeTeX 4.x) fornece
+automaticamente a formata\c{c}\~ao correta para todos os tipos de
+documento previstos na NBR 6023 vigente, em qualquer dos sistemas de
+chamada (autor-data ou num\'erico) \`a escolha do autor.
+
+\section{Implementa\c{c}\~ao de refer\^encia}
+
+A classe LaTeX \texttt{coppe} em suas vers\~oes 4.0 e posteriores
+(\textbf{CoppeTeX 4.x}), distribu\'ida em
+\url{https://github.com/COPPE-UFRJ/CoppeTeX}, \'e a implementa\c{c}\~ao
+de refer\^encia desta Norma. Sua ado\c{c}\~ao \'e o caminho recomendado
+pela COPPE/UFRJ para garantir ader\^encia autom\'atica a todos os
+requisitos acima e ao \textit{Manual UFRJ 2025}.
+
+Em caso de diverg\^encia entre a presente Norma escrita e a sa\'ida
+gerada pela vers\~ao est\'avel corrente do CoppeTeX 4.x, prevalece a
+presente Norma e o \textit{Manual UFRJ 2025}, e a diverg\^encia deve
+ser comunicada \`a equipe mantenedora do CoppeTeX para
+corre\c{c}\~ao na pr\'oxima revis\~ao da implementa\c{c}\~ao.
+
+\vspace{4mm}\hrulefill
+
+\noindent\textit{Vers\~ao da proposta: maio de 2026. \emph{Branch}
+\texttt{nlinguas} em
+\url{https://github.com/COPPE-UFRJ/CoppeTeX}.}
+
+\end{document}
