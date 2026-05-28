@@ -187,7 +187,7 @@
 
 \DeclareFieldFormat{type}{\ifbibstring{#1}{\bibstring{#1}}{#1}}
 
-\DeclareFieldFormat{course}{\mkbibparens{\iflanguage{brazilian}{em\addspace}{in\addspace}#1}}
+\DeclareFieldFormat{course}{\mkbibparens{\coppestring{in:}\addspace#1}}
 \DeclareBibliographyDriver{thesis}{%
   \usebibmacro{bibindex}\usebibmacro{begentry}%
   \usebibmacro{author}%
@@ -208,13 +208,13 @@
   \usebibmacro{finentry}}
 \newbibmacro*{coppe:media}{%
   \iflistundef{artist}{}{\setunit{\addperiod\space}%
-    \printtext{\iflanguage{brazilian}{Ilustra\c{c}\~ao}{Art}\addcolon\space}\printlist{artist}}%
+    \printtext{\coppestring{art}\addcolon\space}\printlist{artist}}%
   \iffieldundef{platform}{}{\setunit{\addperiod\space}%
-    \printtext{\iflanguage{brazilian}{Plataforma}{Platform}\addcolon\space}\printfield{platform}}%
+    \printtext{\coppestring{platform}\addcolon\space}\printfield{platform}}%
   \iflistundef{director}{}{\setunit{\addperiod\space}%
-    \printtext{\iflanguage{brazilian}{Dire\c{c}\~ao}{Directed by}\addcolon\space}\printlist{director}}%
+    \printtext{\coppestring{directedby}\addcolon\space}\printlist{director}}%
   \iflistundef{producer}{}{\setunit{\addperiod\space}%
-    \printtext{\iflanguage{brazilian}{Produ\c{c}\~ao}{Produced by}\addcolon\space}\printlist{producer}}}
+    \printtext{\coppestring{producedby}\addcolon\space}\printlist{producer}}}
 \newbibmacro*{coppe:mediadriver}{%
   \usebibmacro{bibindex}\usebibmacro{begentry}%
   \usebibmacro{author/translator+others}%
