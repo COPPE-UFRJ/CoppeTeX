@@ -1,0 +1,99 @@
+%%
+%% This is file `coppe-lang-french.def',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% coppe.dtx  (with options: `langfr')
+%% 
+%% This is the `coppe' document class used for composition of LaTeX
+%% monographs (master and PhD thesis, and PhD qualifying exams)
+%% satisfying the requirements of the Coordination of Research and
+%% Graduate Courses in Engineering at the Federal University of
+%% Rio de Janeiro.
+%% 
+%% Copyright (C) 2008 Vicente Helano and George Ainsworth Jr.
+%% Copyright (C) 2024 Vicente Helano and George Ainsworth Jr. and Geraldo Xexéo and Eduardo Mangeli
+%% 
+%% This program is free software; you can redistribute it and/or modify
+%% it under the terms of the GNU General Public License version 3 as
+%% published by the Free Software Foundation.
+%% 
+%% This program is distributed in the hope that it will be useful,
+%% but WITHOUT ANY WARRANTY; without even the implied warranty of
+%% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+%% GNU General Public License version 3 for more details.
+%% 
+%% You should have received a copy of the GNU General Public License
+%% version 3 along with this package (see COPYING file).
+%% If not, see <http://www.gnu.org/licenses/>.
+%% 
+%% Author(s): Vicente Helano,
+%%            George Ainsworth
+%%            Geraldo Xexéo
+%%            Eduardo Mangeli
+%% 
+%% \CheckSum{0}
+%% \CharacterTable
+%%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+%%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+%%   Digits        \0\1\2\3\4\5\6\7\8\9
+%%   Exclamation   \!     Double quote  \"     Hash (number) \#
+%%   Dollar        \$     Percent       \%     Ampersand     \&
+%%   Acute accent  \'     Left paren    \(     Right paren   \)
+%%   Asterisk      \*     Plus          \+     Comma         \,
+%%   Minus         \-     Point         \.     Solidus       \/
+%%   Colon         \:     Semicolon     \;     Less than     \<
+%%   Equals        \=     Greater than  \>     Question mark \?
+%%   Commercial at \@     Left bracket  \[     Backslash     \\
+%%   Right bracket \]     Circumflex    \^     Underscore    \_
+%%   Grave accent  \`     Left brace    \{     Vertical bar  \|
+%%   Right brace   \}     Tilde         \~}
+%%
+%% coppe-lang-french.def -- CoppeTeX 4.x French class-string pack.
+%% See coppe-lang-spanish.def for the structure. Institutional names
+%% remain Portuguese; only document-content strings translate.
+\ProvidesFile{coppe-lang-french.def}[2026/05/28 v3.9 CoppeTeX french class strings]
+\copperdefstring{french}{appendix}        {Annexe}
+\copperdefstring{french}{annex}           {Annexe}
+\copperdefstring{french}{frame}           {Encadr\'e}
+\copperdefstring{french}{listframe}       {Liste des encadr\'es}
+\copperdefstring{french}{source}          {Source}
+\copperdefstring{french}{program}         {Programme}
+\copperdefstring{french}{listprogram}     {Liste des programmes}
+\copperdefstring{french}{references}      {R\'ef\'erences}
+\copperdefstring{french}{in:}             {dans}
+\copperdefstring{french}{art}             {Illustration}
+\copperdefstring{french}{platform}        {Plateforme}
+\copperdefstring{french}{directedby}      {R\'ealis\'e par}
+\copperdefstring{french}{producedby}      {Produit par}
+\copperdefstring{french}{listabbreviation}{Liste des abr\'eviations et acronymes}
+\copperdefstring{french}{listsymbol}      {Liste des symboles}
+\copperdefstring{french}{glossary}        {Glossaire}
+\copperdefstring{french}{advisor}         {Directeur}
+\copperdefstring{french}{advisors}        {Directeurs}
+\copperdefstring{french}{dept}            {Programme}
+\copperdefstring{french}{approvedmale}    {Examin\'e par}
+\copperdefstring{french}{approvedfemale}  {Examin\'ee par}
+\copperdefstring{french}{universityname}{Universidade Federal do Rio de Janeiro}
+\copperdefstring{french}{cityname}    {Rio de Janeiro}
+\copperdefstring{french}{statename}   {RJ}
+\copperdefstring{french}{countryname} {Brasil}
+\copperdefstring{french}{monthname1} {janvier}
+\copperdefstring{french}{monthname2} {f\'evrier}
+\copperdefstring{french}{monthname3} {mars}
+\copperdefstring{french}{monthname4} {avril}
+\copperdefstring{french}{monthname5} {mai}
+\copperdefstring{french}{monthname6} {juin}
+\copperdefstring{french}{monthname7} {juillet}
+\copperdefstring{french}{monthname8} {ao\^ut}
+\copperdefstring{french}{monthname9} {septembre}
+\copperdefstring{french}{monthname10}{octobre}
+\copperdefstring{french}{monthname11}{novembre}
+\copperdefstring{french}{monthname12}{d\'ecembre}
+\copperdefstring{french}{algorithm2eopt}{french}
+\copperdefstring{french}{babelname}     {french}
+\AtBeginDocument{\DeclareLanguageMapping{french}{french-coppe}}
+%% 
+%%
+%% End of file `coppe-lang-french.def'.

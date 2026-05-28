@@ -1,0 +1,101 @@
+%%
+%% This is file `coppe-lang-italian.def',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% coppe.dtx  (with options: `langit')
+%% 
+%% This is the `coppe' document class used for composition of LaTeX
+%% monographs (master and PhD thesis, and PhD qualifying exams)
+%% satisfying the requirements of the Coordination of Research and
+%% Graduate Courses in Engineering at the Federal University of
+%% Rio de Janeiro.
+%% 
+%% Copyright (C) 2008 Vicente Helano and George Ainsworth Jr.
+%% Copyright (C) 2024 Vicente Helano and George Ainsworth Jr. and Geraldo Xexéo and Eduardo Mangeli
+%% 
+%% This program is free software; you can redistribute it and/or modify
+%% it under the terms of the GNU General Public License version 3 as
+%% published by the Free Software Foundation.
+%% 
+%% This program is distributed in the hope that it will be useful,
+%% but WITHOUT ANY WARRANTY; without even the implied warranty of
+%% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+%% GNU General Public License version 3 for more details.
+%% 
+%% You should have received a copy of the GNU General Public License
+%% version 3 along with this package (see COPYING file).
+%% If not, see <http://www.gnu.org/licenses/>.
+%% 
+%% Author(s): Vicente Helano,
+%%            George Ainsworth
+%%            Geraldo Xexéo
+%%            Eduardo Mangeli
+%% 
+%% \CheckSum{0}
+%% \CharacterTable
+%%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+%%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+%%   Digits        \0\1\2\3\4\5\6\7\8\9
+%%   Exclamation   \!     Double quote  \"     Hash (number) \#
+%%   Dollar        \$     Percent       \%     Ampersand     \&
+%%   Acute accent  \'     Left paren    \(     Right paren   \)
+%%   Asterisk      \*     Plus          \+     Comma         \,
+%%   Minus         \-     Point         \.     Solidus       \/
+%%   Colon         \:     Semicolon     \;     Less than     \<
+%%   Equals        \=     Greater than  \>     Question mark \?
+%%   Commercial at \@     Left bracket  \[     Backslash     \\
+%%   Right bracket \]     Circumflex    \^     Underscore    \_
+%%   Grave accent  \`     Left brace    \{     Vertical bar  \|
+%%   Right brace   \}     Tilde         \~}
+%%
+%% coppe-lang-italian.def -- CoppeTeX 4.x Italian class-string pack.
+%% See coppe-lang-spanish.def for the structure. The algorithm2e
+%% language option for Italian is spelled "italiano" -- that's the
+%% spelling algorithm2e ships, even though babel calls the language
+%% "italian".
+\ProvidesFile{coppe-lang-italian.def}[2026/05/28 v3.9 CoppeTeX italian class strings]
+\copperdefstring{italian}{appendix}        {Appendice}
+\copperdefstring{italian}{annex}           {Allegato}
+\copperdefstring{italian}{frame}           {Riquadro}
+\copperdefstring{italian}{listframe}       {Elenco dei riquadri}
+\copperdefstring{italian}{source}          {Fonte}
+\copperdefstring{italian}{program}         {Programma}
+\copperdefstring{italian}{listprogram}     {Elenco dei programmi}
+\copperdefstring{italian}{references}      {Riferimenti}
+\copperdefstring{italian}{in:}             {in}
+\copperdefstring{italian}{art}             {Illustrazione}
+\copperdefstring{italian}{platform}        {Piattaforma}
+\copperdefstring{italian}{directedby}      {Regia di}
+\copperdefstring{italian}{producedby}      {Prodotto da}
+\copperdefstring{italian}{listabbreviation}{Elenco di abbreviazioni e sigle}
+\copperdefstring{italian}{listsymbol}      {Elenco dei simboli}
+\copperdefstring{italian}{glossary}        {Glossario}
+\copperdefstring{italian}{advisor}         {Relatore}
+\copperdefstring{italian}{advisors}        {Relatori}
+\copperdefstring{italian}{dept}            {Programma}
+\copperdefstring{italian}{approvedmale}    {Esaminato da}
+\copperdefstring{italian}{approvedfemale}  {Esaminata da}
+\copperdefstring{italian}{universityname}{Universidade Federal do Rio de Janeiro}
+\copperdefstring{italian}{cityname}    {Rio de Janeiro}
+\copperdefstring{italian}{statename}   {RJ}
+\copperdefstring{italian}{countryname} {Brasil}
+\copperdefstring{italian}{monthname1} {gennaio}
+\copperdefstring{italian}{monthname2} {febbraio}
+\copperdefstring{italian}{monthname3} {marzo}
+\copperdefstring{italian}{monthname4} {aprile}
+\copperdefstring{italian}{monthname5} {maggio}
+\copperdefstring{italian}{monthname6} {giugno}
+\copperdefstring{italian}{monthname7} {luglio}
+\copperdefstring{italian}{monthname8} {agosto}
+\copperdefstring{italian}{monthname9} {settembre}
+\copperdefstring{italian}{monthname10}{ottobre}
+\copperdefstring{italian}{monthname11}{novembre}
+\copperdefstring{italian}{monthname12}{dicembre}
+\copperdefstring{italian}{algorithm2eopt}{italiano}
+\copperdefstring{italian}{babelname}     {italian}
+\AtBeginDocument{\DeclareLanguageMapping{italian}{italian-coppe}}
+%% 
+%%
+%% End of file `coppe-lang-italian.def'.

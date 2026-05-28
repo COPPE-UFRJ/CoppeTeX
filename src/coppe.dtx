@@ -1749,21 +1749,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % [brazilian,english] -- identical to the historical \if@english calls.
 \edef\coppe@babelopts{\coppe@foreignlang,\coppe@mainlang}
 \expandafter\RequirePackage\expandafter[\coppe@babelopts]{babel}
-% Auto-load language packs for any non-built-in language listed in babelopts.
-% Built-ins (brazilian, english) ship their string tables inside coppe.cls
-% and need no extra file; others (spanish/french/italian/...) ship as
-% coppe-lang-<name>.def alongside the class.
-\@for\coppe@@lang:=\coppe@babelopts\do{%
-  \edef\coppe@@cur{\coppe@@lang}%
-  \ifx\coppe@@cur\coppe@@brazilianstr\else
-  \ifx\coppe@@cur\coppe@@englishstr\else
-    \InputIfFileExists{coppe-lang-\coppe@@cur.def}
-      {\ClassInfo{coppe}{Loaded language pack coppe-lang-\coppe@@cur.def}}
-      {\ClassError{coppe}
-        {Missing language pack 'coppe-lang-\coppe@@cur.def'.}
-        {Install it next to coppe.cls, or pick a built-in language.}}%
-  \fi\fi}
-% --- Multilingual string dispatcher (scaffolding -- not yet wired in) -------
+% --- Multilingual string dispatcher -----------------------------------------
 % \copperdefstring{<lang>}{<key>}{<value>} adds one entry to the table for
 % language <lang>. The three retrievers below look strings up either at the
 % current babel language (\coppestring -- follows \selectlanguage), or pinned
@@ -1873,6 +1859,21 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % Babel package name for the foreignabstract \begin{otherlanguage}{...}.
 \copperdefstring{brazilian}{babelname}{brazilian}
 \copperdefstring{english}  {babelname}{english}
+% Auto-load language packs for any non-built-in language listed in babelopts.
+% Built-ins (brazilian, english) ship their string tables inside coppe.cls
+% (defined just above) and need no extra file; others (spanish/french/italian
+% /...) ship as coppe-lang-<name>.def alongside the class. The dispatcher
+% must already be defined when these run, so the loader sits AFTER the tables.
+\@for\coppe@@lang:=\coppe@babelopts\do{%
+  \edef\coppe@@cur{\coppe@@lang}%
+  \ifx\coppe@@cur\coppe@@brazilianstr\else
+  \ifx\coppe@@cur\coppe@@englishstr\else
+    \InputIfFileExists{coppe-lang-\coppe@@cur.def}
+      {\ClassInfo{coppe}{Loaded language pack coppe-lang-\coppe@@cur.def}}
+      {\ClassError{coppe}
+        {Missing language pack 'coppe-lang-\coppe@@cur.def'.}
+        {Install it next to coppe.cls, or pick a built-in language.}}%
+  \fi\fi}
 % Quotation marks: csquotes gives the language-aware \enquote; \citacao is its
 % Portuguese alias for short, inline quotations (proposta P3).
 \RequirePackage{csquotes}
@@ -3521,6 +3522,210 @@ postamble
   tcc           = {{Undergraduate Thesis}{Undergraduate Thesis}},
 }
 %</lbxen>
+%<*lbxes>
+\ProvidesFile{spanish-coppe.lbx}[2026/05/28 v3.9 CoppeTeX spanish strings]
+\InheritBibliographyExtras{spanish}
+\NewBibliographyString{availablefrom,mscdiss,dscthesis,tcc,depositor,coppescale}
+\DeclareBibliographyStrings{%
+  inherit       = {spanish},
+  availablefrom = {{Disponible en}{Disponible en}},
+  urlseen       = {{Consultado el}{Consultado el}},
+  in            = {{En}{En}},
+  editor        = {{Editor}{Ed\adddot}},
+  editors       = {{Editores}{Eds\adddot}},
+  depositor     = {{Solicitante}{Solicitante}},
+  coppescale    = {{Escala}{Escala}},
+  mscdiss       = {{Tesis de Maestr\'{\i}a}{Tesis de Maestr\'{\i}a}},
+  dscthesis     = {{Tesis Doctoral}{Tesis Doctoral}},
+  phdthesis     = {{Tesis Doctoral}{Tesis Doctoral}},
+  tcc           = {{Trabajo de Fin de Carrera}{Trabajo de Fin de Carrera}},
+}
+%</lbxes>
+%<*lbxfr>
+\ProvidesFile{french-coppe.lbx}[2026/05/28 v3.9 CoppeTeX french strings]
+\InheritBibliographyExtras{french}
+\NewBibliographyString{availablefrom,mscdiss,dscthesis,tcc,depositor,coppescale}
+\DeclareBibliographyStrings{%
+  inherit       = {french},
+  availablefrom = {{Disponible \`a}{Disponible \`a}},
+  urlseen       = {{Consult\'e le}{Consult\'e le}},
+  in            = {{Dans}{Dans}},
+  editor        = {{\'Editeur}{\'Ed\adddot}},
+  editors       = {{\'Editeurs}{\'Eds\adddot}},
+  depositor     = {{D\'eposant}{D\'eposant}},
+  coppescale    = {{\'Echelle}{\'Echelle}},
+  mscdiss       = {{M\'emoire de Master}{M\'emoire de Master}},
+  dscthesis     = {{Th\`ese de Doctorat}{Th\`ese de Doctorat}},
+  phdthesis     = {{Th\`ese de Doctorat}{Th\`ese de Doctorat}},
+  tcc           = {{M\'emoire de fin d'\'etudes}{M\'emoire de fin d'\'etudes}},
+}
+%</lbxfr>
+%<*lbxit>
+\ProvidesFile{italian-coppe.lbx}[2026/05/28 v3.9 CoppeTeX italian strings]
+\InheritBibliographyExtras{italian}
+\NewBibliographyString{availablefrom,mscdiss,dscthesis,tcc,depositor,coppescale}
+\DeclareBibliographyStrings{%
+  inherit       = {italian},
+  availablefrom = {{Disponibile da}{Disponibile da}},
+  urlseen       = {{Consultato il}{Consultato il}},
+  in            = {{In}{In}},
+  editor        = {{Curatore}{Cur\adddot}},
+  editors       = {{Curatori}{Curr\adddot}},
+  depositor     = {{Depositante}{Depositante}},
+  coppescale    = {{Scala}{Scala}},
+  mscdiss       = {{Tesi di Laurea Magistrale}{Tesi di Laurea Magistrale}},
+  dscthesis     = {{Tesi di Dottorato}{Tesi di Dottorato}},
+  phdthesis     = {{Tesi di Dottorato}{Tesi di Dottorato}},
+  tcc           = {{Tesi di Laurea Triennale}{Tesi di Laurea Triennale}},
+}
+%</lbxit>
+%<*langes>
+%% coppe-lang-spanish.def -- CoppeTeX 4.x Spanish class-string pack.
+%% Loaded by coppe.cls when \documentclass[spanish]{coppe} (or any other
+%% spanish slot) is active. Populates the dispatcher table for the
+%% spanish language and registers the biblatex language mapping.
+%% Institutional names (universityname/cityname/statename/countryname)
+%% are deliberately kept Portuguese: the COPPE/UFRJ cover and folha de
+%% rosto are a Brazilian institutional template that does not translate.
+\ProvidesFile{coppe-lang-spanish.def}[2026/05/28 v3.9 CoppeTeX spanish class strings]
+\copperdefstring{spanish}{appendix}        {Ap\'endice}
+\copperdefstring{spanish}{annex}           {Anexo}
+\copperdefstring{spanish}{frame}           {Cuadro}
+\copperdefstring{spanish}{listframe}       {Lista de Cuadros}
+\copperdefstring{spanish}{source}          {Fuente}
+\copperdefstring{spanish}{program}         {Programa}
+\copperdefstring{spanish}{listprogram}     {Lista de Programas}
+\copperdefstring{spanish}{references}      {Referencias}
+\copperdefstring{spanish}{in:}             {en}
+\copperdefstring{spanish}{art}             {Arte}
+\copperdefstring{spanish}{platform}        {Plataforma}
+\copperdefstring{spanish}{directedby}      {Direcci\'on}
+\copperdefstring{spanish}{producedby}      {Producci\'on}
+\copperdefstring{spanish}{listabbreviation}{Lista de Abreviaturas y Siglas}
+\copperdefstring{spanish}{listsymbol}      {Lista de S\'imbolos}
+\copperdefstring{spanish}{glossary}        {Glosario}
+\copperdefstring{spanish}{advisor}         {Director}
+\copperdefstring{spanish}{advisors}        {Directores}
+\copperdefstring{spanish}{dept}            {Programa}
+\copperdefstring{spanish}{approvedmale}    {Examinado por}
+\copperdefstring{spanish}{approvedfemale}  {Examinada por}
+\copperdefstring{spanish}{universityname}{Universidade Federal do Rio de Janeiro}
+\copperdefstring{spanish}{cityname}    {Rio de Janeiro}
+\copperdefstring{spanish}{statename}   {RJ}
+\copperdefstring{spanish}{countryname} {Brasil}
+\copperdefstring{spanish}{monthname1} {enero}
+\copperdefstring{spanish}{monthname2} {febrero}
+\copperdefstring{spanish}{monthname3} {marzo}
+\copperdefstring{spanish}{monthname4} {abril}
+\copperdefstring{spanish}{monthname5} {mayo}
+\copperdefstring{spanish}{monthname6} {junio}
+\copperdefstring{spanish}{monthname7} {julio}
+\copperdefstring{spanish}{monthname8} {agosto}
+\copperdefstring{spanish}{monthname9} {septiembre}
+\copperdefstring{spanish}{monthname10}{octubre}
+\copperdefstring{spanish}{monthname11}{noviembre}
+\copperdefstring{spanish}{monthname12}{diciembre}
+\copperdefstring{spanish}{algorithm2eopt}{spanish}
+\copperdefstring{spanish}{babelname}     {spanish}
+%% biblatex is loaded by coppe.cls AFTER this .def file is read; defer the
+%% language-mapping registration until \begin{document} so biblatex's
+%% \DeclareLanguageMapping is available.
+\AtBeginDocument{\DeclareLanguageMapping{spanish}{spanish-coppe}}
+%</langes>
+%<*langfr>
+%% coppe-lang-french.def -- CoppeTeX 4.x French class-string pack.
+%% See coppe-lang-spanish.def for the structure. Institutional names
+%% remain Portuguese; only document-content strings translate.
+\ProvidesFile{coppe-lang-french.def}[2026/05/28 v3.9 CoppeTeX french class strings]
+\copperdefstring{french}{appendix}        {Annexe}
+\copperdefstring{french}{annex}           {Annexe}
+\copperdefstring{french}{frame}           {Encadr\'e}
+\copperdefstring{french}{listframe}       {Liste des encadr\'es}
+\copperdefstring{french}{source}          {Source}
+\copperdefstring{french}{program}         {Programme}
+\copperdefstring{french}{listprogram}     {Liste des programmes}
+\copperdefstring{french}{references}      {R\'ef\'erences}
+\copperdefstring{french}{in:}             {dans}
+\copperdefstring{french}{art}             {Illustration}
+\copperdefstring{french}{platform}        {Plateforme}
+\copperdefstring{french}{directedby}      {R\'ealis\'e par}
+\copperdefstring{french}{producedby}      {Produit par}
+\copperdefstring{french}{listabbreviation}{Liste des abr\'eviations et acronymes}
+\copperdefstring{french}{listsymbol}      {Liste des symboles}
+\copperdefstring{french}{glossary}        {Glossaire}
+\copperdefstring{french}{advisor}         {Directeur}
+\copperdefstring{french}{advisors}        {Directeurs}
+\copperdefstring{french}{dept}            {Programme}
+\copperdefstring{french}{approvedmale}    {Examin\'e par}
+\copperdefstring{french}{approvedfemale}  {Examin\'ee par}
+\copperdefstring{french}{universityname}{Universidade Federal do Rio de Janeiro}
+\copperdefstring{french}{cityname}    {Rio de Janeiro}
+\copperdefstring{french}{statename}   {RJ}
+\copperdefstring{french}{countryname} {Brasil}
+\copperdefstring{french}{monthname1} {janvier}
+\copperdefstring{french}{monthname2} {f\'evrier}
+\copperdefstring{french}{monthname3} {mars}
+\copperdefstring{french}{monthname4} {avril}
+\copperdefstring{french}{monthname5} {mai}
+\copperdefstring{french}{monthname6} {juin}
+\copperdefstring{french}{monthname7} {juillet}
+\copperdefstring{french}{monthname8} {ao\^ut}
+\copperdefstring{french}{monthname9} {septembre}
+\copperdefstring{french}{monthname10}{octobre}
+\copperdefstring{french}{monthname11}{novembre}
+\copperdefstring{french}{monthname12}{d\'ecembre}
+\copperdefstring{french}{algorithm2eopt}{french}
+\copperdefstring{french}{babelname}     {french}
+\AtBeginDocument{\DeclareLanguageMapping{french}{french-coppe}}
+%</langfr>
+%<*langit>
+%% coppe-lang-italian.def -- CoppeTeX 4.x Italian class-string pack.
+%% See coppe-lang-spanish.def for the structure. The algorithm2e
+%% language option for Italian is spelled "italiano" -- that's the
+%% spelling algorithm2e ships, even though babel calls the language
+%% "italian".
+\ProvidesFile{coppe-lang-italian.def}[2026/05/28 v3.9 CoppeTeX italian class strings]
+\copperdefstring{italian}{appendix}        {Appendice}
+\copperdefstring{italian}{annex}           {Allegato}
+\copperdefstring{italian}{frame}           {Riquadro}
+\copperdefstring{italian}{listframe}       {Elenco dei riquadri}
+\copperdefstring{italian}{source}          {Fonte}
+\copperdefstring{italian}{program}         {Programma}
+\copperdefstring{italian}{listprogram}     {Elenco dei programmi}
+\copperdefstring{italian}{references}      {Riferimenti}
+\copperdefstring{italian}{in:}             {in}
+\copperdefstring{italian}{art}             {Illustrazione}
+\copperdefstring{italian}{platform}        {Piattaforma}
+\copperdefstring{italian}{directedby}      {Regia di}
+\copperdefstring{italian}{producedby}      {Prodotto da}
+\copperdefstring{italian}{listabbreviation}{Elenco di abbreviazioni e sigle}
+\copperdefstring{italian}{listsymbol}      {Elenco dei simboli}
+\copperdefstring{italian}{glossary}        {Glossario}
+\copperdefstring{italian}{advisor}         {Relatore}
+\copperdefstring{italian}{advisors}        {Relatori}
+\copperdefstring{italian}{dept}            {Programma}
+\copperdefstring{italian}{approvedmale}    {Esaminato da}
+\copperdefstring{italian}{approvedfemale}  {Esaminata da}
+\copperdefstring{italian}{universityname}{Universidade Federal do Rio de Janeiro}
+\copperdefstring{italian}{cityname}    {Rio de Janeiro}
+\copperdefstring{italian}{statename}   {RJ}
+\copperdefstring{italian}{countryname} {Brasil}
+\copperdefstring{italian}{monthname1} {gennaio}
+\copperdefstring{italian}{monthname2} {febbraio}
+\copperdefstring{italian}{monthname3} {marzo}
+\copperdefstring{italian}{monthname4} {aprile}
+\copperdefstring{italian}{monthname5} {maggio}
+\copperdefstring{italian}{monthname6} {giugno}
+\copperdefstring{italian}{monthname7} {luglio}
+\copperdefstring{italian}{monthname8} {agosto}
+\copperdefstring{italian}{monthname9} {settembre}
+\copperdefstring{italian}{monthname10}{ottobre}
+\copperdefstring{italian}{monthname11}{novembre}
+\copperdefstring{italian}{monthname12}{dicembre}
+\copperdefstring{italian}{algorithm2eopt}{italiano}
+\copperdefstring{italian}{babelname}     {italian}
+\AtBeginDocument{\DeclareLanguageMapping{italian}{italian-coppe}}
+%</langit>
 %<*numbbx>
 \ProvidesFile{coppe-numeric.bbx}[2026/05/24 v3.8 CoppeTeX ABNT numeric bibliography]
 % Numeric reference list for the ABNT numeric system (NBR 10520). It reuses the

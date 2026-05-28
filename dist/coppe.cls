@@ -95,10 +95,10 @@ top=3cm,bottom=2cm,inner=2cm,outer=2cm]{geometry}
 \renewcommand\appendix{\coppe@orig@appendix\@coppeappendixtrue}
 \newif\if@coppeannex \@coppeannexfalse
 \newcommand\coppe@tocapp[1]{%
-  \MakeUppercase{\iflanguage{brazilian}{Ap\^endice}{Appendix}}%
+  \MakeUppercase{\coppestring{appendix}}%
   \nobreakspace#1\nobreakspace\textendash\nobreakspace}
 \newcommand\coppe@tocanx[1]{%
-  \MakeUppercase{\iflanguage{brazilian}{Anexo}{Annex}}%
+  \MakeUppercase{\coppestring{annex}}%
   \nobreakspace#1\nobreakspace\textendash\nobreakspace}
 \def\@chapter[#1]#2{%
   \ifnum \c@secnumdepth >\m@ne
@@ -144,9 +144,8 @@ top=3cm,bottom=2cm,inner=2cm,outer=2cm]{geometry}
 \floatstyle{plaintop}
 \restylefloat{figure}
 \restylefloat{table}
-\providecommand{\quadroname}{\iflanguage{brazilian}{Quadro}{Frame}}
-\providecommand{\listquadroname}{%
-  \iflanguage{brazilian}{Lista de Quadros}{List of Frames}}
+\providecommand{\quadroname}{\coppestring{frame}}
+\providecommand{\listquadroname}{\coppestring{listframe}}
 \newfloat{quadro}{htbp}{loq}[chapter]
 \floatname{quadro}{\quadroname}
 \providecommand{\quadroautorefname}{\quadroname}
@@ -156,7 +155,7 @@ top=3cm,bottom=2cm,inner=2cm,outer=2cm]{geometry}
   \addcontentsline{toc}{chapter}{\listquadroname}%
   \@mkboth{\MakeUppercase\listquadroname}{\MakeUppercase\listquadroname}%
   \@starttoc{loq}}
-\newcommand{\cpsourcename}{\iflanguage{brazilian}{Fonte}{Source}}
+\newcommand{\cpsourcename}{\coppestring{source}}
 \newcommand{\cpsource}[1]{%
   \par\addvspace{\smallskipamount}%
   {\footnotesize\singlespacing\centering\cpsourcename: #1\par}}
@@ -193,8 +192,19 @@ p\kern-.025em e}}\kern-.08em
 T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \newboolean{maledoc}
 \setboolean{maledoc}{false}
+\def\coppe@mainlang{brazilian}
+\def\coppe@foreignlang{english}
 \newif\if@english\@englishfalse
-\DeclareOption{english}{\@englishtrue}
+\DeclareOption{brazilian}{%
+  \def\coppe@mainlang{brazilian}\def\coppe@foreignlang{english}\@englishfalse}
+\DeclareOption{english}{%
+  \def\coppe@mainlang{english}\def\coppe@foreignlang{brazilian}\@englishtrue}
+\DeclareOption{spanish}{%
+  \def\coppe@mainlang{spanish}\def\coppe@foreignlang{english}\@englishfalse}
+\DeclareOption{french}{%
+  \def\coppe@mainlang{french}\def\coppe@foreignlang{english}\@englishfalse}
+\DeclareOption{italian}{%
+  \def\coppe@mainlang{italian}\def\coppe@foreignlang{english}\@englishfalse}
 \DeclareOption{msc}{%
   \newcommand{\@degree}{M.Sc.}
   \newcommand{\@degreename}{Mestrado}
@@ -238,11 +248,112 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \doublespacing
 }
 \ProcessOptions\relax
-\if@english
-  \RequirePackage[brazilian,english]{babel}
-\else
-  \RequirePackage[english,brazilian]{babel}
-\fi
+\def\coppe@@brazilianstr{brazilian}
+\def\coppe@@englishstr{english}
+\edef\coppe@babelopts{\coppe@foreignlang,\coppe@mainlang}
+\expandafter\RequirePackage\expandafter[\coppe@babelopts]{babel}
+\providecommand{\copperdefstring}[3]{%
+  \expandafter\gdef\csname coppe@str@#1@#2\endcsname{#3}}
+\providecommand{\coppestring}[1]{\@nameuse{coppe@str@\languagename @#1}}
+\providecommand{\coppemainstring}[1]{\@nameuse{coppe@str@\coppe@mainlang @#1}}
+\providecommand{\coppeforeignstring}[1]{\@nameuse{coppe@str@\coppe@foreignlang @#1}}
+\providecommand{\usecoppelanguage}[1]{%
+  \def\coppe@@cur{#1}%
+  \ifx\coppe@@cur\coppe@@brazilianstr\else
+  \ifx\coppe@@cur\coppe@@englishstr\else
+    \InputIfFileExists{coppe-lang-#1.def}{}
+      {\ClassWarning{coppe}{Language pack coppe-lang-#1.def not found}}%
+  \fi\fi}
+\providecommand{\titlein}[2]{%
+  \expandafter\gdef\csname coppe@title@#1\endcsname{#2}}
+\copperdefstring{brazilian}{appendix}{Ap\^endice}
+\copperdefstring{english}  {appendix}{Appendix}
+\copperdefstring{brazilian}{annex}   {Anexo}
+\copperdefstring{english}  {annex}   {Annex}
+\copperdefstring{brazilian}{frame}        {Quadro}
+\copperdefstring{english}  {frame}        {Frame}
+\copperdefstring{brazilian}{listframe}    {Lista de Quadros}
+\copperdefstring{english}  {listframe}    {List of Frames}
+\copperdefstring{brazilian}{source}       {Fonte}
+\copperdefstring{english}  {source}       {Source}
+\copperdefstring{brazilian}{program}      {Programa}
+\copperdefstring{english}  {program}      {Program}
+\copperdefstring{brazilian}{listprogram}  {Lista de Programas}
+\copperdefstring{english}  {listprogram}  {List of Programs}
+\copperdefstring{brazilian}{references}   {Refer\^encias}
+\copperdefstring{english}  {references}   {References}
+\copperdefstring{brazilian}{in:}          {em}
+\copperdefstring{english}  {in:}          {in}
+\copperdefstring{brazilian}{art}          {Ilustra\c{c}\~ao}
+\copperdefstring{english}  {art}          {Art}
+\copperdefstring{brazilian}{platform}     {Plataforma}
+\copperdefstring{english}  {platform}     {Platform}
+\copperdefstring{brazilian}{directedby}   {Dire\c{c}\~ao}
+\copperdefstring{english}  {directedby}   {Directed by}
+\copperdefstring{brazilian}{producedby}   {Produ\c{c}\~ao}
+\copperdefstring{english}  {producedby}   {Produced by}
+\copperdefstring{brazilian}{listabbreviation}{Lista de Abreviaturas e Siglas}
+\copperdefstring{english}  {listabbreviation}{List of Abbreviations and Acronyms}
+\copperdefstring{brazilian}{listsymbol}      {Lista de S{\' i}mbolos}
+\copperdefstring{english}  {listsymbol}      {List of Symbols}
+\copperdefstring{brazilian}{glossary}        {Gloss{\' a}rio}
+\copperdefstring{english}  {glossary}        {Glossary}
+\copperdefstring{brazilian}{advisor}      {Orientador}
+\copperdefstring{english}  {advisor}      {Advisor}
+\copperdefstring{brazilian}{advisors}     {Orientadores}
+\copperdefstring{english}  {advisors}     {Advisors}
+\copperdefstring{brazilian}{dept}         {Programa}
+\copperdefstring{english}  {dept}         {Department}
+\copperdefstring{brazilian}{approvedmale}  {Examinado por}
+\copperdefstring{brazilian}{approvedfemale}{Examinada por}
+\copperdefstring{english}  {approvedmale}  {Examined by}
+\copperdefstring{english}  {approvedfemale}{Examined by}
+\copperdefstring{brazilian}{universityname}{Universidade Federal do Rio de Janeiro}
+\copperdefstring{english}  {universityname}{Universidade Federal do Rio de Janeiro}
+\copperdefstring{brazilian}{cityname}     {Rio de Janeiro}
+\copperdefstring{english}  {cityname}     {Rio de Janeiro}
+\copperdefstring{brazilian}{statename}    {RJ}
+\copperdefstring{english}  {statename}    {RJ}
+\copperdefstring{brazilian}{countryname}  {Brasil}
+\copperdefstring{english}  {countryname}  {Brasil}
+\copperdefstring{brazilian}{monthname1} {Janeiro}
+\copperdefstring{brazilian}{monthname2} {Fevereiro}
+\copperdefstring{brazilian}{monthname3} {Mar{\c c}o}
+\copperdefstring{brazilian}{monthname4} {Abril}
+\copperdefstring{brazilian}{monthname5} {Maio}
+\copperdefstring{brazilian}{monthname6} {Junho}
+\copperdefstring{brazilian}{monthname7} {Julho}
+\copperdefstring{brazilian}{monthname8} {Agosto}
+\copperdefstring{brazilian}{monthname9} {Setembro}
+\copperdefstring{brazilian}{monthname10}{Outubro}
+\copperdefstring{brazilian}{monthname11}{Novembro}
+\copperdefstring{brazilian}{monthname12}{Dezembro}
+\copperdefstring{english}{monthname1} {January}
+\copperdefstring{english}{monthname2} {February}
+\copperdefstring{english}{monthname3} {March}
+\copperdefstring{english}{monthname4} {April}
+\copperdefstring{english}{monthname5} {May}
+\copperdefstring{english}{monthname6} {June}
+\copperdefstring{english}{monthname7} {July}
+\copperdefstring{english}{monthname8} {August}
+\copperdefstring{english}{monthname9} {September}
+\copperdefstring{english}{monthname10}{October}
+\copperdefstring{english}{monthname11}{November}
+\copperdefstring{english}{monthname12}{December}
+\copperdefstring{brazilian}{algorithm2eopt}{portuguese}
+\copperdefstring{english}  {algorithm2eopt}{}
+\copperdefstring{brazilian}{babelname}{brazilian}
+\copperdefstring{english}  {babelname}{english}
+\@for\coppe@@lang:=\coppe@babelopts\do{%
+  \edef\coppe@@cur{\coppe@@lang}%
+  \ifx\coppe@@cur\coppe@@brazilianstr\else
+  \ifx\coppe@@cur\coppe@@englishstr\else
+    \InputIfFileExists{coppe-lang-\coppe@@cur.def}
+      {\ClassInfo{coppe}{Loaded language pack coppe-lang-\coppe@@cur.def}}
+      {\ClassError{coppe}
+        {Missing language pack 'coppe-lang-\coppe@@cur.def'.}
+        {Install it next to coppe.cls, or pick a built-in language.}}%
+  \fi\fi}
 \RequirePackage{csquotes}
 \newcommand{\citacao}[1]{\enquote{#1}}
 \RequirePackage{xcolor}
@@ -264,9 +375,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   {Ú}{{\'{U}}}1%
 }
 \AtBeginDocument{%
-  \renewcommand\lstlistingname{\iflanguage{brazilian}{Programa}{Program}}%
-  \renewcommand\lstlistlistingname{%
-    \iflanguage{brazilian}{Lista de Programas}{List of Programs}}}
+  \renewcommand\lstlistingname{\coppestring{program}}%
+  \renewcommand\lstlistlistingname{\coppestring{listprogram}}}
 \newcommand\listofprogramas{%
   \chapter*{\lstlistlistingname}%
   \addcontentsline{toc}{chapter}{\lstlistlistingname}%
@@ -324,10 +434,11 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \DefineVerbatimEnvironment{gxoutputs}{Verbatim}%
   {frame=lines,numbers=left,numbersep=\gxnumbersep,fontsize=\small}
 \renewcommand{\theFancyVerbLine}{{\small\ttfamily\arabic{FancyVerbLine}}}
-\if@english
+\edef\coppe@@algolang{\coppemainstring{algorithm2eopt}}
+\ifx\coppe@@algolang\@empty
   \RequirePackage[linesnumbered,lined,algochapter,ruled]{algorithm2e}
 \else
-  \RequirePackage[portuguese,linesnumbered,lined,algochapter,ruled]{algorithm2e}
+  \expandafter\RequirePackage\expandafter[\coppe@@algolang,linesnumbered,lined,algochapter,ruled]{algorithm2e}
 \fi
 \SetKwFor{Para}{para}{faça}{fim do para}
 \SetKwFor{Enquanto}{enquanto}{faça}{fim do enquanto}
@@ -339,8 +450,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     bibstyle=coppe,citestyle=coppe,natbib=true]{biblatex}
 \fi
 \defbibheading{bibliography}{%
-  \chapter*{\iflanguage{brazilian}{Refer\^encias}{References}}%
-  \addcontentsline{toc}{chapter}{\iflanguage{brazilian}{Refer\^encias}{References}}}
+  \chapter*{\coppestring{references}}%
+  \addcontentsline{toc}{chapter}{\coppestring{references}}}
 \AtBeginBibliography{\coppe@bibBegin}
 \let\coppe@orig@printbibliography\printbibliography
 \renewcommand\printbibliography[1][]{%
@@ -389,10 +500,13 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 }
 \renewcommand\title[1]{%
   \global\def\local@title{#1}%
+  \expandafter\gdef\csname coppe@title@brazilian\endcsname{#1}%
 }
 \newcommand\foreigntitle[1]{%
   \global\def\foreign@title{#1}%
+  \expandafter\gdef\csname coppe@title@english\endcsname{#1}%
 }
+\newcommand\coppe@selecttitle{\@nameuse{coppe@title@\coppe@mainlang}}
 \newcount\@advisor\@advisor0
 \newcommand\advisor[4]{%
   \global\@namedef{CoppeAdvisorTitle:\expandafter\the\@advisor}{#1}
@@ -492,12 +606,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \vspace{\stretch{2}}
   \textbf{\MakeUppercase{\@authname\ \@authsurn}}\par
   \vspace{\stretch{2}}
-  \nohyphens{%
-    \if@english
-      \MakeUppercase\foreign@title
-    \else
-      \MakeUppercase\local@title
-    \fi}\par
+  \nohyphens{\MakeUppercase{\coppe@selecttitle}}\par
   \vspace{\stretch{3}}
   \MakeUppercase{\local@cityname}\par
   \number\year
@@ -518,12 +627,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \end{flushleft}
   \vspace{1.05cm}
   \begin{center}
-  \nohyphens{%
-    \if@english
-      \MakeUppercase\foreign@title
-    \else
-      \MakeUppercase\local@title
-    \fi}\par
+  \nohyphens{\MakeUppercase{\coppe@selecttitle}}\par
   \vspace*{3cm}
   \nohyphens{\@authname\ \@authsurn}\par
   \end{center}
@@ -569,12 +673,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \global\let\and\relax}
 \newcommand\makefrontpage{%
   \begin{center}
-    \sloppy\nohyphens{
-      \if@english
-        \MakeUppercase\foreign@title
-      \else
-        \MakeUppercase\local@title
-      \fi}\par
+    \sloppy\nohyphens{\MakeUppercase{\coppe@selecttitle}}\par
     \vspace*{7mm}
     {\@authname\ \@authsurn}\par
   \end{center}\par
@@ -673,11 +772,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
       \noindent\sloppy\nohyphens\@authsurn,
       \nohyphens\@authname\par
       \nohyphens{%
-        \if@english
-          \foreign@title%
-        \else
-          \local@title%
-        \fi/\@authname\ \@authsurn. -- \local@cityname:
+        \coppe@selecttitle/\@authname\ \@authsurn. -- \local@cityname:
       UFRJ/COPPE, \number\year.}\par
       \pageref{front:pageno},
       \pageref{LastPage}
@@ -774,7 +869,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \newenvironment{foreignabstract}{%
   \cleardoublepage
   \thispagestyle{plain}
-  \begin{otherlanguage}{english}
+  \begin{otherlanguage}{\coppe@foreignlang}
   \foreignabstract@toptext\par
   \vspace*{8.6mm}
   \begin{center}
@@ -820,6 +915,46 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \global\let\author\relax
   \global\let\author\relax
   \global\let\date\relax}
+\newenvironment{brazilianabstract}{%
+  \cleardoublepage
+  \thispagestyle{plain}
+  \begin{otherlanguage}{brazilian}
+  \abstract@toptext\par
+  \vspace*{8.6mm}
+  \begin{center}
+    \sloppy\nohyphens{\MakeUppercase\local@title}\par
+    \vspace*{13.2mm}
+    \@authname\ \@authsurn \par
+    \vspace*{7mm}
+    \local@monthname/\number\year
+  \end{center}\par
+  \vspace*{1.5cm}
+  \noindent%
+  \begin{tabularx}{\textwidth}[b]{@{}l@{ }>{\raggedright\arraybackslash}X@{}}
+    \local@advisorstring: &
+    \count1=0
+    \toks@={}
+    \@whilenum \count1<\@advisor \do{%
+    \ifcase\count1
+      \toks@=\expandafter{\csname CoppeAdvisorName:\the\count1%
+      \expandafter\endcsname\expandafter\space%
+      \csname CoppeAdvisorSurname:\the\count1\endcsname\\}
+    \else
+      \toks@=\expandafter\expandafter\expandafter{%
+        \expandafter\the\expandafter\toks@
+        \expandafter&\expandafter\space
+        \csname CoppeAdvisorName:\the\count1\expandafter\endcsname%
+        \expandafter\space\csname CoppeAdvisorSurname:\the\count1\endcsname\\
+      }%
+    \fi
+    \advance\count1 by 1}
+    \the\toks@
+  \end{tabularx}\par
+  \vspace*{2mm}
+  \noindent\local@deptstring: \local@deptname\par
+  \vspace*{7mm}}{%
+  \end{otherlanguage}
+  \vspace*{\fill}}
 \renewcommand\listoffigures{%
     \coppe@hasLof
     \if@twocolumn
@@ -1008,15 +1143,9 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \columnsep 35\p@
   \let\item\@idxitem}
   {\if@restonecol\onecolumn\else\clearpage\fi}
-\if@english
-  \newcommand\listabbreviationname{List of Abbreviations and Acronyms}
-  \newcommand\listsymbolname{List of Symbols}
-  \newcommand\glossaryname{Glossary}
-\else
-  \newcommand\listabbreviationname{Lista de Abreviaturas e Siglas}
-  \newcommand\listsymbolname{Lista de S{\' i}mbolos}
-  \newcommand\glossaryname{Gloss{\' a}rio}
-\fi
+\newcommand\listabbreviationname{\coppemainstring{listabbreviation}}
+\newcommand\listsymbolname{\coppemainstring{listsymbol}}
+\newcommand\glossaryname{\coppemainstring{glossary}}
 \newcommand\local@advisorstring{Orientador}
 \newcommand\foreign@advisorstring{Advisor}
 \ifthenelse{\boolean{maledoc}}{%
@@ -1067,9 +1196,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   degree of \foreign@degname\ of Science (\@degree)}
 }
 \newcommand{\annex}{
-    \iflanguage{brazilian}
-        {\renewcommand{\appendixname}{Anexo}}
-        {\renewcommand{\appendixname}{Annex}}
+    \renewcommand{\appendixname}{\coppestring{annex}}%
     \appendix
     \@coppeannextrue
 }

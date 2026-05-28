@@ -252,16 +252,6 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \def\coppe@@englishstr{english}
 \edef\coppe@babelopts{\coppe@foreignlang,\coppe@mainlang}
 \expandafter\RequirePackage\expandafter[\coppe@babelopts]{babel}
-\@for\coppe@@lang:=\coppe@babelopts\do{%
-  \edef\coppe@@cur{\coppe@@lang}%
-  \ifx\coppe@@cur\coppe@@brazilianstr\else
-  \ifx\coppe@@cur\coppe@@englishstr\else
-    \InputIfFileExists{coppe-lang-\coppe@@cur.def}
-      {\ClassInfo{coppe}{Loaded language pack coppe-lang-\coppe@@cur.def}}
-      {\ClassError{coppe}
-        {Missing language pack 'coppe-lang-\coppe@@cur.def'.}
-        {Install it next to coppe.cls, or pick a built-in language.}}%
-  \fi\fi}
 \providecommand{\copperdefstring}[3]{%
   \expandafter\gdef\csname coppe@str@#1@#2\endcsname{#3}}
 \providecommand{\coppestring}[1]{\@nameuse{coppe@str@\languagename @#1}}
@@ -354,6 +344,16 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \copperdefstring{english}  {algorithm2eopt}{}
 \copperdefstring{brazilian}{babelname}{brazilian}
 \copperdefstring{english}  {babelname}{english}
+\@for\coppe@@lang:=\coppe@babelopts\do{%
+  \edef\coppe@@cur{\coppe@@lang}%
+  \ifx\coppe@@cur\coppe@@brazilianstr\else
+  \ifx\coppe@@cur\coppe@@englishstr\else
+    \InputIfFileExists{coppe-lang-\coppe@@cur.def}
+      {\ClassInfo{coppe}{Loaded language pack coppe-lang-\coppe@@cur.def}}
+      {\ClassError{coppe}
+        {Missing language pack 'coppe-lang-\coppe@@cur.def'.}
+        {Install it next to coppe.cls, or pick a built-in language.}}%
+  \fi\fi}
 \RequirePackage{csquotes}
 \newcommand{\citacao}[1]{\enquote{#1}}
 \RequirePackage{xcolor}

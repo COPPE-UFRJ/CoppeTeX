@@ -40,6 +40,12 @@ copy /Y coppe-numeric.bbx ..\dist\ >nul
 copy /Y coppe-numeric.cbx ..\dist\ >nul
 copy /Y brazilian-coppe.lbx ..\dist\ >nul
 copy /Y english-coppe.lbx ..\dist\ >nul
+copy /Y spanish-coppe.lbx ..\dist\ >nul
+copy /Y french-coppe.lbx ..\dist\ >nul
+copy /Y italian-coppe.lbx ..\dist\ >nul
+copy /Y coppe-lang-spanish.def ..\dist\ >nul
+copy /Y coppe-lang-french.def ..\dist\ >nul
+copy /Y coppe-lang-italian.def ..\dist\ >nul
 copy /Y coppe.ist ..\dist\ >nul
 copy /Y latexmkrc ..\dist\ >nul
 copy /Y coppe.pdf ..\dist\ >nul

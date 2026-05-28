@@ -1,0 +1,106 @@
+%%
+%% This is file `coppe-lang-spanish.def',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% coppe.dtx  (with options: `langes')
+%% 
+%% This is the `coppe' document class used for composition of LaTeX
+%% monographs (master and PhD thesis, and PhD qualifying exams)
+%% satisfying the requirements of the Coordination of Research and
+%% Graduate Courses in Engineering at the Federal University of
+%% Rio de Janeiro.
+%% 
+%% Copyright (C) 2008 Vicente Helano and George Ainsworth Jr.
+%% Copyright (C) 2024 Vicente Helano and George Ainsworth Jr. and Geraldo Xexéo and Eduardo Mangeli
+%% 
+%% This program is free software; you can redistribute it and/or modify
+%% it under the terms of the GNU General Public License version 3 as
+%% published by the Free Software Foundation.
+%% 
+%% This program is distributed in the hope that it will be useful,
+%% but WITHOUT ANY WARRANTY; without even the implied warranty of
+%% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+%% GNU General Public License version 3 for more details.
+%% 
+%% You should have received a copy of the GNU General Public License
+%% version 3 along with this package (see COPYING file).
+%% If not, see <http://www.gnu.org/licenses/>.
+%% 
+%% Author(s): Vicente Helano,
+%%            George Ainsworth
+%%            Geraldo Xexéo
+%%            Eduardo Mangeli
+%% 
+%% \CheckSum{0}
+%% \CharacterTable
+%%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+%%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+%%   Digits        \0\1\2\3\4\5\6\7\8\9
+%%   Exclamation   \!     Double quote  \"     Hash (number) \#
+%%   Dollar        \$     Percent       \%     Ampersand     \&
+%%   Acute accent  \'     Left paren    \(     Right paren   \)
+%%   Asterisk      \*     Plus          \+     Comma         \,
+%%   Minus         \-     Point         \.     Solidus       \/
+%%   Colon         \:     Semicolon     \;     Less than     \<
+%%   Equals        \=     Greater than  \>     Question mark \?
+%%   Commercial at \@     Left bracket  \[     Backslash     \\
+%%   Right bracket \]     Circumflex    \^     Underscore    \_
+%%   Grave accent  \`     Left brace    \{     Vertical bar  \|
+%%   Right brace   \}     Tilde         \~}
+%%
+%% coppe-lang-spanish.def -- CoppeTeX 4.x Spanish class-string pack.
+%% Loaded by coppe.cls when \documentclass[spanish]{coppe} (or any other
+%% spanish slot) is active. Populates the dispatcher table for the
+%% spanish language and registers the biblatex language mapping.
+%% Institutional names (universityname/cityname/statename/countryname)
+%% are deliberately kept Portuguese: the COPPE/UFRJ cover and folha de
+%% rosto are a Brazilian institutional template that does not translate.
+\ProvidesFile{coppe-lang-spanish.def}[2026/05/28 v3.9 CoppeTeX spanish class strings]
+\copperdefstring{spanish}{appendix}        {Ap\'endice}
+\copperdefstring{spanish}{annex}           {Anexo}
+\copperdefstring{spanish}{frame}           {Cuadro}
+\copperdefstring{spanish}{listframe}       {Lista de Cuadros}
+\copperdefstring{spanish}{source}          {Fuente}
+\copperdefstring{spanish}{program}         {Programa}
+\copperdefstring{spanish}{listprogram}     {Lista de Programas}
+\copperdefstring{spanish}{references}      {Referencias}
+\copperdefstring{spanish}{in:}             {en}
+\copperdefstring{spanish}{art}             {Arte}
+\copperdefstring{spanish}{platform}        {Plataforma}
+\copperdefstring{spanish}{directedby}      {Direcci\'on}
+\copperdefstring{spanish}{producedby}      {Producci\'on}
+\copperdefstring{spanish}{listabbreviation}{Lista de Abreviaturas y Siglas}
+\copperdefstring{spanish}{listsymbol}      {Lista de S\'imbolos}
+\copperdefstring{spanish}{glossary}        {Glosario}
+\copperdefstring{spanish}{advisor}         {Director}
+\copperdefstring{spanish}{advisors}        {Directores}
+\copperdefstring{spanish}{dept}            {Programa}
+\copperdefstring{spanish}{approvedmale}    {Examinado por}
+\copperdefstring{spanish}{approvedfemale}  {Examinada por}
+\copperdefstring{spanish}{universityname}{Universidade Federal do Rio de Janeiro}
+\copperdefstring{spanish}{cityname}    {Rio de Janeiro}
+\copperdefstring{spanish}{statename}   {RJ}
+\copperdefstring{spanish}{countryname} {Brasil}
+\copperdefstring{spanish}{monthname1} {enero}
+\copperdefstring{spanish}{monthname2} {febrero}
+\copperdefstring{spanish}{monthname3} {marzo}
+\copperdefstring{spanish}{monthname4} {abril}
+\copperdefstring{spanish}{monthname5} {mayo}
+\copperdefstring{spanish}{monthname6} {junio}
+\copperdefstring{spanish}{monthname7} {julio}
+\copperdefstring{spanish}{monthname8} {agosto}
+\copperdefstring{spanish}{monthname9} {septiembre}
+\copperdefstring{spanish}{monthname10}{octubre}
+\copperdefstring{spanish}{monthname11}{noviembre}
+\copperdefstring{spanish}{monthname12}{diciembre}
+\copperdefstring{spanish}{algorithm2eopt}{spanish}
+\copperdefstring{spanish}{babelname}     {spanish}
+%% biblatex is loaded by coppe.cls AFTER this .def file is read; defer the
+%% language-mapping registration until \begin{document} so biblatex's
+%% \DeclareLanguageMapping is available.
+\AtBeginDocument{\DeclareLanguageMapping{spanish}{spanish-coppe}}
+%% 
+%%
+%% End of file `coppe-lang-spanish.def'.
