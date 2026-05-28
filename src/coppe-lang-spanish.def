@@ -57,7 +57,7 @@
 %% Institutional names (universityname/cityname/statename/countryname)
 %% are deliberately kept Portuguese: the COPPE/UFRJ cover and folha de
 %% rosto are a Brazilian institutional template that does not translate.
-\ProvidesFile{coppe-lang-spanish.def}[2026/05/28 v3.9 CoppeTeX spanish class strings]
+\ProvidesFile{coppe-lang-spanish.def}[2026/05/28 v4.0 CoppeTeX spanish class strings]
 \copperdefstring{spanish}{appendix}        {Ap\'endice}
 \copperdefstring{spanish}{annex}           {Anexo}
 \copperdefstring{spanish}{frame}           {Cuadro}

@@ -55,7 +55,7 @@
 %% language option for Italian is spelled "italiano" -- that's the
 %% spelling algorithm2e ships, even though babel calls the language
 %% "italian".
-\ProvidesFile{coppe-lang-italian.def}[2026/05/28 v3.9 CoppeTeX italian class strings]
+\ProvidesFile{coppe-lang-italian.def}[2026/05/28 v4.0 CoppeTeX italian class strings]
 \copperdefstring{italian}{appendix}        {Appendice}
 \copperdefstring{italian}{annex}           {Allegato}
 \copperdefstring{italian}{frame}           {Riquadro}

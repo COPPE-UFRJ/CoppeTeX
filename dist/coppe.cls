@@ -51,8 +51,8 @@
 %%   Right brace   \}     Tilde         \~}
 %%
 \def\filename{coppe.dtx}
-\def\fileversion{v3.8}
-\def\filedate{2026/05/25}
+\def\fileversion{v4.0}
+\def\filedate{2026/05/28}
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{coppe}[\filedate\ \fileversion\ COPPE Dissertations and Thesis]
 \LoadClass[12pt,a4paper,twoside]{book}

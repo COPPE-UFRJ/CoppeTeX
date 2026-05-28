@@ -99,6 +99,9 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \changes{v3.2}{2023/11/11}{Fixed version problem between cls and dtx.}
 % \changes{v3.3}{2024/01/24}{Extend abrev to work like symb and accept a sorting key}
 % \changes{v3.4}{2024/02/22}{Some examples for figures, tables, longtables, etc.}
+% \changes{v4.0}{2026/05/28}{Multilingual model: three fixed slots (main, foreign, optional third); five built-in language options (brazilian, english, spanish, french, italian); plug-in mechanism for any other Babel language via coppe-lang-lang.def plus lang-coppe.lbx.}
+% \changes{v4.0}{2026/05/28}{New user API: titlein, usecoppelanguage, brazilianabstract environment.}
+% \changes{v4.0}{2026/05/28}{Class-wide string dispatcher (copperdefstring, coppestring, coppemainstring, coppeforeignstring) replaces scattered iflanguage and if english branches; pt/en outputs remain byte-identical.}
 %
 % \DoNotIndex{\!,\',\.,\>,\^,\`,\',\=,\\}
 % \DoNotIndex{\@arabic,\@auxout,\@biblabel,\@bsphack,\@clubpenalty,\@empty}
@@ -691,7 +694,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \DeclareMathOperator{\RMSE}{RMSE}% operadores próprios (cap. de matemática)
 \DeclareMathOperator{\diag}{diag}
 \usepackage{hyperref}
-% listings, fancyvrb e algorithm2e já vêm carregados pela classe coppe (v3.8).
+% listings, fancyvrb e algorithm2e já vêm carregados pela classe coppe (v4.0).
 
 \addbibresource{example.bib}% base de referências (biblatex/biber)
 
@@ -1601,8 +1604,8 @@ No modelo \CoppeTeX os anexos devem obrigtoriamente vir depois dos apêndices e 
 %    \begin{macrocode}
 %<*class>
 \def\filename{coppe.dtx}
-\def\fileversion{v3.8}
-\def\filedate{2026/05/25}
+\def\fileversion{v4.0}
+\def\filedate{2026/05/28}
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{coppe}[\filedate\ \fileversion\ COPPE Dissertations and Thesis]
 \LoadClass[12pt,a4paper,twoside]{book}
@@ -3162,7 +3165,7 @@ postamble
 %
 %    \begin{macrocode}
 %<*dbx>
-\ProvidesFile{coppe.dbx}[2026/05/23 v3.8 CoppeTeX ABNT datamodel]
+\ProvidesFile{coppe.dbx}[2026/05/28 v4.0 CoppeTeX ABNT datamodel]
 % Custom entry types beyond biblatex's standard datamodel (games, TV, maps).
 % map = cartographic document (NBR 6023 4.2.12); biblatex has no native @map.
 % The remaining ABNT "exotic" types (legislation, jurisdiction, legal, patent,
@@ -3187,7 +3190,7 @@ postamble
 \DeclareDatamodelEntryfields[jurisdiction]{relator}
 %</dbx>
 %<*bbx>
-\ProvidesFile{coppe.bbx}[2026/05/23 v3.8 CoppeTeX ABNT bibliography style]
+\ProvidesFile{coppe.bbx}[2026/05/28 v4.0 CoppeTeX ABNT bibliography style]
 % The reference list is single-spaced (ABNT 2.4) via \singlespacing in
 % \AtBeginBibliography. coppe.cls already loads setspace, but the style must work
 % standalone too (e.g. \usepackage[bibstyle=coppe]{biblatex} in a plain article),
@@ -3590,7 +3593,7 @@ postamble
 
 %</bbx>
 %<*cbx>
-\ProvidesFile{coppe.cbx}[2026/05/23 v3.8 CoppeTeX ABNT author-date citations]
+\ProvidesFile{coppe.cbx}[2026/05/28 v4.0 CoppeTeX ABNT author-date citations]
 % Author-date is the CoppeTeX 4.0 default. authoryear-comp gives compressed
 % author-year cites with normal-caps names (post-2020 rule) out of the box.
 \RequireCitationStyle{authoryear-comp}
@@ -3623,7 +3626,7 @@ postamble
     \ifblank{#1}{}{\addcomma\space\mkpageprefix[pagination]{#1}}}}
 %</cbx>
 %<*lbxbr>
-\ProvidesFile{brazilian-coppe.lbx}[2026/05/23 v3.8 CoppeTeX brazilian strings]
+\ProvidesFile{brazilian-coppe.lbx}[2026/05/28 v4.0 CoppeTeX brazilian strings]
 \InheritBibliographyExtras{brazilian}
 \NewBibliographyString{availablefrom,mscdiss,dscthesis,tcc,depositor,coppescale}
 \DeclareBibliographyStrings{%
@@ -3642,7 +3645,7 @@ postamble
 }
 %</lbxbr>
 %<*lbxen>
-\ProvidesFile{english-coppe.lbx}[2026/05/23 v3.8 CoppeTeX english strings]
+\ProvidesFile{english-coppe.lbx}[2026/05/28 v4.0 CoppeTeX english strings]
 \InheritBibliographyExtras{english}
 \NewBibliographyString{availablefrom,mscdiss,dscthesis,tcc,depositor,coppescale}
 \DeclareBibliographyStrings{%
@@ -3659,7 +3662,7 @@ postamble
 }
 %</lbxen>
 %<*lbxes>
-\ProvidesFile{spanish-coppe.lbx}[2026/05/28 v3.9 CoppeTeX spanish strings]
+\ProvidesFile{spanish-coppe.lbx}[2026/05/28 v4.0 CoppeTeX spanish strings]
 \InheritBibliographyExtras{spanish}
 \NewBibliographyString{availablefrom,mscdiss,dscthesis,tcc,depositor,coppescale}
 \DeclareBibliographyStrings{%
@@ -3678,7 +3681,7 @@ postamble
 }
 %</lbxes>
 %<*lbxfr>
-\ProvidesFile{french-coppe.lbx}[2026/05/28 v3.9 CoppeTeX french strings]
+\ProvidesFile{french-coppe.lbx}[2026/05/28 v4.0 CoppeTeX french strings]
 \InheritBibliographyExtras{french}
 \NewBibliographyString{availablefrom,mscdiss,dscthesis,tcc,depositor,coppescale}
 \DeclareBibliographyStrings{%
@@ -3697,7 +3700,7 @@ postamble
 }
 %</lbxfr>
 %<*lbxit>
-\ProvidesFile{italian-coppe.lbx}[2026/05/28 v3.9 CoppeTeX italian strings]
+\ProvidesFile{italian-coppe.lbx}[2026/05/28 v4.0 CoppeTeX italian strings]
 \InheritBibliographyExtras{italian}
 \NewBibliographyString{availablefrom,mscdiss,dscthesis,tcc,depositor,coppescale}
 \DeclareBibliographyStrings{%
@@ -3723,7 +3726,7 @@ postamble
 %% Institutional names (universityname/cityname/statename/countryname)
 %% are deliberately kept Portuguese: the COPPE/UFRJ cover and folha de
 %% rosto are a Brazilian institutional template that does not translate.
-\ProvidesFile{coppe-lang-spanish.def}[2026/05/28 v3.9 CoppeTeX spanish class strings]
+\ProvidesFile{coppe-lang-spanish.def}[2026/05/28 v4.0 CoppeTeX spanish class strings]
 \copperdefstring{spanish}{appendix}        {Ap\'endice}
 \copperdefstring{spanish}{annex}           {Anexo}
 \copperdefstring{spanish}{frame}           {Cuadro}
@@ -3772,7 +3775,7 @@ postamble
 %% coppe-lang-french.def -- CoppeTeX 4.x French class-string pack.
 %% See coppe-lang-spanish.def for the structure. Institutional names
 %% remain Portuguese; only document-content strings translate.
-\ProvidesFile{coppe-lang-french.def}[2026/05/28 v3.9 CoppeTeX french class strings]
+\ProvidesFile{coppe-lang-french.def}[2026/05/28 v4.0 CoppeTeX french class strings]
 \copperdefstring{french}{appendix}        {Annexe}
 \copperdefstring{french}{annex}           {Annexe}
 \copperdefstring{french}{frame}           {Encadr\'e}
@@ -3820,7 +3823,7 @@ postamble
 %% language option for Italian is spelled "italiano" -- that's the
 %% spelling algorithm2e ships, even though babel calls the language
 %% "italian".
-\ProvidesFile{coppe-lang-italian.def}[2026/05/28 v3.9 CoppeTeX italian class strings]
+\ProvidesFile{coppe-lang-italian.def}[2026/05/28 v4.0 CoppeTeX italian class strings]
 \copperdefstring{italian}{appendix}        {Appendice}
 \copperdefstring{italian}{annex}           {Allegato}
 \copperdefstring{italian}{frame}           {Riquadro}
@@ -3863,7 +3866,7 @@ postamble
 \AtBeginDocument{\DeclareLanguageMapping{italian}{italian-coppe}}
 %</langit>
 %<*numbbx>
-\ProvidesFile{coppe-numeric.bbx}[2026/05/24 v3.8 CoppeTeX ABNT numeric bibliography]
+\ProvidesFile{coppe-numeric.bbx}[2026/05/28 v4.0 CoppeTeX ABNT numeric bibliography]
 % Numeric reference list for the ABNT numeric system (NBR 10520). It reuses the
 % full coppe ABNT style (drivers, CAPS surnames, bold titles, "In:", p./f.,
 % the PT->EN source map and the language mappings) and only adds the [n] list
@@ -3898,7 +3901,7 @@ postamble
 
 %</numbbx>
 %<*numcbx>
-\ProvidesFile{coppe-numeric.cbx}[2026/05/24 v3.8 CoppeTeX ABNT numeric citations]
+\ProvidesFile{coppe-numeric.cbx}[2026/05/28 v4.0 CoppeTeX ABNT numeric citations]
 % Numeric citation system (ABNT NBR 10520): in-text references are bracketed
 % numbers [1], compressed and sorted within a single cite group. This is the
 % opt-in alternative to the author-date default (coppe.cbx); it pairs with

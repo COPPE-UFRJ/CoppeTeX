@@ -50,7 +50,7 @@
 %%   Grave accent  \`     Left brace    \{     Vertical bar  \|
 %%   Right brace   \}     Tilde         \~}
 %%
-\ProvidesFile{coppe.dbx}[2026/05/23 v3.8 CoppeTeX ABNT datamodel]
+\ProvidesFile{coppe.dbx}[2026/05/28 v4.0 CoppeTeX ABNT datamodel]
 \DeclareDatamodelEntrytypes{game,videogame,boardgame,tvshow,map}
 \DeclareDatamodelFields[type=field,datatype=literal]{course}      % "(... em <course>)"
 \DeclareDatamodelFields[type=field,datatype=literal]{coppedegree} % degree word

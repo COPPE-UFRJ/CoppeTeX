@@ -53,7 +53,7 @@
 %% coppe-lang-french.def -- CoppeTeX 4.x French class-string pack.
 %% See coppe-lang-spanish.def for the structure. Institutional names
 %% remain Portuguese; only document-content strings translate.
-\ProvidesFile{coppe-lang-french.def}[2026/05/28 v3.9 CoppeTeX french class strings]
+\ProvidesFile{coppe-lang-french.def}[2026/05/28 v4.0 CoppeTeX french class strings]
 \copperdefstring{french}{appendix}        {Annexe}
 \copperdefstring{french}{annex}           {Annexe}
 \copperdefstring{french}{frame}           {Encadr\'e}
