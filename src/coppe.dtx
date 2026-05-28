@@ -254,12 +254,17 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %
 % \DescribeMacro{\title}
 % \DescribeMacro{\foreigntitle}
-% The macros |\title| and |\foreigntitle| are used to enter the titles of your
-% monograph in the current and foreign languages. The default languages are
-% Brazilian Portuguese and English.  The |babel| package is automatically
-% loaded by |coppe.cls|, so you do not need to load it again. The Brazilian
-% Portuguese is the main language and the English is only required for the
-% foreign abstract.
+% \DescribeMacro{\titlein}
+% The macros |\title| and |\foreigntitle| are used to enter the titles of
+% your monograph in Brazilian Portuguese and English respectively (the
+% two built-in languages of CoppeTeX 4.x). For documents whose main
+% language is neither |brazilian| nor |english| -- e.g.\ |spanish|,
+% |french|, |italian|, or a user-supplied language --, also call
+% |\titlein{<lang>}{<text>}| to register the title in that language; the
+% cover and folha de rosto print whichever title matches the main
+% language declared in the class option. See the section ``Multilingual
+% support'' below for the complete picture. The |babel| package is loaded
+% automatically by |coppe.cls|, so you do not need to load it yourself.
 %
 % \DescribeMacro{\advisor}
 % \DescribeMacro{\examiner}
@@ -483,10 +488,31 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %   class; the reference list is then numbered in order of citation (unsorted).
 %   The matching |biblatex| style is selected automatically in either case.
 %
-%   \item[\texttt{english}] \CoppeTeX\  uses Babel. The default language
-%    is Portuguese (actually \verb|brazilian|), with English being the second language. If option \verb|english| is
-%    used, English becomes the main language and Portuguese the secondary. Look at the Babel package
-%    to switch between languages.
+%   \item[\texttt{brazilian, english, spanish, french, italian}]
+%   Pick the document's \emph{main} language. The class loads Babel with
+%   that language as the main one (the last in the Babel option list);
+%   inside the document |\selectlanguage{...}| and
+%   |\begin{otherlanguage}{...}| keep working as usual. The default,
+%   when no language option is given, is |brazilian|.
+%
+%   \begin{itemize}
+%   \item |brazilian| and |english| are \emph{built-in}: their strings
+%     ship inside |coppe.cls| and need no extra file. |english| also
+%     keeps the historical |\if@english| behavior intact.
+%   \item |spanish|, |french|, |italian| are shipped as \emph{language
+%     packs}: two files per language (|coppe-lang-<lang>.def| and
+%     |<lang>-coppe.lbx|) that must sit next to |coppe.cls| (or in your
+%     project directory). They are auto-loaded by the class. Picking one
+%     of them as the main language without the matching pack files
+%     installed raises a clear class error.
+%   \item Any other Babel-known language can be plugged in by writing the
+%     same two files and either passing the language name as a class
+%     option or calling |\usecoppelanguage{<lang>}| in the preamble.
+%   \end{itemize}
+%
+%   See the section ``Multilingual support'' below for the three-slot
+%   architecture, the |\titlein| / |\brazilianabstract| API, and how to
+%   create a new language pack.
 %
 % \end{description}
 %
@@ -499,6 +525,116 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % in the following example:
 % \begin{verbatim}
 %     \freeconfig{Dr.}{Philosophiae Doctor}{PhD}{Doutor}{Dissertation}{Tese}
+% \end{verbatim}
+%
+% \subsection{Multilingual support}\label{sec:multilingual}
+%
+% CoppeTeX 4.x reserves three fixed language slots:
+%
+% \begin{description}
+%   \item[main]   the language of the body, captions, TOC labels and the
+%     |abstract| environment. Picked by the class option (|brazilian| by
+%     default; one of |english|, |spanish|, |french|, |italian| also
+%     accepted out of the box; any other Babel language possible with a
+%     user-supplied pack).
+%   \item[foreign] the language of the |foreignabstract| environment.
+%     |english| by default for every main language; switches automatically
+%     to |brazilian| when |main = english|.
+%   \item[third]  optional. Loaded on demand with
+%     |\usecoppelanguage{<lang>}| in the preamble, useful when the body
+%     quotes or cites in a third language (e.g.\ a Spanish-main thesis
+%     citing a French source). Does not have a class option of its own.
+% \end{description}
+%
+% \DescribeMacro{\titlein}
+% \DescribeEnv{brazilianabstract}
+% \DescribeMacro{\usecoppelanguage}
+% Two pieces of user-facing API come with the multilingual model:
+%
+% \begin{itemize}
+%   \item |\titlein{<lang>}{<text>}| records the title in any language.
+%     |\title{...}| still writes the Brazilian-Portuguese title and
+%     |\foreigntitle{...}| still writes the English one (back-compat);
+%     for a main language outside the |brazilian|/|english| pair, also
+%     call |\titlein{<lang>}{...}|. The cover and folha de rosto print
+%     whichever title matches |\coppe@mainlang|.
+%   \item The |brazilianabstract| environment is the optional third
+%     abstract used when the main language is neither |brazilian| nor
+%     |english| -- typically a Spanish/French/Italian thesis that also
+%     wants a Portuguese resumo for UFRJ examiners. It wraps its body
+%     in |\begin{otherlanguage}{brazilian}| and uses the Portuguese
+%     template strings. A document with |main = brazilian| can simply
+%     keep using |abstract|; |brazilianabstract| is redundant then.
+%   \item |\usecoppelanguage{<lang>}| loads an extra language pack in
+%     the preamble without making it the main or foreign language.
+% \end{itemize}
+%
+% \subsubsection*{Institutional names stay Portuguese}
+%
+% The cover, folha de rosto and ficha catalogr\'afica are a Brazilian
+% institutional template (NBR 14724 + COPPE manual). The strings
+% |universityname|, |cityname|, |statename|, |countryname|, the
+% departments declared with |\department| and the surrounding
+% ``apresentada/submetida ao\dots'' wording are deliberately kept in
+% Portuguese for every main language. Only the title (printed via
+% |\coppe@selecttitle|) follows the main language.
+%
+% \subsubsection*{Writing a new language pack}
+%
+% A language pack is just two files dropped next to |coppe.cls| (or
+% anywhere on the |TEXINPUTS| path):
+%
+% \begin{description}
+%   \item[\texttt{coppe-lang-<lang>.def}] class-level strings.
+%     Populate the dispatcher table with |\copperdefstring{<lang>}{<key>}{<value>}|
+%     for every key already populated for |brazilian|/|english| in
+%     |coppe.cls| (|appendix|, |annex|, |frame|, |listframe|, |source|,
+%     |program|, |listprogram|, |references|, |in:|, |art|, |platform|,
+%     |directedby|, |producedby|, |listabbreviation|, |listsymbol|,
+%     |glossary|, |advisor|, |advisors|, |dept|, |approvedmale|,
+%     |approvedfemale|, |universityname|, |cityname|, |statename|,
+%     |countryname|, |monthname1|\dots |monthname12|, |algorithm2eopt|,
+%     |babelname|). Finish with
+% \begin{verbatim}
+%     \AtBeginDocument{\DeclareLanguageMapping{<lang>}{<lang>-coppe}}
+% \end{verbatim}
+%     so the |biblatex| mapping is registered after the bibliography
+%     engine is loaded by |coppe.cls| (which happens \emph{after} the
+%     language pack is read).
+%   \item[\texttt{<lang>-coppe.lbx}] |biblatex| localization strings.
+%     |\InheritBibliographyExtras{<lang>}| then |\DeclareBibliographyStrings|
+%     for the keys |availablefrom|, |urlseen|, |in|, |editor|, |editors|,
+%     |depositor|, |coppescale|, |mscdiss|, |dscthesis|, |phdthesis|,
+%     |tcc|. The shipped |spanish-coppe.lbx|, |french-coppe.lbx| and
+%     |italian-coppe.lbx| are the reference templates to copy from.
+% \end{description}
+%
+% Tip: the |algorithm2eopt| key holds whatever |algorithm2e| calls the
+% language. Mind the spelling: |algorithm2e| ships |portuguese|, |english|,
+% |spanish|, |french| and |italiano| -- not |italian|.
+%
+% \subsubsection*{Example: a Spanish-main thesis}
+%
+% \begin{verbatim}
+%     \documentclass[spanish,dsc]{coppe}
+%     \addbibresource{example.bib}
+%     \begin{document}
+%       \title{T\'\i tulo em portugu\^es}     % Brazilian abstract slot
+%       \foreigntitle{English title}           % English abstract slot
+%       \titlein{spanish}{T\'\i tulo en espa\~nol}  % cover/folha
+%       \author{Juan}{P\'erez}
+%       \advisor{Prof.}{Mar\'\i a}{Garc\'\i a}{D.Sc.}
+%       \department{PESC}\date{01}{2026}
+%       \keyword{multilenguaje}
+%       \maketitle
+%       \frontmatter
+%       \begin{abstract}        Resumen principal en espa\~nol.   \end{abstract}
+%       \begin{foreignabstract} English foreign abstract.         \end{foreignabstract}
+%       \begin{brazilianabstract} Resumo em portugu\^es para a banca. \end{brazilianabstract}
+%       \tableofcontents
+%       \mainmatter
+%       \chapter{Introducci\'on} Cuerpo en espa\~nol\dots
+%     \end{document}
 % \end{verbatim}
 %
 % \section{Quick, useful tips}
