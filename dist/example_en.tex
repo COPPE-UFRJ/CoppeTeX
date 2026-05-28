@@ -1,0 +1,32 @@
+% example_en.tex -- CoppeTeX 4.0 multilingual demo, main language: english.
+\documentclass[english,dsc]{coppe}
+\addbibresource{example.bib}
+\begin{document}
+  \title{Demonstração da classe CoppeTeX 4.0 em português}
+  \foreigntitle{CoppeTeX 4.0 class demonstration in English}
+  \author{Author's}{Name}
+  \advisor{Prof.}{First}{Advisor}{D.Sc.}
+  \examiner{Prof.}{First Examiner}{D.Sc.}
+  \examiner{Prof.}{Second Examiner}{D.Sc.}
+  \department{PESC}
+  \date{05}{2026}
+  \keyword{Multilingual}
+  \keyword{Demonstration}
+  \maketitle
+  \frontmatter
+  \begin{abstract}
+    This is the main abstract in English, used when the class is loaded
+    with the \texttt{english} option. Lorem ipsum dolor sit amet,
+    consectetur adipiscing elit.
+  \end{abstract}
+  \begin{foreignabstract}
+    Este é o resumo em língua estrangeira (português), produzido pelo
+    ambiente \texttt{foreignabstract} quando o idioma principal é o inglês.
+  \end{foreignabstract}
+  \tableofcontents
+  \mainmatter
+  \chapter{Introduction}
+  This chapter shows that the body is composed in English while the
+  cover and folha-de-rosto remain in Portuguese (the UFRJ institutional
+  template).
+\end{document}

@@ -1,0 +1,35 @@
+% example_pt.tex -- CoppeTeX 4.0 multilingual demo, main language: brazilian.
+% Short demonstration document (cover + folha + abstracts + 1 chapter) used
+% by the CPGP submission package. The full pt-main example with bibliography
+% and lists is the historical example.tex.
+\documentclass[dsc]{coppe}
+\addbibresource{example.bib}
+\begin{document}
+  \title{Demonstração da classe CoppeTeX 4.0 em português}
+  \foreigntitle{CoppeTeX 4.0 class demonstration in English}
+  \author{Nome do}{Autor}
+  \advisor{Prof.}{Primeiro}{Orientador}{D.Sc.}
+  \examiner{Prof.}{Primeiro Examinador}{D.Sc.}
+  \examiner{Prof.}{Segundo Examinador}{D.Sc.}
+  \department{PESC}
+  \date{05}{2026}
+  \keyword{Multilíngue}
+  \keyword{Demonstração}
+  \maketitle
+  \frontmatter
+  \begin{abstract}
+    Este é o resumo principal em português, idioma escolhido por padrão
+    quando nenhuma opção de idioma é passada para a classe \texttt{coppe}.
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+  \end{abstract}
+  \begin{foreignabstract}
+    This is the foreign abstract in English. With a Brazilian-Portuguese
+    main language, \texttt{foreignabstract} defaults to English by class
+    convention.
+  \end{foreignabstract}
+  \tableofcontents
+  \mainmatter
+  \chapter{Introdução}
+  Este capítulo demonstra que o corpo do trabalho é composto em português,
+  com legendas, citações e referências automaticamente em português.
+\end{document}

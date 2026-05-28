@@ -19,6 +19,18 @@ makeindex -s coppe.ist -o example.los example.syx
 pdflatex example.tex
 pdflatex example.tex
 
+:: --- Multilingual demo PDFs (CPGP submission): one per built-in language.
+:: Short documents (cover + folha + abstracts + 1 chapter) that exercise
+:: the v4.0 three-slot multilingual model with each main language.
+for %%L in (pt en es fr it) do (
+  pdflatex example_%%L.tex
+  biber example_%%L
+  makeindex -s coppe.ist -o example_%%L.lab example_%%L.abx
+  makeindex -s coppe.ist -o example_%%L.los example_%%L.syx
+  pdflatex example_%%L.tex
+  pdflatex example_%%L.tex
+)
+
 :: --- Manual (futuremanual2026.pdf): the COPPE thesis norms written with the
 :: coppe class; same build chain as the example (biblatex + lists). ---
 pdflatex futuremanual2026.tex
@@ -55,6 +67,10 @@ copy /Y ufrj-logo.pdf ..\dist\ >nul
 copy /Y example.tex ..\dist\ >nul
 copy /Y example.bib ..\dist\ >nul
 copy /Y example.pdf ..\dist\ >nul
+for %%L in (pt en es fr it) do (
+  copy /Y example_%%L.tex ..\dist\ >nul
+  copy /Y example_%%L.pdf ..\dist\ >nul
+)
 copy /Y ..\README.md ..\dist\ >nul
 copy /Y ..\COPYING ..\dist\ >nul
 :: Remove the retired bibtex styles (replaced by the biblatex style files).

@@ -1,0 +1,42 @@
+% example_fr.tex -- CoppeTeX 4.0 multilingual demo, main language: french.
+% Requires the language pack files coppe-lang-french.def and
+% french-coppe.lbx to be installed alongside coppe.cls.
+\documentclass[french,dsc]{coppe}
+\addbibresource{example.bib}
+\begin{document}
+  \title{Demonstração da classe CoppeTeX 4.0 em português}
+  \foreigntitle{CoppeTeX 4.0 class demonstration in English}
+  \titlein{french}{D\'emonstration de la classe CoppeTeX 4.0 en fran\c{c}ais}
+  \author{Pr\'enom de}{l'Auteur}
+  \advisor{Prof.}{Premier}{Directeur}{D.Sc.}
+  \examiner{Prof.}{Premier Examinateur}{D.Sc.}
+  \examiner{Prof.}{Deuxi\`eme Examinateur}{D.Sc.}
+  \department{PESC}
+  \date{05}{2026}
+  \keyword{Multilingue}
+  \keyword{D\'emonstration}
+  \maketitle
+  \frontmatter
+  \begin{abstract}
+    Ceci est le r\'esum\'e principal en fran\c{c}ais. La th\`ese est
+    r\'edig\'ee en fran\c{c}ais comme langue principale, avec la
+    couverture conserv\'ee en portugais selon la convention
+    institutionnelle de l'UFRJ. Lorem ipsum dolor sit amet, consectetur
+    adipiscing elit.
+  \end{abstract}
+  \begin{foreignabstract}
+    This is the English foreign abstract. Required in CoppeTeX whichever
+    the main language is, for international readability.
+  \end{foreignabstract}
+  \begin{brazilianabstract}
+    Este \'e o resumo em portugu\^es, oferecido pelo ambiente
+    \texttt{brazilianabstract} para a leitura da banca brasileira quando
+    o idioma principal n\~ao \'e o portugu\^es.
+  \end{brazilianabstract}
+  \tableofcontents
+  \mainmatter
+  \chapter{Introduction}
+  Ce chapitre d\'emontre le corps r\'edig\'e en fran\c{c}ais, tandis que
+  la couverture et la folha-de-rosto restent en portugais (mod\`ele
+  institutionnel UFRJ).
+\end{document}

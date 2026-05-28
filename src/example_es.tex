@@ -1,0 +1,41 @@
+% example_es.tex -- CoppeTeX 4.0 multilingual demo, main language: spanish.
+% Requires the language pack files coppe-lang-spanish.def and
+% spanish-coppe.lbx to be installed alongside coppe.cls.
+\documentclass[spanish,dsc]{coppe}
+\addbibresource{example.bib}
+\begin{document}
+  \title{Demonstração da classe CoppeTeX 4.0 em português}
+  \foreigntitle{CoppeTeX 4.0 class demonstration in English}
+  \titlein{spanish}{Demostración de la clase CoppeTeX 4.0 en espa\~nol}
+  \author{Nombre del}{Autor}
+  \advisor{Prof.}{Primer}{Director}{D.Sc.}
+  \examiner{Prof.}{Primer Examinador}{D.Sc.}
+  \examiner{Prof.}{Segundo Examinador}{D.Sc.}
+  \department{PESC}
+  \date{05}{2026}
+  \keyword{Multilenguaje}
+  \keyword{Demostraci\'on}
+  \maketitle
+  \frontmatter
+  \begin{abstract}
+    Este es el resumen principal en espa\~nol. La tesis est\'a escrita
+    en espa\~nol como idioma principal, con la portada conservada en
+    portugu\'es por convenci\'on institucional de la UFRJ. Lorem ipsum
+    dolor sit amet, consectetur adipiscing elit.
+  \end{abstract}
+  \begin{foreignabstract}
+    This is the English foreign abstract. Mandatory in CoppeTeX whichever
+    the main language is, for international readability.
+  \end{foreignabstract}
+  \begin{brazilianabstract}
+    Este \'e o resumo em portugu\^es, oferecido pelo ambiente
+    \texttt{brazilianabstract} para a leitura da banca brasileira quando o
+    idioma principal n\~ao \'e o portugu\^es.
+  \end{brazilianabstract}
+  \tableofcontents
+  \mainmatter
+  \chapter{Introducci\'on}
+  Este cap\'itulo demuestra el cuerpo en espa\~nol, mientras la portada
+  y la folha-de-rosto permanecen en portugu\'es (plantilla institucional
+  UFRJ).
+\end{document}
