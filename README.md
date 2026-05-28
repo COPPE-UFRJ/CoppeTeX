@@ -29,6 +29,14 @@ submitted for evaluation by the Comissão de Programas de Pós-Graduação (CPGP
 of COPPE/UFRJ. Subject to CPGP review and approval, it will become the next
 official release of the `coppe` class.
 
+The accompanying draft of the updated COPPE norm — short, in Portuguese, and
+written to delegate to the UFRJ 2025 *Manual para Elaboração e Normalização
+de Trabalhos Acadêmicos* — is in [`NORMA_COPPE_2026.md`](./NORMA_COPPE_2026.md).
+It lists only the COPPE-specific deltas (institutional identity, three-abstract
+structure, main-language choice, COPPE lists, apêndice/anexo layout,
+pre-textual numbering, ABNT post-2020 adoption) and cites CoppeTeX 4.x as the
+implementation of reference.
+
 ### What it changes
 
 The class gains a three-slot multilingual model — *main* / *foreign* /
