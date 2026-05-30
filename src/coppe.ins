@@ -103,6 +103,14 @@ class and its biblatex/biber bibliography style.
 
 \endpreamble
 
+\declarepreamble\bibpreamble
+
+This is a BibLaTeX/biber bibliographic database for the `coppe' document
+class.  It is generated from coppe.dtx by docstrip; edit the .dtx source,
+not this file.
+
+\endpreamble
+
 \postamble
 % end of `coppe' customized files
 \endpostamble
@@ -113,6 +121,9 @@ class and its biblatex/biber bibliography style.
   \file{coppe.ist}{\from{coppe.dtx}{glossary}}%
   \usepreamble\examplepreamble
   \file{example.tex}{\from{coppe.dtx}{example}}%
+  \usepreamble\bibpreamble
+  \file{example.bib}{\from{coppe.dtx}{examplebib}}%
+  \file{coppe.bib}{\from{coppe.dtx}{coppebib}}%
   \usepreamble\classpreamble
   \file{coppe.cls}{\from{coppe.dtx}{class}}%
   \file{coppe.dbx}{\from{coppe.dtx}{dbx}}%

@@ -21,10 +21,14 @@
 % version 3 along with this package (see COPYING file).
 % If not, see <http://www.gnu.org/licenses/>.
 %
-% Author(s): Vicente Helano
+% Author(s): Geraldo Xexéo
+%            Vicente Helano
 %            George O. Ainsworth Jr.
-%            Geraldo Xexéo
 %            Eduardo Mangeli
+%
+% This style was done with full support of Claude Opus 4.7 and Opus 4.8 Max
+% The AI was used to analyse and create code, discuss better solutions and generate tet
+%
 %
 % \fi
 %
@@ -148,7 +152,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %
 % \title{The |coppe| document class \\
 % Version 3.8 }
-% \author{Vicente H. F. Batista \and George O. Ainsworth Jr. \and Geraldo Xexéo \and Eduardo Mangeli}
+% \author{Geraldo Xexéo \and Vicente H. F. Batista \and George O. Ainsworth Jr. \and  Eduardo Mangeli}
 %
 % \maketitle
 %
@@ -1039,7 +1043,10 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 
   Este é um documento exemplo para o uso da classe CoppeTeX, destinado a ajudar os alunos da do Instituto Alberto Luiz Coimbra de Pós-graduação e Pesquisa de Engenharia (COPPE), da Universidade Federal do Rio de Janeiro.
 
-  A classe \verb|coppe| foi criada por Vicente Helano e George Ainsworth, porém, em 2024, é mantida por Geraldo Xexéo e Eduardo Mangeli. Provavelmente Geraldo Xexéo, professor do Programa de Engenharia de Sistemas e Computação, deve continuar mantendo ou apoiando a manutenção por alguns anos. Se você quiser particiar do grupo de manutenção, é só entrar em contato.
+  A classe \verb|coppe| foi criada originalmente por Vicente Helano e George Ainsworth, porém, em 2024, passou a ser mantida por Geraldo Xexéo e Eduardo Mangeli.
+  Em 2026, Geraldo Xexéo, com forte ajuda das ferramentas Claude 4.7 Opus e Max e 4.8 Opus Max, fez modificações de alta monta para suportar o novo \citetitle{manualbib}, que implementava normas recentes da ABNT.
+  
+   Provavelmente Geraldo Xexéo, professor do Programa de Engenharia de Sistemas e Computação, deve continuar mantendo ou apoiando a manutenção por alguns anos. Se você quiser particiar do grupo de manutenção, é só entrar em contato via github.
 
   A versão mais atual dessa classe é mantida no GitHub, no repositório \url{https://github.com/COPPE-UFRJ/CoppeTeX}. De maneira arbitrária o prof. Geraldo Xexéo criou a organização COPPE-UFRJ no GitHub, e também está disposto a compartilhar com outras iniciativas semelhantes.
 
@@ -1049,10 +1056,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 
   É importante de notar que essa classe não foi construída sobre a classe \LaTeX \  para a ABNT, e que segue de forma geral as regras da ABNT, mas não necessariamente de forma exata, já que o foco foi seguir as regras da Coppe. Essas mesmas regras da Coppe não especificam tudo que realmente seria necessário, então algumas coisas são decisões arbitrárias.
 
-  Apesar desse modelo ser muito bom, ele tem um defeito: a limitação do sistema de referências criados. Primeiramente ele foi criado para o Bib\TeX, e não para o mais poderoso Bib\LaTeX, em segundo lugar, não foi criado de forma independente de linguagem, mas sim apenas para o Português, porque era a regra da época que as monografias deveriam ser exclusivamente em Português. Finalmente, o número de tipos de entrada é pequeno. Isso ainda não foi resolvido, mas está na fila para ser resolvido.
-
-  Mais ainda, as regras da COPPE ainda não se adaptaram, no início de 2024, as novas regras da ABNT para citação, que são mais elegantes por não exigir o uso indiscriminado de maiúsculas.
-
+  Essa classe implementa citações ABNT modernas e vários tipos de entrada descritos na norma.
+    
   Este documento não substitui, mas complementa, o documento que descreve a classe.
 
 
@@ -4336,6 +4341,311 @@ postamble
 \RequireCitationStyle{numeric-comp}
 %</numcbx>
 %    \end{macrocode}
+%
+% \subsection{The bibliographic databases}
+%
+% The two BibLaTeX/biber databases shipped with the class --- |example.bib|
+% (the sample database cited by the example monograph) and |coppe.bib| (the
+% references of this manual) --- are generated from this source too, so the
+% whole distribution still has a single editable origin. They live inside an
+% |\iffalse| block below: the documentation driver never typesets them, and
+% only |coppe.ins| extracts them, through the |examplebib| and |coppebib|
+% docstrip targets. Edit the entries here, never the generated |.bib| files.
+%
+% \iffalse
+%<*examplebib>
+@Comment{ example.bib -- one entry per ABNT document type, exercised in the
+  Referencias of this manual. Many entries use the Portuguese field/type
+  synonyms (autor, titulo, editora, local, ano, organizador, ...). }
+
+@BOOK{book-example,
+   author = "R. Abraham and J. E. Marsden and T. Ratiu",
+   title = "Manifolds, Tensor Analysis, and Applications",
+   edition = "2",
+   address = "New York",
+   publisher = "Springer-Verlag",
+   year = "1988",
+}
+
+@ARTICLE{article-example,
+   author = "D. Iesan",
+   title = {Existence Theorems in the Theory of Mixtures},
+   journal = {Journal of Elasticity},
+   volume = {42},
+   number = {2},
+   pages = {145--163},
+   month = feb,
+   year = 1996,
+}
+
+@TECHREPORT{techreport-exampleIn,
+  author = "D. A. Garret",
+  title = "The Microscopic Detection of Corrosion in Aluminum Aircraft Structures with Thermal Neutron Beams and Film Imaging Methods",
+  type = "In: Report",
+  number = "NBSIR 78-1434",
+  institution = "National Bureau of Standards",
+  address = "Washington, D.C.",
+  year = "1977",
+}
+
+@TECHREPORT{techreport-example,
+   author = "L. Maestrello",
+   title = "Two-Point Correlations of Sound Pressure in the Far Field of a Jet: Experiment",
+   type = "{NASA}",
+   number = "{TM}~{X}-72835",
+   year = 1976,
+}
+
+@INPROCEEDINGS{inproceedings-example,
+   author = "M. E. Gurtin",
+   title = "On the nonlinear theory of elasticity",
+   booktitle = "Proceedings of the International Symposium on Continuum Mechanics and Partial Differential Equations: Contemporary Developments in Continuum Mechanics and Partial Differential Equations",
+   pages = "237-253",
+   address = "Rio de Janeiro",
+   month = aug,
+   year = 1977,
+}
+
+
+@INCOLLECTION{incollection-example,
+   author = "S. C. Cowin",
+   title = "Adaptive Anisotropy: An Example in Living Bone",
+   booktitle = "Non-Classical Continuum Mechanics",
+   series = "London Mathematical Society Lecture Note Series",
+   volume = "122",
+   publisher = "Cambridge University Press",
+   pages = "174--186",
+   year = 1987,
+}
+
+@INBOOK{inbook-example,
+   author = "D. K. Edwards",
+   title = "Thermal Radiation Measurements",
+   address = "New York, USA",
+   booktitle = "Measurements in Heat Transfer",
+   publisher = "Hemisphere Publishing Corporation",
+   editor = "E. R. G. Eckert and R. J. Goldstein",
+   edition = 2,
+   year = "1976",
+   chapter = "10",
+}
+
+@MASTERSTHESIS{mastersthesis-example,
+   author = "A. Tuntomo",
+   title = "Transport Phenomena in a Small Particle with Internal Radiant Absorption",
+   school = "University of California at Berkeley",
+   type = "{Ph.D.} dissertation",
+   address = "Berkeley, California, USA",
+   year = 1990,
+}
+
+@PHDTHESIS{phdthesis-example,
+   author = "Paes~Junior, H. R.",
+   title = "Influ{\^e}ncia da Espessura da Camada Intr{\'i}nseca e Energia do Foton na Degrada{\c c}\~ao de C{\'e}lulas Solares de Sil{\'i}cio Amorfo Hidrogenado",
+   school = "COPPE/UFRJ",
+   address = "Rio de Janeiro, RJ, Brasil",
+   type = "Tese de {D.Sc.}",
+   curso = "Engenharia Metal{\'u}rgica e de Materiais",
+   year = 1994,
+}
+
+@videogame{videogame-example,
+   author = "Meier, Sid",
+   title = "Sid Meier's Civilization VI",
+   artista = "Firaxis Games",
+   plataforma = "PC",
+   editora = "2K Games",
+   versao = "1.0",
+   ano = 2016,
+}
+
+@filme{filme-example,
+   title = "Cidade de Deus",
+   diretor = "Meirelles, Fernando and L{\'u}nd, K{\'a}tia",
+   produtor = "O2 Filmes",
+   editora = "Globo Filmes",
+   local = "Rio de Janeiro",
+   ano = 2002,
+}
+
+@Comment{ Exotic ABNT types (NBR 6023 4.2.5-4.2.12), via the Portuguese synonyms. }
+
+@patente{patente-example,
+   autor = "Silva, J. A.",
+   title = "Dispositivo de medi{\c c}{\~a}o de fluxo t{\'e}rmico",
+   number = "BR 10 2020 012345 6",
+   type = "Patente de Invento",
+   holder = "{Universidade Federal do Rio de Janeiro}",
+   ano = 2021,
+}
+
+@legislacao{legislacao-example,
+   author = "{Brasil}",
+   title = "Lei n. 9.610, de 19 de fevereiro de 1998: altera, atualiza e consolida a legisla{\c c}{\~a}o sobre direitos autorais",
+   type = "Lei Federal",
+   local = "Bras{\'i}lia, DF",
+   ano = 1998,
+}
+
+@norma{norma-example,
+   author = "{Associa{\c c}{\~a}o Brasileira de Normas T{\'e}cnicas}",
+   title = "{NBR} 6023: informa{\c c}{\~a}o e documenta{\c c}{\~a}o: refer{\^e}ncias: elabora{\c c}{\~a}o",
+   local = "Rio de Janeiro",
+   ano = 2018,
+}
+
+@mapa{mapa-example,
+   autor = "{Instituto Brasileiro de Geografia e Estat{\'i}stica}",
+   title = "Mapa pol{\'i}tico do Brasil",
+   escala = "1:5.000.000",
+   local = "Rio de Janeiro",
+   editora = "IBGE",
+   ano = 2016,
+}
+
+@partitura{partitura-example,
+   author = "Villa-Lobos, Heitor",
+   title = "Bachianas Brasileiras n. 5",
+   local = "Rio de Janeiro",
+   publisher = "Academia Brasileira de M{\'u}sica",
+   ano = 1945,
+   addendum = "1 partitura",
+}
+
+@Comment{ Obra sem autor: entra pelo titulo (1a palavra em CAIXA ALTA, ABNT 4.2). }
+@book{semautor-example,
+   title = "Diagn{\'o}stico do setor editorial brasileiro",
+   local = "S{\~a}o Paulo",
+   editora = "C{\^a}mara Brasileira do Livro",
+   ano = 2019,
+}
+
+@Comment{ Artigo/materia de jornal (NBR 6023 4.2.3.6). Com caderno/secao: a
+  data precede o caderno e a pagina vem por ultimo. }
+@artigodejornal{jornalcaderno-example,
+   autor = "J. Byrne",
+   titulo = "A explos{\~a}o de cursos para executivos nos EUA",
+   jornal = "Gazeta Mercantil",
+   local = "S{\~a}o Paulo",
+   data = "1992-02-04",
+   caderno = "Administra{\c c}{\~a}o e Servi{\c c}os",
+   paginas = "28",
+}
+
+@Comment{ Artigo de jornal sem caderno/secao: a paginacao precede a data. }
+@artigodejornal{jornal-example,
+   autor = "L. N. P. Leal",
+   titulo = "MP fiscaliza com autonomia total",
+   jornal = "Jornal do Brasil",
+   local = "Rio de Janeiro",
+   paginas = "3",
+   data = "1999-04-25",
+}
+
+@Comment{ Jurisprudencia / decisao judicial (NBR 6023 4.2.6.2): jurisdicao +
+  orgao (autor, CAIXA ALTA), titulo da decisao, Relator, local e data. }
+@jurisprudencia{jurisprudencia-example,
+   author = "{Brasil. Supremo Tribunal Federal}",
+   title = "Habeas Corpus 12.345",
+   relator = "Min. Fulano de Tal",
+   local = "Bras{\'i}lia, DF",
+   data = "2020-03-10",
+}
+
+@Comment{ Obra sem autor iniciada por artigo: o artigo e a 1a palavra
+  significativa ficam em CAIXA ALTA (ABNT 4.2) -- AS NORMAS de... }
+@book{semautorart-example,
+   title = "As normas de documenta{\c c}{\~a}o acad{\^e}mica",
+   local = "Rio de Janeiro",
+   editora = "ABNT",
+   ano = 2021,
+}
+
+@manual{manualbib,
+   editor = "Sousa, Amanda Moura de and Oliveira, Lidia da Costa and Arias, Luiza Coutinho",
+   title = "Manual para elabora{\c c}{\~a}o e normaliza{\c c}{\~a}o de trabalhos acad{\^e}micos",
+   edition = 9,
+   publisher = "UFRJ/SiBI",
+   location = "Rio de Janeiro",
+   date = 2025,
+   pagetotal = 121,
+   url = "https://drive.google.com/file/d/1IfNy51_qMf8cXEabOlm1U6zMXcH10FWL/view",
+   urldate = "2026-05-30",
+}
+%</examplebib>
+%<*coppebib>
+@Comment{ coppe.bib -- references for this manual (coppe.pdf). }
+
+@book{ KNU86a,
+  author = "Donald E. Knuth",
+  title = "The {{\TeX}book}",
+  publisher = "Addison-Wesley",
+  address = "Reading, MA",
+  year = "1984",
+}
+
+@book{ KNT69a,
+   author = "Leslie Lamport",
+   title = "{\LaTeX \rm:} {A} Document Preparation System",
+   publisher = "Addison-Wesley",
+   address = "Reading, MA",
+   year = 1986
+}
+
+@manual{ TNR08a,
+  author = "CPGP/COPPE/UFRJ",
+  title = "Norma para a Elabora{\c c}\~ao Gr\'afica de Teses",
+  address = "Rio de Janeiro, RJ, Brasil",
+  month = "Julho",
+  year = 2008,
+  note = "Revisada em 10/09/2010",
+}
+
+@unpublished{ PAT88a,
+   author = "Oren Patashnik",
+   title = "BibTeXing",
+   note = "Documentation for general Bib\TeX\ users",
+   month = feb,
+   year = 1988
+}
+
+@unpublished{ PAT88b,
+   author = "Oren Patashnik",
+   title = "Designing BibTeX Styles",
+   note = "The part of BibTeX 's documentation
+           that's not meant for general users",
+   month = feb,
+   year = 1988
+}
+
+@book{ WW79a,
+   author = "Strunk, Jr., William and E. B. White",
+   title = "The Elements of Style",
+   publisher = "Macmillan",
+   edition = 3,
+   year = 1979
+}
+
+@misc{TeX:FAQ,
+  title = "{\TeX} {Frequently} {Asked} {Questions}",
+  url = "\\http://www.tex.ac.uk/cgi-bin/texfaq2html?introduction=yes",
+  key = "TeX FAQ",
+}
+
+@manual{manualbib,
+  editor    = {Sousa, Amanda Moura de and Oliveira, Lidia da Costa and Arias, Luiza Coutinho},
+  title     = {Manual para elaboração e normalização de trabalhos acadêmicos},
+  edition   = {9},
+  publisher = {UFRJ/SiBI},
+  location  = {Rio de Janeiro},
+  date      = {2025},
+  pagetotal = {121},
+  url       = {https://drive.google.com/file/d/1IfNy51_qMf8cXEabOlm1U6zMXcH10FWL/view},
+  urldate   = {2026-05-30},
+}
+%</coppebib>
+% \fi
+%
 % \changes{v3.5}{2024/02/23}{New command annex}
 % \changes{v3.5.1}{2024/02/23}{New command annex now supports brazilian or english}
 %
