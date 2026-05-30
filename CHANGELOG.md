@@ -59,6 +59,22 @@ approval; meant to become the next official release.
 - **`foreignabstract`** now uses `\begin{otherlanguage}{\coppe@foreignlang}`
   instead of hard-coding `english`.
 
+### Fixed
+
+- **Catalog-label writers crashed every Spanish-main document** with
+  `! Emergency stop. <inserted text> }\endwrite` at `\mainmatter`.
+  `\coppe@mainBegin` / `\coppe@bibBegin` / `\coppe@bibEnd` / `\coppe@hasLof`
+  used `\roman{page}` inside `\immediate\write\@auxout{...}`, which
+  Spanish babel redefines (via `\@roman` → `\es@scroman` →
+  `\es@xlsc\uppercase\@firstofone`) to produce small-caps roman; that
+  expansion contains an `\uppercase` group that is unbalanced inside
+  `\write` and aborts pdfTeX. Fixed by switching the four writers to
+  the raw e-TeX primitives `\romannumeral` and `\number` operating on
+  `\c@page` (language-agnostic) and by wrapping the label names
+  themselves in `\detokenize{...}` so the `:` and `.` they contain
+  survive any future babel that activates them. `example_es.pdf` and
+  the historical pt-main `example.pdf` now build cleanly again.
+
 ### Backward compatibility
 
 - `\documentclass[english]{coppe}` and every pre-existing user API

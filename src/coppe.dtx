@@ -102,6 +102,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \changes{v4.0}{2026/05/28}{Multilingual model: three fixed slots (main, foreign, optional third); five built-in language options (brazilian, english, spanish, french, italian); plug-in mechanism for any other Babel language via coppe-lang-lang.def plus lang-coppe.lbx.}
 % \changes{v4.0}{2026/05/28}{New user API: titlein, usecoppelanguage, brazilianabstract environment.}
 % \changes{v4.0}{2026/05/28}{Class-wide string dispatcher (copperdefstring, coppestring, coppemainstring, coppeforeignstring) replaces scattered iflanguage and if english branches; pt/en outputs remain byte-identical.}
+% \changes{v4.0}{2026/05/30}{Catalog-label writers (coppe@mainBegin, coppe@bibBegin, coppe@bibEnd, coppe@hasLof) made language-agnostic: detokenize wrap on label names protects ':' and '.' from babel shorthand activation, and the raw etex primitives romannumeral/number replace LaTeX's roman/arabic to bypass spanish-babel's small-caps @roman redefinition that would otherwise crash pdftex with "Unbalanced write command" on every es-main document.}
 %
 % \DoNotIndex{\!,\',\.,\>,\^,\`,\',\=,\\}
 % \DoNotIndex{\@arabic,\@auxout,\@biblabel,\@bsphack,\@clubpenalty,\@empty}
@@ -2629,7 +2630,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \vspace*{2cm}%
   \clearpage}
 %    \end{macrocode}
-% \changes{v4.0}{2026/05/30}{Initial \coppetexfinalpage colophon page.}
+% \changes{v4.0}{2026/05/30}{Initial coppetexfinalpage colophon page.}
 % \end{macro}
 %
 % \begin{macro}{\makecover}
@@ -3227,34 +3228,55 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %    \end{macrocode}
 %
 %    \begin{macrocode}
-% Some macros used to generate cataloging information.
+% Catalog-label writers. Two language-related traps must be avoided here:
+%   1. The label NAMES contain ':' and '.', which babel makes active in
+%      some languages (e.g. Brazilian's "shorthand" set). If the write
+%      argument is tokenised while one of those is active, pdfTeX aborts
+%      with "<inserted text> }\endwrite" because the shorthand expansion
+%      injects unbalanced braces. \detokenize emits its argument as
+%      catcode-12 characters regardless of the current activation, so the
+%      label NAMES survive whatever language is current at writer time.
+%   2. Spanish babel redefines \@roman (and therefore \roman{...}) to
+%      produce small-caps roman numerals via \es@scroman, whose expansion
+%      contains an \uppercase group that is unbalanced inside \write. The
+%      same crash signature appears. The fix is to bypass LaTeX's
+%      \roman/\arabic counter wrappers entirely and use the raw e-TeX
+%      primitives \romannumeral and \number directly on the \c@page count
+%      register --- both are fully expandable, language-agnostic, and
+%      always produce plain ASCII digits or lowercase roman letters.
+%      \Roman{page} is left in place because babel-spanish only redefines
+%      \@Roman under the (non-default) ucroman option.
 \AtBeginDocument{%
-  \ltx@ifpackageloaded{hyperref}{
+  \ltx@ifpackageloaded{hyperref}{%
     \def\coppe@bibEnd{%
       \immediate\write\@auxout{%
-        \string\newlabel{bib:end}{{}{\arabic{page}}{}{page.\arabic{page}}{}}}}%
+        \string\newlabel{\detokenize{bib:end}}%
+          {{}{\number\c@page}{}{\detokenize{page.}\number\c@page}{}}}}%
     \def\coppe@bibBegin{%
       \immediate\write\@auxout{%
-        \string\newlabel{bib:begin}{{}{\arabic{page}}{}{page.\arabic{page}}{}}}}%
+        \string\newlabel{\detokenize{bib:begin}}%
+          {{}{\number\c@page}{}{\detokenize{page.}\number\c@page}{}}}}%
     \def\coppe@mainBegin{%
       \immediate\write\@auxout{%
-        \string\newlabel{front:pageno}{{}{\Roman{page}}{}{page.\roman{page}}{}}}}%
+        \string\newlabel{\detokenize{front:pageno}}%
+          {{}{\Roman{page}}{}{\detokenize{page.}\romannumeral\c@page}{}}}}%
     \def\coppe@hasLof{%
       \immediate\write\@auxout{%
-        \string\newlabel{cat:lofflag}{{}{:~il.;}{}{page.\roman{page}}{}}}}%
+        \string\newlabel{\detokenize{cat:lofflag}}%
+          {{}{\detokenize{:~il.;}}{}{\detokenize{page.}\romannumeral\c@page}{}}}}%
   }{%
     \def\coppe@bibEnd{%
       \immediate\write\@auxout{%
-      \string\newlabel{bib:end}{{}{\arabic{page}}{}}}}%
+        \string\newlabel{\detokenize{bib:end}}{{}{\number\c@page}{}}}}%
     \def\coppe@bibBegin{%
       \immediate\write\@auxout{%
-      \string\newlabel{bib:begin}{{}{\arabic{page}}{}}}}%
+        \string\newlabel{\detokenize{bib:begin}}{{}{\number\c@page}{}}}}%
     \def\coppe@mainBegin{%
       \immediate\write\@auxout{%
-        \string\newlabel{front:pageno}{{}{\Roman{page}}{}}}}%
+        \string\newlabel{\detokenize{front:pageno}}{{}{\Roman{page}}{}}}}%
     \def\coppe@hasLof{%
       \immediate\write\@auxout{%
-        \string\newlabel{cat:lofflag}{{}{:~il.;}{}}}}%
+        \string\newlabel{\detokenize{cat:lofflag}}{{}{\detokenize{:~il.;}}{}}}}%
   }%
 }
 % The reference list is now produced by biblatex's \printbibliography (see the

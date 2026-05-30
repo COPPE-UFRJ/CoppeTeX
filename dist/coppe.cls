@@ -1106,32 +1106,36 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %%%%     \endgroup
 %%%%     \@esphack}}}
 \AtBeginDocument{%
-  \ltx@ifpackageloaded{hyperref}{
+  \ltx@ifpackageloaded{hyperref}{%
     \def\coppe@bibEnd{%
       \immediate\write\@auxout{%
-        \string\newlabel{bib:end}{{}{\arabic{page}}{}{page.\arabic{page}}{}}}}%
+        \string\newlabel{\detokenize{bib:end}}%
+          {{}{\number\c@page}{}{\detokenize{page.}\number\c@page}{}}}}%
     \def\coppe@bibBegin{%
       \immediate\write\@auxout{%
-        \string\newlabel{bib:begin}{{}{\arabic{page}}{}{page.\arabic{page}}{}}}}%
+        \string\newlabel{\detokenize{bib:begin}}%
+          {{}{\number\c@page}{}{\detokenize{page.}\number\c@page}{}}}}%
     \def\coppe@mainBegin{%
       \immediate\write\@auxout{%
-        \string\newlabel{front:pageno}{{}{\Roman{page}}{}{page.\roman{page}}{}}}}%
+        \string\newlabel{\detokenize{front:pageno}}%
+          {{}{\Roman{page}}{}{\detokenize{page.}\romannumeral\c@page}{}}}}%
     \def\coppe@hasLof{%
       \immediate\write\@auxout{%
-        \string\newlabel{cat:lofflag}{{}{:~il.;}{}{page.\roman{page}}{}}}}%
+        \string\newlabel{\detokenize{cat:lofflag}}%
+          {{}{\detokenize{:~il.;}}{}{\detokenize{page.}\romannumeral\c@page}{}}}}%
   }{%
     \def\coppe@bibEnd{%
       \immediate\write\@auxout{%
-      \string\newlabel{bib:end}{{}{\arabic{page}}{}}}}%
+        \string\newlabel{\detokenize{bib:end}}{{}{\number\c@page}{}}}}%
     \def\coppe@bibBegin{%
       \immediate\write\@auxout{%
-      \string\newlabel{bib:begin}{{}{\arabic{page}}{}}}}%
+        \string\newlabel{\detokenize{bib:begin}}{{}{\number\c@page}{}}}}%
     \def\coppe@mainBegin{%
       \immediate\write\@auxout{%
-        \string\newlabel{front:pageno}{{}{\Roman{page}}{}}}}%
+        \string\newlabel{\detokenize{front:pageno}}{{}{\Roman{page}}{}}}}%
     \def\coppe@hasLof{%
       \immediate\write\@auxout{%
-        \string\newlabel{cat:lofflag}{{}{:~il.;}{}}}}%
+        \string\newlabel{\detokenize{cat:lofflag}}{{}{\detokenize{:~il.;}}{}}}}%
   }%
 }
 \newlength{\recuolongquote}%
