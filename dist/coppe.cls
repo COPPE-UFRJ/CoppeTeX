@@ -55,15 +55,19 @@
 \def\filedate{2026/05/28}
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{coppe}[\filedate\ \fileversion\ COPPE Dissertations and Thesis]
+\let\coppe@version\fileversion
+\let\coppe@date\filedate
+\edef\coppe@docmonth{\the\month}
+\edef\coppe@docyear{\the\year}
 \LoadClass[12pt,a4paper,twoside]{book}
 \RequirePackage{hyphenat}
 \RequirePackage{lastpage}
 \RequirePackage{ifthen}
 \RequirePackage{graphicx}
-\RequirePackage{setspace}
 \RequirePackage{tabularx}
+\RequirePackage{booktabs}      % regras de tabela profissionais (toprule/midrule/bottomrule)
+\RequirePackage{longtable}     % tabelas que quebram entre páginas
 \RequirePackage{etoolbox}
-\RequirePackage{eqparbox}
 \RequirePackage{ltxcmds}
 \RequirePackage{hologo}        % TeX-family logos: \hologo{TeX}, \hologo{LaTeX}, ...
 \def\TeX{\hologo{TeX}}
@@ -82,7 +86,29 @@
     Although slower, you should try compiling with LuaLaTeX}}
 \fi
 \RequirePackage[T1]{fontenc}
-\RequirePackage[a4paper,twoside,bindingoffset=1cm,%
+\RequirePackage{amsmath}
+\ifPDFTeX
+  \RequirePackage{amssymb}
+\else
+  % Unicode engine: defer the check to end of document. Only warn if the
+  % user did NOT add either unicode-math (the modern OpenType-math route)
+  % or amssymb (the legacy route, which they would have loaded manually).
+  % This avoids nagging authors who already followed the documented
+  % \usepackage{unicode-math} workflow.
+  \AtEndDocument{%
+    \@ifpackageloaded{unicode-math}{}{%
+      \@ifpackageloaded{amssymb}{}{%
+        \ClassWarningNoLine{coppe}{%
+          You are compiling with a Unicode engine (LuaLaTeX or XeLaTeX) and\MessageBreak
+          neither unicode-math nor amssymb is loaded. AMS-style symbols\MessageBreak
+          (\string\mathbb, \string\hbar, \string\varnothing, ...) will be undefined.\MessageBreak
+          Add to your preamble:\MessageBreak
+          \space\space\string\usepackage{unicode-math}\MessageBreak
+          \space\space\string\setmathfont{Latin Modern Math}\MessageBreak
+          Do NOT load amssymb together with unicode-math -- it would clash\MessageBreak
+          with the OpenType math font setup}}}}
+\fi
+\RequirePackage[a4paper,twoside,bindingoffset=1cm,headheight=15pt,%
 top=3cm,bottom=2cm,inner=2cm,outer=2cm]{geometry}
 \RequirePackage{titlesec}
 \newif\if@coppeappendix \@coppeappendixfalse
@@ -140,6 +166,7 @@ top=3cm,bottom=2cm,inner=2cm,outer=2cm]{geometry}
   {\normalfont\bfseries\itshape}{\thesubsubsection}{1ex}{}
 \RequirePackage{caption}
 \captionsetup{font=footnotesize,labelsep=endash}
+\RequirePackage{subcaption}
 \RequirePackage{float}
 \floatstyle{plaintop}
 \restylefloat{figure}
@@ -194,17 +221,16 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \setboolean{maledoc}{false}
 \def\coppe@mainlang{brazilian}
 \def\coppe@foreignlang{english}
-\newif\if@english\@englishfalse
 \DeclareOption{brazilian}{%
-  \def\coppe@mainlang{brazilian}\def\coppe@foreignlang{english}\@englishfalse}
+  \def\coppe@mainlang{brazilian}\def\coppe@foreignlang{english}}
 \DeclareOption{english}{%
-  \def\coppe@mainlang{english}\def\coppe@foreignlang{brazilian}\@englishtrue}
+  \def\coppe@mainlang{english}\def\coppe@foreignlang{brazilian}}
 \DeclareOption{spanish}{%
-  \def\coppe@mainlang{spanish}\def\coppe@foreignlang{english}\@englishfalse}
+  \def\coppe@mainlang{spanish}\def\coppe@foreignlang{english}}
 \DeclareOption{french}{%
-  \def\coppe@mainlang{french}\def\coppe@foreignlang{english}\@englishfalse}
+  \def\coppe@mainlang{french}\def\coppe@foreignlang{english}}
 \DeclareOption{italian}{%
-  \def\coppe@mainlang{italian}\def\coppe@foreignlang{english}\@englishfalse}
+  \def\coppe@mainlang{italian}\def\coppe@foreignlang{english}}
 \DeclareOption{msc}{%
   \newcommand{\@degree}{M.Sc.}
   \newcommand{\@degreename}{Mestrado}
@@ -243,10 +269,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \DeclareOption{numbers}{\@coppenumerictrue}
 \newif\if@copperoman\@copperomanfalse
 \DeclareOption{numeraisromanos}{\@copperomantrue}
-\onehalfspacing
-\DeclareOption{doublespacing}{%
-  \doublespacing
-}
+\newif\if@coppedoublespace\@coppedoublespacefalse
+\DeclareOption{doublespacing}{\@coppedoublespacetrue}
 \ProcessOptions\relax
 \def\coppe@@brazilianstr{brazilian}
 \def\coppe@@englishstr{english}
@@ -359,12 +383,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \RequirePackage{xcolor}
 \RequirePackage{listings}
 \RequirePackage{fancyvrb}
-\definecolor{deepblue}{rgb}{0,0,0.5}
-\definecolor{deepred}{rgb}{0.6,0,0}
-\definecolor{deepgreen}{rgb}{0,0.5,0}
 \DeclareFixedFont{\ttb}{T1}{txtt}{bx}{n}{10}
 \DeclareFixedFont{\ttm}{T1}{txtt}{m}{n}{10}
-\newcommand{\gxnumbersep}{0.5em}
 \lstset{captionpos=t,extendedchars=true,basicstyle=\ttfamily,inputencoding=utf8,%
   literate=%
   {ã}{{\~{a}}}1 {á}{{\'{a}}}1 {â}{{\^{a}}}1 {à}{{\`{a}}}1 {é}{{\'{e}}}1%
@@ -383,10 +403,10 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \@mkboth{\MakeUppercase\lstlistlistingname}{\MakeUppercase\lstlistlistingname}%
   \@starttoc{lol}}
 \newcommand\pythonstyle{\lstset{language=Python,basicstyle=\ttm,numbers=left,%
-  numberstyle=\small\ttfamily,numbersep=\gxnumbersep,commentstyle=\color{purple},%
-  morekeywords={self,as},keywordstyle=\ttb\color{deepblue},%
-  emph={MyClass,__init__},emphstyle=\ttb\color{deepred},%
-  stringstyle=\color{deepgreen},frame=tb,showstringspaces=false,%
+  numberstyle=\small\ttfamily,numbersep=0.5em,commentstyle=\color{purple},%
+  morekeywords={self,as},keywordstyle=\ttb\color[rgb]{0,0,0.5},%
+  emph={MyClass,__init__},emphstyle=\ttb\color[rgb]{0.6,0,0},%
+  stringstyle=\color[rgb]{0,0.5,0},frame=tb,showstringspaces=false,%
   extendedchars=true,firstnumber=auto,inputencoding=utf8,breaklines=true,%
   escapechar=`,postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space}}}
 \lstnewenvironment{python}[1][]{\pythonstyle\lstset{#1}%
@@ -394,34 +414,34 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \newcommand\pythoninline[1]{{\pythonstyle\lstinline!#1!}}
 \newcommand\pythonexternal[2][]{{\pythonstyle\lstinputlisting[#1]{#2}}}
 \newcommand\xmlstyle{\lstset{language=XML,basicstyle=\ttm,numbers=left,%
-  numberstyle=\small\ttfamily,numbersep=\gxnumbersep,%
+  numberstyle=\small\ttfamily,numbersep=0.5em,%
   morekeywords={xs:schema,xs:element,xs:sequence,xs:complexType},%
-  keywordstyle=\ttb\color{deepblue},%
+  keywordstyle=\ttb\color[rgb]{0,0,0.5},%
   emph={name,type,attributeFormDefault,elementFormDefault,xmlns:xs},%
-  emphstyle=\ttb\color{deepred},stringstyle=\color{deepgreen},frame=tb,%
+  emphstyle=\ttb\color[rgb]{0.6,0,0},stringstyle=\color[rgb]{0,0.5,0},frame=tb,%
   showstringspaces=false,extendedchars=true,inputencoding=utf8,breaklines=true,%
   postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space}}}
 \lstnewenvironment{xml}[1][]{\xmlstyle\lstset{#1}}{}
 \newcommand\htmlstyle{\lstset{language=HTML,basicstyle=\ttm,numbers=left,%
-  numberstyle=\small\ttfamily,numbersep=\gxnumbersep,%
-  keywordstyle=\ttb\color{deepblue},emphstyle=\ttb\color{deepred},%
-  stringstyle=\color{deepgreen},frame=tb,showstringspaces=false,%
+  numberstyle=\small\ttfamily,numbersep=0.5em,%
+  keywordstyle=\ttb\color[rgb]{0,0,0.5},emphstyle=\ttb\color[rgb]{0.6,0,0},%
+  stringstyle=\color[rgb]{0,0.5,0},frame=tb,showstringspaces=false,%
   extendedchars=true,inputencoding=utf8,breaklines=true,%
   postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space}}}
 \lstnewenvironment{html}[1][]{\htmlstyle\lstset{#1}}{}
 \newcommand\prologstyle{\lstset{language=Prolog,basicstyle=\ttm,numbers=left,%
-  numberstyle=\small\ttfamily,numbersep=\gxnumbersep,commentstyle=\color{purple},%
-  keywordstyle=\ttb\color{deepblue},emph={MyClass,__init__},%
-  emphstyle=\ttb\color{deepred},stringstyle=\color{deepgreen},frame=tb,%
+  numberstyle=\small\ttfamily,numbersep=0.5em,commentstyle=\color{purple},%
+  keywordstyle=\ttb\color[rgb]{0,0,0.5},emph={MyClass,__init__},%
+  emphstyle=\ttb\color[rgb]{0.6,0,0},stringstyle=\color[rgb]{0,0.5,0},frame=tb,%
   showstringspaces=false,extendedchars=true,firstnumber=auto,inputencoding=utf8,%
   breaklines=true,escapechar=`,%
   postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space}}}
 \lstnewenvironment{prolog}[1][]{\prologstyle\lstset{#1}%
   \csname\@lst @SetFirstNumber\endcsname}{\csname\@lst @SaveFirstNumber\endcsname}
 \newcommand\javastyle{\lstset{language=Java,basicstyle=\ttm,numbers=left,%
-  numberstyle=\small\ttfamily,numbersep=\gxnumbersep,commentstyle=\color{purple},%
-  morekeywords={self,as},keywordstyle=\ttb\color{deepblue},%
-  emphstyle=\ttb\color{deepred},stringstyle=\color{deepgreen},frame=tb,%
+  numberstyle=\small\ttfamily,numbersep=0.5em,commentstyle=\color{purple},%
+  morekeywords={self,as},keywordstyle=\ttb\color[rgb]{0,0,0.5},%
+  emphstyle=\ttb\color[rgb]{0.6,0,0},stringstyle=\color[rgb]{0,0.5,0},frame=tb,%
   showstringspaces=false,extendedchars=true,firstnumber=auto,inputencoding=utf8,%
   breaklines=true,escapechar=`,%
   postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space}}}
@@ -429,10 +449,6 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \csname\@lst @SetFirstNumber\endcsname}{\csname\@lst @SaveFirstNumber\endcsname}
 \newcommand\javainline[1]{{\javastyle\lstinline!#1!}}
 \newcommand\javaexternal[2][]{{\javastyle\lstinputlisting[#1]{#2}}}
-\DefineVerbatimEnvironment{gxoutput}{Verbatim}%
-  {frame=lines,numbers=left,numbersep=\gxnumbersep}
-\DefineVerbatimEnvironment{gxoutputs}{Verbatim}%
-  {frame=lines,numbers=left,numbersep=\gxnumbersep,fontsize=\small}
 \renewcommand{\theFancyVerbLine}{{\small\ttfamily\arabic{FancyVerbLine}}}
 \edef\coppe@@algolang{\coppemainstring{algorithm2eopt}}
 \ifx\coppe@@algolang\@empty
@@ -442,21 +458,6 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \fi
 \SetKwFor{Para}{para}{faça}{fim do para}
 \SetKwFor{Enquanto}{enquanto}{faça}{fim do enquanto}
-\if@coppenumeric
-  \RequirePackage[backend=biber,datamodel=coppe,%
-    bibstyle=coppe-numeric,citestyle=coppe-numeric,natbib=true]{biblatex}
-\else
-  \RequirePackage[backend=biber,datamodel=coppe,%
-    bibstyle=coppe,citestyle=coppe,natbib=true]{biblatex}
-\fi
-\defbibheading{bibliography}{%
-  \chapter*{\coppestring{references}}%
-  \addcontentsline{toc}{chapter}{\coppestring{references}}}
-\AtBeginBibliography{\coppe@bibBegin}
-\let\coppe@orig@printbibliography\printbibliography
-\renewcommand\printbibliography[1][]{%
-  \coppe@orig@printbibliography[#1]%
-  \coppe@bibEnd}
 \newcommand\department[1]{%
   \ifthenelse{\equal{#1}{PEB}}
     {\global\def\local@deptname{Engenharia Biom{\' e}dica}
@@ -529,13 +530,12 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \global\def\@authsurn{#2}
 }
 \renewcommand\date[2]{%
-  \month=#1
-  \year=#2
-}
-\newcommand\local@monthname{\ifcase\month\or
+  \def\coppe@docmonth{#1}%
+  \def\coppe@docyear{#2}}
+\newcommand\local@monthname{\ifcase\coppe@docmonth\or
   Janeiro\or Fevereiro\or Mar{\c c}o\or Abril\or Maio\or Junho\or
   Julho\or Agosto\or Setembro\or Outubro\or Novembro\or Dezembro\fi}
-\newcommand\foreign@monthname{\ifcase\month\or
+\newcommand\foreign@monthname{\ifcase\coppe@docmonth\or
   January\or February\or March\or April\or May\or June\or
   July\or August\or September\or October\or November\or December\fi}
 \newcounter{keywords}
@@ -591,6 +591,42 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \else
     \clearpage
   \fi}
+\providecommand{\coppefinalengine}{%
+  \ifPDFTeX\hologo{pdfLaTeX}\fi
+  \ifLuaTeX\hologo{LuaLaTeX}\fi
+  \ifXeTeX\hologo{XeLaTeX}\fi}
+\providecommand{\coppefinalfont}{Computer Modern (padr\~ao \LaTeX{})}
+\providecommand{\coppefinalmanual}{%
+  \emph{Norma para a Elabora\c c\~ao Gr\'afica de Teses e Disserta\c c\~oes
+  da COPPE/UFRJ}}
+\newcommand{\coppetexfinalpage}{%
+  \clearpage
+  % Force the colophon onto a verso (even) page so it faces the rear cover.
+  % If the current page is odd (recto), fill it with an empty verso first.
+  \if@twoside
+    \ifodd\c@page
+      \hbox{}\thispagestyle{empty}\newpage
+    \fi
+  \fi
+  \thispagestyle{empty}%
+  \null\vfill
+  \begin{otherlanguage}{brazilian}%
+    \begin{center}
+      {\footnotesize\setstretch{1.0}%
+      \textsc{Colof\~ao}\par
+      \vspace{0.7em}
+      \begin{minipage}{0.75\textwidth}\centering
+      Este documento foi composto em \LaTeX{} com \coppefinalengine{}
+      em \today, na fonte \coppefinalfont. A bibliografia foi processada
+      por Bib\LaTeX{} e Biber. Foi utilizada a classe \CoppeTeX,
+      vers\~ao~\coppe@version, dispon\'\i vel no reposit\'orio GitHub
+      \mbox{\url{https://github.com/COPPE-UFRJ/CoppeTeX}}, em
+      conformidade com a \coppefinalmanual.
+      \end{minipage}\par}
+    \end{center}
+  \end{otherlanguage}%
+  \vspace*{2cm}%
+  \clearpage}
 \newcommand\makecover{%
   \begin{titlepage}%
   \centering
@@ -609,7 +645,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \nohyphens{\MakeUppercase{\coppe@selecttitle}}\par
   \vspace{\stretch{3}}
   \MakeUppercase{\local@cityname}\par
-  \number\year
+  \coppe@docyear
   \end{titlepage}%
 }
 \renewcommand\maketitle{%
@@ -662,7 +698,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \vspace*{\fill}
   \begin{center}
   \local@cityname\par
-  \local@monthname\ de \number\year
+  \local@monthname\ de \coppe@docyear
   \end{center}
   \end{titlepage}
   % Ficha catalográfica on the verso of the folha de rosto (NBR 14724, R57):
@@ -773,7 +809,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
       \nohyphens\@authname\par
       \nohyphens{%
         \coppe@selecttitle/\@authname\ \@authsurn. -- \local@cityname:
-      UFRJ/COPPE, \number\year.}\par
+      UFRJ/COPPE, \coppe@docyear.}\par
       \pageref{front:pageno},
       \pageref{LastPage}
       p.\@ifundefined{r@cat:lofflag}{}{\pageref{cat:lofflag}} $29,7$cm.\par
@@ -803,7 +839,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
         \the\toks@
       \end{tabularx}}\par
       \nohyphens{\local@doctype\ ({\MakeLowercase\@degreename}) --
-      UFRJ/COPPE/Programa de \local@deptname, \number\year.}\par
+      UFRJ/COPPE/Programa de \local@deptname, \coppe@docyear.}\par
       Refer{\^ e}ncias Bibliogr{\' a}ficas: p. \pageref{bib:begin} -- \pageref{bib:end}.\par
       \count1=0
       \count2=1
@@ -839,7 +875,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \vspace*{13.2mm}
     \@authname\ \@authsurn \par
     \vspace*{7mm}
-    \local@monthname/\number\year
+    \local@monthname/\coppe@docyear
   \end{center}\par
   \vspace*{1.5cm}
   \noindent%
@@ -877,7 +913,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \vspace*{13.2mm}
     \@authname\ \@authsurn \par
     \vspace*{7mm}
-    \foreign@monthname/\number\year
+    \foreign@monthname/\coppe@docyear
   \end{center}\par
   \vspace*{1.5cm}
   \noindent%
@@ -926,7 +962,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \vspace*{13.2mm}
     \@authname\ \@authsurn \par
     \vspace*{7mm}
-    \local@monthname/\number\year
+    \local@monthname/\coppe@docyear
   \end{center}\par
   \vspace*{1.5cm}
   \noindent%
@@ -1180,7 +1216,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \newcommand\frontpage@bottomtext{%
   \begin{center}
   {\MakeUppercase{\local@cityname, \local@statename\ -- \local@countryname}}\par
-  {\MakeUppercase\local@monthname\ DE \number\year}
+  {\MakeUppercase\local@monthname\ DE \coppe@docyear}
   \end{center}%
 }
 \newcommand\abstract@toptext{%
@@ -1195,6 +1231,24 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   COPPE/UFRJ as a partial fulfillment of the requirements for the
   degree of \foreign@degname\ of Science (\@degree)}
 }
+\RequirePackage{setspace}
+\if@coppedoublespace\doublespacing\else\onehalfspacing\fi
+\RequirePackage{hyperref}
+\if@coppenumeric
+  \RequirePackage[backend=biber,datamodel=coppe,%
+    bibstyle=coppe-numeric,citestyle=coppe-numeric,natbib=true]{biblatex}
+\else
+  \RequirePackage[backend=biber,datamodel=coppe,%
+    bibstyle=coppe,citestyle=coppe,natbib=true]{biblatex}
+\fi
+\defbibheading{bibliography}{%
+  \chapter*{\coppestring{references}}%
+  \addcontentsline{toc}{chapter}{\coppestring{references}}}
+\AtBeginBibliography{\coppe@bibBegin}
+\let\coppe@orig@printbibliography\printbibliography
+\renewcommand\printbibliography[1][]{%
+  \coppe@orig@printbibliography[#1]%
+  \coppe@bibEnd}
 \newcommand{\annex}{
     \renewcommand{\appendixname}{\coppestring{annex}}%
     \appendix
