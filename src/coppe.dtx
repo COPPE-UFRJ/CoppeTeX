@@ -472,6 +472,42 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %
 % Annex was introduced in v3.5
 %
+% \subsection*{Final colophon page (\texttt{\textbackslash coppetexfinalpage})}
+%
+% \DescribeMacro{\coppetexfinalpage}
+% Optional closing page modelled on the printer's \emph{colophon}: it
+% records, in Portuguese, the tooling and edition used to typeset the
+% thesis. Call it once, after every other piece of content, immediately
+% before |\end{document}|. The macro
+% \begin{itemize}
+%   \item forces a verso (even) page, so in a two-sided print the
+%         colophon sits opposite the rear cover;
+%   \item types the body at the foot of the page (|\vfill|);
+%   \item renders the text in Portuguese unconditionally (Brazilian
+%         babel), even when the thesis main language is English,
+%         Spanish, French or Italian --- the colophon is institutional
+%         metadata, not body content.
+% \end{itemize}
+% Three slot macros are user-overridable. Redefine them with
+% |\renewcommand| before |\coppetexfinalpage| if the document deviates
+% from the defaults:
+% \begin{description}
+%   \item[\texttt{\textbackslash coppefinalengine}] the \TeX{} engine
+%         identifier. Default: auto-detected via |iftex|
+%         (|\hologo{pdfLaTeX}|, |\hologo{LuaLaTeX}| or
+%         |\hologo{XeLaTeX}|).
+%   \item[\texttt{\textbackslash coppefinalfont}] the text body font.
+%         Default: \emph{Computer Modern (padrão \LaTeX)}.  Redefine if
+%         you loaded |lmodern|, |mathptmx|, an OpenType math font, etc.
+%   \item[\texttt{\textbackslash coppefinalmanual}] the reference manual
+%         title (typeset in italics). Default: the current COPPE/UFRJ
+%         norm. Redefine if your work follows an earlier edition.
+% \end{description}
+% The macro also prints the \CoppeTeX{} class version (captured into
+% |\coppe@version| at class-load time, so it survives any later package
+% that may redefine the global |\fileversion|) and the GitHub repository URL,
+% \url{https://github.com/COPPE-UFRJ/CoppeTeX}.
+%
 % \section{Class options}
 %
 % There are some options users can specify in order to customize the appearance
@@ -1709,6 +1745,8 @@ No modelo \CoppeTeX os anexos devem obrigtoriamente vir depois dos apêndices e 
 \chapter{Outro Anexo}
 
 
+\coppetexfinalpage% colofão institucional (página par, face do contracapa)
+
 \end{document}
 
 %</example>
@@ -1727,6 +1765,19 @@ No modelo \CoppeTeX os anexos devem obrigtoriamente vir depois dos apêndices e 
 \def\filedate{2026/05/28}
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{coppe}[\filedate\ \fileversion\ COPPE Dissertations and Thesis]
+% Save the class version and date into private macros immediately, before any
+% required package can redefine the very common \fileversion / \filedate
+% global names (LaTeX has no convention reserving them for the host class).
+% \coppe@version / \coppe@date are what user-facing macros (e.g.
+% \coppetexfinalpage) should reference.
+\let\coppe@version\fileversion
+\let\coppe@date\filedate
+% Document date stored in private slots so \date can set them without ever
+% touching TeX's \month/\year primitives (which would break \today). They
+% default to the current system month/year, so a document without \date
+% still renders sensibly on the cover and folha de rosto.
+\edef\coppe@docmonth{\the\month}
+\edef\coppe@docyear{\the\year}
 \LoadClass[12pt,a4paper,twoside]{book}
 % setspace, hyperref and the bibliography engine (biblatex+biber) are loaded at
 % the END of the class (after every class hook is defined), in that order:
@@ -2413,18 +2464,20 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \end{macro}
 %
 % \begin{macro}{\date}
-% This code makes easy to switch from dates in different languages.
+% Sets the \emph{document}'s nominal month and year (used by the cover, the
+% folha de rosto, and the catalog). Stores them in private slots
+% (|\coppe@docmonth| / |\coppe@docyear|) rather than mutating TeX's
+% |\month| / |\year| primitives, which would clobber |\today|.
 %    \begin{macrocode}
 \renewcommand\date[2]{%
-  \month=#1
-  \year=#2
-}
+  \def\coppe@docmonth{#1}%
+  \def\coppe@docyear{#2}}
 %    \end{macrocode}
 % \end{macro}
 %
 % \begin{macro}{\local@monthname}
 %    \begin{macrocode}
-\newcommand\local@monthname{\ifcase\month\or
+\newcommand\local@monthname{\ifcase\coppe@docmonth\or
   Janeiro\or Fevereiro\or Mar{\c c}o\or Abril\or Maio\or Junho\or
   Julho\or Agosto\or Setembro\or Outubro\or Novembro\or Dezembro\fi}
 %    \end{macrocode}
@@ -2432,7 +2485,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %
 % \begin{macro}{\foreign@monthname}
 %    \begin{macrocode}
-\newcommand\foreign@monthname{\ifcase\month\or
+\newcommand\foreign@monthname{\ifcase\coppe@docmonth\or
   January\or February\or March\or April\or May\or June\or
   July\or August\or September\or October\or November\or December\fi}
 %    \end{macrocode}
@@ -2523,6 +2576,62 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \changes{v1.0}{2008/08/11}{Moved mainmatter counter to |AtEndDocument|.}
 % \end{macro}
 %
+% \begin{macro}{\coppetexfinalpage}
+% \DescribeMacro{\coppetexfinalpage}
+% Optional colophon-style closing page intended to face the rear cover.
+% The macro forces a verso (even) page so that, in a two-sided print, the
+% reader sees the colophon on the left and the inside of the rear cover
+% on the right; pushes the text to the bottom of the page with |\vfill|;
+% and types it in Portuguese unconditionally (the colophon is institutional
+% metadata, not body content, so it is rendered in pt-BR regardless of the
+% thesis main language). Three slot macros are user-overridable:
+% |\coppefinalengine| (engine name; auto-detected via |iftex|),
+% |\coppefinalfont| (text body font; defaults to Computer Modern, the
+% \LaTeX{} default), and |\coppefinalmanual| (the reference manual title;
+% defaults to the current COPPE/UFRJ norm). Override them before
+% |\coppetexfinalpage| with |\renewcommand| if the document uses a
+% non-default font or follows an earlier edition of the norm.
+%    \begin{macrocode}
+\providecommand{\coppefinalengine}{%
+  \ifPDFTeX\hologo{pdfLaTeX}\fi
+  \ifLuaTeX\hologo{LuaLaTeX}\fi
+  \ifXeTeX\hologo{XeLaTeX}\fi}
+\providecommand{\coppefinalfont}{Computer Modern (padr\~ao \LaTeX{})}
+\providecommand{\coppefinalmanual}{%
+  \emph{Norma para a Elabora\c c\~ao Gr\'afica de Teses e Disserta\c c\~oes
+  da COPPE/UFRJ}}
+\newcommand{\coppetexfinalpage}{%
+  \clearpage
+  % Force the colophon onto a verso (even) page so it faces the rear cover.
+  % If the current page is odd (recto), fill it with an empty verso first.
+  \if@twoside
+    \ifodd\c@page
+      \hbox{}\thispagestyle{empty}\newpage
+    \fi
+  \fi
+  \thispagestyle{empty}%
+  \null\vfill
+  \begin{otherlanguage}{brazilian}%
+    \begin{center}
+      {\footnotesize\setstretch{1.0}%
+      \textsc{Colof\~ao}\par
+      \vspace{0.7em}
+      \begin{minipage}{0.75\textwidth}\centering
+      Este documento foi composto em \LaTeX{} com \coppefinalengine{}
+      em \today, na fonte \coppefinalfont. A bibliografia foi processada
+      por Bib\LaTeX{} e Biber. Foi utilizada a classe \CoppeTeX,
+      vers\~ao~\coppe@version, dispon\'\i vel no reposit\'orio GitHub
+      \mbox{\url{https://github.com/COPPE-UFRJ/CoppeTeX}}, em
+      conformidade com a \coppefinalmanual.
+      \end{minipage}\par}
+    \end{center}
+  \end{otherlanguage}%
+  \vspace*{2cm}%
+  \clearpage}
+%    \end{macrocode}
+% \changes{v4.0}{2026/05/30}{Initial \coppetexfinalpage colophon page.}
+% \end{macro}
+%
 % \begin{macro}{\makecover}
 % The ABNT cover (capa, NBR 14724) suggested in the manual's Anexo A. It is
 % the institution block --- the university, the full COPPE name, and the
@@ -2549,7 +2658,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \nohyphens{\MakeUppercase{\coppe@selecttitle}}\par
   \vspace{\stretch{3}}
   \MakeUppercase{\local@cityname}\par
-  \number\year
+  \coppe@docyear
   \end{titlepage}%
 }
 %    \end{macrocode}
@@ -2607,7 +2716,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \vspace*{\fill}
   \begin{center}
   \local@cityname\par
-  \local@monthname\ de \number\year
+  \local@monthname\ de \coppe@docyear
   \end{center}
   \end{titlepage}
   % Ficha catalográfica on the verso of the folha de rosto (NBR 14724, R57):
@@ -2737,7 +2846,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
       \nohyphens\@authname\par
       \nohyphens{%
         \coppe@selecttitle/\@authname\ \@authsurn. -- \local@cityname:
-      UFRJ/COPPE, \number\year.}\par
+      UFRJ/COPPE, \coppe@docyear.}\par
       \pageref{front:pageno},
       \pageref{LastPage}
       p.\@ifundefined{r@cat:lofflag}{}{\pageref{cat:lofflag}} $29,7$cm.\par
@@ -2767,7 +2876,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
         \the\toks@
       \end{tabularx}}\par
       \nohyphens{\local@doctype\ ({\MakeLowercase\@degreename}) --
-      UFRJ/COPPE/Programa de \local@deptname, \number\year.}\par
+      UFRJ/COPPE/Programa de \local@deptname, \coppe@docyear.}\par
       Refer{\^ e}ncias Bibliogr{\' a}ficas: p. \pageref{bib:begin} -- \pageref{bib:end}.\par
       \count1=0
       \count2=1
@@ -2814,7 +2923,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \vspace*{13.2mm}
     \@authname\ \@authsurn \par
     \vspace*{7mm}
-    \local@monthname/\number\year
+    \local@monthname/\coppe@docyear
   \end{center}\par
   \vspace*{1.5cm}
   \noindent%
@@ -2858,7 +2967,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \vspace*{13.2mm}
     \@authname\ \@authsurn \par
     \vspace*{7mm}
-    \foreign@monthname/\number\year
+    \foreign@monthname/\coppe@docyear
   \end{center}\par
   \vspace*{1.5cm}
   \noindent%
@@ -2921,7 +3030,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \vspace*{13.2mm}
     \@authname\ \@authsurn \par
     \vspace*{7mm}
-    \local@monthname/\number\year
+    \local@monthname/\coppe@docyear
   \end{center}\par
   \vspace*{1.5cm}
   \noindent%
@@ -3248,7 +3357,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \newcommand\frontpage@bottomtext{%
   \begin{center}
   {\MakeUppercase{\local@cityname, \local@statename\ -- \local@countryname}}\par
-  {\MakeUppercase\local@monthname\ DE \number\year}
+  {\MakeUppercase\local@monthname\ DE \coppe@docyear}
   \end{center}%
 }
 %

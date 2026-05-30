@@ -55,6 +55,10 @@
 \def\filedate{2026/05/28}
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{coppe}[\filedate\ \fileversion\ COPPE Dissertations and Thesis]
+\let\coppe@version\fileversion
+\let\coppe@date\filedate
+\edef\coppe@docmonth{\the\month}
+\edef\coppe@docyear{\the\year}
 \LoadClass[12pt,a4paper,twoside]{book}
 \RequirePackage{hyphenat}
 \RequirePackage{lastpage}
@@ -526,13 +530,12 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \global\def\@authsurn{#2}
 }
 \renewcommand\date[2]{%
-  \month=#1
-  \year=#2
-}
-\newcommand\local@monthname{\ifcase\month\or
+  \def\coppe@docmonth{#1}%
+  \def\coppe@docyear{#2}}
+\newcommand\local@monthname{\ifcase\coppe@docmonth\or
   Janeiro\or Fevereiro\or Mar{\c c}o\or Abril\or Maio\or Junho\or
   Julho\or Agosto\or Setembro\or Outubro\or Novembro\or Dezembro\fi}
-\newcommand\foreign@monthname{\ifcase\month\or
+\newcommand\foreign@monthname{\ifcase\coppe@docmonth\or
   January\or February\or March\or April\or May\or June\or
   July\or August\or September\or October\or November\or December\fi}
 \newcounter{keywords}
@@ -588,6 +591,42 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \else
     \clearpage
   \fi}
+\providecommand{\coppefinalengine}{%
+  \ifPDFTeX\hologo{pdfLaTeX}\fi
+  \ifLuaTeX\hologo{LuaLaTeX}\fi
+  \ifXeTeX\hologo{XeLaTeX}\fi}
+\providecommand{\coppefinalfont}{Computer Modern (padr\~ao \LaTeX{})}
+\providecommand{\coppefinalmanual}{%
+  \emph{Norma para a Elabora\c c\~ao Gr\'afica de Teses e Disserta\c c\~oes
+  da COPPE/UFRJ}}
+\newcommand{\coppetexfinalpage}{%
+  \clearpage
+  % Force the colophon onto a verso (even) page so it faces the rear cover.
+  % If the current page is odd (recto), fill it with an empty verso first.
+  \if@twoside
+    \ifodd\c@page
+      \hbox{}\thispagestyle{empty}\newpage
+    \fi
+  \fi
+  \thispagestyle{empty}%
+  \null\vfill
+  \begin{otherlanguage}{brazilian}%
+    \begin{center}
+      {\footnotesize\setstretch{1.0}%
+      \textsc{Colof\~ao}\par
+      \vspace{0.7em}
+      \begin{minipage}{0.75\textwidth}\centering
+      Este documento foi composto em \LaTeX{} com \coppefinalengine{}
+      em \today, na fonte \coppefinalfont. A bibliografia foi processada
+      por Bib\LaTeX{} e Biber. Foi utilizada a classe \CoppeTeX,
+      vers\~ao~\coppe@version, dispon\'\i vel no reposit\'orio GitHub
+      \mbox{\url{https://github.com/COPPE-UFRJ/CoppeTeX}}, em
+      conformidade com a \coppefinalmanual.
+      \end{minipage}\par}
+    \end{center}
+  \end{otherlanguage}%
+  \vspace*{2cm}%
+  \clearpage}
 \newcommand\makecover{%
   \begin{titlepage}%
   \centering
@@ -606,7 +645,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \nohyphens{\MakeUppercase{\coppe@selecttitle}}\par
   \vspace{\stretch{3}}
   \MakeUppercase{\local@cityname}\par
-  \number\year
+  \coppe@docyear
   \end{titlepage}%
 }
 \renewcommand\maketitle{%
@@ -659,7 +698,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \vspace*{\fill}
   \begin{center}
   \local@cityname\par
-  \local@monthname\ de \number\year
+  \local@monthname\ de \coppe@docyear
   \end{center}
   \end{titlepage}
   % Ficha catalográfica on the verso of the folha de rosto (NBR 14724, R57):
@@ -770,7 +809,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
       \nohyphens\@authname\par
       \nohyphens{%
         \coppe@selecttitle/\@authname\ \@authsurn. -- \local@cityname:
-      UFRJ/COPPE, \number\year.}\par
+      UFRJ/COPPE, \coppe@docyear.}\par
       \pageref{front:pageno},
       \pageref{LastPage}
       p.\@ifundefined{r@cat:lofflag}{}{\pageref{cat:lofflag}} $29,7$cm.\par
@@ -800,7 +839,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
         \the\toks@
       \end{tabularx}}\par
       \nohyphens{\local@doctype\ ({\MakeLowercase\@degreename}) --
-      UFRJ/COPPE/Programa de \local@deptname, \number\year.}\par
+      UFRJ/COPPE/Programa de \local@deptname, \coppe@docyear.}\par
       Refer{\^ e}ncias Bibliogr{\' a}ficas: p. \pageref{bib:begin} -- \pageref{bib:end}.\par
       \count1=0
       \count2=1
@@ -836,7 +875,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \vspace*{13.2mm}
     \@authname\ \@authsurn \par
     \vspace*{7mm}
-    \local@monthname/\number\year
+    \local@monthname/\coppe@docyear
   \end{center}\par
   \vspace*{1.5cm}
   \noindent%
@@ -874,7 +913,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \vspace*{13.2mm}
     \@authname\ \@authsurn \par
     \vspace*{7mm}
-    \foreign@monthname/\number\year
+    \foreign@monthname/\coppe@docyear
   \end{center}\par
   \vspace*{1.5cm}
   \noindent%
@@ -923,7 +962,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \vspace*{13.2mm}
     \@authname\ \@authsurn \par
     \vspace*{7mm}
-    \local@monthname/\number\year
+    \local@monthname/\coppe@docyear
   \end{center}\par
   \vspace*{1.5cm}
   \noindent%
@@ -1177,7 +1216,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \newcommand\frontpage@bottomtext{%
   \begin{center}
   {\MakeUppercase{\local@cityname, \local@statename\ -- \local@countryname}}\par
-  {\MakeUppercase\local@monthname\ DE \number\year}
+  {\MakeUppercase\local@monthname\ DE \coppe@docyear}
   \end{center}%
 }
 \newcommand\abstract@toptext{%
