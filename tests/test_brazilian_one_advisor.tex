@@ -1,0 +1,67 @@
+%%
+%% test_brazilian_one_advisor.tex -- regression guard.
+%%
+%% Historical bug: when only ONE \advisor was given, the cover/folha-de-rosto
+%% rendering used to fall over (the original \maketitle loop assumed at
+%% least two advisors). This test pins the single-advisor path: it must
+%% compile cleanly AND the cover label must read "Orientador" (singular),
+%% not "Orientadores".
+%%
+%% Scope: just enough thesis to render \maketitle and the front pages.
+%% No body chapters -- they are covered by test_brazilian_two_advisors.tex.
+%%
+%% Run via ../tests/run-tests.ps1.
+%%
+
+\documentclass[dsc]{coppe}
+
+\addbibresource{example.bib}% only loaded so biblatex initialises cleanly
+
+\begin{document}
+  \title{Teste de um único orientador}
+  \foreigntitle{One-advisor regression test}
+  \author{Teste}{Da Silva}
+
+  % EXACTLY ONE advisor.
+  \advisor{Prof.}{Ana}{Orientadora}{D.Sc.}
+
+  \examiner{Prof.}{Primeiro Examinador Sobrenome}{D.Sc.}
+  \examiner{Prof.}{Segundo Examinador Sobrenome}{Ph.D.}
+  \examiner{Prof.}{Terceiro Examinador Sobrenome}{D.Sc.}
+  \department{PESC}
+  \date{05}{2026}
+
+  \keyword{teste}
+  \keyword{regress\~ao}
+  \keyword{um orientador}
+
+  \maketitle
+
+  \frontmatter
+  \dedication{Dedico a quem revisar este teste.}
+
+  \chapter*{Agradecimentos}
+  Bloco m\'inimo apenas para validar a folha p\'os-dedicat\'oria com um
+  \'unico orientador.
+
+  \begin{abstract}
+  Resumo m\'inimo para validar o ambiente \texttt{abstract} no caminho
+  ``um \'unico orientador''. O conte\'udo \'e irrelevante; importa apenas
+  que a folha seja gerada sem erro e que a r\'otulo de orientador apare\c{c}a
+  no singular (``Orientador'').
+  \end{abstract}
+
+  \begin{foreignabstract}
+  Minimal foreign abstract to validate the \texttt{foreignabstract}
+  environment with a single advisor. Content is irrelevant for the
+  regression test; only the page layout matters.
+  \end{foreignabstract}
+
+  \tableofcontents
+
+  \mainmatter
+  \chapter{Cap\'itulo \'unico}
+  Conte\'udo m\'inimo para que o documento tenha um cap\'itulo de corpo
+  textual e o sum\'ario n\~ao fique vazio.
+
+\end{document}

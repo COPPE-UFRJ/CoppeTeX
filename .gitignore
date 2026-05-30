@@ -38,6 +38,9 @@ specs/*.txt
 *.run.xml
 *page-*.png
 *.synctex.gz
+
+# Regression test build artifacts (rebuild with tests/run-tests.ps1)
+tests/*.pdf
 /ABNT
 /LaTeXManuals
 /LIXO

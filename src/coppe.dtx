@@ -220,7 +220,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \DescribeMacro{\backmatter}
 % A thesis to be approved by the Academic Registry at COPPE/UFRJ
 % must contain three-parts:
-% \emph{front}, \emph{main} and \emph{back} matters~\cite{TNR08a}.
+% \emph{front}, \emph{main} and \emph{back} matters (COPPE/UFRJ Academic
+% Registry guidelines).
 % Each one of these parts is started by calling its corresponding macro
 % |\frontmatter|, |\mainmatter| or |\backmatter|.
 % The front matter of a thesis consists of front cover and face,
@@ -246,7 +247,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \subsection*{Front face}
 %
 % The front face is unnumbered. There, it is not allowed to use
-% hyphenation~\cite{TNR08a}. It is constructed by calling |\maketitle|.
+% hyphenation (COPPE/UFRJ Academic Registry guidelines). It is
+% constructed by calling |\maketitle|.
 % Next, it is described the commands used to
 % enter the information required to create it.
 %
@@ -346,7 +348,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %
 % \DescribeEnv{abstract}
 % \DescribeEnv{foreignabstract}
-% As stated by the Academic Registry~\cite{TNR08a}, abstracts must be in one
+% As stated by the COPPE/UFRJ Academic Registry, abstracts must be in one
 % page each, with at most 250 words. We recommended that they should
 % be only one paragraph long. They must be defined inside the environments
 % |abstract| and |foreignabstract|.
@@ -500,8 +502,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %
 %   \begin{itemize}
 %   \item |brazilian| and |english| are \emph{built-in}: their strings
-%     ship inside |coppe.cls| and need no extra file. |english| also
-%     keeps the historical |\if@english| behavior intact.
+%     ship inside |coppe.cls| and need no extra file.
 %   \item |spanish|, |french|, |italian| are shipped as \emph{language
 %     packs}: two files per language (|coppe-lang-<lang>.def| and
 %     |<lang>-coppe.lbx|) that must sit next to |coppe.cls| (or in your
@@ -640,6 +641,94 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %     \end{document}
 % \end{verbatim}
 %
+% \section{Files in your project folder}
+%
+% In a normal install where CoppeTeX is part of your |TEXINPUTS| path
+% (e.g.\ inside the local texmf tree of MiKTeX or TeX Live), you do not
+% need to think about this list at all --- the files travel with the
+% class. This section is for two situations where you do:
+% \begin{itemize}
+%   \item shipping the class together with your manuscript (a
+%         self-contained submission package); or
+%   \item installing CoppeTeX by hand, dropping the files next to
+%         |coppe.cls| in the project directory.
+% \end{itemize}
+%
+% \subsection*{Always required}
+%
+% These files must be findable at every compilation, regardless of the
+% main language or any class option:
+% \begin{description}
+%   \item[\texttt{coppe.cls}] the document class itself.
+%   \item[\texttt{coppe.dbx}] custom |biblatex| datamodel (declares the
+%         ABNT-specific entry types |@game|, |@videogame|, |@boardgame|,
+%         |@tvshow| and |@map|, plus a few custom fields).
+%   \item[\texttt{coppe.bbx} and \texttt{coppe.cbx}] |biblatex|
+%         bibliography and citation styles for the author--date scheme
+%         (the default).
+%   \item[\texttt{brazilian-coppe.lbx} and \texttt{english-coppe.lbx}]
+%         |biblatex| localisation tables for Portuguese and English. Both
+%         are required \emph{even when neither language is the main one},
+%         because |coppe.bbx| registers
+% \begin{verbatim}
+%     \DeclareLanguageMapping{brazilian}{brazilian-coppe}
+%     \DeclareLanguageMapping{english}{english-coppe}
+% \end{verbatim}
+%         unconditionally, so |biblatex| tries to read both LBX files at
+%         every compilation.
+% \end{description}
+%
+% \subsection*{Conditional on class options}
+%
+% \begin{description}
+%   \item[\texttt{coppe-numeric.bbx} and \texttt{coppe-numeric.cbx}]
+%         only when the |numbers| class option is given
+%         (|\documentclass[numbers]{coppe}|). Without it, |biblatex| never
+%         tries to read them.
+%   \item[\texttt{coppe.ist}] only when the glossary, list-of-symbols, or
+%         list-of-abbreviations features are used. It is the |makeindex|
+%         style file invoked by the |makeindex -s coppe.ist ...| step
+%         described in subsection \emph{Lists of symbols and abbreviations}
+%         above.
+% \end{description}
+%
+% \subsection*{Conditional on the main language}
+%
+% The main language is chosen by the matching class option
+% (|brazilian|, |english|, |spanish|, |french|, |italian|).  The two
+% built-in languages ship their strings inside |coppe.cls| and so need
+% no extra file. The three language packs add two files each --- one
+% class-level (|coppe-lang-<lang>.def|) and one |biblatex|-level
+% (|<lang>-coppe.lbx|):
+% \begin{center}
+% \begin{tabular}{ll}
+%   \hline
+%   \textbf{Main language} & \textbf{Extra files needed} \\
+%   \hline
+%   \texttt{brazilian} (default) & --- (built into \texttt{coppe.cls}) \\
+%   \texttt{english}             & --- (built into \texttt{coppe.cls}) \\
+%   \texttt{spanish}             & \texttt{coppe-lang-spanish.def}, \texttt{spanish-coppe.lbx} \\
+%   \texttt{french}              & \texttt{coppe-lang-french.def},  \texttt{french-coppe.lbx}  \\
+%   \texttt{italian}             & \texttt{coppe-lang-italian.def}, \texttt{italian-coppe.lbx} \\
+%   \hline
+% \end{tabular}
+% \end{center}
+% Loading a third language at preamble time via
+% |\usecoppelanguage{<lang>}| brings in the same pair of files for that
+% language. A user-supplied language pack follows the same scheme: drop
+% |coppe-lang-<lang>.def| and |<lang>-coppe.lbx| next to |coppe.cls|.
+%
+% \subsection*{Cover assets}
+%
+% The institutional title page produced by |\maketitle| needs two PDF
+% logo files at compile time:
+% \begin{description}
+%   \item[\texttt{ufrj-logo.pdf} and \texttt{coppe-logo.pdf}] the UFRJ
+%         shield and the COPPE/UFRJ wordmark. Both ship with the CoppeTeX
+%         distribution; they must be findable from the project directory
+%         (or on |TEXINPUTS|).
+% \end{description}
+%
 % \section{Quick, useful tips}
 %
 % \paragraph{Pictures.} The default picture format of \LaTeX\ is the
@@ -663,9 +752,32 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %
 % When working with PDF's, there is the possibility to add extra information to
 % the file as the author's name, document title, subject, keywords, etc.  This
-% is easily done with the |hyperref| package.  It is also useful to enable
-% hyperlinks.  Fortunately, the |coppe| class will do this automatically if
-% |hyperref| is loaded.
+% is easily done with the |hyperref| package, which is loaded by the |coppe|
+% class itself (since v4.0): the user must \emph{not} load it again in the
+% manuscript preamble.  Author, title, subject and keyword metadata are filled
+% in automatically by |\maketitle|.
+%
+% \paragraph{Math (\texttt{amssymb} vs.\ \texttt{unicode-math}).}
+%
+% The class always loads |amsmath|. The companion AMS symbol package
+% |amssymb|, however, is loaded \emph{only} under |pdfLaTeX|: it is a legacy
+% 8-bit package built around the |msam|/|msbm| Type 1 fonts and clashes with
+% |unicode-math|, the modern OpenType-math package used on Unicode engines
+% (\hologo{LuaLaTeX}, \hologo{XeLaTeX}). On those engines the class skips
+% |amssymb| and schedules an \emph{end-of-document} check: if by then the
+% author has loaded neither |unicode-math| nor |amssymb| (which they could
+% have loaded by hand, though it is discouraged), a |ClassWarning| reminds
+% them to add
+% \begin{verbatim}
+%   \usepackage{unicode-math}
+%   \setmathfont{Latin Modern Math}  % or STIX Two Math, ...
+% \end{verbatim}
+% to the manuscript preamble. The class deliberately does \emph{not}
+% auto-load |unicode-math|, because picking an OpenType math font is a
+% typographic choice that belongs to the author. \textbf{Never load
+% |amssymb| together with |unicode-math|}: it would re-establish the 8-bit
+% AMS fonts on top of the OpenType math font and split symbols across two
+% incompatible encodings.
 %
 % \paragraph{Printing.} To get your work correctly printed,
 % you must ensure that any page scaling option (e.g., fit or shrink to printable
@@ -684,17 +796,20 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %<*example>
 \documentclass[dsc]{coppe}
 
-\usepackage{booktabs}% tabelas mais bonitas
-\usepackage{rotating}% rodando coisas, como tabelas
-\usepackage{longtable} % tabelas longas
+\usepackage{rotating}        % rodando coisas, como tabelas
 \usepackage[most]{tcolorbox} % caixas de texto
 \usepackage{tikz}            % gráficos vetoriais (o tcolorbox já o traz)
-\usepackage{subcaption}      % subfiguras/subtabelas (NÃO use subfig/subfigure)
-\usepackage{amsmath,amssymb}
-\DeclareMathOperator{\RMSE}{RMSE}% operadores próprios (cap. de matemática)
+% Sob LuaLaTeX/XeLaTeX, descomente as duas linhas a seguir para obter os
+% símbolos AMS (\mathbb, \hbar, \varnothing, ...) via unicode-math. Sob
+% pdfLaTeX, a classe já carrega amssymb automaticamente; deixe comentado.
+%\usepackage{unicode-math}
+%\setmathfont{Latin Modern Math}    % ou STIX Two Math, TeX Gyre Termes Math...
+\DeclareMathOperator{\RMSE}{RMSE}   % operadores próprios (cap. de matemática)
 \DeclareMathOperator{\diag}{diag}
-\usepackage{hyperref}
-% listings, fancyvrb e algorithm2e já vêm carregados pela classe coppe (v4.0).
+% A classe coppe (v4.0) já carrega: amsmath, booktabs, longtable, subcaption,
+% hyperref, biblatex, listings, fancyvrb, algorithm2e -- não recarregue esses
+% pacotes aqui (em particular, hyperref deve ficar a cargo da classe para que
+% a ordem com setspace e biblatex permaneça correta).
 
 \addbibresource{example.bib}% base de referências (biblatex/biber)
 
@@ -707,7 +822,10 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \author{Nome do Autor}{Sobrenome}
   \advisor{Prof.}{Nome do Primeiro Orientador}{Sobrenome}{D.Sc.}
   \advisor{Prof.}{Nome do Segundo Orientador}{Sobrenome}{Ph.D.}
-  \advisor{Prof.}{Nome do Terceiro Orientador}{Sobrenome}{D.Sc.}
+  % A classe aceita de um a tres \advisor; se houver apenas um, o rotulo na
+  % capa e na folha de rosto sai como "Orientador" (singular), com dois ou
+  % mais sai como "Orientadores" (plural). Para o caso 1/3 orientadores,
+  % veja tests/test_brazilian_one_advisor.tex e tests/test_brazilian_three_advisors.tex.
 
   \examiner{Prof.}{Nome do Primeiro Examinador Sobrenome}{D.Sc.}
   \examiner{Prof.}{Nome do Segundo Examinador Sobrenome}{Ph.D.}
@@ -1390,13 +1508,13 @@ saudacao("COPPE")
 \end{python}
 \source{Elaboração própria.}
 
-Para inserir código no meio do texto use \verb|\pythoninline|, como em \pythoninline{saudacao(nome)}; e para mostrar a saída de um programa use o ambiente \verb|gxoutput| (verbatim):
+Para inserir código no meio do texto use \verb|\pythoninline|, como em \pythoninline{saudacao(nome)}; e para mostrar a saída de um programa use o ambiente \verb|Verbatim| do \texttt{fancyvrb}, que a classe já carrega:
 
-\begin{gxoutput}
+\begin{Verbatim}[frame=lines,numbers=left,numbersep=0.5em]
 Olá, COPPE!
-\end{gxoutput}
+\end{Verbatim}
 
-Há estilos prontos também para \verb|java|, \verb|xml|, \verb|html| e \verb|prolog|, comandos \verb|\pythoninline|/\verb|\javainline| para código no meio do texto, e os ambientes \verb|gxoutput|/\verb|gxoutputs| para a saída dos programas. Para algoritmos, use o ambiente \verb|algorithm| com as palavras-chave em português \verb|\Para| e \verb|\Enquanto|, como no \autoref{alg:soma}.
+Há estilos prontos também para \verb|java|, \verb|xml|, \verb|html| e \verb|prolog|, comandos \verb|\pythoninline|/\verb|\javainline| para código no meio do texto, e o ambiente \verb|Verbatim| (com as opções acima) para a saída de programas. Para algoritmos, use o ambiente \verb|algorithm| com as palavras-chave em português \verb|\Para| e \verb|\Enquanto|, como no \autoref{alg:soma}.
 
 \begin{algorithm}[H]
 \caption{Soma dos elementos de um vetor}
@@ -1412,7 +1530,7 @@ $s \leftarrow 0$\;
 
   \chapter{Escrevendo matemática}
 
-  A classe carrega \texttt{amsmath} e \texttt{amssymb}. Fórmulas no texto vão entre \verb|$...$|; fórmulas destacadas e numeradas usam o ambiente \verb|equation|.
+  A classe carrega \texttt{amsmath} em qualquer motor. Sob \hologo{pdfLaTeX} ela também carrega \texttt{amssymb} (símbolos clássicos $\mathbb{R}$, $\hbar$, $\varnothing$, \ldots). Sob \hologo{LuaLaTeX}/\hologo{XeLaTeX}, \textbf{a classe NÃO carrega \texttt{amssymb}} (ele é incompatível com o \texttt{unicode-math}); se você terminar o documento sem ter carregado nem \texttt{unicode-math} nem \texttt{amssymb}, a classe emite um \emph{ClassWarning} no fim da compilação pedindo que você adicione \verb|\usepackage{unicode-math}| ao preâmbulo (veja a~\autoref{sec:unicode-math}). Fórmulas no texto vão entre \verb|$...$|; fórmulas destacadas e numeradas usam o ambiente \verb|equation|.
 
   \section{Alinhamento (align)}
   O ambiente \verb|align| alinha equações pelo \verb|&| e numera cada linha (\verb|\\| quebra a linha; \verb|align*| não numera):
@@ -1457,10 +1575,11 @@ $s \leftarrow 0$\;
   Assim, \verb|$\RMSE(y,\hat{y})$| produz $\RMSE(y,\hat{y})$, e \verb|$\diag(\lambda_1,\dots,\lambda_n)$| produz $\diag(\lambda_1,\dots,\lambda_n)$.
 
   \section{Unicode e LuaLaTeX (unicode-math)}
-  Ao migrar para o \hologo{LuaLaTeX}, troque o \texttt{amssymb} pelo \texttt{unicode-math} e escolha uma fonte matemática OpenType:
+  \label{sec:unicode-math}
+  Ao migrar para \hologo{LuaLaTeX} (ou \hologo{XeLaTeX}), \textbf{não carregue} \texttt{amssymb}: ele é o pacote AMS legado, escrito para as fontes Type~1 de 8~bits (\texttt{msam}/\texttt{msbm}), e colide com \texttt{unicode-math} -- o pacote moderno que controla a fonte matemática OpenType. Por isso a classe \texttt{coppe} já \emph{omite} \texttt{amssymb} sob motores Unicode e emite um aviso na compilação (procure por \texttt{Class coppe Warning} no log) lembrando que cabe a você completar o preâmbulo:
   \begin{verbatim}
-  \usepackage{amsmath}
-  \usepackage{unicode-math}
+  \usepackage{amsmath}      % a classe já carrega
+  \usepackage{unicode-math} % NÃO use \usepackage{amssymb} junto
   \setmathfont{Latin Modern Math}  % ou STIX Two Math, TeX Gyre Termes Math...
   \end{verbatim}
   O código clássico continua valendo ($\mathbb{R}$, $\int_a^b f(x)\,dx$, $\alpha$) e você ainda pode digitar os próprios símbolos Unicode no editor. A vantagem é que o PDF passa a indexar os símbolos em Unicode real: ao copiar uma fórmula do PDF, o significado dos símbolos é preservado.
@@ -1609,16 +1728,19 @@ No modelo \CoppeTeX os anexos devem obrigtoriamente vir depois dos apêndices e 
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{coppe}[\filedate\ \fileversion\ COPPE Dissertations and Thesis]
 \LoadClass[12pt,a4paper,twoside]{book}
-% The bibliography engine (biblatex+biber) is loaded further below, after babel,
-% so the numbers class option can select the citation style at load time.
+% setspace, hyperref and the bibliography engine (biblatex+biber) are loaded at
+% the END of the class (after every class hook is defined), in that order:
+% setspace -> hyperref -> biblatex. hyperref must come late so all the macros
+% it patches (TOC, refs, lists) are already defined, and biblatex must come
+% after hyperref so its citation links and back-references work.
 \RequirePackage{hyphenat}
 \RequirePackage{lastpage}
 \RequirePackage{ifthen}
 \RequirePackage{graphicx}
-\RequirePackage{setspace}
 \RequirePackage{tabularx}
+\RequirePackage{booktabs}      % regras de tabela profissionais (toprule/midrule/bottomrule)
+\RequirePackage{longtable}     % tabelas que quebram entre páginas
 \RequirePackage{etoolbox}
-\RequirePackage{eqparbox}
 \RequirePackage{ltxcmds}
 \RequirePackage{hologo}        % TeX-family logos: \hologo{TeX}, \hologo{LaTeX}, ...
 % Render \TeX, \LaTeX and friends via hologo (\CoppeTeX is a custom logo, kept).
@@ -1642,9 +1764,45 @@ No modelo \CoppeTeX os anexos devem obrigtoriamente vir depois dos apêndices e 
     Although slower, you should try compiling with LuaLaTeX}}
 \fi
 \RequirePackage[T1]{fontenc}
+% Math support. amsmath is universal and works on every engine, so the class
+% brings it in unconditionally (it must precede hyperref, which is loaded at
+% the end of the class). amssymb is the legacy AMS symbol package, built
+% around the 8-bit Type 1 fonts msam/msbm; on a Unicode engine (LuaLaTeX or
+% XeLaTeX) it clashes with unicode-math, which already provides all of its
+% symbols through Unicode math codes. So amssymb is loaded ONLY under
+% pdfLaTeX; Unicode-engine users get a ClassWarning pointing them at
+% unicode-math (the class does not auto-load unicode-math because choosing
+% an OpenType math font is a typographic decision that belongs to the author).
+\RequirePackage{amsmath}
+\ifPDFTeX
+  \RequirePackage{amssymb}
+\else
+  % Unicode engine: defer the check to end of document. Only warn if the
+  % user did NOT add either unicode-math (the modern OpenType-math route)
+  % or amssymb (the legacy route, which they would have loaded manually).
+  % This avoids nagging authors who already followed the documented
+  % \usepackage{unicode-math} workflow.
+  \AtEndDocument{%
+    \@ifpackageloaded{unicode-math}{}{%
+      \@ifpackageloaded{amssymb}{}{%
+        \ClassWarningNoLine{coppe}{%
+          You are compiling with a Unicode engine (LuaLaTeX or XeLaTeX) and\MessageBreak
+          neither unicode-math nor amssymb is loaded. AMS-style symbols\MessageBreak
+          (\string\mathbb, \string\hbar, \string\varnothing, ...) will be undefined.\MessageBreak
+          Add to your preamble:\MessageBreak
+          \space\space\string\usepackage{unicode-math}\MessageBreak
+          \space\space\string\setmathfont{Latin Modern Math}\MessageBreak
+          Do NOT load amssymb together with unicode-math -- it would clash\MessageBreak
+          with the OpenType math font setup}}}}
+\fi
 % manual2024 margins: 3cm top, 2cm bottom, mirrored 3cm inner / 2cm outer for
 % two-sided printing -- realised as inner=outer=2cm plus a 1cm bindingoffset.
-\RequirePackage[a4paper,twoside,bindingoffset=1cm,%
+% headheight=15pt is given here (not patched later) so geometry's own page
+% arithmetic stays self-consistent: fancyhdr needs >= 14.49998pt of header
+% height to host the running head, and the standard 12pt default triggers
+% its "headheight is too small" warning. Letting geometry know up front
+% keeps \topmargin a derived value -- we never touch it by hand.
+\RequirePackage[a4paper,twoside,bindingoffset=1cm,headheight=15pt,%
 top=3cm,bottom=2cm,inner=2cm,outer=2cm]{geometry}
 \RequirePackage{titlesec}
 % --- Section heading formats (manual2024 2.6 / proposta P22) -----------------
@@ -1717,6 +1875,9 @@ top=3cm,bottom=2cm,inner=2cm,outer=2cm]{geometry}
 %     "Figura 1 -- titulo" travessao separator (sources handled by \source). ---
 \RequirePackage{caption}
 \captionsetup{font=footnotesize,labelsep=endash}
+% subcaption (NÃO subfig/subfigure) for subfigures / subtables; load right after
+% caption so it picks up the ABNT captionsetup above.
+\RequirePackage{subcaption}
 % --- Floats: caption on TOP and a mandatory "Fonte:" line at the bottom.
 %     manual2024 2.10-2.11 (R46/R51: identification on top; R48/R52: the source
 %     at the bottom is mandatory). The float package's plaintop style forces the
@@ -1777,6 +1938,8 @@ top=3cm,bottom=2cm,inner=2cm,outer=2cm]{geometry}
 %     \frontmatter (unnumbered by default; roman with the numeraisromanos
 %     class option). ------------------------------------------------------------
 \RequirePackage{fancyhdr}
+% \headheight is set to 15pt by geometry up above (see the geometry call),
+% which is what fancyhdr needs (>= 14.49998pt) for the running head.
 \fancypagestyle{coppe}{\fancyhf{}\fancyhead[RO,LE]{\thepage}%
   \renewcommand{\headrulewidth}{0pt}}
 % Blank pages inserted by \cleardoublepage (two-sided) must be empty: no page
@@ -1811,22 +1974,23 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %   * third    -- optional, loaded on demand with \usecoppelanguage{<name>}
 %                 in the preamble (for citations or quotations in a third
 %                 language). Has no class option of its own.
-% Backward compatibility: the historical \if@english boolean is kept and
-% mirrors "is main = english?", so every existing \if@english branch in the
-% class keeps working unchanged.
+% Note: the legacy \if@english boolean (defined and toggled here in
+% v3.x for backward compatibility) was removed in v4.0 -- nothing
+% inside the class or in the biblatex style files (.bbx/.cbx/.dbx/.lbx)
+% tests it. Code that needs to branch on the main language should test
+% \ifx\coppe@mainlang\coppe@@englishstr instead.
 \def\coppe@mainlang{brazilian}
 \def\coppe@foreignlang{english}
-\newif\if@english\@englishfalse
 \DeclareOption{brazilian}{%
-  \def\coppe@mainlang{brazilian}\def\coppe@foreignlang{english}\@englishfalse}
+  \def\coppe@mainlang{brazilian}\def\coppe@foreignlang{english}}
 \DeclareOption{english}{%
-  \def\coppe@mainlang{english}\def\coppe@foreignlang{brazilian}\@englishtrue}
+  \def\coppe@mainlang{english}\def\coppe@foreignlang{brazilian}}
 \DeclareOption{spanish}{%
-  \def\coppe@mainlang{spanish}\def\coppe@foreignlang{english}\@englishfalse}
+  \def\coppe@mainlang{spanish}\def\coppe@foreignlang{english}}
 \DeclareOption{french}{%
-  \def\coppe@mainlang{french}\def\coppe@foreignlang{english}\@englishfalse}
+  \def\coppe@mainlang{french}\def\coppe@foreignlang{english}}
 \DeclareOption{italian}{%
-  \def\coppe@mainlang{italian}\def\coppe@foreignlang{english}\@englishfalse}
+  \def\coppe@mainlang{italian}\def\coppe@foreignlang{english}}
 \DeclareOption{msc}{%
   \newcommand{\@degree}{M.Sc.}
   \newcommand{\@degreename}{Mestrado}
@@ -1868,13 +2032,13 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \newif\if@copperoman\@copperomanfalse
 \DeclareOption{numeraisromanos}{\@copperomantrue}
 %    \end{macrocode}
-% Here is the default one-and-a-half line spacing.
-% Users can change to double spacing by passing the |doublespacing| option.
+% Default line spacing is one-and-a-half; the |doublespacing| option switches
+% to double spacing. Since |setspace| is loaded at the end of the class
+% (after |hyperref|), the actual |\onehalfspacing|/|\doublespacing| call is
+% deferred: the option only flips a flag, which the late-load block reads.
 %    \begin{macrocode}
-\onehalfspacing
-\DeclareOption{doublespacing}{%
-  \doublespacing
-}
+\newif\if@coppedoublespace\@coppedoublespacefalse
+\DeclareOption{doublespacing}{\@coppedoublespacetrue}
 %    \end{macrocode}
 %
 %    \begin{macrocode}
@@ -2024,12 +2188,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \RequirePackage{xcolor}
 \RequirePackage{listings}
 \RequirePackage{fancyvrb}
-\definecolor{deepblue}{rgb}{0,0,0.5}
-\definecolor{deepred}{rgb}{0.6,0,0}
-\definecolor{deepgreen}{rgb}{0,0.5,0}
 \DeclareFixedFont{\ttb}{T1}{txtt}{bx}{n}{10}
 \DeclareFixedFont{\ttm}{T1}{txtt}{m}{n}{10}
-\newcommand{\gxnumbersep}{0.5em}
 \lstset{captionpos=t,extendedchars=true,basicstyle=\ttfamily,inputencoding=utf8,%
   literate=%
   {ã}{{\~{a}}}1 {á}{{\'{a}}}1 {â}{{\^{a}}}1 {à}{{\`{a}}}1 {é}{{\'{e}}}1%
@@ -2051,10 +2211,10 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \@starttoc{lol}}
 % Per-language styles + environments (python, java, xml, html, prolog).
 \newcommand\pythonstyle{\lstset{language=Python,basicstyle=\ttm,numbers=left,%
-  numberstyle=\small\ttfamily,numbersep=\gxnumbersep,commentstyle=\color{purple},%
-  morekeywords={self,as},keywordstyle=\ttb\color{deepblue},%
-  emph={MyClass,__init__},emphstyle=\ttb\color{deepred},%
-  stringstyle=\color{deepgreen},frame=tb,showstringspaces=false,%
+  numberstyle=\small\ttfamily,numbersep=0.5em,commentstyle=\color{purple},%
+  morekeywords={self,as},keywordstyle=\ttb\color[rgb]{0,0,0.5},%
+  emph={MyClass,__init__},emphstyle=\ttb\color[rgb]{0.6,0,0},%
+  stringstyle=\color[rgb]{0,0.5,0},frame=tb,showstringspaces=false,%
   extendedchars=true,firstnumber=auto,inputencoding=utf8,breaklines=true,%
   escapechar=`,postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space}}}
 \lstnewenvironment{python}[1][]{\pythonstyle\lstset{#1}%
@@ -2062,34 +2222,34 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \newcommand\pythoninline[1]{{\pythonstyle\lstinline!#1!}}
 \newcommand\pythonexternal[2][]{{\pythonstyle\lstinputlisting[#1]{#2}}}
 \newcommand\xmlstyle{\lstset{language=XML,basicstyle=\ttm,numbers=left,%
-  numberstyle=\small\ttfamily,numbersep=\gxnumbersep,%
+  numberstyle=\small\ttfamily,numbersep=0.5em,%
   morekeywords={xs:schema,xs:element,xs:sequence,xs:complexType},%
-  keywordstyle=\ttb\color{deepblue},%
+  keywordstyle=\ttb\color[rgb]{0,0,0.5},%
   emph={name,type,attributeFormDefault,elementFormDefault,xmlns:xs},%
-  emphstyle=\ttb\color{deepred},stringstyle=\color{deepgreen},frame=tb,%
+  emphstyle=\ttb\color[rgb]{0.6,0,0},stringstyle=\color[rgb]{0,0.5,0},frame=tb,%
   showstringspaces=false,extendedchars=true,inputencoding=utf8,breaklines=true,%
   postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space}}}
 \lstnewenvironment{xml}[1][]{\xmlstyle\lstset{#1}}{}
 \newcommand\htmlstyle{\lstset{language=HTML,basicstyle=\ttm,numbers=left,%
-  numberstyle=\small\ttfamily,numbersep=\gxnumbersep,%
-  keywordstyle=\ttb\color{deepblue},emphstyle=\ttb\color{deepred},%
-  stringstyle=\color{deepgreen},frame=tb,showstringspaces=false,%
+  numberstyle=\small\ttfamily,numbersep=0.5em,%
+  keywordstyle=\ttb\color[rgb]{0,0,0.5},emphstyle=\ttb\color[rgb]{0.6,0,0},%
+  stringstyle=\color[rgb]{0,0.5,0},frame=tb,showstringspaces=false,%
   extendedchars=true,inputencoding=utf8,breaklines=true,%
   postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space}}}
 \lstnewenvironment{html}[1][]{\htmlstyle\lstset{#1}}{}
 \newcommand\prologstyle{\lstset{language=Prolog,basicstyle=\ttm,numbers=left,%
-  numberstyle=\small\ttfamily,numbersep=\gxnumbersep,commentstyle=\color{purple},%
-  keywordstyle=\ttb\color{deepblue},emph={MyClass,__init__},%
-  emphstyle=\ttb\color{deepred},stringstyle=\color{deepgreen},frame=tb,%
+  numberstyle=\small\ttfamily,numbersep=0.5em,commentstyle=\color{purple},%
+  keywordstyle=\ttb\color[rgb]{0,0,0.5},emph={MyClass,__init__},%
+  emphstyle=\ttb\color[rgb]{0.6,0,0},stringstyle=\color[rgb]{0,0.5,0},frame=tb,%
   showstringspaces=false,extendedchars=true,firstnumber=auto,inputencoding=utf8,%
   breaklines=true,escapechar=`,%
   postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space}}}
 \lstnewenvironment{prolog}[1][]{\prologstyle\lstset{#1}%
   \csname\@lst @SetFirstNumber\endcsname}{\csname\@lst @SaveFirstNumber\endcsname}
 \newcommand\javastyle{\lstset{language=Java,basicstyle=\ttm,numbers=left,%
-  numberstyle=\small\ttfamily,numbersep=\gxnumbersep,commentstyle=\color{purple},%
-  morekeywords={self,as},keywordstyle=\ttb\color{deepblue},%
-  emphstyle=\ttb\color{deepred},stringstyle=\color{deepgreen},frame=tb,%
+  numberstyle=\small\ttfamily,numbersep=0.5em,commentstyle=\color{purple},%
+  morekeywords={self,as},keywordstyle=\ttb\color[rgb]{0,0,0.5},%
+  emphstyle=\ttb\color[rgb]{0.6,0,0},stringstyle=\color[rgb]{0,0.5,0},frame=tb,%
   showstringspaces=false,extendedchars=true,firstnumber=auto,inputencoding=utf8,%
   breaklines=true,escapechar=`,%
   postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space}}}
@@ -2097,11 +2257,14 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \csname\@lst @SetFirstNumber\endcsname}{\csname\@lst @SaveFirstNumber\endcsname}
 \newcommand\javainline[1]{{\javastyle\lstinline!#1!}}
 \newcommand\javaexternal[2][]{{\javastyle\lstinputlisting[#1]{#2}}}
-% Verbatim output environments (program output), fancyvrb.
-\DefineVerbatimEnvironment{gxoutput}{Verbatim}%
-  {frame=lines,numbers=left,numbersep=\gxnumbersep}
-\DefineVerbatimEnvironment{gxoutputs}{Verbatim}%
-  {frame=lines,numbers=left,numbersep=\gxnumbersep,fontsize=\small}
+% fancyvrb's Verbatim environment is available for program output; the
+% \DefineVerbatimEnvironment{gxoutput}/{gxoutputs} aliases that used to live
+% here were author-personal (gx prefix) and were removed in v4.0. Use, for
+% example,
+%   \begin{Verbatim}[frame=lines,numbers=left,numbersep=0.5em]
+%   ...
+%   \end{Verbatim}
+% (or \DefineVerbatimEnvironment{...}{Verbatim}{...} in the manuscript preamble).
 \renewcommand{\theFancyVerbLine}{{\small\ttfamily\arabic{FancyVerbLine}}}
 % Algorithms: algorithm2e, language driven by the main-slot \coppemainstring
 % lookup (key "algorithm2eopt"). Empty means use algorithm2e's default
@@ -2114,37 +2277,10 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \fi
 \SetKwFor{Para}{para}{faça}{fim do para}
 \SetKwFor{Enquanto}{enquanto}{faça}{fim do enquanto}
-% Bibliography engine: the full coppe BibLaTeX/biber ABNT style, replacing the
-% former natbib+bibtex setup. Loaded here, after babel, so its language strings
-% map correctly. The numbers option selects the numeric style; otherwise the
-% author-date default is used. natbib=true keeps \citet/\citep available.
-\if@coppenumeric
-  \RequirePackage[backend=biber,datamodel=coppe,%
-    bibstyle=coppe-numeric,citestyle=coppe-numeric,natbib=true]{biblatex}
-\else
-  \RequirePackage[backend=biber,datamodel=coppe,%
-    bibstyle=coppe,citestyle=coppe,natbib=true]{biblatex}
-\fi
-% Reference-list heading "Referencias" (pt) / "References" (en) -- manual2024
-% 3.1.4.1 requires the post-textual list to be titled "Referencias", not
-% "Bibliografia" (babel's default \bibname). The title is set directly with
-% \iflanguage so it is correct in BOTH the chapter heading and the .toc entry:
-% \iflanguage resolves to plain text and survives the write to the .toc, whereas
-% biblatex's \bibstring does not, and babel's \bibname caption override proved
-% unreliable here. Evaluated in the body, the current language is settled.
-\defbibheading{bibliography}{%
-  \chapter*{\coppestring{references}}%
-  \addcontentsline{toc}{chapter}{\coppestring{references}}}
-% The catalog page range (bib:begin/bib:end) was written by the old
-% thebibliography redefinition, which biblatex's \printbibliography does not
-% use. biblatex offers \AtBeginBibliography but no end counterpart, so the
-% begin label uses that hook and the end label is emitted by wrapping
-% \printbibliography to write it just after the reference list.
-\AtBeginBibliography{\coppe@bibBegin}
-\let\coppe@orig@printbibliography\printbibliography
-\renewcommand\printbibliography[1][]{%
-  \coppe@orig@printbibliography[#1]%
-  \coppe@bibEnd}
+% setspace + hyperref + biblatex are loaded at the very end of the class
+% (see the block just before %</class>), so their hooks see every macro the
+% class defines, and the load order setspace -> hyperref -> biblatex is
+% respected.
 %    \end{macrocode}
 % \changes{v3.0}{2020/03/02}{Added support for monographs in English.}
 % \changes{v3.4.1}{2025/02/13}{Fix english option to consider brazilian a second language, describe it in document}
@@ -2588,7 +2724,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % between the number of pages of the textual part and the page dimension.
 % We have created a label to flag the existence of lists of figures. It is
 % checked to be undefined using the
-% plain \TeX\ command |\@isundefined|~\cite{TeX:FAQ}.
+% plain \TeX\ command |\@isundefined| (cf.\ the \TeX\ FAQ).
 %    \begin{macrocode}
 \newcommand\makecatalog{%
   \vspace*{\fill}
@@ -3129,6 +3265,62 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   degree of \foreign@degname\ of Science (\@degree)}
 }
 %
+%    \end{macrocode}
+%
+% \subsection*{Late-load packages: setspace, hyperref, biblatex}
+%
+% These three packages \emph{must} be the last things the class loads, and in
+% this exact order:
+% \begin{itemize}
+%   \item |setspace| -- supplies |\singlespacing|, |\onehalfspacing| and
+%         friends. It is loaded here so the line-spacing state it carries
+%         around is settled before |hyperref| patches all the cross-reference
+%         and TOC plumbing.
+%   \item |hyperref| -- patches an enormous number of LaTeX internals
+%         (|\section|, |\label|, |\ref|, |\bibcite|, list-of-* commands, \ldots).
+%         Loading it as late as possible is the standard rule of thumb so it
+%         sees the final version of those macros, including the ones the
+%         |coppe| class redefines (e.g. |\@chapter|, |\listofquadros|).
+%   \item |biblatex| -- must come after |hyperref| so its citation links and
+%         back-references hook into hyperref correctly; otherwise the |\cite|
+%         commands print as plain (non-clickable) text.
+% \end{itemize}
+%    \begin{macrocode}
+\RequirePackage{setspace}
+% Apply the default line spacing now that setspace is available. The flag was
+% set above by \DeclareOption{doublespacing}; absent the option, one-and-a-half.
+\if@coppedoublespace\doublespacing\else\onehalfspacing\fi
+\RequirePackage{hyperref}
+% Bibliography engine: the full coppe BibLaTeX/biber ABNT style, replacing the
+% former natbib+bibtex setup. The numbers class option selects the numeric
+% citation style; otherwise the author-date default is used. natbib=true keeps
+% \citet/\citep available for users migrating from natbib.
+\if@coppenumeric
+  \RequirePackage[backend=biber,datamodel=coppe,%
+    bibstyle=coppe-numeric,citestyle=coppe-numeric,natbib=true]{biblatex}
+\else
+  \RequirePackage[backend=biber,datamodel=coppe,%
+    bibstyle=coppe,citestyle=coppe,natbib=true]{biblatex}
+\fi
+% Reference-list heading "Referencias" (pt) / "References" (en) -- manual2024
+% 3.1.4.1 requires the post-textual list to be titled "Referencias", not
+% "Bibliografia" (babel's default \bibname). The title is rendered through
+% \coppestring so it follows the current main language in BOTH the chapter
+% heading and the .toc entry (biblatex's \bibstring proved unreliable across
+% the .toc write, and babel's \bibname caption override was equally fragile).
+\defbibheading{bibliography}{%
+  \chapter*{\coppestring{references}}%
+  \addcontentsline{toc}{chapter}{\coppestring{references}}}
+% The catalog page range (bib:begin/bib:end) was written by the old
+% thebibliography redefinition, which biblatex's \printbibliography does not
+% use. biblatex offers \AtBeginBibliography but no end counterpart, so the
+% begin label uses that hook and the end label is emitted by wrapping
+% \printbibliography to write it just after the reference list.
+\AtBeginBibliography{\coppe@bibBegin}
+\let\coppe@orig@printbibliography\printbibliography
+\renewcommand\printbibliography[1][]{%
+  \coppe@orig@printbibliography[#1]%
+  \coppe@bibEnd}
 %    \end{macrocode}
 %
 %    \begin{macrocode}

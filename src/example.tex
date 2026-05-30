@@ -28,16 +28,11 @@
 %%
 \documentclass[dsc]{coppe}
 
-\usepackage{booktabs}% tabelas mais bonitas
-\usepackage{rotating}% rodando coisas, como tabelas
-\usepackage{longtable} % tabelas longas
+\usepackage{rotating}        % rodando coisas, como tabelas
 \usepackage[most]{tcolorbox} % caixas de texto
 \usepackage{tikz}            % gráficos vetoriais (o tcolorbox já o traz)
-\usepackage{subcaption}      % subfiguras/subtabelas (NÃO use subfig/subfigure)
-\usepackage{amsmath,amssymb}
-\DeclareMathOperator{\RMSE}{RMSE}% operadores próprios (cap. de matemática)
+\DeclareMathOperator{\RMSE}{RMSE}   % operadores próprios (cap. de matemática)
 \DeclareMathOperator{\diag}{diag}
-\usepackage{hyperref}
 
 \addbibresource{example.bib}% base de referências (biblatex/biber)
 
@@ -50,7 +45,10 @@
   \author{Nome do Autor}{Sobrenome}
   \advisor{Prof.}{Nome do Primeiro Orientador}{Sobrenome}{D.Sc.}
   \advisor{Prof.}{Nome do Segundo Orientador}{Sobrenome}{Ph.D.}
-  \advisor{Prof.}{Nome do Terceiro Orientador}{Sobrenome}{D.Sc.}
+  % A classe aceita de um a tres \advisor; se houver apenas um, o rotulo na
+  % capa e na folha de rosto sai como "Orientador" (singular), com dois ou
+  % mais sai como "Orientadores" (plural). Para o caso 1/3 orientadores,
+  % veja tests/test_brazilian_one_advisor.tex e tests/test_brazilian_three_advisors.tex.
 
   \examiner{Prof.}{Nome do Primeiro Examinador Sobrenome}{D.Sc.}
   \examiner{Prof.}{Nome do Segundo Examinador Sobrenome}{Ph.D.}
@@ -712,13 +710,13 @@ saudacao("COPPE")
 \end{python}
 \source{Elaboração própria.}
 
-Para inserir código no meio do texto use \verb|\pythoninline|, como em \pythoninline{saudacao(nome)}; e para mostrar a saída de um programa use o ambiente \verb|gxoutput| (verbatim):
+Para inserir código no meio do texto use \verb|\pythoninline|, como em \pythoninline{saudacao(nome)}; e para mostrar a saída de um programa use o ambiente \verb|Verbatim| do \texttt{fancyvrb}, que a classe já carrega:
 
-\begin{gxoutput}
+\begin{Verbatim}[frame=lines,numbers=left,numbersep=0.5em]
 Olá, COPPE!
-\end{gxoutput}
+\end{Verbatim}
 
-Há estilos prontos também para \verb|java|, \verb|xml|, \verb|html| e \verb|prolog|, comandos \verb|\pythoninline|/\verb|\javainline| para código no meio do texto, e os ambientes \verb|gxoutput|/\verb|gxoutputs| para a saída dos programas. Para algoritmos, use o ambiente \verb|algorithm| com as palavras-chave em português \verb|\Para| e \verb|\Enquanto|, como no \autoref{alg:soma}.
+Há estilos prontos também para \verb|java|, \verb|xml|, \verb|html| e \verb|prolog|, comandos \verb|\pythoninline|/\verb|\javainline| para código no meio do texto, e o ambiente \verb|Verbatim| (com as opções acima) para a saída de programas. Para algoritmos, use o ambiente \verb|algorithm| com as palavras-chave em português \verb|\Para| e \verb|\Enquanto|, como no \autoref{alg:soma}.
 
 \begin{algorithm}[H]
 \caption{Soma dos elementos de um vetor}
@@ -734,7 +732,7 @@ $s \leftarrow 0$\;
 
   \chapter{Escrevendo matemática}
 
-  A classe carrega \texttt{amsmath} e \texttt{amssymb}. Fórmulas no texto vão entre \verb|$...$|; fórmulas destacadas e numeradas usam o ambiente \verb|equation|.
+  A classe carrega \texttt{amsmath} em qualquer motor. Sob \hologo{pdfLaTeX} ela também carrega \texttt{amssymb} (símbolos clássicos $\mathbb{R}$, $\hbar$, $\varnothing$, \ldots). Sob \hologo{LuaLaTeX}/\hologo{XeLaTeX}, \textbf{a classe NÃO carrega \texttt{amssymb}} (ele é incompatível com o \texttt{unicode-math}); se você terminar o documento sem ter carregado nem \texttt{unicode-math} nem \texttt{amssymb}, a classe emite um \emph{ClassWarning} no fim da compilação pedindo que você adicione \verb|\usepackage{unicode-math}| ao preâmbulo (veja a~\autoref{sec:unicode-math}). Fórmulas no texto vão entre \verb|$...$|; fórmulas destacadas e numeradas usam o ambiente \verb|equation|.
 
   \section{Alinhamento (align)}
   O ambiente \verb|align| alinha equações pelo \verb|&| e numera cada linha (\verb|\\| quebra a linha; \verb|align*| não numera):
@@ -779,10 +777,11 @@ $s \leftarrow 0$\;
   Assim, \verb|$\RMSE(y,\hat{y})$| produz $\RMSE(y,\hat{y})$, e \verb|$\diag(\lambda_1,\dots,\lambda_n)$| produz $\diag(\lambda_1,\dots,\lambda_n)$.
 
   \section{Unicode e LuaLaTeX (unicode-math)}
-  Ao migrar para o \hologo{LuaLaTeX}, troque o \texttt{amssymb} pelo \texttt{unicode-math} e escolha uma fonte matemática OpenType:
+  \label{sec:unicode-math}
+  Ao migrar para \hologo{LuaLaTeX} (ou \hologo{XeLaTeX}), \textbf{não carregue} \texttt{amssymb}: ele é o pacote AMS legado, escrito para as fontes Type~1 de 8~bits (\texttt{msam}/\texttt{msbm}), e colide com \texttt{unicode-math} -- o pacote moderno que controla a fonte matemática OpenType. Por isso a classe \texttt{coppe} já \emph{omite} \texttt{amssymb} sob motores Unicode e emite um aviso na compilação (procure por \texttt{Class coppe Warning} no log) lembrando que cabe a você completar o preâmbulo:
   \begin{verbatim}
-  \usepackage{amsmath}
-  \usepackage{unicode-math}
+  \usepackage{amsmath}      % a classe já carrega
+  \usepackage{unicode-math} % NÃO use \usepackage{amssymb} junto
   \setmathfont{Latin Modern Math}  % ou STIX Two Math, TeX Gyre Termes Math...
   \end{verbatim}
   O código clássico continua valendo ($\mathbb{R}$, $\int_a^b f(x)\,dx$, $\alpha$) e você ainda pode digitar os próprios símbolos Unicode no editor. A vantagem é que o PDF passa a indexar os símbolos em Unicode real: ao copiar uma fórmula do PDF, o significado dos símbolos é preservado.

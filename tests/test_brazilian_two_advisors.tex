@@ -1,0 +1,278 @@
+%%
+%% test_brazilian_two_advisors.tex -- regression test for the coppe class.
+%% Brazilian main language, two advisors (the common case; the cover label
+%% should print "Orientadores").
+%%
+%% Run via ../tests/run-tests.ps1, which sets TEXINPUTS so this file finds
+%% coppe.cls and example.bib in ../src/. EXTEND THIS FILE whenever a new
+%% bug is found in the two-advisor / common path: keep every existing case
+%% working and add a minimal repro for the new one.
+%%
+%% Covered features (as of 2026/05/29, CoppeTeX v4.0, nlinguas branch):
+%%   * metadata: \title, \foreigntitle, \author, \advisor (x2), \examiner (x3),
+%%               \department, \date, \keyword (x3)
+%%   * \maketitle (cover + folha de rosto + ficha catalografica)
+%%   * \frontmatter: \dedication, agradecimentos chapter*, abstract, foreignabstract
+%%   * lists: \listoffigures, \listoftables, \listofquadros, \listofprogramas,
+%%            \printloabbreviations, \printlosymbols, \tableofcontents
+%%   * \mainmatter chapters covering: figures with \source/\fonte, booktabs
+%%     table, quadro float, subcaption subfigures, longtable, amsmath +
+%%     amssymb math, algorithm2e algorithm, listings Python block, longquote,
+%%     footnotes (singlespacing+filete via setspace), \sigla / \sigla*,
+%%     \symbl, \abbrev, \citet, \citep, \autoref cross-references
+%%   * back matter: \printbibliography, \appendix (x2), \annex
+%%
+%% Compile under pdfLaTeX. Under LuaLaTeX/XeLaTeX, the class skips amssymb
+%% and the end-of-document ClassWarning will fire (test it by adding
+%% \usepackage{unicode-math} + \setmathfont{Latin Modern Math} below).
+%%
+
+\documentclass[dsc]{coppe}
+
+% Only packages NOT brought in by the class belong here. The coppe class (v4.0)
+% already loads: amsmath, amssymb (pdfLaTeX only), booktabs, longtable,
+% subcaption, hyperref, biblatex, listings, fancyvrb, algorithm2e, setspace,
+% csquotes, xcolor, geometry, fontenc, inputenc (pdfLaTeX), hyphenat,
+% lastpage, graphicx, tabularx, etoolbox, ltxcmds, hologo, caption,
+% float, enumitem, fancyhdr, titlesec, iftex.
+\usepackage{tikz}
+
+% Sob LuaLaTeX/XeLaTeX, descomente para suprimir o ClassWarning do fim de
+% documento e obter os simbolos AMS via unicode-math:
+%\usepackage{unicode-math}
+%\setmathfont{Latin Modern Math}
+
+% Operadores matematicos personalizados (cap. de matematica).
+\DeclareMathOperator{\RMSE}{RMSE}
+
+\addbibresource{example.bib}% reuse the example fixture bibliography
+
+\makelosymbols
+\makeloabbreviations
+
+% Acronyms: \sigla expands on first use, abbreviates afterwards.
+\newsigla{coppe}{COPPE}{Instituto Alberto Luiz Coimbra de P\'os-Gradua\c c\~ao
+  e Pesquisa de Engenharia}
+\newsigla{abnt}{ABNT}{Associa\c c\~ao Brasileira de Normas T\'ecnicas}
+
+\begin{document}
+  \title{Documento de teste da classe coppe}
+  \foreigntitle{coppe class regression test document}
+  \author{Teste}{Da Silva}
+  \advisor{Prof.}{Primeiro}{Orientador}{D.Sc.}
+  \advisor{Prof.}{Segundo}{Orientador}{Ph.D.}
+  \examiner{Prof.}{Primeiro Examinador Sobrenome}{D.Sc.}
+  \examiner{Prof.}{Segundo Examinador Sobrenome}{Ph.D.}
+  \examiner{Prof.}{Terceiro Examinador Sobrenome}{D.Sc.}
+  \department{PESC}
+  \date{05}{2026}
+
+  \keyword{teste}
+  \keyword{regress\~ao}
+  \keyword{abnt}
+
+  \maketitle
+
+  \frontmatter
+  \dedication{Dedico a quem tiver de depurar esta classe.}
+
+  \chapter*{Agradecimentos}
+  Bloco m\'inimo apenas para verificar que \verb|\chapter*| produz a entrada
+  correta no sum\'ario e que a folha p\'os-dedicat\'oria \'e gerada sem erro.
+
+  \begin{abstract}
+  Resumo de teste para validar o ambiente \texttt{abstract} sob a l\'ingua
+  principal \texttt{brazilian}. O conte\'udo \'e irrelevante; o que importa
+  \'e que a folha seja gerada com cabe\c{c}alho institucional, par\'agrafo
+  central e linha de palavras-chave.
+  \end{abstract}
+
+  \begin{foreignabstract}
+  English foreign abstract used to validate the \texttt{foreignabstract}
+  environment under a brazilian-main thesis. The actual prose is irrelevant
+  for regression testing; only the page layout matters here.
+  \end{foreignabstract}
+
+  \listoffigures
+  \listoftables
+  \listofquadros
+  \listofprogramas
+  \printloabbreviations
+  \printlosymbols
+  \tableofcontents
+
+  \mainmatter
+
+  % --------------------------------------------------------------------
+  \chapter{Floats: figuras, tabelas, quadros, subcaption}
+  \label{cap:floats}
+
+  Este cap\'itulo testa todos os ambientes flutuantes da classe. Adiante,
+  o \autoref{cap:math} cobre matem\'atica (com s\'imbolos do
+  \texttt{amssymb}) e o \autoref{cap:cite} testa cita\c{c}\~oes.
+
+  A \autoref{fig:logo} traz o logotipo da \sigla{coppe}; reapareceu como
+  \sigla{coppe} (segunda men\c{c}\~ao deve sair apenas como sigla).
+
+  \begin{figure}[ht]
+    \centering
+    \includegraphics[height=2cm]{coppe-logo}
+    \caption{Logotipo institucional (figura simples).}
+    \label{fig:logo}
+  \end{figure}
+  \fonte{Material institucional.}
+
+  \begin{figure}[ht]
+    \centering
+    \begin{subfigure}{0.45\linewidth}
+      \centering\includegraphics[height=1.8cm]{ufrj-logo}
+      \caption{UFRJ}\label{fig:sub:ufrj}
+    \end{subfigure}\hfill
+    \begin{subfigure}{0.45\linewidth}
+      \centering\includegraphics[height=1.8cm]{coppe-logo}
+      \caption{COPPE}\label{fig:sub:coppe}
+    \end{subfigure}
+    \caption{Subfiguras lado a lado (\texttt{subcaption}).}
+    \label{fig:sub}
+  \end{figure}
+  \fonte{Material institucional.}
+
+  \begin{table}[ht]
+    \centering
+    \caption{Tabela de teste com regras profissionais (\texttt{booktabs}).}
+    \label{tab:teste}
+    \begin{tabular}{lrr}
+      \toprule
+      Item & Quantidade & Pre\c{c}o (R\$) \\
+      \midrule
+      Caneta  &  3 &  4,50 \\
+      Caderno &  1 & 18,90 \\
+      L\'apis & 12 &  0,75 \\
+      \bottomrule
+    \end{tabular}
+  \end{table}
+  \fonte{Pesquisa fict\'icia (apenas para teste).}
+
+  \begin{quadro}[ht]
+    \centering
+    \caption{Quadro com bordas no conte\'udo.}
+    \label{q:teste}
+    \begin{tabular}{|l|l|}
+      \hline
+      Coluna A & Coluna B \\ \hline
+      valor 1  & valor 2  \\
+      valor 3  & valor 4  \\ \hline
+    \end{tabular}
+  \end{quadro}
+  \fonte{Elabora\c{c}\~ao pr\'opria.}
+
+  \begin{longtable}{lll}
+    \caption{Longtable m\'inima (uma p\'agina apenas).}\label{tab:long}\\
+    \toprule A & B & C \\ \midrule \endfirsthead
+    \toprule A & B & C \\ \midrule \endhead
+    \bottomrule \endfoot
+    \bottomrule \endlastfoot
+    1 & 2 & 3 \\
+    4 & 5 & 6 \\
+    7 & 8 & 9 \\
+  \end{longtable}
+  \fonte{Elabora\c{c}\~ao pr\'opria.}
+
+  % --------------------------------------------------------------------
+  \chapter{Matem\'atica (amsmath + amssymb)}
+  \label{cap:math}
+
+  Estes s\'imbolos v\^em do \texttt{amssymb}: $\mathbb{R}$, $\hbar$,
+  $\varnothing$. Sob \hologo{LuaLaTeX}/\hologo{XeLaTeX}, sem
+  \texttt{unicode-math}, eles ficam indefinidos --- e a classe emite um
+  \emph{ClassWarning} no fim da compila\c{c}\~ao apontando para o que
+  fazer.
+
+  Operador personalizado (declarado no pre\^ambulo):
+  $\RMSE(y,\hat{y})$.
+
+  \begin{align}
+    f(x) &= a x^2 + b x + c \\
+         &= a (x - x_1)(x - x_2) .
+  \end{align}
+
+  \begin{equation}
+    A = \begin{bmatrix} a_{11} & a_{12} \\ a_{21} & a_{22} \end{bmatrix}
+    \qquad
+    \det A = \begin{vmatrix} a_{11} & a_{12} \\ a_{21} & a_{22} \end{vmatrix} .
+  \end{equation}
+
+  % --------------------------------------------------------------------
+  \chapter{Algoritmos e listagens}
+  \label{cap:algo}
+
+  Um algoritmo via \texttt{algorithm2e} usando os macros pt-BR registrados
+  pela classe (\verb|\Para|, \verb|\Enquanto|):
+  \begin{algorithm}[H]
+    \caption{Soma trivial de um vetor}
+    \KwIn{vetor $v$ de tamanho $n$}
+    \KwOut{soma $s$}
+    $s \leftarrow 0$\;
+    \Para{$i \leftarrow 1$ \KwTo $n$}{
+      $s \leftarrow s + v[i]$\;
+    }
+    \KwRet $s$\;
+  \end{algorithm}
+
+  Uma listagem Python (\texttt{listings}), via o estilo \texttt{python}
+  registrado pela classe:
+  \begin{python}
+def soma(v):
+    s = 0
+    for x in v:
+        s += x
+    return s
+  \end{python}
+
+  % --------------------------------------------------------------------
+  \chapter{Cita\c{c}\~oes, cita\c{c}\~oes longas e siglas}
+  \label{cap:cite}
+
+  Cita\c{c}\~oes com \texttt{biblatex}/\texttt{natbib} (autor-data, estilo
+  \texttt{coppe}): segundo \citet{book-example}, algo importante;
+  \citep{article-example} aponta na mesma dire\c{c}\~ao.
+
+  Cita\c{c}\~ao longa com o ambiente \texttt{longquote}:
+  \begin{longquote}
+  Este \'e um teste do ambiente \texttt{longquote}, que deve aparecer em
+  espa\c{c}amento simples, com recuo \`a esquerda de 4\,cm e fonte menor.
+  O bloco precisa se distinguir claramente do par\'agrafo anterior.
+  \end{longquote}
+
+  Uma nota de rodap\'e\footnote{Esta nota deve sair em espa\c{c}amento
+  simples (sob controle de \texttt{setspace}) e com filete curto (5\,cm) \`a
+  esquerda, conforme manual2024.} valida \texttt{setspace} mais a regra
+  \verb|\footnoterule|.
+
+  Acr\^onimos: a primeira men\c{c}\~ao a \sigla{abnt} deve sair por extenso
+  com a sigla entre par\^enteses; a segunda men\c{c}\~ao a \sigla{abnt}
+  deve sair apenas como ``ABNT''. Para\c{c}\~ao explicita da forma
+  completa: \sigla*{abnt}.
+
+  Lista de s\'imbolos (popula \texttt{\textbackslash printlosymbols} no
+  pr\'e-textual):
+  \symbl{R}{$\mathbb{R}$}{Conjunto dos n\'umeros reais.}
+  \symbl{hbar}{$\hbar$}{Constante de Planck reduzida.}
+
+  \backmatter
+  \printbibliography
+
+  \appendix
+  \chapter{Primeiro ap\^endice}
+  \label{ap:um}
+  Texto de ap\^endice apenas para gerar a entrada ``AP\^ENDICE A -- ...''
+  no sum\'ario e validar \verb|\appendix|.
+
+  \chapter{Segundo ap\^endice}
+  Mais um, para verificar a numera\c{c}\~ao ``AP\^ENDICE B''.
+
+  \annex
+  \chapter{Um anexo}
+  Texto de anexo para validar \verb|\annex| (numera\c{c}\~ao ``ANEXO A'').
+
+\end{document}
