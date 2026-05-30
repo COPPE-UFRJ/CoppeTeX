@@ -123,6 +123,86 @@ existing pt/en regression baseline:
 
 
 
+## Required LaTeX packages
+
+`coppe.cls` is built on the standard **`book`** class (`12pt, a4paper,
+twoside`) and loads the stock CTAN packages below with `\RequirePackage`.
+A full TeX Live or MiKTeX install already has every one of them, so the
+list matters only for a minimal install — or when you want to know which
+commands are already in scope (you do **not** need to `\usepackage` any of
+these in your thesis). Bracketed text is the options the class passes.
+
+**Engine & encoding**
+
+- `iftex` — detect the engine (pdfTeX / LuaTeX / XeTeX) to branch setup.
+- `inputenc` [`utf8`] — UTF-8 input; loaded **only under pdfTeX** (Unicode
+  engines read UTF-8 natively).
+- `fontenc` [`T1`] — T1 font encoding (accented glyphs, correct hyphenation).
+
+**Math & symbols**
+
+- `amsmath` — AMS math environments.
+- `amssymb` — AMS symbol fonts; loaded **only under pdfTeX** (under a
+  Unicode engine load `unicode-math` yourself — the class warns if neither
+  is present).
+
+**Page layout & spacing**
+
+- `geometry` — A4 two-side margins, binding offset, header height.
+- `fancyhdr` — running headers and footers.
+- `titlesec` — chapter and section title formatting.
+- `setspace` — one-and-a-half (or, with `doublespacing`, double) line spacing.
+
+**Lists, tables & rules**
+
+- `enumitem` — customizable list spacing and labels.
+- `tabularx` — tables with auto-width columns.
+- `booktabs` — professional horizontal rules (`\toprule`, `\midrule`, …).
+- `longtable` — tables that break across pages.
+
+**Floats, graphics & captions**
+
+- `graphicx` — include images.
+- `float` — float placement control (e.g. `[H]`).
+- `caption` — caption typography (ABNT caption-on-top).
+- `subcaption` — subfigures and subtables.
+
+**Code, verbatim & algorithms**
+
+- `listings` — source-code listings.
+- `fancyvrb` — extended verbatim.
+- `algorithm2e` [`linesnumbered, lined, algochapter, ruled`] — typeset
+  algorithms; the natural-language option follows the main language.
+
+**Bibliography, quotations & language**
+
+- `babel` — multilingual typesetting; the language options are computed
+  from the main/foreign language slots.
+- `csquotes` — context-sensitive quotation marks (recommended companion of
+  biblatex).
+- `biblatex` [`backend=biber`] — bibliography engine and the ABNT `coppe`
+  styles (`coppe` / `coppe-numeric`). The backend is **biber**, not bibtex.
+
+**Hyperlinks**
+
+- `hyperref` — clickable cross-references, PDF bookmarks and metadata.
+
+**Low-level utilities**
+
+- `etoolbox` — e-TeX programming toolkit.
+- `ltxcmds` — low-level command helpers (`\ltx@ifpackageloaded`, …).
+- `ifthen` — `\ifthenelse` conditionals.
+- `hyphenat` — hyphenation control (`\nohyphens`, used on the cover).
+- `lastpage` — `\pageref{LastPage}` for the cataloging page count.
+- `hologo` — TeX-family logos (`\hologo{LaTeX}`, …).
+- `xcolor` — colour support (used by `listings` and `hyperref`).
+
+Everything is loaded unconditionally except `inputenc` / `amssymb` (pdfTeX
+only) and the option-driven `biblatex` style choice (`numbers` selects the
+numeric `coppe-numeric` style). The language packs add no packages — only
+the string files described above.
+
+
 
 ## How Much
 

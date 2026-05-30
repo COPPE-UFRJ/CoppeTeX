@@ -766,6 +766,109 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %         (or on |TEXINPUTS|).
 % \end{description}
 %
+% \section{Required \LaTeX{} packages}
+%
+% The class is built on the standard |book| class
+% (|12pt, a4paper, twoside|) and brings in the stock CTAN packages listed
+% below with |\RequirePackage|. On a full \TeX{}~Live or \MiKTeX{} install they are
+% all present already, so this list matters only for a minimal install
+% --- or when you simply want to know which commands are already in scope.
+% You do \emph{not} need to |\usepackage| any of these yourself; every
+% command and environment they provide is available in your manuscript.
+% Options in brackets are the ones the class passes.
+%
+% \subsection*{Engine and encoding}
+% \begin{description}
+%   \item[\texttt{iftex}] detects the running engine, so the class can
+%         branch its setup between pdf\TeX{} and the Unicode engines
+%         (Lua\TeX/Xe\TeX).
+%   \item[\texttt{inputenc} (\texttt{utf8})] UTF-8 input; loaded
+%         \emph{only under pdf\TeX{}} (the Unicode engines read UTF-8
+%         natively).
+%   \item[\texttt{fontenc} (\texttt{T1})] T1 font encoding, for correctly
+%         composed accented glyphs and hyphenation.
+% \end{description}
+%
+% \subsection*{Mathematics and symbols}
+% \begin{description}
+%   \item[\texttt{amsmath}] the AMS mathematics environments.
+%   \item[\texttt{amssymb}] the AMS symbol fonts; loaded \emph{only under
+%         pdf\TeX{}}. Under a Unicode engine load |unicode-math| (or
+%         |amssymb|) yourself --- the class warns at end of document if
+%         neither is present.
+% \end{description}
+%
+% \subsection*{Page layout and spacing}
+% \begin{description}
+%   \item[\texttt{geometry}] A4 two-side margins, binding offset and
+%         header height.
+%   \item[\texttt{fancyhdr}] running headers and footers.
+%   \item[\texttt{titlesec}] chapter and section title formatting.
+%   \item[\texttt{setspace}] one-and-a-half line spacing (double with the
+%         |doublespacing| option).
+% \end{description}
+%
+% \subsection*{Lists, tables and rules}
+% \begin{description}
+%   \item[\texttt{enumitem}] customisable list spacing and labels.
+%   \item[\texttt{tabularx}] tables with automatic-width columns.
+%   \item[\texttt{booktabs}] professional horizontal rules
+%         (|\toprule|, |\midrule|, |\bottomrule|).
+%   \item[\texttt{longtable}] tables that break across pages.
+% \end{description}
+%
+% \subsection*{Floats, graphics and captions}
+% \begin{description}
+%   \item[\texttt{graphicx}] image inclusion.
+%   \item[\texttt{float}] float placement control (e.g.\ the |[H]|
+%         specifier).
+%   \item[\texttt{caption}] caption typography (the ABNT caption-on-top
+%         layout).
+%   \item[\texttt{subcaption}] subfigures and subtables.
+% \end{description}
+%
+% \subsection*{Code, verbatim and algorithms}
+% \begin{description}
+%   \item[\texttt{listings}] source-code listings.
+%   \item[\texttt{fancyvrb}] extended verbatim.
+%   \item[\texttt{algorithm2e} {\normalfont(|linesnumbered, lined, algochapter, ruled|)}]
+%         typeset algorithms; the natural-language option tracks the main
+%         language.
+% \end{description}
+%
+% \subsection*{Bibliography, quotations and language}
+% \begin{description}
+%   \item[\texttt{babel}] multilingual typesetting; the language options
+%         are computed from the main and foreign language slots.
+%   \item[\texttt{csquotes}] context-sensitive quotation marks (the
+%         recommended companion of |biblatex|).
+%   \item[\texttt{biblatex} {\normalfont(|backend=biber|)}] the
+%         bibliography engine and the ABNT |coppe| styles (|coppe| or, with
+%         the |numbers| option, |coppe-numeric|). The backend is
+%         \textbf{biber}, not bib\TeX{}.
+% \end{description}
+%
+% \subsection*{Hyperlinks}
+% \begin{description}
+%   \item[\texttt{hyperref}] clickable cross-references, PDF bookmarks and
+%         document metadata.
+% \end{description}
+%
+% \subsection*{Low-level utilities}
+% \begin{description}
+%   \item[\texttt{etoolbox}] e-\TeX{} programming toolkit.
+%   \item[\texttt{ltxcmds}] low-level command helpers
+%         (|\ltx@ifpackageloaded|, \ldots).
+%   \item[\texttt{ifthen}] the |\ifthenelse| conditional.
+%   \item[\texttt{hyphenat}] hyphenation control (|\nohyphens|, used on the
+%         cover).
+%   \item[\texttt{lastpage}] |\pageref{LastPage}| for the cataloging page
+%         count.
+%   \item[\texttt{hologo}] \TeX-family logos (|\hologo{LaTeX}|, \ldots).
+%   \item[\texttt{xcolor}] colour support (used by |listings| and
+%         |hyperref|).
+% \end{description}
+%
 % \section{Quick, useful tips}
 %
 % \paragraph{Pictures.} The default picture format of \LaTeX\ is the
