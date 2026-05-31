@@ -3654,6 +3654,33 @@ postamble
 \DeclareDelimFormat[bib,biblist]{multinamedelim}{\addsemicolon\space}
 \DeclareDelimFormat[bib,biblist]{finalnamedelim}{\addsemicolon\space}
 
+% ABNT (NBR 6023 8.1.1.4): a collection entered under the name of its
+% organizer prints the kind of responsibility in parentheses after the
+% name, abbreviated, lowercase and in the singular even for several
+% organizers -- e.g. "SOUSA, A. M. de; OLIVEIRA, L. da C. (org.)". The
+% standard style prints ", Org." (comma, no parentheses) when the editor
+% takes the author slot, so override editor+others to wrap the role string
+% in "(...)". The host position ("In: NAME (org.)") already parenthesises
+% the role via coppe:bookeditor below. The role word itself is the
+% lowercase, singular "org." (and "ed.", "cur.", ...) set in the language
+% packs (brazilian-coppe.lbx et al.).
+\renewbibmacro*{editor+others}{%
+  \ifboolexpr{ test \ifuseeditor and not test {\ifnameundef{editor}} }
+    {\printnames{editor}%
+     \setunit*{\addspace}%
+     \printtext{\mkbibparens{\usebibmacro{editor+othersstrg}}}%
+     \clearname{editor}}
+    {}}
+% Same parenthesised role for drivers that take the editor through the plain
+% editor macro instead of editor+others (e.g. @manual).
+\renewbibmacro*{editor}{%
+  \ifboolexpr{ test \ifuseeditor and not test {\ifnameundef{editor}} }
+    {\printnames{editor}%
+     \setunit*{\addspace}%
+     \printtext{\mkbibparens{\usebibmacro{editorstrg}}}%
+     \clearname{editor}}
+    {}}
+
 % Uppercase the surname (family + prefix) only inside the bibliography list;
 % citations keep normal caps (post-2020 rule).
 % ABNT date (NBR 6023 §4.3.5.5.2): "dia mês. ano" -- without the brazilian "de"
@@ -4065,8 +4092,8 @@ postamble
   availablefrom = {{Dispon\'{\i}vel em}{Dispon\'{\i}vel em}},
   urlseen       = {{Acesso em}{Acesso em}},
   in            = {{In}{In}},
-  editor        = {{Organizador}{Org\adddot}},
-  editors       = {{Organizadores}{Orgs\adddot}},
+  editor        = {{organizador}{org\adddot}},
+  editors       = {{organizadores}{org\adddot}},
   depositor     = {{Depositante}{Depositante}},
   coppescale    = {{Escala}{Escala}},
   mscdiss       = {{Disserta\c{c}\~{a}o de Mestrado}{Disserta\c{c}\~{a}o de Mestrado}},
@@ -4084,6 +4111,8 @@ postamble
   availablefrom = {{Available from}{Available from}},
   urlseen       = {{Access on}{Access on}},
   in            = {{In}{In}},
+  editor        = {{editor}{ed\adddot}},
+  editors       = {{editors}{ed\adddot}},
   depositor     = {{Depositor}{Depositor}},
   coppescale    = {{Scale}{Scale}},
   mscdiss       = {{M\adddot Sc\adddot\ Dissertation}{M\adddot Sc\adddot\ Diss\adddot}},
@@ -4101,8 +4130,8 @@ postamble
   availablefrom = {{Disponible en}{Disponible en}},
   urlseen       = {{Consultado el}{Consultado el}},
   in            = {{En}{En}},
-  editor        = {{Editor}{Ed\adddot}},
-  editors       = {{Editores}{Eds\adddot}},
+  editor        = {{editor}{ed\adddot}},
+  editors       = {{editores}{ed\adddot}},
   depositor     = {{Solicitante}{Solicitante}},
   coppescale    = {{Escala}{Escala}},
   mscdiss       = {{Tesis de Maestr\'{\i}a}{Tesis de Maestr\'{\i}a}},
@@ -4120,8 +4149,8 @@ postamble
   availablefrom = {{Disponible \`a}{Disponible \`a}},
   urlseen       = {{Consult\'e le}{Consult\'e le}},
   in            = {{Dans}{Dans}},
-  editor        = {{\'Editeur}{\'Ed\adddot}},
-  editors       = {{\'Editeurs}{\'Eds\adddot}},
+  editor        = {{\'editeur}{\'ed\adddot}},
+  editors       = {{\'editeurs}{\'ed\adddot}},
   depositor     = {{D\'eposant}{D\'eposant}},
   coppescale    = {{\'Echelle}{\'Echelle}},
   mscdiss       = {{M\'emoire de Master}{M\'emoire de Master}},
@@ -4139,8 +4168,8 @@ postamble
   availablefrom = {{Disponibile da}{Disponibile da}},
   urlseen       = {{Consultato il}{Consultato il}},
   in            = {{In}{In}},
-  editor        = {{Curatore}{Cur\adddot}},
-  editors       = {{Curatori}{Curr\adddot}},
+  editor        = {{curatore}{cur\adddot}},
+  editors       = {{curatori}{cur\adddot}},
   depositor     = {{Depositante}{Depositante}},
   coppescale    = {{Scala}{Scala}},
   mscdiss       = {{Tesi di Laurea Magistrale}{Tesi di Laurea Magistrale}},

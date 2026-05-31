@@ -73,6 +73,21 @@
 \DeclareDelimFormat[bib,biblist]{multinamedelim}{\addsemicolon\space}
 \DeclareDelimFormat[bib,biblist]{finalnamedelim}{\addsemicolon\space}
 
+\renewbibmacro*{editor+others}{%
+  \ifboolexpr{ test \ifuseeditor and not test {\ifnameundef{editor}} }
+    {\printnames{editor}%
+     \setunit*{\addspace}%
+     \printtext{\mkbibparens{\usebibmacro{editor+othersstrg}}}%
+     \clearname{editor}}
+    {}}
+\renewbibmacro*{editor}{%
+  \ifboolexpr{ test \ifuseeditor and not test {\ifnameundef{editor}} }
+    {\printnames{editor}%
+     \setunit*{\addspace}%
+     \printtext{\mkbibparens{\usebibmacro{editorstrg}}}%
+     \clearname{editor}}
+    {}}
+
 \protected\def\coppe@abntdate#1#2#3{%
   \iffieldundef{#3}{}{\stripzeros{\thefield{#3}}\nobreakspace}%
   \iffieldundef{#2}{}{\mkbibmonth{\thefield{#2}}\iffieldundef{#1}{}{\space}}%
