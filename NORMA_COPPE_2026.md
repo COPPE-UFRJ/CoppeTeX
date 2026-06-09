@@ -33,10 +33,6 @@ configuração adicional por parte do autor, um documento aderente
 simultaneamente ao *Manual UFRJ 2025* e à presente Norma. Seu uso é o
 caminho recomendado pela COPPE/UFRJ para a confecção do documento final.
 
-Quando houver dúvida quanto à apresentação correta de algum elemento
-gráfico previsto pela presente Norma, a saída gerada pela versão mais
-recente do CoppeTeX 4.x prevalece como referência.
-
 ---
 
 ## 2. Identificação institucional
@@ -109,10 +105,6 @@ principais:
 - **Português**;
 - **Inglês**;
 - **Espanhol**;
-- **Francês**;
-- **Italiano**;
-- Qualquer outro idioma reconhecido pela implementação de referência
-  (CoppeTeX 4.x), mediante o pacote de localização correspondente.
 
 A escolha do idioma principal afeta:
 
@@ -197,11 +189,6 @@ normas ABNT pertinentes:
 
 Os elementos da referência, os formatos das citações e as regras gerais
 de apresentação são os definidos pela ABNT vigente.
-
-Esta adoção constitui a única divergência da presente Norma em relação
-ao previsto no *Manual UFRJ 2025* — que reflete edições anteriores das
-mesmas normas ABNT — e ocorre na medida estrita das atualizações
-posteriores a 2020 introduzidas pela própria ABNT.
 
 A implementação de referência (CoppeTeX 4.x) fornece automaticamente a
 formatação correta para todos os tipos de documento previstos na NBR
