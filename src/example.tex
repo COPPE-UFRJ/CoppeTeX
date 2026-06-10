@@ -56,7 +56,7 @@
   \examiner{Prof.}{Nome do Quarto Examinador Sobrenome}{Ph.D.}
   \examiner{Prof.}{Nome do Quinto Examinador Sobrenome}{Ph.D.}
   \department{PESC}
-  \date{01}{2024}
+  \date{06}{2026}
 
   \keyword{Primeira palavra-chave}
   \keyword{Segunda palavra-chave}
@@ -131,6 +131,10 @@
 
   Esse documento segue a norma de formatação de teses e dissertações da COPPE. Ele também pode ser usado para exames de qualificação. As principais instruções estão no documento que explica a classe, ``The \verb|coppe| document class'', que fica disponível no GitHub.
 
+  Há um grupo de WhatsApp para perguntas e discussões do estilo: \href{https://github.com/COPPE-UFRJ/CoppeTeX/wiki}{here}.
+
+  Bugs devem ser reportados na \href{https://github.com/COPPE-UFRJ/CoppeTeX/issues}{página de \textit{issues} do GitHub do CoppeTeX}.
+
   Esse documento é usado como exemplo de coisas que podem ser feitas. Ele está configurado para usar citações do tipo author-data. Para usar citações do tipo numérica é necessário colocar, entre as opções de \verb|documentclass|, a opção \verb|numbers|.
 
   É importante de notar que essa classe não foi construída sobre a classe \LaTeX \  para a ABNT, e que segue de forma geral as regras da ABNT, mas não necessariamente de forma exata, já que o foco foi seguir as regras da Coppe. Essas mesmas regras da Coppe não especificam tudo que realmente seria necessário, então algumas coisas são decisões arbitrárias.
@@ -202,7 +206,7 @@
   included the determination of the effect of object thickness on image quality,
   the defining of minimum levels of detectability and a preliminary investigation
   of a means whereby the degree of corrosion could be quantified with neutron
-  radiographic data. \cite{article-example}
+  radiographic data. \citep{article-example}
   \end{longquote}
 
   Citações devem apontar as referências. Para isso, está disponível o ótimo pacote \verb*|natbib| que permite criar citações em dois formatos, o totalmente dentro de parênteses (\verb*|\citep|), como em \citep{article-example} como o de citação pertencente ao texto, como em \citet{article-example}. Veja o capítulo sobre referências bibliográficas.
@@ -559,26 +563,26 @@ Colocar a tabela ou imagem dentro de \verb|figure|/\verb|table| (um \emph{float}
   \begin{table}[h]
   \caption{Exemplos de cita{\c c}\~oes utilizando o comando padr\~ao
     \texttt{\textbackslash cite} do \LaTeX\ e
-    o comando \texttt{\textbackslash citet},
+    o comando \texttt{\textbackslash citep},
     disponível pela opção \texttt{natbib} do BibLaTeX.}
   \label{tab:citation}
   \centering
   {\footnotesize
   \begin{tabular}{|c|c|c|}
     \hline
-    Tipo da Publicação & \verb|\cite| & \verb|\citet|\\
+    Tipo da Publicação & \verb|\cite| & \verb|\citep|\\
     \hline
-    Livro & \cite{book-example} & \citet{book-example}\\
-    Artigo & \cite{article-example} & \citet{article-example}\\
-    Relatório & \cite{techreport-example} & \citet{techreport-example}\\
-    Relatório & \cite{techreport-exampleIn} & \citet{techreport-exampleIn}\\
+    Livro & \cite{book-example} & \citep{book-example}\\
+    Artigo & \cite{article-example} & \citep{article-example}\\
+    Relatório & \cite{techreport-example} & \citep{techreport-example}\\
+    Relatório & \cite{techreport-exampleIn} & \citep{techreport-exampleIn}\\
     Anais de Congresso & \cite{inproceedings-example} &
-      \citet{inproceedings-example}\\
-    Séries & \cite{incollection-example} & \citet{incollection-example}\\
-    Em Livro & \cite{inbook-example} & \citet{inbook-example}\\
+      \citep{inproceedings-example}\\
+    Séries & \cite{incollection-example} & \citep{incollection-example}\\
+    Em Livro & \cite{inbook-example} & \citep{inbook-example}\\
     Dissertação de mestrado & \cite{mastersthesis-example} &
-      \citet{mastersthesis-example}\\
-    Tese de doutorado & \cite{phdthesis-example} & \citet{phdthesis-example}\\
+      \citep{mastersthesis-example}\\
+    Tese de doutorado & \cite{phdthesis-example} & \citep{phdthesis-example}\\
     \hline
   \end{tabular}}
   \fonte{Elabora\c{c}\~ao pr\'opria.}

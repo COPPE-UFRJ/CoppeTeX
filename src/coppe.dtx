@@ -151,7 +151,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \GetFileInfo{coppe}
 %
 % \title{The |coppe| document class \\
-% Version 3.8 }
+% Version 4.0 }
 % \author{Geraldo Xexéo \and Vicente H. F. Batista \and George O. Ainsworth Jr. \and  Eduardo Mangeli}
 %
 % \maketitle
@@ -210,9 +210,9 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %
 % \section{Support}
 %
-% We maintain a mailing list where users can send questions, comments,
+% We maintain a WhatsApp group where users can send questions, comments,
 % and bugs to. More details can be found
-% \href{http://coppetex.sourceforge.net/mailing-list.html}{here}.
+% \href{https://github.com/COPPE-UFRJ/CoppeTeX/wiki}{here}.
 %
 % However, as the project maintenance was transferred to a new repository,
 % bug reports, as well as new feature requests, should be directed to
@@ -977,7 +977,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \examiner{Prof.}{Nome do Quarto Examinador Sobrenome}{Ph.D.}
   \examiner{Prof.}{Nome do Quinto Examinador Sobrenome}{Ph.D.}
   \department{PESC}
-  \date{01}{2024}
+  \date{06}{2026}
 
   \keyword{Primeira palavra-chave}
   \keyword{Segunda palavra-chave}
@@ -1051,6 +1051,10 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   A versão mais atual dessa classe é mantida no GitHub, no repositório \url{https://github.com/COPPE-UFRJ/CoppeTeX}. De maneira arbitrária o prof. Geraldo Xexéo criou a organização COPPE-UFRJ no GitHub, e também está disposto a compartilhar com outras iniciativas semelhantes.
 
   Esse documento segue a norma de formatação de teses e dissertações da COPPE. Ele também pode ser usado para exames de qualificação. As principais instruções estão no documento que explica a classe, ``The \verb|coppe| document class'', que fica disponível no GitHub.
+  
+  Há um grupo de WhatsApp para perguntas e discussões do estilo: \href{https://github.com/COPPE-UFRJ/CoppeTeX/wiki}{here}.
+  
+  Bugs devem ser reportados na \href{https://github.com/COPPE-UFRJ/CoppeTeX/issues}{página de \textit{issues} do GitHub do CoppeTeX}.
 
   Esse documento é usado como exemplo de coisas que podem ser feitas. Ele está configurado para usar citações do tipo author-data. Para usar citações do tipo numérica é necessário colocar, entre as opções de \verb|documentclass|, a opção \verb|numbers|.
 
@@ -1127,7 +1131,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   included the determination of the effect of object thickness on image quality,
   the defining of minimum levels of detectability and a preliminary investigation
   of a means whereby the degree of corrosion could be quantified with neutron
-  radiographic data. \cite{article-example}
+  radiographic data. \citep{article-example}
   \end{longquote}
 
   Citações devem apontar as referências. Para isso, está disponível o ótimo pacote \verb*|natbib| que permite criar citações em dois formatos, o totalmente dentro de parênteses (\verb*|\citep|), como em \citep{article-example} como o de citação pertencente ao texto, como em \citet{article-example}. Veja o capítulo sobre referências bibliográficas.
@@ -1500,26 +1504,26 @@ Colocar a tabela ou imagem dentro de \verb|figure|/\verb|table| (um \emph{float}
   \begin{table}[h]
   \caption{Exemplos de cita{\c c}\~oes utilizando o comando padr\~ao
     \texttt{\textbackslash cite} do \LaTeX\ e
-    o comando \texttt{\textbackslash citet},
+    o comando \texttt{\textbackslash citep},
     disponível pela opção \texttt{natbib} do BibLaTeX.}
   \label{tab:citation}
   \centering
   {\footnotesize
   \begin{tabular}{|c|c|c|}
     \hline
-    Tipo da Publicação & \verb|\cite| & \verb|\citet|\\
+    Tipo da Publicação & \verb|\cite| & \verb|\citep|\\
     \hline
-    Livro & \cite{book-example} & \citet{book-example}\\
-    Artigo & \cite{article-example} & \citet{article-example}\\
-    Relatório & \cite{techreport-example} & \citet{techreport-example}\\
-    Relatório & \cite{techreport-exampleIn} & \citet{techreport-exampleIn}\\
+    Livro & \cite{book-example} & \citep{book-example}\\
+    Artigo & \cite{article-example} & \citep{article-example}\\
+    Relatório & \cite{techreport-example} & \citep{techreport-example}\\
+    Relatório & \cite{techreport-exampleIn} & \citep{techreport-exampleIn}\\
     Anais de Congresso & \cite{inproceedings-example} &
-      \citet{inproceedings-example}\\
-    Séries & \cite{incollection-example} & \citet{incollection-example}\\
-    Em Livro & \cite{inbook-example} & \citet{inbook-example}\\
+      \citep{inproceedings-example}\\
+    Séries & \cite{incollection-example} & \citep{incollection-example}\\
+    Em Livro & \cite{inbook-example} & \citep{inbook-example}\\
     Dissertação de mestrado & \cite{mastersthesis-example} &
-      \citet{mastersthesis-example}\\
-    Tese de doutorado & \cite{phdthesis-example} & \citet{phdthesis-example}\\
+      \citep{mastersthesis-example}\\
+    Tese de doutorado & \cite{phdthesis-example} & \citep{phdthesis-example}\\
     \hline
   \end{tabular}}
   \fonte{Elabora\c{c}\~ao pr\'opria.}
@@ -2756,10 +2760,10 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \includegraphics[height=2cm]{ufrj-logo}\hfill
     \includegraphics[height=2cm]{coppe-logo}}\par
   \vspace{1.5cm}
-  {\singlespacing
-   \MakeUppercase{\local@universityname}\par
-   \nohyphens{\MakeUppercase{Instituto Alberto Luiz Coimbra de
-     P{\' o}s-Gradua{\c c}{\~ a}o e Pesquisa de Engenharia (COPPE)}}\par
+  {\singlespacing 
+%% \MakeUppercase{\local@universityname}\par
+%%   \nohyphens{\MakeUppercase{Instituto Alberto Luiz Coimbra de
+%%     P{\' o}s-Gradua{\c c}{\~ a}o e Pesquisa de Engenharia (COPPE)}}\par
    \MakeUppercase{Programa de \local@deptname}\par}
   \vspace{\stretch{2}}
   \textbf{\MakeUppercase{\@authname\ \@authsurn}}\par
