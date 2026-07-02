@@ -38,6 +38,8 @@
 
 \makelosymbols
 \makeloabbreviations
+\usepackage{indentfirst} % se quiser indentar o primeiro paragrafo das seções
+\renewcommand{\familydefault}{\rmdefault} % para usar fontes COM serifa no default
 
 \begin{document}
   \title{Título da Tese}
@@ -195,11 +197,11 @@
 \section{Citações}
 \label{sec:citacoes}
 
- Citações curtas podem ser feitas \quote{o comando quote} ou direto com ``duas crases e dois apóstrofos.'' Citações longas devem usar o comando \verb*|longuote|
+ Citações curtas podem ser feitas \enquote{o comando quote} ou direto com ``duas crases e dois apóstrofos.'' Citações longas devem usar o comando \verb*|longquote|
 
   \begin{longquote}
   Um exemplo de citação longa nas regras da ABNT (4cm de recuo e fonte menor)
-  feita com o ambiente  \verb=longquote= The primary objective of this
+  feita com o ambiente  \verb*|longquote| The primary objective of this
   investigation was to determine the feasibility of detecting corrosion in
   aluminum Naval aircraft components with neutron radiographic interrogation
   and the use of standard corrosion penetrameters. Secondary objectives

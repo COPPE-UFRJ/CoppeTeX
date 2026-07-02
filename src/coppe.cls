@@ -635,12 +635,12 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \includegraphics[height=2cm]{coppe-logo}}\par
   \vspace{1.5cm}
   {\singlespacing
-%% \MakeUppercase{\local@universityname}\par
-%%   \nohyphens{\MakeUppercase{Instituto Alberto Luiz Coimbra de
-%%     P{\' o}s-Gradua{\c c}{\~ a}o e Pesquisa de Engenharia (COPPE)}}\par
+ \MakeUppercase{\local@universityname}\par
+   \nohyphens{\MakeUppercase{Instituto Alberto Luiz Coimbra de \\
+     P{\' o}s-Gradua{\c c}{\~ a}o e Pesquisa de Engenharia}}\par
    \MakeUppercase{Programa de \local@deptname}\par}
   \vspace{\stretch{2}}
-  \textbf{\MakeUppercase{\@authname\ \@authsurn}}\par
+  \textbf{\MakeUppercase{\textbf{\@authname\ \@authsurn}}}\par
   \vspace{\stretch{2}}
   \nohyphens{\MakeUppercase{\coppe@selecttitle}}\par
   \vspace{\stretch{3}}
@@ -663,9 +663,9 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \end{flushleft}
   \vspace{1.05cm}
   \begin{center}
-  \nohyphens{\MakeUppercase{\coppe@selecttitle}}\par
-  \vspace*{3cm}
   \nohyphens{\@authname\ \@authsurn}\par
+  \vspace*{3cm}
+  \nohyphens{\MakeUppercase{\coppe@selecttitle}}\par
   \end{center}
   \vspace*{2.1cm}
   \begin{flushright}
@@ -1138,16 +1138,29 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
         \string\newlabel{\detokenize{cat:lofflag}}{{}{\detokenize{:~il.;}}{}}}}%
   }%
 }
-\newlength{\recuolongquote}%
-\setlength{\recuolongquote}{4cm}%
+\newlength{\recuolongquote}
+\setlength{\recuolongquote}{4cm}
+
 \newenvironment*{longquote}[1][default]{%
-\list{}%
-\footnotesize%
-\addtolength{\leftskip}{\recuolongquote}%
-\item[]%
-\singlespacing%
-\ifthenelse{\not\equal{#1}{default}}{\itshape\selectlanguage{#1}}{}%
-}{\endlist}%
+\begin{list}{}{%
+\setlength{\leftmargin}{\recuolongquote}%
+\setlength{\rightmargin}{0pt}%
+\setlength{\itemindent}{0pt}%
+\setlength{\listparindent}{0pt}%
+\setlength{\parsep}{0pt}%
+\setlength{\topsep}{\baselineskip}%
+}%
+\item\relax
+\footnotesize
+\singlespacing
+\ifthenelse{\not\equal{#1}{default}}%
+{\itshape\selectlanguage{#1}}%
+{}%
+\ignorespaces
+}{%
+\end{list}%
+\ignorespacesafterend
+}
 \newenvironment{theglossary}{%
   \if@twocolumn%
     \@restonecoltrue\onecolumn%
