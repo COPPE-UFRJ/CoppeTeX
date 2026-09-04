@@ -49,19 +49,46 @@ caminho recomendado pela COPPE/UFRJ para a confecção do documento final.
 
 ## 2. Identificação institucional
 
-### 2.1 Capa e folha de rosto
+### 2.1 Capa
 
-A capa e a folha de rosto do trabalho exibem, na ordem:
+A capa exibe, na ordem:
 
 - **Universidade Federal do Rio de Janeiro**;
 - **Instituto Alberto Luiz Coimbra de Pós-Graduação e Pesquisa de
   Engenharia (COPPE)**;
 - O nome do **Programa de Pós-graduação** em que o trabalho foi defendido;
 - O nome completo do autor;
-- O título do trabalho, no idioma principal (ver Seção 4);
-- A cidade (Rio de Janeiro) e o ano da defesa.
+- O título do trabalho, no idioma principal (ver Seção 4), seguido do
+  subtítulo, se houver, precedido de dois pontos;
+- O **número de volumes**, se houver mais de um, com a especificação do
+  respectivo volume em cada capa;
+- A cidade (Rio de Janeiro) e o **ano de depósito** — o da entrega da
+  versão final revista ao Programa, que não coincide necessariamente com
+  o ano da defesa.
 
-### 2.2 Caráter da identidade institucional
+Os logotipos da UFRJ e da COPPE são opcionais, conforme o Anexo A do
+*Manual UFRJ 2026*. A COPPE adota o seu uso.
+
+### 2.2 Folha de rosto
+
+A folha de rosto exibe, na ordem:
+
+- O nome completo do autor;
+- O título do trabalho, no idioma principal, seguido do subtítulo, se
+  houver, precedido de dois pontos;
+- O **número de volumes**, se houver mais de um;
+- A **natureza do trabalho** (tese ou dissertação), o **objetivo** (grau
+  pretendido), o nome da instituição a que é submetido e a **área de
+  concentração** — em espaço simples, alinhados do meio da mancha
+  gráfica até a margem direita;
+- A **linha de pesquisa**, conforme o modelo de coleta CAPES;
+- O nome do **orientador** e, se houver, do **coorientador**, alinhados a
+  partir da margem esquerda;
+- A cidade (Rio de Janeiro) e o **ano de depósito**.
+
+O nome do autor precede o título, e a data indica apenas o ano.
+
+### 2.3 Caráter da identidade institucional
 
 Os elementos de identidade institucional — o nome da Universidade, o
 nome do Instituto (COPPE), o nome do Programa de Pós-graduação, a cidade
@@ -70,7 +97,7 @@ exibidos em português**, independentemente do idioma principal do
 trabalho. Somente o título do trabalho, na capa e na folha de rosto,
 acompanha o idioma principal.
 
-### 2.3 Ficha catalográfica
+### 2.4 Ficha catalográfica
 
 A ficha catalográfica é gerada conforme as regras AACR2 e o *Manual UFRJ
 2025*, e figura no **verso da folha de rosto**. Acrescenta-se à ficha:
@@ -79,7 +106,7 @@ A ficha catalográfica é gerada conforme as regras AACR2 e o *Manual UFRJ
 - O nome do **Programa de Pós-graduação** em que o trabalho foi defendido;
 - A indicação das páginas iniciais e finais da lista de Referências.
 
-### 2.4 Folha de aprovação
+### 2.5 Folha de aprovação
 
 A folha de aprovação contém o título do trabalho, o nome do candidato,
 os nomes do(s) orientador(es) e dos membros da Banca Examinadora — na
@@ -132,7 +159,7 @@ A escolha do idioma principal afeta:
   principal (ver Seção 3).
 
 A identidade institucional permanece em português em qualquer idioma
-principal (ver Seção 2.2).
+principal (ver Seção 2.3).
 
 ---
 
