@@ -337,6 +337,44 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \end{verbatim}
 % Usually, six words are enough.
 %
+% \subsection*{Folha adicional: Coleta CAPES}
+%
+% Since August 2026 every thesis and dissertation must carry a
+% \emph{folha adicional} immediately after the folha de rosto, holding the
+% fields the CAPES/MEC collection requires plus the ficha catalografica
+% (SiBI manual, 9th rev. ed. 2026, 3.1.2.1.2 and Annex H). The sheet is
+% filled in by the graduate programme, and is neither counted nor numbered.
+%
+% The macros below feed that sheet. They are institutional data, so the
+% sheet is always typeset in Portuguese regardless of the main language of
+% the work, as the COPPE norm requires of institutional identity.
+%
+% \DescribeMacro{\areaconcentracao}
+% The area of concentration, e.g. |\areaconcentracao{Engenharia de Sistemas
+% e Computacao}|. It appears on the folha de rosto, on the folha de
+% aprovacao and on the folha adicional.
+%
+% \DescribeMacro{\linhapesquisa}
+% The research line, required by the CAPES model of the folha de rosto.
+%
+% \DescribeMacro{\tipoproducao}
+% The kind of intellectual output, one of |bibliografica|, |artistica|,
+% |tecnologica| or |tecnica|. Anything else raises a warning.
+%
+% \DescribeMacro{\projetovinculado}
+% \DescribeMacro{\nomeprojeto}
+% Whether the work belongs to a research project (|sim| or |nao|) and, if
+% so, its name.
+%
+% \DescribeMacro{\agenciafomento}
+% A funding agency, given as full name and acronym; repeat once per agency:
+% \begin{verbatim}
+%   \agenciafomento{Conselho Nacional de Desenvolvimento
+%                   Cientifico e Tecnologico}{CNPq}
+%   \agenciafomento{Fundacao Carlos Chagas Filho de Amparo a
+%                   Pesquisa do Estado do Rio de Janeiro}{FAPERJ}
+% \end{verbatim}
+%
 % \subsection*{Cataloging details}
 %
 % This page contains cataloging information useful for librarians.
@@ -2646,6 +2684,40 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \global\addtocounter{keywords}{1}
 }
 %    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\areaconcentracao}
+% \begin{macro}{\linhapesquisa}
+% \begin{macro}{\tipoproducao}
+% \begin{macro}{\projetovinculado}
+% \begin{macro}{\nomeprojeto}
+% \begin{macro}{\agenciafomento}
+% Data for the folha adicional (Coleta CAPES) and for the natureza block of
+% the folha de rosto and folha de aprovacao. Every one of them defaults to
+% empty; \makefolhaadicional prints an empty rule where a value is missing,
+% so the programme can complete the sheet by hand if need be.
+%    \begin{macrocode}
+\newcommand\coppe@areaconc{}
+\newcommand\areaconcentracao[1]{\gdef\coppe@areaconc{#1}}
+\newcommand\coppe@linhapesq{}
+\newcommand\linhapesquisa[1]{\gdef\coppe@linhapesq{#1}}
+\newcommand\coppe@tipoproducao{}
+\newcommand\tipoproducao[1]{\gdef\coppe@tipoproducao{#1}}
+\newcommand\coppe@projetovinc{}
+\newcommand\projetovinculado[1]{\gdef\coppe@projetovinc{#1}}
+\newcommand\coppe@nomeprojeto{}
+\newcommand\nomeprojeto[1]{\gdef\coppe@nomeprojeto{#1}}
+\newcounter{coppeagencias}
+\newcommand\agenciafomento[2]{%
+  \global\@namedef{CoppeAgencia:\expandafter\the\c@coppeagencias}{#1}%
+  \global\@namedef{CoppeAgenciaSigla:\expandafter\the\c@coppeagencias}{#2}%
+  \global\addtocounter{coppeagencias}{1}}
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
 % \end{macro}
 %
 % \begin{macro}{\freeconfig}

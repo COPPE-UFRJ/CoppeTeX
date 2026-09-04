@@ -550,6 +550,21 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \global\@namedef{CoppeKeyword:\expandafter\the\c@keywords}{#1}
   \global\addtocounter{keywords}{1}
 }
+\newcommand\coppe@areaconc{}
+\newcommand\areaconcentracao[1]{\gdef\coppe@areaconc{#1}}
+\newcommand\coppe@linhapesq{}
+\newcommand\linhapesquisa[1]{\gdef\coppe@linhapesq{#1}}
+\newcommand\coppe@tipoproducao{}
+\newcommand\tipoproducao[1]{\gdef\coppe@tipoproducao{#1}}
+\newcommand\coppe@projetovinc{}
+\newcommand\projetovinculado[1]{\gdef\coppe@projetovinc{#1}}
+\newcommand\coppe@nomeprojeto{}
+\newcommand\nomeprojeto[1]{\gdef\coppe@nomeprojeto{#1}}
+\newcounter{coppeagencias}
+\newcommand\agenciafomento[2]{%
+  \global\@namedef{CoppeAgencia:\expandafter\the\c@coppeagencias}{#1}%
+  \global\@namedef{CoppeAgenciaSigla:\expandafter\the\c@coppeagencias}{#2}%
+  \global\addtocounter{coppeagencias}{1}}
 \newcommand\freeconfig[6]{%
 \providecommand\@degree{}
 \renewcommand\@degree{#1}
