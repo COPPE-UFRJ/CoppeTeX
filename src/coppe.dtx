@@ -775,7 +775,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \section{Required \LaTeX{} packages}
 %
 % The class is built on the standard |book| class
-% (|12pt, a4paper, twoside|) and brings in the stock CTAN packages listed
+% (|12pt, a4paper, oneside|) and brings in the stock CTAN packages listed
 % below with |\RequirePackage|. On a full \TeX{}~Live or \MiKTeX{} install they are
 % all present already, so this list matters only for a minimal install
 % --- or when you simply want to know which commands are already in scope.
@@ -806,7 +806,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %
 % \subsection*{Page layout and spacing}
 % \begin{description}
-%   \item[\texttt{geometry}] A4 two-side margins, binding offset and
+%   \item[\texttt{geometry}] A4 one-sided margins (3/3/2/2\,cm) and
 %         header height.
 %   \item[\texttt{fancyhdr}] running headers and footers.
 %   \item[\texttt{titlesec}] chapter and section title formatting.
@@ -1898,7 +1898,7 @@ No modelo \CoppeTeX os anexos devem obrigtoriamente vir depois dos apêndices e 
 % still renders sensibly on the cover and folha de rosto.
 \edef\coppe@docmonth{\the\month}
 \edef\coppe@docyear{\the\year}
-\LoadClass[12pt,a4paper,twoside]{book}
+\LoadClass[12pt,a4paper,oneside]{book}
 % setspace, hyperref and the bibliography engine (biblatex+biber) are loaded at
 % the END of the class (after every class hook is defined), in that order:
 % setspace -> hyperref -> biblatex. hyperref must come late so all the macros
@@ -1966,15 +1966,24 @@ No modelo \CoppeTeX os anexos devem obrigtoriamente vir depois dos apêndices e 
           Do NOT load amssymb together with unicode-math -- it would clash\MessageBreak
           with the OpenType math font setup}}}}
 \fi
-% manual2024 margins: 3cm top, 2cm bottom, mirrored 3cm inner / 2cm outer for
-% two-sided printing -- realised as inner=outer=2cm plus a 1cm bindingoffset.
+% Margins per the SiBI manual, 9th rev. ed. (2026), 2.3: left 3cm, top 3cm,
+% right 2cm, bottom 2cm -- ONE-SIDED. The 2025 edition also specified verso
+% margins (right 3cm / left 2cm) and recommended printing the body on both
+% sides; the 2026 revision DELETED the verso margins entirely, following CEPG
+% Resolution 246/2023, which ended the printed deposit. A digital-only document
+% has no gutter, so the mirrored layout (previously inner=outer=2cm plus a 1cm
+% bindingoffset) no longer has any normative basis and is now opt-in via the
+% \texttt{twoside} class option, handled after \ProcessOptions below.
+%
 % headheight=15pt is given here (not patched later) so geometry's own page
 % arithmetic stays self-consistent: fancyhdr needs >= 14.49998pt of header
 % height to host the running head, and the standard 12pt default triggers
 % its "headheight is too small" warning. Letting geometry know up front
 % keeps \topmargin a derived value -- we never touch it by hand.
-\RequirePackage[a4paper,twoside,bindingoffset=1cm,headheight=15pt,%
-top=3cm,bottom=2cm,inner=2cm,outer=2cm]{geometry}
+% (geometry has no \texttt{oneside} key -- only \texttt{twoside}; with the key
+% absent it follows the class, which \LoadClass set to one-sided above.)
+\RequirePackage[a4paper,headheight=15pt,%
+top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
 \RequirePackage{titlesec}
 % --- Section heading formats (manual2024 2.6 / proposta P22) -----------------
 % chapter (numbered): "N  TITLE", ALL CAPS, bold, flush left (no "Capitulo N").
@@ -2210,10 +2219,28 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %    \begin{macrocode}
 \newif\if@coppedoublespace\@coppedoublespacefalse
 \DeclareOption{doublespacing}{\@coppedoublespacetrue}
+% Two-sided layout is opt-in since v4.1: the 2026 manual dropped the verso
+% margins and the deposit is digital (CEPG 246/2023). Given \texttt{twoside},
+% the mirrored 3cm inner / 2cm outer layout is restored after \ProcessOptions.
+\newif\if@coppetwoside \@coppetwosidefalse
+\DeclareOption{twoside}{\@coppetwosidetrue}
+\DeclareOption{oneside}{\@coppetwosidefalse}
 %    \end{macrocode}
 %
 %    \begin{macrocode}
 \ProcessOptions\relax
+% \LoadClass and geometry ran before \ProcessOptions (see above), so the
+% two-sided layout can only be applied here. geometry reads left/right as
+% inner/outer once twoside is on, so the 3cm/2cm pair set above becomes the
+% mirrored gutter with no further arithmetic. \@twosidetrue is what book's own
+% twoside option sets, and is what \cleardoublepage and fancyhdr test.
+% In one-sided mode fancyhdr treats every page as odd, so the \fancyhead[RO,LE]
+% declarations elsewhere already put the folio in the top right corner of every
+% folha, as 2.7 requires.
+\if@coppetwoside
+  \@twosidetrue
+  \geometry{twoside}%
+\fi
 % Built-in language names (used by the loader and the dispatcher below).
 \def\coppe@@brazilianstr{brazilian}
 \def\coppe@@englishstr{english}

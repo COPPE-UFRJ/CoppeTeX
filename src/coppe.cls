@@ -59,7 +59,7 @@
 \let\coppe@date\filedate
 \edef\coppe@docmonth{\the\month}
 \edef\coppe@docyear{\the\year}
-\LoadClass[12pt,a4paper,twoside]{book}
+\LoadClass[12pt,a4paper,oneside]{book}
 \RequirePackage{hyphenat}
 \RequirePackage{lastpage}
 \RequirePackage{ifthen}
@@ -108,8 +108,8 @@
           Do NOT load amssymb together with unicode-math -- it would clash\MessageBreak
           with the OpenType math font setup}}}}
 \fi
-\RequirePackage[a4paper,twoside,bindingoffset=1cm,headheight=15pt,%
-top=3cm,bottom=2cm,inner=2cm,outer=2cm]{geometry}
+\RequirePackage[a4paper,headheight=15pt,%
+top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
 \RequirePackage{titlesec}
 \newif\if@coppeappendix \@coppeappendixfalse
 \titleformat{\chapter}[hang]
@@ -271,7 +271,14 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \DeclareOption{numeraisromanos}{\@copperomantrue}
 \newif\if@coppedoublespace\@coppedoublespacefalse
 \DeclareOption{doublespacing}{\@coppedoublespacetrue}
+\newif\if@coppetwoside \@coppetwosidefalse
+\DeclareOption{twoside}{\@coppetwosidetrue}
+\DeclareOption{oneside}{\@coppetwosidefalse}
 \ProcessOptions\relax
+\if@coppetwoside
+  \@twosidetrue
+  \geometry{twoside}%
+\fi
 \def\coppe@@brazilianstr{brazilian}
 \def\coppe@@englishstr{english}
 \edef\coppe@babelopts{\coppe@foreignlang,\coppe@mainlang}
