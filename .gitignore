@@ -46,3 +46,6 @@ tests/*.pdf
 /LIXO
 /InstrucoesClaude
 /specs
+
+# Configuração local do Claude Code
+.claude/
