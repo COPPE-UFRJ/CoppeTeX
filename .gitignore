@@ -45,7 +45,8 @@ tests/*.pdf
 /LaTeXManuals
 /LIXO
 /InstrucoesClaude
-/specs
+/specs/*
+!/specs/*.md
 
 # Configuração local do Claude Code
 .claude/
