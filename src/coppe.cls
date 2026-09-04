@@ -271,6 +271,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \DeclareOption{numeraisromanos}{\@copperomantrue}
 \newif\if@coppedoublespace\@coppedoublespacefalse
 \DeclareOption{doublespacing}{\@coppedoublespacetrue}
+\newif\if@copperascunho \@copperascunhofalse
+\DeclareOption{rascunhoficha}{\@copperascunhotrue}
 \newif\if@coppetwoside \@coppetwosidefalse
 \DeclareOption{twoside}{\@coppetwosidetrue}
 \DeclareOption{oneside}{\@coppetwosidefalse}
@@ -732,7 +734,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   % ahead of the approval sheet produced by \frontmatter.
   \setcounter{page}{2}%
   \ifthenelse{\boolean{maledoc}}{}{%
-    \thispagestyle{empty}\makecatalog\clearpage\addtocounter{page}{-1}}%
+    \makefolhaadicional\clearpage\addtocounter{page}{-1}}%
   \global\let\maketitle\relax%
   \global\let\and\relax}
 \newcommand\makefrontpage{%
@@ -883,6 +885,82 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \end{minipage}}
   \end{center}
   \vspace*{\fill}}
+\newcommand\coppe@fichafile{}
+\newcommand\coppe@fichapage{1}
+\newcommand\fichacatalografica[2][1]{%
+  \gdef\coppe@fichapage{#1}\gdef\coppe@fichafile{#2}}
+\newcommand\coppe@marcatipo[1]{%
+  \ifthenelse{\equal{\coppe@tipoproducao}{#1}}{$\times$}{\phantom{$\times$}}}
+\newcommand\coppe@marcavinc[1]{%
+  \ifthenelse{\equal{\coppe@projetovinc}{#1}}{$\times$}{\phantom{$\times$}}}
+\newcommand\coppe@campo[1]{%
+  \ifthenelse{\equal{#1}{}}{\hrulefill}{#1\enspace\hrulefill}}
+\newcommand\coppe@checatipo{%
+  \ifthenelse{\equal{\coppe@tipoproducao}{}}{}{%
+    \ifthenelse{\equal{\coppe@tipoproducao}{bibliografica}\OR
+                \equal{\coppe@tipoproducao}{artistica}\OR
+                \equal{\coppe@tipoproducao}{tecnologica}\OR
+                \equal{\coppe@tipoproducao}{tecnica}}{}{%
+      \ClassWarning{coppe}{Unknown \string\tipoproducao{} value
+        `\coppe@tipoproducao'. Annex H of the SiBI manual allows only
+        bibliografica, artistica, tecnologica or tecnica; no box will be
+        ticked}}}}
+\newcommand\makefolhaadicional{%
+  \clearpage
+  \thispagestyle{empty}%
+  \coppe@checatipo
+  {\singlespacing
+  \begin{center}
+    {\large\bfseries Informa\c c\~oes Coleta CAPES}
+  \end{center}
+  \vspace{7mm}
+  \noindent Tipo de produ\c c\~ao intelectual:\par
+  \vspace{1mm}
+  \hspace*{10mm}(\coppe@marcatipo{bibliografica})\enspace Bibliogr\'afica\par
+  \hspace*{10mm}(\coppe@marcatipo{artistica})\enspace Art\'{\i}stica\par
+  \hspace*{10mm}(\coppe@marcatipo{tecnologica})\enspace Tecnol\'ogica\par
+  \hspace*{10mm}(\coppe@marcatipo{tecnica})\enspace T\'ecnica\par
+  \vspace{5mm}
+  \noindent Projeto de pesquisa vinculado \`a produ\c c\~ao intelectual?\par
+  \vspace{1mm}
+  \hspace*{10mm}(\coppe@marcavinc{sim})\enspace Sim\par
+  \hspace*{10mm}(\coppe@marcavinc{nao})\enspace N\~ao\par
+  \vspace{5mm}
+  \noindent Nome do projeto de pesquisa:\par
+  \vspace{1mm}
+  \noindent\coppe@campo{\coppe@nomeprojeto}\par
+  \vspace{5mm}
+  \noindent \'Area de concentra\c c\~ao da produ\c c\~ao intelectual:\par
+  \vspace{1mm}
+  \noindent\coppe@campo{\coppe@areaconc}\par
+  \vspace{5mm}
+  \noindent Ag\^encia(s) de fomento financiadora(s) da produ\c c\~ao
+  intelectual:\par
+  \vspace{1mm}
+  \ifthenelse{\value{coppeagencias}=0}{%
+    \noindent\hrulefill\par}{%
+    \count1=0
+    \@whilenum\count1<\value{coppeagencias}\do{%
+      \noindent\hspace*{10mm}\csname CoppeAgencia:\the\count1\endcsname
+      \ (\csname CoppeAgenciaSigla:\the\count1\endcsname)\par
+      \advance\count1 by 1}}%
+  \vspace{9mm}
+  \begin{center}
+    {\large\bfseries Ficha catalogr\'afica}\par
+    \vspace{4mm}
+    \ifthenelse{\equal{\coppe@fichafile}{}}{%
+      \if@copperascunho
+        \makecatalog
+      \else
+        \framebox[125mm][c]{\parbox[c][62mm][c]{115mm}{\centering\footnotesize
+          Espa\c co reservado \`a ficha catalogr\'afica.\\[1ex]
+          Gere-a em \texttt{fichacatalografica.sibi.ufrj.br} e inclua o
+          arquivo com \texttt{\string\fichacatalografica\{arquivo.pdf\}},
+          ou solicite-a \`a biblioteca do seu Programa.}}%
+      \fi}{%
+      \includegraphics[page=\coppe@fichapage,width=125mm]{\coppe@fichafile}}%
+  \end{center}
+  \par}}
 \newcommand\dedication[1]{
   \gdef\@dedic{#1}
     \cleardoublepage
