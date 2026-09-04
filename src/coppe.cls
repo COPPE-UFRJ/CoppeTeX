@@ -567,12 +567,15 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \renewcommand\frontmatter{%
   \cleardoublepage
   \@mainmatterfalse
-  \pagenumbering{roman}
+  \if@copperoman
+    \ClassWarningNoLine{coppe}{Option `numeraisromanos' prints roman numerals
+      on the pre-textual folhas and restarts the arabic count at 1 in the
+      textual part. Section 2.7 of the SiBI manual (9th rev. ed., 2026) has
+      those folhas counted but not numbered, and the arabic numbering
+      continuing the count. Drop the option to comply}%
+    \pagenumbering{roman}%
+  \fi
   \thispagestyle{empty}
-  % folha de rosto = counted page 1 (ABNT: the capa is not counted). An odd
-  % start keeps the page-counter parity aligned with the physical (recto) side,
-  % so \cleardoublepage lands every pre-textual element on an odd (front) page.
-  \setcounter{page}{1}
   \makefrontpage
   \clearpage
   \if@copperoman
@@ -591,7 +594,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \fancypagestyle{plain}{\fancyhf{}\fancyhead[RO,LE]{\thepage}%
     \renewcommand{\headrulewidth}{0pt}}%
   \pagestyle{coppe}%
-  \pagenumbering{arabic}}
+  \if@copperoman\pagenumbering{arabic}\fi}
 \renewcommand\backmatter{%
   \if@openright
     \cleardoublepage
@@ -659,6 +662,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \pagenumbering{alph}
   \ltx@ifpackageloaded{hyperref}{\coppe@hypersetup}{}%
   \makecover
+  \pagenumbering{arabic}
   \begin{titlepage}
   \begin{flushleft}
   \vspace*{1.5mm}
@@ -711,7 +715,9 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   % Ficha catalográfica on the verso of the folha de rosto (NBR 14724, R57):
   % the title page is a recto, so this lands on the immediately following verso,
   % ahead of the approval sheet produced by \frontmatter.
-  \ifthenelse{\boolean{maledoc}}{}{\thispagestyle{empty}\makecatalog}%
+  \setcounter{page}{2}%
+  \ifthenelse{\boolean{maledoc}}{}{%
+    \thispagestyle{empty}\makecatalog\clearpage\addtocounter{page}{-1}}%
   \global\let\maketitle\relax%
   \global\let\and\relax}
 \newcommand\makefrontpage{%

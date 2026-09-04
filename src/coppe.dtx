@@ -2676,12 +2676,25 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \renewcommand\frontmatter{%
   \cleardoublepage
   \@mainmatterfalse
-  \pagenumbering{roman}
+% The count already started at the folha de rosto (see \maketitle) and simply
+% continues here: 2.7 requires every folha from the folha de rosto onwards to
+% be counted sequentially, printing arabic numerals only from the first textual
+% folha. Resetting the counter here -- as this class did until v4.1 -- made the
+% Introducao come out as page 1, which the norm does not allow.
+%
+% The numeraisromanos option keeps the legacy behaviour (lowercase roman in the
+% pre-textual part, arabic restarting at 1 in the textual part). That departs
+% from 2.7, which has the pre-textual folhas counted but NOT numbered, so the
+% option warns.
+  \if@copperoman
+    \ClassWarningNoLine{coppe}{Option `numeraisromanos' prints roman numerals
+      on the pre-textual folhas and restarts the arabic count at 1 in the
+      textual part. Section 2.7 of the SiBI manual (9th rev. ed., 2026) has
+      those folhas counted but not numbered, and the arabic numbering
+      continuing the count. Drop the option to comply}%
+    \pagenumbering{roman}%
+  \fi
   \thispagestyle{empty}
-  % folha de rosto = counted page 1 (ABNT: the capa is not counted). An odd
-  % start keeps the page-counter parity aligned with the physical (recto) side,
-  % so \cleardoublepage lands every pre-textual element on an odd (front) page.
-  \setcounter{page}{1}
   \makefrontpage
   \clearpage
   \if@copperoman
@@ -2705,7 +2718,13 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \fancypagestyle{plain}{\fancyhf{}\fancyhead[RO,LE]{\thepage}%
     \renewcommand{\headrulewidth}{0pt}}%
   \pagestyle{coppe}%
-  \pagenumbering{arabic}}
+% No \pagenumbering{arabic} in the default path: it would reset the counter to
+% 1 and make the Introducao folha 1, contrary to 2.7. The counter has been
+% arabic and running since the folha de rosto; all that changes here is that
+% the folio starts being PRINTED. Only the legacy numeraisromanos path, which
+% switched to roman in the front matter, has to switch back -- and there the
+% restart at 1 is intrinsic to that (non-conforming) scheme.
+  \if@copperoman\pagenumbering{arabic}\fi}
 %    \end{macrocode}
 % \end{macro}
 %
@@ -2814,9 +2833,15 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \begin{macro}{\maketitle}
 %    \begin{macrocode}
 \renewcommand\maketitle{%
+% The capa is neither counted nor numbered (2.7), so it lives in its own
+% throwaway numbering scheme; \pagenumbering{arabic} right after it restarts
+% the counter, making the FOLHA DE ROSTO page 1 -- which is where 2.7 says the
+% count begins. Nothing is printed here: \frontmatter keeps \pagestyle{empty}
+% until the textual part starts.
   \pagenumbering{alph}
   \ltx@ifpackageloaded{hyperref}{\coppe@hypersetup}{}%
   \makecover
+  \pagenumbering{arabic}
   \begin{titlepage}
   \begin{flushleft}
   \vspace*{1.5mm}
@@ -2869,7 +2894,19 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   % Ficha catalográfica on the verso of the folha de rosto (NBR 14724, R57):
   % the title page is a recto, so this lands on the immediately following verso,
   % ahead of the approval sheet produced by \frontmatter.
-  \ifthenelse{\boolean{maledoc}}{}{\thispagestyle{empty}\makecatalog}%
+% LaTeX's titlepage environment ends with \setcounter{page}{1} whenever the
+% document is one-sided (see \endtitlepage in classes.dtx). That silently ate
+% the folha de rosto from the count, putting the folha de aprovacao at 1 instead
+% of 2. The count is therefore restated here: the folha de rosto WAS folha 1, so
+% whatever follows it is folha 2.
+  \setcounter{page}{2}%
+% The page carrying the ficha catalografica is explicitly excluded from the
+% count -- 2.7 of the 2026 manual ("a folha adicional que contem a ficha
+% catalografica nao pode ser contada ou numerada"), and the 2025 edition said
+% the same of the verso of the folha de rosto. Hence the counter is stepped
+% back after it.
+  \ifthenelse{\boolean{maledoc}}{}{%
+    \thispagestyle{empty}\makecatalog\clearpage\addtocounter{page}{-1}}%
   \global\let\maketitle\relax%
   \global\let\and\relax}
 %    \end{macrocode}
