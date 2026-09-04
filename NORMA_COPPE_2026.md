@@ -14,15 +14,27 @@ e suas revisões subsequentes (01/10/2009, 10/09/2010 e 26/11/2019).
 
 A apresentação gráfica de teses e dissertações da COPPE/UFRJ segue o
 **Manual para Elaboração e Normalização de Trabalhos Acadêmicos** da
-UFRJ/SiBI, 9.ª edição (Rio de Janeiro, 2025) — doravante referido como
-*Manual UFRJ 2025* — em conjunto com as adaptações estabelecidas pela
+UFRJ/SiBI, 9.ª edição revista (Rio de Janeiro, 2026) — doravante referido
+como *Manual UFRJ 2026* — em conjunto com as adaptações estabelecidas pela
 presente Norma.
+
+A edição revista de 2026 incorpora três decisões institucionais que
+condicionam diretamente a presente Norma:
+
+- A **Resolução CEPG n. 246/2023**, de 10 de novembro de 2023, que extingue
+  a entrega da via impressa à Central de Memória Acadêmica e institui a
+  entrega exclusivamente digital do documento final;
+- A **Resolução CEPG n. 302/2024**, de 19 de julho de 2024, cujo art. 57
+  fixa os idiomas em que teses e dissertações podem ser redigidas
+  (ver Seção 4);
+- O **novo modelo de coleta de informações acadêmicas da CAPES**, que dá
+  origem à folha adicional descrita na Seção 2.3.
 
 A presente Norma estabelece **apenas os elementos próprios da COPPE/UFRJ**.
 Todos os aspectos não tratados explicitamente aqui — formato do papel,
 margens, espaçamento, fonte, paginação geral, equações, tabelas,
 indicativos de seção, ortografia, siglas, ilustrações no caso geral,
-estrutura textual no caso geral, etc. — devem seguir o *Manual UFRJ 2025*.
+estrutura textual no caso geral, etc. — devem seguir o *Manual UFRJ 2026*.
 
 ### 1.2 Implementação de referência
 
@@ -30,7 +42,7 @@ A **implementação de referência** desta Norma é a classe LaTeX `coppe`,
 versão 4.0 e posteriores (**CoppeTeX 4.x**), distribuída em
 <https://github.com/COPPE-UFRJ/CoppeTeX>. A classe produz, sem
 configuração adicional por parte do autor, um documento aderente
-simultaneamente ao *Manual UFRJ 2025* e à presente Norma. Seu uso é o
+simultaneamente ao *Manual UFRJ 2026* e à presente Norma. Seu uso é o
 caminho recomendado pela COPPE/UFRJ para a confecção do documento final.
 
 ---
@@ -78,7 +90,7 @@ data da defesa. A folha de aprovação **não é numerada**.
 
 ## 3. Resumos: estrutura de três idiomas
 
-Em complemento ao previsto no *Manual UFRJ 2025*, a presente Norma
+Em complemento ao previsto no *Manual UFRJ 2026*, a presente Norma
 reconhece três posições distintas para o resumo:
 
 1. **Resumo em idioma principal**, obrigatório, no idioma em que o
@@ -126,7 +138,7 @@ principal (ver Seção 2.2).
 
 ## 5. Ilustrações próprias da COPPE/UFRJ
 
-Em complemento às listas previstas no *Manual UFRJ 2025* (Lista de
+Em complemento às listas previstas no *Manual UFRJ 2026* (Lista de
 Figuras, Lista de Tabelas, Lista de Abreviaturas e Siglas, Lista de
 Símbolos), a presente Norma reconhece:
 
@@ -204,11 +216,11 @@ A classe LaTeX `coppe` em suas versões 4.0 e posteriores
 <https://github.com/COPPE-UFRJ/CoppeTeX>, é a implementação de
 referência desta Norma. Sua adoção é o caminho recomendado pela
 COPPE/UFRJ para garantir aderência automática a todos os requisitos
-acima e ao *Manual UFRJ 2025*.
+acima e ao *Manual UFRJ 2026*.
 
 Em caso de divergência entre a presente Norma escrita e a saída gerada
 pela versão estável corrente do CoppeTeX 4.x, prevalece a presente Norma
-e o *Manual UFRJ 2025*, e a divergência deve ser comunicada à equipe
+e o *Manual UFRJ 2026*, e a divergência deve ser comunicada à equipe
 mantenedora do CoppeTeX para correção na próxima revisão da
 implementação.
 
