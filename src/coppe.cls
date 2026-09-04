@@ -700,9 +700,14 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \begin{minipage}{0.5\textwidth}
   \singlespacing\frontcover@maintext
   \end{minipage}\par
-  \vspace*{7.5mm}
+  \end{flushright}
+  \vspace*{12mm}
+  {\singlespacing
+  \ifthenelse{\equal{\coppe@linhapesq}{}}{}{%
+    \noindent Linha de pesquisa: \coppe@linhapesq\par
+    \vspace*{5mm}}%
   \nohyphens{%
-  \begin{tabularx}{8.45cm}[b]{@{}l@{ }>{\raggedright\arraybackslash}X@{}}
+  \noindent\begin{tabularx}{\textwidth}[b]{@{}l@{ }>{\raggedright\arraybackslash}X@{}}
     \local@advisorstring: &
     \count1=0
     \toks@={}
@@ -721,8 +726,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \fi
     \advance\count1 by 1}
     \the\toks@
-  \end{tabularx}}\par
-  \end{flushright}
+  \end{tabularx}}\par}
   \vspace*{\fill}
   \begin{center}
   \local@cityname\par

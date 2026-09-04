@@ -1030,7 +1030,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 
   % Dados da folha adicional (Coleta CAPES), obrigatoria desde agosto de 2026.
   % A folha e preenchida pelo Programa; estes campos apenas a compoem.
-  \areaconcentracao{Engenharia de Sistemas e Computacao}
+  \areaconcentracao{Engenharia de Sistemas e Computa\c c\~ao}
   \linhapesquisa{Engenharia de Dados e Conhecimento}
   \tipoproducao{bibliografica}   % bibliografica | artistica | tecnologica | tecnica
   \projetovinculado{sim}         % sim | nao
@@ -2959,9 +2959,18 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \begin{minipage}{0.5\textwidth}
   \singlespacing\frontcover@maintext
   \end{minipage}\par
-  \vspace*{7.5mm}
+  \end{flushright}
+% Only the natureza block is indented to the right (2.4). The linha de pesquisa
+% and the orientadores return to the LEFT MARGIN, as the CAPES model of the
+% folha de rosto and Annex B of the manual show. Until v4.1 they sat inside the
+% right-hand block, which is what a recent review flagged.
+  \vspace*{12mm}
+  {\singlespacing
+  \ifthenelse{\equal{\coppe@linhapesq}{}}{}{%
+    \noindent Linha de pesquisa: \coppe@linhapesq\par
+    \vspace*{5mm}}%
   \nohyphens{%
-  \begin{tabularx}{8.45cm}[b]{@{}l@{ }>{\raggedright\arraybackslash}X@{}}
+  \noindent\begin{tabularx}{\textwidth}[b]{@{}l@{ }>{\raggedright\arraybackslash}X@{}}
     \local@advisorstring: &
     \count1=0
     \toks@={}
@@ -2980,8 +2989,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \fi
     \advance\count1 by 1}
     \the\toks@
-  \end{tabularx}}\par
-  \end{flushright}
+  \end{tabularx}}\par}
   \vspace*{\fill}
 % 3.1.2.1.1(g): the folha de rosto carries the ANO DE DEPOSITO alone -- the year
 % the revised final version is handed to the Programa. The month was never asked
