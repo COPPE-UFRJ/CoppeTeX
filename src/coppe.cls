@@ -697,8 +697,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \end{center}
   \vspace*{2.1cm}
   \begin{flushright}
-  \begin{minipage}{8.45cm}
-  \frontcover@maintext
+  \begin{minipage}{0.5\textwidth}
+  \singlespacing\frontcover@maintext
   \end{minipage}\par
   \vspace*{7.5mm}
   \nohyphens{%
@@ -726,7 +726,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \vspace*{\fill}
   \begin{center}
   \local@cityname\par
-  \local@monthname\ de \coppe@docyear
+  \coppe@docyear
   \end{center}
   \end{titlepage}
   % Ficha catalográfica on the verso of the folha de rosto (NBR 14724, R57):
@@ -1324,7 +1324,10 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   ao Programa de P{\' o}s-gradua{\c c}{\~ a}o em \local@deptname,
   COPPE, da \local@universityname, como parte dos requisitos
   necess{\' a}rios {\` a} obten{\c c}{\~ a}o do t{\' i}tulo de
-  \local@degname\ em \local@deptname.}
+  \local@degname\ em \local@deptname.}%
+  \ifthenelse{\equal{\coppe@areaconc}{}}{}{%
+    \par\vspace{1ex}%
+    \sloppy\nohyphens{\'Area de concentra{\c c}{\~ a}o: \coppe@areaconc.}}%
 }
 \newcommand\frontpage@maintext{
   \noindent {\MakeUppercase\local@doctype}

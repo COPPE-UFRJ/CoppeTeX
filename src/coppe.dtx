@@ -2952,8 +2952,12 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \end{center}
   \vspace*{2.1cm}
   \begin{flushright}
-  \begin{minipage}{8.45cm}
-  \frontcover@maintext
+% 2.4: on the folha de rosto the natureza/objetivo/instituicao block is set
+% SINGLE spaced, and aligned from the middle of the mancha grafica to the right
+% margin. 0.5\textwidth tracks the mancha, so the block follows automatically if
+% the margins ever change -- the old fixed 8.45cm did not.
+  \begin{minipage}{0.5\textwidth}
+  \singlespacing\frontcover@maintext
   \end{minipage}\par
   \vspace*{7.5mm}
   \nohyphens{%
@@ -2979,9 +2983,14 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \end{tabularx}}\par
   \end{flushright}
   \vspace*{\fill}
+% 3.1.2.1.1(g): the folha de rosto carries the ANO DE DEPOSITO alone -- the year
+% the revised final version is handed to the Programa. The month was never asked
+% for here (the capa, Annex A, also shows only the year), and printing it
+% invited confusion with the defence date. \date still takes month and year:
+% the month is what the abstract pages and the colophon use.
   \begin{center}
   \local@cityname\par
-  \local@monthname\ de \coppe@docyear
+  \coppe@docyear
   \end{center}
   \end{titlepage}
   % Ficha catalográfica on the verso of the folha de rosto (NBR 14724, R57):
@@ -3737,13 +3746,20 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \newcommand\local@statename{RJ}
 \newcommand\local@countryname{Brasil}
 %
+% 3.1.2.1.1(e) of the 2026 manual requires the natureza, the objetivo, the
+% name of the institution AND the area de concentracao in this block. The area
+% was missing; it is appended as its own sentence when \areaconcentracao was
+% given, and simply omitted otherwise.
 \newcommand\frontcover@maintext{
   \sloppy\nohyphens{\local@doctype\ de \@degreename\
   \ifthenelse{\boolean{maledoc}}{apresentado}{apresentada}
   ao Programa de P{\' o}s-gradua{\c c}{\~ a}o em \local@deptname,
   COPPE, da \local@universityname, como parte dos requisitos
   necess{\' a}rios {\` a} obten{\c c}{\~ a}o do t{\' i}tulo de
-  \local@degname\ em \local@deptname.}
+  \local@degname\ em \local@deptname.}%
+  \ifthenelse{\equal{\coppe@areaconc}{}}{}{%
+    \par\vspace{1ex}%
+    \sloppy\nohyphens{\'Area de concentra{\c c}{\~ a}o: \coppe@areaconc.}}%
 }
 %
 \newcommand\frontpage@maintext{
