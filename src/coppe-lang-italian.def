@@ -75,8 +75,8 @@
 \copperdefstring{italian}{advisor}         {Relatore}
 \copperdefstring{italian}{advisors}        {Relatori}
 \copperdefstring{italian}{dept}            {Programma}
-\copperdefstring{italian}{approvedmale}    {Esaminato da}
-\copperdefstring{italian}{approvedfemale}  {Esaminata da}
+\copperdefstring{italian}{approvedmale}    {Approvato da}
+\copperdefstring{italian}{approvedfemale}  {Approvata da}
 \copperdefstring{italian}{universityname}{Universidade Federal do Rio de Janeiro}
 \copperdefstring{italian}{cityname}    {Rio de Janeiro}
 \copperdefstring{italian}{statename}   {RJ}

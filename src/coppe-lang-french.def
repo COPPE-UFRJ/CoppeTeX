@@ -73,8 +73,8 @@
 \copperdefstring{french}{advisor}         {Directeur}
 \copperdefstring{french}{advisors}        {Directeurs}
 \copperdefstring{french}{dept}            {Programme}
-\copperdefstring{french}{approvedmale}    {Examin\'e par}
-\copperdefstring{french}{approvedfemale}  {Examin\'ee par}
+\copperdefstring{french}{approvedmale}    {Approuv\'e par}
+\copperdefstring{french}{approvedfemale}  {Approuv\'ee par}
 \copperdefstring{french}{universityname}{Universidade Federal do Rio de Janeiro}
 \copperdefstring{french}{cityname}    {Rio de Janeiro}
 \copperdefstring{french}{statename}   {RJ}

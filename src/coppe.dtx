@@ -2375,10 +2375,10 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \copperdefstring{english}  {advisors}     {Advisors}
 \copperdefstring{brazilian}{dept}         {Programa}
 \copperdefstring{english}  {dept}         {Department}
-\copperdefstring{brazilian}{approvedmale}  {Examinado por}
-\copperdefstring{brazilian}{approvedfemale}{Examinada por}
-\copperdefstring{english}  {approvedmale}  {Examined by}
-\copperdefstring{english}  {approvedfemale}{Examined by}
+\copperdefstring{brazilian}{approvedmale}  {Aprovado por}
+\copperdefstring{brazilian}{approvedfemale}{Aprovada por}
+\copperdefstring{english}  {approvedmale}  {Approved by}
+\copperdefstring{english}  {approvedfemale}{Approved by}
 % Institutional names: always Portuguese on the cover/folha (UFRJ template).
 \copperdefstring{brazilian}{universityname}{Universidade Federal do Rio de Janeiro}
 \copperdefstring{english}  {universityname}{Universidade Federal do Rio de Janeiro}
@@ -3058,7 +3058,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \end{tabularx}\par
   \vspace*{20mm}
   \noindent\begin{tabularx}{\textwidth}[b]{@{}l@{ }>{\raggedright\arraybackslash}X@{}}
-    Aprovada por: &
+    \local@approvedname: &
     \count1=0
     \toks@={}
     \@whilenum \count1<\@examiner \do{%
@@ -3742,10 +3742,13 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %
 \newcommand\local@advisorstring{Orientador}
 \newcommand\foreign@advisorstring{Advisor}
+% Fed by the string dispatcher instead of a hard-coded Portuguese literal.
+% Expansion is lazy (it happens inside \makefrontpage), so \coppe@mainlang is
+% already set by the time this is used.
 \ifthenelse{\boolean{maledoc}}{%
-  \newcommand\local@approvedname{Examinado por}%
+  \newcommand\local@approvedname{\coppemainstring{approvedmale}}%
 }{%
-  \newcommand\local@approvedname{Examinada por}%
+  \newcommand\local@approvedname{\coppemainstring{approvedfemale}}%
 }
 \newcommand\local@universityname{Universidade Federal do Rio de Janeiro}
 \newcommand\local@deptstring{Programa}
@@ -4503,8 +4506,8 @@ postamble
 \copperdefstring{spanish}{advisor}         {Director}
 \copperdefstring{spanish}{advisors}        {Directores}
 \copperdefstring{spanish}{dept}            {Programa}
-\copperdefstring{spanish}{approvedmale}    {Examinado por}
-\copperdefstring{spanish}{approvedfemale}  {Examinada por}
+\copperdefstring{spanish}{approvedmale}    {Aprobado por}
+\copperdefstring{spanish}{approvedfemale}  {Aprobada por}
 \copperdefstring{spanish}{universityname}{Universidade Federal do Rio de Janeiro}
 \copperdefstring{spanish}{cityname}    {Rio de Janeiro}
 \copperdefstring{spanish}{statename}   {RJ}
@@ -4552,8 +4555,8 @@ postamble
 \copperdefstring{french}{advisor}         {Directeur}
 \copperdefstring{french}{advisors}        {Directeurs}
 \copperdefstring{french}{dept}            {Programme}
-\copperdefstring{french}{approvedmale}    {Examin\'e par}
-\copperdefstring{french}{approvedfemale}  {Examin\'ee par}
+\copperdefstring{french}{approvedmale}    {Approuv\'e par}
+\copperdefstring{french}{approvedfemale}  {Approuv\'ee par}
 \copperdefstring{french}{universityname}{Universidade Federal do Rio de Janeiro}
 \copperdefstring{french}{cityname}    {Rio de Janeiro}
 \copperdefstring{french}{statename}   {RJ}
@@ -4600,8 +4603,8 @@ postamble
 \copperdefstring{italian}{advisor}         {Relatore}
 \copperdefstring{italian}{advisors}        {Relatori}
 \copperdefstring{italian}{dept}            {Programma}
-\copperdefstring{italian}{approvedmale}    {Esaminato da}
-\copperdefstring{italian}{approvedfemale}  {Esaminata da}
+\copperdefstring{italian}{approvedmale}    {Approvato da}
+\copperdefstring{italian}{approvedfemale}  {Approvata da}
 \copperdefstring{italian}{universityname}{Universidade Federal do Rio de Janeiro}
 \copperdefstring{italian}{cityname}    {Rio de Janeiro}
 \copperdefstring{italian}{statename}   {RJ}

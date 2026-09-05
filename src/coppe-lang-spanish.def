@@ -77,8 +77,8 @@
 \copperdefstring{spanish}{advisor}         {Director}
 \copperdefstring{spanish}{advisors}        {Directores}
 \copperdefstring{spanish}{dept}            {Programa}
-\copperdefstring{spanish}{approvedmale}    {Examinado por}
-\copperdefstring{spanish}{approvedfemale}  {Examinada por}
+\copperdefstring{spanish}{approvedmale}    {Aprobado por}
+\copperdefstring{spanish}{approvedfemale}  {Aprobada por}
 \copperdefstring{spanish}{universityname}{Universidade Federal do Rio de Janeiro}
 \copperdefstring{spanish}{cityname}    {Rio de Janeiro}
 \copperdefstring{spanish}{statename}   {RJ}

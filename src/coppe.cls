@@ -337,10 +337,10 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \copperdefstring{english}  {advisors}     {Advisors}
 \copperdefstring{brazilian}{dept}         {Programa}
 \copperdefstring{english}  {dept}         {Department}
-\copperdefstring{brazilian}{approvedmale}  {Examinado por}
-\copperdefstring{brazilian}{approvedfemale}{Examinada por}
-\copperdefstring{english}  {approvedmale}  {Examined by}
-\copperdefstring{english}  {approvedfemale}{Examined by}
+\copperdefstring{brazilian}{approvedmale}  {Aprovado por}
+\copperdefstring{brazilian}{approvedfemale}{Aprovada por}
+\copperdefstring{english}  {approvedmale}  {Approved by}
+\copperdefstring{english}  {approvedfemale}{Approved by}
 \copperdefstring{brazilian}{universityname}{Universidade Federal do Rio de Janeiro}
 \copperdefstring{english}  {universityname}{Universidade Federal do Rio de Janeiro}
 \copperdefstring{brazilian}{cityname}     {Rio de Janeiro}
@@ -773,7 +773,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \end{tabularx}\par
   \vspace*{20mm}
   \noindent\begin{tabularx}{\textwidth}[b]{@{}l@{ }>{\raggedright\arraybackslash}X@{}}
-    Aprovada por: &
+    \local@approvedname: &
     \count1=0
     \toks@={}
     \@whilenum \count1<\@examiner \do{%
@@ -1312,9 +1312,9 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \newcommand\local@advisorstring{Orientador}
 \newcommand\foreign@advisorstring{Advisor}
 \ifthenelse{\boolean{maledoc}}{%
-  \newcommand\local@approvedname{Examinado por}%
+  \newcommand\local@approvedname{\coppemainstring{approvedmale}}%
 }{%
-  \newcommand\local@approvedname{Examinada por}%
+  \newcommand\local@approvedname{\coppemainstring{approvedfemale}}%
 }
 \newcommand\local@universityname{Universidade Federal do Rio de Janeiro}
 \newcommand\local@deptstring{Programa}
