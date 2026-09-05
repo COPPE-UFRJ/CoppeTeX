@@ -85,6 +85,7 @@
   \AtEndOfClass{\ClassWarningNoLine{coppe}{%
     Although slower, you should try compiling with LuaLaTeX}}
 \fi
+\RequirePackage{lmodern}
 \RequirePackage[T1]{fontenc}
 \RequirePackage{amsmath}
 \ifPDFTeX

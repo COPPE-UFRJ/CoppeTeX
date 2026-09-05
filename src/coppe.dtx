@@ -1986,6 +1986,21 @@ No modelo \CoppeTeX os anexos devem obrigtoriamente vir depois dos apêndices e 
   \AtEndOfClass{\ClassWarningNoLine{coppe}{%
     Although slower, you should try compiling with LuaLaTeX}}
 \fi
+% lmodern MUST come with the T1 encoding. Without it, T1 falls back to the EC
+% fonts, which exist only as METAFONT bitmaps in most installations, and the
+% whole document is typeset in Type3 bitmap fonts. Measured before this change:
+% example.pdf carried 87 Type3 fonts against 6 Type1, and coppe.pdf 133 against
+% 2. The consequences are not cosmetic:
+%
+%   * the text renders blurred at any zoom and prints poorly;
+%   * copying and searching text in the PDF is unreliable;
+%   * PDF/A -- required for deposit by 2.2(d) of the 2026 manual -- is not
+%     attainable with bitmap text.
+%
+% Latin Modern is the vector successor of Computer Modern, metrically and
+% visually near-identical, and ships with every current distribution, so the
+% page layout does not move.
+\RequirePackage{lmodern}
 \RequirePackage[T1]{fontenc}
 % Math support. amsmath is universal and works on every engine, so the class
 % brings it in unconditionally (it must precede hyperref, which is loaded at
