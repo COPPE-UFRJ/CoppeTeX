@@ -271,6 +271,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \DeclareOption{numeraisromanos}{\@copperomantrue}
 \newif\if@coppedoublespace\@coppedoublespacefalse
 \DeclareOption{doublespacing}{\@coppedoublespacetrue}
+\newif\if@coppeassin \@coppeassinfalse
+\DeclareOption{assinaturas}{\@coppeassintrue}
 \newif\if@copperascunho \@copperascunhofalse
 \DeclareOption{rascunhoficha}{\@copperascunhotrue}
 \newif\if@coppetwoside \@coppetwosidefalse
@@ -522,11 +524,12 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 }
 \newcommand\coppe@selecttitle{\@nameuse{coppe@title@\coppe@mainlang}}
 \newcount\@advisor\@advisor0
-\newcommand\advisor[4]{%
-  \global\@namedef{CoppeAdvisorTitle:\expandafter\the\@advisor}{#1}
-  \global\@namedef{CoppeAdvisorName:\expandafter\the\@advisor}{#2}
-  \global\@namedef{CoppeAdvisorSurname:\expandafter\the\@advisor}{#3}
-  \global\@namedef{CoppeAdvisorDegree:\expandafter\the\@advisor}{#4}
+\newcommand\advisor[5][]{%
+  \global\@namedef{CoppeAdvisorInst:\expandafter\the\@advisor}{#1}
+  \global\@namedef{CoppeAdvisorTitle:\expandafter\the\@advisor}{#2}
+  \global\@namedef{CoppeAdvisorName:\expandafter\the\@advisor}{#3}
+  \global\@namedef{CoppeAdvisorSurname:\expandafter\the\@advisor}{#4}
+  \global\@namedef{CoppeAdvisorDegree:\expandafter\the\@advisor}{#5}
   \global\advance\@advisor by 1
   \ifnum\@advisor>1
     \renewcommand\local@advisorstring{Orientadores}
@@ -534,8 +537,12 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \fi
 }
 \newcount\@examiner\@examiner0
-\newcommand\examiner[3]{%
-  \global\@namedef{CoppeExaminer:\expandafter\the\@examiner}{#1\ #2}
+\newcommand\examiner[4][]{%
+  \global\@namedef{CoppeExaminerInst:\expandafter\the\@examiner}{#1}
+  \global\@namedef{CoppeExaminerTitle:\expandafter\the\@examiner}{#2}
+  \global\@namedef{CoppeExaminerName:\expandafter\the\@examiner}{#3}
+  \global\@namedef{CoppeExaminerDegree:\expandafter\the\@examiner}{#4}
+  \global\@namedef{CoppeExaminer:\expandafter\the\@examiner}{#2\ #3}
   \global\advance\@examiner by 1
 }
 \renewcommand\author[2]{%
@@ -747,6 +754,23 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \makefolhaadicional\clearpage\addtocounter{page}{-1}}%
   \global\let\maketitle\relax%
   \global\let\and\relax}
+\newcommand\coppe@membroid[4]{%
+  #1\ #2%
+  \ifthenelse{\equal{#3}{}}{}{, #3}%
+  \ifthenelse{\equal{#4}{}}{}{, #4}}
+\newcommand\coppe@membro[4]{%
+  \if@coppeassin
+    \vspace{9mm}%
+    \begin{center}
+      \rule{95mm}{0.4pt}\par
+      \nopagebreak{\footnotesize\coppe@membroid{#1}{#2}{#3}{#4}}\par
+    \end{center}%
+  \else
+    \noindent\hspace*{8mm}%
+    \begin{minipage}{\dimexpr\textwidth-8mm\relax}
+      \coppe@membroid{#1}{#2}{#3}{#4}
+    \end{minipage}\par\vspace{2mm}%
+  \fi}
 \newcommand\makefrontpage{%
   \begin{center}
     \nohyphens{\@authname\ \@authsurn}\par
@@ -763,47 +787,30 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \noindent\local@approvedonname:\enspace
   \ifthenelse{\equal{\coppe@dataaprov}{}}{\hrulefill}{\coppe@dataaprov}\par
   \vspace*{12mm}
-  \nohyphens{%
-  \noindent\begin{tabularx}{\textwidth}[b]{@{}l@{ }>{\raggedright\arraybackslash}X@{}}
-    \local@advisorstring: &
-    \count1=0
-    \toks@={}
-    \@whilenum \count1<\@advisor \do{%
-    \ifcase\count1 % same as \ifnum0=\count1
-      \toks@=\expandafter{\csname CoppeAdvisorName:\the\count1%
-        \expandafter\endcsname\expandafter\space%
-        \csname CoppeAdvisorSurname:\the\count1\endcsname\\}
-    \else
-      \toks@=\expandafter\expandafter\expandafter{%
-        \expandafter\the\expandafter\toks@%
-        \expandafter&\expandafter\space%
-        \csname CoppeAdvisorName:\the\count1\expandafter\endcsname%
-        \expandafter\space\csname CoppeAdvisorSurname:\the\count1\endcsname\\
-      }%
-    \fi
-    \advance\count1 by 1}
-    \the\toks@
-  \end{tabularx}\par
-  \vspace*{20mm}
-  \noindent\begin{tabularx}{\textwidth}[b]{@{}l@{ }>{\raggedright\arraybackslash}X@{}}
-    \local@approvedname: &
-    \count1=0
-    \toks@={}
-    \@whilenum \count1<\@examiner \do{%
-    \ifcase\count1 % same as \ifnum0=\count1
-      \toks@=\expandafter{\csname CoppeExaminer:\the\count1%
-        \expandafter\endcsname\expandafter\\}
-    \else
-      \toks@=\expandafter\expandafter\expandafter{%
-        \expandafter\the\expandafter\toks@%
-        \expandafter&\expandafter\space%
-        \csname CoppeExaminer:\the\count1\expandafter\endcsname%
-        \expandafter\space\\
-      }%
-    \fi
-    \advance\count1 by 1}
-    \the\toks@
-    \end{tabularx}}\par
+  \gdef\coppe@bancalist{}%
+  \count1=0
+  \@whilenum\count1<\@advisor\do{%
+    \protected@edef\coppe@tmp{\noexpand\coppe@membro
+      {\csname CoppeAdvisorTitle:\the\count1\endcsname}%
+      {\csname CoppeAdvisorName:\the\count1\endcsname\space
+       \csname CoppeAdvisorSurname:\the\count1\endcsname}%
+      {\csname CoppeAdvisorDegree:\the\count1\endcsname}%
+      {\csname CoppeAdvisorInst:\the\count1\endcsname}}%
+    \expandafter\g@addto@macro\expandafter\coppe@bancalist
+      \expandafter{\coppe@tmp}%
+    \advance\count1 by 1}%
+  \count1=0
+  \@whilenum\count1<\@examiner\do{%
+    \protected@edef\coppe@tmp{\noexpand\coppe@membro
+      {\csname CoppeExaminerTitle:\the\count1\endcsname}%
+      {\csname CoppeExaminerName:\the\count1\endcsname}%
+      {\csname CoppeExaminerDegree:\the\count1\endcsname}%
+      {\csname CoppeExaminerInst:\the\count1\endcsname}}%
+    \expandafter\g@addto@macro\expandafter\coppe@bancalist
+      \expandafter{\coppe@tmp}%
+    \advance\count1 by 1}%
+  \noindent\local@approvedname:\par
+  \nohyphens{\singlespacing\coppe@bancalist}\par
   \vspace*{\fill}}
 \newcommand\coppe@hypersetup{%
 \begingroup

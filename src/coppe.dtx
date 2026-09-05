@@ -1009,18 +1009,18 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \title{Título da Tese}
   \foreigntitle{Thesis Title}
   \author{Nome do Autor}{Sobrenome}
-  \advisor{Prof.}{Nome do Primeiro Orientador}{Sobrenome}{D.Sc.}
-  \advisor{Prof.}{Nome do Segundo Orientador}{Sobrenome}{Ph.D.}
+  \advisor[UFRJ]{Prof.}{Nome do Primeiro Orientador}{Sobrenome}{D.Sc.}
+  \advisor[UFRJ]{Prof.}{Nome do Segundo Orientador}{Sobrenome}{Ph.D.}
   % A classe aceita de um a tres \advisor; se houver apenas um, o rotulo na
   % capa e na folha de rosto sai como "Orientador" (singular), com dois ou
   % mais sai como "Orientadores" (plural). Para o caso 1/3 orientadores,
   % veja tests/test_brazilian_one_advisor.tex e tests/test_brazilian_three_advisors.tex.
 
-  \examiner{Prof.}{Nome do Primeiro Examinador Sobrenome}{D.Sc.}
-  \examiner{Prof.}{Nome do Segundo Examinador Sobrenome}{Ph.D.}
-  \examiner{Prof.}{Nome do Terceiro Examinador Sobrenome}{D.Sc.}
-  \examiner{Prof.}{Nome do Quarto Examinador Sobrenome}{Ph.D.}
-  \examiner{Prof.}{Nome do Quinto Examinador Sobrenome}{Ph.D.}
+  \examiner[UFRJ]{Prof.}{Nome do Primeiro Examinador Sobrenome}{D.Sc.}
+  \examiner[UFRJ]{Prof.}{Nome do Segundo Examinador Sobrenome}{Ph.D.}
+  \examiner[UFF]{Prof.}{Nome do Terceiro Examinador Sobrenome}{D.Sc.}
+  \examiner[UNICAMP]{Prof.}{Nome do Quarto Examinador Sobrenome}{Ph.D.}
+  \examiner[USP]{Prof.}{Nome do Quinto Examinador Sobrenome}{Ph.D.}
   \department{PESC}
   \date{06}{2026}
 
@@ -2279,6 +2279,12 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % blank where the ficha goes. The rascunhoficha option fills that blank with the
 % class's own LaTeX-composed ficha instead -- useful while writing, never valid
 % for deposit: the official ficha comes from the SiBI generator.
+% Annex D of the manual draws one signature rule per board member, with the
+% identification underneath. The COPPE folha de aprovacao has listed the names
+% compactly, without rules, for years. The compact list stays the default and
+% the rules are opt-in, so existing theses do not change shape overnight.
+\newif\if@coppeassin \@coppeassinfalse
+\DeclareOption{assinaturas}{\@coppeassintrue}
 \newif\if@copperascunho \@copperascunhofalse
 \DeclareOption{rascunhoficha}{\@copperascunhotrue}
 \newif\if@coppetwoside \@coppetwosidefalse
@@ -2635,11 +2641,14 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % Defines globally the title, name and academic degree of the advisors.
 %    \begin{macrocode}
 \newcount\@advisor\@advisor0
-\newcommand\advisor[4]{%
-  \global\@namedef{CoppeAdvisorTitle:\expandafter\the\@advisor}{#1}
-  \global\@namedef{CoppeAdvisorName:\expandafter\the\@advisor}{#2}
-  \global\@namedef{CoppeAdvisorSurname:\expandafter\the\@advisor}{#3}
-  \global\@namedef{CoppeAdvisorDegree:\expandafter\the\@advisor}{#4}
+% The optional first argument is the member's institution, required by
+% 3.1.2.1.3(e). Omitting it keeps every pre-4.1 call working unchanged.
+\newcommand\advisor[5][]{%
+  \global\@namedef{CoppeAdvisorInst:\expandafter\the\@advisor}{#1}
+  \global\@namedef{CoppeAdvisorTitle:\expandafter\the\@advisor}{#2}
+  \global\@namedef{CoppeAdvisorName:\expandafter\the\@advisor}{#3}
+  \global\@namedef{CoppeAdvisorSurname:\expandafter\the\@advisor}{#4}
+  \global\@namedef{CoppeAdvisorDegree:\expandafter\the\@advisor}{#5}
   \global\advance\@advisor by 1
   \ifnum\@advisor>1
     \renewcommand\local@advisorstring{Orientadores}
@@ -2654,8 +2663,17 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \begin{macro}{\examiner}
 %    \begin{macrocode}
 \newcount\@examiner\@examiner0
-\newcommand\examiner[3]{%
-  \global\@namedef{CoppeExaminer:\expandafter\the\@examiner}{#1\ #2}
+% Until v4.1 this stored only "#1 #2" and DISCARDED the third argument: the
+% titulacao every document passed was silently thrown away and never printed,
+% though 3.1.2.1.3(e) requires it. Each part is now kept separately, and the
+% optional first argument carries the institution.
+% CoppeExaminer: is retained with its old meaning for anything reading it.
+\newcommand\examiner[4][]{%
+  \global\@namedef{CoppeExaminerInst:\expandafter\the\@examiner}{#1}
+  \global\@namedef{CoppeExaminerTitle:\expandafter\the\@examiner}{#2}
+  \global\@namedef{CoppeExaminerName:\expandafter\the\@examiner}{#3}
+  \global\@namedef{CoppeExaminerDegree:\expandafter\the\@examiner}{#4}
+  \global\@namedef{CoppeExaminer:\expandafter\the\@examiner}{#2\ #3}
   \global\advance\@examiner by 1
 }
 %    \end{macrocode}
@@ -3037,6 +3055,26 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % concentracao, (d) the date of approval, (e) the examining board. Until v4.1
 % this page opened with the title in caps and the author under it, and set the
 % natureza as a wall of uppercase (\frontpage@maintext). Annex D shows neither.
+% One board member. \coppe@membroid is the identification line required by
+% 3.1.2.1.3(e) -- name, titulacao and institution -- with the last two omitted
+% when not given, so a document that never supplied them looks as it did before.
+\newcommand\coppe@membroid[4]{%
+  #1\ #2%
+  \ifthenelse{\equal{#3}{}}{}{, #3}%
+  \ifthenelse{\equal{#4}{}}{}{, #4}}
+\newcommand\coppe@membro[4]{%
+  \if@coppeassin
+    \vspace{9mm}%
+    \begin{center}
+      \rule{95mm}{0.4pt}\par
+      \nopagebreak{\footnotesize\coppe@membroid{#1}{#2}{#3}{#4}}\par
+    \end{center}%
+  \else
+    \noindent\hspace*{8mm}%
+    \begin{minipage}{\dimexpr\textwidth-8mm\relax}
+      \coppe@membroid{#1}{#2}{#3}{#4}
+    \end{minipage}\par\vspace{2mm}%
+  \fi}
 \newcommand\makefrontpage{%
   \begin{center}
     \nohyphens{\@authname\ \@authsurn}\par
@@ -3057,47 +3095,40 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \noindent\local@approvedonname:\enspace
   \ifthenelse{\equal{\coppe@dataaprov}{}}{\hrulefill}{\coppe@dataaprov}\par
   \vspace*{12mm}
-  \nohyphens{%
-  \noindent\begin{tabularx}{\textwidth}[b]{@{}l@{ }>{\raggedright\arraybackslash}X@{}}
-    \local@advisorstring: &
-    \count1=0
-    \toks@={}
-    \@whilenum \count1<\@advisor \do{%
-    \ifcase\count1 % same as \ifnum0=\count1
-      \toks@=\expandafter{\csname CoppeAdvisorName:\the\count1%
-        \expandafter\endcsname\expandafter\space%
-        \csname CoppeAdvisorSurname:\the\count1\endcsname\\}
-    \else
-      \toks@=\expandafter\expandafter\expandafter{%
-        \expandafter\the\expandafter\toks@%
-        \expandafter&\expandafter\space%
-        \csname CoppeAdvisorName:\the\count1\expandafter\endcsname%
-        \expandafter\space\csname CoppeAdvisorSurname:\the\count1\endcsname\\
-      }%
-    \fi
-    \advance\count1 by 1}
-    \the\toks@
-  \end{tabularx}\par
-  \vspace*{20mm}
-  \noindent\begin{tabularx}{\textwidth}[b]{@{}l@{ }>{\raggedright\arraybackslash}X@{}}
-    \local@approvedname: &
-    \count1=0
-    \toks@={}
-    \@whilenum \count1<\@examiner \do{%
-    \ifcase\count1 % same as \ifnum0=\count1
-      \toks@=\expandafter{\csname CoppeExaminer:\the\count1%
-        \expandafter\endcsname\expandafter\\}
-    \else
-      \toks@=\expandafter\expandafter\expandafter{%
-        \expandafter\the\expandafter\toks@%
-        \expandafter&\expandafter\space%
-        \csname CoppeExaminer:\the\count1\expandafter\endcsname%
-        \expandafter\space\\
-      }%
-    \fi
-    \advance\count1 by 1}
-    \the\toks@
-    \end{tabularx}}\par
+% (e) the examining board, with the ORIENTADOR FIRST, as president of the board
+% (3.1.2.1.3(e)). Until v4.1 the advisors were printed in a block of their own
+% above a second list headed "Aprovada por:", which split the board in two and
+% did not mark the advisor as its president. They are now one list.
+%
+% The list is assembled into \coppe@bancalist with \g@addto@macro instead of
+% being built inside a tabularx: each entry now carries four fields (treatment,
+% name, titulacao, institution) and the old \toks@/\expandafter accumulation
+% could not carry them without becoming unreadable. \protected@edef keeps
+% accents and other protected commands in the names intact.
+  \gdef\coppe@bancalist{}%
+  \count1=0
+  \@whilenum\count1<\@advisor\do{%
+    \protected@edef\coppe@tmp{\noexpand\coppe@membro
+      {\csname CoppeAdvisorTitle:\the\count1\endcsname}%
+      {\csname CoppeAdvisorName:\the\count1\endcsname\space
+       \csname CoppeAdvisorSurname:\the\count1\endcsname}%
+      {\csname CoppeAdvisorDegree:\the\count1\endcsname}%
+      {\csname CoppeAdvisorInst:\the\count1\endcsname}}%
+    \expandafter\g@addto@macro\expandafter\coppe@bancalist
+      \expandafter{\coppe@tmp}%
+    \advance\count1 by 1}%
+  \count1=0
+  \@whilenum\count1<\@examiner\do{%
+    \protected@edef\coppe@tmp{\noexpand\coppe@membro
+      {\csname CoppeExaminerTitle:\the\count1\endcsname}%
+      {\csname CoppeExaminerName:\the\count1\endcsname}%
+      {\csname CoppeExaminerDegree:\the\count1\endcsname}%
+      {\csname CoppeExaminerInst:\the\count1\endcsname}}%
+    \expandafter\g@addto@macro\expandafter\coppe@bancalist
+      \expandafter{\coppe@tmp}%
+    \advance\count1 by 1}%
+  \noindent\local@approvedname:\par
+  \nohyphens{\singlespacing\coppe@bancalist}\par
 % No city/date block at the foot: 3.1.2.1.3 ends the folha de aprovacao at the
 % examining board, and Annex D shows nothing below the signature lines. The date
 % that belongs on this page is the date of APPROVAL, printed above.

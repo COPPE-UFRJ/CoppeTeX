@@ -1,0 +1,69 @@
+%%
+%% test_assinaturas.tex -- regression test for the coppe class.
+%% Exercises the pre-textual pages introduced/reshaped for the SiBI manual,
+%% 9th revised edition (2026):
+%%
+%%   * class option `assinaturas' -- folha de aprovacao with one signature
+%%     rule per board member instead of the compact list (Annex D)
+%%   * \examiner and \advisor with the OPTIONAL institution argument, and the
+%%     titulacao argument that pre-4.1 discarded silently
+%%   * folha adicional with the Coleta CAPES fields (3.1.2.1.2, Annex H):
+%%     \tipoproducao, \projetovinculado, \nomeprojeto, \areaconcentracao,
+%%     \agenciafomento
+%%   * \linhapesquisa and \areaconcentracao on the folha de rosto
+%%   * \dataaprovacao on the folha de aprovacao
+%%
+%% Deliberately mixes calls WITH and WITHOUT the optional institution, so a
+%% regression in the optional-argument handling shows up here.
+%%
+%% Run via ../tests/run-tests.ps1. Compile under pdfLaTeX.
+%%
+
+\documentclass[dsc,assinaturas]{coppe}
+
+\usepackage[brazilian]{babel}
+
+\title{Título de Teste das Assinaturas}
+\foreigntitle{Signature Test Title}
+\author{Nome}{de Teste}
+
+% com instituição
+\advisor[UFRJ]{Prof.}{Primeiro}{Orientador}{D.Sc.}
+% sem instituição -- deve continuar valendo (compatibilidade pré-4.1)
+\advisor{Prof.}{Segundo}{Orientador}{Ph.D.}
+
+\examiner[UFRJ]{Prof.}{Primeiro Examinador}{D.Sc.}
+\examiner{Prof.}{Segundo Examinador}{Ph.D.}
+\examiner[UFF]{Prof.}{Terceiro Examinador}{D.Sc.}
+
+\department{PESC}
+\date{09}{2026}
+\dataaprovacao{15 de setembro de 2026}
+
+\keyword{Primeira}
+\keyword{Segunda}
+
+\areaconcentracao{Engenharia de Sistemas e Computação}
+\linhapesquisa{Engenharia de Dados e Conhecimento}
+\tipoproducao{bibliografica}
+\projetovinculado{sim}
+\nomeprojeto{Projeto de Teste}
+\agenciafomento{Conselho Nacional de Desenvolvimento Científico e
+                Tecnológico}{CNPq}
+
+\begin{document}
+  \maketitle
+  \frontmatter
+  \begin{abstract}
+    Resumo de teste.
+  \end{abstract}
+  \begin{foreignabstract}
+    Test abstract.
+  \end{foreignabstract}
+  \tableofcontents
+  \mainmatter
+  \chapter{Introdução}
+    Primeiro parágrafo, para conferir o recuo.
+  \section{Uma seção}
+    Texto da seção.
+\end{document}
