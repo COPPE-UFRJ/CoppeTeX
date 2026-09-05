@@ -40,12 +40,17 @@ implementation of reference.
 ### What it changes
 
 The class gains a three-slot multilingual model — *main* / *foreign* /
-optional *third* — with five built-in language options and a plug-in
+optional *third*. The languages a thesis may be WRITTEN in are the three
+allowed by art. 57 of CEPG Resolution 302/2024 (Portuguese, English,
+Spanish); French and Italian ship as demonstrations of the plug-in
+mechanism, not as permitted thesis languages. There are five built-in
+language options and a plug-in
 mechanism for any other Babel language:
 
 - **`brazilian`** (default) and **`english`** — strings shipped inside
   `coppe.cls`; no extra file needed; identical output to previous releases.
-- **`spanish`**, **`french`**, **`italian`** — language packs auto-loaded
+- **`spanish`** — language pack auto-loaded
+- **`french`**, **`italian`** — demonstration packs, auto-loaded
   from `coppe-lang-<lang>.def` (class strings) and `<lang>-coppe.lbx`
   (biblatex strings), both shipped alongside `coppe.cls` in `dist/`.
 - **Any other Babel language** — supply the same two files and pass the

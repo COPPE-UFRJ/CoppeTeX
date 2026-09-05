@@ -24,10 +24,12 @@ contribuições articuladas:
 
 1. **Modelo multilíngue na implementação de referência.** A classe
    `coppe` ganha um modelo de três posições fixas de idioma — *principal*,
-   *estrangeiro* e *terceiro opcional* —, com cinco opções de idioma
-   principal já embutidas (português, inglês, espanhol, francês e
-   italiano) e um mecanismo extensível para qualquer idioma adicional
-   suportado pelo Babel.
+   *estrangeiro* e *terceiro opcional*. Os idiomas de redação são os três
+   admitidos pelo art. 57 da Resolução CEPG n. 302/2024 — **português,
+   inglês e espanhol** —, e a classe traz ainda um mecanismo extensível
+   para qualquer idioma suportado pelo Babel, com pacotes de francês e
+   italiano distribuídos como demonstração desse mecanismo, sem que isso
+   os habilite para a redação de teses e dissertações.
 
 2. **Norma atualizada e enxuta.** Propomos substituir a norma atual,
    relativamente extensa, por uma versão **mínima** (cerca de duas páginas)
@@ -84,8 +86,8 @@ para apreciação:
 - **CONTRIBUTING.md** — instruções para colaboradores que quiserem
   contribuir com novos pacotes de idioma no futuro.
 - **TODO.md** — itens em aberto para a versão final, em particular a
-  revisão dos pacotes de espanhol, francês e italiano por falantes
-  nativos antes da liberação oficial.
+  revisão do pacote de espanhol por falantes nativos antes da liberação
+  oficial.
 
 Permanecemos à disposição para apresentar a proposta presencialmente ou
 acolher quaisquer sugestões de ajuste por parte desta Comissão.
