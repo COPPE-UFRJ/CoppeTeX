@@ -53,3 +53,4 @@ tests/*.pdf
 
 # metadados XMP gerados pela opcao pdfa
 *.xmpdata
+*.xmpi
