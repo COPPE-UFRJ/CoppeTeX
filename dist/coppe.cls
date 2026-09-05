@@ -59,7 +59,7 @@
 \let\coppe@date\filedate
 \edef\coppe@docmonth{\the\month}
 \edef\coppe@docyear{\the\year}
-\LoadClass[12pt,a4paper,twoside]{book}
+\LoadClass[12pt,a4paper,oneside]{book}
 \RequirePackage{hyphenat}
 \RequirePackage{lastpage}
 \RequirePackage{ifthen}
@@ -85,6 +85,7 @@
   \AtEndOfClass{\ClassWarningNoLine{coppe}{%
     Although slower, you should try compiling with LuaLaTeX}}
 \fi
+\RequirePackage{lmodern}
 \RequirePackage[T1]{fontenc}
 \RequirePackage{amsmath}
 \ifPDFTeX
@@ -108,8 +109,10 @@
           Do NOT load amssymb together with unicode-math -- it would clash\MessageBreak
           with the OpenType math font setup}}}}
 \fi
-\RequirePackage[a4paper,twoside,bindingoffset=1cm,headheight=15pt,%
-top=3cm,bottom=2cm,inner=2cm,outer=2cm]{geometry}
+\RequirePackage[a4paper,headheight=15pt,%
+top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
+\setlength\emergencystretch{3em}
+\RequirePackage{indentfirst}
 \RequirePackage{titlesec}
 \newif\if@coppeappendix \@coppeappendixfalse
 \titleformat{\chapter}[hang]
@@ -159,13 +162,22 @@ top=3cm,bottom=2cm,inner=2cm,outer=2cm]{geometry}
   {\normalfont\Large\bfseries\filcenter}{}{0pt}{\MakeUppercase}
 \titlespacing*{name=\chapter,numberless}{0pt}{10pt}{1.5\baselineskip}
 \titleformat{\section}
-  {\normalfont\large\bfseries}{\thesection}{1ex}{\MakeUppercase}
+  {\normalfont\large}{\thesection}{1ex}{\MakeUppercase}
 \titleformat{\subsection}
   {\normalfont\bfseries}{\thesubsection}{1ex}{}
 \titleformat{\subsubsection}
   {\normalfont\bfseries\itshape}{\thesubsubsection}{1ex}{}
+\titleformat{\paragraph}[hang]
+  {\normalfont\itshape}{\theparagraph}{1ex}{}
+\titlespacing*{\paragraph}{0pt}{2.5ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+\setcounter{secnumdepth}{4}
+\setcounter{tocdepth}{4}
+\let\coppe@orig@lchapter\l@chapter
+\renewcommand\l@chapter[2]{\coppe@orig@lchapter{\MakeUppercase{#1}}{#2}}
+\let\coppe@orig@lsection\l@section
+\renewcommand\l@section[2]{\coppe@orig@lsection{\MakeUppercase{#1}}{#2}}
 \RequirePackage{caption}
-\captionsetup{font=footnotesize,labelsep=endash}
+\captionsetup{font=footnotesize,labelsep=endash,justification=centering}
 \RequirePackage{subcaption}
 \RequirePackage{float}
 \floatstyle{plaintop}
@@ -271,7 +283,20 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \DeclareOption{numeraisromanos}{\@copperomantrue}
 \newif\if@coppedoublespace\@coppedoublespacefalse
 \DeclareOption{doublespacing}{\@coppedoublespacetrue}
+\newif\if@coppepdfa \@coppepdfafalse
+\DeclareOption{pdfa}{\@coppepdfatrue}
+\newif\if@coppeassin \@coppeassinfalse
+\DeclareOption{assinaturas}{\@coppeassintrue}
+\newif\if@copperascunho \@copperascunhofalse
+\DeclareOption{rascunhoficha}{\@copperascunhotrue}
+\newif\if@coppetwoside \@coppetwosidefalse
+\DeclareOption{twoside}{\@coppetwosidetrue}
+\DeclareOption{oneside}{\@coppetwosidefalse}
 \ProcessOptions\relax
+\if@coppetwoside
+  \@twosidetrue
+  \geometry{twoside}%
+\fi
 \def\coppe@@brazilianstr{brazilian}
 \def\coppe@@englishstr{english}
 \edef\coppe@babelopts{\coppe@foreignlang,\coppe@mainlang}
@@ -328,10 +353,24 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \copperdefstring{english}  {advisors}     {Advisors}
 \copperdefstring{brazilian}{dept}         {Programa}
 \copperdefstring{english}  {dept}         {Department}
-\copperdefstring{brazilian}{approvedmale}  {Examinado por}
-\copperdefstring{brazilian}{approvedfemale}{Examinada por}
-\copperdefstring{english}  {approvedmale}  {Examined by}
-\copperdefstring{english}  {approvedfemale}{Examined by}
+\copperdefstring{brazilian}{approvedmale}  {Aprovado por}
+\copperdefstring{brazilian}{approvedfemale}{Aprovada por}
+\copperdefstring{brazilian}{approvedonmale}  {Aprovado em}
+\copperdefstring{brazilian}{approvedonfemale}{Aprovada em}
+\copperdefstring{brazilian}{keywordsname} {Palavras-chave}
+\copperdefstring{brazilian}{volumename} {Volume}
+\copperdefstring{brazilian}{coadvisor}  {Coorientador}
+\copperdefstring{brazilian}{coadvisors} {Coorientadores}
+\copperdefstring{brazilian}{ofname}     {de}
+\copperdefstring{english}  {approvedmale}  {Approved by}
+\copperdefstring{english}  {approvedfemale}{Approved by}
+\copperdefstring{english}  {approvedonmale}  {Approved on}
+\copperdefstring{english}  {approvedonfemale}{Approved on}
+\copperdefstring{english}  {keywordsname} {Keywords}
+\copperdefstring{english}  {volumename} {Volume}
+\copperdefstring{english}  {coadvisor}  {Co-advisor}
+\copperdefstring{english}  {coadvisors} {Co-advisors}
+\copperdefstring{english}  {ofname}     {of}
 \copperdefstring{brazilian}{universityname}{Universidade Federal do Rio de Janeiro}
 \copperdefstring{english}  {universityname}{Universidade Federal do Rio de Janeiro}
 \copperdefstring{brazilian}{cityname}     {Rio de Janeiro}
@@ -456,9 +495,16 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \else
   \expandafter\RequirePackage\expandafter[\coppe@@algolang,linesnumbered,lined,algochapter,ruled]{algorithm2e}
 \fi
+\SetAlgoCaptionSeparator{\ \textendash}
+\SetAlCapFnt{\footnotesize}
+\SetAlCapNameFnt{\footnotesize}
+\SetAlCapSty{textnormal}
+\SetAlCapNameSty{textnormal}
 \SetKwFor{Para}{para}{faça}{fim do para}
 \SetKwFor{Enquanto}{enquanto}{faça}{fim do enquanto}
+\newcommand\coppe@deptcode{}
 \newcommand\department[1]{%
+  \gdef\coppe@deptcode{#1}%
   \ifthenelse{\equal{#1}{PEB}}
     {\global\def\local@deptname{Engenharia Biom{\' e}dica}
      \global\def\foreign@deptname{Biomedical Engineering}}{}
@@ -508,12 +554,49 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \expandafter\gdef\csname coppe@title@english\endcsname{#1}%
 }
 \newcommand\coppe@selecttitle{\@nameuse{coppe@title@\coppe@mainlang}}
+\newcommand\subtitle[1]{%
+  \expandafter\gdef\csname coppe@subtitle@brazilian\endcsname{#1}}
+\newcommand\foreignsubtitle[1]{%
+  \expandafter\gdef\csname coppe@subtitle@english\endcsname{#1}}
+\newcommand\subtitlein[2]{%
+  \expandafter\gdef\csname coppe@subtitle@#1\endcsname{#2}}
+\newcommand\coppe@selectsubtitle{\@nameuse{coppe@subtitle@\coppe@mainlang}}
+\newcommand\coppe@titleblock{%
+  \MakeUppercase{\coppe@selecttitle}%
+  \@ifundefined{coppe@subtitle@\coppe@mainlang}{}{: \coppe@selectsubtitle}}
+\newcount\@coadvisor\@coadvisor0
+\newcommand\coadvisor[5][]{%
+  \global\@namedef{CoppeCoadvisorInst:\expandafter\the\@coadvisor}{#1}
+  \global\@namedef{CoppeCoadvisorTitle:\expandafter\the\@coadvisor}{#2}
+  \global\@namedef{CoppeCoadvisorName:\expandafter\the\@coadvisor}{#3}
+  \global\@namedef{CoppeCoadvisorSurname:\expandafter\the\@coadvisor}{#4}
+  \global\@namedef{CoppeCoadvisorDegree:\expandafter\the\@coadvisor}{#5}
+  \global\advance\@coadvisor by 1
+}
+\newcommand\local@coadvisorstring{%
+  \ifnum\@coadvisor>1
+    \coppemainstring{coadvisors}%
+  \else
+    \coppemainstring{coadvisor}%
+  \fi}
+\newcommand\coppe@nvolumes{1}
+\newcommand\coppe@thisvolume{1}
+\newcommand\volumes[1]{\gdef\coppe@nvolumes{#1}}
+\newcommand\volume[1]{\gdef\coppe@thisvolume{#1}}
+\newcommand\coppe@volumeline{%
+  \ifnum\coppe@nvolumes>1
+    \par\vspace*{4mm}%
+    \coppemainstring{volumename}\space\coppe@thisvolume\space
+    \coppemainstring{ofname}\space\coppe@nvolumes
+    \par
+  \fi}
 \newcount\@advisor\@advisor0
-\newcommand\advisor[4]{%
-  \global\@namedef{CoppeAdvisorTitle:\expandafter\the\@advisor}{#1}
-  \global\@namedef{CoppeAdvisorName:\expandafter\the\@advisor}{#2}
-  \global\@namedef{CoppeAdvisorSurname:\expandafter\the\@advisor}{#3}
-  \global\@namedef{CoppeAdvisorDegree:\expandafter\the\@advisor}{#4}
+\newcommand\advisor[5][]{%
+  \global\@namedef{CoppeAdvisorInst:\expandafter\the\@advisor}{#1}
+  \global\@namedef{CoppeAdvisorTitle:\expandafter\the\@advisor}{#2}
+  \global\@namedef{CoppeAdvisorName:\expandafter\the\@advisor}{#3}
+  \global\@namedef{CoppeAdvisorSurname:\expandafter\the\@advisor}{#4}
+  \global\@namedef{CoppeAdvisorDegree:\expandafter\the\@advisor}{#5}
   \global\advance\@advisor by 1
   \ifnum\@advisor>1
     \renewcommand\local@advisorstring{Orientadores}
@@ -521,8 +604,12 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \fi
 }
 \newcount\@examiner\@examiner0
-\newcommand\examiner[3]{%
-  \global\@namedef{CoppeExaminer:\expandafter\the\@examiner}{#1\ #2}
+\newcommand\examiner[4][]{%
+  \global\@namedef{CoppeExaminerInst:\expandafter\the\@examiner}{#1}
+  \global\@namedef{CoppeExaminerTitle:\expandafter\the\@examiner}{#2}
+  \global\@namedef{CoppeExaminerName:\expandafter\the\@examiner}{#3}
+  \global\@namedef{CoppeExaminerDegree:\expandafter\the\@examiner}{#4}
+  \global\@namedef{CoppeExaminer:\expandafter\the\@examiner}{#2\ #3}
   \global\advance\@examiner by 1
 }
 \renewcommand\author[2]{%
@@ -543,6 +630,44 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \global\@namedef{CoppeKeyword:\expandafter\the\c@keywords}{#1}
   \global\addtocounter{keywords}{1}
 }
+\newcounter{foreignkeywords}
+\newcommand\foreignkeyword[1]{%
+  \global\@namedef{CoppeForeignKeyword:\expandafter\the\c@foreignkeywords}{#1}
+  \global\addtocounter{foreignkeywords}{1}
+}
+\newcounter{braziliankeywords}
+\newcommand\braziliankeyword[1]{%
+  \global\@namedef{CoppeBrazilianKeyword:\expandafter\the\c@braziliankeywords}{#1}
+  \global\addtocounter{braziliankeywords}{1}
+}
+\newcommand\coppe@printkeywords[3]{%
+  \ifnum#3>0
+    \par\vspace*{7mm}%
+    \noindent{\singlespacing\textbf{#1:}\enspace
+    \count1=0
+    \@whilenum\count1<#3\do{%
+      \ifnum\count1>0 ;\space\fi
+      \csname #2\the\count1\endcsname
+      \advance\count1 by 1}%
+    .\par}%
+  \fi}
+\newcommand\coppe@areaconc{}
+\newcommand\areaconcentracao[1]{\gdef\coppe@areaconc{#1}}
+\newcommand\coppe@dataaprov{}
+\newcommand\dataaprovacao[1]{\gdef\coppe@dataaprov{#1}}
+\newcommand\coppe@linhapesq{}
+\newcommand\linhapesquisa[1]{\gdef\coppe@linhapesq{#1}}
+\newcommand\coppe@tipoproducao{}
+\newcommand\tipoproducao[1]{\gdef\coppe@tipoproducao{#1}}
+\newcommand\coppe@projetovinc{}
+\newcommand\projetovinculado[1]{\gdef\coppe@projetovinc{#1}}
+\newcommand\coppe@nomeprojeto{}
+\newcommand\nomeprojeto[1]{\gdef\coppe@nomeprojeto{#1}}
+\newcounter{coppeagencias}
+\newcommand\agenciafomento[2]{%
+  \global\@namedef{CoppeAgencia:\expandafter\the\c@coppeagencias}{#1}%
+  \global\@namedef{CoppeAgenciaSigla:\expandafter\the\c@coppeagencias}{#2}%
+  \global\addtocounter{coppeagencias}{1}}
 \newcommand\freeconfig[6]{%
 \providecommand\@degree{}
 \renewcommand\@degree{#1}
@@ -560,12 +685,15 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \renewcommand\frontmatter{%
   \cleardoublepage
   \@mainmatterfalse
-  \pagenumbering{roman}
+  \if@copperoman
+    \ClassWarningNoLine{coppe}{Option `numeraisromanos' prints roman numerals
+      on the pre-textual folhas and restarts the arabic count at 1 in the
+      textual part. Section 2.7 of the SiBI manual (9th rev. ed., 2026) has
+      those folhas counted but not numbered, and the arabic numbering
+      continuing the count. Drop the option to comply}%
+    \pagenumbering{roman}%
+  \fi
   \thispagestyle{empty}
-  % folha de rosto = counted page 1 (ABNT: the capa is not counted). An odd
-  % start keeps the page-counter parity aligned with the physical (recto) side,
-  % so \cleardoublepage lands every pre-textual element on an odd (front) page.
-  \setcounter{page}{1}
   \makefrontpage
   \clearpage
   \if@copperoman
@@ -584,7 +712,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \fancypagestyle{plain}{\fancyhf{}\fancyhead[RO,LE]{\thepage}%
     \renewcommand{\headrulewidth}{0pt}}%
   \pagestyle{coppe}%
-  \pagenumbering{arabic}}
+  \if@copperoman\pagenumbering{arabic}\fi}
 \renewcommand\backmatter{%
   \if@openright
     \cleardoublepage
@@ -642,7 +770,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \vspace{\stretch{2}}
   \textbf{\MakeUppercase{\textbf{\@authname\ \@authsurn}}}\par
   \vspace{\stretch{2}}
-  \nohyphens{\MakeUppercase{\coppe@selecttitle}}\par
+  \nohyphens{\coppe@titleblock}\par
+  \coppe@volumeline
   \vspace{\stretch{3}}
   \MakeUppercase{\local@cityname}\par
   \coppe@docyear
@@ -652,6 +781,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \pagenumbering{alph}
   \ltx@ifpackageloaded{hyperref}{\coppe@hypersetup}{}%
   \makecover
+  \pagenumbering{arabic}
   \begin{titlepage}
   \begin{flushleft}
   \vspace*{1.5mm}
@@ -665,16 +795,22 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \begin{center}
   \nohyphens{\@authname\ \@authsurn}\par
   \vspace*{3cm}
-  \nohyphens{\MakeUppercase{\coppe@selecttitle}}\par
+  \nohyphens{\coppe@titleblock}\par
+  \coppe@volumeline
   \end{center}
   \vspace*{2.1cm}
   \begin{flushright}
-  \begin{minipage}{8.45cm}
-  \frontcover@maintext
+  \begin{minipage}{0.5\textwidth}
+  \singlespacing\frontcover@maintext
   \end{minipage}\par
-  \vspace*{7.5mm}
+  \end{flushright}
+  \vspace*{12mm}
+  {\singlespacing
+  \ifthenelse{\equal{\coppe@linhapesq}{}}{}{%
+    \noindent Linha de pesquisa: \coppe@linhapesq\par
+    \vspace*{5mm}}%
   \nohyphens{%
-  \begin{tabularx}{8.45cm}[b]{@{}l@{ }>{\raggedright\arraybackslash}X@{}}
+  \noindent\begin{tabularx}{\textwidth}[b]{@{}l@{ }>{\raggedright\arraybackslash}X@{}}
     \local@advisorstring: &
     \count1=0
     \toks@={}
@@ -693,72 +829,117 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \fi
     \advance\count1 by 1}
     \the\toks@
-  \end{tabularx}}\par
-  \end{flushright}
+  \end{tabularx}}%
+  \ifnum\@coadvisor>0
+    \par\vspace*{2mm}%
+    \nohyphens{%
+    \noindent\begin{tabularx}{\textwidth}[b]{@{}l@{ }>{\raggedright\arraybackslash}X@{}}
+      \local@coadvisorstring: &
+      \count1=0
+      \toks@={}
+      \@whilenum \count1<\@coadvisor \do{%
+      \ifcase\count1
+        \toks@=\expandafter{\csname CoppeCoadvisorName:\the\count1%
+          \expandafter\endcsname\expandafter\space%
+          \csname CoppeCoadvisorSurname:\the\count1\endcsname\\}
+      \else
+        \toks@=\expandafter\expandafter\expandafter{%
+          \expandafter\the\expandafter\toks@%
+          \expandafter&\expandafter\space%
+          \csname CoppeCoadvisorName:\the\count1\expandafter\endcsname%
+          \expandafter\space\csname CoppeCoadvisorSurname:\the\count1\endcsname\\
+        }%
+      \fi
+      \advance\count1 by 1}
+      \the\toks@
+    \end{tabularx}}%
+  \fi
+  \par}
   \vspace*{\fill}
   \begin{center}
   \local@cityname\par
-  \local@monthname\ de \coppe@docyear
+  \coppe@docyear
   \end{center}
   \end{titlepage}
   % Ficha catalográfica on the verso of the folha de rosto (NBR 14724, R57):
   % the title page is a recto, so this lands on the immediately following verso,
   % ahead of the approval sheet produced by \frontmatter.
-  \ifthenelse{\boolean{maledoc}}{}{\thispagestyle{empty}\makecatalog}%
+  \setcounter{page}{2}%
+  \ifthenelse{\boolean{maledoc}}{}{%
+    \makefolhaadicional\clearpage\addtocounter{page}{-1}}%
   \global\let\maketitle\relax%
   \global\let\and\relax}
+\newcommand\coppe@membroid[4]{%
+  #1\ #2%
+  \ifthenelse{\equal{#3}{}}{}{, #3}%
+  \ifthenelse{\equal{#4}{}}{}{, #4}}
+\newcommand\coppe@membro[4]{%
+  \if@coppeassin
+    \vspace{9mm}%
+    \begin{center}
+      \rule{95mm}{0.4pt}\par
+      \nopagebreak{\footnotesize\coppe@membroid{#1}{#2}{#3}{#4}}\par
+    \end{center}%
+  \else
+    \noindent\hspace*{8mm}%
+    \begin{minipage}{\dimexpr\textwidth-8mm\relax}
+      \coppe@membroid{#1}{#2}{#3}{#4}
+    \end{minipage}\par\vspace{2mm}%
+  \fi}
 \newcommand\makefrontpage{%
   \begin{center}
-    \sloppy\nohyphens{\MakeUppercase{\coppe@selecttitle}}\par
+    \nohyphens{\@authname\ \@authsurn}\par
     \vspace*{7mm}
-    {\@authname\ \@authsurn}\par
+    \sloppy\nohyphens{\coppe@selecttitle
+      \@ifundefined{coppe@subtitle@\coppe@mainlang}{}{:
+        \coppe@selectsubtitle}}\par
   \end{center}\par
-  \vspace*{4mm}
-  \frontpage@maintext
-  \vspace*{16mm}
-  \nohyphens{%
-  \noindent\begin{tabularx}{\textwidth}[b]{@{}l@{ }>{\raggedright\arraybackslash}X@{}}
-    \local@advisorstring: &
-    \count1=0
-    \toks@={}
-    \@whilenum \count1<\@advisor \do{%
-    \ifcase\count1 % same as \ifnum0=\count1
-      \toks@=\expandafter{\csname CoppeAdvisorName:\the\count1%
-        \expandafter\endcsname\expandafter\space%
-        \csname CoppeAdvisorSurname:\the\count1\endcsname\\}
-    \else
-      \toks@=\expandafter\expandafter\expandafter{%
-        \expandafter\the\expandafter\toks@%
-        \expandafter&\expandafter\space%
-        \csname CoppeAdvisorName:\the\count1\expandafter\endcsname%
-        \expandafter\space\csname CoppeAdvisorSurname:\the\count1\endcsname\\
-      }%
-    \fi
-    \advance\count1 by 1}
-    \the\toks@
-  \end{tabularx}\par
-  \vspace*{20mm}
-  \noindent\begin{tabularx}{\textwidth}[b]{@{}l@{ }>{\raggedright\arraybackslash}X@{}}
-    Aprovada por: &
-    \count1=0
-    \toks@={}
-    \@whilenum \count1<\@examiner \do{%
-    \ifcase\count1 % same as \ifnum0=\count1
-      \toks@=\expandafter{\csname CoppeExaminer:\the\count1%
-        \expandafter\endcsname\expandafter\\}
-    \else
-      \toks@=\expandafter\expandafter\expandafter{%
-        \expandafter\the\expandafter\toks@%
-        \expandafter&\expandafter\space%
-        \csname CoppeExaminer:\the\count1\expandafter\endcsname%
-        \expandafter\space\\
-      }%
-    \fi
-    \advance\count1 by 1}
-    \the\toks@
-    \end{tabularx}}\par
-  \vspace*{\fill}
-  \frontpage@bottomtext}
+  \vspace*{8mm}
+  \begin{flushright}
+  \begin{minipage}{0.5\textwidth}
+  \singlespacing\frontcover@maintext
+  \end{minipage}
+  \end{flushright}
+  \vspace*{12mm}
+  \noindent\local@approvedonname:\enspace
+  \ifthenelse{\equal{\coppe@dataaprov}{}}{\hrulefill}{\coppe@dataaprov}\par
+  \vspace*{12mm}
+  \gdef\coppe@bancalist{}%
+  \count1=0
+  \@whilenum\count1<\@advisor\do{%
+    \protected@edef\coppe@tmp{\noexpand\coppe@membro
+      {\csname CoppeAdvisorTitle:\the\count1\endcsname}%
+      {\csname CoppeAdvisorName:\the\count1\endcsname\space
+       \csname CoppeAdvisorSurname:\the\count1\endcsname}%
+      {\csname CoppeAdvisorDegree:\the\count1\endcsname}%
+      {\csname CoppeAdvisorInst:\the\count1\endcsname}}%
+    \expandafter\g@addto@macro\expandafter\coppe@bancalist
+      \expandafter{\coppe@tmp}%
+    \advance\count1 by 1}%
+  \count1=0
+  \@whilenum\count1<\@coadvisor\do{%
+    \protected@edef\coppe@tmp{\noexpand\coppe@membro
+      {\csname CoppeCoadvisorTitle:\the\count1\endcsname}%
+      {\csname CoppeCoadvisorName:\the\count1\endcsname\space
+       \csname CoppeCoadvisorSurname:\the\count1\endcsname}%
+      {\csname CoppeCoadvisorDegree:\the\count1\endcsname}%
+      {\csname CoppeCoadvisorInst:\the\count1\endcsname}}%
+    \expandafter\g@addto@macro\expandafter\coppe@bancalist
+      \expandafter{\coppe@tmp}%
+    \advance\count1 by 1}%
+  \count1=0
+  \@whilenum\count1<\@examiner\do{%
+    \protected@edef\coppe@tmp{\noexpand\coppe@membro
+      {\csname CoppeExaminerTitle:\the\count1\endcsname}%
+      {\csname CoppeExaminerName:\the\count1\endcsname}%
+      {\csname CoppeExaminerDegree:\the\count1\endcsname}%
+      {\csname CoppeExaminerInst:\the\count1\endcsname}}%
+    \expandafter\g@addto@macro\expandafter\coppe@bancalist
+      \expandafter{\coppe@tmp}%
+    \advance\count1 by 1}%
+  \noindent\local@approvedname:\par
+  \nohyphens{\singlespacing\coppe@bancalist}\par
+  \vspace*{\fill}}
 \newcommand\coppe@hypersetup{%
 \begingroup
   % changes to \toks@ and \count@ are kept local;
@@ -855,6 +1036,82 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \end{minipage}}
   \end{center}
   \vspace*{\fill}}
+\newcommand\coppe@fichafile{}
+\newcommand\coppe@fichapage{1}
+\newcommand\fichacatalografica[2][1]{%
+  \gdef\coppe@fichapage{#1}\gdef\coppe@fichafile{#2}}
+\newcommand\coppe@marcatipo[1]{%
+  \ifthenelse{\equal{\coppe@tipoproducao}{#1}}{$\times$}{\phantom{$\times$}}}
+\newcommand\coppe@marcavinc[1]{%
+  \ifthenelse{\equal{\coppe@projetovinc}{#1}}{$\times$}{\phantom{$\times$}}}
+\newcommand\coppe@campo[1]{%
+  \ifthenelse{\equal{#1}{}}{\hrulefill}{#1\enspace\hrulefill}}
+\newcommand\coppe@checatipo{%
+  \ifthenelse{\equal{\coppe@tipoproducao}{}}{}{%
+    \ifthenelse{\equal{\coppe@tipoproducao}{bibliografica}\OR
+                \equal{\coppe@tipoproducao}{artistica}\OR
+                \equal{\coppe@tipoproducao}{tecnologica}\OR
+                \equal{\coppe@tipoproducao}{tecnica}}{}{%
+      \ClassWarning{coppe}{Unknown \string\tipoproducao{} value
+        `\coppe@tipoproducao'. Annex H of the SiBI manual allows only
+        bibliografica, artistica, tecnologica or tecnica; no box will be
+        ticked}}}}
+\newcommand\makefolhaadicional{%
+  \clearpage
+  \thispagestyle{empty}%
+  \coppe@checatipo
+  {\singlespacing
+  \begin{center}
+    {\large\bfseries Informa\c c\~oes Coleta CAPES}
+  \end{center}
+  \vspace{7mm}
+  \noindent Tipo de produ\c c\~ao intelectual:\par
+  \vspace{1mm}
+  \hspace*{10mm}(\coppe@marcatipo{bibliografica})\enspace Bibliogr\'afica\par
+  \hspace*{10mm}(\coppe@marcatipo{artistica})\enspace Art\'{\i}stica\par
+  \hspace*{10mm}(\coppe@marcatipo{tecnologica})\enspace Tecnol\'ogica\par
+  \hspace*{10mm}(\coppe@marcatipo{tecnica})\enspace T\'ecnica\par
+  \vspace{5mm}
+  \noindent Projeto de pesquisa vinculado \`a produ\c c\~ao intelectual?\par
+  \vspace{1mm}
+  \hspace*{10mm}(\coppe@marcavinc{sim})\enspace Sim\par
+  \hspace*{10mm}(\coppe@marcavinc{nao})\enspace N\~ao\par
+  \vspace{5mm}
+  \noindent Nome do projeto de pesquisa:\par
+  \vspace{1mm}
+  \noindent\coppe@campo{\coppe@nomeprojeto}\par
+  \vspace{5mm}
+  \noindent \'Area de concentra\c c\~ao da produ\c c\~ao intelectual:\par
+  \vspace{1mm}
+  \noindent\coppe@campo{\coppe@areaconc}\par
+  \vspace{5mm}
+  \noindent Ag\^encia(s) de fomento financiadora(s) da produ\c c\~ao
+  intelectual:\par
+  \vspace{1mm}
+  \ifthenelse{\value{coppeagencias}=0}{%
+    \noindent\hrulefill\par}{%
+    \count1=0
+    \@whilenum\count1<\value{coppeagencias}\do{%
+      \noindent\hspace*{10mm}\csname CoppeAgencia:\the\count1\endcsname
+      \ (\csname CoppeAgenciaSigla:\the\count1\endcsname)\par
+      \advance\count1 by 1}}%
+  \vspace{9mm}
+  \begin{center}
+    {\large\bfseries Ficha catalogr\'afica}\par
+    \vspace{4mm}
+    \ifthenelse{\equal{\coppe@fichafile}{}}{%
+      \if@copperascunho
+        \makecatalog
+      \else
+        \framebox[125mm][c]{\parbox[c][62mm][c]{115mm}{\centering\footnotesize
+          Espa\c co reservado \`a ficha catalogr\'afica.\\[1ex]
+          Gere-a em \texttt{fichacatalografica.sibi.ufrj.br} e inclua o
+          arquivo com \texttt{\string\fichacatalografica\{arquivo.pdf\}},
+          ou solicite-a \`a biblioteca do seu Programa.}}%
+      \fi}{%
+      \includegraphics[page=\coppe@fichapage,width=125mm]{\coppe@fichafile}}%
+  \end{center}
+  \par}}
 \newcommand\dedication[1]{
   \gdef\@dedic{#1}
     \cleardoublepage
@@ -901,7 +1158,10 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \end{tabularx}\par
   \vspace*{2mm}
   \noindent\local@deptstring: \local@deptname\par
-  \vspace*{7mm}}{\vspace*{\fill}}
+  \vspace*{7mm}}{%
+  \coppe@printkeywords{\coppemainstring{keywordsname}}%
+    {CoppeKeyword:}{\value{keywords}}%
+  \vspace*{\fill}}
 \newenvironment{foreignabstract}{%
   \cleardoublepage
   \thispagestyle{plain}
@@ -940,6 +1200,13 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \vspace*{2mm}
   \noindent\foreign@deptstring: \foreign@deptname\par
   \vspace*{7mm}}{%
+  \ifnum\value{foreignkeywords}>0
+    \coppe@printkeywords{\coppeforeignstring{keywordsname}}%
+      {CoppeForeignKeyword:}{\value{foreignkeywords}}%
+  \else
+    \coppe@printkeywords{\coppeforeignstring{keywordsname}}%
+      {CoppeKeyword:}{\value{keywords}}%
+  \fi
   \end{otherlanguage}
   \vspace*{\fill}
   \global\let\@author\@empty
@@ -989,6 +1256,13 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \vspace*{2mm}
   \noindent\local@deptstring: \local@deptname\par
   \vspace*{7mm}}{%
+  \ifnum\value{braziliankeywords}>0
+    \coppe@printkeywords{\coppestring{keywordsname}}%
+      {CoppeBrazilianKeyword:}{\value{braziliankeywords}}%
+  \else
+    \coppe@printkeywords{\coppestring{keywordsname}}%
+      {CoppeKeyword:}{\value{keywords}}%
+  \fi
   \end{otherlanguage}
   \vspace*{\fill}}
 \renewcommand\listoffigures{%
@@ -1202,9 +1476,14 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \newcommand\local@advisorstring{Orientador}
 \newcommand\foreign@advisorstring{Advisor}
 \ifthenelse{\boolean{maledoc}}{%
-  \newcommand\local@approvedname{Examinado por}%
+  \newcommand\local@approvedname{\coppemainstring{approvedmale}}%
 }{%
-  \newcommand\local@approvedname{Examinada por}%
+  \newcommand\local@approvedname{\coppemainstring{approvedfemale}}%
+}
+\ifthenelse{\boolean{maledoc}}{%
+  \newcommand\local@approvedonname{\coppemainstring{approvedonmale}}%
+}{%
+  \newcommand\local@approvedonname{\coppemainstring{approvedonfemale}}%
 }
 \newcommand\local@universityname{Universidade Federal do Rio de Janeiro}
 \newcommand\local@deptstring{Programa}
@@ -1218,7 +1497,10 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   ao Programa de P{\' o}s-gradua{\c c}{\~ a}o em \local@deptname,
   COPPE, da \local@universityname, como parte dos requisitos
   necess{\' a}rios {\` a} obten{\c c}{\~ a}o do t{\' i}tulo de
-  \local@degname\ em \local@deptname.}
+  \local@degname\ em \local@deptname.}%
+  \ifthenelse{\equal{\coppe@areaconc}{}}{}{%
+    \par\vspace{1ex}%
+    \sloppy\nohyphens{\'Area de concentra{\c c}{\~ a}o: \coppe@areaconc.}}%
 }
 \newcommand\frontpage@maintext{
   \noindent {\MakeUppercase\local@doctype}
@@ -1250,6 +1532,33 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 }
 \RequirePackage{setspace}
 \if@coppedoublespace\doublespacing\else\onehalfspacing\fi
+\if@coppepdfa
+  \RequirePackage[a-2b]{pdfx}
+  \newwrite\coppe@xmpout
+  \AtBeginDocument{%
+    \gdef\coppe@xmpkeys{}%
+    \count@=0
+    \@whilenum\count@<\value{keywords}\do{%
+      \ifnum\count@>0
+        \g@addto@macro\coppe@xmpkeys{\string\sep\space}%
+      \fi
+      \protected@edef\coppe@tmp{\csname CoppeKeyword:\the\count@\endcsname}%
+      \expandafter\g@addto@macro\expandafter\coppe@xmpkeys
+        \expandafter{\coppe@tmp}%
+      \advance\count@ by 1}%
+    \immediate\openout\coppe@xmpout=\jobname.xmpdata
+    \begingroup
+      \let\protect\string
+      \immediate\write\coppe@xmpout{\string\Title{\coppe@selecttitle}}%
+      \immediate\write\coppe@xmpout{\string\Author{\@authname\space\@authsurn}}%
+      \immediate\write\coppe@xmpout{\string\Keywords{\coppe@xmpkeys}}%
+      \immediate\write\coppe@xmpout{\string\Subject{\local@doctype\space de
+        \@degreename. Programa \coppe@deptcode, COPPE/UFRJ}}%
+      \immediate\write\coppe@xmpout{\string\Publisher{\local@universityname}}%
+      \immediate\write\coppe@xmpout{\string\Date{\coppe@docyear}}%
+    \endgroup
+    \immediate\closeout\coppe@xmpout}%
+\fi
 \RequirePackage{hyperref}
 \if@coppenumeric
   \RequirePackage[backend=biber,datamodel=coppe,%
