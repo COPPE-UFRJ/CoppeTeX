@@ -350,9 +350,9 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % the work, as the COPPE norm requires of institutional identity.
 %
 % \DescribeMacro{\areaconcentracao}
-% The area of concentration, e.g. |\areaconcentracao{Engenharia de Sistemas
-% e Computacao}|. It appears on the folha de rosto, on the folha de
-% aprovacao and on the folha adicional.
+% The area of concentration, e.g.
+% |\areaconcentracao{Engenharia de Sistemas e Computacao}|. It appears on the
+% folha de rosto, on the folha de aprovacao and on the folha adicional.
 %
 % \DescribeMacro{\linhapesquisa}
 % The research line, required by the CAPES model of the folha de rosto.
@@ -2943,7 +2943,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \begin{macro}{\agenciafomento}
 % Data for the folha adicional (Coleta CAPES) and for the natureza block of
 % the folha de rosto and folha de aprovacao. Every one of them defaults to
-% empty; \makefolhaadicional prints an empty rule where a value is missing,
+% empty; |\makefolhaadicional| prints an empty rule where a value is missing,
 % so the programme can complete the sheet by hand if need be.
 %    \begin{macrocode}
 \newcommand\coppe@areaconc{}
@@ -3498,11 +3498,11 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % The folha adicional required from August 2026 (SiBI manual, 9th rev. ed.,
 % 3.1.2.1.2 and Annex H): the CAPES collection fields plus the ficha
 % catalografica, sitting immediately after the folha de rosto and counted by
-% nobody. \fichacatalografica takes the PDF produced by the SiBI generator at
+% nobody. |\fichacatalografica| takes the PDF produced by the SiBI generator at
 % <http://fichacatalografica.sibi.ufrj.br/>, optionally with a page number.
 %
 % The sheet is institutional, so it is always in Portuguese whatever the main
-% language of the work -- and deliberately without \selectlanguage, since the
+% language of the work -- and deliberately without |\selectlanguage|, since the
 % brazilian babel language need not be loaded in, say, a Spanish-main document.
 %    \begin{macrocode}
 \newcommand\coppe@fichafile{}

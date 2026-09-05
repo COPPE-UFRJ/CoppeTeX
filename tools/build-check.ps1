@@ -17,14 +17,16 @@
     example  - class + example.tex
     langs    - class + os cinco example_<lang>.tex
     tests    - class + a suíte tests/run-tests.ps1
-    all      - tudo acima, mais coppe.pdf (o manual). Padrão.
+    docs     - class + coppe.pdf (manual), NORMA_COPPE_2026.pdf,
+               futuremanual2026.pdf e covers_5languages.pdf
+    all      - tudo acima. Padrão.
 
 .EXAMPLE
     .\tools\build-check.ps1
     .\tools\build-check.ps1 -Scope example
 #>
 param(
-    [ValidateSet("class", "example", "langs", "tests", "all")]
+    [ValidateSet("class", "example", "langs", "tests", "docs", "all")]
     [string]$Scope = "all"
 )
 
@@ -91,7 +93,36 @@ if ($Scope -in @("langs", "all")) {
     }
 }
 
-if ($Scope -eq "all") { Build-Tex -Stem "coppe" -Dir $src -WithBiber }
+if ($Scope -in @("docs", "all")) {
+    # O manual sai do .dtx, nao de um .tex: o proprio coppe.dtx traz a secao
+    # driver. Precisa de makeindex para o indice remissivo e para o glossario
+    # de comandos, e de tres passadas para as referencias cruzadas.
+    Invoke-Step "coppe-1" $src { & pdflatex -interaction=nonstopmode coppe.dtx }
+    Invoke-Step "coppe-idx" $src { & makeindex -s gind.ist -o coppe.ind coppe.idx }
+    Invoke-Step "coppe-glo" $src { & makeindex -s gglo.ist -o coppe.gls coppe.glo }
+    Invoke-Step "coppe-2" $src { & pdflatex -interaction=nonstopmode coppe.dtx }
+    Invoke-Step "coppe-3" $src { & pdflatex -interaction=nonstopmode coppe.dtx }
+
+    Build-Tex -Stem "futuremanual2026"     -Dir $src -WithBiber
+    Build-Tex -Stem "NORMA_COPPE_2026"     -Dir $src
+
+    # covers_5languages monta uma montagem das cinco capas a partir de PNGs
+    # extraidos dos example_<lang>.pdf. Sem pdftoppm (poppler) nao ha como
+    # gerar os PNGs, e o passo e pulado em vez de falhar.
+    if (Get-Command pdftoppm -ErrorAction SilentlyContinue) {
+        Push-Location $src
+        foreach ($l in @("pt", "en", "es", "fr", "it")) {
+            # -singlefile da o nome exato "cover_<l>.png". Sem ele o pdftoppm
+            # acrescenta o numero da pagina com tantos digitos quantos tiver a
+            # ultima pagina pedida, e o nome varia entre versoes.
+            & pdftoppm -png -r 150 -f 1 -l 1 -singlefile "example_$l.pdf" "cover_$l" 2>&1 | Out-Null
+        }
+        Pop-Location
+        Build-Tex -Stem "covers_5languages" -Dir $src
+    } else {
+        Add-Line "pulado   covers_5languages (pdftoppm nao encontrado)"
+    }
+}
 
 if ($Scope -in @("tests", "all")) {
     Invoke-Step "suite" $testDir { & powershell -NoProfile -File (Join-Path $testDir "run-tests.ps1") }
