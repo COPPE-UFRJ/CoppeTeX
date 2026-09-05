@@ -2149,6 +2149,22 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
 % own sumario is four levels deep, so tocdepth follows.
 \setcounter{secnumdepth}{4}
 \setcounter{tocdepth}{4}
+% 2.6: "no sumario, as secoes devem ser grafadas conforme apresentadas no corpo
+% do trabalho". The body sets chapter and section in ALL CAPS (via the
+% \MakeUppercase in their \titleformat), but that case change belongs to the
+% printed heading alone -- the .toc keeps the title as typed, so the sumario
+% came out in ordinary case and contradicted the body.
+%
+% \l@chapter and \l@section are the two TOC line formatters; wrapping their
+% entry argument is enough, and leaves \l@subsection and below untouched, which
+% is what we want since those levels are NOT uppercased in the body either.
+% The entry carries \numberline{N} plus the title; \MakeUppercase passes the
+% digits through unchanged and leaves robust commands (including hyperref's
+% link wrappers) intact.
+\let\coppe@orig@lchapter\l@chapter
+\renewcommand\l@chapter[2]{\coppe@orig@lchapter{\MakeUppercase{#1}}{#2}}
+\let\coppe@orig@lsection\l@section
+\renewcommand\l@section[2]{\coppe@orig@lsection{\MakeUppercase{#1}}{#2}}
 % --- Captions (manual2024 2.10-2.11 / proposta P6): smaller font, ABNT
 %     "Figura 1 -- titulo" travessao separator (sources handled by \source). ---
 \RequirePackage{caption}

@@ -171,6 +171,10 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
 \titlespacing*{\paragraph}{0pt}{2.5ex plus 1ex minus .2ex}{1.5ex plus .2ex}
 \setcounter{secnumdepth}{4}
 \setcounter{tocdepth}{4}
+\let\coppe@orig@lchapter\l@chapter
+\renewcommand\l@chapter[2]{\coppe@orig@lchapter{\MakeUppercase{#1}}{#2}}
+\let\coppe@orig@lsection\l@section
+\renewcommand\l@section[2]{\coppe@orig@lsection{\MakeUppercase{#1}}{#2}}
 \RequirePackage{caption}
 \captionsetup{font=footnotesize,labelsep=endash}
 \RequirePackage{subcaption}
