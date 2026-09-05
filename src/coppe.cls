@@ -111,6 +111,7 @@
 \fi
 \RequirePackage[a4paper,headheight=15pt,%
 top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
+\setlength\emergencystretch{3em}
 \RequirePackage{indentfirst}
 \RequirePackage{titlesec}
 \newif\if@coppeappendix \@coppeappendixfalse
@@ -176,7 +177,7 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
 \let\coppe@orig@lsection\l@section
 \renewcommand\l@section[2]{\coppe@orig@lsection{\MakeUppercase{#1}}{#2}}
 \RequirePackage{caption}
-\captionsetup{font=footnotesize,labelsep=endash}
+\captionsetup{font=footnotesize,labelsep=endash,justification=centering}
 \RequirePackage{subcaption}
 \RequirePackage{float}
 \floatstyle{plaintop}

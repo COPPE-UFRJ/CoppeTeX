@@ -1197,7 +1197,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 
   Em todo caso, \textbf{deve se tomar enorme atenção com as citações, para evitar ocorrer em plágio não intencional}.
 
-  Quando se cita uma obra por meio de outra (\textit{apud}), pela ABNT entra na lista de referências \emph{apenas a obra efetivamente consultada}. A obra original (não consultada) é informada como texto e \emph{não} é referenciada. Use \verb*|\citetapud{Autor original}{ano}{chave consultada}|, como em \citetapud{Drumond}{1953}{article-example}, ou a forma entre parênteses \verb*|\citepapud|, como em \citepapud[145]{Drumond}{1953}{article-example}. Note que, nas Referências, aparece somente a obra consultada.
+  Quando se cita uma obra por meio de outra (\textit{apud}), pela ABNT entra na lista de referências \emph{apenas a obra efetivamente consultada}. A obra original (não consultada) é informada como texto e \emph{não} é referenciada. Use \verb*|\citetapud{autor}{ano}{chave}|, como em \citetapud{Drumond}{1953}{article-example}, ou a forma entre parênteses \verb*|\citepapud|, como em \citepapud[145]{Drumond}{1953}{article-example}. Note que, nas Referências, aparece somente a obra consultada.
 
 \chapter{Floats}
 
@@ -1220,7 +1220,7 @@ Vamos ver uma tabela padrão, como a \autoref{tab:exemplo_numeros}.
 \label{tab:exemplo_numeros}
 \begin{tabular}{ccc} % Define a quantidade de colunas
 \hline % Linha superior
-\textbf{Coluna 1} & \textbf{Coluna 2} & \textbf{Coluna 3} \\ % Cabeçalhos
+\textbf{Col. 1} & \textbf{Col. 2} & \textbf{Col. 3} \\ % Cabeçalhos
 \hline % Linha média
 1 & 2 & 3 \\ % Primeira linha de dados
 \hline
@@ -1278,7 +1278,7 @@ Atualmente a tendência é usar tabelas mais leves, como \autoref{tab:exemplo_nu
 \label{tab:exemplo_numerosbom}
 \begin{tabular}{ccc} % Define a quantidade de colunas
 \toprule % Linha superior
-\textbf{Coluna 1} & \textbf{Coluna 2} & \textbf{Coluna 3} \\ % Cabeçalhos
+\textbf{Col. 1} & \textbf{Col. 2} & \textbf{Col. 3} \\ % Cabeçalhos
 \midrule % Linha média
 1 & 2 & 3 \\ % Primeira linha de dados
 4 & 5 & 6 \\ % Segunda linha de dados
@@ -1313,7 +1313,7 @@ A \autoref{tab:tabela_largafns} é larga demais, e nela isso é resolvido diminu
 \footnotesize % Aplica uma fonte menor para a tabela
 \begin{tabular}{cccccccc} % Aumente o número de colunas conforme necessário
 \toprule
-\textbf{Coluna 1} & \textbf{Coluna 2} & \textbf{Coluna 3} & \textbf{Coluna 4} & \textbf{Coluna 5} & \textbf{Coluna 6} & \textbf{Coluna 7} & \textbf{Coluna 8} \\
+\textbf{Col. 1} & \textbf{Col. 2} & \textbf{Col. 3} & \textbf{Col. 4} & \textbf{Col. 5} & \textbf{Col. 6} & \textbf{Col. 7} & \textbf{Col. 8} \\
 \midrule
 Dado 1.1 & Dado 1.2 & Dado 1.3 & Dado 1.4 & Dado 1.5 & Dado 1.6 & Dado 1.7 & Dado 1.8 \\
 Dado 2.1 & Dado 2.2 & Dado 2.3 & Dado 2.4 & Dado 2.5 & Dado 2.6 & Dado 2.7 & Dado 2.8 \\
@@ -1368,12 +1368,12 @@ Se a tabela for muito longa, o ambiente \verb|longtable| é o ideal. Ele fornece
 \begin{longtable}{|c|c|c|}
 % primeiro cabeçalho (é o caption)
 \caption{Exemplo de Tabela Longa}\label{tab:longa} \\
-\hline \textbf{Coluna 1} & \textbf{Coluna 2} & \textbf{Coluna 3} \\ \hline
+\hline \textbf{Col. 1} & \textbf{Col. 2} & \textbf{Col. 3} \\ \hline
 \endfirsthead
 % cabeçalho normal
 \multicolumn{3}{c}%
 {{\tablename\ \thetable{} -- continuação da página anterior}} \\
-\hline \textbf{Coluna 1} & \textbf{Coluna 2} & \textbf{Coluna 3} \\ \hline
+\hline \textbf{Col. 1} & \textbf{Col. 2} & \textbf{Col. 3} \\ \hline
 \endhead
 % pé normal
 \hline \multicolumn{3}{|r|}{{Continua na próxima página}} \\ \hline
@@ -1517,7 +1517,8 @@ Para colocar várias imagens (ou tabelas) lado a lado, cada uma com sua própria
   \fonte{Elabora\c{c}\~ao pr\'opria.}
 \end{figure}
 
-Referencie a figura inteira com \verb|\autoref{fig:subs}| e cada parte com \verb|\autoref{fig:sub-a}| (\autoref{fig:sub-a}).
+Referencie a figura inteira com \verb|\autoref{fig:subs}|. Cada parte tem
+rótulo próprio: \verb|\autoref{fig:sub-a}| leva à \autoref{fig:sub-a}.
 
 \section{Imagens (graphicx)}
 
@@ -1722,7 +1723,9 @@ Para inserir código no meio do texto use \verb|\pythoninline|, como em \pythoni
 Olá, COPPE!
 \end{Verbatim}
 
-Há estilos prontos também para \verb|java|, \verb|xml|, \verb|html| e \verb|prolog|, comandos \verb|\pythoninline|/\verb|\javainline| para código no meio do texto, e o ambiente \verb|Verbatim| (com as opções acima) para a saída de programas. Para algoritmos, use o ambiente \verb|algorithm| com as palavras-chave em português \verb|\Para| e \verb|\Enquanto|, como no \autoref{alg:soma}.
+Há estilos prontos também para \verb|java|, \verb|xml|, \verb|html| e \verb|prolog|.
+Há também \verb|\pythoninline| e \verb|\javainline| para código no meio do
+texto, e o ambiente \verb|Verbatim| (com as opções acima) para a saída de programas. Para algoritmos, use o ambiente \verb|algorithm| com as palavras-chave em português \verb|\Para| e \verb|\Enquanto|, como no \autoref{alg:soma}.
 
 \begin{algorithm}[H]
 \caption{Soma dos elementos de um vetor}
@@ -1780,7 +1783,12 @@ $s \leftarrow 0$\;
   \DeclareMathOperator{\RMSE}{RMSE}
   \DeclareMathOperator{\diag}{diag}
   \end{verbatim}
-  Assim, \verb|$\RMSE(y,\hat{y})$| produz $\RMSE(y,\hat{y})$, e \verb|$\diag(\lambda_1,\dots,\lambda_n)$| produz $\diag(\lambda_1,\dots,\lambda_n)$.
+  Assim:
+  \begin{itemize}
+    \item \verb|$\RMSE(y,\hat{y})$| produz $\RMSE(y,\hat{y})$;
+    \item \verb|$\diag(\lambda_1,\lambda_2)$| produz
+          $\diag(\lambda_1,\lambda_2)$.
+  \end{itemize}
 
   \section{Unicode e LuaLaTeX (unicode-math)}
   \label{sec:unicode-math}
@@ -1788,7 +1796,7 @@ $s \leftarrow 0$\;
   \begin{verbatim}
   \usepackage{amsmath}      % a classe já carrega
   \usepackage{unicode-math} % NÃO use \usepackage{amssymb} junto
-  \setmathfont{Latin Modern Math}  % ou STIX Two Math, TeX Gyre Termes Math...
+  \setmathfont{Latin Modern Math}  % ou STIX Two Math
   \end{verbatim}
   O código clássico continua valendo ($\mathbb{R}$, $\int_a^b f(x)\,dx$, $\alpha$) e você ainda pode digitar os próprios símbolos Unicode no editor. A vantagem é que o PDF passa a indexar os símbolos em Unicode real: ao copiar uma fórmula do PDF, o significado dos símbolos é preservado.
 
@@ -1811,7 +1819,8 @@ $s \leftarrow 0$\;
 
   \section{URLs}
 
-  Para endereços, use \verb|\url{https://exemplo.org}|: o \verb|hyperref| cria o link e quebra a URL no fim da linha. Para um texto-âncora, use \verb|\href{https://exemplo.org}{texto clicável}|. Evite digitar URLs como texto comum --- elas não quebram e estouram a margem.
+  Para endereços, use \verb|\url{https://exemplo.org}|: o \verb|hyperref| cria o link e quebra a URL no fim da linha. Para um texto-âncora,
+use \verb|\href{https://exemplo.org}{texto}|. Evite digitar URLs como texto comum --- elas não quebram e estouram a margem.
 
   \section{Índice remissivo}
 
@@ -2061,6 +2070,14 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
 %
 % Loaded BEFORE titlesec so titlesec's \@afterindent handling sees the patched
 % \@afterindentfalse.
+% Long unbreakable tokens -- \verb|...| in running prose, command names, URLs --
+% cannot be hyphenated, so TeX overfills the line rather than stretching the
+% spaces. example.tex alone produced 17 overfull boxes this way, the worst 86pt,
+% which is the "text does not always respect the margins" a recent review
+% reported. \emergencystretch gives TeX a final pass in which it may stretch
+% interword spaces instead of running into the margin. It cannot save a single
+% token longer than the measure, but it clears the ordinary cases.
+\setlength\emergencystretch{3em}
 \RequirePackage{indentfirst}
 \RequirePackage{titlesec}
 % --- Section heading formats (manual2024 2.6 / proposta P22) -----------------
@@ -2168,7 +2185,13 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
 % --- Captions (manual2024 2.10-2.11 / proposta P6): smaller font, ABNT
 %     "Figura 1 -- titulo" travessao separator (sources handled by \source). ---
 \RequirePackage{caption}
-\captionsetup{font=footnotesize,labelsep=endash}
+% justification=centering makes MULTI-LINE captions centre like the one-line
+% ones. Without it, caption's singlelinecheck centres a caption that fits on one
+% line and justifies one that wraps, so in a document with mixed caption lengths
+% a couple of tables looked left-aligned while the rest looked centred -- which
+% is what a recent review noticed about tables 5.1 and 5.2. 2.10 does not
+% prescribe the alignment; it does not tolerate two alignments either.
+\captionsetup{font=footnotesize,labelsep=endash,justification=centering}
 % subcaption (NÃO subfig/subfigure) for subfigures / subtables; load right after
 % caption so it picks up the ABNT captionsetup above.
 \RequirePackage{subcaption}
