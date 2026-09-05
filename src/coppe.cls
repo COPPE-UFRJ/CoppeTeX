@@ -484,7 +484,9 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \SetAlCapNameSty{textnormal}
 \SetKwFor{Para}{para}{faça}{fim do para}
 \SetKwFor{Enquanto}{enquanto}{faça}{fim do enquanto}
+\newcommand\coppe@deptcode{}
 \newcommand\department[1]{%
+  \gdef\coppe@deptcode{#1}%
   \ifthenelse{\equal{#1}{PEB}}
     {\global\def\local@deptname{Engenharia Biom{\' e}dica}
      \global\def\foreign@deptname{Biomedical Engineering}}{}
@@ -1438,6 +1440,30 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \if@coppedoublespace\doublespacing\else\onehalfspacing\fi
 \if@coppepdfa
   \RequirePackage[a-2b]{pdfx}
+  \newwrite\coppe@xmpout
+  \AtBeginDocument{%
+    \gdef\coppe@xmpkeys{}%
+    \count@=0
+    \@whilenum\count@<\value{keywords}\do{%
+      \ifnum\count@>0
+        \g@addto@macro\coppe@xmpkeys{\string\sep\space}%
+      \fi
+      \protected@edef\coppe@tmp{\csname CoppeKeyword:\the\count@\endcsname}%
+      \expandafter\g@addto@macro\expandafter\coppe@xmpkeys
+        \expandafter{\coppe@tmp}%
+      \advance\count@ by 1}%
+    \immediate\openout\coppe@xmpout=\jobname.xmpdata
+    \begingroup
+      \let\protect\string
+      \immediate\write\coppe@xmpout{\string\Title{\coppe@selecttitle}}%
+      \immediate\write\coppe@xmpout{\string\Author{\@authname\space\@authsurn}}%
+      \immediate\write\coppe@xmpout{\string\Keywords{\coppe@xmpkeys}}%
+      \immediate\write\coppe@xmpout{\string\Subject{\local@doctype\space de
+        \@degreename. Programa \coppe@deptcode, COPPE/UFRJ}}%
+      \immediate\write\coppe@xmpout{\string\Publisher{\local@universityname}}%
+      \immediate\write\coppe@xmpout{\string\Date{\coppe@docyear}}%
+    \endgroup
+    \immediate\closeout\coppe@xmpout}%
 \fi
 \RequirePackage{hyperref}
 \if@coppenumeric

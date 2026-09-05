@@ -2610,7 +2610,14 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % which correspond to all academic units at COPPE/UFRJ. It defines the current
 % and the foreign names of these units.
 %    \begin{macrocode}
+\newcommand\coppe@deptcode{}
 \newcommand\department[1]{%
+% The programme CODE is kept alongside the resolved name. The names in the table
+% below carry TeX accent escapes with braces (Computa{\c c}{\~ a}o), which pdfx
+% copies verbatim into the XMP, producing "Computa{c}o" in dc:description. The
+% code is plain ASCII and safe there. Giving the whole table UTF-8 twins would
+% be the prettier fix, and is left for later.
+  \gdef\coppe@deptcode{#1}%
   \ifthenelse{\equal{#1}{PEB}}
     {\global\def\local@deptname{Engenharia Biom{\' e}dica}
      \global\def\foreign@deptname{Biomedical Engineering}}{}
@@ -4002,6 +4009,45 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % Pantheon and by the SiBI's own instructions, which also list PDF/A-2b.
 \if@coppepdfa
   \RequirePackage[a-2b]{pdfx}
+% pdfx takes the XMP metadata from \jobname.xmpdata, which it reads when it is
+% LOADED -- before the preamble has run, so before \title, \author and
+% \keyword exist. The file is therefore WRITTEN at \begin{document}, when the
+% metadata is known, and picked up on the NEXT run. The build already runs
+% pdflatex three times for cross-references, so the deposited PDF always carries
+% current metadata; only a first-ever compilation of a brand-new file emits
+% pdfx's "no \jobname.xmpdata" warning and lacks dc:title.
+%
+% The writes must be \immediate. \protected@write defers to the shipout, and
+% the stream is closed here and now, so deferred writes would land nowhere --
+% which is exactly what happened first time round: a 0-byte .xmpdata.
+% \let\protect\string inside the group gives the protection that
+% \protected@write would have given: accents and other robust commands are
+% written literally instead of being expanded. pdfx reads the .xmpdata as
+% LaTeX, so \'a arrives there intact.
+  \newwrite\coppe@xmpout
+  \AtBeginDocument{%
+    \gdef\coppe@xmpkeys{}%
+    \count@=0
+    \@whilenum\count@<\value{keywords}\do{%
+      \ifnum\count@>0
+        \g@addto@macro\coppe@xmpkeys{\string\sep\space}%
+      \fi
+      \protected@edef\coppe@tmp{\csname CoppeKeyword:\the\count@\endcsname}%
+      \expandafter\g@addto@macro\expandafter\coppe@xmpkeys
+        \expandafter{\coppe@tmp}%
+      \advance\count@ by 1}%
+    \immediate\openout\coppe@xmpout=\jobname.xmpdata
+    \begingroup
+      \let\protect\string
+      \immediate\write\coppe@xmpout{\string\Title{\coppe@selecttitle}}%
+      \immediate\write\coppe@xmpout{\string\Author{\@authname\space\@authsurn}}%
+      \immediate\write\coppe@xmpout{\string\Keywords{\coppe@xmpkeys}}%
+      \immediate\write\coppe@xmpout{\string\Subject{\local@doctype\space de
+        \@degreename. Programa \coppe@deptcode, COPPE/UFRJ}}%
+      \immediate\write\coppe@xmpout{\string\Publisher{\local@universityname}}%
+      \immediate\write\coppe@xmpout{\string\Date{\coppe@docyear}}%
+    \endgroup
+    \immediate\closeout\coppe@xmpout}%
 \fi
 \RequirePackage{hyperref}
 % Bibliography engine: the full coppe BibLaTeX/biber ABNT style, replacing the

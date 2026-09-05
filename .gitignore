@@ -50,3 +50,6 @@ tests/*.pdf
 
 # Configuração local do Claude Code
 .claude/
+
+# metadados XMP gerados pela opcao pdfa
+*.xmpdata
