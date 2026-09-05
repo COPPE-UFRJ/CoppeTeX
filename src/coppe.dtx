@@ -1000,7 +1000,6 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \makelosymbols
 \makeloabbreviations
 % Algumas coisas opcioanais que não cabem no coppetex.sty
-\usepackage{indentfirst} % se quiser indentar o primeiro paragrafo das seções
 %\renewcommand{\familydefault}{\sfdefault} % para usar fontes SEM serifa no default
 \renewcommand{\familydefault}{\rmdefault} % para usar fontes COM serifa no default
 
@@ -2037,6 +2036,17 @@ No modelo \CoppeTeX os anexos devem obrigtoriamente vir depois dos apêndices e 
 % absent it follows the class, which \LoadClass set to one-sided above.)
 \RequirePackage[a4paper,headheight=15pt,%
 top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
+% The first paragraph of every section must be indented like any other. LaTeX's
+% default is the Anglo-Saxon convention -- no indent after a heading -- which is
+% not what Brazilian typography (nor the SiBI manual's own examples) uses.
+% indentfirst was mentioned only as a commented suggestion in the example
+% preamble, so every document built with this class came out with the first
+% paragraph of each section flush left. Loading it in the class fixes it for
+% everybody instead of asking each author to remember.
+%
+% Loaded BEFORE titlesec so titlesec's \@afterindent handling sees the patched
+% \@afterindentfalse.
+\RequirePackage{indentfirst}
 \RequirePackage{titlesec}
 % --- Section heading formats (manual2024 2.6 / proposta P22) -----------------
 % chapter (numbered): "N  TITLE", ALL CAPS, bold, flush left (no "Capitulo N").
@@ -2095,9 +2105,13 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
 \titleformat{name=\chapter,numberless}[hang]
   {\normalfont\Large\bfseries\filcenter}{}{0pt}{\MakeUppercase}
 \titlespacing*{name=\chapter,numberless}{0pt}{10pt}{1.5\baselineskip}
-% section: ALL CAPS, normal weight.
+% section: ALL CAPS, normal weight -- the \bfseries here contradicted this very
+% comment until v4.1, and made the secondary level as heavy as the primary one,
+% defeating the "destaque gradativo" of 2.6. The gradation is now
+% chapter = ALL CAPS bold, section = ALL CAPS regular, subsection = Title Case
+% bold, subsubsection = Title Case bold italic, as read from the manual.
 \titleformat{\section}
-  {\normalfont\large\bfseries}{\thesection}{1ex}{\MakeUppercase}
+  {\normalfont\large}{\thesection}{1ex}{\MakeUppercase}
 % subsection: bold (author writes Title Case).
 \titleformat{\subsection}
   {\normalfont\bfseries}{\thesubsection}{1ex}{}

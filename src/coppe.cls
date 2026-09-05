@@ -110,6 +110,7 @@
 \fi
 \RequirePackage[a4paper,headheight=15pt,%
 top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
+\RequirePackage{indentfirst}
 \RequirePackage{titlesec}
 \newif\if@coppeappendix \@coppeappendixfalse
 \titleformat{\chapter}[hang]
@@ -159,7 +160,7 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
   {\normalfont\Large\bfseries\filcenter}{}{0pt}{\MakeUppercase}
 \titlespacing*{name=\chapter,numberless}{0pt}{10pt}{1.5\baselineskip}
 \titleformat{\section}
-  {\normalfont\large\bfseries}{\thesection}{1ex}{\MakeUppercase}
+  {\normalfont\large}{\thesection}{1ex}{\MakeUppercase}
 \titleformat{\subsection}
   {\normalfont\bfseries}{\thesubsection}{1ex}{}
 \titleformat{\subsubsection}
