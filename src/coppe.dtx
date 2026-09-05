@@ -2573,6 +2573,21 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \else
   \expandafter\RequirePackage\expandafter[\coppe@@algolang,linesnumbered,lined,algochapter,ruled]{algorithm2e}
 \fi
+% algorithm2e composes its own caption and therefore ignores the class-wide
+% \captionsetup{font=footnotesize,labelsep=endash}. Left alone it printed
+% "Algoritmo 6.1:Titulo" in bold at body size, while every other illustration
+% printed "Figura 6.1 -- Titulo" in footnotesize -- 2.10 asks for the
+% designating word, the number, a TRAVESSAO and the title, uniformly.
+%
+% The separator and the caption fonts are therefore set to match. The `ruled'
+% layout (rules above and below) is kept: 2.10 prescribes where the caption and
+% the source go, not whether the float is delimited, and the rules read here
+% like the top-and-bottom delimitation a table carries.
+\SetAlgoCaptionSeparator{\ \textendash}
+\SetAlCapFnt{\footnotesize}
+\SetAlCapNameFnt{\footnotesize}
+\SetAlCapSty{textnormal}
+\SetAlCapNameSty{textnormal}
 \SetKwFor{Para}{para}{faça}{fim do para}
 \SetKwFor{Enquanto}{enquanto}{faça}{fim do enquanto}
 % setspace + hyperref + biblatex are loaded at the very end of the class
