@@ -343,10 +343,12 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \copperdefstring{brazilian}{approvedfemale}{Aprovada por}
 \copperdefstring{brazilian}{approvedonmale}  {Aprovado em}
 \copperdefstring{brazilian}{approvedonfemale}{Aprovada em}
+\copperdefstring{brazilian}{keywordsname} {Palavras-chave}
 \copperdefstring{english}  {approvedmale}  {Approved by}
 \copperdefstring{english}  {approvedfemale}{Approved by}
 \copperdefstring{english}  {approvedonmale}  {Approved on}
 \copperdefstring{english}  {approvedonfemale}{Approved on}
+\copperdefstring{english}  {keywordsname} {Keywords}
 \copperdefstring{brazilian}{universityname}{Universidade Federal do Rio de Janeiro}
 \copperdefstring{english}  {universityname}{Universidade Federal do Rio de Janeiro}
 \copperdefstring{brazilian}{cityname}     {Rio de Janeiro}
@@ -563,6 +565,27 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \global\@namedef{CoppeKeyword:\expandafter\the\c@keywords}{#1}
   \global\addtocounter{keywords}{1}
 }
+\newcounter{foreignkeywords}
+\newcommand\foreignkeyword[1]{%
+  \global\@namedef{CoppeForeignKeyword:\expandafter\the\c@foreignkeywords}{#1}
+  \global\addtocounter{foreignkeywords}{1}
+}
+\newcounter{braziliankeywords}
+\newcommand\braziliankeyword[1]{%
+  \global\@namedef{CoppeBrazilianKeyword:\expandafter\the\c@braziliankeywords}{#1}
+  \global\addtocounter{braziliankeywords}{1}
+}
+\newcommand\coppe@printkeywords[3]{%
+  \ifnum#3>0
+    \par\vspace*{7mm}%
+    \noindent{\singlespacing\textbf{#1:}\enspace
+    \count1=0
+    \@whilenum\count1<#3\do{%
+      \ifnum\count1>0 ;\space\fi
+      \csname #2\the\count1\endcsname
+      \advance\count1 by 1}%
+    .\par}%
+  \fi}
 \newcommand\coppe@areaconc{}
 \newcommand\areaconcentracao[1]{\gdef\coppe@areaconc{#1}}
 \newcommand\coppe@dataaprov{}
@@ -1030,7 +1053,10 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \end{tabularx}\par
   \vspace*{2mm}
   \noindent\local@deptstring: \local@deptname\par
-  \vspace*{7mm}}{\vspace*{\fill}}
+  \vspace*{7mm}}{%
+  \coppe@printkeywords{\coppemainstring{keywordsname}}%
+    {CoppeKeyword:}{\value{keywords}}%
+  \vspace*{\fill}}
 \newenvironment{foreignabstract}{%
   \cleardoublepage
   \thispagestyle{plain}
@@ -1069,6 +1095,13 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \vspace*{2mm}
   \noindent\foreign@deptstring: \foreign@deptname\par
   \vspace*{7mm}}{%
+  \ifnum\value{foreignkeywords}>0
+    \coppe@printkeywords{\coppeforeignstring{keywordsname}}%
+      {CoppeForeignKeyword:}{\value{foreignkeywords}}%
+  \else
+    \coppe@printkeywords{\coppeforeignstring{keywordsname}}%
+      {CoppeKeyword:}{\value{keywords}}%
+  \fi
   \end{otherlanguage}
   \vspace*{\fill}
   \global\let\@author\@empty
@@ -1118,6 +1151,13 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \vspace*{2mm}
   \noindent\local@deptstring: \local@deptname\par
   \vspace*{7mm}}{%
+  \ifnum\value{braziliankeywords}>0
+    \coppe@printkeywords{\coppestring{keywordsname}}%
+      {CoppeBrazilianKeyword:}{\value{braziliankeywords}}%
+  \else
+    \coppe@printkeywords{\coppestring{keywordsname}}%
+      {CoppeKeyword:}{\value{keywords}}%
+  \fi
   \end{otherlanguage}
   \vspace*{\fill}}
 \renewcommand\listoffigures{%

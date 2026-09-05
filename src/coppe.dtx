@@ -2385,10 +2385,12 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \copperdefstring{brazilian}{approvedfemale}{Aprovada por}
 \copperdefstring{brazilian}{approvedonmale}  {Aprovado em}
 \copperdefstring{brazilian}{approvedonfemale}{Aprovada em}
+\copperdefstring{brazilian}{keywordsname} {Palavras-chave}
 \copperdefstring{english}  {approvedmale}  {Approved by}
 \copperdefstring{english}  {approvedfemale}{Approved by}
 \copperdefstring{english}  {approvedonmale}  {Approved on}
 \copperdefstring{english}  {approvedonfemale}{Approved on}
+\copperdefstring{english}  {keywordsname} {Keywords}
 % Institutional names: always Portuguese on the cover/folha (UFRJ template).
 \copperdefstring{brazilian}{universityname}{Universidade Federal do Rio de Janeiro}
 \copperdefstring{english}  {universityname}{Universidade Federal do Rio de Janeiro}
@@ -2726,6 +2728,38 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \global\@namedef{CoppeKeyword:\expandafter\the\c@keywords}{#1}
   \global\addtocounter{keywords}{1}
 }
+% Keywords for the foreign abstract. Annex F of the manual shows the English
+% abstract closing with English keywords, and \keyword alone cannot serve both
+% pages. When no \foreignkeyword is given the foreign abstract falls back to
+% the \keyword list, which is what a document written before v4.1 expects.
+\newcounter{foreignkeywords}
+\newcommand\foreignkeyword[1]{%
+  \global\@namedef{CoppeForeignKeyword:\expandafter\the\c@foreignkeywords}{#1}
+  \global\addtocounter{foreignkeywords}{1}
+}
+% Keywords for the optional third abstract (Portuguese, for the banca). Same
+% shape and same fallback as \foreignkeyword: without it the Portuguese page
+% would close with the main-language keywords under a Portuguese label, which
+% is what a Spanish-, French- or Italian-main work would produce.
+\newcounter{braziliankeywords}
+\newcommand\braziliankeyword[1]{%
+  \global\@namedef{CoppeBrazilianKeyword:\expandafter\the\c@braziliankeywords}{#1}
+  \global\addtocounter{braziliankeywords}{1}
+}
+% 3.1.2.1.4: the keywords close the resumo, preceded by the term, a colon, and
+% separated from one another by semicolons.
+% #1 label, #2 csname prefix, #3 how many.
+\newcommand\coppe@printkeywords[3]{%
+  \ifnum#3>0
+    \par\vspace*{7mm}%
+    \noindent{\singlespacing\textbf{#1:}\enspace
+    \count1=0
+    \@whilenum\count1<#3\do{%
+      \ifnum\count1>0 ;\space\fi
+      \csname #2\the\count1\endcsname
+      \advance\count1 by 1}%
+    .\par}%
+  \fi}
 %    \end{macrocode}
 % \end{macro}
 %
@@ -3391,7 +3425,10 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \end{tabularx}\par
   \vspace*{2mm}
   \noindent\local@deptstring: \local@deptname\par
-  \vspace*{7mm}}{\vspace*{\fill}}
+  \vspace*{7mm}}{%
+  \coppe@printkeywords{\coppemainstring{keywordsname}}%
+    {CoppeKeyword:}{\value{keywords}}%
+  \vspace*{\fill}}
 %    \end{macrocode}
 % \changes{v0.5}{2008/05/25}{Changed from macro to environment.}
 % \end{environment}
@@ -3436,6 +3473,13 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \vspace*{2mm}
   \noindent\foreign@deptstring: \foreign@deptname\par
   \vspace*{7mm}}{%
+  \ifnum\value{foreignkeywords}>0
+    \coppe@printkeywords{\coppeforeignstring{keywordsname}}%
+      {CoppeForeignKeyword:}{\value{foreignkeywords}}%
+  \else
+    \coppe@printkeywords{\coppeforeignstring{keywordsname}}%
+      {CoppeKeyword:}{\value{keywords}}%
+  \fi
   \end{otherlanguage}
   \vspace*{\fill}
   \global\let\@author\@empty
@@ -3499,6 +3543,15 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \vspace*{2mm}
   \noindent\local@deptstring: \local@deptname\par
   \vspace*{7mm}}{%
+% \coppestring takes ONE argument and resolves against the current language;
+% this runs before \end{otherlanguage}, so \languagename is already brazilian.
+  \ifnum\value{braziliankeywords}>0
+    \coppe@printkeywords{\coppestring{keywordsname}}%
+      {CoppeBrazilianKeyword:}{\value{braziliankeywords}}%
+  \else
+    \coppe@printkeywords{\coppestring{keywordsname}}%
+      {CoppeKeyword:}{\value{keywords}}%
+  \fi
   \end{otherlanguage}
   \vspace*{\fill}}
 %    \end{macrocode}
@@ -4571,6 +4624,7 @@ postamble
 \copperdefstring{spanish}{approvedfemale}  {Aprobada por}
 \copperdefstring{spanish}{approvedonmale}  {Aprobado el}
 \copperdefstring{spanish}{approvedonfemale}{Aprobada el}
+\copperdefstring{spanish}{keywordsname} {Palabras clave}
 \copperdefstring{spanish}{universityname}{Universidade Federal do Rio de Janeiro}
 \copperdefstring{spanish}{cityname}    {Rio de Janeiro}
 \copperdefstring{spanish}{statename}   {RJ}
@@ -4622,6 +4676,7 @@ postamble
 \copperdefstring{french}{approvedfemale}  {Approuv\'ee par}
 \copperdefstring{french}{approvedonmale}  {Approuv\'e le}
 \copperdefstring{french}{approvedonfemale}{Approuv\'ee le}
+\copperdefstring{french}{keywordsname} {Mots-cl\'es}
 \copperdefstring{french}{universityname}{Universidade Federal do Rio de Janeiro}
 \copperdefstring{french}{cityname}    {Rio de Janeiro}
 \copperdefstring{french}{statename}   {RJ}
@@ -4672,6 +4727,7 @@ postamble
 \copperdefstring{italian}{approvedfemale}  {Approvata da}
 \copperdefstring{italian}{approvedonmale}  {Approvato il}
 \copperdefstring{italian}{approvedonfemale}{Approvata il}
+\copperdefstring{italian}{keywordsname} {Parole chiave}
 \copperdefstring{italian}{universityname}{Universidade Federal do Rio de Janeiro}
 \copperdefstring{italian}{cityname}    {Rio de Janeiro}
 \copperdefstring{italian}{statename}   {RJ}
