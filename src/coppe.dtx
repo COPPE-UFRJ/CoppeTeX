@@ -2312,6 +2312,13 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % identification underneath. The COPPE folha de aprovacao has listed the names
 % compactly, without rules, for years. The compact list stays the default and
 % the rules are opt-in, so existing theses do not change shape overnight.
+% PDF/A output. Opt-in for now: 2.2(d) of the 2026 manual requires the deposited
+% file to be PDF/A, but the constraints (embedded fonts, colour profile, no
+% encryption, restricted transparency) can trip up a document that pulls in
+% arbitrary images or packages, and breaking existing theses to enforce it would
+% be worse than letting the author switch it on when depositing.
+\newif\if@coppepdfa \@coppepdfafalse
+\DeclareOption{pdfa}{\@coppepdfatrue}
 \newif\if@coppeassin \@coppeassinfalse
 \DeclareOption{assinaturas}{\@coppeassintrue}
 \newif\if@copperascunho \@copperascunhofalse
@@ -3987,6 +3994,15 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % Apply the default line spacing now that setspace is available. The flag was
 % set above by \DeclareOption{doublespacing}; absent the option, one-and-a-half.
 \if@coppedoublespace\doublespacing\else\onehalfspacing\fi
+% pdfx MUST precede hyperref -- it loads hyperref itself, with the options
+% PDF/A needs, and cannot fix up an already-loaded one. Level a-2b rather than
+% a-1b (the "ISO 19005-1" of Annex I): a-1b forbids transparency, which
+% tcolorbox and several graphics packages produce, so a-1b would fail on
+% documents that are otherwise perfectly fine. a-2b is ISO 19005-2, accepted by
+% Pantheon and by the SiBI's own instructions, which also list PDF/A-2b.
+\if@coppepdfa
+  \RequirePackage[a-2b]{pdfx}
+\fi
 \RequirePackage{hyperref}
 % Bibliography engine: the full coppe BibLaTeX/biber ABNT style, replacing the
 % former natbib+bibtex setup. The numbers class option selects the numeric

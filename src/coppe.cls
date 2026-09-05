@@ -273,6 +273,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \DeclareOption{numeraisromanos}{\@copperomantrue}
 \newif\if@coppedoublespace\@coppedoublespacefalse
 \DeclareOption{doublespacing}{\@coppedoublespacetrue}
+\newif\if@coppepdfa \@coppepdfafalse
+\DeclareOption{pdfa}{\@coppepdfatrue}
 \newif\if@coppeassin \@coppeassinfalse
 \DeclareOption{assinaturas}{\@coppeassintrue}
 \newif\if@copperascunho \@copperascunhofalse
@@ -1434,6 +1436,9 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 }
 \RequirePackage{setspace}
 \if@coppedoublespace\doublespacing\else\onehalfspacing\fi
+\if@coppepdfa
+  \RequirePackage[a-2b]{pdfx}
+\fi
 \RequirePackage{hyperref}
 \if@coppenumeric
   \RequirePackage[backend=biber,datamodel=coppe,%
