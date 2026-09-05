@@ -114,4 +114,55 @@ quando aparece um arquivo `_scratch/BUILD_REQUEST`.
 
 ---
 
+## Como retomar em outra máquina
+
+```bash
+git clone https://github.com/COPPE-UFRJ/CoppeTeX.git
+cd CoppeTeX
+git checkout nlinguas          # NÃO trabalhe no master
+```
+
+### O que não vem pelo git
+
+- **Os manuais em `specs/`.** São publicações do SiBI e do próprio COPPE; o
+  repositório não os redistribui (ver `.gitignore`). Só os `.md` daquela
+  pasta são versionados. Copie os PDFs da máquina antiga —
+  [`specs/README.md`](./specs/README.md) diz o que é cada um e onde
+  obtê-los. Sem eles dá para compilar tudo, mas não para conferir a
+  classe contra a norma.
+- As pastas locais `ABNT/`, `LIXO/`, `LaTeXManuals/` e `_scratch/`.
+
+### Para compilar e verificar
+
+Numa janela do PowerShell, deixe rodando:
+
+```powershell
+.\tools\watch-build.ps1
+```
+
+Ele observa `_scratch\BUILD_REQUEST` e escreve `_scratch\RESULTADO.txt`.
+Ou rode direto:
+
+```powershell
+.\tools\build-check.ps1 -Scope all      # class | example | langs | tests | docs | all
+```
+
+Requisitos: TeX Live ou MiKTeX com `biber`, `biblatex`, `lmodern`,
+`algorithm2e`, `tcolorbox`, `pdfx` e os pacotes de idioma do Babel.
+`pdftoppm` (poppler) é opcional — sem ele, apenas a montagem de capas é
+pulada.
+
+### Política de branch
+
+O **`master` guarda o estado aprovado pela COPPE** e só se move quando a
+CPGP aprovar o v4.x. Todo o trabalho vive em `nlinguas`.
+
+Cuidado com um detalhe que já causou problema: **renomear um branch não
+reaponta o upstream**. Um `git branch -m` deixou a configuração apontando
+para `master` e o push seguinte publicou trabalho não aprovado dentro
+dele. Depois de renomear qualquer branch, confira `git branch -vv` antes
+de dar push.
+
+---
+
 *Última atualização: setembro de 2026, branch `nlinguas`.*
