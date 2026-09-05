@@ -62,6 +62,13 @@
   </rdf:Description> 
   <rdf:Description rdf:about="" xmlns:dc="http://purl.org/dc/elements/1.1/"> 
    <dc:format>application/pdf</dc:format> 
+   <dc:title><rdf:Alt><rdf:li xml:lang="x-default">Título de Teste do PDF/A</rdf:li></rdf:Alt></dc:title>
+   <dc:creator><rdf:Seq><rdf:li>Nome de Teste</rdf:li></rdf:Seq></dc:creator>
+   <dc:publisher><rdf:Bag><rdf:li>Universidade Federal do Rio de Janeiro</rdf:li></rdf:Bag></dc:publisher>
+   <dc:description><rdf:Alt><rdf:li xml:lang="x-default">Tese de Doutorado. Programa PESC, COPPE/UFRJ</rdf:li></rdf:Alt></dc:description>
+   <dc:subject><rdf:Bag><rdf:li>Primeira</rdf:li>
+     <rdf:li>Segunda</rdf:li></rdf:Bag></dc:subject>
+   <dc:date><rdf:Seq><rdf:li>2026</rdf:li></rdf:Seq></dc:date>
   </rdf:Description> 
   <rdf:Description rdf:about="" xmlns:prism="http://prismstandard.org/namespaces/basic/2.2/"> 
   </rdf:Description> 
@@ -73,15 +80,15 @@
   </rdf:Description> 
   <rdf:Description rdf:about="" xmlns:xmp="http://ns.adobe.com/xap/1.0/"> 
    <xmp:CreatorTool>LaTeX with hyperref</xmp:CreatorTool> 
-   <xmp:ModifyDate>2026-09-05T10:50:23-03:00</xmp:ModifyDate> 
-   <xmp:CreateDate>2026-09-05T10:50:23-03:00</xmp:CreateDate> 
-   <xmp:MetadataDate>2026-09-05T10:50:23-03:00</xmp:MetadataDate> 
+   <xmp:ModifyDate>2026-09-05T11:06:41-03:00</xmp:ModifyDate> 
+   <xmp:CreateDate>2026-09-05T11:06:41-03:00</xmp:CreateDate> 
+   <xmp:MetadataDate>2026-09-05T11:06:41-03:00</xmp:MetadataDate> 
   </rdf:Description> 
   <rdf:Description rdf:about="" xmlns:xmpRights = "http://ns.adobe.com/xap/1.0/rights/"> 
   </rdf:Description> 
   <rdf:Description rdf:about="" xmlns:xmpMM="http://ns.adobe.com/xap/1.0/mm/"> 
    <xmpMM:DocumentID>uuid:539C1DE6-3AAC-F528-8AB9-FA7AAA0FBE8D</xmpMM:DocumentID> 
-   <xmpMM:InstanceID>uuid:C290F790-DECF-B3BC-268A-9E63658128CF</xmpMM:InstanceID> 
+   <xmpMM:InstanceID>uuid:4185E2BF-A894-DC53-CF6C-AEB8054E8C03</xmpMM:InstanceID> 
   </rdf:Description> 
  </rdf:RDF> 
 </x:xmpmeta> 

@@ -348,11 +348,15 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \copperdefstring{brazilian}{approvedonmale}  {Aprovado em}
 \copperdefstring{brazilian}{approvedonfemale}{Aprovada em}
 \copperdefstring{brazilian}{keywordsname} {Palavras-chave}
+\copperdefstring{brazilian}{volumename} {Volume}
+\copperdefstring{brazilian}{ofname}     {de}
 \copperdefstring{english}  {approvedmale}  {Approved by}
 \copperdefstring{english}  {approvedfemale}{Approved by}
 \copperdefstring{english}  {approvedonmale}  {Approved on}
 \copperdefstring{english}  {approvedonfemale}{Approved on}
 \copperdefstring{english}  {keywordsname} {Keywords}
+\copperdefstring{english}  {volumename} {Volume}
+\copperdefstring{english}  {ofname}     {of}
 \copperdefstring{brazilian}{universityname}{Universidade Federal do Rio de Janeiro}
 \copperdefstring{english}  {universityname}{Universidade Federal do Rio de Janeiro}
 \copperdefstring{brazilian}{cityname}     {Rio de Janeiro}
@@ -536,6 +540,27 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \expandafter\gdef\csname coppe@title@english\endcsname{#1}%
 }
 \newcommand\coppe@selecttitle{\@nameuse{coppe@title@\coppe@mainlang}}
+\newcommand\subtitle[1]{%
+  \expandafter\gdef\csname coppe@subtitle@brazilian\endcsname{#1}}
+\newcommand\foreignsubtitle[1]{%
+  \expandafter\gdef\csname coppe@subtitle@english\endcsname{#1}}
+\newcommand\subtitlein[2]{%
+  \expandafter\gdef\csname coppe@subtitle@#1\endcsname{#2}}
+\newcommand\coppe@selectsubtitle{\@nameuse{coppe@subtitle@\coppe@mainlang}}
+\newcommand\coppe@titleblock{%
+  \MakeUppercase{\coppe@selecttitle}%
+  \@ifundefined{coppe@subtitle@\coppe@mainlang}{}{: \coppe@selectsubtitle}}
+\newcommand\coppe@nvolumes{1}
+\newcommand\coppe@thisvolume{1}
+\newcommand\volumes[1]{\gdef\coppe@nvolumes{#1}}
+\newcommand\volume[1]{\gdef\coppe@thisvolume{#1}}
+\newcommand\coppe@volumeline{%
+  \ifnum\coppe@nvolumes>1
+    \par\vspace*{4mm}%
+    \coppemainstring{volumename}\space\coppe@thisvolume\space
+    \coppemainstring{ofname}\space\coppe@nvolumes
+    \par
+  \fi}
 \newcount\@advisor\@advisor0
 \newcommand\advisor[5][]{%
   \global\@namedef{CoppeAdvisorInst:\expandafter\the\@advisor}{#1}
@@ -716,7 +741,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \vspace{\stretch{2}}
   \textbf{\MakeUppercase{\textbf{\@authname\ \@authsurn}}}\par
   \vspace{\stretch{2}}
-  \nohyphens{\MakeUppercase{\coppe@selecttitle}}\par
+  \nohyphens{\coppe@titleblock}\par
+  \coppe@volumeline
   \vspace{\stretch{3}}
   \MakeUppercase{\local@cityname}\par
   \coppe@docyear
@@ -740,7 +766,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \begin{center}
   \nohyphens{\@authname\ \@authsurn}\par
   \vspace*{3cm}
-  \nohyphens{\MakeUppercase{\coppe@selecttitle}}\par
+  \nohyphens{\coppe@titleblock}\par
+  \coppe@volumeline
   \end{center}
   \vspace*{2.1cm}
   \begin{flushright}
@@ -809,7 +836,9 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \begin{center}
     \nohyphens{\@authname\ \@authsurn}\par
     \vspace*{7mm}
-    \sloppy\nohyphens{\coppe@selecttitle}\par
+    \sloppy\nohyphens{\coppe@selecttitle
+      \@ifundefined{coppe@subtitle@\coppe@mainlang}{}{:
+        \coppe@selectsubtitle}}\par
   \end{center}\par
   \vspace*{8mm}
   \begin{flushright}

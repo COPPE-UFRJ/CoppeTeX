@@ -82,6 +82,8 @@
 \copperdefstring{spanish}{approvedonmale}  {Aprobado el}
 \copperdefstring{spanish}{approvedonfemale}{Aprobada el}
 \copperdefstring{spanish}{keywordsname} {Palabras clave}
+\copperdefstring{spanish}{volumename} {Volumen}
+\copperdefstring{spanish}{ofname}     {de}
 \copperdefstring{spanish}{universityname}{Universidade Federal do Rio de Janeiro}
 \copperdefstring{spanish}{cityname}    {Rio de Janeiro}
 \copperdefstring{spanish}{statename}   {RJ}

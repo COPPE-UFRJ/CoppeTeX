@@ -2422,11 +2422,15 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \copperdefstring{brazilian}{approvedonmale}  {Aprovado em}
 \copperdefstring{brazilian}{approvedonfemale}{Aprovada em}
 \copperdefstring{brazilian}{keywordsname} {Palavras-chave}
+\copperdefstring{brazilian}{volumename} {Volume}
+\copperdefstring{brazilian}{ofname}     {de}
 \copperdefstring{english}  {approvedmale}  {Approved by}
 \copperdefstring{english}  {approvedfemale}{Approved by}
 \copperdefstring{english}  {approvedonmale}  {Approved on}
 \copperdefstring{english}  {approvedonfemale}{Approved on}
 \copperdefstring{english}  {keywordsname} {Keywords}
+\copperdefstring{english}  {volumename} {Volume}
+\copperdefstring{english}  {ofname}     {of}
 % Institutional names: always Portuguese on the cover/folha (UFRJ template).
 \copperdefstring{brazilian}{universityname}{Universidade Federal do Rio de Janeiro}
 \copperdefstring{english}  {universityname}{Universidade Federal do Rio de Janeiro}
@@ -2694,6 +2698,39 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % language the user must call |\titlein{<lang>}{...}| to populate it.
 %    \begin{macrocode}
 \newcommand\coppe@selecttitle{\@nameuse{coppe@title@\coppe@mainlang}}
+% Subtitle, mirroring the title machinery slot for slot: \subtitle feeds the
+% brazilian slot, \foreignsubtitle the english one, \subtitlein any other.
+% 3.1.1 and 3.1.2.1.1(c) require the subtitle on the capa and on the folha de
+% rosto, subordinated to the title by a colon.
+\newcommand\subtitle[1]{%
+  \expandafter\gdef\csname coppe@subtitle@brazilian\endcsname{#1}}
+\newcommand\foreignsubtitle[1]{%
+  \expandafter\gdef\csname coppe@subtitle@english\endcsname{#1}}
+\newcommand\subtitlein[2]{%
+  \expandafter\gdef\csname coppe@subtitle@#1\endcsname{#2}}
+\newcommand\coppe@selectsubtitle{\@nameuse{coppe@subtitle@\coppe@mainlang}}
+% Title as the capa and the folha de rosto print it. Annexes A and B show the
+% title in caps and the subtitle in ordinary case after a colon, so the case
+% change is applied to the title alone.
+\newcommand\coppe@titleblock{%
+  \MakeUppercase{\coppe@selecttitle}%
+  \@ifundefined{coppe@subtitle@\coppe@mainlang}{}{: \coppe@selectsubtitle}}
+% Number of volumes (3.1.1 and 3.1.2.1.1(d)): printed only when there is more
+% than one, since a single-volume work says nothing about volumes.
+\newcommand\coppe@nvolumes{1}
+\newcommand\coppe@thisvolume{1}
+\newcommand\volumes[1]{\gdef\coppe@nvolumes{#1}}
+\newcommand\volume[1]{\gdef\coppe@thisvolume{#1}}
+\newcommand\coppe@volumeline{%
+  \ifnum\coppe@nvolumes>1
+    \par\vspace*{4mm}%
+    \coppemainstring{volumename}\space\coppe@thisvolume\space
+    \coppemainstring{ofname}\space\coppe@nvolumes
+% The closing \par matters: on the capa the next thing is \vspace{\stretch{3}},
+% which does not end a paragraph, so without it the city ran on into the volume
+% line ("Volume 2 de 3 RIO DE JANEIRO").
+    \par
+  \fi}
 %    \end{macrocode}
 % \end{macro}
 %
@@ -3030,7 +3067,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \vspace{\stretch{2}}
   \textbf{\MakeUppercase{\textbf{\@authname\ \@authsurn}}}\par
   \vspace{\stretch{2}}
-  \nohyphens{\MakeUppercase{\coppe@selecttitle}}\par
+  \nohyphens{\coppe@titleblock}\par
+  \coppe@volumeline
   \vspace{\stretch{3}}
   \MakeUppercase{\local@cityname}\par
   \coppe@docyear
@@ -3064,7 +3102,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \begin{center}
 	  \nohyphens{\@authname\ \@authsurn}\par
 	  \vspace*{3cm}
-	  \nohyphens{\MakeUppercase{\coppe@selecttitle}}\par
+	  \nohyphens{\coppe@titleblock}\par
+	  \coppe@volumeline
   \end{center}
   \vspace*{2.1cm}
   \begin{flushright}
@@ -3171,7 +3210,9 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \begin{center}
     \nohyphens{\@authname\ \@authsurn}\par
     \vspace*{7mm}
-    \sloppy\nohyphens{\coppe@selecttitle}\par
+    \sloppy\nohyphens{\coppe@selecttitle
+      \@ifundefined{coppe@subtitle@\coppe@mainlang}{}{:
+        \coppe@selectsubtitle}}\par
   \end{center}\par
   \vspace*{8mm}
 % Same block, same indentation and same single spacing as the folha de rosto:
@@ -4731,6 +4772,8 @@ postamble
 \copperdefstring{spanish}{approvedonmale}  {Aprobado el}
 \copperdefstring{spanish}{approvedonfemale}{Aprobada el}
 \copperdefstring{spanish}{keywordsname} {Palabras clave}
+\copperdefstring{spanish}{volumename} {Volumen}
+\copperdefstring{spanish}{ofname}     {de}
 \copperdefstring{spanish}{universityname}{Universidade Federal do Rio de Janeiro}
 \copperdefstring{spanish}{cityname}    {Rio de Janeiro}
 \copperdefstring{spanish}{statename}   {RJ}
@@ -4783,6 +4826,8 @@ postamble
 \copperdefstring{french}{approvedonmale}  {Approuv\'e le}
 \copperdefstring{french}{approvedonfemale}{Approuv\'ee le}
 \copperdefstring{french}{keywordsname} {Mots-cl\'es}
+\copperdefstring{french}{volumename} {Volume}
+\copperdefstring{french}{ofname}     {de}
 \copperdefstring{french}{universityname}{Universidade Federal do Rio de Janeiro}
 \copperdefstring{french}{cityname}    {Rio de Janeiro}
 \copperdefstring{french}{statename}   {RJ}
@@ -4834,6 +4879,8 @@ postamble
 \copperdefstring{italian}{approvedonmale}  {Approvato il}
 \copperdefstring{italian}{approvedonfemale}{Approvata il}
 \copperdefstring{italian}{keywordsname} {Parole chiave}
+\copperdefstring{italian}{volumename} {Volume}
+\copperdefstring{italian}{ofname}     {di}
 \copperdefstring{italian}{universityname}{Universidade Federal do Rio de Janeiro}
 \copperdefstring{italian}{cityname}    {Rio de Janeiro}
 \copperdefstring{italian}{statename}   {RJ}
