@@ -214,7 +214,41 @@ Duas consequências para quem já usava `\examiner`:
 A opção de classe `assinaturas` troca a lista compacta por uma régua de
 assinatura por membro, como no Anexo D do manual.
 
-### 4.5 Francês e italiano
+### 4.5 PDF/A no depósito
+
+2.2(d) exige a entrega em PDF/A, e o Anexo I do manual só ensina a
+conversão por Word, LibreOffice, Acrobat ou sites — nada que sirva a quem
+escreve em LaTeX. A classe passa a produzir o arquivo diretamente:
+
+```latex
+\documentclass[dsc,pdfa]{coppe}
+```
+
+A opção é **opcional por ora**, não o padrão: as restrições do PDF/A podem
+esbarrar em imagens ou pacotes que o seu texto use. Ligue-a ao preparar a
+versão de depósito e confira que o documento ainda compila.
+
+O nível é o **PDF/A-2b**. O Anexo I fala em "ISO 19005-1", que é o a-1b,
+mas esse nível proíbe transparência — que o `tcolorbox` e vários pacotes
+gráficos produzem — e reprovaria documentos sem defeito algum. O a-2b é a
+ISO 19005-2, também listada no Anexo I entre as opções do LibreOffice.
+
+Os metadados XMP (título, autor, palavras-chave, programa) são gerados a
+partir do que você já declarou no preâmbulo, num arquivo
+`<nome>.xmpdata`. Ele é lido na compilação **seguinte** à que o escreveu;
+como o build roda `pdflatex` três vezes, isso é transparente. O arquivo é
+gerado, não deve ser versionado nem editado à mão.
+
+Duas observações:
+
+- Se você já convertia o PDF por fora, pode parar. A conversão externa
+  costuma rasterizar ou reamostrar, e agora é desnecessária.
+- Nenhum validador PDF/A foi executado sobre a saída até aqui. O arquivo
+  declara conformidade e satisfaz as verificações estruturais feitas,
+  mas vale passá-lo por um validador (veraPDF, ou o pré-voo do Acrobat)
+  antes do depósito.
+
+### 4.6 Francês e italiano
 
 O art. 57 da Resolução CEPG n. 302/2024 admite teses e dissertações em
 **português, inglês ou espanhol**. Os pacotes de francês e italiano
