@@ -97,21 +97,32 @@ exibidos em português**, independentemente do idioma principal do
 trabalho. Somente o título do trabalho, na capa e na folha de rosto,
 acompanha o idioma principal.
 
-### 2.4 Ficha catalográfica
+### 2.4 Folha adicional com ficha catalográfica
 
-A ficha catalográfica é gerada conforme as regras AACR2 e o *Manual UFRJ
-2025*, e figura no **verso da folha de rosto**. Acrescenta-se à ficha:
+A partir de agosto de 2026, conforme o §3.1.2.1.2 do *Manual UFRJ 2026*,
+o trabalho apresenta uma **folha adicional imediatamente após a folha de
+rosto**, preenchida pelo Programa de Pós-graduação, contendo os campos da
+Coleta CAPES e a ficha catalográfica.
 
-- A indicação da instituição como **UFRJ/COPPE**;
-- O nome do **Programa de Pós-graduação** em que o trabalho foi defendido;
-- A indicação das páginas iniciais e finais da lista de Referências.
+A ficha é obtida no **Gerador de Fichas Catalográficas** do SiBI
+(<http://fichacatalografica.sibi.ufrj.br/>) ou solicitada à biblioteca do
+Programa. **A ficha não é composta pelo autor nem pela classe LaTeX.**
+
+A folha adicional **não é contada nem numerada** (ver Seção 7).
 
 ### 2.5 Folha de aprovação
 
-A folha de aprovação contém o título do trabalho, o nome do candidato,
-os nomes do(s) orientador(es) e dos membros da Banca Examinadora — na
-ordem em que aprovaram o trabalho —, com espaço para assinatura, e a
-data da defesa. A folha de aprovação **não é numerada**.
+A folha de aprovação apresenta, na ordem do §3.1.2.1.3 do *Manual UFRJ
+2026*: o nome do autor; o título por extenso e o subtítulo, se houver; a
+natureza, o objetivo, o nome da instituição e a área de concentração; a
+**data de aprovação**; e o nome, a **titulação** e a **instituição** de
+cada membro da Banca Examinadora.
+
+O **orientador figura em primeiro lugar**, por presidir a banca, seguido
+do coorientador, se houver, e dos demais examinadores. Não há bloco
+separado de orientadores, nem local e data ao pé da página.
+
+A folha de aprovação **não é numerada**.
 
 ---
 
@@ -127,9 +138,20 @@ reconhece três posições distintas para o resumo:
    resumo é redigido em português;
 3. **Resumo em português**, opcional e adicional, requerido apenas
    quando nenhum dos dois resumos anteriores seja em português — caso
-   típico de trabalhos com idioma principal espanhol, francês ou
-   italiano. Destina-se à leitura pela banca e pelos examinadores
-   brasileiros.
+   típico de trabalhos com idioma principal espanhol. Destina-se à
+   leitura pela banca e pelos examinadores brasileiros.
+
+O §3.1.2.1.5 do *Manual UFRJ 2026* prevê dois resumos: o da língua
+vernácula e o da língua de divulgação internacional. Num trabalho
+redigido em espanhol — idioma admitido pelo art. 57 da Resolução CEPG n.
+302/2024 — esse par é espanhol e inglês, e o português, língua da
+Universidade e da banca, ficaria de fora. A terceira posição existe para
+cobrir exatamente esse caso, e é acréscimo da COPPE, não exigência do
+manual.
+
+Cada resumo encerra com as palavras-chave no seu próprio idioma,
+precedidas do termo correspondente e separadas por ponto e vírgula, como
+determina o §3.1.2.1.4.
 
 Cada resumo ocupa uma página própria, na ordem acima, dentro da seção
 pré-textual.
@@ -143,7 +165,14 @@ principais:
 
 - **Português**;
 - **Inglês**;
-- **Espanhol**;
+- **Espanhol**.
+
+Esses são os idiomas admitidos pelo **art. 57 da Resolução CEPG n.
+302/2024**, e não há na UFRJ respaldo normativo para outros. A
+implementação de referência distribui ainda pacotes de francês e
+italiano, que servem de demonstração do mecanismo de extensão a novos
+idiomas e **não** habilitam esses idiomas para a redação de teses e
+dissertações.
 
 A escolha do idioma principal afeta:
 
@@ -204,17 +233,21 @@ respeitando o idioma principal do trabalho.
 
 ## 7. Numeração das páginas pré-textuais
 
-A capa não é contada nem numerada. A folha de rosto inicia a contagem
-das páginas pré-textuais.
+Esta Seção apenas reafirma o §2.7 do *Manual UFRJ 2026*, por ser o ponto
+em que se observaram mais divergências de implementação.
 
-Por **regra padrão**, **os números das páginas pré-textuais não são
-impressos**, embora sejam contados. À critério do autor, e de forma
-opcional, os números das páginas pré-textuais podem ser impressos em
-algarismos romanos minúsculos (iii, iv, v, …) a partir da terceira
-página contada.
+A capa não é contada nem numerada. **A contagem começa na folha de
+rosto** e prossegue sequencialmente por todas as folhas, que **não são
+numeradas** enquanto pré-textuais. A **folha adicional** que contém a
+ficha catalográfica **não é contada nem numerada**.
 
-A numeração arábica, no canto superior externo da página, inicia em 1
-na primeira página da parte textual.
+A numeração em algarismos arábicos é impressa **a partir da primeira
+folha da parte textual, dando sequência à contagem já iniciada** — e
+portanto a Introdução **não** é a folha 1. Figura no canto superior
+direito, a 2 cm da borda superior, com o último algarismo a 2 cm da
+borda direita.
+
+Não se empregam algarismos romanos nas folhas pré-textuais.
 
 ---
 
@@ -253,5 +286,6 @@ implementação.
 
 ---
 
-*Versão da proposta: maio de 2026. Branch `nlinguas` em
+*Versão da proposta: setembro de 2026, revista para a 9.ª edição revista
+(2026) do Manual UFRJ/SiBI. Branch `nlinguas` em
 <https://github.com/COPPE-UFRJ/CoppeTeX>.*
