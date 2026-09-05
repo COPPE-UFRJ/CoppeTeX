@@ -339,8 +339,12 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \copperdefstring{english}  {dept}         {Department}
 \copperdefstring{brazilian}{approvedmale}  {Aprovado por}
 \copperdefstring{brazilian}{approvedfemale}{Aprovada por}
+\copperdefstring{brazilian}{approvedonmale}  {Aprovado em}
+\copperdefstring{brazilian}{approvedonfemale}{Aprovada em}
 \copperdefstring{english}  {approvedmale}  {Approved by}
 \copperdefstring{english}  {approvedfemale}{Approved by}
+\copperdefstring{english}  {approvedonmale}  {Approved on}
+\copperdefstring{english}  {approvedonfemale}{Approved on}
 \copperdefstring{brazilian}{universityname}{Universidade Federal do Rio de Janeiro}
 \copperdefstring{english}  {universityname}{Universidade Federal do Rio de Janeiro}
 \copperdefstring{brazilian}{cityname}     {Rio de Janeiro}
@@ -554,6 +558,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 }
 \newcommand\coppe@areaconc{}
 \newcommand\areaconcentracao[1]{\gdef\coppe@areaconc{#1}}
+\newcommand\coppe@dataaprov{}
+\newcommand\dataaprovacao[1]{\gdef\coppe@dataaprov{#1}}
 \newcommand\coppe@linhapesq{}
 \newcommand\linhapesquisa[1]{\gdef\coppe@linhapesq{#1}}
 \newcommand\coppe@tipoproducao{}
@@ -743,13 +749,20 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \global\let\and\relax}
 \newcommand\makefrontpage{%
   \begin{center}
-    \sloppy\nohyphens{\MakeUppercase{\coppe@selecttitle}}\par
+    \nohyphens{\@authname\ \@authsurn}\par
     \vspace*{7mm}
-    {\@authname\ \@authsurn}\par
+    \sloppy\nohyphens{\coppe@selecttitle}\par
   \end{center}\par
-  \vspace*{4mm}
-  \frontpage@maintext
-  \vspace*{16mm}
+  \vspace*{8mm}
+  \begin{flushright}
+  \begin{minipage}{0.5\textwidth}
+  \singlespacing\frontcover@maintext
+  \end{minipage}
+  \end{flushright}
+  \vspace*{12mm}
+  \noindent\local@approvedonname:\enspace
+  \ifthenelse{\equal{\coppe@dataaprov}{}}{\hrulefill}{\coppe@dataaprov}\par
+  \vspace*{12mm}
   \nohyphens{%
   \noindent\begin{tabularx}{\textwidth}[b]{@{}l@{ }>{\raggedright\arraybackslash}X@{}}
     \local@advisorstring: &
@@ -791,8 +804,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \advance\count1 by 1}
     \the\toks@
     \end{tabularx}}\par
-  \vspace*{\fill}
-  \frontpage@bottomtext}
+  \vspace*{\fill}}
 \newcommand\coppe@hypersetup{%
 \begingroup
   % changes to \toks@ and \count@ are kept local;
@@ -1315,6 +1327,11 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \newcommand\local@approvedname{\coppemainstring{approvedmale}}%
 }{%
   \newcommand\local@approvedname{\coppemainstring{approvedfemale}}%
+}
+\ifthenelse{\boolean{maledoc}}{%
+  \newcommand\local@approvedonname{\coppemainstring{approvedonmale}}%
+}{%
+  \newcommand\local@approvedonname{\coppemainstring{approvedonfemale}}%
 }
 \newcommand\local@universityname{Universidade Federal do Rio de Janeiro}
 \newcommand\local@deptstring{Programa}

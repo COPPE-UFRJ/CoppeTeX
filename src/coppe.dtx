@@ -2377,8 +2377,12 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \copperdefstring{english}  {dept}         {Department}
 \copperdefstring{brazilian}{approvedmale}  {Aprovado por}
 \copperdefstring{brazilian}{approvedfemale}{Aprovada por}
+\copperdefstring{brazilian}{approvedonmale}  {Aprovado em}
+\copperdefstring{brazilian}{approvedonfemale}{Aprovada em}
 \copperdefstring{english}  {approvedmale}  {Approved by}
 \copperdefstring{english}  {approvedfemale}{Approved by}
+\copperdefstring{english}  {approvedonmale}  {Approved on}
+\copperdefstring{english}  {approvedonfemale}{Approved on}
 % Institutional names: always Portuguese on the cover/folha (UFRJ template).
 \copperdefstring{brazilian}{universityname}{Universidade Federal do Rio de Janeiro}
 \copperdefstring{english}  {universityname}{Universidade Federal do Rio de Janeiro}
@@ -2720,6 +2724,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %    \begin{macrocode}
 \newcommand\coppe@areaconc{}
 \newcommand\areaconcentracao[1]{\gdef\coppe@areaconc{#1}}
+\newcommand\coppe@dataaprov{}
+\newcommand\dataaprovacao[1]{\gdef\coppe@dataaprov{#1}}
 \newcommand\coppe@linhapesq{}
 \newcommand\linhapesquisa[1]{\gdef\coppe@linhapesq{#1}}
 \newcommand\coppe@tipoproducao{}
@@ -3026,15 +3032,31 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \end{macro}
 %
 %    \begin{macrocode}
+% 3.1.2.1.3 lists the elements of the folha de aprovacao in order: (a) the
+% AUTHOR, (b) the title in full, (c) the natureza/objetivo/instituicao/area de
+% concentracao, (d) the date of approval, (e) the examining board. Until v4.1
+% this page opened with the title in caps and the author under it, and set the
+% natureza as a wall of uppercase (\frontpage@maintext). Annex D shows neither.
 \newcommand\makefrontpage{%
   \begin{center}
-    \sloppy\nohyphens{\MakeUppercase{\coppe@selecttitle}}\par
+    \nohyphens{\@authname\ \@authsurn}\par
     \vspace*{7mm}
-    {\@authname\ \@authsurn}\par
+    \sloppy\nohyphens{\coppe@selecttitle}\par
   \end{center}\par
-  \vspace*{4mm}
-  \frontpage@maintext
-  \vspace*{16mm}
+  \vspace*{8mm}
+% Same block, same indentation and same single spacing as the folha de rosto:
+% 2.4 names the two pages together.
+  \begin{flushright}
+  \begin{minipage}{0.5\textwidth}
+  \singlespacing\frontcover@maintext
+  \end{minipage}
+  \end{flushright}
+  \vspace*{12mm}
+% (d) date of approval. Annex D prints "Aprovada em:" followed by a blank to be
+% filled in; \dataaprovacao supplies it when the date is already known.
+  \noindent\local@approvedonname:\enspace
+  \ifthenelse{\equal{\coppe@dataaprov}{}}{\hrulefill}{\coppe@dataaprov}\par
+  \vspace*{12mm}
   \nohyphens{%
   \noindent\begin{tabularx}{\textwidth}[b]{@{}l@{ }>{\raggedright\arraybackslash}X@{}}
     \local@advisorstring: &
@@ -3076,8 +3098,11 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \advance\count1 by 1}
     \the\toks@
     \end{tabularx}}\par
-  \vspace*{\fill}
-  \frontpage@bottomtext}
+% No city/date block at the foot: 3.1.2.1.3 ends the folha de aprovacao at the
+% examining board, and Annex D shows nothing below the signature lines. The date
+% that belongs on this page is the date of APPROVAL, printed above.
+% \frontpage@bottomtext stays defined for anyone calling it directly.
+  \vspace*{\fill}}
 %    \end{macrocode}
 % \changes{v3.0}{2020/02/03}{New approval page layout.}
 %    \begin{macrocode}
@@ -3749,6 +3774,11 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \newcommand\local@approvedname{\coppemainstring{approvedmale}}%
 }{%
   \newcommand\local@approvedname{\coppemainstring{approvedfemale}}%
+}
+\ifthenelse{\boolean{maledoc}}{%
+  \newcommand\local@approvedonname{\coppemainstring{approvedonmale}}%
+}{%
+  \newcommand\local@approvedonname{\coppemainstring{approvedonfemale}}%
 }
 \newcommand\local@universityname{Universidade Federal do Rio de Janeiro}
 \newcommand\local@deptstring{Programa}
@@ -4508,6 +4538,8 @@ postamble
 \copperdefstring{spanish}{dept}            {Programa}
 \copperdefstring{spanish}{approvedmale}    {Aprobado por}
 \copperdefstring{spanish}{approvedfemale}  {Aprobada por}
+\copperdefstring{spanish}{approvedonmale}  {Aprobado el}
+\copperdefstring{spanish}{approvedonfemale}{Aprobada el}
 \copperdefstring{spanish}{universityname}{Universidade Federal do Rio de Janeiro}
 \copperdefstring{spanish}{cityname}    {Rio de Janeiro}
 \copperdefstring{spanish}{statename}   {RJ}
@@ -4557,6 +4589,8 @@ postamble
 \copperdefstring{french}{dept}            {Programme}
 \copperdefstring{french}{approvedmale}    {Approuv\'e par}
 \copperdefstring{french}{approvedfemale}  {Approuv\'ee par}
+\copperdefstring{french}{approvedonmale}  {Approuv\'e le}
+\copperdefstring{french}{approvedonfemale}{Approuv\'ee le}
 \copperdefstring{french}{universityname}{Universidade Federal do Rio de Janeiro}
 \copperdefstring{french}{cityname}    {Rio de Janeiro}
 \copperdefstring{french}{statename}   {RJ}
@@ -4605,6 +4639,8 @@ postamble
 \copperdefstring{italian}{dept}            {Programma}
 \copperdefstring{italian}{approvedmale}    {Approvato da}
 \copperdefstring{italian}{approvedfemale}  {Approvata da}
+\copperdefstring{italian}{approvedonmale}  {Approvato il}
+\copperdefstring{italian}{approvedonfemale}{Approvata il}
 \copperdefstring{italian}{universityname}{Universidade Federal do Rio de Janeiro}
 \copperdefstring{italian}{cityname}    {Rio de Janeiro}
 \copperdefstring{italian}{statename}   {RJ}
