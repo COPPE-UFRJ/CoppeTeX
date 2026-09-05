@@ -349,6 +349,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \copperdefstring{brazilian}{approvedonfemale}{Aprovada em}
 \copperdefstring{brazilian}{keywordsname} {Palavras-chave}
 \copperdefstring{brazilian}{volumename} {Volume}
+\copperdefstring{brazilian}{coadvisor}  {Coorientador}
+\copperdefstring{brazilian}{coadvisors} {Coorientadores}
 \copperdefstring{brazilian}{ofname}     {de}
 \copperdefstring{english}  {approvedmale}  {Approved by}
 \copperdefstring{english}  {approvedfemale}{Approved by}
@@ -356,6 +358,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \copperdefstring{english}  {approvedonfemale}{Approved on}
 \copperdefstring{english}  {keywordsname} {Keywords}
 \copperdefstring{english}  {volumename} {Volume}
+\copperdefstring{english}  {coadvisor}  {Co-advisor}
+\copperdefstring{english}  {coadvisors} {Co-advisors}
 \copperdefstring{english}  {ofname}     {of}
 \copperdefstring{brazilian}{universityname}{Universidade Federal do Rio de Janeiro}
 \copperdefstring{english}  {universityname}{Universidade Federal do Rio de Janeiro}
@@ -550,6 +554,21 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \newcommand\coppe@titleblock{%
   \MakeUppercase{\coppe@selecttitle}%
   \@ifundefined{coppe@subtitle@\coppe@mainlang}{}{: \coppe@selectsubtitle}}
+\newcount\@coadvisor\@coadvisor0
+\newcommand\coadvisor[5][]{%
+  \global\@namedef{CoppeCoadvisorInst:\expandafter\the\@coadvisor}{#1}
+  \global\@namedef{CoppeCoadvisorTitle:\expandafter\the\@coadvisor}{#2}
+  \global\@namedef{CoppeCoadvisorName:\expandafter\the\@coadvisor}{#3}
+  \global\@namedef{CoppeCoadvisorSurname:\expandafter\the\@coadvisor}{#4}
+  \global\@namedef{CoppeCoadvisorDegree:\expandafter\the\@coadvisor}{#5}
+  \global\advance\@coadvisor by 1
+}
+\newcommand\local@coadvisorstring{%
+  \ifnum\@coadvisor>1
+    \coppemainstring{coadvisors}%
+  \else
+    \coppemainstring{coadvisor}%
+  \fi}
 \newcommand\coppe@nvolumes{1}
 \newcommand\coppe@thisvolume{1}
 \newcommand\volumes[1]{\gdef\coppe@nvolumes{#1}}
@@ -800,7 +819,32 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \fi
     \advance\count1 by 1}
     \the\toks@
-  \end{tabularx}}\par}
+  \end{tabularx}}%
+  \ifnum\@coadvisor>0
+    \par\vspace*{2mm}%
+    \nohyphens{%
+    \noindent\begin{tabularx}{\textwidth}[b]{@{}l@{ }>{\raggedright\arraybackslash}X@{}}
+      \local@coadvisorstring: &
+      \count1=0
+      \toks@={}
+      \@whilenum \count1<\@coadvisor \do{%
+      \ifcase\count1
+        \toks@=\expandafter{\csname CoppeCoadvisorName:\the\count1%
+          \expandafter\endcsname\expandafter\space%
+          \csname CoppeCoadvisorSurname:\the\count1\endcsname\\}
+      \else
+        \toks@=\expandafter\expandafter\expandafter{%
+          \expandafter\the\expandafter\toks@%
+          \expandafter&\expandafter\space%
+          \csname CoppeCoadvisorName:\the\count1\expandafter\endcsname%
+          \expandafter\space\csname CoppeCoadvisorSurname:\the\count1\endcsname\\
+        }%
+      \fi
+      \advance\count1 by 1}
+      \the\toks@
+    \end{tabularx}}%
+  \fi
+  \par}
   \vspace*{\fill}
   \begin{center}
   \local@cityname\par
@@ -859,6 +903,17 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
        \csname CoppeAdvisorSurname:\the\count1\endcsname}%
       {\csname CoppeAdvisorDegree:\the\count1\endcsname}%
       {\csname CoppeAdvisorInst:\the\count1\endcsname}}%
+    \expandafter\g@addto@macro\expandafter\coppe@bancalist
+      \expandafter{\coppe@tmp}%
+    \advance\count1 by 1}%
+  \count1=0
+  \@whilenum\count1<\@coadvisor\do{%
+    \protected@edef\coppe@tmp{\noexpand\coppe@membro
+      {\csname CoppeCoadvisorTitle:\the\count1\endcsname}%
+      {\csname CoppeCoadvisorName:\the\count1\endcsname\space
+       \csname CoppeCoadvisorSurname:\the\count1\endcsname}%
+      {\csname CoppeCoadvisorDegree:\the\count1\endcsname}%
+      {\csname CoppeCoadvisorInst:\the\count1\endcsname}}%
     \expandafter\g@addto@macro\expandafter\coppe@bancalist
       \expandafter{\coppe@tmp}%
     \advance\count1 by 1}%

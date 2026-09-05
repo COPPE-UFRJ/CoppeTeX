@@ -2423,6 +2423,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \copperdefstring{brazilian}{approvedonfemale}{Aprovada em}
 \copperdefstring{brazilian}{keywordsname} {Palavras-chave}
 \copperdefstring{brazilian}{volumename} {Volume}
+\copperdefstring{brazilian}{coadvisor}  {Coorientador}
+\copperdefstring{brazilian}{coadvisors} {Coorientadores}
 \copperdefstring{brazilian}{ofname}     {de}
 \copperdefstring{english}  {approvedmale}  {Approved by}
 \copperdefstring{english}  {approvedfemale}{Approved by}
@@ -2430,6 +2432,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \copperdefstring{english}  {approvedonfemale}{Approved on}
 \copperdefstring{english}  {keywordsname} {Keywords}
 \copperdefstring{english}  {volumename} {Volume}
+\copperdefstring{english}  {coadvisor}  {Co-advisor}
+\copperdefstring{english}  {coadvisors} {Co-advisors}
 \copperdefstring{english}  {ofname}     {of}
 % Institutional names: always Portuguese on the cover/folha (UFRJ template).
 \copperdefstring{brazilian}{universityname}{Universidade Federal do Rio de Janeiro}
@@ -2717,6 +2721,24 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \@ifundefined{coppe@subtitle@\coppe@mainlang}{}{: \coppe@selectsubtitle}}
 % Number of volumes (3.1.1 and 3.1.2.1.1(d)): printed only when there is more
 % than one, since a single-volume work says nothing about volumes.
+% Coorientador (3.1.2.1.1(f)). Same shape as \advisor, including the optional
+% institution; the label switches to the plural on the second call, as the
+% advisor label already did.
+\newcount\@coadvisor\@coadvisor0
+\newcommand\coadvisor[5][]{%
+  \global\@namedef{CoppeCoadvisorInst:\expandafter\the\@coadvisor}{#1}
+  \global\@namedef{CoppeCoadvisorTitle:\expandafter\the\@coadvisor}{#2}
+  \global\@namedef{CoppeCoadvisorName:\expandafter\the\@coadvisor}{#3}
+  \global\@namedef{CoppeCoadvisorSurname:\expandafter\the\@coadvisor}{#4}
+  \global\@namedef{CoppeCoadvisorDegree:\expandafter\the\@coadvisor}{#5}
+  \global\advance\@coadvisor by 1
+}
+\newcommand\local@coadvisorstring{%
+  \ifnum\@coadvisor>1
+    \coppemainstring{coadvisors}%
+  \else
+    \coppemainstring{coadvisor}%
+  \fi}
 \newcommand\coppe@nvolumes{1}
 \newcommand\coppe@thisvolume{1}
 \newcommand\volumes[1]{\gdef\coppe@nvolumes{#1}}
@@ -3144,7 +3166,32 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \fi
     \advance\count1 by 1}
     \the\toks@
-  \end{tabularx}}\par}
+  \end{tabularx}}%
+  \ifnum\@coadvisor>0
+    \par\vspace*{2mm}%
+    \nohyphens{%
+    \noindent\begin{tabularx}{\textwidth}[b]{@{}l@{ }>{\raggedright\arraybackslash}X@{}}
+      \local@coadvisorstring: &
+      \count1=0
+      \toks@={}
+      \@whilenum \count1<\@coadvisor \do{%
+      \ifcase\count1
+        \toks@=\expandafter{\csname CoppeCoadvisorName:\the\count1%
+          \expandafter\endcsname\expandafter\space%
+          \csname CoppeCoadvisorSurname:\the\count1\endcsname\\}
+      \else
+        \toks@=\expandafter\expandafter\expandafter{%
+          \expandafter\the\expandafter\toks@%
+          \expandafter&\expandafter\space%
+          \csname CoppeCoadvisorName:\the\count1\expandafter\endcsname%
+          \expandafter\space\csname CoppeCoadvisorSurname:\the\count1\endcsname\\
+        }%
+      \fi
+      \advance\count1 by 1}
+      \the\toks@
+    \end{tabularx}}%
+  \fi
+  \par}
   \vspace*{\fill}
 % 3.1.2.1.1(g): the folha de rosto carries the ANO DE DEPOSITO alone -- the year
 % the revised final version is handed to the Programa. The month was never asked
@@ -3247,6 +3294,19 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
        \csname CoppeAdvisorSurname:\the\count1\endcsname}%
       {\csname CoppeAdvisorDegree:\the\count1\endcsname}%
       {\csname CoppeAdvisorInst:\the\count1\endcsname}}%
+    \expandafter\g@addto@macro\expandafter\coppe@bancalist
+      \expandafter{\coppe@tmp}%
+    \advance\count1 by 1}%
+% Coorientadores come right after the orientadores and before the rest of the
+% board, keeping the order 3.1.2.1.3(e) prescribes.
+  \count1=0
+  \@whilenum\count1<\@coadvisor\do{%
+    \protected@edef\coppe@tmp{\noexpand\coppe@membro
+      {\csname CoppeCoadvisorTitle:\the\count1\endcsname}%
+      {\csname CoppeCoadvisorName:\the\count1\endcsname\space
+       \csname CoppeCoadvisorSurname:\the\count1\endcsname}%
+      {\csname CoppeCoadvisorDegree:\the\count1\endcsname}%
+      {\csname CoppeCoadvisorInst:\the\count1\endcsname}}%
     \expandafter\g@addto@macro\expandafter\coppe@bancalist
       \expandafter{\coppe@tmp}%
     \advance\count1 by 1}%
@@ -4773,6 +4833,8 @@ postamble
 \copperdefstring{spanish}{approvedonfemale}{Aprobada el}
 \copperdefstring{spanish}{keywordsname} {Palabras clave}
 \copperdefstring{spanish}{volumename} {Volumen}
+\copperdefstring{spanish}{coadvisor}  {Codirector}
+\copperdefstring{spanish}{coadvisors} {Codirectores}
 \copperdefstring{spanish}{ofname}     {de}
 \copperdefstring{spanish}{universityname}{Universidade Federal do Rio de Janeiro}
 \copperdefstring{spanish}{cityname}    {Rio de Janeiro}
@@ -4827,6 +4889,8 @@ postamble
 \copperdefstring{french}{approvedonfemale}{Approuv\'ee le}
 \copperdefstring{french}{keywordsname} {Mots-cl\'es}
 \copperdefstring{french}{volumename} {Volume}
+\copperdefstring{french}{coadvisor}  {Co-directeur}
+\copperdefstring{french}{coadvisors} {Co-directeurs}
 \copperdefstring{french}{ofname}     {de}
 \copperdefstring{french}{universityname}{Universidade Federal do Rio de Janeiro}
 \copperdefstring{french}{cityname}    {Rio de Janeiro}
@@ -4880,6 +4944,8 @@ postamble
 \copperdefstring{italian}{approvedonfemale}{Approvata il}
 \copperdefstring{italian}{keywordsname} {Parole chiave}
 \copperdefstring{italian}{volumename} {Volume}
+\copperdefstring{italian}{coadvisor}  {Correlatore}
+\copperdefstring{italian}{coadvisors} {Correlatori}
 \copperdefstring{italian}{ofname}     {di}
 \copperdefstring{italian}{universityname}{Universidade Federal do Rio de Janeiro}
 \copperdefstring{italian}{cityname}    {Rio de Janeiro}

@@ -81,6 +81,8 @@
 \copperdefstring{italian}{approvedonfemale}{Approvata il}
 \copperdefstring{italian}{keywordsname} {Parole chiave}
 \copperdefstring{italian}{volumename} {Volume}
+\copperdefstring{italian}{coadvisor}  {Correlatore}
+\copperdefstring{italian}{coadvisors} {Correlatori}
 \copperdefstring{italian}{ofname}     {di}
 \copperdefstring{italian}{universityname}{Universidade Federal do Rio de Janeiro}
 \copperdefstring{italian}{cityname}    {Rio de Janeiro}
