@@ -166,6 +166,11 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
   {\normalfont\bfseries}{\thesubsection}{1ex}{}
 \titleformat{\subsubsection}
   {\normalfont\bfseries\itshape}{\thesubsubsection}{1ex}{}
+\titleformat{\paragraph}[hang]
+  {\normalfont\itshape}{\theparagraph}{1ex}{}
+\titlespacing*{\paragraph}{0pt}{2.5ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+\setcounter{secnumdepth}{4}
+\setcounter{tocdepth}{4}
 \RequirePackage{caption}
 \captionsetup{font=footnotesize,labelsep=endash}
 \RequirePackage{subcaption}

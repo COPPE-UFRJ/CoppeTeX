@@ -2133,6 +2133,22 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
 % subsubsection: bold italic.
 \titleformat{\subsubsection}
   {\normalfont\bfseries\itshape}{\thesubsubsection}{1ex}{}
+% paragraph = quinary section: italic, the author capitalising only the first
+% word. 2.6 recommends going as deep as the quinary, and the annotation on the
+% 2025 manual (specs/ANOTACOES.md) describes exactly this shape.
+%
+% book makes \paragraph a RUN-IN heading, so the text continued on the same
+% line -- 2.6 requires "o texto deve ser iniciado em outra linha". The positive
+% "after" spacing in \titlespacing turns it into a displayed heading.
+\titleformat{\paragraph}[hang]
+  {\normalfont\itshape}{\theparagraph}{1ex}{}
+\titlespacing*{\paragraph}{0pt}{2.5ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+% book defaults secnumdepth to 2, so \subsubsection and \paragraph came out
+% UNNUMBERED however carefully \titleformat named \thesubsubsection. 2.6 has
+% the numbering following the whole chain down to the quinary, and the manual's
+% own sumario is four levels deep, so tocdepth follows.
+\setcounter{secnumdepth}{4}
+\setcounter{tocdepth}{4}
 % --- Captions (manual2024 2.10-2.11 / proposta P6): smaller font, ABNT
 %     "Figura 1 -- titulo" travessao separator (sources handled by \source). ---
 \RequirePackage{caption}
