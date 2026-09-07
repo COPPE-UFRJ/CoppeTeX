@@ -141,13 +141,21 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \DoNotIndex{\ClassWarning,\DeclareOption,\Gamma,\LaTeX,\LoadClass}
 % \DoNotIndex{\MakeUppercase,\MessageBreak,\NeedsTeXFormat,\Omega,\Pi}
 % \DoNotIndex{\ProcessOptions,\ProvidesClass,\RequirePackage,\Roman}
+% Three conditional primitives are deliberately absent from the lists below:
+% the ones that close or branch a conditional.
+% |\DoNotIndex| scans its argument with \TeX's own conditional machinery live,
+% so a bare one of them closes the wrong conditional. The manual ended its run
+% with ``Too many \}'s'' and exited with status~1, which failed the docs step
+% of the harness even though the PDF had been written. Leaving them out of the
+% lists means they get indexed, which is harmless. Note that they cannot be
+% named here either, not even inside |...| shorthand split across a line.
 % \DoNotIndex{\addcontentsline,\addtocounter,\advance,\and,\arabic}
 % \DoNotIndex{\baselineskip,\baselinestretch,\begin,\begingroup,\bibindent}
 % \DoNotIndex{\bibname,\boolean,\c,\c@enumiv,\centering,\chapter}
 % \DoNotIndex{\cleardoublepage,\clearpage,\clubpenalty,\columnsep}
-% \DoNotIndex{\columnseprule,\count,\csname,\def,\do,\documentclass,\else}
+% \DoNotIndex{\columnseprule,\count,\csname,\def,\do,\documentclass}
 % \DoNotIndex{\end,\endcsname,\endgroup,\endlist,\equal,\eta,\expandafter}
-% \DoNotIndex{\fi,\filedate,\filename,\fileversion,\gdef,\global,\hbox}
+% \DoNotIndex{\filedate,\filename,\fileversion,\gdef,\global,\hbox}
 % \DoNotIndex{\hrulefill,\if@restonecol,\if@twocolumn,\ifcase,\ifnum}
 % \DoNotIndex{\ifthenelse,\ifx,\immediate,\indexentry,\indexname,\it,\item}
 % \DoNotIndex{\itemindent,\jobname,\kern,\labelsep,\labelwidth,\leftmargin}
@@ -155,7 +163,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \DoNotIndex{\makebox,\mathbb,\mathbf,\mathcal,\month,\n,\newboolean}
 % \DoNotIndex{\newcommand,\newcount,\newcounter,\newdimen,\newenvironment}
 % \DoNotIndex{\newlabel,\newpage,\newwrite,\nocite,\nohyphens,\noindent}
-% \DoNotIndex{\normalsize,\nu,\number,\omega,\onecolumn,\openout,\or,\p@}
+% \DoNotIndex{\normalsize,\nu,\number,\omega,\onecolumn,\openout,\p@}
 % \DoNotIndex{\p@enumiv,\pagenumbering,\pageref,\pagestyle,\par,\parindent}
 % \DoNotIndex{\parskip,\protected@write,\qquad,\relax,\renewcommand}
 % \DoNotIndex{\renewenvironment,\rm,\sc,\setboolean,\setcounter,\setlength}
@@ -6625,7 +6633,10 @@ def soma(v):
 % \nocite{*}
 % \bibliographystyle{plain}
 % \bibliography{coppe}
+% \clearpage
 % \Finale
+% \clearpage
 % \PrintChanges
+% \clearpage
 % \PrintIndex
 \endinput
