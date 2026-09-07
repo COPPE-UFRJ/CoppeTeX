@@ -2595,13 +2595,28 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \@mkboth{\MakeUppercase\lstlistlistingname}{\MakeUppercase\lstlistlistingname}%
   \@starttoc{lol}}
 % Per-language styles + environments (python, java, xml, html, prolog).
+% The red hook that marks a wrapped line is built ONCE, into a box, and the
+% styles below insert the box. Writing the colour inline -- postbreak=\mbox{%
+% \textcolor{red}{$\hookrightarrow$}\space} -- worked for years and broke the
+% moment the pdfa option was switched on: pdfx puts xcolor into a converting
+% mode (\selectcolormodel plus \convertcolorsU/D), and a colour command run
+% from inside listings' line-breaking machinery then fails with "Missing
+% number, treated as zero" at the first wrapped line. Every listing in the
+% document dies, so the class's own example could not be compiled as PDF/A at
+% all. A box is immune: it is built here, in ordinary horizontal mode where
+% xcolor works normally, and listings only ever copies it.
+%
+% The \sbox waits for \begin{document} because xcolor's colours are not
+% defined while the class is still loading.
+\newsavebox\coppe@lstarrow
+\AtBeginDocument{\sbox\coppe@lstarrow{\textcolor{red}{$\hookrightarrow$}\space}}
 \newcommand\pythonstyle{\lstset{language=Python,basicstyle=\ttm,numbers=left,%
   numberstyle=\small\ttfamily,numbersep=0.5em,commentstyle=\color{purple},%
   morekeywords={self,as},keywordstyle=\ttb\color[rgb]{0,0,0.5},%
   emph={MyClass,__init__},emphstyle=\ttb\color[rgb]{0.6,0,0},%
   stringstyle=\color[rgb]{0,0.5,0},frame=tb,showstringspaces=false,%
   extendedchars=true,firstnumber=auto,inputencoding=utf8,breaklines=true,%
-  escapechar=`,postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space}}}
+  escapechar=`,postbreak=\usebox\coppe@lstarrow}}
 \lstnewenvironment{python}[1][]{\pythonstyle\lstset{#1}%
   \csname\@lst @SetFirstNumber\endcsname}{\csname\@lst @SaveFirstNumber\endcsname}
 \newcommand\pythoninline[1]{{\pythonstyle\lstinline!#1!}}
@@ -2613,14 +2628,14 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   emph={name,type,attributeFormDefault,elementFormDefault,xmlns:xs},%
   emphstyle=\ttb\color[rgb]{0.6,0,0},stringstyle=\color[rgb]{0,0.5,0},frame=tb,%
   showstringspaces=false,extendedchars=true,inputencoding=utf8,breaklines=true,%
-  postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space}}}
+  postbreak=\usebox\coppe@lstarrow}}
 \lstnewenvironment{xml}[1][]{\xmlstyle\lstset{#1}}{}
 \newcommand\htmlstyle{\lstset{language=HTML,basicstyle=\ttm,numbers=left,%
   numberstyle=\small\ttfamily,numbersep=0.5em,%
   keywordstyle=\ttb\color[rgb]{0,0,0.5},emphstyle=\ttb\color[rgb]{0.6,0,0},%
   stringstyle=\color[rgb]{0,0.5,0},frame=tb,showstringspaces=false,%
   extendedchars=true,inputencoding=utf8,breaklines=true,%
-  postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space}}}
+  postbreak=\usebox\coppe@lstarrow}}
 \lstnewenvironment{html}[1][]{\htmlstyle\lstset{#1}}{}
 \newcommand\prologstyle{\lstset{language=Prolog,basicstyle=\ttm,numbers=left,%
   numberstyle=\small\ttfamily,numbersep=0.5em,commentstyle=\color{purple},%
@@ -2628,7 +2643,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   emphstyle=\ttb\color[rgb]{0.6,0,0},stringstyle=\color[rgb]{0,0.5,0},frame=tb,%
   showstringspaces=false,extendedchars=true,firstnumber=auto,inputencoding=utf8,%
   breaklines=true,escapechar=`,%
-  postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space}}}
+  postbreak=\usebox\coppe@lstarrow}}
 \lstnewenvironment{prolog}[1][]{\prologstyle\lstset{#1}%
   \csname\@lst @SetFirstNumber\endcsname}{\csname\@lst @SaveFirstNumber\endcsname}
 \newcommand\javastyle{\lstset{language=Java,basicstyle=\ttm,numbers=left,%
@@ -2637,7 +2652,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   emphstyle=\ttb\color[rgb]{0.6,0,0},stringstyle=\color[rgb]{0,0.5,0},frame=tb,%
   showstringspaces=false,extendedchars=true,firstnumber=auto,inputencoding=utf8,%
   breaklines=true,escapechar=`,%
-  postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space}}}
+  postbreak=\usebox\coppe@lstarrow}}
 \lstnewenvironment{java}[1][]{\javastyle\lstset{#1}%
   \csname\@lst @SetFirstNumber\endcsname}{\csname\@lst @SaveFirstNumber\endcsname}
 \newcommand\javainline[1]{{\javastyle\lstinline!#1!}}

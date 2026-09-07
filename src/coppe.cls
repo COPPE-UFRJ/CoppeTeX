@@ -441,13 +441,15 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \addcontentsline{toc}{chapter}{\lstlistlistingname}%
   \@mkboth{\MakeUppercase\lstlistlistingname}{\MakeUppercase\lstlistlistingname}%
   \@starttoc{lol}}
+\newsavebox\coppe@lstarrow
+\AtBeginDocument{\sbox\coppe@lstarrow{\textcolor{red}{$\hookrightarrow$}\space}}
 \newcommand\pythonstyle{\lstset{language=Python,basicstyle=\ttm,numbers=left,%
   numberstyle=\small\ttfamily,numbersep=0.5em,commentstyle=\color{purple},%
   morekeywords={self,as},keywordstyle=\ttb\color[rgb]{0,0,0.5},%
   emph={MyClass,__init__},emphstyle=\ttb\color[rgb]{0.6,0,0},%
   stringstyle=\color[rgb]{0,0.5,0},frame=tb,showstringspaces=false,%
   extendedchars=true,firstnumber=auto,inputencoding=utf8,breaklines=true,%
-  escapechar=`,postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space}}}
+  escapechar=`,postbreak=\usebox\coppe@lstarrow}}
 \lstnewenvironment{python}[1][]{\pythonstyle\lstset{#1}%
   \csname\@lst @SetFirstNumber\endcsname}{\csname\@lst @SaveFirstNumber\endcsname}
 \newcommand\pythoninline[1]{{\pythonstyle\lstinline!#1!}}
@@ -459,14 +461,14 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   emph={name,type,attributeFormDefault,elementFormDefault,xmlns:xs},%
   emphstyle=\ttb\color[rgb]{0.6,0,0},stringstyle=\color[rgb]{0,0.5,0},frame=tb,%
   showstringspaces=false,extendedchars=true,inputencoding=utf8,breaklines=true,%
-  postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space}}}
+  postbreak=\usebox\coppe@lstarrow}}
 \lstnewenvironment{xml}[1][]{\xmlstyle\lstset{#1}}{}
 \newcommand\htmlstyle{\lstset{language=HTML,basicstyle=\ttm,numbers=left,%
   numberstyle=\small\ttfamily,numbersep=0.5em,%
   keywordstyle=\ttb\color[rgb]{0,0,0.5},emphstyle=\ttb\color[rgb]{0.6,0,0},%
   stringstyle=\color[rgb]{0,0.5,0},frame=tb,showstringspaces=false,%
   extendedchars=true,inputencoding=utf8,breaklines=true,%
-  postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space}}}
+  postbreak=\usebox\coppe@lstarrow}}
 \lstnewenvironment{html}[1][]{\htmlstyle\lstset{#1}}{}
 \newcommand\prologstyle{\lstset{language=Prolog,basicstyle=\ttm,numbers=left,%
   numberstyle=\small\ttfamily,numbersep=0.5em,commentstyle=\color{purple},%
@@ -474,7 +476,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   emphstyle=\ttb\color[rgb]{0.6,0,0},stringstyle=\color[rgb]{0,0.5,0},frame=tb,%
   showstringspaces=false,extendedchars=true,firstnumber=auto,inputencoding=utf8,%
   breaklines=true,escapechar=`,%
-  postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space}}}
+  postbreak=\usebox\coppe@lstarrow}}
 \lstnewenvironment{prolog}[1][]{\prologstyle\lstset{#1}%
   \csname\@lst @SetFirstNumber\endcsname}{\csname\@lst @SaveFirstNumber\endcsname}
 \newcommand\javastyle{\lstset{language=Java,basicstyle=\ttm,numbers=left,%
@@ -483,7 +485,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   emphstyle=\ttb\color[rgb]{0.6,0,0},stringstyle=\color[rgb]{0,0.5,0},frame=tb,%
   showstringspaces=false,extendedchars=true,firstnumber=auto,inputencoding=utf8,%
   breaklines=true,escapechar=`,%
-  postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space}}}
+  postbreak=\usebox\coppe@lstarrow}}
 \lstnewenvironment{java}[1][]{\javastyle\lstset{#1}%
   \csname\@lst @SetFirstNumber\endcsname}{\csname\@lst @SaveFirstNumber\endcsname}
 \newcommand\javainline[1]{{\javastyle\lstinline!#1!}}
