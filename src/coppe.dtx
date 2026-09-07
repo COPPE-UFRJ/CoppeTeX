@@ -2058,7 +2058,24 @@ No modelo \CoppeTeX os anexos devem obrigtoriamente vir depois dos apêndices e 
 % keeps \topmargin a derived value -- we never touch it by hand.
 % (geometry has no \texttt{oneside} key -- only \texttt{twoside}; with the key
 % absent it follows the class, which \LoadClass set to one-sided above.)
-\RequirePackage[a4paper,headheight=15pt,%
+% headsep is given explicitly to place the folio. 2.7 measures it the way it
+% measures the right margin -- to the digits themselves: "a 2cm da borda
+% superior, ficando o ultimo algarismo a 2cm da borda direita". The right edge
+% already landed at 2.02cm; the top of the digits sat at 1.87cm, too high.
+% geometry derives \topmargin from top - 1in - headheight - headsep, so
+% shortening headsep lowers the header and leaves the body top untouched:
+% topmargin + headheight + headsep is 13.088pt either way, and 3cm is where the
+% body still starts. The value is CALIBRATED, not computed -- the folio sits a
+% little lower than the arithmetic alone predicts, because fancyhdr's box does
+% not put the digits flush with the top of \headheight. Two measured points,
+% taken from the rendered page rather than from the PDF's font metrics:
+%   headsep 18.07pt -> digits at 1.8669cm      headsep 14.29pt -> 2.0616cm
+% which put 2.0000cm at 15.49pt. Measured back on the rendered page, the top of
+% the digits and their right edge now come out at the same 2.019cm -- and the
+% right margin is 2cm by construction, so that shared 0.019cm is the ruler's
+% own bias, not a residual error. Change the body font size or headheight and
+% this number has to be measured again, not scaled.
+\RequirePackage[a4paper,headheight=15pt,headsep=15.49pt,%
 top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
 % The first paragraph of every section must be indented like any other. LaTeX's
 % default is the Anglo-Saxon convention -- no indent after a heading -- which is

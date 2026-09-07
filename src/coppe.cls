@@ -109,7 +109,7 @@
           Do NOT load amssymb together with unicode-math -- it would clash\MessageBreak
           with the OpenType math font setup}}}}
 \fi
-\RequirePackage[a4paper,headheight=15pt,%
+\RequirePackage[a4paper,headheight=15pt,headsep=15.49pt,%
 top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
 \setlength\emergencystretch{3em}
 \RequirePackage{indentfirst}
