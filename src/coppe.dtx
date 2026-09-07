@@ -2422,6 +2422,13 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \DeclareOption{pdfa}{\@coppepdfatrue}
 \newif\if@coppeassin \@coppeassinfalse
 \DeclareOption{assinaturas}{\@coppeassintrue}
+% As paginas de resumo listam os ORIENTADORES abaixo do titulo. O coorientador
+% nao aparece ali, e isso e tradicao da COPPE, nao exigencia do manual: a
+% 3.1.2.1.4 descreve o resumo e nao lista quem assina a orientacao. Como ha
+% Programas que preferem ve-lo, a opcao acrescenta os coorientadores nas tres
+% paginas de resumo, no mesmo formato da folha de rosto. Sem a opcao nada muda.
+\newif\if@coppecoadvresumo \@coppecoadvresumofalse
+\DeclareOption{coorientador}{\@coppecoadvresumotrue}
 \newif\if@copperascunho \@copperascunhofalse
 \DeclareOption{rascunhoficha}{\@copperascunhotrue}
 \newif\if@coppetwoside \@coppetwosidefalse
@@ -2873,6 +2880,13 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \coppemainstring{coadvisors}%
   \else
     \coppemainstring{coadvisor}%
+  \fi}
+% Mesma coisa no idioma estrangeiro, para a pagina de abstract.
+\newcommand\foreign@coadvisorstring{%
+  \ifnum\@coadvisor>1
+    \coppeforeignstring{coadvisors}%
+  \else
+    \coppeforeignstring{coadvisor}%
   \fi}
 \newcommand\coppe@nvolumes{1}
 \newcommand\coppe@thisvolume{1}
@@ -3707,6 +3721,43 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \end{macro}
 %
 
+% \begin{macro}{\coppe@coadvisorrows}
+% The coadvisor block of the abstract pages, in the shape the folha de rosto
+% already uses. It prints nothing at all unless the |coorientador| class option
+% is given AND the document actually declared a |\coadvisor|, so the default
+% output is byte for byte what it was. The argument is the label macro, which
+% differs per page: the main-language pages pass |\local@coadvisorstring| and
+% the foreign one passes |\foreign@coadvisorstring|.
+%    \begin{macrocode}
+\newcommand\coppe@coadvisorrows[1]{%
+  \if@coppecoadvresumo
+    \ifnum\@coadvisor>0
+      \par\vspace*{2mm}%
+      \noindent\begin{tabularx}{\textwidth}[b]{@{}l@{ }>{\raggedright\arraybackslash}X@{}}
+        #1: &
+        \count1=0
+        \toks@={}
+        \@whilenum \count1<\@coadvisor \do{%
+        \ifcase\count1
+          \toks@=\expandafter{\csname CoppeCoadvisorName:\the\count1%
+            \expandafter\endcsname\expandafter\space%
+            \csname CoppeCoadvisorSurname:\the\count1\endcsname\\}
+        \else
+          \toks@=\expandafter\expandafter\expandafter{%
+            \expandafter\the\expandafter\toks@%
+            \expandafter&\expandafter\space%
+            \csname CoppeCoadvisorName:\the\count1\expandafter\endcsname%
+            \expandafter\space\csname CoppeCoadvisorSurname:\the\count1\endcsname\\
+          }%
+        \fi
+        \advance\count1 by 1}
+        \the\toks@
+      \end{tabularx}%
+    \fi
+  \fi}
+%    \end{macrocode}
+% \end{macro}
+%
 % \begin{environment}{abstract}
 % This is a specialization of the abstract in the article standard class.
 %    \begin{macrocode}
@@ -3743,7 +3794,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \fi
     \advance\count1 by 1}
     \the\toks@
-  \end{tabularx}\par
+  \end{tabularx}%
+  \coppe@coadvisorrows{\local@coadvisorstring}\par
   \vspace*{2mm}
   \noindent\local@deptstring: \local@deptname\par
   \vspace*{7mm}}{%
@@ -3790,7 +3842,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \fi
     \advance\count1 by 1}
     \the\toks@
-  \end{tabularx}\par
+  \end{tabularx}%
+  \coppe@coadvisorrows{\foreign@coadvisorstring}\par
   \vspace*{2mm}
   \noindent\foreign@deptstring: \foreign@deptname\par
   \vspace*{7mm}}{%
@@ -3860,7 +3913,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \fi
     \advance\count1 by 1}
     \the\toks@
-  \end{tabularx}\par
+  \end{tabularx}%
+  \coppe@coadvisorrows{\local@coadvisorstring}\par
   \vspace*{2mm}
   \noindent\local@deptstring: \local@deptname\par
   \vspace*{7mm}}{%
@@ -6531,6 +6585,53 @@ def soma(v):
     Texto da seção.
 \end{document}
 %</testassin7>
+% \fi
+%
+% \subsubsection{\texttt{tests/test\_coorientador.tex}}
+%
+% Guards the |coorientador| class option: the coadvisors have to show up on all
+% three abstract pages, under the label of the page's own language, and the
+% advisors have to stay exactly where they were. Two coadvisors on purpose, so
+% the plural form of the label is exercised as well.
+%
+% \iffalse
+%<*testcoadv>
+\documentclass[dsc,coorientador]{coppe}
+
+\usepackage[brazilian]{babel}
+
+\title{Título de Teste do Coorientador no Resumo}
+\foreigntitle{Coadvisor on the Abstract Page Test}
+\author{Nome}{de Teste}
+
+\advisor[UFRJ]{Prof.}{Primeiro}{Orientador}{D.Sc.}
+\coadvisor[UFF]{Prof.}{Primeiro}{Coorientador}{D.Sc.}
+\coadvisor[UNIRIO]{Prof.}{Segundo}{Coorientador}{Ph.D.}
+
+\examiner[UFRJ]{Prof.}{Primeiro Examinador}{D.Sc.}
+\examiner{Prof.}{Segundo Examinador}{Ph.D.}
+
+\department{PESC}
+\date{09}{2026}
+
+\keyword{Primeira}
+\keyword{Segunda}
+
+\begin{document}
+  \maketitle
+  \frontmatter
+  \begin{abstract}
+    Resumo de teste.
+  \end{abstract}
+  \begin{foreignabstract}
+    Test abstract.
+  \end{foreignabstract}
+  \tableofcontents
+  \mainmatter
+  \chapter{Introdução}
+    Primeiro parágrafo.
+\end{document}
+%</testcoadv>
 % \fi
 %
 % \subsubsection{\texttt{tests/test\_pdfa.tex}}

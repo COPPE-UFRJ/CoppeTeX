@@ -1,0 +1,68 @@
+%%
+%% This is file `tests/test_coorientador.tex',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% coppe.dtx  (with options: `testcoadv')
+%% 
+%% This is a regression test for the `coppe' document class.  Each test is meant
+%% to compile cleanly under pdflatex + biber + pdflatex + pdflatex; the runner
+%% src/tests/run-tests.ps1 discovers every test_*.tex in that directory.  It is
+%% generated from coppe.dtx by docstrip; edit the .dtx source, not this file.
+%% 
+%% \CheckSum{0}
+%% \CharacterTable
+%%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+%%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+%%   Digits        \0\1\2\3\4\5\6\7\8\9
+%%   Exclamation   \!     Double quote  \"     Hash (number) \#
+%%   Dollar        \$     Percent       \%     Ampersand     \&
+%%   Acute accent  \'     Left paren    \(     Right paren   \)
+%%   Asterisk      \*     Plus          \+     Comma         \,
+%%   Minus         \-     Point         \.     Solidus       \/
+%%   Colon         \:     Semicolon     \;     Less than     \<
+%%   Equals        \=     Greater than  \>     Question mark \?
+%%   Commercial at \@     Left bracket  \[     Backslash     \\
+%%   Right bracket \]     Circumflex    \^     Underscore    \_
+%%   Grave accent  \`     Left brace    \{     Vertical bar  \|
+%%   Right brace   \}     Tilde         \~}
+%%
+\documentclass[dsc,coorientador]{coppe}
+
+\usepackage[brazilian]{babel}
+
+\title{Título de Teste do Coorientador no Resumo}
+\foreigntitle{Coadvisor on the Abstract Page Test}
+\author{Nome}{de Teste}
+
+\advisor[UFRJ]{Prof.}{Primeiro}{Orientador}{D.Sc.}
+\coadvisor[UFF]{Prof.}{Primeiro}{Coorientador}{D.Sc.}
+\coadvisor[UNIRIO]{Prof.}{Segundo}{Coorientador}{Ph.D.}
+
+\examiner[UFRJ]{Prof.}{Primeiro Examinador}{D.Sc.}
+\examiner{Prof.}{Segundo Examinador}{Ph.D.}
+
+\department{PESC}
+\date{09}{2026}
+
+\keyword{Primeira}
+\keyword{Segunda}
+
+\begin{document}
+  \maketitle
+  \frontmatter
+  \begin{abstract}
+    Resumo de teste.
+  \end{abstract}
+  \begin{foreignabstract}
+    Test abstract.
+  \end{foreignabstract}
+  \tableofcontents
+  \mainmatter
+  \chapter{Introdução}
+    Primeiro parágrafo.
+\end{document}
+%% 
+%%
+%% End of file `tests/test_coorientador.tex'.

@@ -287,6 +287,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \DeclareOption{pdfa}{\@coppepdfatrue}
 \newif\if@coppeassin \@coppeassinfalse
 \DeclareOption{assinaturas}{\@coppeassintrue}
+\newif\if@coppecoadvresumo \@coppecoadvresumofalse
+\DeclareOption{coorientador}{\@coppecoadvresumotrue}
 \newif\if@copperascunho \@copperascunhofalse
 \DeclareOption{rascunhoficha}{\@copperascunhotrue}
 \newif\if@coppetwoside \@coppetwosidefalse
@@ -594,6 +596,12 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \coppemainstring{coadvisors}%
   \else
     \coppemainstring{coadvisor}%
+  \fi}
+\newcommand\foreign@coadvisorstring{%
+  \ifnum\@coadvisor>1
+    \coppeforeignstring{coadvisors}%
+  \else
+    \coppeforeignstring{coadvisor}%
   \fi}
 \newcommand\coppe@nvolumes{1}
 \newcommand\coppe@thisvolume{1}
@@ -1149,6 +1157,32 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
       \end{minipage}
     \end{flushright}}
 
+\newcommand\coppe@coadvisorrows[1]{%
+  \if@coppecoadvresumo
+    \ifnum\@coadvisor>0
+      \par\vspace*{2mm}%
+      \noindent\begin{tabularx}{\textwidth}[b]{@{}l@{ }>{\raggedright\arraybackslash}X@{}}
+        #1: &
+        \count1=0
+        \toks@={}
+        \@whilenum \count1<\@coadvisor \do{%
+        \ifcase\count1
+          \toks@=\expandafter{\csname CoppeCoadvisorName:\the\count1%
+            \expandafter\endcsname\expandafter\space%
+            \csname CoppeCoadvisorSurname:\the\count1\endcsname\\}
+        \else
+          \toks@=\expandafter\expandafter\expandafter{%
+            \expandafter\the\expandafter\toks@%
+            \expandafter&\expandafter\space%
+            \csname CoppeCoadvisorName:\the\count1\expandafter\endcsname%
+            \expandafter\space\csname CoppeCoadvisorSurname:\the\count1\endcsname\\
+          }%
+        \fi
+        \advance\count1 by 1}
+        \the\toks@
+      \end{tabularx}%
+    \fi
+  \fi}
 \newenvironment{abstract}{%
   \cleardoublepage
   \thispagestyle{plain}
@@ -1182,7 +1216,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \fi
     \advance\count1 by 1}
     \the\toks@
-  \end{tabularx}\par
+  \end{tabularx}%
+  \coppe@coadvisorrows{\local@coadvisorstring}\par
   \vspace*{2mm}
   \noindent\local@deptstring: \local@deptname\par
   \vspace*{7mm}}{%
@@ -1223,7 +1258,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \fi
     \advance\count1 by 1}
     \the\toks@
-  \end{tabularx}\par
+  \end{tabularx}%
+  \coppe@coadvisorrows{\foreign@coadvisorstring}\par
   \vspace*{2mm}
   \noindent\foreign@deptstring: \foreign@deptname\par
   \vspace*{7mm}}{%
@@ -1279,7 +1315,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \fi
     \advance\count1 by 1}
     \the\toks@
-  \end{tabularx}\par
+  \end{tabularx}%
+  \coppe@coadvisorrows{\local@coadvisorstring}\par
   \vspace*{2mm}
   \noindent\local@deptstring: \local@deptname\par
   \vspace*{7mm}}{%
