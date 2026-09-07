@@ -4236,11 +4236,40 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \pdfsuppressptexinfo=-1
 % pdfx takes the XMP metadata from \jobname.xmpdata, which it reads when it is
 % LOADED -- before the preamble has run, so before \title, \author and
-% \keyword exist. The file is therefore WRITTEN at \begin{document}, when the
-% metadata is known, and picked up on the NEXT run. The build already runs
-% pdflatex three times for cross-references, so the deposited PDF always carries
-% current metadata; only a first-ever compilation of a brand-new file emits
-% pdfx's "no \jobname.xmpdata" warning and lacks dc:title.
+% \keyword exist. The file is therefore WRITTEN by the class and picked up on
+% the NEXT run. The build already runs pdflatex three times for cross-
+% references, so the deposited PDF always carries current metadata; only a
+% first-ever compilation of a brand-new file emits pdfx's "no \jobname.xmpdata"
+% warning and lacks dc:title.
+%
+% The write happens at the END of the document, not at \begin{document}. This
+% class has always documented -- and every example follows it -- that \title,
+% \author, \department and \keyword go AFTER \begin{document}, next to
+% \maketitle. A write at \begin{document} therefore ran before any of them
+% existed and died with "Undefined control sequence" on \@authname, so the
+% pdfa option was unusable in exactly the style the manual teaches. It only
+% ever worked for a document that set its metadata in the preamble. At the end
+% everything is set whichever style the author chose, and \immediate still puts
+% the file on disk in time for the next run.
+%
+% The hook is enddocument/afteraux, and the stream is \@mainaux rather than one
+% of our own. TeX has sixteen output streams and example.tex was already using
+% all of them (toc, lof, lot, loa, lol, loq, los, idx, glo, aux, bcf, ...), so
+% \newwrite here failed with "No room for a new \write" on precisely the
+% document that most needs validating. enddocument/afteraux fires after LaTeX
+% has closed the .aux, which frees that stream for the one \immediate\openout
+% we need and costs the document nothing. Kernels older than 2020-10-01 have no
+% such hook; there the class falls back to \AtEndDocument with a stream of its
+% own, which is the pre-existing behaviour.
+%
+% Every field is guarded, and the guards are not cosmetic. \coppe@selecttitle
+% is \@nameuse{coppe@title@<lang>}, and \csname on a name that does not exist
+% yet MAKES it \relax: unexpandable, so \write puts the control sequence NAME
+% into the file instead of the title. The .xmpdata then carried the literal
+% \coppe@title@brazilian, pdfx read it back on the following run, and the
+% document stopped compiling at all -- a single bad run bricked the file until
+% someone deleted the .xmpdata by hand. A field that is not set is now simply
+% omitted, which pdfx handles, instead of poisoning the next run.
 %
 % The writes must be \immediate. \protected@write defers to the shipout, and
 % the stream is closed here and now, so deferred writes would land nowhere --
@@ -4249,8 +4278,14 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \protected@write would have given: accents and other robust commands are
 % written literally instead of being expanded. pdfx reads the .xmpdata as
 % LaTeX, so \'a arrives there intact.
-  \newwrite\coppe@xmpout
-  \AtBeginDocument{%
+  \ifdefined\AddToHook
+    \let\coppe@xmpout\@mainaux
+    \def\coppe@xmphook{\AddToHook{enddocument/afteraux}}%
+  \else
+    \newwrite\coppe@xmpout
+    \let\coppe@xmphook\AtEndDocument
+  \fi
+  \coppe@xmphook{%
     \gdef\coppe@xmpkeys{}%
     \count@=0
     \@whilenum\count@<\value{keywords}\do{%
@@ -4264,14 +4299,19 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \immediate\openout\coppe@xmpout=\jobname.xmpdata
     \begingroup
       \let\protect\string
-      \immediate\write\coppe@xmpout{\string\Title{\coppe@selecttitle}}%
-      \immediate\write\coppe@xmpout{\string\Author{\@authname\space\@authsurn}}%
+      \@ifundefined{coppe@title@\coppe@mainlang}{}{%
+        \immediate\write\coppe@xmpout{\string\Title{\coppe@selecttitle}}}%
+      \@ifundefined{@authname}{}{%
+        \immediate\write\coppe@xmpout{%
+          \string\Author{\@authname\space\@authsurn}}}%
       \immediate\write\coppe@xmpout{\string\Keywords{\coppe@xmpkeys}}%
-      \immediate\write\coppe@xmpout{\string\Subject{\local@doctype\space de
-        \@degreename. Programa de \meta@deptname\space(\coppe@deptcode),
-        COPPE/UFRJ}}%
+      \ifthenelse{\equal{\coppe@deptcode}{}}{}{%
+        \immediate\write\coppe@xmpout{\string\Subject{\local@doctype\space de
+          \@degreename. Programa de \meta@deptname\space(\coppe@deptcode),
+          COPPE/UFRJ}}}%
       \immediate\write\coppe@xmpout{\string\Publisher{\local@universityname}}%
-      \immediate\write\coppe@xmpout{\string\Date{\coppe@docyear}}%
+      \@ifundefined{coppe@docyear}{}{%
+        \immediate\write\coppe@xmpout{\string\Date{\coppe@docyear}}}%
     \endgroup
     \immediate\closeout\coppe@xmpout}%
 \fi

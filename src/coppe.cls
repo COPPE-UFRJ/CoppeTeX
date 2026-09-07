@@ -1560,8 +1560,14 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \if@coppepdfa
   \RequirePackage[a-2b]{pdfx}
   \pdfsuppressptexinfo=-1
-  \newwrite\coppe@xmpout
-  \AtBeginDocument{%
+  \ifdefined\AddToHook
+    \let\coppe@xmpout\@mainaux
+    \def\coppe@xmphook{\AddToHook{enddocument/afteraux}}%
+  \else
+    \newwrite\coppe@xmpout
+    \let\coppe@xmphook\AtEndDocument
+  \fi
+  \coppe@xmphook{%
     \gdef\coppe@xmpkeys{}%
     \count@=0
     \@whilenum\count@<\value{keywords}\do{%
@@ -1575,14 +1581,19 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \immediate\openout\coppe@xmpout=\jobname.xmpdata
     \begingroup
       \let\protect\string
-      \immediate\write\coppe@xmpout{\string\Title{\coppe@selecttitle}}%
-      \immediate\write\coppe@xmpout{\string\Author{\@authname\space\@authsurn}}%
+      \@ifundefined{coppe@title@\coppe@mainlang}{}{%
+        \immediate\write\coppe@xmpout{\string\Title{\coppe@selecttitle}}}%
+      \@ifundefined{@authname}{}{%
+        \immediate\write\coppe@xmpout{%
+          \string\Author{\@authname\space\@authsurn}}}%
       \immediate\write\coppe@xmpout{\string\Keywords{\coppe@xmpkeys}}%
-      \immediate\write\coppe@xmpout{\string\Subject{\local@doctype\space de
-        \@degreename. Programa de \meta@deptname\space(\coppe@deptcode),
-        COPPE/UFRJ}}%
+      \ifthenelse{\equal{\coppe@deptcode}{}}{}{%
+        \immediate\write\coppe@xmpout{\string\Subject{\local@doctype\space de
+          \@degreename. Programa de \meta@deptname\space(\coppe@deptcode),
+          COPPE/UFRJ}}}%
       \immediate\write\coppe@xmpout{\string\Publisher{\local@universityname}}%
-      \immediate\write\coppe@xmpout{\string\Date{\coppe@docyear}}%
+      \@ifundefined{coppe@docyear}{}{%
+        \immediate\write\coppe@xmpout{\string\Date{\coppe@docyear}}}%
     \endgroup
     \immediate\closeout\coppe@xmpout}%
 \fi
