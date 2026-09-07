@@ -503,46 +503,60 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \SetKwFor{Para}{para}{faça}{fim do para}
 \SetKwFor{Enquanto}{enquanto}{faça}{fim do enquanto}
 \newcommand\coppe@deptcode{}
+\newcommand\meta@deptname{}
 \newcommand\department[1]{%
   \gdef\coppe@deptcode{#1}%
   \ifthenelse{\equal{#1}{PEB}}
     {\global\def\local@deptname{Engenharia Biom{\' e}dica}
+     \global\def\meta@deptname{Engenharia Biomédica}
      \global\def\foreign@deptname{Biomedical Engineering}}{}
   \ifthenelse{\equal{#1}{PEC}}
     {\global\def\local@deptname{Engenharia Civil}
+     \global\def\meta@deptname{Engenharia Civil}
      \global\def\foreign@deptname{Civil Engineering}}{}
   \ifthenelse{\equal{#1}{PEE}}
     {\global\def\local@deptname{Engenharia El{\' e}trica}
+     \global\def\meta@deptname{Engenharia Elétrica}
      \global\def\foreign@deptname{Electrical Engineering}}{}
   \ifthenelse{\equal{#1}{PEM}}
     {\global\def\local@deptname{Engenharia Mec{\^ a}nica}
+     \global\def\meta@deptname{Engenharia Mecânica}
      \global\def\foreign@deptname{Mechanical Engineering}}{}
   \ifthenelse{\equal{#1}{PEMM}}
     {\global\def\local@deptname{Engenharia Metal{\' u}rgica e de Materiais}
+     \global\def\meta@deptname{Engenharia Metalúrgica e de Materiais}
 \global\def\foreign@deptname{Metallurgical and Materials Engineering}}{}
   \ifthenelse{\equal{#1}{PEN}}
     {\global\def\local@deptname{Engenharia Nuclear}
+     \global\def\meta@deptname{Engenharia Nuclear}
      \global\def\foreign@deptname{Nuclear Engineering}}{}
   \ifthenelse{\equal{#1}{PENO}}
     {\global\def\local@deptname{Engenharia Oce{\^ a}nica}
+     \global\def\meta@deptname{Engenharia Oceânica}
      \global\def\foreign@deptname{Ocean Engineering}}{}
   \ifthenelse{\equal{#1}{PPE}}
     {\global\def\local@deptname{Planejamento Energ{\' e}tico}
+     \global\def\meta@deptname{Planejamento Energético}
      \global\def\foreign@deptname{Energy Planning}}{}
   \ifthenelse{\equal{#1}{PEP}}
     {\global\def\local@deptname{Engenharia de Produ{\c c}{\~ a}o}
+     \global\def\meta@deptname{Engenharia de Produção}
      \global\def\foreign@deptname{Production Engineering}}{}
   \ifthenelse{\equal{#1}{PEQ}}
     {\global\def\local@deptname{Engenharia Qu{\' i}mica}
+     \global\def\meta@deptname{Engenharia Química}
      \global\def\foreign@deptname{Chemical Engineering}}{}
   \ifthenelse{\equal{#1}{PESC}}
     {\global\def\local@deptname{Engenharia de Sistemas e Computa{\c c}{\~ a}o}
+     \global\def\meta@deptname{Engenharia de Sistemas e Computação}
      \global\def\foreign@deptname{Systems Engineering and Computer Science}}{}
   \ifthenelse{\equal{#1}{PET}}
     {\global\def\local@deptname{Engenharia de Transportes}
+     \global\def\meta@deptname{Engenharia de Transportes}
      \global\def\foreign@deptname{Transportation Engineering}}{}
   \ifthenelse{\equal{#1}{PENT}}
     {\global\def\local@deptname{Engenharia de Nanotecnologia}
+     \global\def\meta@deptname{Engenharia de Nanotecnologia}
       \global\def\foreign@deptname{Nanotechnology Engineering}}{}
 }
 \renewcommand\title[1]{%
@@ -1554,7 +1568,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
       \immediate\write\coppe@xmpout{\string\Author{\@authname\space\@authsurn}}%
       \immediate\write\coppe@xmpout{\string\Keywords{\coppe@xmpkeys}}%
       \immediate\write\coppe@xmpout{\string\Subject{\local@doctype\space de
-        \@degreename. Programa \coppe@deptcode, COPPE/UFRJ}}%
+        \@degreename. Programa de \meta@deptname\space(\coppe@deptcode),
+        COPPE/UFRJ}}%
       \immediate\write\coppe@xmpout{\string\Publisher{\local@universityname}}%
       \immediate\write\coppe@xmpout{\string\Date{\coppe@docyear}}%
     \endgroup
