@@ -1,11 +1,14 @@
-% NORMA_COPPE_2026.tex -- LaTeX source for the typeset PDF version of the
-% proposed minimal COPPE/UFRJ norm. Uses the article class on purpose:
-% this is a normative document about the coppe class, not a thesis, so
-% applying the coppe class itself to it would be confusing.
+% NORMA_COPPE_2026.tex -- versao composta da Norma da COPPE/UFRJ.
 %
-% Authoring source is NORMA_COPPE_2026.md at the repository root; this
-% file is a hand-typeset transcription kept readable as LaTeX without
-% pandoc.
+% A fonte de autoria e NORMA_COPPE_2026.md, na raiz do repositorio; este
+% arquivo e a transcricao composta dela, mantida legivel como LaTeX e sem
+% depender de pandoc. Editar os dois em conjunto.
+%
+% Usa a classe article de proposito: e um documento normativo SOBRE a classe
+% coppe, nao uma tese, e aplicar a propria classe a ele confundiria.
+%
+% NAO sai do coppe.dtx: a Norma tem ciclo de vida proprio, decidido pela CPGP,
+% e nao e artefato da classe.
 
 \documentclass[a4paper,11pt]{article}
 \usepackage[T1]{fontenc}
@@ -18,294 +21,315 @@
 \usepackage{microtype}
 \usepackage{url}
 \usepackage{parskip}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{array}
 \usepackage[hidelinks]{hyperref}
 
 \titleformat{\section}{\large\bfseries}{\thesection}{1ex}{}
 \titleformat{\subsection}{\normalsize\bfseries}{\thesubsection}{1ex}{}
 
+% Cada secao normativa declara de que tipo e a diferenca em relacao ao Manual.
+\newcommand\tipo[1]{\normalfont\textit{--- #1}}
+
 \title{\bfseries Norma para a Elabora\c{c}\~ao Gr\'afica de Teses e
        Disserta\c{c}\~oes da COPPE/UFRJ\\[2mm]
        \large Edi\c{c}\~ao 2026 -- Proposta para aprecia\c{c}\~ao da CPGP}
 \author{}
-\date{Maio de 2026}
+\date{Setembro de 2026}
 
 \begin{document}
 \maketitle
 
 \noindent\textit{Esta Norma, quando aprovada, substitui a} Norma para a
-Elabora\c{c}\~ao Gr\'afica de Teses/Disserta\c{c}\~oes \textit{da
-COPPE/UFRJ aprovada pela CPGP em 15 de julho de 2008 e suas revis\~oes
-subsequentes (01/10/2009, 10/09/2010 e 26/11/2019).}
+Elabora\c{c}\~ao Gr\'afica de Teses/Disserta\c{c}\~oes \textit{da COPPE/UFRJ aprovada pela
+CPGP em 15 de julho de 2008 e suas revis\~oes subsequentes (01/10/2009,
+10/09/2010 e 26/11/2019).}
 
 \hrulefill
 
-\section{Documento base e implementa\c{c}\~ao de refer\^encia}
+\section*{Como ler esta Norma}
 
-\subsection{Documento base}
+Esta Norma \textbf{n\~ao descreve como se formata uma tese}. Quem faz isso \'e o
+\textbf{Manual para Elabora\c{c}\~ao e Normaliza\c{c}\~ao de Trabalhos Acad\^emicos} da
+UFRJ/SiBI, 9.\textsuperscript{a} edi\c{c}\~ao revista (Rio de Janeiro, 2026) -- daqui
+em diante \textit{Manual UFRJ 2026} --, que vale integralmente na COPPE.
 
-A apresenta\c{c}\~ao gr\'afica de teses e disserta\c{c}\~oes da
-COPPE/UFRJ segue o \textbf{Manual para Elabora\c{c}\~ao e
-Normaliza\c{c}\~ao de Trabalhos Acad\^emicos} da UFRJ/SiBI, 9.\textsuperscript{a}
-edi\c{c}\~ao revista (Rio de Janeiro, 2026) -- doravante referido
-como \textit{Manual UFRJ 2026} -- em conjunto com as adapta\c{c}\~oes
-estabelecidas pela presente Norma.
+O que esta Norma faz \'e registrar, ponto a ponto, \textbf{onde a COPPE
+especializa o Manual}: onde ele deixa uma escolha em aberto e a COPPE escolhe,
+onde ele pede um dado que s\'o a COPPE tem, e onde a COPPE acrescenta um elemento
+que ele n\~ao prev\^e. Fora do que est\'a escrito aqui, vale o Manual --- formato do
+papel, margens, espa\c{c}amento, fonte, pagina\c{c}\~ao, equa\c{c}\~oes, tabelas, indicativos de
+se\c{c}\~ao, ortografia, siglas, ilustra\c{c}\~oes e estrutura textual no caso geral.
 
-A edi\c{c}\~ao revista de 2026 incorpora tr\^es decis\~oes
-institucionais que condicionam diretamente a presente Norma: a
-\textbf{Resolu\c{c}\~ao CEPG n. 246/2023}, que extingue a entrega da
-via impressa e institui a entrega exclusivamente digital; a
-\textbf{Resolu\c{c}\~ao CEPG n. 302/2024}, cujo art.\ 57 fixa os
-idiomas de reda\c{c}\~ao (ver Se\c{c}\~ao 4); e o \textbf{novo modelo
-de coleta de informa\c{c}\~oes acad\^emicas da CAPES}, que d\'a origem
-\`a folha adicional da Se\c{c}\~ao 2.4.
+Cada se\c{c}\~ao abaixo diz de que tipo \'e a diferen\c{c}a:
 
-A presente Norma estabelece \textbf{apenas os elementos pr\'oprios da
-COPPE/UFRJ}. Todos os aspectos n\~ao tratados explicitamente aqui --
-formato do papel, margens, espa\c{c}amento, fonte, pagina\c{c}\~ao
-geral, equa\c{c}\~oes, tabelas, indicativos de se\c{c}\~ao, ortografia,
-siglas, ilustra\c{c}\~oes no caso geral, estrutura textual no caso
-geral, etc.\ -- devem seguir o \textit{Manual UFRJ 2026}.
+\begin{description}[leftmargin=2.6cm,style=nextline,font=\bfseries]
+  \item[Escolha] O Manual admite mais de uma forma; a COPPE fixa uma.
+  \item[Dado pr\'oprio] O Manual pede a informa\c{c}\~ao; o valor \'e da COPPE.
+  \item[Acr\'escimo] Elemento que o Manual n\~ao prev\^e e a COPPE exige ou admite.
+  \item[Reafirma\c{c}\~ao] Nada \'e acrescentado; repete-se um ponto do Manual por ser
+    fonte frequente de erro.
+\end{description}
 
-\subsection{Implementa\c{c}\~ao de refer\^encia}
+A edi\c{c}\~ao revista de 2026 do Manual incorpora tr\^es decis\~oes institucionais que
+condicionam esta Norma: a \textbf{Resolu\c{c}\~ao CEPG n. 246/2023}, que extingue a
+via impressa e institui a entrega exclusivamente digital; a \textbf{Resolu\c{c}\~ao
+CEPG n. 302/2024}, cujo art.\ 57 fixa os idiomas de reda\c{c}\~ao; e o \textbf{novo
+modelo de coleta de informa\c{c}\~oes acad\^emicas da CAPES}, que d\'a origem \`a folha
+adicional.
 
-A \textbf{implementa\c{c}\~ao de refer\^encia} desta Norma \'e a classe
-LaTeX \texttt{coppe}, vers\~ao 4.0 e posteriores (\textbf{CoppeTeX
-4.x}), distribu\'ida em
-\url{https://github.com/COPPE-UFRJ/CoppeTeX}. A classe produz, sem
-configura\c{c}\~ao adicional por parte do autor, um documento aderente
-simultaneamente ao \textit{Manual UFRJ 2026} e \`a presente Norma. Seu
-uso \'e o caminho recomendado pela COPPE/UFRJ para a confec\c{c}\~ao do
-documento final.
+\subsection*{Mapa das diferen\c{c}as}
 
-Quando houver d\'uvida quanto \`a apresenta\c{c}\~ao correta de algum
-elemento gr\'afico previsto pela presente Norma, a sa\'ida gerada pela
-vers\~ao mais recente do CoppeTeX 4.x prevalece como refer\^encia.
+\begin{center}
+\begin{tabular}{@{}p{6.6cm}p{4.4cm}l@{}}
+\toprule
+\textbf{Nesta Norma} & \textbf{Especializa} & \textbf{Tipo}\\
+\midrule
+1. Logomarcas                          & Anexo A                & Escolha\\
+2. Nome da institui\c{c}\~ao na capa         & 3.1.1                  & Escolha\\
+3. Programas de P\'os-gradua\c{c}\~ao          & 3.1.1, 3.1.2.1.1       & Dado pr\'oprio\\
+4. Identidade institucional em portugu\^es & 3.1.1, 3.1.2.1.1     & Escolha\\
+5. Orienta\c{c}\~ao na folha de rosto        & 3.1.2.1.1(f)           & Escolha\\
+6. Orientadores nas p\'aginas de resumo  & 3.1.2.1.4              & Acr\'escimo\\
+7. Terceiro resumo                     & 3.1.2.1.4, 3.1.2.1.5   & Acr\'escimo\\
+8. Idioma principal                    & art.\ 57, CEPG 302/2024 & Escolha\\
+9. Listas pr\'oprias                     & 3.1.2.2.4              & Acr\'escimo\\
+10. Fonte das ilustra\c{c}\~oes              & 4.2                    & Escolha\\
+11. Ap\^endices e Anexos                 & 3.1.4.2, 3.1.4.3       & Escolha\\
+12. Numera\c{c}\~ao das folhas               & 2.7                    & Reafirma\c{c}\~ao\\
+13. Cita\c{c}\~oes e Refer\^encias             & 3.1.4.1                & Escolha\\
+\bottomrule
+\end{tabular}
+\end{center}
 
-\section{Identifica\c{c}\~ao institucional}
+\hrulefill
 
-\subsection{Capa}
+\section{Logomarcas \tipo{Escolha}}
 
-A capa exibe, na ordem:
+O Anexo A do \textit{Manual UFRJ 2026} mostra, no alto da capa, dois logotipos,
+e marca ambos como \textbf{opcionais}: o da UFRJ, \`a esquerda, e o do Programa,
+\`a direita.
 
-\begin{itemize}[leftmargin=2em]
-  \item \textbf{Universidade Federal do Rio de Janeiro};
-  \item \textbf{Instituto Alberto Luiz Coimbra de P\'os-Gradua\c{c}\~ao
-        e Pesquisa de Engenharia (COPPE)};
-  \item O nome do \textbf{Programa de P\'os-gradua\c{c}\~ao} em que o
-        trabalho foi defendido;
-  \item O nome completo do autor;
-  \item O t\'itulo do trabalho, no idioma principal (ver Se\c{c}\~ao 4),
-        seguido do subt\'itulo, se houver, precedido de dois pontos;
-  \item O \textbf{n\'umero de volumes}, se houver mais de um;
-  \item A cidade (Rio de Janeiro) e o \textbf{ano de dep\'osito} -- o da
-        entrega da vers\~ao final revista ao Programa, que n\~ao coincide
-        necessariamente com o ano da defesa.
+\textbf{A COPPE adota os dois}, e especializa o da direita: no lugar do logotipo
+do Programa vai o do \textbf{Instituto (COPPE)}, que \'e comum a todos os
+Programas.
+
+\begin{itemize}[nosep]
+  \item Ambos figuram no alto da capa e da folha de rosto, na mesma linha, o da
+    UFRJ alinhado \`a margem esquerda e o da COPPE \`a margem direita;
+  \item Ambos com \textbf{2\,cm de altura}, preservada a propor\c{c}\~ao original;
+  \item Nenhum outro logotipo \'e admitido --- nem de Programa, nem de
+    laborat\'orio, nem de ag\^encia de fomento. O v\'inculo com a ag\^encia \'e declarado
+    na folha adicional da Coleta CAPES, n\~ao como imagem.
 \end{itemize}
 
-\subsection{Folha de rosto}
+Os arquivos vetoriais em uso s\~ao distribu\'idos com a implementa\c{c}\~ao de refer\^encia
+(Se\c{c}\~ao~14).
 
-A folha de rosto exibe, na ordem: o nome completo do autor; o t\'itulo,
-seguido do subt\'itulo precedido de dois pontos; o n\'umero de volumes,
-se houver mais de um; a \textbf{natureza} do trabalho, o \textbf{objetivo},
-o nome da institui\c{c}\~ao e a \textbf{\'area de concentra\c{c}\~ao},
-em espa\c{c}o simples e alinhados do meio da mancha gr\'afica \`a margem
-direita; a \textbf{linha de pesquisa}; o \textbf{orientador} e, se
-houver, o \textbf{coorientador}, a partir da margem esquerda; e a cidade
-e o \textbf{ano de dep\'osito}.
+\section{Nome da institui\c{c}\~ao na capa \tipo{Escolha}}
 
-O nome do autor precede o t\'itulo, e a data indica apenas o ano.
+O item 3.1.1 do Manual pede ``nome da institui\c{c}\~ao'', sem dizer em quantos
+n\'iveis. Na COPPE s\~ao \textbf{tr\^es linhas}, nesta ordem:
 
-\subsection{Car\'ater da identidade institucional}
-
-Os elementos de identidade institucional -- o nome da Universidade, o
-nome do Instituto (COPPE), o nome do Programa de P\'os-gradua\c{c}\~ao,
-a cidade sede (Rio de Janeiro), o estado (RJ) e o pa\'is (Brasil) --
-\textbf{s\~ao sempre exibidos em portugu\^es}, independentemente do
-idioma principal do trabalho. Somente o t\'itulo do trabalho, na capa e
-na folha de rosto, acompanha o idioma principal.
-
-\subsection{Folha adicional com ficha catalogr\'afica}
-
-A partir de agosto de 2026, conforme o item 3.1.2.1.2 do \textit{Manual
-UFRJ 2026}, o trabalho apresenta uma \textbf{folha adicional
-imediatamente ap\'os a folha de rosto}, preenchida pelo Programa de
-P\'os-gradua\c{c}\~ao, contendo os campos da Coleta CAPES e a ficha
-catalogr\'afica.
-
-A ficha \'e obtida no \textbf{Gerador de Fichas Catalogr\'aficas} do
-SiBI (\url{http://fichacatalografica.sibi.ufrj.br/}) ou solicitada \`a
-biblioteca do Programa. \textbf{A ficha n\~ao \'e composta pelo autor
-nem pela classe LaTeX.}
-
-A folha adicional \textbf{n\~ao \'e contada nem numerada} (ver
-Se\c{c}\~ao 7).
-
-\subsection{Folha de aprova\c{c}\~ao}
-
-A folha de aprova\c{c}\~ao apresenta, na ordem do item 3.1.2.1.3 do
-\textit{Manual UFRJ 2026}: o nome do autor; o t\'itulo por extenso e o
-subt\'itulo, se houver; a natureza, o objetivo, o nome da
-institui\c{c}\~ao e a \'area de concentra\c{c}\~ao; a \textbf{data de
-aprova\c{c}\~ao}; e o nome, a \textbf{titula\c{c}\~ao} e a
-\textbf{institui\c{c}\~ao} de cada membro da Banca Examinadora.
-
-O \textbf{orientador figura em primeiro lugar}, por presidir a banca,
-seguido do coorientador, se houver, e dos demais examinadores. N\~ao h\'a
-bloco separado de orientadores, nem local e data ao p\'e da p\'agina.
-
-A folha de aprova\c{c}\~ao \textbf{n\~ao \'e numerada}.
-
-\section{Resumos: estrutura de tr\^es idiomas}
-
-Em complemento ao previsto no \textit{Manual UFRJ 2026}, a presente
-Norma reconhece tr\^es posi\c{c}\~oes distintas para o resumo:
-
-\begin{enumerate}[leftmargin=2em]
-  \item \textbf{Resumo em idioma principal}, obrigat\'orio, no idioma
-        em que o trabalho foi redigido (ver Se\c{c}\~ao 4);
-  \item \textbf{Resumo em idioma estrangeiro} (\textit{foreign
-        abstract}), obrigat\'orio, por conven\c{c}\~ao em ingl\^es;
-        quando o idioma principal \'e o ingl\^es, este resumo \'e
-        redigido em portugu\^es;
-  \item \textbf{Resumo em portugu\^es}, opcional e adicional, requerido
-        apenas quando nenhum dos dois resumos anteriores seja em
-        portugu\^es -- caso t\'ipico de trabalhos com idioma principal
-        espanhol, franc\^es ou italiano. Destina-se \`a leitura pela
-        banca e pelos examinadores brasileiros.
+\begin{enumerate}[nosep]
+  \item \textbf{Universidade Federal do Rio de Janeiro};
+  \item \textbf{Instituto Alberto Luiz Coimbra de P\'os-Gradua\c{c}\~ao e Pesquisa de
+    Engenharia (COPPE)};
+  \item o nome do \textbf{Programa de P\'os-gradua\c{c}\~ao} em que o trabalho foi
+    defendido.
 \end{enumerate}
 
-Cada resumo ocupa uma p\'agina pr\'opria, na ordem acima, dentro da
-se\c{c}\~ao pr\'e-textual.
+\section{Programas de P\'os-gradua\c{c}\~ao da COPPE \tipo{Dado pr\'oprio}}
 
-\section{Idioma principal do trabalho}
+O Manual pede o nome do Programa; a lista \'e da COPPE. S\~ao treze, e o nome que
+figura na capa, na folha de rosto e nas p\'aginas de resumo \'e o da coluna
+``Programa de Engenharia de\ldots''.
 
-O trabalho pode ser redigido em qualquer um dos seguintes idiomas
-principais:
+\begin{center}
+\begin{tabular}{@{}llp{6.3cm}@{}}
+\toprule
+\textbf{Sigla} & \textbf{Programa} & \textbf{Nome em ingl\^es}\\
+\midrule
+PEB  & Engenharia Biom\'edica                    & Biomedical Engineering\\
+PEC  & Engenharia Civil                        & Civil Engineering\\
+PEE  & Engenharia El\'etrica                     & Electrical Engineering\\
+PEM  & Engenharia Mec\^anica                     & Mechanical Engineering\\
+PEMM & Engenharia Metal\'urgica e de Materiais   & Metallurgical and Materials Engineering\\
+PEN  & Engenharia Nuclear                      & Nuclear Engineering\\
+PENO & Engenharia Oce\^anica                     & Ocean Engineering\\
+PENT & Engenharia de Nanotecnologia            & Nanotechnology Engineering\\
+PEP  & Engenharia de Produ\c{c}\~ao                  & Production Engineering\\
+PEQ  & Engenharia Qu\'imica                      & Chemical Engineering\\
+PESC & Engenharia de Sistemas e Computa\c{c}\~ao     & Systems Engineering and Computer Science\\
+PET  & Engenharia de Transportes               & Transportation Engineering\\
+PPE  & Planejamento Energ\'etico                 & Energy Planning\\
+\bottomrule
+\end{tabular}
+\end{center}
 
-\begin{itemize}[leftmargin=2em]
-  \item \textbf{Portugu\^es};
-  \item \textbf{Ingl\^es};
-  \item \textbf{Espanhol}.
+O nome em ingl\^es \'e usado \textbf{apenas} na p\'agina de \textit{abstract}, onde o
+Manual j\'a prev\^e um resumo em l\'ingua estrangeira. Em toda a identidade
+institucional o nome vai em portugu\^es (Se\c{c}\~ao~4).
+
+Altera\c{c}\~oes nesta lista --- cria\c{c}\~ao, extin\c{c}\~ao ou renomea\c{c}\~ao de Programa --- s\~ao
+comunicadas \`a equipe mantenedora da implementa\c{c}\~ao de refer\^encia, e entram na
+revis\~ao seguinte da classe.
+
+\section{Identidade institucional em portugu\^es \tipo{Escolha}}
+
+O Manual n\~ao trata do caso de um trabalho redigido em idioma estrangeiro. Na
+COPPE, os elementos de identidade institucional --- nome da Universidade, nome
+do Instituto, nome do Programa, cidade (Rio de Janeiro), estado (RJ) e pa\'is
+(Brasil) --- \textbf{figuram sempre em portugu\^es}, qualquer que seja o idioma
+principal do trabalho.
+
+Acompanham o idioma principal apenas o t\'itulo do trabalho, o subt\'itulo, a
+natureza, o objetivo e a \'area de concentra\c{c}\~ao.
+
+\section{Orienta\c{c}\~ao na folha de rosto \tipo{Escolha}}
+
+O item 3.1.2.1.1(f) pede o nome do orientador e, quando houver, do
+coorientador, sem fixar a posi\c{c}\~ao. Na COPPE ambos figuram \textbf{alinhados a
+partir da margem esquerda}, abaixo do bloco de natureza, o orientador antes do
+coorientador.
+
+\section{Orientadores nas p\'aginas de resumo \tipo{Acr\'escimo}}
+
+O item 3.1.2.1.4 descreve o resumo e n\~ao diz quem assina a orienta\c{c}\~ao. A COPPE
+acrescenta, abaixo do t\'itulo e do nome do autor, em cada p\'agina de resumo, o
+nome do \textbf{orientador} (ou dos orientadores) e o nome do \textbf{Programa}.
+
+A inclus\~ao do \textbf{coorientador} nessas p\'aginas \'e \textbf{facultativa}, a
+crit\'erio do Programa. A implementa\c{c}\~ao de refer\^encia a oferece como op\c{c}\~ao,
+desligada por padr\~ao.
+
+\section{Terceiro resumo \tipo{Acr\'escimo}}
+
+O Manual prev\^e dois resumos: o da l\'ingua vern\'acula (3.1.2.1.4) e o da l\'ingua de
+divulga\c{c}\~ao internacional (3.1.2.1.5). A COPPE reconhece tr\^es posi\c{c}\~oes:
+
+\begin{enumerate}[nosep]
+  \item \textbf{Resumo em idioma principal} --- obrigat\'orio, no idioma de
+    reda\c{c}\~ao;
+  \item \textbf{Resumo em idioma estrangeiro} --- obrigat\'orio, por conven\c{c}\~ao em
+    ingl\^es; quando o idioma principal \'e o ingl\^es, este resumo \'e redigido em
+    portugu\^es;
+  \item \textbf{Resumo em portugu\^es} --- obrigat\'orio apenas quando nenhum dos
+    dois anteriores estiver em portugu\^es.
+\end{enumerate}
+
+A terceira posi\c{c}\~ao existe por um caso concreto: num trabalho redigido em
+espanhol, idioma admitido pelo art.\ 57 da Resolu\c{c}\~ao CEPG n.\ 302/2024, o par
+previsto pelo Manual \'e espanhol e ingl\^es, e o portugu\^es --- l\'ingua da
+Universidade e da banca --- ficaria de fora.
+
+Cada resumo ocupa uma p\'agina pr\'opria, na ordem acima, e encerra com as
+palavras-chave \textbf{no seu pr\'oprio idioma}, separadas por ponto e v\'irgula,
+como determina o 3.1.2.1.4.
+
+\section{Idioma principal do trabalho \tipo{Escolha}}
+
+O trabalho pode ser redigido em \textbf{portugu\^es}, \textbf{ingl\^es} ou
+\textbf{espanhol}, que s\~ao os idiomas admitidos pelo art.\ 57 da Resolu\c{c}\~ao CEPG
+n.\ 302/2024. N\~ao h\'a na UFRJ respaldo normativo para outros.
+
+A escolha do idioma principal afeta o corpo textual, as legendas, os t\'itulos das
+se\c{c}\~oes pr\'e-textuais, o t\'itulo do trabalho na capa e na folha de rosto e o texto
+de abertura do resumo em idioma principal. N\~ao afeta a identidade institucional
+(Se\c{c}\~ao~4).
+
+\section{Listas de Quadros, Programas e Algoritmos \tipo{Acr\'escimo}}
+
+Em complemento \`as listas do item 3.1.2.2.4, a COPPE reconhece tr\^es listas
+pr\'oprias, cada uma presente quando houver ao menos uma ocorr\^encia no corpo do
+trabalho, entre a Lista de Tabelas e a Lista de Abreviaturas:
+
+\begin{itemize}[nosep]
+  \item \textbf{Lista de Quadros} --- quadro \'e a ilustra\c{c}\~ao bordada em todos os
+    lados, distinta da tabela, que \'e delimitada apenas no topo e na base;
+  \item \textbf{Lista de Programas} --- listagens de c\'odigo-fonte;
+  \item \textbf{Lista de Algoritmos} --- pseudo-c\'odigo.
 \end{itemize}
 
-Esses s\~ao os idiomas admitidos pelo \textbf{art.\ 57 da
-Resolu\c{c}\~ao CEPG n. 302/2024}, e n\~ao h\'a na UFRJ respaldo
-normativo para outros. A implementa\c{c}\~ao de refer\^encia distribui
-ainda pacotes de franc\^es e italiano, que servem de demonstra\c{c}\~ao
-do mecanismo de extens\~ao a novos idiomas e \textbf{n\~ao} habilitam
-esses idiomas para a reda\c{c}\~ao de teses e disserta\c{c}\~oes.
+\section{Fonte das ilustra\c{c}\~oes \tipo{Escolha}}
 
-A escolha do idioma principal afeta a l\'ingua do corpo textual, das
-legendas, dos t\'itulos das se\c{c}\~oes pr\'e-textuais (Sum\'ario,
-Listas, Refer\^encias, etc.) e do t\'itulo do trabalho exibido na capa.
-A identidade institucional permanece em portugu\^es em qualquer idioma
-principal (ver Subse\c{c}\~ao 2.2).
+Para toda ilustra\c{c}\~ao --- figura, tabela, quadro, programa, algoritmo --- a
+legenda figura \textbf{acima} e a fonte \'e \textbf{obrigat\'oria} e figura
+\textbf{abaixo}, em corpo menor, espa\c{c}amento simples, centralizada, antecedida
+da palavra ``Fonte:'' ou de seu equivalente no idioma principal.
 
-\section{Ilustra\c{c}\~oes pr\'oprias da COPPE/UFRJ}
+\section{Ap\^endices e Anexos \tipo{Escolha}}
 
-Em complemento \`as listas previstas no \textit{Manual UFRJ 2026}
-(Lista de Figuras, Lista de Tabelas, Lista de Abreviaturas e Siglas,
-Lista de S\'imbolos), a presente Norma reconhece:
-
-\begin{itemize}[leftmargin=2em]
-  \item \textbf{Lista de Quadros} -- para o tipo de ilustra\c{c}\~ao
-        ``quadro'', bordado em todos os lados, distinto de tabela (a
-        qual \'e delimitada apenas no topo e na base);
-  \item \textbf{Lista de Programas} -- para listagens de
-        c\'odigo-fonte;
-  \item \textbf{Lista de Algoritmos} -- para a apresenta\c{c}\~ao de
-        pseudo-c\'odigo.
-\end{itemize}
-
-Cada uma destas listas figura entre a Lista de Tabelas e a Lista de
-Abreviaturas, na se\c{c}\~ao pr\'e-textual, sempre que houver ao menos
-uma ocorr\^encia no corpo do trabalho.
-
-Para todas as ilustra\c{c}\~oes (figuras, tabelas, quadros, programas,
-algoritmos) a legenda figura \textbf{acima} da ilustra\c{c}\~ao, e a
-fonte \'e obrigat\'oria e figura \textbf{abaixo}, em corpo menor,
-espa\c{c}amento simples, centralizada, antecedida da palavra
-``Fonte:''\ (ou seu equivalente no idioma principal).
-
-\section{Ap\^endices e Anexos}
-
-Os cap\'itulos de Ap\^endice e de Anexo s\~ao apresentados, tanto no
-in\'icio do cap\'itulo quanto no Sum\'ario, no formato:
+Os cap\'itulos de Ap\^endice e de Anexo s\~ao apresentados, tanto na abertura do
+cap\'itulo quanto no Sum\'ario, no formato
 
 \begin{quote}
-  \textbf{AP\^ENDICE A -- \textit{T\'itulo do ap\^endice}}\\[1mm]
-  \textbf{ANEXO A -- \textit{T\'itulo do anexo}}
+  \textbf{AP\^ENDICE A --- T\'itulo do ap\^endice}\\
+  \textbf{ANEXO A --- T\'itulo do anexo}
 \end{quote}
 
-A palavra ``AP\^ENDICE''\ ou ``ANEXO''\ figura em caixa alta, seguida
-da letra identificadora (A, B, C, \ldots), de travess\~ao e do
-t\'itulo do cap\'itulo, respeitando o idioma principal do trabalho.
+com a palavra em caixa alta, a letra identificadora, travess\~ao e o t\'itulo,
+respeitando o idioma principal.
 
-\section{Numera\c{c}\~ao das p\'aginas pr\'e-textuais}
+\section{Numera\c{c}\~ao das folhas \tipo{Reafirma\c{c}\~ao}}
 
-Esta Se\c{c}\~ao apenas reafirma o item 2.7 do \textit{Manual UFRJ
-2026}, por ser o ponto em que se observaram mais diverg\^encias de
-implementa\c{c}\~ao.
+Nada se acrescenta aqui ao item 2.7 do Manual. A se\c{c}\~ao existe porque \'e o ponto
+em que mais se observaram diverg\^encias de implementa\c{c}\~ao.
 
-A capa n\~ao \'e contada nem numerada. \textbf{A contagem come\c{c}a na
-folha de rosto} e prossegue sequencialmente por todas as folhas, que
-\textbf{n\~ao s\~ao numeradas} enquanto pr\'e-textuais. A
-\textbf{folha adicional} que cont\'em a ficha catalogr\'afica
-\textbf{n\~ao \'e contada nem numerada}.
+A capa n\~ao \'e contada nem numerada. \textbf{A contagem come\c{c}a na folha de rosto}
+e prossegue por todas as folhas, que n\~ao s\~ao numeradas enquanto pr\'e-textuais. A
+folha adicional que cont\'em a ficha catalogr\'afica \textbf{n\~ao \'e contada nem
+numerada}.
 
-A numera\c{c}\~ao em algarismos ar\'abicos \'e impressa \textbf{a
-partir da primeira folha da parte textual, dando sequ\^encia \`a
-contagem j\'a iniciada} -- e portanto a Introdu\c{c}\~ao \textbf{n\~ao}
-\'e a folha 1. Figura no canto superior direito, a 2\,cm da borda
-superior, com o \'ultimo algarismo a 2\,cm da borda direita.
+A numera\c{c}\~ao em algarismos ar\'abicos \'e impressa \textbf{a partir da primeira folha
+da parte textual, dando sequ\^encia \`a contagem j\'a iniciada} --- e portanto a
+Introdu\c{c}\~ao \textbf{n\~ao} \'e a folha 1. Figura no canto superior direito, a 2\,cm
+da borda superior, com o \'ultimo algarismo a 2\,cm da borda direita.
 
 N\~ao se empregam algarismos romanos nas folhas pr\'e-textuais.
 
-\section{Cita\c{c}\~oes e Refer\^encias Bibliogr\'aficas}
+\section{Cita\c{c}\~oes e Refer\^encias \tipo{Escolha}}
 
-A presente Norma adota integralmente as edi\c{c}\~oes mais recentes
-das normas ABNT pertinentes:
+A COPPE adota as edi\c{c}\~oes vigentes das normas ABNT pertinentes: \textbf{NBR 6023}
+(Refer\^encias) e \textbf{NBR 10520} (Cita\c{c}\~oes). Qualquer dos sistemas de chamada
+previstos --- autor-data ou num\'erico --- \'e admitido, a crit\'erio do autor, desde
+que usado de forma consistente em todo o trabalho.
 
-\begin{itemize}[leftmargin=2em]
-  \item \textbf{NBR 6023} (Refer\^encias) em sua revis\~ao a partir de
-        2018;
-  \item \textbf{NBR 10520} (Cita\c{c}\~oes) em sua revis\~ao de 2023.
-\end{itemize}
-
-Os elementos da refer\^encia, os formatos das cita\c{c}\~oes e as
-regras gerais de apresenta\c{c}\~ao s\~ao os definidos pela ABNT
-vigente.
-
-Esta ado\c{c}\~ao constitui a \'unica diverg\^encia da presente Norma
-em rela\c{c}\~ao ao previsto no \textit{Manual UFRJ 2026} -- que
-reflete edi\c{c}\~oes anteriores das mesmas normas ABNT -- e ocorre na
-medida estrita das atualiza\c{c}\~oes posteriores a 2020 introduzidas
-pela pr\'opria ABNT.
-
-A implementa\c{c}\~ao de refer\^encia (CoppeTeX 4.x) fornece
-automaticamente a formata\c{c}\~ao correta para todos os tipos de
-documento previstos na NBR 6023 vigente, em qualquer dos sistemas de
-chamada (autor-data ou num\'erico) \`a escolha do autor.
+\hrulefill
 
 \section{Implementa\c{c}\~ao de refer\^encia}
 
-A classe LaTeX \texttt{coppe} em suas vers\~oes 4.0 e posteriores
-(\textbf{CoppeTeX 4.x}), distribu\'ida em
-\url{https://github.com/COPPE-UFRJ/CoppeTeX}, \'e a implementa\c{c}\~ao
-de refer\^encia desta Norma. Sua ado\c{c}\~ao \'e o caminho recomendado
-pela COPPE/UFRJ para garantir ader\^encia autom\'atica a todos os
-requisitos acima e ao \textit{Manual UFRJ 2026}.
+A classe LaTeX \texttt{coppe}, vers\~oes 4.0 e posteriores (\textbf{CoppeTeX
+4.x}), distribu\'ida em \url{https://github.com/COPPE-UFRJ/CoppeTeX}, \'e a
+implementa\c{c}\~ao de refer\^encia desta Norma. Produz, sem configura\c{c}\~ao adicional por
+parte do autor, um documento aderente ao mesmo tempo ao \textit{Manual UFRJ
+2026} e a esta Norma, e distribui os arquivos das duas logomarcas.
 
-Em caso de diverg\^encia entre a presente Norma escrita e a sa\'ida
-gerada pela vers\~ao est\'avel corrente do CoppeTeX 4.x, prevalece a
-presente Norma e o \textit{Manual UFRJ 2026}, e a diverg\^encia deve
-ser comunicada \`a equipe mantenedora do CoppeTeX para
-corre\c{c}\~ao na pr\'oxima revis\~ao da implementa\c{c}\~ao.
+Em caso de diverg\^encia entre o que est\'a escrito aqui e o que a vers\~ao est\'avel
+corrente da classe produz, \textbf{prevalecem esta Norma e o Manual}, e a
+diverg\^encia deve ser comunicada \`a equipe mantenedora para corre\c{c}\~ao na revis\~ao
+seguinte.
+
+\subsection{O que a implementa\c{c}\~ao n\~ao faz}
+
+\begin{itemize}[nosep]
+  \item \textbf{A ficha catalogr\'afica n\~ao \'e composta pela classe.} \'E obtida no
+    Gerador de Fichas Catalogr\'aficas do SiBI
+    (\url{http://fichacatalografica.sibi.ufrj.br/}) ou solicitada \`a biblioteca
+    do Programa, e entra na folha adicional prevista no item 3.1.2.1.2,
+    preenchida pelo Programa.
+  \item \textbf{Os pacotes de franc\^es e italiano distribu\'idos com a classe n\~ao
+    habilitam esses idiomas para reda\c{c}\~ao.} Servem de demonstra\c{c}\~ao do mecanismo
+    de extens\~ao a novos idiomas; os idiomas admitidos s\~ao os da Se\c{c}\~ao~8.
+\end{itemize}
 
 \vspace{4mm}\hrulefill
 
-\noindent\textit{Vers\~ao da proposta: maio de 2026. \emph{Branch}
-\texttt{nlinguas} em
-\url{https://github.com/COPPE-UFRJ/CoppeTeX}.}
+\noindent\textit{Vers\~ao da proposta: setembro de 2026, revista para a
+9.\textsuperscript{a} edi\c{c}\~ao revista (2026) do Manual UFRJ/SiBI. A fonte de
+autoria \'e} \texttt{NORMA\_COPPE\_2026.md}\textit{, na raiz do reposit\'orio.
+\emph{Branch} \texttt{nlinguas} em}
+\url{https://github.com/COPPE-UFRJ/CoppeTeX}\textit{.}
 
 \end{document}

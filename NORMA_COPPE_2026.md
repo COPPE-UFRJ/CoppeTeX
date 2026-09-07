@@ -3,289 +3,258 @@
 **Edição 2026 — Proposta para apreciação da CPGP**
 
 Esta Norma, quando aprovada, substitui a *Norma para a Elaboração Gráfica de
-Teses/Dissertações* da COPPE/UFRJ aprovada pela CPGP em 15 de julho de 2008
-e suas revisões subsequentes (01/10/2009, 10/09/2010 e 26/11/2019).
+Teses/Dissertações* da COPPE/UFRJ aprovada pela CPGP em 15 de julho de 2008 e
+suas revisões subsequentes (01/10/2009, 10/09/2010 e 26/11/2019).
 
 ---
 
-## 1. Documento base e implementação de referência
+## Como ler esta Norma
 
-### 1.1 Documento base
+Esta Norma **não descreve como se formata uma tese**. Quem faz isso é o
+**Manual para Elaboração e Normalização de Trabalhos Acadêmicos** da UFRJ/SiBI,
+9.ª edição revista (Rio de Janeiro, 2026) — daqui em diante *Manual UFRJ 2026*
+—, que vale integralmente na COPPE.
 
-A apresentação gráfica de teses e dissertações da COPPE/UFRJ segue o
-**Manual para Elaboração e Normalização de Trabalhos Acadêmicos** da
-UFRJ/SiBI, 9.ª edição revista (Rio de Janeiro, 2026) — doravante referido
-como *Manual UFRJ 2026* — em conjunto com as adaptações estabelecidas pela
-presente Norma.
+O que esta Norma faz é registrar, ponto a ponto, **onde a COPPE especializa o
+Manual**: onde ele deixa uma escolha em aberto e a COPPE escolhe, onde ele pede
+um dado que só a COPPE tem, e onde a COPPE acrescenta um elemento que ele não
+prevê. Fora do que está escrito aqui, vale o Manual — formato do papel, margens,
+espaçamento, fonte, paginação, equações, tabelas, indicativos de seção,
+ortografia, siglas, ilustrações e estrutura textual no caso geral.
 
-A edição revista de 2026 incorpora três decisões institucionais que
-condicionam diretamente a presente Norma:
+Cada seção abaixo diz de que tipo é a diferença:
 
-- A **Resolução CEPG n. 246/2023**, de 10 de novembro de 2023, que extingue
-  a entrega da via impressa à Central de Memória Acadêmica e institui a
-  entrega exclusivamente digital do documento final;
-- A **Resolução CEPG n. 302/2024**, de 19 de julho de 2024, cujo art. 57
-  fixa os idiomas em que teses e dissertações podem ser redigidas
-  (ver Seção 4);
-- O **novo modelo de coleta de informações acadêmicas da CAPES**, que dá
-  origem à folha adicional descrita na Seção 2.3.
+| Tipo | Significado |
+|---|---|
+| **Escolha** | O Manual admite mais de uma forma; a COPPE fixa uma. |
+| **Dado próprio** | O Manual pede a informação; o valor é da COPPE. |
+| **Acréscimo** | Elemento que o Manual não prevê e a COPPE exige ou admite. |
+| **Reafirmação** | Nada é acrescentado; repete-se um ponto do Manual por ser fonte frequente de erro. |
 
-A presente Norma estabelece **apenas os elementos próprios da COPPE/UFRJ**.
-Todos os aspectos não tratados explicitamente aqui — formato do papel,
-margens, espaçamento, fonte, paginação geral, equações, tabelas,
-indicativos de seção, ortografia, siglas, ilustrações no caso geral,
-estrutura textual no caso geral, etc. — devem seguir o *Manual UFRJ 2026*.
+A edição revista de 2026 do Manual incorpora três decisões institucionais que
+condicionam esta Norma: a **Resolução CEPG n. 246/2023**, que extingue a via
+impressa e institui a entrega exclusivamente digital; a **Resolução CEPG n.
+302/2024**, cujo art. 57 fixa os idiomas de redação; e o **novo modelo de coleta
+de informações acadêmicas da CAPES**, que dá origem à folha adicional.
 
-### 1.2 Implementação de referência
+### Mapa das diferenças
 
-A **implementação de referência** desta Norma é a classe LaTeX `coppe`,
-versão 4.0 e posteriores (**CoppeTeX 4.x**), distribuída em
-<https://github.com/COPPE-UFRJ/CoppeTeX>. A classe produz, sem
-configuração adicional por parte do autor, um documento aderente
-simultaneamente ao *Manual UFRJ 2026* e à presente Norma. Seu uso é o
-caminho recomendado pela COPPE/UFRJ para a confecção do documento final.
-
----
-
-## 2. Identificação institucional
-
-### 2.1 Capa
-
-A capa exibe, na ordem:
-
-- **Universidade Federal do Rio de Janeiro**;
-- **Instituto Alberto Luiz Coimbra de Pós-Graduação e Pesquisa de
-  Engenharia (COPPE)**;
-- O nome do **Programa de Pós-graduação** em que o trabalho foi defendido;
-- O nome completo do autor;
-- O título do trabalho, no idioma principal (ver Seção 4), seguido do
-  subtítulo, se houver, precedido de dois pontos;
-- O **número de volumes**, se houver mais de um, com a especificação do
-  respectivo volume em cada capa;
-- A cidade (Rio de Janeiro) e o **ano de depósito** — o da entrega da
-  versão final revista ao Programa, que não coincide necessariamente com
-  o ano da defesa.
-
-Os logotipos da UFRJ e da COPPE são opcionais, conforme o Anexo A do
-*Manual UFRJ 2026*. A COPPE adota o seu uso.
-
-### 2.2 Folha de rosto
-
-A folha de rosto exibe, na ordem:
-
-- O nome completo do autor;
-- O título do trabalho, no idioma principal, seguido do subtítulo, se
-  houver, precedido de dois pontos;
-- O **número de volumes**, se houver mais de um;
-- A **natureza do trabalho** (tese ou dissertação), o **objetivo** (grau
-  pretendido), o nome da instituição a que é submetido e a **área de
-  concentração** — em espaço simples, alinhados do meio da mancha
-  gráfica até a margem direita;
-- A **linha de pesquisa**, conforme o modelo de coleta CAPES;
-- O nome do **orientador** e, se houver, do **coorientador**, alinhados a
-  partir da margem esquerda;
-- A cidade (Rio de Janeiro) e o **ano de depósito**.
-
-O nome do autor precede o título, e a data indica apenas o ano.
-
-### 2.3 Caráter da identidade institucional
-
-Os elementos de identidade institucional — o nome da Universidade, o
-nome do Instituto (COPPE), o nome do Programa de Pós-graduação, a cidade
-sede (Rio de Janeiro), o estado (RJ) e o país (Brasil) — **são sempre
-exibidos em português**, independentemente do idioma principal do
-trabalho. Somente o título do trabalho, na capa e na folha de rosto,
-acompanha o idioma principal.
-
-### 2.4 Folha adicional com ficha catalográfica
-
-A partir de agosto de 2026, conforme o §3.1.2.1.2 do *Manual UFRJ 2026*,
-o trabalho apresenta uma **folha adicional imediatamente após a folha de
-rosto**, preenchida pelo Programa de Pós-graduação, contendo os campos da
-Coleta CAPES e a ficha catalográfica.
-
-A ficha é obtida no **Gerador de Fichas Catalográficas** do SiBI
-(<http://fichacatalografica.sibi.ufrj.br/>) ou solicitada à biblioteca do
-Programa. **A ficha não é composta pelo autor nem pela classe LaTeX.**
-
-A folha adicional **não é contada nem numerada** (ver Seção 7).
-
-### 2.5 Folha de aprovação
-
-A folha de aprovação apresenta, na ordem do §3.1.2.1.3 do *Manual UFRJ
-2026*: o nome do autor; o título por extenso e o subtítulo, se houver; a
-natureza, o objetivo, o nome da instituição e a área de concentração; a
-**data de aprovação**; e o nome, a **titulação** e a **instituição** de
-cada membro da Banca Examinadora.
-
-O **orientador figura em primeiro lugar**, por presidir a banca, seguido
-do coorientador, se houver, e dos demais examinadores. Não há bloco
-separado de orientadores, nem local e data ao pé da página.
-
-A folha de aprovação **não é numerada**.
+| Nesta Norma | Especializa | Tipo |
+|---|---|---|
+| 1. Logomarcas | Anexo A | Escolha |
+| 2. Nome da instituição na capa | 3.1.1 | Escolha |
+| 3. Programas de Pós-graduação | 3.1.1, 3.1.2.1.1 | Dado próprio |
+| 4. Identidade institucional em português | 3.1.1, 3.1.2.1.1 | Escolha |
+| 5. Orientação na folha de rosto | 3.1.2.1.1(f) | Escolha |
+| 6. Orientadores nas páginas de resumo | 3.1.2.1.4 | Acréscimo |
+| 7. Terceiro resumo | 3.1.2.1.4, 3.1.2.1.5 | Acréscimo |
+| 8. Idioma principal | art. 57 da Res. CEPG 302/2024 | Escolha |
+| 9. Listas de Quadros, Programas e Algoritmos | 3.1.2.2.4 | Acréscimo |
+| 10. Fonte das ilustrações | 4.2 | Escolha |
+| 11. Apêndices e Anexos | 3.1.4.2, 3.1.4.3 | Escolha |
+| 12. Numeração das folhas | 2.7 | Reafirmação |
+| 13. Citações e Referências | 3.1.4.1 | Escolha |
 
 ---
 
-## 3. Resumos: estrutura de três idiomas
+## 1. Logomarcas — *Escolha*
 
-Em complemento ao previsto no *Manual UFRJ 2026*, a presente Norma
-reconhece três posições distintas para o resumo:
+O Anexo A do *Manual UFRJ 2026* mostra, no alto da capa, dois logotipos, e
+marca ambos como **opcionais**: o da UFRJ, à esquerda, e o do Programa, à
+direita.
 
-1. **Resumo em idioma principal**, obrigatório, no idioma em que o
-   trabalho foi redigido (ver Seção 4);
-2. **Resumo em idioma estrangeiro** (*foreign abstract*), obrigatório,
-   por convenção em inglês; quando o idioma principal é o inglês, este
-   resumo é redigido em português;
-3. **Resumo em português**, opcional e adicional, requerido apenas
-   quando nenhum dos dois resumos anteriores seja em português — caso
-   típico de trabalhos com idioma principal espanhol. Destina-se à
-   leitura pela banca e pelos examinadores brasileiros.
+**A COPPE adota os dois**, e especializa o da direita: no lugar do logotipo do
+Programa vai o do **Instituto (COPPE)**, que é comum a todos os Programas.
 
-O §3.1.2.1.5 do *Manual UFRJ 2026* prevê dois resumos: o da língua
-vernácula e o da língua de divulgação internacional. Num trabalho
-redigido em espanhol — idioma admitido pelo art. 57 da Resolução CEPG n.
-302/2024 — esse par é espanhol e inglês, e o português, língua da
-Universidade e da banca, ficaria de fora. A terceira posição existe para
-cobrir exatamente esse caso, e é acréscimo da COPPE, não exigência do
-manual.
+- Ambos figuram no alto da capa e da folha de rosto, na mesma linha, o da UFRJ
+  alinhado à margem esquerda e o da COPPE à margem direita;
+- Ambos com **2 cm de altura**, preservada a proporção original;
+- Nenhum outro logotipo é admitido — nem de Programa, nem de laboratório, nem
+  de agência de fomento. O vínculo com a agência é declarado na folha adicional
+  da Coleta CAPES, não como imagem.
 
-Cada resumo encerra com as palavras-chave no seu próprio idioma,
-precedidas do termo correspondente e separadas por ponto e vírgula, como
-determina o §3.1.2.1.4.
+Os arquivos vetoriais em uso são distribuídos com a implementação de referência
+(Seção 14).
 
-Cada resumo ocupa uma página própria, na ordem acima, dentro da seção
-pré-textual.
+## 2. Nome da instituição na capa — *Escolha*
 
----
+O item 3.1.1 do Manual pede "nome da instituição", sem dizer em quantos níveis.
+Na COPPE são **três linhas**, nesta ordem:
 
-## 4. Idioma principal do trabalho
+1. **Universidade Federal do Rio de Janeiro**
+2. **Instituto Alberto Luiz Coimbra de Pós-Graduação e Pesquisa de Engenharia
+   (COPPE)**
+3. O nome do **Programa de Pós-graduação** em que o trabalho foi defendido.
 
-O trabalho pode ser redigido em qualquer um dos seguintes idiomas
-principais:
+## 3. Programas de Pós-graduação da COPPE — *Dado próprio*
 
-- **Português**;
-- **Inglês**;
-- **Espanhol**.
+O Manual pede o nome do Programa; a lista é da COPPE. São treze, e o nome que
+figura na capa, na folha de rosto e nas páginas de resumo é o da coluna
+"Programa de Engenharia de…":
 
-Esses são os idiomas admitidos pelo **art. 57 da Resolução CEPG n.
-302/2024**, e não há na UFRJ respaldo normativo para outros. A
-implementação de referência distribui ainda pacotes de francês e
-italiano, que servem de demonstração do mecanismo de extensão a novos
-idiomas e **não** habilitam esses idiomas para a redação de teses e
-dissertações.
+| Sigla | Programa | Nome em inglês |
+|---|---|---|
+| PEB | Engenharia Biomédica | Biomedical Engineering |
+| PEC | Engenharia Civil | Civil Engineering |
+| PEE | Engenharia Elétrica | Electrical Engineering |
+| PEM | Engenharia Mecânica | Mechanical Engineering |
+| PEMM | Engenharia Metalúrgica e de Materiais | Metallurgical and Materials Engineering |
+| PEN | Engenharia Nuclear | Nuclear Engineering |
+| PENO | Engenharia Oceânica | Ocean Engineering |
+| PENT | Engenharia de Nanotecnologia | Nanotechnology Engineering |
+| PEP | Engenharia de Produção | Production Engineering |
+| PEQ | Engenharia Química | Chemical Engineering |
+| PESC | Engenharia de Sistemas e Computação | Systems Engineering and Computer Science |
+| PET | Engenharia de Transportes | Transportation Engineering |
+| PPE | Planejamento Energético | Energy Planning |
 
-A escolha do idioma principal afeta:
+O nome em inglês é usado **apenas** na página de *abstract*, onde o Manual já
+prevê um resumo em língua estrangeira. Em toda a identidade institucional o
+nome vai em português (Seção 4).
 
-- A língua do corpo textual;
-- A língua das legendas de figuras, tabelas, quadros, programas e
-  algoritmos;
-- A língua dos títulos das seções pré-textuais (Sumário, Lista de
-  Figuras, Lista de Tabelas, Lista de Quadros, Lista de Programas,
-  Lista de Algoritmos, Lista de Abreviaturas e Siglas, Lista de
-  Símbolos, Glossário, Referências, etc.);
-- A língua do título do trabalho exibido na capa e na folha de rosto;
-- A língua do título e do texto de abertura do resumo em idioma
-  principal (ver Seção 3).
+Alterações nesta lista — criação, extinção ou renomeação de Programa — são
+comunicadas à equipe mantenedora da implementação de referência, e entram na
+revisão seguinte da classe.
 
-A identidade institucional permanece em português em qualquer idioma
-principal (ver Seção 2.3).
+## 4. Identidade institucional em português — *Escolha*
 
----
+O Manual não trata do caso de um trabalho redigido em idioma estrangeiro. Na
+COPPE, os elementos de identidade institucional — nome da Universidade, nome do
+Instituto, nome do Programa, cidade (Rio de Janeiro), estado (RJ) e país
+(Brasil) — **figuram sempre em português**, qualquer que seja o idioma
+principal do trabalho.
 
-## 5. Ilustrações próprias da COPPE/UFRJ
+Acompanham o idioma principal apenas o título do trabalho, o subtítulo, a
+natureza, o objetivo e a área de concentração.
 
-Em complemento às listas previstas no *Manual UFRJ 2026* (Lista de
-Figuras, Lista de Tabelas, Lista de Abreviaturas e Siglas, Lista de
-Símbolos), a presente Norma reconhece:
+## 5. Orientação na folha de rosto — *Escolha*
 
-- **Lista de Quadros** — para o tipo de ilustração "quadro", bordado em
-  todos os lados, distinto de tabela (a qual é delimitada apenas no topo
-  e na base);
-- **Lista de Programas** — para listagens de código-fonte;
-- **Lista de Algoritmos** — para a apresentação de pseudo-código.
+O item 3.1.2.1.1(f) pede o nome do orientador e, quando houver, do
+coorientador, sem fixar a posição. Na COPPE ambos figuram **alinhados a partir
+da margem esquerda**, abaixo do bloco de natureza, o orientador antes do
+coorientador.
 
-Cada uma destas listas figura entre a Lista de Tabelas e a Lista de
-Abreviaturas, na seção pré-textual, sempre que houver ao menos uma
-ocorrência no corpo do trabalho.
+## 6. Orientadores nas páginas de resumo — *Acréscimo*
 
-Para todas as ilustrações (figuras, tabelas, quadros, programas,
-algoritmos) a legenda figura **acima** da ilustração, e a fonte é
-obrigatória e figura **abaixo**, em corpo menor, espaçamento simples,
-centralizada, antecedida da palavra "Fonte:" (ou seu equivalente no
-idioma principal).
+O item 3.1.2.1.4 descreve o resumo e não diz quem assina a orientação. A COPPE
+acrescenta, abaixo do título e do nome do autor, em cada página de resumo, o
+nome do **orientador** (ou dos orientadores) e o nome do **Programa**.
 
----
+A inclusão do **coorientador** nessas páginas é **facultativa**, a critério do
+Programa. A implementação de referência a oferece como opção, desligada por
+padrão.
 
-## 6. Apêndices e Anexos
+## 7. Terceiro resumo — *Acréscimo*
 
-Os capítulos de Apêndice e de Anexo são apresentados, tanto no início do
-capítulo quanto no Sumário, no formato:
+O Manual prevê dois resumos: o da língua vernácula (3.1.2.1.4) e o da língua de
+divulgação internacional (3.1.2.1.5). A COPPE reconhece três posições:
 
-> **APÊNDICE A — *Título do apêndice***
+1. **Resumo em idioma principal** — obrigatório, no idioma de redação;
+2. **Resumo em idioma estrangeiro** — obrigatório, por convenção em inglês;
+   quando o idioma principal é o inglês, este resumo é redigido em português;
+3. **Resumo em português** — obrigatório apenas quando nenhum dos dois
+   anteriores estiver em português.
+
+A terceira posição existe por um caso concreto: num trabalho redigido em
+espanhol, idioma admitido pelo art. 57 da Resolução CEPG n. 302/2024, o par
+previsto pelo Manual é espanhol e inglês, e o português — língua da
+Universidade e da banca — ficaria de fora.
+
+Cada resumo ocupa uma página própria, na ordem acima, e encerra com as
+palavras-chave **no seu próprio idioma**, separadas por ponto e vírgula, como
+determina o 3.1.2.1.4.
+
+## 8. Idioma principal do trabalho — *Escolha*
+
+O trabalho pode ser redigido em **português**, **inglês** ou **espanhol**, que
+são os idiomas admitidos pelo art. 57 da Resolução CEPG n. 302/2024. Não há na
+UFRJ respaldo normativo para outros.
+
+A escolha do idioma principal afeta o corpo textual, as legendas, os títulos
+das seções pré-textuais, o título do trabalho na capa e na folha de rosto e o
+texto de abertura do resumo em idioma principal. Não afeta a identidade
+institucional (Seção 4).
+
+## 9. Listas de Quadros, Programas e Algoritmos — *Acréscimo*
+
+Em complemento às listas do item 3.1.2.2.4, a COPPE reconhece três listas
+próprias, cada uma presente quando houver ao menos uma ocorrência no corpo do
+trabalho, entre a Lista de Tabelas e a Lista de Abreviaturas:
+
+- **Lista de Quadros** — quadro é a ilustração bordada em todos os lados,
+  distinta da tabela, que é delimitada apenas no topo e na base;
+- **Lista de Programas** — listagens de código-fonte;
+- **Lista de Algoritmos** — pseudo-código.
+
+## 10. Fonte das ilustrações — *Escolha*
+
+Para toda ilustração — figura, tabela, quadro, programa, algoritmo — a legenda
+figura **acima** e a fonte é **obrigatória** e figura **abaixo**, em corpo
+menor, espaçamento simples, centralizada, antecedida da palavra "Fonte:" ou de
+seu equivalente no idioma principal.
+
+## 11. Apêndices e Anexos — *Escolha*
+
+Os capítulos de Apêndice e de Anexo são apresentados, tanto na abertura do
+capítulo quanto no Sumário, no formato
+
+> **APÊNDICE A — Título do apêndice**
 >
-> **ANEXO A — *Título do anexo***
+> **ANEXO A — Título do anexo**
 
-A palavra "APÊNDICE" ou "ANEXO" figura em caixa alta, seguida da letra
-identificadora (A, B, C, …), de travessão e do título do capítulo,
-respeitando o idioma principal do trabalho.
+com a palavra em caixa alta, a letra identificadora, travessão e o título,
+respeitando o idioma principal.
 
----
+## 12. Numeração das folhas — *Reafirmação*
 
-## 7. Numeração das páginas pré-textuais
+Nada se acrescenta aqui ao item 2.7 do Manual. A seção existe porque é o ponto
+em que mais se observaram divergências de implementação.
 
-Esta Seção apenas reafirma o §2.7 do *Manual UFRJ 2026*, por ser o ponto
-em que se observaram mais divergências de implementação.
+A capa não é contada nem numerada. **A contagem começa na folha de rosto** e
+prossegue por todas as folhas, que não são numeradas enquanto pré-textuais. A
+folha adicional que contém a ficha catalográfica **não é contada nem numerada**.
 
-A capa não é contada nem numerada. **A contagem começa na folha de
-rosto** e prossegue sequencialmente por todas as folhas, que **não são
-numeradas** enquanto pré-textuais. A **folha adicional** que contém a
-ficha catalográfica **não é contada nem numerada**.
-
-A numeração em algarismos arábicos é impressa **a partir da primeira
-folha da parte textual, dando sequência à contagem já iniciada** — e
-portanto a Introdução **não** é a folha 1. Figura no canto superior
-direito, a 2 cm da borda superior, com o último algarismo a 2 cm da
-borda direita.
+A numeração em algarismos arábicos é impressa **a partir da primeira folha da
+parte textual, dando sequência à contagem já iniciada** — e portanto a
+Introdução **não** é a folha 1. Figura no canto superior direito, a 2 cm da
+borda superior, com o último algarismo a 2 cm da borda direita.
 
 Não se empregam algarismos romanos nas folhas pré-textuais.
 
----
+## 13. Citações e Referências — *Escolha*
 
-## 8. Citações e Referências Bibliográficas
-
-A presente Norma adota integralmente as edições mais recentes das
-normas ABNT pertinentes:
-
-- **NBR 6023** (Referências) em sua revisão a partir de 2018;
-- **NBR 10520** (Citações) em sua revisão de 2023.
-
-Os elementos da referência, os formatos das citações e as regras gerais
-de apresentação são os definidos pela ABNT vigente.
-
-A implementação de referência (CoppeTeX 4.x) fornece automaticamente a
-formatação correta para todos os tipos de documento previstos na NBR
-6023 vigente, em qualquer dos sistemas de chamada (autor-data ou
-numérico) à escolha do autor.
+A COPPE adota as edições vigentes das normas ABNT pertinentes: **NBR 6023**
+(Referências) e **NBR 10520** (Citações). Qualquer dos sistemas de chamada
+previstos — autor-data ou numérico — é admitido, a critério do autor, desde que
+usado de forma consistente em todo o trabalho.
 
 ---
 
-## 9. Implementação de referência
+## 14. Implementação de referência
 
-A classe LaTeX `coppe` em suas versões 4.0 e posteriores
-(**CoppeTeX 4.x**), distribuída em
-<https://github.com/COPPE-UFRJ/CoppeTeX>, é a implementação de
-referência desta Norma. Sua adoção é o caminho recomendado pela
-COPPE/UFRJ para garantir aderência automática a todos os requisitos
-acima e ao *Manual UFRJ 2026*.
+A classe LaTeX `coppe`, versões 4.0 e posteriores (**CoppeTeX 4.x**),
+distribuída em <https://github.com/COPPE-UFRJ/CoppeTeX>, é a implementação de
+referência desta Norma. Produz, sem configuração adicional por parte do autor,
+um documento aderente ao mesmo tempo ao *Manual UFRJ 2026* e a esta Norma, e
+distribui os arquivos das duas logomarcas.
 
-Em caso de divergência entre a presente Norma escrita e a saída gerada
-pela versão estável corrente do CoppeTeX 4.x, prevalece a presente Norma
-e o *Manual UFRJ 2026*, e a divergência deve ser comunicada à equipe
-mantenedora do CoppeTeX para correção na próxima revisão da
-implementação.
+Em caso de divergência entre o que está escrito aqui e o que a versão estável
+corrente da classe produz, **prevalecem esta Norma e o Manual**, e a divergência
+deve ser comunicada à equipe mantenedora para correção na revisão seguinte.
+
+### O que a implementação não faz
+
+- **A ficha catalográfica não é composta pela classe.** É obtida no Gerador de
+  Fichas Catalográficas do SiBI (<http://fichacatalografica.sibi.ufrj.br/>) ou
+  solicitada à biblioteca do Programa, e entra na folha adicional prevista no
+  item 3.1.2.1.2, preenchida pelo Programa.
+- **Os pacotes de francês e italiano distribuídos com a classe não habilitam
+  esses idiomas para redação.** Servem de demonstração do mecanismo de extensão
+  a novos idiomas; os idiomas admitidos são os da Seção 8.
 
 ---
 
-*Versão da proposta: setembro de 2026, revista para a 9.ª edição revista
-(2026) do Manual UFRJ/SiBI. Branch `nlinguas` em
+*Versão da proposta: setembro de 2026, revista para a 9.ª edição revista (2026)
+do Manual UFRJ/SiBI. Este arquivo é a fonte de autoria; a versão composta em
+LaTeX está em `src/NORMA_COPPE_2026.tex`. Branch `nlinguas` em
 <https://github.com/COPPE-UFRJ/CoppeTeX>.*
