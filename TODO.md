@@ -50,17 +50,44 @@ guarda o estado aprovado; o v4.x é proposta.
 
 ## 2. Validar o PDF/A com um validador de verdade
 
-**Status:** pendente, e é o item mais importante que resta.
+**Status:** pendente. Continua sendo o item mais importante que resta, mas
+o terreno foi preparado.
 
-O arquivo produzido com a opção `pdfa` **declara** conformidade a-2b,
-traz OutputIntent com perfil sRGB embutido, todas as fontes embutidas e
-XMP completo — mas **nenhum validador rodou sobre ele**. Não há veraPDF
-disponível no ambiente em que a classe foi desenvolvida.
+Uma auditoria estrutural de `tests/test_pdfa.pdf` conferiu, item a item,
+o que um validador cobraria e não achou nada errado: sem `/Encrypt`, XMP
+no catálogo sem filtro declarando `pdfaid:part=2`/`conformance=B`,
+OutputIntent `GTS_PDFA1` com perfil sRGB embutido, as sete fontes todas
+embutidas e nenhuma Type3, as cinco anotações com o flag Print, sem
+JavaScript, sem LZW, `/ID` no trailer, e DocInfo e XMP batendo em título,
+autor e assunto.
 
-Antes do release: passar `dist/example.pdf` pelo
-[veraPDF](https://verapdf.org/) ou pelo pré-voo do Acrobat, e só então
-considerar 2.2(d) atendido. Se passar, avaliar tornar `pdfa` o padrão em
-vez de opção.
+Ela achou **uma** coisa e ela foi corrigida: o pdfTeX carimbava
+`/PTEX.Fullbanner` no dicionário de informações. Não é uma das chaves que
+a 6.6.2.3.2 mapeia para uma propriedade XMP e nenhum extension schema a
+declarava, ou seja, era entrada de DocInfo sem contrapartida no XMP — a
+queixa clássica de quem passa um PDF do pdfTeX por um validador. A classe
+agora faz `\pdfsuppressptexinfo=-1`.
+
+Sobram duas entradas na mesma situação, e **ambas são postas ali pelo
+próprio pdfx**, não pela classe: `/Trapped` (que o pdfx grava fixo como
+`/False` e não espelha em `pdf:Trapped`) e `/GTS_PDFA1Version`. Mexer
+nelas é brigar com o pacote, e não vale fazer isso às cegas: são
+exatamente o tipo de coisa que só se decide com o relatório do validador
+na mão.
+
+Falta, então, o que sempre faltou — **rodar o veraPDF**. Não dá para fazer
+isso daqui: `software.verapdf.org`, o Maven Central e o CTAN estão fora da
+política de saída tanto do ambiente da nuvem quanto da VM local. Na sua
+máquina:
+
+```powershell
+# baixe o instalador em https://verapdf.org/software/
+verapdf --flavour 2b tests\test_pdfa.pdf
+```
+
+Se passar, avaliar tornar `pdfa` o padrão em vez de opção. Se acusar
+`/Trapped` ou `/GTS_PDFA1Version`, aí sim vale investigar como contornar
+o pdfx.
 
 ## 3. Revisão do pacote de espanhol por falante nativo
 
@@ -79,16 +106,38 @@ outro Programa que marque o que mudaria.
 
 ## 4. Pendências técnicas menores
 
-- **Tabela de departamentos em UTF-8.** Os nomes em `\department` trazem
-  escapes com chaves (`Computa{\c c}{\~ a}o`), que o pdfx copia literais
-  para o XMP. Por isso o `\Subject` dos metadados usa o código do
-  programa. Gêmeos em UTF-8 resolveriam de vez.
 - **Coorientador nas páginas de resumo.** Hoje só os orientadores são
   listados ali. O formato daquela página é tradição da COPPE, não
-  exigência do manual — decidir antes de mexer.
-- **Fólio a 2 cm da borda superior.** Está a ~2,15 cm; 2.7 diz 2 cm.
-- **Banca grande com a opção `assinaturas`.** Com 7 membros pode estourar
-  a folha; testado até 5.
+  exigência do manual — decidir antes de mexer. **Único item ainda em
+  aberto desta seção**, e é decisão, não conserto.
+
+Os outros três saíram:
+
+- ~~Tabela de departamentos em UTF-8.~~ Cada programa agora é declarado
+  duas vezes: `\local@deptname` mantém os escapes com chaves que a capa e
+  a folha de rosto compõem, e `\meta@deptname` traz o mesmo nome em UTF-8
+  literal, que é o que vai para o XMP. O assunto dos metadados deixou de
+  ser o código e passou a ser "Programa de Engenharia de Sistemas e
+  Computação (PESC), COPPE/UFRJ", com os acentos inteiros no DocInfo e no
+  `dc:description`.
+- ~~Fólio a 2 cm da borda superior.~~ A medida de 2,15 cm era da linha de
+  base; a 2.7 mede o fólio como mede a margem direita, pelo algarismo
+  ("a 2cm da borda superior, ficando o último algarismo a 2cm da borda
+  direita"). Medido na página renderizada, o topo dos algarismos estava a
+  1,87 cm — alto demais, e não baixo. `headsep` foi calibrado em 15,49 pt
+  a partir de dois pontos medidos; o topo dos algarismos e a borda direita
+  agora caem os dois em 2,019 cm, e a margem direita é 2 cm por
+  construção, então esses 0,019 cm são viés da régua e não erro residual.
+  O topo do corpo continua exatamente em 3 cm.
+- ~~Banca grande com a opção `assinaturas`.~~ Estourava mesmo:
+  `tests/test_assinaturas_7.tex` (dois orientadores e cinco examinadores,
+  um deles com nome e instituição longos) empurrava três membros para uma
+  segunda folha — que ainda por cima imprimia fólio na parte pré-textual,
+  onde a 2.7 proíbe. O espaço acima de cada linha de assinatura passou a
+  sair de `\coppe@membrogap`, ajustado ao tamanho da banca (9 mm até
+  cinco membros, 7 mm com seis, 5 mm de sete em diante) e com 2 mm de
+  encolhimento para absorver um título que quebre uma linha a mais. Cinco
+  membros ou menos compõem exatamente como antes.
 
 ## 5. CTAN e Overleaf
 
@@ -165,4 +214,4 @@ de dar push.
 
 ---
 
-*Última atualização: setembro de 2026, branch `nlinguas`.*
+*Última atualização: 6 de setembro de 2026, branch `nlinguas`.*

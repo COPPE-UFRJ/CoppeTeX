@@ -255,6 +255,34 @@ O art. 57 da Resolução CEPG n. 302/2024 admite teses e dissertações em
 continuam distribuídos como demonstração do mecanismo de extensão, mas
 não têm respaldo normativo como idioma de redação de tese na UFRJ.
 
+### 4.7 Acabamento: fólio, banca grande e metadados
+
+Três correções que mudam o que sai na página, nenhuma delas exigindo
+alteração no seu documento.
+
+**O fólio desceu 0,13 cm.** A 2.7 mede o número da folha pelo algarismo,
+do mesmo jeito nos dois eixos: "a 2cm da borda superior, ficando o último
+algarismo a 2cm da borda direita". A borda direita já estava certa; o
+topo dos algarismos estava a 1,87 cm, alto demais. Agora os dois eixos
+batem. O topo do corpo do texto não se moveu: continua em 3 cm.
+
+**Banca de seis ou mais membros cabe na folha.** Com sete membros a folha
+de aprovação transbordava para uma segunda página — e aquela página ainda
+imprimia um fólio na parte pré-textual, onde a 2.7 não admite. O espaço
+acima de cada linha de assinatura agora acompanha o tamanho da banca:
+9 mm até cinco membros, 7 mm com seis, 5 mm de sete em diante, com 2 mm
+de folga elástica para títulos que quebrem uma linha a mais. **Banca de
+até cinco membros compõe exatamente como antes.**
+
+**O assunto do PDF virou legível.** Com a opção `pdfa`, o campo de
+assunto dos metadados trazia o código do programa porque os nomes na
+tabela de departamentos carregam escapes do TeX que o pdfx copiava
+literais. Agora sai o nome por extenso, com acentos: "Tese de Doutorado.
+Programa de Engenharia de Sistemas e Computação (PESC), COPPE/UFRJ". No
+mesmo movimento, o `/PTEX.Fullbanner` que o pdfTeX carimbava no PDF
+deixou de ser gravado — era uma entrada de metadados sem contrapartida no
+XMP, o achado mais comum de validador de PDF/A em arquivo feito com TeX.
+
 ---
 
 ## Frequently asked
