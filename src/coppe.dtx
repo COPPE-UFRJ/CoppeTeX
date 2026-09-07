@@ -3331,9 +3331,23 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   #1\ #2%
   \ifthenelse{\equal{#3}{}}{}{, #3}%
   \ifthenelse{\equal{#4}{}}{}{, #4}}
+% The gap above each signature rule is \coppe@membrogap, set from the size of
+% the board just before the list is assembled (see \makefrontpage). A fixed 9mm
+% fitted five members and overflowed at seven -- the sheet silently continued
+% onto a second page, which also printed a folio in the pre-textual part, where
+% 2.7 forbids one. The shrink lives in the length itself -- \newlength makes a
+% skip register, so "9mm minus 2mm" survives \setlength and reaches \vspace as
+% real glue, and a title long enough to wrap an extra line is absorbed instead
+% of costing a page. It has to go through \vspace and not a bare \vskip: the
+% board list is emitted inside \nohyphens, i.e. in horizontal mode, where
+% \vskip is an error and TeX then typesets the "plus ... minus ..." after it as
+% ordinary text -- which is exactly what landed on the page the first time.
+\newlength\coppe@membrogap
+\setlength\coppe@membrogap{9mm minus 2mm}
+\newcount\coppe@bancasize
 \newcommand\coppe@membro[4]{%
   \if@coppeassin
-    \vspace{9mm}%
+    \vspace{\coppe@membrogap}%
     \begin{center}
       \rule{95mm}{0.4pt}\par
       \nopagebreak{\footnotesize\coppe@membroid{#1}{#2}{#3}{#4}}\par
@@ -3376,6 +3390,19 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % name, titulacao, institution) and the old \toks@/\expandafter accumulation
 % could not carry them without becoming unreadable. \protected@edef keeps
 % accents and other protected commands in the names intact.
+% Size of the board decides the spacing above. The thresholds are measured, not
+% guessed: with the 9mm gap a seven-member board pushed three members onto a
+% second page, 7mm brought six back onto one sheet and 5mm did the same for
+% seven and eight. Boards of five or fewer keep the original 9mm, so every
+% document written before this change renders exactly as it did.
+  \coppe@bancasize=\@advisor
+  \advance\coppe@bancasize by \@coadvisor
+  \advance\coppe@bancasize by \@examiner
+  \ifnum\coppe@bancasize>6
+    \setlength\coppe@membrogap{5mm minus 2mm}%
+  \else\ifnum\coppe@bancasize>5
+    \setlength\coppe@membrogap{7mm minus 2mm}%
+  \fi\fi
   \gdef\coppe@bancalist{}%
   \count1=0
   \@whilenum\count1<\@advisor\do{%

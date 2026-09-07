@@ -887,9 +887,12 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   #1\ #2%
   \ifthenelse{\equal{#3}{}}{}{, #3}%
   \ifthenelse{\equal{#4}{}}{}{, #4}}
+\newlength\coppe@membrogap
+\setlength\coppe@membrogap{9mm minus 2mm}
+\newcount\coppe@bancasize
 \newcommand\coppe@membro[4]{%
   \if@coppeassin
-    \vspace{9mm}%
+    \vspace{\coppe@membrogap}%
     \begin{center}
       \rule{95mm}{0.4pt}\par
       \nopagebreak{\footnotesize\coppe@membroid{#1}{#2}{#3}{#4}}\par
@@ -918,6 +921,14 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \noindent\local@approvedonname:\enspace
   \ifthenelse{\equal{\coppe@dataaprov}{}}{\hrulefill}{\coppe@dataaprov}\par
   \vspace*{12mm}
+  \coppe@bancasize=\@advisor
+  \advance\coppe@bancasize by \@coadvisor
+  \advance\coppe@bancasize by \@examiner
+  \ifnum\coppe@bancasize>6
+    \setlength\coppe@membrogap{5mm minus 2mm}%
+  \else\ifnum\coppe@bancasize>5
+    \setlength\coppe@membrogap{7mm minus 2mm}%
+  \fi\fi
   \gdef\coppe@bancalist{}%
   \count1=0
   \@whilenum\count1<\@advisor\do{%
