@@ -628,6 +628,41 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %   architecture, the |\titlein| / |\brazilianabstract| API, and how to
 %   create a new language pack.
 %
+%   \item[\texttt{pdfa}] Produce the deposited file as \textbf{PDF/A-2b}, which
+%   2.2(d) of the manual requires of the digital version. The class loads
+%   |pdfx| at level |a-2b| and writes the XMP metadata from the document's own
+%   |\title|, |\author|, |\keyword| and |\department|. Level a-2b rather than
+%   a-1b: a-1b forbids transparency, which |tcolorbox| and several graphics
+%   packages produce. The metadata reaches the PDF on the SECOND run, because
+%   |pdfx| reads it from a file the class writes at the end of the first one --
+%   which is no burden, since three runs are needed for cross-references anyway.
+%
+%   \item[\texttt{assinaturas}] Give every member of the board a signature rule
+%   of its own on the folha de aprovacao, as Annex D of the manual shows,
+%   instead of the compact list. The spacing adapts to the size of the board.
+%
+%   \item[\texttt{coorientador}] List the coadvisors on the three abstract
+%   pages, under the advisors, in the same shape the folha de rosto uses.
+%   Off by default: the abstract page listing only the advisors is a COPPE
+%   tradition, and 3.1.2.1.4 does not require either form.
+%
+%   \item[\texttt{rascunhoficha}] While writing, fill the folha adicional with a
+%   ficha catalografica typeset by the class itself, so the page is not an empty
+%   frame. \textbf{Never valid for deposit}: the real ficha comes from the SiBI
+%   generator or the Programa's library, and goes in with |\fichacatalografica|.
+%
+%   \item[\texttt{twoside}, \texttt{oneside}] The 2026 edition dropped the verso
+%   margins and the deposit is digital, so the class sets one-sided pages with a
+%   3\,cm left margin on every folha. |twoside| restores the mirrored layout for
+%   anyone who is going to PRINT and bind the work; |oneside| is the default and
+%   is there to be explicit.
+%
+%   \item[\texttt{numeraisromanos}] Number the pre-textual folhas in lowercase
+%   roman numerals. \textbf{Contrary to 2.7}, which has the count running from
+%   the folha de rosto with nothing printed until the textual part. Kept only so
+%   that documents written under the older norm still compile; do not use it for
+%   a new work.
+%
 % \end{description}
 %
 % \subsection{Changing document identification}%
@@ -997,10 +1032,14 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % area) isn't enabled. This kind of option often comes in print dialogs of document
 % visualization softwares.
 %
-% \paragraph{Quotation} \DescribeMacro{longquote} To quote text larger than three
-% lines, according to ABNT, you must increase the left margin to 4 cm, do not use
-% quotation marks, and use a smaller font. The |coppe| class provides the |longquote|
-% environment to easily make these adjustments.
+% \paragraph{Quotation} \DescribeMacro{longquote} A quotation longer than three
+% lines is INDENTED BY 4\,cm from the left margin -- not set with a 4\,cm left
+% margin, which is a different and much narrower thing. 2.2(b) of the manual
+% says ``recuo de 4 cm da margem esquerda'', so on an A4 page with a 3\,cm
+% margin the quoted text starts 7\,cm from the edge of the paper. It carries no
+% quotation marks and is set in the smaller font, single spaced. The |coppe|
+% class provides the |longquote| environment, which does all of that; the
+% indentation is |\recuolongquote|, should a Programa ever need to change it.
 %
 % \section{A simple example}
 %
