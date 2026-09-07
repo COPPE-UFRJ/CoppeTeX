@@ -50,48 +50,34 @@ guarda o estado aprovado; o v4.x é proposta.
 
 ## 2. Validar o PDF/A com um validador de verdade
 
-**Status:** pendente. Continua sendo o item mais importante que resta, mas
-o terreno foi preparado.
+**Status: FEITO.** Os dois documentos que a classe produz com a opção
+`pdfa` são **PDF/A-2b conformes** pelo veraPDF 1.30.2: 144 regras, 0
+falhas.
 
-Uma auditoria estrutural de `tests/test_pdfa.pdf` conferiu, item a item,
-o que um validador cobraria e não achou nada errado: sem `/Encrypt`, XMP
-no catálogo sem filtro declarando `pdfaid:part=2`/`conformance=B`,
-OutputIntent `GTS_PDFA1` com perfil sRGB embutido, as sete fontes todas
-embutidas e nenhuma Type3, as cinco anotações com o flag Print, sem
-JavaScript, sem LZW, `/ID` no trailer, e DocInfo e XMP batendo em título,
-autor e assunto.
+E não é mais um ritual manual. `tools/build-check.ps1 -Scope pdfa`
+compila os dois e passa os dois pelo veraPDF; o escopo `all` faz o mesmo.
+São dois de propósito: `src/tests/test_pdfa.tex`, curto, cobre as páginas
+pré-textuais, e `src/example_pdfa.tex` é o example.tex inteiro, com
+bibliografia, listas, figuras, algoritmos e as caixas do tcolorbox — ou
+seja, transparência, que é o que o a-1b proibiria e o a-2b admite.
 
-Ela achou **uma** coisa e ela foi corrigida: o pdfTeX carimbava
-`/PTEX.Fullbanner` no dicionário de informações. Não é uma das chaves que
-a 6.6.2.3.2 mapeia para uma propriedade XMP e nenhum extension schema a
-declarava, ou seja, era entrada de DocInfo sem contrapartida no XMP — a
-queixa clássica de quem passa um PDF do pdfTeX por um validador. A classe
-agora faz `\pdfsuppressptexinfo=-1`.
+Para chegar lá, três defeitos tiveram de ser consertados. A opção `pdfa`
+**nunca tinha sido compilada num documento de verdade** e não funcionava
+em nenhum: escrevia o `.xmpdata` antes de `\title` e `\author`
+existirem (que é o estilo que a documentação ensina), estourava os
+dezesseis fluxos de saída do TeX no `example.tex`, e uma passada ruim
+gravava no `.xmpdata` o nome de uma sequência de controle, o que
+inutilizava o arquivo até alguém apagá-lo à mão. Além disso, toda
+listagem de código morria sob `pdfa`, porque o pdfx põe o xcolor em modo
+de conversão e o `\textcolor` do `postbreak` falhava na primeira linha
+quebrada.
 
-Sobram duas entradas na mesma situação, e **ambas são postas ali pelo
-próprio pdfx**, não pela classe: `/Trapped` (que o pdfx grava fixo como
-`/False` e não espelha em `pdf:Trapped`) e `/GTS_PDFA1Version`. Mexer
-nelas é brigar com o pacote, e não vale fazer isso às cegas: são
-exatamente o tipo de coisa que só se decide com o relatório do validador
-na mão.
-
-Falta, então, o que sempre faltou — **rodar o veraPDF**. Não dá para fazer
-isso daqui: `software.verapdf.org`, o Maven Central e o CTAN estão fora da
-política de saída tanto do ambiente da nuvem quanto da VM local. Na sua
-máquina:
-
-```powershell
-# baixe o instalador em https://verapdf.org/software/
-verapdf --flavour 2b tests\test_pdfa.pdf
-```
-
-Se passar, avaliar tornar `pdfa` o padrão em vez de opção. Se acusar
-`/Trapped` ou `/GTS_PDFA1Version`, aí sim vale investigar como contornar
-o pdfx.
+**Avaliar tornar `pdfa` o padrão** em vez de opção — agora que se sabe que
+funciona e que o resultado é conforme.
 
 ## 3. Revisão do pacote de espanhol por falante nativo
 
-**Status:** pendente.
+**Status:** pendente. É o que resta de trabalho humano.
 
 Os pacotes de francês e italiano deixaram de ser idiomas de redação
 autorizados (art. 57 da Res. CEPG 302/2024) e passaram a demonstração do
@@ -106,45 +92,73 @@ outro Programa que marque o que mudaria.
 
 ## 4. Pendências técnicas menores
 
-- **Coorientador nas páginas de resumo.** Hoje só os orientadores são
-  listados ali. O formato daquela página é tradição da COPPE, não
-  exigência do manual — decidir antes de mexer. **Único item ainda em
-  aberto desta seção**, e é decisão, não conserto.
+**Status: FEITAS, as quatro.**
 
-Os outros três saíram:
+- ~~Tabela de departamentos em UTF-8.~~ Cada programa é declarado duas
+  vezes: `\local@deptname` mantém os escapes com chaves que a capa
+  compõe, `\meta@deptname` traz o nome em UTF-8 literal para o XMP.
+- ~~Fólio a 2 cm da borda superior.~~ A 2.7 mede pelo algarismo, como
+  mede a margem direita. O topo estava a 1,87 cm — alto demais, e não
+  baixo: os 2,15 cm da medição antiga eram da linha de base. `headsep`
+  calibrado; os dois eixos caem em 2,019 cm, que é o viés da régua.
+- ~~Banca grande com `assinaturas`.~~ Sete membros empurravam três para
+  uma segunda folha, que ainda imprimia fólio na parte pré-textual. O
+  espaço acompanha o tamanho da banca.
+- ~~Coorientador nas páginas de resumo.~~ Virou a opção `coorientador`,
+  desligada por padrão, com teste próprio.
 
-- ~~Tabela de departamentos em UTF-8.~~ Cada programa agora é declarado
-  duas vezes: `\local@deptname` mantém os escapes com chaves que a capa e
-  a folha de rosto compõem, e `\meta@deptname` traz o mesmo nome em UTF-8
-  literal, que é o que vai para o XMP. O assunto dos metadados deixou de
-  ser o código e passou a ser "Programa de Engenharia de Sistemas e
-  Computação (PESC), COPPE/UFRJ", com os acentos inteiros no DocInfo e no
-  `dc:description`.
-- ~~Fólio a 2 cm da borda superior.~~ A medida de 2,15 cm era da linha de
-  base; a 2.7 mede o fólio como mede a margem direita, pelo algarismo
-  ("a 2cm da borda superior, ficando o último algarismo a 2cm da borda
-  direita"). Medido na página renderizada, o topo dos algarismos estava a
-  1,87 cm — alto demais, e não baixo. `headsep` foi calibrado em 15,49 pt
-  a partir de dois pontos medidos; o topo dos algarismos e a borda direita
-  agora caem os dois em 2,019 cm, e a margem direita é 2 cm por
-  construção, então esses 0,019 cm são viés da régua e não erro residual.
-  O topo do corpo continua exatamente em 3 cm.
-- ~~Banca grande com a opção `assinaturas`.~~ Estourava mesmo:
-  `tests/test_assinaturas_7.tex` (dois orientadores e cinco examinadores,
-  um deles com nome e instituição longos) empurrava três membros para uma
-  segunda folha — que ainda por cima imprimia fólio na parte pré-textual,
-  onde a 2.7 proíbe. O espaço acima de cada linha de assinatura passou a
-  sair de `\coppe@membrogap`, ajustado ao tamanho da banca (9 mm até
-  cinco membros, 7 mm com seis, 5 mm de sete em diante) e com 2 mm de
-  encolhimento para absorver um título que quebre uma linha a mais. Cinco
-  membros ou menos compõem exatamente como antes.
+## 4b. Conformidade: o que a revisão contra o manual 2026 encontrou
+
+Varredura da saída medida contra `specs/manual-sibi-9ed-rev-2026.txt`.
+Três não conformidades, todas corrigidas:
+
+- **Fólio em corpo 12.** A 2.2(b) põe a paginação na lista do que sai em
+  "fonte menor e uniforme", junto das citações longas, das notas de
+  rodapé e das legendas — os outros três já saíam em 10 pt.
+- **Listas pré-textuais no sumário.** O sumário abria com seis entradas
+  (Figuras, Tabelas, Quadros, Programas, Abreviaturas, Símbolos) que são
+  elementos pré-textuais e vêm antes dele. A 3.1.2.1.6 manda usar como
+  exemplo o sumário do próprio manual, que abre em "1 INTRODUÇÃO". A
+  opção `listasnosumario` devolve o comportamento antigo.
+- **Apêndice e Anexo à esquerda.** A 2.6 lista "apêndice(s)" e "anexo(s)"
+  entre os títulos sem indicativo numérico, que são centralizados —
+  letra não é indicativo numérico, e o manual centraliza o seu Anexo A.
+
+Conferidos e **conformes**: A4; margens 3/3/2/2; recuo de 4 cm da citação
+longa (7 cm da borda, medido); corpo 12 no texto e 10 nas legendas,
+citações e notas; filete de 5 cm nas notas; travessão nas legendas;
+legenda acima e fonte abaixo; ordem dos pré-textuais com o sumário por
+último; contagem começando na folha de rosto com a folha adicional fora;
+títulos sem indicativo centralizados na mancha; pós-textuais no sumário.
+
+Também saiu da documentação um erro por fator de quatro: o parágrafo da
+citação longa dizia que a margem esquerda passa a 4 cm, quando o que a
+norma pede — e o que o código sempre fez — é recuo de 4 cm ALÉM da
+margem. E metade das opções de classe não estava documentada, inclusive
+`pdfa` e `assinaturas`.
+
+## 4c. Fonte única
+
+`pdflatex coppe.ins` agora gera **tudo**: a classe, os estilos biblatex,
+os pacotes de idioma, as bases `.bib`, o `.ist`, os cinco exemplos por
+idioma, o `example_pdfa`, a montagem das capas, o `latexmkrc` e a suíte
+de regressão. Não há mais nenhum arquivo derivado mantido à mão.
+
+A suíte mudou de lugar por causa disso: vive em `src/tests/`, porque o
+`\openout` do TeX escreve em subdiretório e recusa qualquer caminho com
+`..`.
+
+Continuam fora, por terem vida própria: `tools/*.ps1` e
+`src/tests/run-tests.ps1`, que são o harness; `NORMA_COPPE_2026.tex` e
+`futuremanual2026.tex`, que são documentos sobre a norma.
 
 ## 5. CTAN e Overleaf
 
 **Status:** pendentes de aprovação da CPGP.
 
 - Tag `v4.1`, pacote CTAN a partir de `dist/` mais `src/coppe.dtx` e
-  `src/coppe.ins`.
+  `src/coppe.ins` — que agora bastam sozinhos para reconstruir a
+  distribuição inteira.
 - Template no Overleaf com o conteúdo de `dist/`, e botão "Open in
   Overleaf" no README. O `latexmkrc` já configura biber e os makeindex.
 
@@ -156,9 +170,10 @@ Os outros três saíram:
 - Release no GitHub com os artefatos de `dist/`.
 
 **Sem CI no GitHub Actions.** A verificação roda localmente por
-[`tools/build-check.ps1`](./tools/build-check.ps1), que regenera a classe,
-compila o exemplo, os cinco idiomas, os manuais e a suíte de testes, e
-deixa os logs em `_scratch/`. `tools/watch-build.ps1` dispara o mesmo
+[`tools/build-check.ps1`](./tools/build-check.ps1), que regenera tudo a
+partir do `.dtx`, compila o exemplo, os cinco idiomas, os manuais e a
+suíte de testes, passa os dois documentos PDF/A pelo veraPDF, e deixa os
+logs em `_scratch/`. `tools/watch-build.ps1` dispara o mesmo
 quando aparece um arquivo `_scratch/BUILD_REQUEST`.
 
 ---
@@ -169,6 +184,7 @@ quando aparece um arquivo `_scratch/BUILD_REQUEST`.
 git clone https://github.com/COPPE-UFRJ/CoppeTeX.git
 cd CoppeTeX
 git checkout nlinguas          # NÃO trabalhe no master
+cd src && pdflatex coppe.ins   # gera TODOS os arquivos derivados
 ```
 
 ### O que não vem pelo git
@@ -193,13 +209,20 @@ Ele observa `_scratch\BUILD_REQUEST` e escreve `_scratch\RESULTADO.txt`.
 Ou rode direto:
 
 ```powershell
-.\tools\build-check.ps1 -Scope all      # class | example | langs | tests | docs | all
+.\tools\build-check.ps1 -Scope all   # class|example|langs|tests|docs|pdfa|all
 ```
+
+O escopo `pdfa` compila os dois documentos PDF/A e passa os dois pelo
+veraPDF, que o script procura em `%USERPROFILE%\verapdf` e no PATH; sem
+ele o passo é pulado, não falha. O relatório XML fica em
+`_scratch/build-logs/` e o resumo, com a cláusula de cada regra
+reprovada, vai para o `RESULTADO.txt`.
 
 Requisitos: TeX Live ou MiKTeX com `biber`, `biblatex`, `lmodern`,
 `algorithm2e`, `tcolorbox`, `pdfx` e os pacotes de idioma do Babel.
 `pdftoppm` (poppler) é opcional — sem ele, apenas a montagem de capas é
-pulada.
+pulada. O [veraPDF](https://verapdf.org/) é necessário só para o escopo
+`pdfa`.
 
 ### Política de branch
 
@@ -214,4 +237,4 @@ de dar push.
 
 ---
 
-*Última atualização: 6 de setembro de 2026, branch `nlinguas`.*
+*Última atualização: 7 de setembro de 2026, branch `nlinguas`.*
