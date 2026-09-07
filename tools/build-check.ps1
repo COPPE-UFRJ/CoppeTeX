@@ -38,7 +38,9 @@ $ErrorActionPreference = "Continue"
 
 $root    = Split-Path -Parent (Split-Path -Parent $MyInvocation.MyCommand.Path)
 $src     = Join-Path $root "src"
-$testDir = Join-Path $root "tests"
+# tests/ vive DENTRO de src/: o coppe.ins gera os test_*.tex, e o openout
+# do TeX so escreve em subdiretorios -- nunca em "..".
+$testDir = Join-Path $src "tests"
 $logDir  = Join-Path $root "_scratch\build-logs"
 $result  = Join-Path $root "_scratch\RESULTADO.txt"
 
@@ -86,8 +88,21 @@ Add-Line "pdflatex: $((Get-Command pdflatex -ErrorAction SilentlyContinue).Sourc
 Add-Line "biber:    $((Get-Command biber -ErrorAction SilentlyContinue).Source)"
 Add-Line ""
 
-# 1. Regenerar a classe a partir do .dtx -- sempre, porque tudo depende disso.
+# 1. Regenerar TUDO a partir do .dtx -- sempre, porque tudo depende disso.
+# O coppe.ins gera a classe, os estilos biblatex, os pacotes de idioma, as
+# bases .bib, os exemplos nos cinco idiomas, o example_pdfa, a montagem das
+# capas, a suite de testes e o latexmkrc.
 Invoke-Step "coppe.ins" $src { & pdflatex -interaction=nonstopmode coppe.ins }
+
+# O latexmkrc sai do docstrip como latexmkrc.tex: o \openout do TeX acrescenta
+# .tex a todo nome sem extensao, e nao ha como pedir a ele o nome exato. Poe no
+# lugar aqui, para que a geracao continue sendo um comando so para quem usa o
+# harness.
+$mkrcGen = Join-Path $src "latexmkrc.tex"
+if (Test-Path $mkrcGen) {
+    Copy-Item $mkrcGen (Join-Path $src "latexmkrc") -Force
+    Add-Line "ok       latexmkrc (de latexmkrc.tex)"
+}
 
 if ($Scope -in @("example", "all")) { Build-Tex -Stem "example" -Dir $src -WithBiber }
 

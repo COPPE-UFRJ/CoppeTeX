@@ -111,6 +111,24 @@ not this file.
 
 \endpreamble
 
+\declarepreamble\demopreamble
+
+This is one of the demonstration documents of the `coppe' document class:
+the five main-language demos, the PDF/A build of the full example and the
+side-by-side cover sheet.  It is generated from coppe.dtx by docstrip; edit
+the .dtx source, not this file.
+
+\endpreamble
+
+\declarepreamble\testpreamble
+
+This is a regression test for the `coppe' document class.  Each test is meant
+to compile cleanly under pdflatex + biber + pdflatex + pdflatex; the runner
+src/tests/run-tests.ps1 discovers every test_*.tex in that directory.  It is
+generated from coppe.dtx by docstrip; edit the .dtx source, not this file.
+
+\endpreamble
+
 \postamble
 % end of `coppe' customized files
 \endpostamble
@@ -139,5 +157,38 @@ not this file.
   \file{coppe-lang-italian.def}{\from{coppe.dtx}{langit}}%
   \file{coppe-numeric.bbx}{\from{coppe.dtx}{numbbx}}%
   \file{coppe-numeric.cbx}{\from{coppe.dtx}{numcbx}}%
+% Documentos de demonstracao: os cinco idiomas principais, a montagem das
+% capas e a versao PDF/A do exemplo completo.
+  \usepreamble\demopreamble
+  \file{example_pt.tex}{\from{coppe.dtx}{examplept}}%
+  \file{example_en.tex}{\from{coppe.dtx}{exampleen}}%
+  \file{example_es.tex}{\from{coppe.dtx}{examplees}}%
+  \file{example_fr.tex}{\from{coppe.dtx}{examplefr}}%
+  \file{example_it.tex}{\from{coppe.dtx}{exampleit}}%
+  \file{example_pdfa.tex}{\from{coppe.dtx}{examplepdfa}}%
+  \file{covers_5languages.tex}{\from{coppe.dtx}{covers}}%
+% Suite de regressao. Fica em src/tests/ porque o \openout do TeX escreve
+% em subdiretorio mas nunca em "..".
+  \usepreamble\testpreamble
+  \file{tests/test_brazilian_one_advisor.tex}{\from{coppe.dtx}{testone}}%
+  \file{tests/test_brazilian_two_advisors.tex}{\from{coppe.dtx}{testtwo}}%
+  \file{tests/test_brazilian_three_advisors.tex}{\from{coppe.dtx}{testthree}}%
+  \file{tests/test_assinaturas.tex}{\from{coppe.dtx}{testassin}}%
+  \file{tests/test_assinaturas_7.tex}{\from{coppe.dtx}{testassin7}}%
+  \file{tests/test_pdfa.tex}{\from{coppe.dtx}{testpdfa}}%
+% O latexmkrc e Perl e nao pode levar o preambulo em %% que o docstrip
+% acrescenta por padrao, entao o aviso de arquivo gerado vai dentro do proprio
+% modulo, em comentario de Perl.
+%
+% Sai como latexmkrc.tex, e nao latexmkrc, porque o \openout do TeX acrescenta
+% .tex a todo nome sem extensao e recusa nome comecado por ponto: nao ha como
+% pedir a ele um arquivo chamado exatamente "latexmkrc". Quem usa
+% tools/build-check.ps1 nao precisa fazer nada -- ele poe o arquivo no lugar
+% depois de cada geracao. Quem rodar o coppe.ins na mao copia:
+%     copy latexmkrc.tex latexmkrc      (Windows)
+%     cp   latexmkrc.tex latexmkrc      (Unix)
+  \nopreamble
+  \nopostamble
+  \file{latexmkrc.tex}{\from{coppe.dtx}{latexmkrc}}%
 }
 \endbatchfile

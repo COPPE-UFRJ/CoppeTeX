@@ -1,22 +1,33 @@
 %%
-%% test_assinaturas_7.tex -- regression test for the coppe class.
+%% This is file `tests/test_assinaturas_7.tex',
+%% generated with the docstrip utility.
 %%
-%% The folha de aprovacao under the `assinaturas' option gives every board
-%% member a signature rule of its own (Annex D). The class had only ever been
-%% exercised up to five members, and a doctoral board at the COPPE routinely
-%% reaches seven, so this test pins the tall end of the range: two advisors
-%% plus five examiners, one of them with a long name and a long institution,
-%% which is the combination most likely to wrap a line and push the sheet over.
+%% The original source files were:
 %%
-%% What "passing" means here is narrower than "pdflatex exited 0": the folha
-%% de aprovacao must still fit on ONE page. tools/check-aprovacao.py measures
-%% that from the rendered PDF; run-tests.ps1 only sees the exit code, so a
-%% silent overflow would show up as an Overfull \vbox in the log rather than
-%% as a failure. Both are checked.
+%% coppe.dtx  (with options: `testassin7')
+%% 
+%% This is a regression test for the `coppe' document class.  Each test is meant
+%% to compile cleanly under pdflatex + biber + pdflatex + pdflatex; the runner
+%% src/tests/run-tests.ps1 discovers every test_*.tex in that directory.  It is
+%% generated from coppe.dtx by docstrip; edit the .dtx source, not this file.
+%% 
+%% \CheckSum{0}
+%% \CharacterTable
+%%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+%%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+%%   Digits        \0\1\2\3\4\5\6\7\8\9
+%%   Exclamation   \!     Double quote  \"     Hash (number) \#
+%%   Dollar        \$     Percent       \%     Ampersand     \&
+%%   Acute accent  \'     Left paren    \(     Right paren   \)
+%%   Asterisk      \*     Plus          \+     Comma         \,
+%%   Minus         \-     Point         \.     Solidus       \/
+%%   Colon         \:     Semicolon     \;     Less than     \<
+%%   Equals        \=     Greater than  \>     Question mark \?
+%%   Commercial at \@     Left bracket  \[     Backslash     \\
+%%   Right bracket \]     Circumflex    \^     Underscore    \_
+%%   Grave accent  \`     Left brace    \{     Vertical bar  \|
+%%   Right brace   \}     Tilde         \~}
 %%
-%% Run via ../tests/run-tests.ps1. Compile under pdfLaTeX.
-%%
-
 \documentclass[dsc,assinaturas]{coppe}
 
 \usepackage[brazilian]{babel}
@@ -32,7 +43,7 @@
 \examiner{Prof.}{Segundo Examinador}{Ph.D.}
 \examiner[UFF]{Prof.}{Terceiro Examinador}{D.Sc.}
 \examiner[UNIRIO]{Prof.}{Quarto Examinador}{D.Sc.}
-% nome e instituição longos de propósito: é o caso que estoura primeiro
+ % nome e instituição longos de propósito: é o caso que estoura primeiro
 \examiner[Universidade Federal do Estado do Rio de Janeiro]{Prof.}{Quinto
   Examinador de Nome Bastante Comprido}{D.Sc.}
 
@@ -67,3 +78,6 @@
   \section{Uma seção}
     Texto da seção.
 \end{document}
+%% 
+%%
+%% End of file `tests/test_assinaturas_7.tex'.

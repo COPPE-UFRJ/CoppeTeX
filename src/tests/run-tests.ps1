@@ -18,7 +18,7 @@ $ErrorActionPreference = "Stop"
 # Make pdflatex see ../src/. The trailing ; matters on Windows -- it tells
 # kpathsea "and then the normal TEXINPUTS path after this".
 $here   = Split-Path -Parent $MyInvocation.MyCommand.Path
-$srcDir = Resolve-Path (Join-Path $here "..\src")
+$srcDir = Resolve-Path (Join-Path $here "..")
 $env:TEXINPUTS = "$srcDir;$here;$env:TEXINPUTS"
 $env:BIBINPUTS = "$srcDir;$here;$env:BIBINPUTS"
 

@@ -1,24 +1,33 @@
 %%
-%% test_pdfa.tex -- regression test for the coppe class.
-%% Exercises the pre-textual pages introduced/reshaped for the SiBI manual,
-%% 9th revised edition (2026):
+%% This is file `tests/test_pdfa.tex',
+%% generated with the docstrip utility.
 %%
-%%   * class option `assinaturas' -- folha de aprovacao with one signature
-%%     rule per board member instead of the compact list (Annex D)
-%%   * \examiner and \advisor with the OPTIONAL institution argument, and the
-%%     titulacao argument that pre-4.1 discarded silently
-%%   * folha adicional with the Coleta CAPES fields (3.1.2.1.2, Annex H):
-%%     \tipoproducao, \projetovinculado, \nomeprojeto, \areaconcentracao,
-%%     \agenciafomento
-%%   * \linhapesquisa and \areaconcentracao on the folha de rosto
-%%   * \dataaprovacao on the folha de aprovacao
+%% The original source files were:
 %%
-%% Deliberately mixes calls WITH and WITHOUT the optional institution, so a
-%% regression in the optional-argument handling shows up here.
+%% coppe.dtx  (with options: `testpdfa')
+%% 
+%% This is a regression test for the `coppe' document class.  Each test is meant
+%% to compile cleanly under pdflatex + biber + pdflatex + pdflatex; the runner
+%% src/tests/run-tests.ps1 discovers every test_*.tex in that directory.  It is
+%% generated from coppe.dtx by docstrip; edit the .dtx source, not this file.
+%% 
+%% \CheckSum{0}
+%% \CharacterTable
+%%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+%%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+%%   Digits        \0\1\2\3\4\5\6\7\8\9
+%%   Exclamation   \!     Double quote  \"     Hash (number) \#
+%%   Dollar        \$     Percent       \%     Ampersand     \&
+%%   Acute accent  \'     Left paren    \(     Right paren   \)
+%%   Asterisk      \*     Plus          \+     Comma         \,
+%%   Minus         \-     Point         \.     Solidus       \/
+%%   Colon         \:     Semicolon     \;     Less than     \<
+%%   Equals        \=     Greater than  \>     Question mark \?
+%%   Commercial at \@     Left bracket  \[     Backslash     \\
+%%   Right bracket \]     Circumflex    \^     Underscore    \_
+%%   Grave accent  \`     Left brace    \{     Vertical bar  \|
+%%   Right brace   \}     Tilde         \~}
 %%
-%% Run via ../tests/run-tests.ps1. Compile under pdfLaTeX.
-%%
-
 \documentclass[dsc,pdfa]{coppe}
 
 \usepackage[brazilian]{babel}
@@ -31,9 +40,9 @@
 \volume{2}
 \author{Nome}{de Teste}
 
-% com instituição
+ % com instituição
 \advisor[UFRJ]{Prof.}{Primeiro}{Orientador}{D.Sc.}
-% sem instituição -- deve continuar valendo (compatibilidade pré-4.1)
+ % sem instituição -- deve continuar valendo (compatibilidade pré-4.1)
 \advisor{Prof.}{Segundo}{Orientador}{Ph.D.}
 \coadvisor[UFF]{Prof.}{Primeiro}{Coorientador}{D.Sc.}
 
@@ -78,3 +87,6 @@
   \paragraph{Um quinto nível}
     Texto quinário.
 \end{document}
+%% 
+%%
+%% End of file `tests/test_pdfa.tex'.

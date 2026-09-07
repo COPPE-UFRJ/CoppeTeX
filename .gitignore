@@ -54,3 +54,6 @@ tests/*.pdf
 # metadados XMP gerados pela opcao pdfa
 *.xmpdata
 *.xmpi
+
+# gerado pelo coppe.ins; o build-check o copia para latexmkrc
+src/latexmkrc.tex
