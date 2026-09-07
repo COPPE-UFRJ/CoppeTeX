@@ -191,7 +191,7 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
 \let\l@quadro\l@figure
 \newcommand\listofquadros{%
   \chapter*{\listquadroname}%
-  \addcontentsline{toc}{chapter}{\listquadroname}%
+  \coppe@listtoc{\listquadroname}%
   \@mkboth{\MakeUppercase\listquadroname}{\MakeUppercase\listquadroname}%
   \@starttoc{loq}}
 \newcommand{\cpsourcename}{\coppestring{source}}
@@ -205,7 +205,7 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
   {\floatstyle{plaintop}\newfloat{#1}{htbp}{lo#1}}%
   \floatname{#1}{#2}%
   \expandafter\newcommand\csname listof#1s\endcsname{%
-    \chapter*{#3}\addcontentsline{toc}{chapter}{#3}%
+    \chapter*{#3}\coppe@listtoc{#3}%
     \@mkboth{\MakeUppercase{#3}}{\MakeUppercase{#3}}%
     \@starttoc{lo#1}}}
 \let\coppe@orig@footnotetext\@footnotetext
@@ -216,6 +216,9 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
 \setlist[alineas,1]{label=\alph*),leftmargin=1.8em,itemsep=0pt}
 \setlist[alineas,2]{label=--,leftmargin=1.8em,itemsep=0pt}
 \RequirePackage{fancyhdr}
+\newcommand\coppe@listtoc[1]{%
+  \if@coppelistastoc\addcontentsline{toc}{chapter}{#1}\fi}
+\newif\if@coppeglosspre \@coppeglossprefalse
 \newcommand\coppe@folio{{\footnotesize\thepage}}
 \fancypagestyle{coppe}{\fancyhf{}\fancyhead[RO,LE]{\coppe@folio}%
   \renewcommand{\headrulewidth}{0pt}}
@@ -290,6 +293,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \DeclareOption{assinaturas}{\@coppeassintrue}
 \newif\if@coppecoadvresumo \@coppecoadvresumofalse
 \DeclareOption{coorientador}{\@coppecoadvresumotrue}
+\newif\if@coppelistastoc \@coppelistastocfalse
+\DeclareOption{listasnosumario}{\@coppelistastoctrue}
 \newif\if@copperascunho \@copperascunhofalse
 \DeclareOption{rascunhoficha}{\@copperascunhotrue}
 \newif\if@coppetwoside \@coppetwosidefalse
@@ -441,7 +446,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \renewcommand\lstlistlistingname{\coppestring{listprogram}}}
 \newcommand\listofprogramas{%
   \chapter*{\lstlistlistingname}%
-  \addcontentsline{toc}{chapter}{\lstlistlistingname}%
+  \coppe@listtoc{\lstlistlistingname}%
   \@mkboth{\MakeUppercase\lstlistlistingname}{\MakeUppercase\lstlistlistingname}%
   \@starttoc{lol}}
 \newsavebox\coppe@lstarrow
@@ -1338,7 +1343,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
       \@restonecolfalse
     \fi
     \chapter*{\listfigurename}%
-      \addcontentsline{toc}{chapter}{\listfigurename}%
+      \coppe@listtoc{\listfigurename}%
       \@mkboth{\MakeUppercase\listfigurename}%
               {\MakeUppercase\listfigurename}%
     \@starttoc{lof}%
@@ -1351,7 +1356,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
       \@restonecolfalse
     \fi
     \chapter*{\listtablename}%
-      \addcontentsline{toc}{chapter}{\listtablename}%
+      \coppe@listtoc{\listtablename}%
       \@mkboth{%
           \MakeUppercase\listtablename}%
          {\MakeUppercase\listtablename}%
@@ -1360,7 +1365,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     }
 \newcommand\printlosymbols{%
 \renewcommand\glossaryname{\listsymbolname}%
-\@input@{\jobname.los}}
+\begingroup\@coppeglosspretrue
+\@input@{\jobname.los}\endgroup}
 \def\makelosymbols{%
   \newwrite\@losfile
   \immediate\openout\@losfile=\jobname.syx
@@ -1386,7 +1392,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \@esphack}}}%
 \newcommand\printloabbreviations{%
 \renewcommand\glossaryname{\listabbreviationname}%
-\@input@{\jobname.lab}}
+\begingroup\@coppeglosspretrue
+\@input@{\jobname.lab}\endgroup}
 \def\makeloabbreviations{%
   \newwrite\@labfile
   \immediate\openout\@labfile=\jobname.abx
@@ -1509,7 +1516,11 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \@mkboth{\MakeUppercase\glossaryname}%
   {\MakeUppercase\glossaryname}%
   \chapter*{\glossaryname}%
-  \addcontentsline{toc}{chapter}{\glossaryname}
+  \if@coppeglosspre
+    \coppe@listtoc{\glossaryname}%
+  \else
+    \addcontentsline{toc}{chapter}{\glossaryname}%
+  \fi
   \list{}
   {\setlength{\listparindent}{0in}%
    \setlength{\labelwidth}{1.0in}%

@@ -2266,7 +2266,7 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
 \let\l@quadro\l@figure
 \newcommand\listofquadros{%
   \chapter*{\listquadroname}%
-  \addcontentsline{toc}{chapter}{\listquadroname}%
+  \coppe@listtoc{\listquadroname}%
   \@mkboth{\MakeUppercase\listquadroname}{\MakeUppercase\listquadroname}%
   \@starttoc{loq}}
 % \source / \fonte: the illustration source (ABNT-mandatory). Typeset below the
@@ -2286,7 +2286,7 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
   {\floatstyle{plaintop}\newfloat{#1}{htbp}{lo#1}}%
   \floatname{#1}{#2}%
   \expandafter\newcommand\csname listof#1s\endcsname{%
-    \chapter*{#3}\addcontentsline{toc}{chapter}{#3}%
+    \chapter*{#3}\coppe@listtoc{#3}%
     \@mkboth{\MakeUppercase{#3}}{\MakeUppercase{#3}}%
     \@starttoc{lo#1}}}
 % --- Footnotes (manual2024 / R16, R8, R21): single spacing and a 5 cm rule
@@ -2312,6 +2312,16 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
 % folio was the one item on that list still coming out at the body size of 12pt.
 % It is \footnotesize now, which is the same smaller size the other three
 % already use -- "uniforme" is part of the requirement, not just "menor".
+% Pre-textual lists reach the sumario only under the listasnosumario option
+% (see the option's declaration for the reason). Post-textual material calls
+% \addcontentsline directly and is unaffected.
+\newcommand\coppe@listtoc[1]{%
+  \if@coppelistastoc\addcontentsline{toc}{chapter}{#1}\fi}
+% \coppe@glosspre marks the two PRE-textual uses of the glossary environment --
+% the list of abbreviations and the list of symbols -- apart from the genuine
+% post-textual Glossario, which shares the same environment but must appear in
+% the sumario.
+\newif\if@coppeglosspre \@coppeglossprefalse
 \newcommand\coppe@folio{{\footnotesize\thepage}}
 \fancypagestyle{coppe}{\fancyhf{}\fancyhead[RO,LE]{\coppe@folio}%
   \renewcommand{\headrulewidth}{0pt}}
@@ -2439,6 +2449,19 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % paginas de resumo, no mesmo formato da folha de rosto. Sem a opcao nada muda.
 \newif\if@coppecoadvresumo \@coppecoadvresumofalse
 \DeclareOption{coorientador}{\@coppecoadvresumotrue}
+% 3.1.2.1.6 says the sumario enumerates the divisions "na mesma ordem e grafia
+% em que a materia nele se sucede" and adds "inclusive os elementos
+% pos-textuais" -- and then settles the question by pointing at its own sumario
+% as the model. That sumario opens at "1 INTRODUCAO": the lists of figures, of
+% tables, of abbreviations and of symbols come BEFORE the sumario and are not
+% listed in it, which is also the rule of NBR 6027 for pre-textual elements.
+% The class was adding all of them, so every thesis carried six entries the
+% manual's own example does not have. They come out. Post-textual elements --
+% Referencias, Glossario, Apendices, Anexos, Indice -- stay, as required.
+%
+% Programas that want the old behaviour ask for it by name.
+\newif\if@coppelistastoc \@coppelistastocfalse
+\DeclareOption{listasnosumario}{\@coppelistastoctrue}
 \newif\if@copperascunho \@copperascunhofalse
 \DeclareOption{rascunhoficha}{\@copperascunhotrue}
 \newif\if@coppetwoside \@coppetwosidefalse
@@ -2637,7 +2660,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \listofprogramas in the coppe list style (heading + ToC + running head).
 \newcommand\listofprogramas{%
   \chapter*{\lstlistlistingname}%
-  \addcontentsline{toc}{chapter}{\lstlistlistingname}%
+  \coppe@listtoc{\lstlistlistingname}%
   \@mkboth{\MakeUppercase\lstlistlistingname}{\MakeUppercase\lstlistlistingname}%
   \@starttoc{lol}}
 % Per-language styles + environments (python, java, xml, html, prolog).
@@ -3952,7 +3975,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
       \@restonecolfalse
     \fi
     \chapter*{\listfigurename}%
-      \addcontentsline{toc}{chapter}{\listfigurename}%
+      \coppe@listtoc{\listfigurename}%
       \@mkboth{\MakeUppercase\listfigurename}%
               {\MakeUppercase\listfigurename}%
     \@starttoc{lof}%
@@ -3970,7 +3993,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
       \@restonecolfalse
     \fi
     \chapter*{\listtablename}%
-      \addcontentsline{toc}{chapter}{\listtablename}%
+      \coppe@listtoc{\listtablename}%
       \@mkboth{%
           \MakeUppercase\listtablename}%
          {\MakeUppercase\listtablename}%
@@ -3984,7 +4007,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %    \begin{macrocode}
 \newcommand\printlosymbols{%
 \renewcommand\glossaryname{\listsymbolname}%
-\@input@{\jobname.los}}
+\begingroup\@coppeglosspretrue
+\@input@{\jobname.los}\endgroup}
 %    \end{macrocode}
 % \end{macro}
 %
@@ -4023,7 +4047,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %    \begin{macrocode}
 \newcommand\printloabbreviations{%
 \renewcommand\glossaryname{\listabbreviationname}%
-\@input@{\jobname.lab}}
+\begingroup\@coppeglosspretrue
+\@input@{\jobname.lab}\endgroup}
 %    \end{macrocode}
 % \end{macro}
 %
@@ -4203,7 +4228,11 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \@mkboth{\MakeUppercase\glossaryname}%
   {\MakeUppercase\glossaryname}%
   \chapter*{\glossaryname}%
-  \addcontentsline{toc}{chapter}{\glossaryname}
+  \if@coppeglosspre
+    \coppe@listtoc{\glossaryname}%
+  \else
+    \addcontentsline{toc}{chapter}{\glossaryname}%
+  \fi
   \list{}
   {\setlength{\listparindent}{0in}%
    \setlength{\labelwidth}{1.0in}%
