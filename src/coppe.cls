@@ -1534,6 +1534,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \if@coppedoublespace\doublespacing\else\onehalfspacing\fi
 \if@coppepdfa
   \RequirePackage[a-2b]{pdfx}
+  \pdfsuppressptexinfo=-1
   \newwrite\coppe@xmpout
   \AtBeginDocument{%
     \gdef\coppe@xmpkeys{}%

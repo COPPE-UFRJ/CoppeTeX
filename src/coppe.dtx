@@ -4165,6 +4165,12 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % Pantheon and by the SiBI's own instructions, which also list PDF/A-2b.
 \if@coppepdfa
   \RequirePackage[a-2b]{pdfx}
+% pdfTeX stamps /PTEX.Fullbanner into the document information dictionary.
+% It is not one of the keys ISO 19005-2 6.6.2.3.2 maps to an XMP property, and
+% no extension schema declares it, so it is a DocInfo entry with no XMP
+% counterpart -- a finding a PDF/A checker has every reason to raise, and one
+% that costs nothing to remove. -1 sets every suppression bit.
+  \pdfsuppressptexinfo=-1
 % pdfx takes the XMP metadata from \jobname.xmpdata, which it reads when it is
 % LOADED -- before the preamble has run, so before \title, \author and
 % \keyword exist. The file is therefore WRITTEN at \begin{document}, when the
