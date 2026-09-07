@@ -120,8 +120,15 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
   {\if@coppeappendix\MakeUppercase{\appendixname}\ \thechapter\ \textendash\else\thechapter\fi}
   {1ex}{\MakeUppercase}
 \titlespacing*{\chapter}{0pt}{10pt}{1.5\baselineskip}
+\newcommand\coppe@appendixheadings{%
+  \titleformat{\chapter}[block]
+    {\normalfont\Large\bfseries\filcenter}
+    {\MakeUppercase{\appendixname}\ \thechapter\ \textendash}
+    {1ex}{\MakeUppercase}%
+  \titlespacing*{\chapter}{0pt}{10pt}{1.5\baselineskip}}
 \let\coppe@orig@appendix\appendix
-\renewcommand\appendix{\coppe@orig@appendix\@coppeappendixtrue}
+\renewcommand\appendix{%
+  \coppe@orig@appendix\@coppeappendixtrue\coppe@appendixheadings}
 \newif\if@coppeannex \@coppeannexfalse
 \newcommand\coppe@tocapp[1]{%
   \MakeUppercase{\coppestring{appendix}}%
@@ -1668,6 +1675,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \renewcommand{\appendixname}{\coppestring{annex}}%
     \appendix
     \@coppeannextrue
+    \coppe@appendixheadings
 }
 %% 
 %%

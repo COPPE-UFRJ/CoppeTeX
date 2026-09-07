@@ -2179,8 +2179,22 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
   {\if@coppeappendix\MakeUppercase{\appendixname}\ \thechapter\ \textendash\else\thechapter\fi}
   {1ex}{\MakeUppercase}
 \titlespacing*{\chapter}{0pt}{10pt}{1.5\baselineskip}
+% 2.6 says the numeric indicative of a section precedes its title flush left,
+% and that titles WITHOUT a numeric indicative are centred -- and then lists
+% them, "apendice(s)" and "anexo(s)" among them. A letter is not a numeric
+% indicative, and the manual sets its own Annex A centred. The chapter format is
+% therefore re-issued when \appendix or \annex is called: same label, same
+% travessao, but a centred block instead of a flush-left hang. Numbered chapters
+% are untouched -- they DO carry a numeric indicative and stay flush left.
+\newcommand\coppe@appendixheadings{%
+  \titleformat{\chapter}[block]
+    {\normalfont\Large\bfseries\filcenter}
+    {\MakeUppercase{\appendixname}\ \thechapter\ \textendash}
+    {1ex}{\MakeUppercase}%
+  \titlespacing*{\chapter}{0pt}{10pt}{1.5\baselineskip}}
 \let\coppe@orig@appendix\appendix
-\renewcommand\appendix{\coppe@orig@appendix\@coppeappendixtrue}
+\renewcommand\appendix{%
+  \coppe@orig@appendix\@coppeappendixtrue\coppe@appendixheadings}
 % Sumario (TOC) entries for APENDICE/ANEXO chapters read "APENDICE A -- Title"
 % / "ANEXO A -- Title" (R75/R76), not the bare "A". The label word is chosen by
 % which macro is written (so it is correct at .toc-render time even though the
@@ -4549,6 +4563,9 @@ postamble
     \renewcommand{\appendixname}{\coppestring{annex}}%
     \appendix
     \@coppeannextrue
+% \appendix has already re-issued the centred chapter format, but it baked in
+% the \appendixname of that moment. Re-issue it now that the name is "Anexo".
+    \coppe@appendixheadings
 }
 %</class>
 %    \end{macrocode}
