@@ -109,7 +109,7 @@
           Do NOT load amssymb together with unicode-math -- it would clash\MessageBreak
           with the OpenType math font setup}}}}
 \fi
-\RequirePackage[a4paper,headheight=15pt,headsep=15.49pt,%
+\RequirePackage[a4paper,headheight=15pt,headsep=16.87pt,%
 top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
 \setlength\emergencystretch{3em}
 \RequirePackage{indentfirst}
@@ -120,8 +120,15 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
   {\if@coppeappendix\MakeUppercase{\appendixname}\ \thechapter\ \textendash\else\thechapter\fi}
   {1ex}{\MakeUppercase}
 \titlespacing*{\chapter}{0pt}{10pt}{1.5\baselineskip}
+\newcommand\coppe@appendixheadings{%
+  \titleformat{\chapter}[block]
+    {\normalfont\Large\bfseries\filcenter}
+    {\MakeUppercase{\appendixname}\ \thechapter\ \textendash}
+    {1ex}{\MakeUppercase}%
+  \titlespacing*{\chapter}{0pt}{10pt}{1.5\baselineskip}}
 \let\coppe@orig@appendix\appendix
-\renewcommand\appendix{\coppe@orig@appendix\@coppeappendixtrue}
+\renewcommand\appendix{%
+  \coppe@orig@appendix\@coppeappendixtrue\coppe@appendixheadings}
 \newif\if@coppeannex \@coppeannexfalse
 \newcommand\coppe@tocapp[1]{%
   \MakeUppercase{\coppestring{appendix}}%
@@ -191,7 +198,7 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
 \let\l@quadro\l@figure
 \newcommand\listofquadros{%
   \chapter*{\listquadroname}%
-  \addcontentsline{toc}{chapter}{\listquadroname}%
+  \coppe@listtoc{\listquadroname}%
   \@mkboth{\MakeUppercase\listquadroname}{\MakeUppercase\listquadroname}%
   \@starttoc{loq}}
 \newcommand{\cpsourcename}{\coppestring{source}}
@@ -205,7 +212,7 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
   {\floatstyle{plaintop}\newfloat{#1}{htbp}{lo#1}}%
   \floatname{#1}{#2}%
   \expandafter\newcommand\csname listof#1s\endcsname{%
-    \chapter*{#3}\addcontentsline{toc}{chapter}{#3}%
+    \chapter*{#3}\coppe@listtoc{#3}%
     \@mkboth{\MakeUppercase{#3}}{\MakeUppercase{#3}}%
     \@starttoc{lo#1}}}
 \let\coppe@orig@footnotetext\@footnotetext
@@ -216,7 +223,11 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
 \setlist[alineas,1]{label=\alph*),leftmargin=1.8em,itemsep=0pt}
 \setlist[alineas,2]{label=--,leftmargin=1.8em,itemsep=0pt}
 \RequirePackage{fancyhdr}
-\fancypagestyle{coppe}{\fancyhf{}\fancyhead[RO,LE]{\thepage}%
+\newcommand\coppe@listtoc[1]{%
+  \if@coppelistastoc\addcontentsline{toc}{chapter}{#1}\fi}
+\newif\if@coppeglosspre \@coppeglossprefalse
+\newcommand\coppe@folio{{\footnotesize\thepage}}
+\fancypagestyle{coppe}{\fancyhf{}\fancyhead[RO,LE]{\coppe@folio}%
   \renewcommand{\headrulewidth}{0pt}}
 \renewcommand{\cleardoublepage}{%
   \clearpage
@@ -287,6 +298,10 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \DeclareOption{pdfa}{\@coppepdfatrue}
 \newif\if@coppeassin \@coppeassinfalse
 \DeclareOption{assinaturas}{\@coppeassintrue}
+\newif\if@coppecoadvresumo \@coppecoadvresumofalse
+\DeclareOption{coorientador}{\@coppecoadvresumotrue}
+\newif\if@coppelistastoc \@coppelistastocfalse
+\DeclareOption{listasnosumario}{\@coppelistastoctrue}
 \newif\if@copperascunho \@copperascunhofalse
 \DeclareOption{rascunhoficha}{\@copperascunhotrue}
 \newif\if@coppetwoside \@coppetwosidefalse
@@ -438,16 +453,18 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \renewcommand\lstlistlistingname{\coppestring{listprogram}}}
 \newcommand\listofprogramas{%
   \chapter*{\lstlistlistingname}%
-  \addcontentsline{toc}{chapter}{\lstlistlistingname}%
+  \coppe@listtoc{\lstlistlistingname}%
   \@mkboth{\MakeUppercase\lstlistlistingname}{\MakeUppercase\lstlistlistingname}%
   \@starttoc{lol}}
+\newsavebox\coppe@lstarrow
+\AtBeginDocument{\sbox\coppe@lstarrow{\textcolor{red}{$\hookrightarrow$}\space}}
 \newcommand\pythonstyle{\lstset{language=Python,basicstyle=\ttm,numbers=left,%
   numberstyle=\small\ttfamily,numbersep=0.5em,commentstyle=\color{purple},%
   morekeywords={self,as},keywordstyle=\ttb\color[rgb]{0,0,0.5},%
   emph={MyClass,__init__},emphstyle=\ttb\color[rgb]{0.6,0,0},%
   stringstyle=\color[rgb]{0,0.5,0},frame=tb,showstringspaces=false,%
   extendedchars=true,firstnumber=auto,inputencoding=utf8,breaklines=true,%
-  escapechar=`,postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space}}}
+  escapechar=`,postbreak=\usebox\coppe@lstarrow}}
 \lstnewenvironment{python}[1][]{\pythonstyle\lstset{#1}%
   \csname\@lst @SetFirstNumber\endcsname}{\csname\@lst @SaveFirstNumber\endcsname}
 \newcommand\pythoninline[1]{{\pythonstyle\lstinline!#1!}}
@@ -459,14 +476,14 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   emph={name,type,attributeFormDefault,elementFormDefault,xmlns:xs},%
   emphstyle=\ttb\color[rgb]{0.6,0,0},stringstyle=\color[rgb]{0,0.5,0},frame=tb,%
   showstringspaces=false,extendedchars=true,inputencoding=utf8,breaklines=true,%
-  postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space}}}
+  postbreak=\usebox\coppe@lstarrow}}
 \lstnewenvironment{xml}[1][]{\xmlstyle\lstset{#1}}{}
 \newcommand\htmlstyle{\lstset{language=HTML,basicstyle=\ttm,numbers=left,%
   numberstyle=\small\ttfamily,numbersep=0.5em,%
   keywordstyle=\ttb\color[rgb]{0,0,0.5},emphstyle=\ttb\color[rgb]{0.6,0,0},%
   stringstyle=\color[rgb]{0,0.5,0},frame=tb,showstringspaces=false,%
   extendedchars=true,inputencoding=utf8,breaklines=true,%
-  postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space}}}
+  postbreak=\usebox\coppe@lstarrow}}
 \lstnewenvironment{html}[1][]{\htmlstyle\lstset{#1}}{}
 \newcommand\prologstyle{\lstset{language=Prolog,basicstyle=\ttm,numbers=left,%
   numberstyle=\small\ttfamily,numbersep=0.5em,commentstyle=\color{purple},%
@@ -474,7 +491,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   emphstyle=\ttb\color[rgb]{0.6,0,0},stringstyle=\color[rgb]{0,0.5,0},frame=tb,%
   showstringspaces=false,extendedchars=true,firstnumber=auto,inputencoding=utf8,%
   breaklines=true,escapechar=`,%
-  postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space}}}
+  postbreak=\usebox\coppe@lstarrow}}
 \lstnewenvironment{prolog}[1][]{\prologstyle\lstset{#1}%
   \csname\@lst @SetFirstNumber\endcsname}{\csname\@lst @SaveFirstNumber\endcsname}
 \newcommand\javastyle{\lstset{language=Java,basicstyle=\ttm,numbers=left,%
@@ -483,7 +500,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   emphstyle=\ttb\color[rgb]{0.6,0,0},stringstyle=\color[rgb]{0,0.5,0},frame=tb,%
   showstringspaces=false,extendedchars=true,firstnumber=auto,inputencoding=utf8,%
   breaklines=true,escapechar=`,%
-  postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space}}}
+  postbreak=\usebox\coppe@lstarrow}}
 \lstnewenvironment{java}[1][]{\javastyle\lstset{#1}%
   \csname\@lst @SetFirstNumber\endcsname}{\csname\@lst @SaveFirstNumber\endcsname}
 \newcommand\javainline[1]{{\javastyle\lstinline!#1!}}
@@ -592,6 +609,12 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \coppemainstring{coadvisors}%
   \else
     \coppemainstring{coadvisor}%
+  \fi}
+\newcommand\foreign@coadvisorstring{%
+  \ifnum\@coadvisor>1
+    \coppeforeignstring{coadvisors}%
+  \else
+    \coppeforeignstring{coadvisor}%
   \fi}
 \newcommand\coppe@nvolumes{1}
 \newcommand\coppe@thisvolume{1}
@@ -711,7 +734,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \makefrontpage
   \clearpage
   \if@copperoman
-    \fancypagestyle{plain}{\fancyhf{}\fancyhead[RO,LE]{\thepage}%
+    \fancypagestyle{plain}{\fancyhf{}\fancyhead[RO,LE]{\coppe@folio}%
       \renewcommand{\headrulewidth}{0pt}}%
     \pagestyle{coppe}%
   \else
@@ -723,7 +746,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \coppe@mainBegin
   \cleardoublepage
   \@mainmattertrue
-  \fancypagestyle{plain}{\fancyhf{}\fancyhead[RO,LE]{\thepage}%
+  \fancypagestyle{plain}{\fancyhf{}\fancyhead[RO,LE]{\coppe@folio}%
     \renewcommand{\headrulewidth}{0pt}}%
   \pagestyle{coppe}%
   \if@copperoman\pagenumbering{arabic}\fi}
@@ -1147,6 +1170,32 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
       \end{minipage}
     \end{flushright}}
 
+\newcommand\coppe@coadvisorrows[1]{%
+  \if@coppecoadvresumo
+    \ifnum\@coadvisor>0
+      \par\vspace*{2mm}%
+      \noindent\begin{tabularx}{\textwidth}[b]{@{}l@{ }>{\raggedright\arraybackslash}X@{}}
+        #1: &
+        \count1=0
+        \toks@={}
+        \@whilenum \count1<\@coadvisor \do{%
+        \ifcase\count1
+          \toks@=\expandafter{\csname CoppeCoadvisorName:\the\count1%
+            \expandafter\endcsname\expandafter\space%
+            \csname CoppeCoadvisorSurname:\the\count1\endcsname\\}
+        \else
+          \toks@=\expandafter\expandafter\expandafter{%
+            \expandafter\the\expandafter\toks@%
+            \expandafter&\expandafter\space%
+            \csname CoppeCoadvisorName:\the\count1\expandafter\endcsname%
+            \expandafter\space\csname CoppeCoadvisorSurname:\the\count1\endcsname\\
+          }%
+        \fi
+        \advance\count1 by 1}
+        \the\toks@
+      \end{tabularx}%
+    \fi
+  \fi}
 \newenvironment{abstract}{%
   \cleardoublepage
   \thispagestyle{plain}
@@ -1180,7 +1229,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \fi
     \advance\count1 by 1}
     \the\toks@
-  \end{tabularx}\par
+  \end{tabularx}%
+  \coppe@coadvisorrows{\local@coadvisorstring}\par
   \vspace*{2mm}
   \noindent\local@deptstring: \local@deptname\par
   \vspace*{7mm}}{%
@@ -1221,7 +1271,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \fi
     \advance\count1 by 1}
     \the\toks@
-  \end{tabularx}\par
+  \end{tabularx}%
+  \coppe@coadvisorrows{\foreign@coadvisorstring}\par
   \vspace*{2mm}
   \noindent\foreign@deptstring: \foreign@deptname\par
   \vspace*{7mm}}{%
@@ -1277,7 +1328,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \fi
     \advance\count1 by 1}
     \the\toks@
-  \end{tabularx}\par
+  \end{tabularx}%
+  \coppe@coadvisorrows{\local@coadvisorstring}\par
   \vspace*{2mm}
   \noindent\local@deptstring: \local@deptname\par
   \vspace*{7mm}}{%
@@ -1298,7 +1350,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
       \@restonecolfalse
     \fi
     \chapter*{\listfigurename}%
-      \addcontentsline{toc}{chapter}{\listfigurename}%
+      \coppe@listtoc{\listfigurename}%
       \@mkboth{\MakeUppercase\listfigurename}%
               {\MakeUppercase\listfigurename}%
     \@starttoc{lof}%
@@ -1311,7 +1363,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
       \@restonecolfalse
     \fi
     \chapter*{\listtablename}%
-      \addcontentsline{toc}{chapter}{\listtablename}%
+      \coppe@listtoc{\listtablename}%
       \@mkboth{%
           \MakeUppercase\listtablename}%
          {\MakeUppercase\listtablename}%
@@ -1320,7 +1372,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     }
 \newcommand\printlosymbols{%
 \renewcommand\glossaryname{\listsymbolname}%
-\@input@{\jobname.los}}
+\begingroup\@coppeglosspretrue
+\@input@{\jobname.los}\endgroup}
 \def\makelosymbols{%
   \newwrite\@losfile
   \immediate\openout\@losfile=\jobname.syx
@@ -1346,7 +1399,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \@esphack}}}%
 \newcommand\printloabbreviations{%
 \renewcommand\glossaryname{\listabbreviationname}%
-\@input@{\jobname.lab}}
+\begingroup\@coppeglosspretrue
+\@input@{\jobname.lab}\endgroup}
 \def\makeloabbreviations{%
   \newwrite\@labfile
   \immediate\openout\@labfile=\jobname.abx
@@ -1469,7 +1523,11 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \@mkboth{\MakeUppercase\glossaryname}%
   {\MakeUppercase\glossaryname}%
   \chapter*{\glossaryname}%
-  \addcontentsline{toc}{chapter}{\glossaryname}
+  \if@coppeglosspre
+    \coppe@listtoc{\glossaryname}%
+  \else
+    \addcontentsline{toc}{chapter}{\glossaryname}%
+  \fi
   \list{}
   {\setlength{\listparindent}{0in}%
    \setlength{\labelwidth}{1.0in}%
@@ -1560,8 +1618,14 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \if@coppepdfa
   \RequirePackage[a-2b]{pdfx}
   \pdfsuppressptexinfo=-1
-  \newwrite\coppe@xmpout
-  \AtBeginDocument{%
+  \ifdefined\AddToHook
+    \let\coppe@xmpout\@mainaux
+    \def\coppe@xmphook{\AddToHook{enddocument/afteraux}}%
+  \else
+    \newwrite\coppe@xmpout
+    \let\coppe@xmphook\AtEndDocument
+  \fi
+  \coppe@xmphook{%
     \gdef\coppe@xmpkeys{}%
     \count@=0
     \@whilenum\count@<\value{keywords}\do{%
@@ -1575,14 +1639,19 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \immediate\openout\coppe@xmpout=\jobname.xmpdata
     \begingroup
       \let\protect\string
-      \immediate\write\coppe@xmpout{\string\Title{\coppe@selecttitle}}%
-      \immediate\write\coppe@xmpout{\string\Author{\@authname\space\@authsurn}}%
+      \@ifundefined{coppe@title@\coppe@mainlang}{}{%
+        \immediate\write\coppe@xmpout{\string\Title{\coppe@selecttitle}}}%
+      \@ifundefined{@authname}{}{%
+        \immediate\write\coppe@xmpout{%
+          \string\Author{\@authname\space\@authsurn}}}%
       \immediate\write\coppe@xmpout{\string\Keywords{\coppe@xmpkeys}}%
-      \immediate\write\coppe@xmpout{\string\Subject{\local@doctype\space de
-        \@degreename. Programa de \meta@deptname\space(\coppe@deptcode),
-        COPPE/UFRJ}}%
+      \ifthenelse{\equal{\coppe@deptcode}{}}{}{%
+        \immediate\write\coppe@xmpout{\string\Subject{\local@doctype\space de
+          \@degreename. Programa de \meta@deptname\space(\coppe@deptcode),
+          COPPE/UFRJ}}}%
       \immediate\write\coppe@xmpout{\string\Publisher{\local@universityname}}%
-      \immediate\write\coppe@xmpout{\string\Date{\coppe@docyear}}%
+      \@ifundefined{coppe@docyear}{}{%
+        \immediate\write\coppe@xmpout{\string\Date{\coppe@docyear}}}%
     \endgroup
     \immediate\closeout\coppe@xmpout}%
 \fi
@@ -1606,6 +1675,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \renewcommand{\appendixname}{\coppestring{annex}}%
     \appendix
     \@coppeannextrue
+    \coppe@appendixheadings
 }
 %% 
 %%
