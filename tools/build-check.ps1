@@ -19,6 +19,10 @@
     tests    - class + a suíte tests/run-tests.ps1
     docs     - class + coppe.pdf (manual), NORMA_COPPE_2026.pdf,
                futuremanual2026.pdf e covers_5languages.pdf
+    pdfa     - class + example_pdfa.tex e tests/test_pdfa.tex, e passa os dois
+               pelo veraPDF no perfil 2b. Precisa do veraPDF instalado (o
+               script procura em %USERPROFILE%\verapdf e no PATH); sem ele o
+               passo é PULADO, não falha.
     all      - tudo acima. Padrão.
 
 .EXAMPLE
@@ -26,7 +30,7 @@
     .\tools\build-check.ps1 -Scope example
 #>
 param(
-    [ValidateSet("class", "example", "langs", "tests", "docs", "all")]
+    [ValidateSet("class", "example", "langs", "tests", "docs", "pdfa", "all")]
     [string]$Scope = "all"
 )
 
@@ -126,6 +130,89 @@ if ($Scope -in @("docs", "all")) {
 
 if ($Scope -in @("tests", "all")) {
     Invoke-Step "suite" $testDir { & powershell -NoProfile -File (Join-Path $testDir "run-tests.ps1") }
+}
+
+if ($Scope -in @("pdfa", "all")) {
+    # Os dois documentos que saem com a opcao de classe pdfa: o exemplo inteiro
+    # (bibliografia, listas, figuras, tcolorbox -- transparencia) e o teste
+    # curto das paginas pre-textuais. Validar so o curto nao diria nada sobre o
+    # que vai para o deposito.
+    Build-Tex -Stem "example_pdfa" -Dir $src     -WithBiber
+    Build-Tex -Stem "test_pdfa"    -Dir $testDir -WithBiber
+
+    # O veraPDF nao esta no PATH depois da instalacao padrao no Windows; o
+    # instalador deixa o .bat na raiz da pasta escolhida. Procura-se ali antes
+    # de recorrer ao PATH.
+    $veraCandidates = @(
+        (Join-Path $env:USERPROFILE "verapdf\verapdf.bat"),
+        (Join-Path $env:USERPROFILE "verapdf\bin\verapdf.bat"),
+        "C:\Program Files\verapdf\verapdf.bat"
+    )
+    $vera = $veraCandidates | Where-Object { Test-Path $_ } | Select-Object -First 1
+    if (-not $vera) {
+        $cmd = Get-Command verapdf -ErrorAction SilentlyContinue
+        if ($cmd) { $vera = $cmd.Source }
+    }
+
+    if (-not $vera) {
+        Add-Line "pulado   veraPDF (nao encontrado em %USERPROFILE%\verapdf nem no PATH)"
+    } else {
+        Add-Line ""
+        Add-Line "veraPDF: $vera"
+        foreach ($t in @(
+                @{ Stem = "example_pdfa"; Dir = $src },
+                @{ Stem = "test_pdfa";    Dir = $testDir })) {
+            $pdf = Join-Path $t.Dir "$($t.Stem).pdf"
+            $rep = Join-Path $logDir "verapdf-$($t.Stem).xml"
+            if (-not (Test-Path $pdf)) { Add-Line "FALHOU   verapdf:$($t.Stem)  (PDF nao foi gerado)"; $script:failed++; continue }
+            $script:ran++
+            # --format xml da o machine-readable report, que e o unico que traz
+            # a clausula e o numero do teste de cada regra reprovada.
+            # stderr NAO pode ir para o mesmo arquivo: o veraPDF escreve log do
+            # Java em stderr, e misturado ao stdout ele corrompe o XML.
+            $err = Join-Path $logDir "verapdf-$($t.Stem).err"
+            & $vera --flavour 2b --format xml $pdf 2> $err | Out-File -FilePath $rep -Encoding utf8
+            $code = $LASTEXITCODE
+
+            # Resumo legivel dentro do RESULTADO.txt: sem isto o relatorio so
+            # existe como XML de varios MB, que nao se le daqui.
+            $compliant = $null
+            $failures  = @()
+            try {
+                $raw = Get-Content $rep -Raw
+                $i = $raw.IndexOf("<?xml")
+                if ($i -gt 0) { $raw = $raw.Substring($i) }
+                [xml]$x = $raw
+                $vr = $x.SelectSingleNode("//validationReport")
+                if ($vr) { $compliant = $vr.isCompliant }
+                foreach ($r in $x.SelectNodes("//rule[@status='FAILED']")) {
+                    $desc = $r.description
+                    if ($desc) { $desc = ($desc -replace '\s+', ' ').Trim() }
+                    $failures += [pscustomobject]@{
+                        Clause = $r.clause
+                        Test   = $r.testNumber
+                        Checks = $r.failedChecks
+                        Desc   = $desc
+                    }
+                }
+            } catch { Add-Line "         (nao consegui ler $rep : $_)" }
+
+            if ($compliant -eq "true") {
+                Add-Line "ok       verapdf:$($t.Stem)  PDF/A-2b CONFORME"
+            } else {
+                $script:failed++
+                Add-Line "FALHOU   verapdf:$($t.Stem)  (exit $code, isCompliant=$compliant, $($failures.Count) regra(s))"
+                foreach ($f in $failures) {
+                    Add-Line ("         {0} teste {1}: {2} falha(s)" -f $f.Clause, $f.Test, $f.Checks)
+                    if ($f.Desc) {
+                        $d = $f.Desc
+                        if ($d.Length -gt 150) { $d = $d.Substring(0, 150) + "..." }
+                        Add-Line "           $d"
+                    }
+                }
+            }
+        }
+    }
 }
 
 Add-Line ""
