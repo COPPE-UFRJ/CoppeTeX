@@ -109,7 +109,7 @@
           Do NOT load amssymb together with unicode-math -- it would clash\MessageBreak
           with the OpenType math font setup}}}}
 \fi
-\RequirePackage[a4paper,headheight=15pt,headsep=15.49pt,%
+\RequirePackage[a4paper,headheight=15pt,headsep=16.87pt,%
 top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
 \setlength\emergencystretch{3em}
 \RequirePackage{indentfirst}
@@ -216,7 +216,8 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
 \setlist[alineas,1]{label=\alph*),leftmargin=1.8em,itemsep=0pt}
 \setlist[alineas,2]{label=--,leftmargin=1.8em,itemsep=0pt}
 \RequirePackage{fancyhdr}
-\fancypagestyle{coppe}{\fancyhf{}\fancyhead[RO,LE]{\thepage}%
+\newcommand\coppe@folio{{\footnotesize\thepage}}
+\fancypagestyle{coppe}{\fancyhf{}\fancyhead[RO,LE]{\coppe@folio}%
   \renewcommand{\headrulewidth}{0pt}}
 \renewcommand{\cleardoublepage}{%
   \clearpage
@@ -721,7 +722,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \makefrontpage
   \clearpage
   \if@copperoman
-    \fancypagestyle{plain}{\fancyhf{}\fancyhead[RO,LE]{\thepage}%
+    \fancypagestyle{plain}{\fancyhf{}\fancyhead[RO,LE]{\coppe@folio}%
       \renewcommand{\headrulewidth}{0pt}}%
     \pagestyle{coppe}%
   \else
@@ -733,7 +734,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \coppe@mainBegin
   \cleardoublepage
   \@mainmattertrue
-  \fancypagestyle{plain}{\fancyhf{}\fancyhead[RO,LE]{\thepage}%
+  \fancypagestyle{plain}{\fancyhf{}\fancyhead[RO,LE]{\coppe@folio}%
     \renewcommand{\headrulewidth}{0pt}}%
   \pagestyle{coppe}%
   \if@copperoman\pagenumbering{arabic}\fi}

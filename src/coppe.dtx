@@ -2099,12 +2099,16 @@ No modelo \CoppeTeX os anexos devem obrigtoriamente vir depois dos apêndices e 
 % not put the digits flush with the top of \headheight. Two measured points,
 % taken from the rendered page rather than from the PDF's font metrics:
 %   headsep 18.07pt -> digits at 1.8669cm      headsep 14.29pt -> 2.0616cm
-% which put 2.0000cm at 15.49pt. Measured back on the rendered page, the top of
-% the digits and their right edge now come out at the same 2.019cm -- and the
-% right margin is 2cm by construction, so that shared 0.019cm is the ruler's
-% own bias, not a residual error. Change the body font size or headheight and
-% this number has to be measured again, not scaled.
-\RequirePackage[a4paper,headheight=15pt,headsep=15.49pt,%
+% which put 2.0000cm at 15.49pt while the folio was still set at the body size.
+% It is \footnotesize now (2.2(b) puts pagination in the smaller font), the
+% digits are shorter, and their top therefore sits lower for the same baseline:
+% re-measured, 15.49pt gave 2.0659cm and the value moved to 16.87pt. That is
+% precisely why this is a measured constant and not a computed one -- change
+% the folio's size or headheight and it has to be measured again, not scaled.
+% Verified on the rendered page: the top of the digits and their right edge come
+% out at the same 2.019cm, and the right margin is 2cm by construction, so that
+% shared 0.019cm is the ruler's own bias and not a residual error.
+\RequirePackage[a4paper,headheight=15pt,headsep=16.87pt,%
 top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
 % The first paragraph of every section must be indented like any other. LaTeX's
 % default is the Anglo-Saxon convention -- no indent after a heading -- which is
@@ -2303,7 +2307,13 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
 \RequirePackage{fancyhdr}
 % \headheight is set to 15pt by geometry up above (see the geometry call),
 % which is what fancyhdr needs (>= 14.49998pt) for the running head.
-\fancypagestyle{coppe}{\fancyhf{}\fancyhead[RO,LE]{\thepage}%
+% 2.2(b) lists what is set in "fonte menor e uniforme": long quotations,
+% footnotes, PAGINATION, and the captions of illustrations and tables. The
+% folio was the one item on that list still coming out at the body size of 12pt.
+% It is \footnotesize now, which is the same smaller size the other three
+% already use -- "uniforme" is part of the requirement, not just "menor".
+\newcommand\coppe@folio{{\footnotesize\thepage}}
+\fancypagestyle{coppe}{\fancyhf{}\fancyhead[RO,LE]{\coppe@folio}%
   \renewcommand{\headrulewidth}{0pt}}
 % Blank pages inserted by \cleardoublepage (two-sided) must be empty: no page
 % number may leak onto them (e.g. the verso right after the cover).
@@ -3115,7 +3125,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \makefrontpage
   \clearpage
   \if@copperoman
-    \fancypagestyle{plain}{\fancyhf{}\fancyhead[RO,LE]{\thepage}%
+    \fancypagestyle{plain}{\fancyhf{}\fancyhead[RO,LE]{\coppe@folio}%
       \renewcommand{\headrulewidth}{0pt}}%
     \pagestyle{coppe}%
   \else
@@ -3132,7 +3142,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \coppe@mainBegin
   \cleardoublepage
   \@mainmattertrue
-  \fancypagestyle{plain}{\fancyhf{}\fancyhead[RO,LE]{\thepage}%
+  \fancypagestyle{plain}{\fancyhf{}\fancyhead[RO,LE]{\coppe@folio}%
     \renewcommand{\headrulewidth}{0pt}}%
   \pagestyle{coppe}%
 % No \pagenumbering{arabic} in the default path: it would reset the counter to
