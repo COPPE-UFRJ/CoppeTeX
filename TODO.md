@@ -137,20 +137,68 @@ norma pede — e o que o código sempre fez — é recuo de 4 cm ALÉM da
 margem. E metade das opções de classe não estava documentada, inclusive
 `pdfa` e `assinaturas`.
 
-## 4c. Fonte única
+## 4c. Fonte única, e onde ela termina
 
-`pdflatex coppe.ins` agora gera **tudo**: a classe, os estilos biblatex,
-os pacotes de idioma, as bases `.bib`, o `.ist`, os cinco exemplos por
-idioma, o `example_pdfa`, a montagem das capas, o `latexmkrc` e a suíte
-de regressão. Não há mais nenhum arquivo derivado mantido à mão.
+`pdflatex coppe.ins` gera **tudo o que é distribuído**: a classe, os estilos
+biblatex, os pacotes de idioma, as bases `.bib`, o `.ist`, os cinco exemplos
+por idioma, o `example_pdfa`, a montagem das capas e o `latexmkrc`. Nenhum
+arquivo derivado é mantido à mão.
 
-A suíte mudou de lugar por causa disso: vive em `src/tests/`, porque o
-`\openout` do TeX escreve em subdiretório e recusa qualquer caminho com
-`..`.
+A linha para aí. O que existe só para **provar** que a classe funciona não sai
+do `.dtx` e não é distribuído:
 
-Continuam fora, por terem vida própria: `tools/*.ps1` e
-`src/tests/run-tests.ps1`, que são o harness; `NORMA_COPPE_2026.tex` e
-`futuremanual2026.tex`, que são documentos sobre a norma.
+- `tests/` — a suíte de regressão, sete arquivos escritos à mão;
+- `adversativa/` — doze documentos, quatro tipos de trabalho por três idiomas,
+  cada um acionando ao mesmo tempo tudo o que a classe oferece;
+- `tools/*.ps1` — o harness;
+- `NORMA_COPPE_2026.tex` e `futuremanual2026.tex` — documentos sobre a norma,
+  com ciclo de vida próprio.
+
+## 4d. A prova de funcionamento
+
+```powershell
+.\tools\prova.ps1
+```
+
+É o que tem de sair limpo antes de marcar uma versão. Não é atalho para o
+build-check: cobre as três coisas que podem estar erradas sem ninguém notar.
+
+1. **Fonte única.** Regera tudo do `.dtx` e confere pelo git se algum arquivo
+   distribuído mudou. Se mudou, alguém editou um derivado à mão — e a edição
+   acabou de ser perdida. Melhor descobrir antes de publicar.
+2. **O que é distribuído compila.**
+3. **A prova passa**: a suíte de regressão e os doze adversativos, nos **dois
+   motores**, com o veraPDF em cima de todo PDF/A.
+
+Estado atual: **243 passos, 0 falhas, 26 PDFs conformes com PDF/A-2b**.
+
+## 4e. Os dezesseis fluxos de escrita
+
+Um trabalho que usa todas as listas estoura os 16 `\write` do pdfTeX. Medido
+pela sonda `adversativa/_writes_probe.tex`, num documento que aciona tudo:
+
+| | fluxos |
+|---|---|
+| núcleo (`.aux`, `\@partaux`, `\@unused`) | 3 |
+| a classe e os pacotes que ela carrega | 3 |
+| `tcolorbox` do autor | 1 |
+| `makeidx` | 1 |
+| listas de abreviaturas e de símbolos | 2 |
+| `.out` do hyperref, no `\begin{document}` | 1 |
+| as seis listas (`.toc`, `.lof`, `.lot`, `.loq`, `.lol`, `.loa`) | 6 |
+
+Dezessete para dezesseis lugares. A classe responde por dois, e os dois só
+existem se o autor pedir as listas; seis listas custam seis fluxos porque é
+assim que o `\@starttoc` do LaTeX funciona. Não há o que enxugar.
+
+Por isso, sob pdfTeX a classe **carrega o `morewrites` sozinha**, se estiver
+instalado — mensagem de erro mandando ligar opção é conselho para quem já
+sabe. `semmorewrites` desliga, para quem topar com um conflito;
+`morewrites` passa a significar "eu insisto" (falta do pacote vira erro). Sob
+LuaTeX, que tem 128 fluxos, nada é carregado.
+
+E quando o teto for atingido mesmo assim, o erro é da classe, em português, e
+nomeia as três saídas.
 
 ## 5. CTAN e Overleaf
 
@@ -237,4 +285,4 @@ de dar push.
 
 ---
 
-*Última atualização: 7 de setembro de 2026, branch `nlinguas`.*
+*Última atualização: 9 de setembro de 2026, branch `nlinguas`.*

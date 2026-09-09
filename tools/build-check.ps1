@@ -27,17 +27,25 @@
                com o ciclo completo: biber, makeindex das listas e do indice
                remissivo, tres passadas, e veraPDF em cada um.
     all      - tudo acima. Padrão.
+    prova    - `all' mais a verificacao de fonte unica (nenhum arquivo derivado
+               divergiu do .dtx) e um veredito final. E o que tem de sair limpo
+               antes de marcar uma versao; tools\prova.ps1 e so um atalho.
 
 .EXAMPLE
     .\tools\build-check.ps1
     .\tools\build-check.ps1 -Scope example
 #>
 param(
-    [ValidateSet("class", "example", "langs", "tests", "docs", "pdfa", "adversativa", "all")]
+    [ValidateSet("class", "example", "langs", "tests", "docs", "pdfa", "adversativa", "all", "prova")]
     [string]$Scope = "all"
 )
 
 $ErrorActionPreference = "Continue"
+
+# `prova' e `all' mais duas coisas: a verificacao de fonte unica, antes, e o
+# veredito, depois. O corpo do script e o mesmo.
+$prova = ($Scope -eq "prova")
+if ($prova) { $Scope = "all" }
 
 $root    = Split-Path -Parent (Split-Path -Parent $MyInvocation.MyCommand.Path)
 $src     = Join-Path $root "src"
@@ -87,7 +95,38 @@ function Build-Tex {
     Invoke-Step "$Stem-3" $Dir { & pdflatex -interaction=nonstopmode -halt-on-error "$Stem.tex" }
 }
 
-Add-Line "=== build-check  escopo=$Scope  $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss') ==="
+Add-Line ("=== build-check  escopo=" + $(if ($prova) { "prova" } else { $Scope }) + "  $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss') ===")
+$provaProblemas = @()
+
+# Fonte unica: regerar a partir do .dtx nao pode mudar nada que estivesse
+# limpo. Se mudou, alguem editou um derivado a mao e a edicao acaba de ser
+# perdida -- que e o que se quer descobrir antes de publicar, e nao depois.
+if ($prova) {
+    if (Get-Command git -ErrorAction SilentlyContinue) {
+        Push-Location $root
+        $gitAntes = @(& git status --porcelain -- src 2>$null)
+        Pop-Location
+        Push-Location $src
+        & pdflatex -interaction=nonstopmode coppe.ins 2>&1 | Out-Null
+        Pop-Location
+        Push-Location $root
+        $gitDepois = @(& git status --porcelain -- src 2>$null)
+        Pop-Location
+        $novos = @($gitDepois | Where-Object { $gitAntes -notcontains $_ })
+        if ($novos.Count -gt 0) {
+            Add-Line "FALHOU   fonte unica: regerar do .dtx mudou arquivo que estava limpo"
+            foreach ($n in $novos) { Add-Line "         $n" }
+            $script:failed++
+            $provaProblemas += "fonte unica"
+        } else {
+            Add-Line "ok       fonte unica (nenhum derivado divergia do .dtx)"
+        }
+    } else {
+        Add-Line "pulado   fonte unica (git nao encontrado)"
+        $provaProblemas += "fonte unica nao verificada"
+    }
+}
+Add-Line ""
 Add-Line "pdflatex: $((Get-Command pdflatex -ErrorAction SilentlyContinue).Source)"
 Add-Line "biber:    $((Get-Command biber -ErrorAction SilentlyContinue).Source)"
 Add-Line ""
@@ -310,6 +349,29 @@ Add-Line "--- PDFs ---"
 Get-ChildItem -Path $src -Filter *.pdf -ErrorAction SilentlyContinue |
     Sort-Object Name |
     ForEach-Object { Add-Line ("{0,-34} {1,9} bytes  {2}" -f $_.Name, $_.Length, $_.LastWriteTime.ToString("HH:mm:ss")) }
+
+if ($prova) {
+    Add-Line ""
+    Add-Line "=================== VEREDITO DA PROVA ==================="
+    $conf = @($lines | Where-Object { $_ -match "PDF/A-2b CONFORME" }).Count
+    Add-Line ("  passos ................... {0}" -f $ran)
+    Add-Line ("  falhas ................... {0}" -f $failed)
+    Add-Line ("  PDFs conformes PDF/A-2b .. {0}" -f $conf)
+    if (@($lines | Where-Object { $_ -match "pulado   veraPDF" }).Count -gt 0) {
+        Add-Line "  veraPDF .................. NAO RODOU"
+        $provaProblemas += "veraPDF nao rodou"
+    }
+    if (@($lines | Where-Object { $_ -match "pulado   adversativa/lualatex" }).Count -gt 0) {
+        Add-Line "  LuaLaTeX ................. NAO RODOU"
+        $provaProblemas += "LuaLaTeX nao rodou"
+    }
+    if ($failed -eq 0 -and $provaProblemas.Count -eq 0) {
+        Add-Line "  PROVA COMPLETA -- pode marcar a versao."
+    } else {
+        Add-Line ("  NAO PASSOU: " + (($provaProblemas + @("$failed falha(s)")) -join "; "))
+    }
+    Add-Line "========================================================"
+}
 
 $lines | Out-File -FilePath $result -Encoding utf8
 Write-Host ""
