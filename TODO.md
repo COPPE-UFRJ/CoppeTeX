@@ -33,6 +33,15 @@ Registrado aqui para que ninguém refaça:
   algoritmo com travessão, alinhamento único de legendas, e fim dos 17
   estouros de margem do exemplo.
 - Norma COPPE 2026 (`.md` e `.tex`) reconciliada com o manual.
+- **Revisão adversativa**: doze documentos completos, quatro tipos de trabalho
+  por três idiomas, nos dois motores. Achou quatro não conformidades que os
+  exemplos e os testes não pegavam — capa transbordando sob `doublespacing`,
+  fólio impresso em folha pré-textual, banca de oito sem caber numa folha, e o
+  ponto do babel espanhol no indicativo do sumário. Todas corrigidas.
+- **`tools/conferir-norma.py`**: a conformidade deixou de ser lida e passou a
+  ser medida no PDF pronto (Seção 4f).
+- **Proposta para a CPGP** (`PROPOSTA_CPGP.md`) e ofício de encaminhamento
+  (`CARTA_CPGP.md`) escritos para a v4.1.
 
 ---
 
@@ -41,12 +50,62 @@ Registrado aqui para que ninguém refaça:
 **Status:** pendente.
 
 PR de `nlinguas` para `master` em
-<https://github.com/COPPE-UFRJ/CoppeTeX>, com
-[`CARTA_CPGP.md`](./CARTA_CPGP.md) como texto de abertura e links para os
-PDFs de `dist/`.
+<https://github.com/COPPE-UFRJ/CoppeTeX>.
 
 **O `master` não deve ser avançado antes da aprovação da CPGP.** Ele
-guarda o estado aprovado; o v4.x é proposta.
+guarda o estado aprovado; o v4.x é proposta. A PR existe para dar à
+Comissão um lugar onde ler o conjunto e comentar linha a linha — o *merge*
+só acontece depois do voto.
+
+Corpo da PR, pronto para colar:
+
+````markdown
+## CoppeTeX 4.1 — conformidade com o Manual UFRJ/SiBI 9.ª ed. rev. (2026)
+
+Esta PR reúne, para apreciação da CPGP, a norma proposta e a implementação
+que a realiza. **Não deve ser mesclada antes do voto da Comissão:** o
+`master` guarda o estado aprovado.
+
+### O que se propõe
+
+- **Norma** — `NORMA_COPPE_2026.md` deixa de descrever o formato e adota o
+  Manual UFRJ/SiBI (9.ª ed. rev., 2026) integralmente, registrando em treze
+  seções apenas onde a COPPE o especializa.
+- **Implementação** — a classe `coppe` 4.1 como implementação de referência.
+- **Texto a ser votado** — `PROPOSTA_CPGP.md`, com o articulado e a
+  justificativa; encaminhamento em `CARTA_CPGP.md`.
+
+### O que mudou no código
+
+Ver `CHANGELOG.md`, entrada `[4.1]`. Em uma linha: paginação, folha da
+Coleta CAPES, folha de aprovação da 3.1.2.1.3, palavras-chave nos resumos,
+listas fora do sumário, Latin Modern, PDF/A-2b, coorientador, e as quatro
+não conformidades que a revisão adversativa encontrou.
+
+### Como conferir
+
+```powershell
+.\tools\prova.ps1
+```
+
+Regenera tudo a partir de `src/coppe.dtx`, confere pelo git que nenhum
+derivado divergiu, compila a distribuição, a suíte de regressão e os doze
+documentos adversativos nos dois motores, e passa o veraPDF em todo PDF/A.
+Depois:
+
+```bash
+python3 tools/conferir-norma.py adversativa/adv_*.pdf src/example*.pdf
+```
+
+mede o PDF pronto contra o Manual — papel, margens, fólio na tinta, ordem
+da paginação, sumário, folha de aprovação e páginas de resumo.
+
+### Para ler sem compilar
+
+`dist/coppe.pdf` (manual), `dist/NORMA_COPPE_2026.pdf` (a norma composta
+pela própria classe), `dist/example_pt.pdf`, `example_en.pdf`,
+`example_es.pdf` e `dist/covers_5languages.pdf`.
+````
 
 ## 2. Validar o PDF/A com um validador de verdade
 
@@ -200,6 +259,32 @@ LuaTeX, que tem 128 fluxos, nada é carregado.
 E quando o teto for atingido mesmo assim, o erro é da classe, em português, e
 nomeia as três saídas.
 
+## 4f. A norma medida, não lida
+
+`tools/conferir-norma.py` lê o PDF pronto e mede o que a norma fixa em
+centímetros e em ordem — que é o que nenhuma compilação bem-sucedida garante:
+uma tese compila perfeitamente com a margem errada.
+
+```bash
+python3 tools/conferir-norma.py adversativa/adv_*.pdf src/example*.pdf
+CONFERIR=-v python3 tools/conferir-norma.py src/example.pdf   # mostra os ok
+```
+
+Confere A4, o fólio a 2 cm das duas bordas (medido na tinta, não na métrica da
+fonte), a margem esquerda, a primeira folha numerada e que nenhuma anterior
+esteja numerada, a abertura do sumário e os pós-textuais nele, Apêndice e Anexo
+centralizados na mancha, a folha de aprovação numa folha só, e cada página de
+resumo com orientador e palavras-chave.
+
+Sabe os quatro idiomas em que a classe compõe e lê as opções de
+`\documentclass` do `.tex` ao lado, para não cobrar o que o documento pediu
+para não ter: com `listasnosumario`, abrir o sumário na lista de figuras é o
+pedido, não defeito; e um pós-textual só é cobrado do sumário se existir a
+folha correspondente.
+
+Precisa de `python3`, poppler (`pdftotext`, `pdftoppm`, `pdfinfo`). Roda em
+qualquer sistema.
+
 ## 5. CTAN e Overleaf
 
 **Status:** pendentes de aprovação da CPGP.
@@ -216,6 +301,11 @@ nomeia as três saídas.
   `thesis`, `abnt`, `coppe`, `ufrj`, `biblatex`).
 - `SECURITY.md` e `CODE_OF_CONDUCT.md` mínimos.
 - Release no GitHub com os artefatos de `dist/`.
+- **Apagar `.git/_to_delete/`.** O ambiente onde o Claude trabalha enxerga a
+  pasta mas não consegue remover arquivo nenhum; os lockfiles órfãos do git
+  foram movidos para lá em vez de apagados. É seguro apagar a pasta inteira.
+  Um `git gc` na sequência limpa os `tmp_obj_*` que ficaram em
+  `.git/objects/`.
 
 **Sem CI no GitHub Actions.** A verificação roda localmente por
 [`tools/build-check.ps1`](./tools/build-check.ps1), que regenera tudo a
@@ -285,4 +375,4 @@ de dar push.
 
 ---
 
-*Última atualização: 9 de setembro de 2026, branch `nlinguas`.*
+*Última atualização: 9 de setembro de 2026, branch `nlinguas`, v4.1.*

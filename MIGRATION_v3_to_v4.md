@@ -147,9 +147,17 @@ API compatível.
 | Cidade e data no rodapé da folha de aprovação | Removidos; entra "Aprovada em:" |
 | `"Aprovada por:"` sempre em português | Acompanha o idioma principal |
 | Titulação passada a `\examiner` e nunca impressa | Impressa |
+| Sumário abrindo pelas listas pré-textuais | Abre em "1 INTRODUÇÃO"; as listas são pré-textuais e vêm antes dele (3.1.2.1.6) |
+| Fólio em corpo 12 | Corpo 10, junto das legendas, notas e citações longas (2.2b) |
+| "Apêndice A" e "Anexo A" à esquerda | Centralizados: letra não é indicativo numérico (2.6) |
+| Sem palavras-chave nos resumos | Cada resumo encerra com as suas, no próprio idioma (3.1.2.1.4) |
+| Fontes bitmap (Type 3 no PDF) | Latin Modern — sem isso não há PDF/A |
 
 Quem for **imprimir** e quiser as margens espelhadas de volta usa a opção
-de classe `twoside`.
+de classe `twoside`. Quem estiver nas últimas semanas de escrita e não
+quiser ver o sumário mudar debaixo do texto usa `listasnosumario`, que
+devolve as listas pré-textuais a ele — ciente de que isso contraria a
+3.1.2.1.6.
 
 ### 4.2 A ficha catalográfica saiu da sua responsabilidade
 
@@ -266,13 +274,13 @@ algarismo a 2cm da borda direita". A borda direita já estava certa; o
 topo dos algarismos estava a 1,87 cm, alto demais. Agora os dois eixos
 batem. O topo do corpo do texto não se moveu: continua em 3 cm.
 
-**Banca de seis ou mais membros cabe na folha.** Com sete membros a folha
-de aprovação transbordava para uma segunda página — e aquela página ainda
-imprimia um fólio na parte pré-textual, onde a 2.7 não admite. O espaço
-acima de cada linha de assinatura agora acompanha o tamanho da banca:
-9 mm até cinco membros, 7 mm com seis, 5 mm de sete em diante, com 2 mm
-de folga elástica para títulos que quebrem uma linha a mais. **Banca de
-até cinco membros compõe exatamente como antes.**
+**Banca grande cabe na folha.** Com sete membros a folha de aprovação
+transbordava para uma segunda página — e aquela página ainda imprimia um
+fólio na parte pré-textual, onde a 2.7 não admite. O espaço acima de cada
+linha de assinatura agora acompanha o tamanho da banca: 9 mm até cinco
+membros, 7 mm com seis, 5 mm com sete e 3,5 mm com oito, com folga
+elástica para títulos que quebrem uma linha a mais. **Banca de até cinco
+membros compõe exatamente como antes.**
 
 **O assunto do PDF virou legível.** Com a opção `pdfa`, o campo de
 assunto dos metadados trazia o código do programa porque os nomes na
@@ -282,6 +290,34 @@ Programa de Engenharia de Sistemas e Computação (PESC), COPPE/UFRJ". No
 mesmo movimento, o `/PTEX.Fullbanner` que o pdfTeX carimbava no PDF
 deixou de ser gravado — era uma entrada de metadados sem contrapartida no
 XMP, o achado mais comum de validador de PDF/A em arquivo feito com TeX.
+
+### 4.8 O que a revisão adversativa consertou
+
+Doze documentos completos — os quatro tipos de trabalho nos três idiomas
+admitidos, cada um acionando ao mesmo tempo tudo o que a classe oferece —
+acharam quatro defeitos que os exemplos não pegavam. Três deles você só
+notaria no dia do depósito:
+
+- **A capa não transborda mais sob `doublespacing`.** Capa e folha de rosto
+  são modelo institucional e agora saem em espaço simples qualquer que
+  seja o espaçamento do corpo. Antes, com espaçamento duplo, a capa ia
+  para uma segunda e uma terceira folha.
+- **Nada que transborde imprime fólio na parte pré-textual.** O
+  `\thispagestyle` valia por uma página só; a folha que sobrava herdava o
+  estilo corrente e saía numerada.
+- **Trabalho em espanhol: o sumário não põe mais ponto no indicativo.**
+  Saía "2.1. SECCIÓN SECUNDARIA" no sumário e "2.1 SECCIÓN SECUNDARIA" no
+  título da seção. Era o babel, e a 2.6 quer o espaço, não o ponto.
+
+### 4.9 "No room for a new \write"
+
+Um trabalho que pede todas as listas — figuras, tabelas, quadros,
+programas, algoritmos, abreviaturas e símbolos — precisa de dezessete dos
+dezesseis fluxos de saída do TeX, e o erro cai em cima da última lista
+pedida sem explicar nada. Sob pdfLaTeX a classe agora carrega o pacote
+`morewrites` sozinha, se ele estiver instalado, e o teto some. Nada a
+fazer da sua parte. `semmorewrites` desliga, se você topar com um
+conflito; sob LuaLaTeX, que tem 128 fluxos, nada disso é carregado.
 
 ---
 

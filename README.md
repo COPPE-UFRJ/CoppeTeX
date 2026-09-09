@@ -22,20 +22,31 @@ This version follows the [document](https://registro.daac.coppe.ufrj.br/wp-conte
 > (Revisada em 26/11/2019 – Alteração da Folha Aprovação, Anexo III, páginas 22 e 23) 
 
 
-## `nlinguas` branch — new proposal for CPGP
+## `nlinguas` branch — proposal for CPGP (v4.1)
 
-This branch (`nlinguas`) is the proposed multilingual extension of CoppeTeX 4.x
-submitted for evaluation by the Comissão de Programas de Pós-Graduação (CPGP)
-of COPPE/UFRJ. Subject to CPGP review and approval, it will become the next
-official release of the `coppe` class.
+This branch (`nlinguas`) carries CoppeTeX **4.1**, submitted for evaluation by
+the Comissão de Programas de Pós-Graduação (CPGP) of COPPE/UFRJ. Subject to
+CPGP review and approval, it becomes the next official release of the `coppe`
+class. **`master` holds the state the COPPE has approved and does not move
+before that vote.**
 
-The accompanying draft of the updated COPPE norm — short, in Portuguese, and
-written to delegate to the UFRJ 2025 *Manual para Elaboração e Normalização
-de Trabalhos Acadêmicos* — is in [`NORMA_COPPE_2026.md`](./NORMA_COPPE_2026.md).
-It lists only the COPPE-specific deltas (institutional identity, three-abstract
-structure, main-language choice, COPPE lists, apêndice/anexo layout,
-pre-textual numbering, ABNT post-2020 adoption) and cites CoppeTeX 4.x as the
-implementation of reference.
+Two things are proposed together:
+
+- **The norm.** [`NORMA_COPPE_2026.md`](./NORMA_COPPE_2026.md) stops describing
+  the format and adopts the UFRJ/SiBI *Manual para Elaboração e Normalização de
+  Trabalhos Acadêmicos*, **9th edition revised (2026)**, in full. What is left
+  is thirteen sections recording only where COPPE specializes the Manual —
+  each labelled *Escolha*, *Dado próprio*, *Acréscimo* or *Reafirmação* — plus
+  the logomarks, the list of the thirteen Programas, and the three-abstract
+  structure.
+- **The implementation.** The class is verified against that Manual item by
+  item ([`REVISAO_SIBI.md`](./REVISAO_SIBI.md)) and the norm cites it as the
+  implementation of reference.
+
+The text put to the Comissão for a vote is
+[`PROPOSTA_CPGP.md`](./PROPOSTA_CPGP.md); the covering letter is
+[`CARTA_CPGP.md`](./CARTA_CPGP.md). What changes for people already writing a
+thesis is in [`MIGRATION_v3_to_v4.md`](./MIGRATION_v3_to_v4.md).
 
 ### What it changes
 
@@ -103,29 +114,47 @@ The manual (`coppe.pdf`) gains a new "Multilingual support" subsection
 key list + the deferred `\DeclareLanguageMapping` idiom) and a complete
 Spanish-main worked example.
 
-### Implementation history on this branch
+### Conformance with the 2026 Manual (v4.1)
 
-Four commits, each independently verifiable, each rebuilt with the
-existing pt/en regression baseline:
+The revised 9th edition (2026) of the UFRJ/SiBI Manual absorbed three
+institutional decisions — exclusively digital deposit (CEPG Res. 246/2023), the
+writing languages of art. 57 of CEPG Res. 302/2024, and the new CAPES
+data-collection sheet — and the class had never been checked against it. The
+September 2026 series did that, item by item. The full list is in
+[`CHANGELOG.md`](./CHANGELOG.md); the headline items:
 
-1. **`775db80`** — *scaffolding (no behavior change)*: language registers,
-   dispatcher (`\copperdefstring`, `\coppestring`, `\coppemainstring`,
-   `\coppeforeignstring`), Brazilian + English string tables, new class
-   options, language-pack loader.
-2. **`a363bc6`** — *migrate every site*: every `\iflanguage{brazilian}{x}{y}`
-   and every `\if@english` design-time switch in `coppe.cls`, `coppe.bbx`
-   and the bibliography drivers now reads from the dispatcher. Adds
-   `\coppe@selecttitle`, `\titlein`, the `brazilianabstract` environment,
-   and routes `foreignabstract` through `\coppe@foreignlang`.
-3. **`466302a`** — *Spanish / French / Italian language packs*: six new
-   docstrip modules in `coppe.dtx`, matching `\file{...}` entries in
-   `coppe.ins`, sync rules in `doall.bat`, smoke-tested with full
-   cover + abstract + foreignabstract + brazilianabstract documents.
-4. **`bfd0b5d`** — *documentation*: §5.2 "Multilingual support" added to
-   the manual; the class-option list and the `\title` paragraph in the
-   pre-existing "Document identification" section updated to point at it.
+- pagination continuous from the folha de rosto, folio in 10 pt at 2 cm from
+  the top and right edges, one-sided layout with a 3 cm left margin;
+- the additional sheet with the catalog card and the CAPES collection fields;
+- the approval sheet of 3.1.2.1.3, with the date and each member's degree and
+  institution, and spacing that keeps a board of up to eight on one sheet;
+- keywords closing all three abstracts, pre-textual lists out of the sumário,
+  Apêndice and Anexo centred;
+- Latin Modern instead of bitmap fonts, and **PDF/A-2b** under the `pdfa`
+  option, validated by veraPDF;
+- `\coadvisor`, plus the `coorientador` option for the abstract pages.
 
+### Single source, and proving a release
 
+`pdflatex coppe.ins` in `src/` generates **everything that is distributed** —
+the class, the biblatex styles, the language packs, the `.bib` bases, the
+`.ist`, the five per-language examples, `example_pdfa`, the cover montage and
+the `latexmkrc`. No derived file is edited by hand.
+
+What exists only to *prove* the class works is not distributed and is not in
+the `.dtx`: the regression suite, the twelve adversarial documents in
+`adversativa/`, and the harness in `tools/`. One command runs the lot:
+
+```powershell
+.\tools\prova.ps1
+```
+
+It regenerates the distribution and checks by git that no derived file
+diverged, compiles everything under both pdfLaTeX and LuaLaTeX, runs veraPDF
+over every PDF/A, and prints a verdict. `python3 tools/conferir-norma.py
+adversativa/adv_*.pdf` then measures the finished PDFs against the Manual —
+paper size, margins, folio position on the rendered ink, pagination order,
+sumário contents, approval sheet, abstract pages.
 
 
 ## Required LaTeX packages
