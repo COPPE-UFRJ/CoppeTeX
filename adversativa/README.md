@@ -15,6 +15,10 @@ Nada aqui é escrito à mão: `tools/mk-adversativa.py` gera os doze. Para mudar
 o que eles exercitam, mude o gerador e rode-o de novo a partir da raiz do
 repositório.
 
+**Nada aqui é distribuído, e nada aqui sai do `coppe.dtx`.** Esta pasta prova
+que a classe funciona; não faz parte dela. Só os `.tex` e este README entram no
+git — os 24 PDFs e os auxiliares são produto de build.
+
 ## O que cada um exercita além do comum
 
 As opções e os tamanhos de banca variam de propósito, de modo que a matriz
@@ -36,22 +40,44 @@ assinaturas (até 5 membros, 6, e 7 ou mais).
 | `adv_dsc_en` | dsc | inglês | PET | 7 | rascunhoficha |
 | `adv_dsc_es` | dsc | espanhol | PPE | 8 | numbers, ficha real |
 
-Os doze levam `pdfa`, `assinaturas` e `coorientador`. Os doze programas são
+Os doze levam `pdfa`, `assinaturas` e `coorientador` — e **nenhuma opção de
+fluxo de escrita**, de propósito. Acionar todas as listas ao mesmo tempo é
+exatamente o caso em que o pdfTeX estoura os 16 `\write`, e o que se quer
+verificar é que a classe resolve isso sozinha, no caminho padrão, sem o autor
+saber que o problema existe. Os doze programas são
 diferentes, para que a tabela de departamentos em UTF-8 saia inteira pelo
 menos uma vez. Os documentos em espanhol carregam os três resumos, com o
 `brazilianabstract` que só existe para esse caso.
 
 ## Como rodar
 
+Junto com o resto da prova de funcionamento, que é como isto deve ser rodado
+antes de marcar uma versão:
+
+```powershell
+.\tools\prova.ps1
+```
+
+Ou sozinho:
+
 ```powershell
 .\tools\build-check.ps1 -Scope adversativa
 ```
 
-O ciclo é completo, e é o único do harness que roda o **makeindex** das
-listas de abreviaturas e de símbolos e do índice remissivo — sem isso essas
-listas saem vazias ou desatualizadas, que é justamente o erro que os alunos
-cometem. Depois, `-Scope pdfa` (ou `all`) passa cada um dos doze PDFs pelo
-veraPDF, já que todos são compilados com a opção `pdfa`.
+O ciclo é completo, e é o único do harness que roda o **makeindex** das listas
+de abreviaturas e de símbolos e do índice remissivo — sem isso essas listas
+saem vazias ou desatualizadas, que é justamente o erro que os alunos cometem.
+Cada documento é compilado **duas vezes, nos dois motores**: pdfLaTeX e
+LuaLaTeX, este último com `-jobname` próprio, de modo que os 24 PDFs convivem e
+o veraPDF julga os 24.
+
+## A sonda de fluxos
+
+`_writes_probe.tex` não é um dos doze: é uma sonda. Compila com
+`semmorewrites` só para registrar, no `RESULTADO.txt`, quantos dos 16 fluxos de
+escrita do pdfTeX cada parte consome — a classe, cada pacote do autor, cada
+lista. Serve para que a conta volte a ser mensurável quando alguém acrescentar
+um pacote e o teto voltar a apertar.
 
 ## O que não está aqui
 
