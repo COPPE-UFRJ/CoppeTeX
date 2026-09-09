@@ -222,6 +222,27 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
 \newlist{alineas}{enumerate}{2}
 \setlist[alineas,1]{label=\alph*),leftmargin=1.8em,itemsep=0pt}
 \setlist[alineas,2]{label=--,leftmargin=1.8em,itemsep=0pt}
+\newcommand\coppe@checkwrites[1]{%
+  \ifdefined\directlua\else
+    \if@coppemorewrites\else
+      \@ifundefined{tf@#1}{%
+        \ifnum\count17>14
+          \ClassError{coppe}{Acabaram os 16 fluxos de escrita do TeX}{%
+            Este trabalho pede mais listas do que o pdfTeX consegue manter
+            abertas ao mesmo tempo.\MessageBreak
+            Tres saidas, nesta ordem de preferencia:\MessageBreak
+            (1) compile com lualatex, que tem 128 fluxos;\MessageBreak
+            (2) passe a opcao `morewrites' a classe coppe;\MessageBreak
+            (3) remova uma lista que o trabalho nao usa.\MessageBreak
+            A lista que faltou agora foi a de extensao `#1', mas o problema
+            nao e dela: e a soma de todas.}%
+        \fi}{}%
+    \fi
+  \fi}
+\newcommand\coppe@wrapstarttoc{%
+  \let\coppe@orig@starttoc\@starttoc
+  \def\@starttoc##1{\coppe@checkwrites{##1}\coppe@orig@starttoc{##1}}}
+\AtBeginDocument{\coppe@wrapstarttoc}
 \RequirePackage{fancyhdr}
 \newcommand\coppe@listtoc[1]{%
   \if@coppelistastoc\addcontentsline{toc}{chapter}{#1}\fi}
@@ -307,7 +328,31 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \newif\if@coppetwoside \@coppetwosidefalse
 \DeclareOption{twoside}{\@coppetwosidetrue}
 \DeclareOption{oneside}{\@coppetwosidefalse}
+\newif\if@coppemorewrites \@coppemorewritestrue
+\newif\if@coppemwforced   \@coppemwforcedfalse
+\DeclareOption{morewrites}{\@coppemorewritestrue\@coppemwforcedtrue}
+\DeclareOption{semmorewrites}{\@coppemorewritesfalse}
 \ProcessOptions\relax
+\if@coppemorewrites
+  \ifdefined\directlua
+    \ClassInfo{coppe}{morewrites dispensado: o LuaTeX ja tem 128 fluxos}%
+    \@coppemorewritesfalse
+  \else
+    \IfFileExists{morewrites.sty}
+      {\RequirePackage{morewrites}}
+      {\if@coppemwforced
+         \ClassError{coppe}{Opcao `morewrites' pedida, mas morewrites.sty nao
+           esta instalado}{Instale o pacote morewrites, ou compile com lualatex,
+           que nao precisa dele.}%
+       \else
+         \ClassWarningNoLine{coppe}{O pacote morewrites nao esta instalado.\MessageBreak
+           Sem ele o pdfTeX so aguenta 16 fluxos de escrita, e um trabalho\MessageBreak
+           com todas as listas passa disso. Se a compilacao parar por falta\MessageBreak
+           de fluxo, instale morewrites ou compile com lualatex}%
+         \@coppemorewritesfalse
+       \fi}%
+  \fi
+\fi
 \if@coppetwoside
   \@twosidetrue
   \geometry{twoside}%
@@ -1617,7 +1662,13 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \if@coppedoublespace\doublespacing\else\onehalfspacing\fi
 \if@coppepdfa
   \RequirePackage[a-2b]{pdfx}
-  \pdfsuppressptexinfo=-1
+  \ifdefined\pdfsuppressptexinfo
+    \pdfsuppressptexinfo=-1
+  \else
+    \ifdefined\pdfvariable
+      \pdfvariable suppressoptionalinfo=15
+    \fi
+  \fi
   \ifdefined\AddToHook
     \let\coppe@xmpout\@mainaux
     \def\coppe@xmphook{\AddToHook{enddocument/afteraux}}%
