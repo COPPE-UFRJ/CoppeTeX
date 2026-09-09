@@ -51,8 +51,8 @@
 %%   Right brace   \}     Tilde         \~}
 %%
 \def\filename{coppe.dtx}
-\def\fileversion{v4.0}
-\def\filedate{2026/05/28}
+\def\fileversion{v4.1}
+\def\filedate{2026/09/09}
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{coppe}[\filedate\ \fileversion\ COPPE Dissertations and Thesis]
 \let\coppe@version\fileversion
@@ -812,7 +812,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \ifPDFTeX\hologo{pdfLaTeX}\fi
   \ifLuaTeX\hologo{LuaLaTeX}\fi
   \ifXeTeX\hologo{XeLaTeX}\fi}
-\providecommand{\coppefinalfont}{Computer Modern (padr\~ao \LaTeX{})}
+\providecommand{\coppefinalfont}{Latin Modern (\texttt{lmodern})}
 \providecommand{\coppefinalmanual}{%
   \emph{Norma para a Elabora\c c\~ao Gr\'afica de Teses e Disserta\c c\~oes
   da COPPE/UFRJ}}

@@ -129,6 +129,10 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \changes{v4.0}{2026/05/28}{Multilingual model: three fixed slots (main, foreign, optional third); five built-in language options (brazilian, english, spanish, french, italian); plug-in mechanism for any other Babel language via coppe-lang-lang.def plus lang-coppe.lbx.}
 % \changes{v4.0}{2026/05/28}{New user API: titlein, usecoppelanguage, brazilianabstract environment.}
 % \changes{v4.0}{2026/05/28}{Class-wide string dispatcher (copperdefstring, coppestring, coppemainstring, coppeforeignstring) replaces scattered iflanguage and if english branches; pt/en outputs remain byte-identical.}
+% \changes{v4.1}{2026/09/09}{Conformance with the revised 9th edition (2026) of the UFRJ/SiBI manual: continuous pagination from the folha de rosto, folio in 10pt at 2cm from the top and right edges, one-sided layout with a 3cm left margin, additional sheet with the catalog card and the CAPES collection fields, approval sheet of 3.1.2.1.3, keywords closing the three abstracts, pre-textual lists out of the sumario, Apendice and Anexo headings centred, fifth heading level, and Latin Modern instead of the bitmap fonts.}
+% \changes{v4.1}{2026/09/09}{New options: pdfa (PDF/A-2b via pdfx, XMP built from the document), assinaturas, coorientador, rascunhoficha, listasnosumario, morewrites/semmorewrites. New command coadvisor. Under pdfTeX the class loads morewrites by itself when installed, because a work that asks for every list needs seventeen of TeX's sixteen output streams.}
+% \changes{v4.1}{2026/09/09}{Single source: pdflatex coppe.ins generates everything distributed -- class, biblatex styles, language packs, .bib bases, .ist, the five per-language examples, example\_pdfa, the cover montage and latexmkrc. The regression suite, the adversarial documents and the harness prove the class and are NOT distributed.}
+% \changes{v4.1}{2026/09/09}{Fixes found by the adversarial review: cover and folha de rosto compose in single spacing so they do not overflow under doublespacing, no folio is printed on a pre-textual sheet when something does overflow, the approval sheet holds a board of eight, and es-nosectiondot removes the period babel-spanish put in the sumario indicative.}
 % \changes{v4.0}{2026/05/30}{Catalog-label writers (coppe@mainBegin, coppe@bibBegin, coppe@bibEnd, coppe@hasLof) made language-agnostic: detokenize wrap on label names protects ':' and '.' from babel shorthand activation, and the raw etex primitives romannumeral/number replace LaTeX's roman/arabic to bypass spanish-babel's small-caps @roman redefinition that would otherwise crash pdftex with "Unbalanced write command" on every es-main document.}
 %
 % \DoNotIndex{\!,\',\.,\>,\^,\`,\',\=,\\}
@@ -571,8 +575,9 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %         (|\hologo{pdfLaTeX}|, |\hologo{LuaLaTeX}| or
 %         |\hologo{XeLaTeX}|).
 %   \item[\texttt{\textbackslash coppefinalfont}] the text body font.
-%         Default: \emph{Computer Modern (padrão \LaTeX)}.  Redefine if
-%         you loaded |lmodern|, |mathptmx|, an OpenType math font, etc.
+%         Default: \emph{Latin Modern (\texttt{lmodern})}, which is what the
+%         class loads.  Redefine if you loaded |mathptmx|, an OpenType math
+%         font, etc.
 %   \item[\texttt{\textbackslash coppefinalmanual}] the reference manual
 %         title (typeset in italics). Default: the current COPPE/UFRJ
 %         norm. Redefine if your work follows an earlier edition.
@@ -668,6 +673,15 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %   the same run can misbehave. |morewrites| means ``I insist'': a missing
 %   package becomes an error instead of a warning. Under LuaLaTeX, which has 128
 %   streams, none of this is loaded and none of it is needed.
+%
+%   \item[\texttt{listasnosumario}] Put the pre-textual lists -- figures,
+%   tables, quadros, programas, abreviaturas, simbolos -- back into the sumario.
+%   \textbf{Contrary to 3.1.2.1.6}, which tells the author to follow the
+%   manual's own sumario, and that one opens at ``1 INTRODUCAO'': the lists are
+%   pre-textual elements and come BEFORE the sumario, so listing them inside it
+%   is listing what the reader has already passed. The option exists because
+%   every CoppeTeX document written before this release had them there, and a
+%   work in its final weeks should not have its sumario change under it.
 %
 %   \item[\texttt{numeraisromanos}] Number the pre-textual folhas in lowercase
 %   roman numerals. \textbf{Contrary to 2.7}, which has the count running from
@@ -1070,7 +1084,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %\setmathfont{Latin Modern Math}    % ou STIX Two Math, TeX Gyre Termes Math...
 \DeclareMathOperator{\RMSE}{RMSE}   % operadores próprios (cap. de matemática)
 \DeclareMathOperator{\diag}{diag}
-% A classe coppe (v4.0) já carrega: amsmath, booktabs, longtable, subcaption,
+% A classe coppe já carrega: amsmath, booktabs, longtable, subcaption,
 % hyperref, biblatex, listings, fancyvrb, algorithm2e -- não recarregue esses
 % pacotes aqui (em particular, hyperref deve ficar a cargo da classe para que
 % a ordem com setspace e biblatex permaneça correta).
@@ -2022,8 +2036,8 @@ No modelo \CoppeTeX os anexos devem obrigtoriamente vir depois dos apêndices e 
 %    \begin{macrocode}
 %<*class>
 \def\filename{coppe.dtx}
-\def\fileversion{v4.0}
-\def\filedate{2026/05/28}
+\def\fileversion{v4.1}
+\def\filedate{2026/09/09}
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{coppe}[\filedate\ \fileversion\ COPPE Dissertations and Thesis]
 % Save the class version and date into private macros immediately, before any
@@ -3409,7 +3423,10 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \ifPDFTeX\hologo{pdfLaTeX}\fi
   \ifLuaTeX\hologo{LuaLaTeX}\fi
   \ifXeTeX\hologo{XeLaTeX}\fi}
-\providecommand{\coppefinalfont}{Computer Modern (padr\~ao \LaTeX{})}
+% A classe carrega lmodern (as bitmap da Computer Modern saiam em Type 3 e
+% inviabilizavam o PDF/A), entao o colofao diz Latin Modern -- quem trocar a
+% fonte redefine este comando.
+\providecommand{\coppefinalfont}{Latin Modern (\texttt{lmodern})}
 \providecommand{\coppefinalmanual}{%
   \emph{Norma para a Elabora\c c\~ao Gr\'afica de Teses e Disserta\c c\~oes
   da COPPE/UFRJ}}
@@ -4755,7 +4772,7 @@ postamble
 %
 %    \begin{macrocode}
 %<*dbx>
-\ProvidesFile{coppe.dbx}[2026/05/28 v4.0 CoppeTeX ABNT datamodel]
+\ProvidesFile{coppe.dbx}[2026/09/09 v4.1 CoppeTeX ABNT datamodel]
 % Custom entry types beyond biblatex's standard datamodel (games, TV, maps).
 % map = cartographic document (NBR 6023 4.2.12); biblatex has no native @map.
 % The remaining ABNT "exotic" types (legislation, jurisdiction, legal, patent,
@@ -4780,7 +4797,7 @@ postamble
 \DeclareDatamodelEntryfields[jurisdiction]{relator}
 %</dbx>
 %<*bbx>
-\ProvidesFile{coppe.bbx}[2026/05/28 v4.0 CoppeTeX ABNT bibliography style]
+\ProvidesFile{coppe.bbx}[2026/09/09 v4.1 CoppeTeX ABNT bibliography style]
 % The reference list is single-spaced (ABNT 2.4) via \singlespacing in
 % \AtBeginBibliography. coppe.cls already loads setspace, but the style must work
 % standalone too (e.g. \usepackage[bibstyle=coppe]{biblatex} in a plain article),
@@ -5210,7 +5227,7 @@ postamble
 
 %</bbx>
 %<*cbx>
-\ProvidesFile{coppe.cbx}[2026/05/28 v4.0 CoppeTeX ABNT author-date citations]
+\ProvidesFile{coppe.cbx}[2026/09/09 v4.1 CoppeTeX ABNT author-date citations]
 % Author-date is the CoppeTeX 4.0 default. authoryear-comp gives compressed
 % author-year cites with normal-caps names (post-2020 rule) out of the box.
 \RequireCitationStyle{authoryear-comp}
@@ -5243,7 +5260,7 @@ postamble
     \ifblank{#1}{}{\addcomma\space\mkpageprefix[pagination]{#1}}}}
 %</cbx>
 %<*lbxbr>
-\ProvidesFile{brazilian-coppe.lbx}[2026/05/28 v4.0 CoppeTeX brazilian strings]
+\ProvidesFile{brazilian-coppe.lbx}[2026/09/09 v4.1 CoppeTeX brazilian strings]
 \InheritBibliographyExtras{brazilian}
 \NewBibliographyString{availablefrom,mscdiss,dscthesis,tcc,depositor,coppescale}
 \DeclareBibliographyStrings{%
@@ -5262,7 +5279,7 @@ postamble
 }
 %</lbxbr>
 %<*lbxen>
-\ProvidesFile{english-coppe.lbx}[2026/05/28 v4.0 CoppeTeX english strings]
+\ProvidesFile{english-coppe.lbx}[2026/09/09 v4.1 CoppeTeX english strings]
 \InheritBibliographyExtras{english}
 \NewBibliographyString{availablefrom,mscdiss,dscthesis,tcc,depositor,coppescale}
 \DeclareBibliographyStrings{%
@@ -5281,7 +5298,7 @@ postamble
 }
 %</lbxen>
 %<*lbxes>
-\ProvidesFile{spanish-coppe.lbx}[2026/05/28 v4.0 CoppeTeX spanish strings]
+\ProvidesFile{spanish-coppe.lbx}[2026/09/09 v4.1 CoppeTeX spanish strings]
 \InheritBibliographyExtras{spanish}
 \NewBibliographyString{availablefrom,mscdiss,dscthesis,tcc,depositor,coppescale}
 \DeclareBibliographyStrings{%
@@ -5300,7 +5317,7 @@ postamble
 }
 %</lbxes>
 %<*lbxfr>
-\ProvidesFile{french-coppe.lbx}[2026/05/28 v4.0 CoppeTeX french strings]
+\ProvidesFile{french-coppe.lbx}[2026/09/09 v4.1 CoppeTeX french strings]
 \InheritBibliographyExtras{french}
 \NewBibliographyString{availablefrom,mscdiss,dscthesis,tcc,depositor,coppescale}
 \DeclareBibliographyStrings{%
@@ -5319,7 +5336,7 @@ postamble
 }
 %</lbxfr>
 %<*lbxit>
-\ProvidesFile{italian-coppe.lbx}[2026/05/28 v4.0 CoppeTeX italian strings]
+\ProvidesFile{italian-coppe.lbx}[2026/09/09 v4.1 CoppeTeX italian strings]
 \InheritBibliographyExtras{italian}
 \NewBibliographyString{availablefrom,mscdiss,dscthesis,tcc,depositor,coppescale}
 \DeclareBibliographyStrings{%
@@ -5345,7 +5362,7 @@ postamble
 %% Institutional names (universityname/cityname/statename/countryname)
 %% are deliberately kept Portuguese: the COPPE/UFRJ cover and folha de
 %% rosto are a Brazilian institutional template that does not translate.
-\ProvidesFile{coppe-lang-spanish.def}[2026/05/28 v4.0 CoppeTeX spanish class strings]
+\ProvidesFile{coppe-lang-spanish.def}[2026/09/09 v4.1 CoppeTeX spanish class strings]
 \copperdefstring{spanish}{appendix}        {Ap\'endice}
 \copperdefstring{spanish}{annex}           {Anexo}
 \copperdefstring{spanish}{frame}           {Cuadro}
@@ -5401,7 +5418,7 @@ postamble
 %% coppe-lang-french.def -- CoppeTeX 4.x French class-string pack.
 %% See coppe-lang-spanish.def for the structure. Institutional names
 %% remain Portuguese; only document-content strings translate.
-\ProvidesFile{coppe-lang-french.def}[2026/05/28 v4.0 CoppeTeX french class strings]
+\ProvidesFile{coppe-lang-french.def}[2026/09/09 v4.1 CoppeTeX french class strings]
 \copperdefstring{french}{appendix}        {Annexe}
 \copperdefstring{french}{annex}           {Annexe}
 \copperdefstring{french}{frame}           {Encadr\'e}
@@ -5456,7 +5473,7 @@ postamble
 %% language option for Italian is spelled "italiano" -- that's the
 %% spelling algorithm2e ships, even though babel calls the language
 %% "italian".
-\ProvidesFile{coppe-lang-italian.def}[2026/05/28 v4.0 CoppeTeX italian class strings]
+\ProvidesFile{coppe-lang-italian.def}[2026/09/09 v4.1 CoppeTeX italian class strings]
 \copperdefstring{italian}{appendix}        {Appendice}
 \copperdefstring{italian}{annex}           {Allegato}
 \copperdefstring{italian}{frame}           {Riquadro}
@@ -5506,7 +5523,7 @@ postamble
 \AtBeginDocument{\DeclareLanguageMapping{italian}{italian-coppe}}
 %</langit>
 %<*numbbx>
-\ProvidesFile{coppe-numeric.bbx}[2026/05/28 v4.0 CoppeTeX ABNT numeric bibliography]
+\ProvidesFile{coppe-numeric.bbx}[2026/09/09 v4.1 CoppeTeX ABNT numeric bibliography]
 % Numeric reference list for the ABNT numeric system (NBR 10520). It reuses the
 % full coppe ABNT style (drivers, CAPS surnames, bold titles, "In:", p./f.,
 % the PT->EN source map and the language mappings) and only adds the [n] list
@@ -5541,7 +5558,7 @@ postamble
 
 %</numbbx>
 %<*numcbx>
-\ProvidesFile{coppe-numeric.cbx}[2026/05/28 v4.0 CoppeTeX ABNT numeric citations]
+\ProvidesFile{coppe-numeric.cbx}[2026/09/09 v4.1 CoppeTeX ABNT numeric citations]
 % Numeric citation system (ABNT NBR 10520): in-text references are bracketed
 % numbers [1], compressed and sorted within a single cite group. This is the
 % opt-in alternative to the author-date default (coppe.cbx); it pairs with
