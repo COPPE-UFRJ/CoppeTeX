@@ -4542,7 +4542,28 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % no extension schema declares it, so it is a DocInfo entry with no XMP
 % counterpart -- a finding a PDF/A checker has every reason to raise, and one
 % that costs nothing to remove. -1 sets every suppression bit.
-  \pdfsuppressptexinfo=-1
+%
+% The two engines spell this differently, and not just in the name. pdfTeX has
+% \pdfsuppressptexinfo, whose bits only ever govern PTEX.* entries, so -1 (all
+% of them) is safe. LuaTeX moved the pdfTeX integer parameters behind
+% \pdfvariable in 0.85 AND renamed this one to suppressoptionalinfo, whose bits
+% reach further: besides the four PTEX.* entries (1, 2, 4, 8) it can also
+% suppress Creator, the dates, Producer, Trapped and -- the dangerous one --
+% the trailer /ID, which PDF/A requires. So -1 is exactly what must NOT be
+% written there; 15 is the four PTEX.* bits and nothing else. Checked on a real
+% LuaTeX run: /ID survives.
+%
+% Getting the name wrong is not a quiet failure. \pdfvariable with an unknown
+% variable name makes LuaTeX typeset the name, and the document stops with
+% "Missing \begin{document}" -- which is how the first attempt at this was
+% caught.
+  \ifdefined\pdfsuppressptexinfo
+    \pdfsuppressptexinfo=-1
+  \else
+    \ifdefined\pdfvariable
+      \pdfvariable suppressoptionalinfo=15
+    \fi
+  \fi
 % pdfx takes the XMP metadata from \jobname.xmpdata, which it reads when it is
 % LOADED -- before the preamble has run, so before \title, \author and
 % \keyword exist. The file is therefore WRITTEN by the class and picked up on

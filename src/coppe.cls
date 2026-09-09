@@ -1662,7 +1662,13 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \if@coppedoublespace\doublespacing\else\onehalfspacing\fi
 \if@coppepdfa
   \RequirePackage[a-2b]{pdfx}
-  \pdfsuppressptexinfo=-1
+  \ifdefined\pdfsuppressptexinfo
+    \pdfsuppressptexinfo=-1
+  \else
+    \ifdefined\pdfvariable
+      \pdfvariable suppressoptionalinfo=15
+    \fi
+  \fi
   \ifdefined\AddToHook
     \let\coppe@xmpout\@mainaux
     \def\coppe@xmphook{\AddToHook{enddocument/afteraux}}%
