@@ -1,0 +1,155 @@
+%% Documento da revisao adversativa -- GERADO por tools/mk-adversativa.py.
+%% tipo=mscexam idioma=es programa=PEC
+%% Opcoes: mscexam, spanish, pdfa, assinaturas, coorientador, rascunhoficha
+\documentclass[mscexam,spanish,pdfa,assinaturas,coorientador,rascunhoficha]{coppe}
+
+\usepackage[most]{tcolorbox}
+\usepackage{makeidx}\makeindex
+\addbibresource{example.bib}
+\makelosymbols
+\makeloabbreviations
+
+\begin{document}
+
+  \title{Um documento adversativo para a classe CoppeTeX}
+  \subtitle{tudo o que a classe oferece, ao mesmo tempo}
+  \foreigntitle{An adversarial document for the CoppeTeX class}
+  \foreignsubtitle{everything the class offers, all at once}
+  \titlein{spanish}{Un documento adversativo para la clase CoppeTeX}
+  \subtitlein{spanish}{todo lo que ofrece la clase, a la vez}
+  \volumes{2}\volume{1}
+  \author{Nome do}{Autor Adversativo}
+  \advisor[UFRJ]{Prof.}{Orientador}{Numero 1}{D.Sc.}
+  \advisor{Prof.}{Orientador}{Numero 2}{D.Sc.}
+  \coadvisor[UFF]{Prof.}{Coorientador}{Primeiro}{Ph.D.}
+  \examiner[UFRJ]{Prof.}{Examinador Numero 1}{D.Sc.}
+  \examiner{Prof.}{Examinador Numero 2}{D.Sc.}
+  \examiner[UFF]{Prof.}{Examinador Numero 3}{D.Sc.}
+  \examiner[UNIRIO]{Prof.}{Examinador Numero 4}{D.Sc.}
+  \department{PEC}
+  \date{09}{2026}
+  \dataaprovacao{15 de setembro de 2026}
+  \areaconcentracao{Engenharia de Sistemas e Computação}
+  \linhapesquisa{Engenharia de Dados e Conhecimento}
+  \tipoproducao{bibliografica}
+  \projetovinculado{sim}
+  \nomeprojeto{Projeto Adversativo}
+  \agenciafomento{Conselho Nacional de Desenvolvimento Científico e Tecnológico}{CNPq}
+  \keyword{Adversativo}\keyword{Conformidade}
+  \foreignkeyword{Adversarial}\foreignkeyword{Conformance}
+  \braziliankeyword{Adversativo}\braziliankeyword{Conformidade}
+
+  \maketitle
+  \frontmatter
+  \dedication{A quienes supieron esperar.}
+
+  \chapter*{Agradecimientos}
+  Párrafo de cuerpo, para comprobar la sangría de primera línea, el interlineado de uno y medio y la mancha gráfica.
+
+  \begin{abstract}
+  Este documento existe para ser difícil. Ejercita a propósito y al mismo tiempo todo lo que ofrece la clase: los cinco niveles de sección, los cinco tipos de ilustración, las tres listas propias de la COPPE, la cita larga, las siglas, los símbolos, las abreviaturas, el índice, los apéndices y los anexos. Si algo se rompe, se rompe aquí.
+  \end{abstract}
+
+  \begin{foreignabstract}
+  This document exists to be difficult. It deliberately exercises everything the class offers at once: the five section levels, the five kinds of illustration, the three COPPE-specific lists, the long quotation, the acronyms, the symbols, the abbreviations, the index, the appendices and the annexes. If anything breaks, it breaks here.
+  \end{foreignabstract}
+
+  \begin{brazilianabstract}
+  Este documento existe para ser difícil. Ele aciona, de propósito e ao mesmo tempo, tudo o que a classe oferece: os cinco níveis de seção, os cinco tipos de ilustração, as três listas próprias da COPPE, a citação longa, as siglas, os símbolos, as abreviaturas, o índice remissivo, os apêndices e os anexos. Se alguma coisa quebra, quebra aqui.
+  \end{brazilianabstract}
+
+  \listoffigures
+  \listoftables
+  \listofquadros
+  \listofprogramas
+  \listofalgorithms
+  \printloabbreviations
+  \printlosymbols
+  \tableofcontents
+
+  \mainmatter
+  \chapter{Introducción}\label{cap:intro}
+  Párrafo de cuerpo, para comprobar la sangría de primera línea, el interlineado de uno y medio y la mancha gráfica.\index{adversativo}
+
+  \chapter{Todos los niveles de sección}
+  Párrafo de cuerpo, para comprobar la sangría de primera línea, el interlineado de uno y medio y la mancha gráfica.
+  \section{Sección secundaria}
+  Párrafo de cuerpo, para comprobar la sangría de primera línea, el interlineado de uno y medio y la mancha gráfica.
+  \subsection{Subsección terciaria}
+  Párrafo de cuerpo, para comprobar la sangría de primera línea, el interlineado de uno y medio y la mancha gráfica.
+  \subsubsection{Subsubsección cuaternaria}
+  Párrafo de cuerpo, para comprobar la sangría de primera línea, el interlineado de uno y medio y la mancha gráfica.
+  \paragraph{Nivel quinario}
+  Párrafo de cuerpo, para comprobar la sangría de primera línea, el interlineado de uno y medio y la mancha gráfica.
+
+  \chapter{Todas las ilustraciones}
+  \begin{figure}[ht]
+    \centering\includegraphics[height=3cm]{coppe-logo}
+    \caption{Figura de prueba}\label{fig:adv}
+    \source{Elaboración propia.}
+  \end{figure}
+  \begin{table}[ht]
+    \centering\caption{Tabla de prueba}\label{tab:adv}
+    \begin{tabular}{lrr}\hline A & 1 & 2\\ B & 3 & 4\\ \hline\end{tabular}
+    \source{Elaboración propia.}
+  \end{table}
+  \begin{quadro}[ht]
+    \centering\caption{Cuadro de prueba}\label{qua:adv}
+    \begin{tabular}{|l|l|}\hline A & B\\ \hline C & D\\ \hline\end{tabular}
+    \source{Elaboración propia.}
+  \end{quadro}
+  \begin{python}[caption={Programa de prueba},label=prog:adv]
+def adversativo(n):
+    # uma linha bastante longa, de proposito, para acionar a quebra do listings e o gancho vermelho do postbreak
+    return sum(i * i for i in range(n))
+  \end{python}
+  \source{Elaboración propia.}
+  \begin{algorithm}[H]
+    \caption{Algoritmo de prueba}\label{alg:adv}
+    \KwIn{$n$}
+    \KwOut{$s$}
+    $s \leftarrow 0$\;
+    \For{$i \leftarrow 1$ \KwTo $n$}{$s \leftarrow s + i$\;}
+    \Return $s$\;
+  \end{algorithm}
+  \source{Elaboración propia.}
+
+  \chapter{Citas, símbolos y siglas}
+  Párrafo de cuerpo, para comprobar la sangría de primera línea, el interlineado de uno y medio y la mancha gráfica. \citep{book-example}
+  \begin{longquote}
+  Una cita de más de tres líneas se sangra cuatro centímetros desde el margen izquierdo, se compone en cuerpo menor y a espacio simple, y no lleva comillas. Es lo que pide la norma y lo que verifica este párrafo, ocupando líneas suficientes para que la sangría se vea.
+  \end{longquote}
+  Párrafo de cuerpo, para comprobar la sangría de primera línea, el interlineado de uno y medio y la mancha gráfica.\footnote{Párrafo de cuerpo, para comprobar la sangría de primera línea, el interlineado de uno y medio y la mancha gráfica.}
+  \begin{equation}
+    E = mc^{2} \label{eq:adv}
+  \end{equation}
+  \symbl{$\alpha$}{Párrafo de cuerpo, para comp}
+  \symbl{$\beta$}{Párrafo de cuerpo, para comp}
+  \abbrev{CoppeTeX}{Párrafo de cuerpo, para comp}
+  \abbrev[ABNT]{ABNT}{Associação Brasileira de Normas Técnicas}
+  \newsigla{ufrj}{UFRJ}{Universidade Federal do Rio de Janeiro}
+  \newsigla{cpgp}{CPGP}{Comissão de Programas de Pós-Graduação}
+  \sigla{ufrj} \sigla{cpgp} \sigla{ufrj}
+
+  \chapter{Conclusiones}
+  Párrafo de cuerpo, para comprobar la sangría de primera línea, el interlineado de uno y medio y la mancha gráfica.
+
+  \backmatter
+  \nocite{article-example,manualbib}
+  \printbibliography
+
+  \appendix
+  \chapter{Un apéndice}
+  El apéndice es un texto elaborado por el propio autor para complementar su argumentación sin ser esencial para comprender el texto principal.
+  \chapter{Otro apéndice}
+  Párrafo de cuerpo, para comprobar la sangría de primera línea, el interlineado de uno y medio y la mancha gráfica.
+
+  \annex
+  \chapter{Un anexo}
+  El anexo es un documento no elaborado por el autor, que sirve de fundamentación, comprobación o ilustración.
+  \chapter{Otro anexo}
+  Párrafo de cuerpo, para comprobar la sangría de primera línea, el interlineado de uno y medio y la mancha gráfica.
+
+  \printindex
+  \coppetexfinalpage
+\end{document}

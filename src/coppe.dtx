@@ -657,6 +657,18 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %   anyone who is going to PRINT and bind the work; |oneside| is the default and
 %   is there to be explicit.
 %
+%   \item[\texttt{semmorewrites}, \texttt{morewrites}] \TeX\ has sixteen output
+%   streams and a work that asks for every list runs out of them; the failure,
+%   ``No room for a new \texttt{\textbackslash write}'', lands on whichever list
+%   came last and explains nothing. Under pdf\TeX\ the class therefore loads the
+%   |morewrites| package by itself when it is installed, which removes the
+%   ceiling. |semmorewrites| turns that off, for the rare case where the
+%   package disagrees with something else in the document -- it buffers what is
+%   written until shipout, so a package that writes a file and reads it back in
+%   the same run can misbehave. |morewrites| means ``I insist'': a missing
+%   package becomes an error instead of a warning. Under LuaLaTeX, which has 128
+%   streams, none of this is loaded and none of it is needed.
+%
 %   \item[\texttt{numeraisromanos}] Number the pre-textual folhas in lowercase
 %   roman numerals. \textbf{Contrary to 2.7}, which has the count running from
 %   the folha de rosto with nothing printed until the textual part. Kept only so
@@ -2357,6 +2369,43 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
 %     (manual2024 2.7 / proposta P25-P26). Pre-textual numbering is set by
 %     \frontmatter (unnumbered by default; roman with the numeraisromanos
 %     class option). ------------------------------------------------------------
+% Every list goes through \@starttoc, which allocates a stream the first time
+% it sees an extension. That is where the ceiling is hit in practice, so that
+% is where the class checks -- one \ifnum before the allocation, and an error
+% that names the three ways out instead of the kernel's bare "No room".
+%
+% \count17 is the write allocation counter, and 15 is the last usable stream.
+% Under LuaTeX there are 128 and the counter is managed differently, so the
+% check is skipped there; the same is true when morewrites is in charge.
+% The wrap waits for \begin{document} on purpose: hyperref redefines
+% \@starttoc as well, and it is loaded at the very end of this class, so a
+% \let taken here would be thrown away.
+\newcommand\coppe@checkwrites[1]{%
+  \ifdefined\directlua\else
+    \if@coppemorewrites\else
+      \@ifundefined{tf@#1}{%
+        \ifnum\count17>14
+          \ClassError{coppe}{Acabaram os 16 fluxos de escrita do TeX}{%
+            Este trabalho pede mais listas do que o pdfTeX consegue manter
+            abertas ao mesmo tempo.\MessageBreak
+            Tres saidas, nesta ordem de preferencia:\MessageBreak
+            (1) compile com lualatex, que tem 128 fluxos;\MessageBreak
+            (2) passe a opcao `morewrites' a classe coppe;\MessageBreak
+            (3) remova uma lista que o trabalho nao usa.\MessageBreak
+            A lista que faltou agora foi a de extensao `#1', mas o problema
+            nao e dela: e a soma de todas.}%
+        \fi}{}%
+    \fi
+  \fi}
+% The wrapping itself lives in a macro of its own rather than inside the hook:
+% \AtBeginDocument stores its argument by expansion, and a parameter written
+% there does not survive it -- the document died with "Parameters must be
+% numbered consecutively" at \begin{document}. One level of nesting, one
+% doubling, and the hook only has to call it.
+\newcommand\coppe@wrapstarttoc{%
+  \let\coppe@orig@starttoc\@starttoc
+  \def\@starttoc##1{\coppe@checkwrites{##1}\coppe@orig@starttoc{##1}}}
+\AtBeginDocument{\coppe@wrapstarttoc}
 \RequirePackage{fancyhdr}
 % \headheight is set to 15pt by geometry up above (see the geometry call),
 % which is what fancyhdr needs (>= 14.49998pt) for the running head.
@@ -2520,10 +2569,80 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \newif\if@coppetwoside \@coppetwosidefalse
 \DeclareOption{twoside}{\@coppetwosidetrue}
 \DeclareOption{oneside}{\@coppetwosidefalse}
+% --- Fluxos de escrita ------------------------------------------------------
+% TeX has SIXTEEN \write streams and no more. Every list costs one for the
+% whole run: the .toc, the .lof, the .lot, and one for each list this class
+% adds (.loq for quadros, .lol for programas, .loa for algoritmos), plus the
+% .abx and .syx behind the lists of abbreviations and of symbols, the .idx of
+% the index, hyperref's .out, biblatex's .bcf and the kernel's .aux and friends.
+% A work that asks for all of them sits exactly at the ceiling.
+%
+% The kernel's failure in that situation -- "No room for a new \write" -- names
+% neither the cause nor the way out, and lands on whichever list happens to be
+% requested last, which is usually \tableofcontents and has nothing to do with
+% it. The class therefore checks before the allocation and says what is
+% happening (see \coppe@starttoc below).
+%
+% There are three ways out and the class chooses none of them for the author:
+%
+%   * compile with LuaLaTeX. It has 128 streams; nothing else has to change,
+%     and the class supports it.
+%   * let the class load `morewrites', which multiplexes the streams so the
+%     ceiling disappears under pdfLaTeX.
+%   * drop a list the work does not use. Each one returns a stream.
+%
+% The DEFAULT is the second one, and it is on. An error telling the author to
+% pass an option is advice for someone who already knows: a student two days
+% from the deposit reads "No room for a new \write" and concludes the class is
+% broken. So under pdfTeX the class loads morewrites by itself.
+%
+% Three things keep that from becoming a burden:
+%
+%   * it is loaded ONLY IF INSTALLED. Missing, the class carries on without it
+%     and warns; morewrites does not become a hard dependency of a work that
+%     would never have reached the ceiling anyway.
+%   * `semmorewrites' turns it off, for whoever hits a conflict. morewrites
+%     patches \newwrite, \openout and \write and buffers what is written until
+%     shipout, so a package that writes a file and reads it back in the SAME run
+%     can misbehave. That is the real cost of this default, and it is why the
+%     escape exists.
+%   * `morewrites' still exists and now means "I insist": with it, a missing
+%     package is an error rather than a warning.
+%
+% Under LuaTeX none of this applies and nothing is loaded.
+\newif\if@coppemorewrites \@coppemorewritestrue
+\newif\if@coppemwforced   \@coppemwforcedfalse
+\DeclareOption{morewrites}{\@coppemorewritestrue\@coppemwforcedtrue}
+\DeclareOption{semmorewrites}{\@coppemorewritesfalse}
 %    \end{macrocode}
 %
 %    \begin{macrocode}
 \ProcessOptions\relax
+% morewrites has to come before anything else allocates, so it goes first
+% thing after the options are read.
+\if@coppemorewrites
+  \ifdefined\directlua
+% Under LuaTeX there is nothing to solve: 128 streams already. The flag is
+% cleared too, so the \@starttoc guard further down knows the ceiling is not
+% in play here either.
+    \ClassInfo{coppe}{morewrites dispensado: o LuaTeX ja tem 128 fluxos}%
+    \@coppemorewritesfalse
+  \else
+    \IfFileExists{morewrites.sty}
+      {\RequirePackage{morewrites}}
+      {\if@coppemwforced
+         \ClassError{coppe}{Opcao `morewrites' pedida, mas morewrites.sty nao
+           esta instalado}{Instale o pacote morewrites, ou compile com lualatex,
+           que nao precisa dele.}%
+       \else
+         \ClassWarningNoLine{coppe}{O pacote morewrites nao esta instalado.\MessageBreak
+           Sem ele o pdfTeX so aguenta 16 fluxos de escrita, e um trabalho\MessageBreak
+           com todas as listas passa disso. Se a compilacao parar por falta\MessageBreak
+           de fluxo, instale morewrites ou compile com lualatex}%
+         \@coppemorewritesfalse
+       \fi}%
+  \fi
+\fi
 % \LoadClass and geometry ran before \ProcessOptions (see above), so the
 % two-sided layout can only be applied here. geometry reads left/right as
 % inner/outer once twoside is on, so the 3cm/2cm pair set above becomes the

@@ -1,0 +1,148 @@
+%% Documento da revisao adversativa -- GERADO por tools/mk-adversativa.py.
+%% tipo=dsc idioma=en programa=PET
+%% Opcoes: dsc, english, pdfa, assinaturas, coorientador, rascunhoficha
+\documentclass[dsc,english,pdfa,assinaturas,coorientador,rascunhoficha]{coppe}
+
+\usepackage[most]{tcolorbox}
+\usepackage{makeidx}\makeindex
+\addbibresource{example.bib}
+\makelosymbols
+\makeloabbreviations
+
+\begin{document}
+
+  \title{Um documento adversativo para a classe CoppeTeX}
+  \subtitle{tudo o que a classe oferece, ao mesmo tempo}
+  \foreigntitle{An adversarial document for the CoppeTeX class}
+  \foreignsubtitle{everything the class offers, all at once}
+  \volumes{2}\volume{1}
+  \author{Nome do}{Autor Adversativo}
+  \advisor[UFRJ]{Prof.}{Orientador}{Numero 1}{D.Sc.}
+  \advisor{Prof.}{Orientador}{Numero 2}{D.Sc.}
+  \coadvisor[UFF]{Prof.}{Coorientador}{Primeiro}{Ph.D.}
+  \examiner[UFRJ]{Prof.}{Examinador Numero 1}{D.Sc.}
+  \examiner{Prof.}{Examinador Numero 2}{D.Sc.}
+  \examiner[UFF]{Prof.}{Examinador Numero 3}{D.Sc.}
+  \examiner[UNIRIO]{Prof.}{Examinador Numero 4}{D.Sc.}
+  \department{PET}
+  \date{09}{2026}
+  \dataaprovacao{15 de setembro de 2026}
+  \areaconcentracao{Engenharia de Sistemas e Computação}
+  \linhapesquisa{Engenharia de Dados e Conhecimento}
+  \tipoproducao{bibliografica}
+  \projetovinculado{sim}
+  \nomeprojeto{Projeto Adversativo}
+  \agenciafomento{Conselho Nacional de Desenvolvimento Científico e Tecnológico}{CNPq}
+  \keyword{Adversativo}\keyword{Conformidade}
+  \foreignkeyword{Adversarial}\foreignkeyword{Conformance}
+
+  \maketitle
+  \frontmatter
+  \dedication{To those who waited.}
+
+  \chapter*{Acknowledgements}
+  A body paragraph, to check the first-line indentation, the one-and-a-half spacing and the text block.
+
+  \begin{abstract}
+  This document exists to be difficult. It deliberately exercises everything the class offers at once: the five section levels, the five kinds of illustration, the three COPPE-specific lists, the long quotation, the acronyms, the symbols, the abbreviations, the index, the appendices and the annexes. If anything breaks, it breaks here.
+  \end{abstract}
+
+  \begin{foreignabstract}
+  Este documento existe para ser difícil. Ele aciona, de propósito e ao mesmo tempo, tudo o que a classe oferece: os cinco níveis de seção, os cinco tipos de ilustração, as três listas próprias da COPPE, a citação longa, as siglas, os símbolos, as abreviaturas, o índice remissivo, os apêndices e os anexos. Se alguma coisa quebra, quebra aqui.
+  \end{foreignabstract}
+
+  \listoffigures
+  \listoftables
+  \listofquadros
+  \listofprogramas
+  \listofalgorithms
+  \printloabbreviations
+  \printlosymbols
+  \tableofcontents
+
+  \mainmatter
+  \chapter{Introduction}\label{cap:intro}
+  A body paragraph, to check the first-line indentation, the one-and-a-half spacing and the text block.\index{adversativo}
+
+  \chapter{Every section level}
+  A body paragraph, to check the first-line indentation, the one-and-a-half spacing and the text block.
+  \section{Secondary section}
+  A body paragraph, to check the first-line indentation, the one-and-a-half spacing and the text block.
+  \subsection{Tertiary subsection}
+  A body paragraph, to check the first-line indentation, the one-and-a-half spacing and the text block.
+  \subsubsection{Quaternary subsubsection}
+  A body paragraph, to check the first-line indentation, the one-and-a-half spacing and the text block.
+  \paragraph{Quinary level}
+  A body paragraph, to check the first-line indentation, the one-and-a-half spacing and the text block.
+
+  \chapter{Every illustration}
+  \begin{figure}[ht]
+    \centering\includegraphics[height=3cm]{coppe-logo}
+    \caption{Test figure}\label{fig:adv}
+    \source{Prepared by the author.}
+  \end{figure}
+  \begin{table}[ht]
+    \centering\caption{Test table}\label{tab:adv}
+    \begin{tabular}{lrr}\hline A & 1 & 2\\ B & 3 & 4\\ \hline\end{tabular}
+    \source{Prepared by the author.}
+  \end{table}
+  \begin{quadro}[ht]
+    \centering\caption{Test frame}\label{qua:adv}
+    \begin{tabular}{|l|l|}\hline A & B\\ \hline C & D\\ \hline\end{tabular}
+    \source{Prepared by the author.}
+  \end{quadro}
+  \begin{python}[caption={Test program},label=prog:adv]
+def adversativo(n):
+    # uma linha bastante longa, de proposito, para acionar a quebra do listings e o gancho vermelho do postbreak
+    return sum(i * i for i in range(n))
+  \end{python}
+  \source{Prepared by the author.}
+  \begin{algorithm}[H]
+    \caption{Test algorithm}\label{alg:adv}
+    \KwIn{$n$}
+    \KwOut{$s$}
+    $s \leftarrow 0$\;
+    \For{$i \leftarrow 1$ \KwTo $n$}{$s \leftarrow s + i$\;}
+    \Return $s$\;
+  \end{algorithm}
+  \source{Prepared by the author.}
+
+  \chapter{Quotations, symbols and acronyms}
+  A body paragraph, to check the first-line indentation, the one-and-a-half spacing and the text block. \citep{book-example}
+  \begin{longquote}
+  A quotation longer than three lines is indented four centimetres from the left margin, set in the smaller font and single spaced, and carries no quotation marks. That is what the norm asks for and what this paragraph checks, running long enough for the indentation to be visible.
+  \end{longquote}
+  A body paragraph, to check the first-line indentation, the one-and-a-half spacing and the text block.\footnote{A body paragraph, to check the first-line indentation, the one-and-a-half spacing and the text block.}
+  \begin{equation}
+    E = mc^{2} \label{eq:adv}
+  \end{equation}
+  \symbl{$\alpha$}{A body paragraph, to check t}
+  \symbl{$\beta$}{A body paragraph, to check t}
+  \abbrev{CoppeTeX}{A body paragraph, to check t}
+  \abbrev[ABNT]{ABNT}{Associação Brasileira de Normas Técnicas}
+  \newsigla{ufrj}{UFRJ}{Universidade Federal do Rio de Janeiro}
+  \newsigla{cpgp}{CPGP}{Comissão de Programas de Pós-Graduação}
+  \sigla{ufrj} \sigla{cpgp} \sigla{ufrj}
+
+  \chapter{Conclusions}
+  A body paragraph, to check the first-line indentation, the one-and-a-half spacing and the text block.
+
+  \backmatter
+  \nocite{article-example,manualbib}
+  \printbibliography
+
+  \appendix
+  \chapter{An appendix}
+  An appendix is a text written by the author to complement the argument without being essential to understanding the main text.
+  \chapter{Another appendix}
+  A body paragraph, to check the first-line indentation, the one-and-a-half spacing and the text block.
+
+  \annex
+  \chapter{An annex}
+  An annex is a document not written by the author, serving as grounding, evidence or illustration.
+  \chapter{Another annex}
+  A body paragraph, to check the first-line indentation, the one-and-a-half spacing and the text block.
+
+  \printindex
+  \coppetexfinalpage
+\end{document}
