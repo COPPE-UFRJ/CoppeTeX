@@ -23,6 +23,9 @@
                pelo veraPDF no perfil 2b. Precisa do veraPDF instalado (o
                script procura em %USERPROFILE%\verapdf e no PATH); sem ele o
                passo é PULADO, não falha.
+    adversativa - os 12 documentos de adversativa/ (4 tipos x 3 idiomas),
+               com o ciclo completo: biber, makeindex das listas e do indice
+               remissivo, tres passadas, e veraPDF em cada um.
     all      - tudo acima. Padrão.
 
 .EXAMPLE
@@ -30,7 +33,7 @@
     .\tools\build-check.ps1 -Scope example
 #>
 param(
-    [ValidateSet("class", "example", "langs", "tests", "docs", "pdfa", "all")]
+    [ValidateSet("class", "example", "langs", "tests", "docs", "pdfa", "adversativa", "all")]
     [string]$Scope = "all"
 )
 
@@ -38,9 +41,10 @@ $ErrorActionPreference = "Continue"
 
 $root    = Split-Path -Parent (Split-Path -Parent $MyInvocation.MyCommand.Path)
 $src     = Join-Path $root "src"
-# tests/ vive DENTRO de src/: o coppe.ins gera os test_*.tex, e o openout
-# do TeX so escreve em subdiretorios -- nunca em "..".
-$testDir = Join-Path $src "tests"
+# tests/ e adversativa/ ficam FORA de src/: nao sao distribuidos e nao saem do
+# coppe.dtx. Provam que a classe funciona; nao fazem parte dela.
+$testDir = Join-Path $root "tests"
+$advDir  = Join-Path $root "adversativa"
 $logDir  = Join-Path $root "_scratch\build-logs"
 $result  = Join-Path $root "_scratch\RESULTADO.txt"
 
@@ -147,6 +151,64 @@ if ($Scope -in @("tests", "all")) {
     Invoke-Step "suite" $testDir { & powershell -NoProfile -File (Join-Path $testDir "run-tests.ps1") }
 }
 
+if ($Scope -in @("adversativa", "all")) {
+    # Revisao adversativa: 4 tipos de documento x 3 idiomas, cada um acionando
+    # o maximo possivel da API ao mesmo tempo. Ciclo COMPLETO -- e o unico lugar
+    # do harness onde o makeindex das listas de abreviaturas e de simbolos e do
+    # indice remissivo tambem roda, que e o que essas listas exigem de verdade.
+    $env:TEXINPUTS = "$src;$advDir;$env:TEXINPUTS"
+    $advDocs = Get-ChildItem -Path $advDir -Filter "adv_*.tex" -ErrorAction SilentlyContinue |
+        Sort-Object Name | ForEach-Object { [System.IO.Path]::GetFileNameWithoutExtension($_.Name) }
+    if (-not $advDocs) { Add-Line "pulado   adversativa (nenhum adv_*.tex)" }
+
+    # Sonda de fluxos: compila SEM morewrites so para registrar quantos \write
+    # cada parte consome. Estoura de proposito e NAO entra na contagem de
+    # falhas -- o valor dela e o log, nao o PDF.
+    $probe = Join-Path $advDir "_writes_probe.tex"
+    if (Test-Path $probe) {
+        Push-Location $advDir
+        $out = & pdflatex -interaction=nonstopmode "_writes_probe.tex" 2>&1
+        Pop-Location
+        $out | Out-File -FilePath (Join-Path $logDir "_writes_probe.log") -Encoding utf8
+        Add-Line ""
+        Add-Line "--- fluxos de escrita consumidos (sem morewrites) ---"
+        foreach ($l in ($out | Select-String -Pattern '@@FLUXO')) {
+            Add-Line ("         " + ($l.Line -replace '^.*@@FLUXO ', ''))
+        }
+        Add-Line ""
+    }
+    foreach ($stem in $advDocs) {
+        Invoke-Step "$stem-1"    $advDir { & pdflatex -interaction=nonstopmode -halt-on-error "$stem.tex" }
+        Invoke-Step "$stem-biber" $advDir { & biber $stem }
+        # as listas de abreviaturas e de simbolos passam pelo makeindex com o
+        # estilo coppe.ist; o indice remissivo, pelo makeindex padrao
+        Invoke-Step "$stem-lab" $advDir { & makeindex -s (Join-Path $src "coppe.ist") -o "$stem.lab" "$stem.abx" }
+        Invoke-Step "$stem-los" $advDir { & makeindex -s (Join-Path $src "coppe.ist") -o "$stem.los" "$stem.syx" }
+        Invoke-Step "$stem-idx" $advDir { & makeindex "$stem.idx" }
+        Invoke-Step "$stem-2"    $advDir { & pdflatex -interaction=nonstopmode -halt-on-error "$stem.tex" }
+        Invoke-Step "$stem-3"    $advDir { & pdflatex -interaction=nonstopmode -halt-on-error "$stem.tex" }
+    }
+
+    # Segunda passada, com LuaLaTeX. E a outra saida documentada para o teto de
+    # 16 fluxos, e vale saber que a classe inteira compila nos dois motores --
+    # nao so que compila num deles. -jobname mantem os dois PDFs lado a lado,
+    # para que o veraPDF possa julgar os dois.
+    if (Get-Command lualatex -ErrorAction SilentlyContinue) {
+        foreach ($stem in $advDocs) {
+            $lj = "${stem}_lua"
+            Invoke-Step "$lj-1"     $advDir { & lualatex -interaction=nonstopmode -halt-on-error -jobname $lj "$stem.tex" }
+            Invoke-Step "$lj-biber" $advDir { & biber $lj }
+            Invoke-Step "$lj-lab"   $advDir { & makeindex -s (Join-Path $src "coppe.ist") -o "$lj.lab" "$lj.abx" }
+            Invoke-Step "$lj-los"   $advDir { & makeindex -s (Join-Path $src "coppe.ist") -o "$lj.los" "$lj.syx" }
+            Invoke-Step "$lj-idx"   $advDir { & makeindex "$lj.idx" }
+            Invoke-Step "$lj-2"     $advDir { & lualatex -interaction=nonstopmode -halt-on-error -jobname $lj "$stem.tex" }
+            Invoke-Step "$lj-3"     $advDir { & lualatex -interaction=nonstopmode -halt-on-error -jobname $lj "$stem.tex" }
+        }
+    } else {
+        Add-Line "pulado   adversativa/lualatex (lualatex nao encontrado)"
+    }
+}
+
 if ($Scope -in @("pdfa", "all")) {
     # Os dois documentos que saem com a opcao de classe pdfa: o exemplo inteiro
     # (bibliografia, listas, figuras, tcolorbox -- transparencia) e o teste
@@ -174,9 +236,18 @@ if ($Scope -in @("pdfa", "all")) {
     } else {
         Add-Line ""
         Add-Line "veraPDF: $vera"
-        foreach ($t in @(
-                @{ Stem = "example_pdfa"; Dir = $src },
-                @{ Stem = "test_pdfa";    Dir = $testDir })) {
+        $veraTargets = @(
+            @{ Stem = "example_pdfa"; Dir = $src },
+            @{ Stem = "test_pdfa";    Dir = $testDir })
+        # todo documento adversativo e compilado com a opcao pdfa: se algum
+        # deles ja foi gerado, valida-se tambem
+        $advDirV = Join-Path $root "adversativa"
+        if (Test-Path $advDirV) {
+            foreach ($f in (Get-ChildItem -Path $advDirV -Filter "adv_*.pdf" -ErrorAction SilentlyContinue | Sort-Object Name)) {
+                $veraTargets += @{ Stem = [System.IO.Path]::GetFileNameWithoutExtension($f.Name); Dir = $advDirV }
+            }
+        }
+        foreach ($t in $veraTargets) {
             $pdf = Join-Path $t.Dir "$($t.Stem).pdf"
             $rep = Join-Path $logDir "verapdf-$($t.Stem).xml"
             if (-not (Test-Path $pdf)) { Add-Line "FALHOU   verapdf:$($t.Stem)  (PDF nao foi gerado)"; $script:failed++; continue }

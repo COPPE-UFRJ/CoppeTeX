@@ -57,3 +57,10 @@ tests/*.pdf
 
 # gerado pelo coppe.ins; o build-check o copia para latexmkrc
 src/latexmkrc.tex
+
+# adversativa/: prova de funcionamento, nao distribuida. So as fontes entram no
+# git; os 24 PDFs e os auxiliares sao produto de build e se regeram por
+# tools\prova.ps1.
+adversativa/*
+!adversativa/*.tex
+!adversativa/README.md

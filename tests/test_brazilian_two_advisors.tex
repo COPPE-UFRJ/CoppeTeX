@@ -1,33 +1,36 @@
 %%
-%% This is file `tests/test_brazilian_two_advisors.tex',
-%% generated with the docstrip utility.
+%% test_brazilian_two_advisors.tex -- regression test for the coppe class.
+%% Brazilian main language, two advisors (the common case; the cover label
+%% should print "Orientadores").
 %%
-%% The original source files were:
+%% Run via ../tests/run-tests.ps1, which sets TEXINPUTS so this file finds
+%% coppe.cls and example.bib in ../src/. EXTEND THIS FILE whenever a new
+%% bug is found in the two-advisor / common path: keep every existing case
+%% working and add a minimal repro for the new one.
 %%
-%% coppe.dtx  (with options: `testtwo')
-%% 
-%% This is a regression test for the `coppe' document class.  Each test is meant
-%% to compile cleanly under pdflatex + biber + pdflatex + pdflatex; the runner
-%% src/tests/run-tests.ps1 discovers every test_*.tex in that directory.  It is
-%% generated from coppe.dtx by docstrip; edit the .dtx source, not this file.
-%% 
-%% \CheckSum{0}
-%% \CharacterTable
-%%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
-%%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
-%%   Digits        \0\1\2\3\4\5\6\7\8\9
-%%   Exclamation   \!     Double quote  \"     Hash (number) \#
-%%   Dollar        \$     Percent       \%     Ampersand     \&
-%%   Acute accent  \'     Left paren    \(     Right paren   \)
-%%   Asterisk      \*     Plus          \+     Comma         \,
-%%   Minus         \-     Point         \.     Solidus       \/
-%%   Colon         \:     Semicolon     \;     Less than     \<
-%%   Equals        \=     Greater than  \>     Question mark \?
-%%   Commercial at \@     Left bracket  \[     Backslash     \\
-%%   Right bracket \]     Circumflex    \^     Underscore    \_
-%%   Grave accent  \`     Left brace    \{     Vertical bar  \|
-%%   Right brace   \}     Tilde         \~}
+%% Covered features (as of 2026/05/29, CoppeTeX v4.0, nlinguas branch):
+%%   * metadata: \title, \foreigntitle, \author, \advisor (x2), \examiner (x3),
+%%               \department, \date, \keyword (x3)
+%%   * \maketitle (cover + folha de rosto + ficha catalografica)
+%%   * \frontmatter: \dedication, agradecimentos chapter*, abstract, foreignabstract
+%%   * lists: \listoffigures, \listoftables, \listofquadros, \listofprogramas,
+%%            \printloabbreviations, \printlosymbols, \tableofcontents
+%%   * \mainmatter chapters covering: figures with \source/\fonte, booktabs
+%%     table, quadro float, subcaption subfigures, longtable, amsmath +
+%%     amssymb math, algorithm2e algorithm, listings Python block, longquote,
+%%     footnotes (singlespacing+filete via setspace), \sigla / \sigla*,
+%%     \symbl, \abbrev, \citet, \citep, \autoref cross-references
+%%   * back matter: \printbibliography, \appendix (x2), \annex
 %%
+%% Compile under pdfLaTeX. Under LuaLaTeX/XeLaTeX, the class skips amssymb
+%% and the end-of-document ClassWarning will fire (test it by adding
+%% \usepackage{unicode-math} + \setmathfont{Latin Modern Math} below).
+%%
+%% NAO e gerado pelo coppe.dtx e NAO e distribuido: a suite prova que a
+%% classe funciona, nao faz parte dela. Rode por tools\prova.ps1, ou por
+%% tests\run-tests.ps1 para so esta pasta.
+%%
+
 \documentclass[dsc]{coppe}
 
  % Only packages NOT brought in by the class belong here. The coppe class (v4.0)
