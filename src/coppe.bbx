@@ -142,6 +142,16 @@
 \renewbibmacro*{in:}{\printtext{\bibstring{in}\addcolon\space}}
 
 \DeclareFieldFormat{url}{\bibstring{availablefrom}\addcolon\space\url{#1}}
+\DeclareFieldFormat{urldate}{\bibstring{urlseen}\addcolon\space#1}
+\renewbibmacro*{url+urldate}{%
+  \iffieldundef{addendum}
+    {}
+    {\printfield{addendum}\clearfield{addendum}%
+     \setunit{\adddot\space}}%
+  \iffieldundef{url}
+    {}
+    {\printfield{url}%
+     \iffieldundef{urlyear}{}{\setunit{\adddot\space}\printurldate}}}
 
 \DeclareBibliographyDriver{article}{%
   \usebibmacro{bibindex}%
@@ -293,8 +303,8 @@
   \newunit\newblock
   \usebibmacro{url+urldate}%
   \usebibmacro{finentry}}
-\DeclareBibliographyDriver{standard}{\usedriver{}{book}}
-\DeclareBibliographyDriver{music}{\usedriver{}{book}}
+\DeclareBibliographyDriver{standard}{\usedriver{}{book}\usebibmacro{finentry}}
+\DeclareBibliographyDriver{music}{\usedriver{}{book}\usebibmacro{finentry}}
 \newbibmacro*{coppe:legaldriver}{%
   \usebibmacro{bibindex}\usebibmacro{begentry}%
   \usebibmacro{author/translator+others}%
@@ -311,13 +321,13 @@
 \DeclareBibliographyDriver{legislation}{\usebibmacro{coppe:legaldriver}}
 \DeclareBibliographyDriver{jurisdiction}{\usebibmacro{coppe:legaldriver}}
 \DeclareBibliographyDriver{legal}{\usebibmacro{coppe:legaldriver}}
-\DeclareBibliographyDriver{audio}{\usedriver{}{misc}}
-\DeclareBibliographyDriver{video}{\usedriver{}{misc}}
-\DeclareBibliographyDriver{software}{\usedriver{}{misc}}
-\DeclareBibliographyDriver{image}{\usedriver{}{misc}}
-\DeclareBibliographyDriver{artwork}{\usedriver{}{misc}}
-\DeclareBibliographyDriver{performance}{\usedriver{}{misc}}
-\DeclareBibliographyDriver{dataset}{\usedriver{}{misc}}
+\DeclareBibliographyDriver{audio}{\usedriver{}{misc}\usebibmacro{finentry}}
+\DeclareBibliographyDriver{video}{\usedriver{}{misc}\usebibmacro{finentry}}
+\DeclareBibliographyDriver{software}{\usedriver{}{misc}\usebibmacro{finentry}}
+\DeclareBibliographyDriver{image}{\usedriver{}{misc}\usebibmacro{finentry}}
+\DeclareBibliographyDriver{artwork}{\usedriver{}{misc}\usebibmacro{finentry}}
+\DeclareBibliographyDriver{performance}{\usedriver{}{misc}\usebibmacro{finentry}}
+\DeclareBibliographyDriver{dataset}{\usedriver{}{misc}\usebibmacro{finentry}}
 
 \DeclareSourcemap{%
   \maps[datatype=bibtex]{%

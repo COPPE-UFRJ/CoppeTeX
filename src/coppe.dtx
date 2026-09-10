@@ -523,7 +523,37 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %   |@videogame| (|@jogoeletronico|); |@tvshow| (|@programadetv|).
 % \end{description}
 % When an entry has no |author| or |editor|, it is entered by title, with the
-% first significant word (and a leading article) in capitals.
+% first significant word (and a leading article) in capitals. A periodical is
+% the exception: 4.2.3 sets its title in capitals throughout.
+%
+% \subsection*{Fields the ABNT categories need}
+%
+% Beyond the usual |biblatex| fields, each with an unaccented Portuguese
+% synonym:
+% \begin{description}
+% \item[Events] |eventtitle| (|evento|) --- the name of the event, set in
+%   capitals ahead of the title of the proceedings, as 4.2.4 requires;
+%   |number| (|numero|) the edition; |eventdate| (|dataevento|) the year it was
+%   held; |venue| (|localevento|) the city. The |title| (|@anais|) or
+%   |booktitle| (|@trabalhodeevento|) then carries only
+%   \enquote{Anais [\dots]}, which is the element in bold.
+% \item[Patents] |filingdate| (|deposito|) and |grantdate| (|concessao|),
+%   printed as \enquote{Dep\'osito: \dots. Concess\~ao: \dots.} (4.2.5).
+% \item[Theses] |course| (|curso|), |institution| (|instituicao|),
+%   |pagetotal| --- rendered as
+%   \enquote{1997. 203~f. Disserta\c c\~ao (Mestrado em \dots) ---
+%   Institui\c c\~ao, Local, 1997.} (4.2.1.1).
+% \item[Legal documents] |relator|, plus |volume|, |number| and |pages| of
+%   the vehicle in which the act was published (4.2.6).
+% \item[Anything electronic] |url| and |urldate| (|dataacesso|), closing the
+%   entry as \enquote{Dispon\'{\i}vel em: \dots. Acesso em: \dots.}
+% \end{description}
+%
+% Every one of these is exercised, with the manual's own example data, by
+% |adversativa/referencias-manual.bib| --- one entry per category of 4.2 ---
+% and checked against the manual's printed form by
+% |tools/conferir-referencias.py|. Neither is distributed: they prove the
+% styles, they are not part of them.
 %
 % \subsection*{Appendix and Annex (Optional)}
 %
@@ -793,7 +823,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %     |\InheritBibliographyExtras{<lang>}| then |\DeclareBibliographyStrings|
 %     for the keys |availablefrom|, |urlseen|, |in|, |editor|, |editors|,
 %     |depositor|, |coppescale|, |mscdiss|, |dscthesis|, |phdthesis|,
-%     |tcc|. The shipped |spanish-coppe.lbx|, |french-coppe.lbx| and
+%     |tcc|, |coppemscdeg|, |coppedscdeg|, |coppephddeg|, |coppetccdeg|,
+%     |coppefiling|, |coppegrant|. The shipped |spanish-coppe.lbx|, |french-coppe.lbx| and
 %     |italian-coppe.lbx| are the reference templates to copy from.
 % \end{description}
 %
@@ -4936,12 +4967,15 @@ postamble
 \DeclareDatamodelFields[type=list,datatype=literal]{producer}
 \DeclareDatamodelFields[type=field,datatype=literal]{caderno}     % newspaper section
 \DeclareDatamodelFields[type=field,datatype=literal]{relator}     % jurisprudence rapporteur
+\DeclareDatamodelFields[type=field,datatype=literal]{filingdate}  % patente: deposito
+\DeclareDatamodelFields[type=field,datatype=literal]{grantdate}   % patente: concessao
 \DeclareDatamodelEntryfields{course,coppedegree}
 \DeclareDatamodelEntryfields[game,videogame,boardgame,software,movie,tvshow,video]%
   {artist,platform,director,producer,version}
 \DeclareDatamodelEntryfields[map]{scale}
 \DeclareDatamodelEntryfields[article]{caderno}
 \DeclareDatamodelEntryfields[jurisdiction]{relator}
+\DeclareDatamodelEntryfields[patent]{filingdate,grantdate}
 %</dbx>
 %<*bbx>
 \ProvidesFile{coppe.bbx}[2026/09/09 v4.1 CoppeTeX ABNT bibliography style]
@@ -5009,6 +5043,22 @@ postamble
 % ABNT date (NBR 6023 §4.3.5.5.2): "dia mês. ano" -- without the brazilian "de"
 % between the parts (e.g. "4 fev. 1992", "abr. 1996"). #1=year, #2=month, #3=day
 % field names; the month stays abbreviated via \mkbibmonth.
+% Autor-entidade com subordinacao: a 4.3.2.13 poe em caixa alta a jurisdicao ou
+% a entidade superior, e deixa em caixa normal o que vem depois -- o orgao
+% subordinado ("BRASIL. Supremo Tribunal Federal.") e o qualificador entre
+% parenteses ("SAO PAULO (Estado)."). \mkbibnamefamily so conhecia nome de
+% pessoa e punha tudo em caixa alta. Corta-se no primeiro " (" e, dentro do que
+% sobra a esquerda, no primeiro ". ": o que estiver antes vai para caixa alta,
+% o resto sai como foi digitado.
+\protected\def\coppe@ucfamily#1{\coppe@ucparen#1 (\coppe@ucstop}
+\protected\def\coppe@ucparen#1 (#2\coppe@ucstop{%
+  \coppe@ucdot#1. \coppe@ucstop
+  \ifblank{#2}{}{\space(\coppe@uctrimparen#2\coppe@ucstop}}
+\protected\def\coppe@uctrimparen#1 (\coppe@ucstop{#1}
+\protected\def\coppe@ucdot#1. #2\coppe@ucstop{%
+  \MakeUppercase{#1}%
+  \ifblank{#2}{}{\adddot\space\coppe@uctrimdot#2\coppe@ucstop}}
+\protected\def\coppe@uctrimdot#1. \coppe@ucstop{#1}
 \protected\def\coppe@abntdate#1#2#3{%
   \iffieldundef{#3}{}{\stripzeros{\thefield{#3}}\nobreakspace}%
   \iffieldundef{#2}{}{\mkbibmonth{\thefield{#2}}\iffieldundef{#1}{}{\space}}%
@@ -5016,7 +5066,7 @@ postamble
 \AtBeginBibliography{%
   \singlespacing                        % entries single-spaced internally (2.4)
   \setlength{\bibitemsep}{\baselineskip}% one blank line between entries (2.4)
-  \renewcommand*{\mkbibnamefamily}[1]{\MakeUppercase{#1}}%
+  \renewcommand*{\mkbibnamefamily}[1]{\coppe@ucfamily{#1}}%
   \renewcommand*{\mkbibnameprefix}[1]{\MakeUppercase{#1}}%
   \let\mkbibdatelong\coppe@abntdate     % ABNT date format (drop the "de")
   \let\mkbibdateshort\coppe@abntdate
@@ -5065,6 +5115,8 @@ postamble
 % Legal documents (NBR 6023 4.2.6): the law's identification/ementa is NOT
 % highlighted; the entry leads with the jurisdiction (entity author, CAPS).
 \DeclareFieldFormat[legislation,jurisdiction,legal]{title}{#1}
+\DeclareFieldFormat[legislation,jurisdiction,legal]{volume}{v\adddot\addnbspace#1}
+\DeclareFieldFormat[legislation,jurisdiction,legal]{number}{n\adddot\addnbspace#1}
 \DeclareFieldFormat{journaltitle}{\mkbibbold{#1}}
 \DeclareFieldFormat{booktitle}{\mkbibbold{#1}}
 \DeclareFieldFormat{maintitle}{\mkbibbold{#1}}
@@ -5083,6 +5135,25 @@ postamble
 
 % --- Online: "Disponível em: <url>." + "Acesso em: <date>." via lbx strings ---
 \DeclareFieldFormat{url}{\bibstring{availablefrom}\addcolon\space\url{#1}}
+% O 4.2 do manual fecha toda entrada eletronica assim, sem excecao:
+%   Disponivel em: <url>. Acesso em: <data>.
+% O biblatex, por padrao, poe a data de acesso entre parenteses e sem
+% dois-pontos -- "<url> (Acesso em <data>)" --, que e a convencao dele, nao a
+% da norma.
+\DeclareFieldFormat{urldate}{\bibstring{urlseen}\addcolon\space#1}
+% A descricao fisica ("1 carta", "3 fotografias", "1 partitura") vem ANTES do
+% bloco eletronico em todos os exemplos da 4.2. Os drivers padrao do biblatex
+% a imprimem DEPOIS, entao ela e impressa aqui e o campo e limpo, para nao
+% sair duas vezes.
+\renewbibmacro*{url+urldate}{%
+  \iffieldundef{addendum}
+    {}
+    {\printfield{addendum}\clearfield{addendum}%
+     \setunit{\adddot\space}}%
+  \iffieldundef{url}
+    {}
+    {\printfield{url}%
+     \iffieldundef{urlyear}{}{\setunit{\adddot\space}\printurldate}}}
 
 % --- ABNT article driver: no "In:"; Journal, Local, v., n., p., date, DOI/URL.
 %     Newspapers (entrysubtype=newspaper, set by the @artigodejornal source map)
@@ -5154,20 +5225,39 @@ postamble
 \DeclareFieldFormat{type}{\ifbibstring{#1}{\bibstring{#1}}{#1}}
 
 % --- Thesis: "<type> (em <course>)" using the custom course field (ABNT). ---
-\DeclareFieldFormat{course}{\mkbibparens{\coppestring{in:}\addspace#1}}
+% "(Mestrado em Memoria Social e Documento)": a 4.2.1.1 poe o grau dentro dos
+% parenteses, antes do curso, e deixa o substantivo do documento fora deles --
+% "Dissertacao (Mestrado em ...)". O grau vem do campo coppedegree, que o
+% sourcemap preenche junto com o tipo.
+\DeclareFieldFormat{course}{%
+  \mkbibparens{%
+    \iffieldundef{coppedegree}
+      {}
+      {\ifbibstring{\thefield{coppedegree}}
+         {\bibstring{\thefield{coppedegree}}}
+         {\thefield{coppedegree}}%
+       \addspace}%
+    \coppestring{in:}\addspace#1}}
+% A ordem da 4.2.1.1 para tese e dissertacao:
+%   AUTOR. Titulo. ano. NNN f. Tipo (Grau em Curso) -- Instituicao, Local, ano.
+% A data aparece duas vezes de proposito, como nos exemplos do manual: uma
+% depois do titulo, outra fechando a nota de tese.
 \DeclareBibliographyDriver{thesis}{%
   \usebibmacro{bibindex}\usebibmacro{begentry}%
   \usebibmacro{author}%
   \setunit{\labelnamepunct}\newblock
   \usebibmacro{title}%
   \newunit\newblock
-  \printfield{type}\setunit*{\addspace}\printfield{course}%
-  \newunit\newblock
-  \printlist{institution}%
-  \setunit*{\addcomma\space}\printlist{location}%
-  \setunit*{\addcomma\space}\printdate%
+  \printdate%
   \newunit\newblock
   \printfield{pagetotal}%
+  \newunit\newblock
+  \printfield{type}\setunit*{\addspace}\printfield{course}%
+  \iflistundef{institution}
+    {}
+    {\setunit*{\addspace\textemdash\addspace}\printlist{institution}}%
+  \setunit*{\addcomma\space}\printlist{location}%
+  \setunit*{\addcomma\space}\printdate%
   \newunit\newblock
   \printfield{note}%
   \newunit\newblock
@@ -5202,6 +5292,72 @@ postamble
   \newunit\newblock
   \usebibmacro{url+urldate}%
   \usebibmacro{finentry}}
+% --- Publicacao periodica (4.2.3.1 a 4.2.3.3) -----------------------------
+% O titulo do periodico vai INTEIRO em caixa alta, e nao so a primeira palavra
+% como numa obra sem autor: e a forma dos exemplos do manual. Sem driver
+% proprio saia o default do biblatex -- "SAO Paulo Medical Journal (1941)." --,
+% sem local, sem editora e com o ano entre parenteses.
+\DeclareFieldFormat[periodical,suppperiodical]{title}{\MakeUppercase{#1}}
+\DeclareFieldFormat[periodical,suppperiodical]{volume}{v\adddot\addnbspace#1}
+\DeclareFieldFormat[periodical,suppperiodical]{number}{n\adddot\addnbspace#1}
+\DeclareBibliographyDriver{periodical}{%
+  \usebibmacro{bibindex}\usebibmacro{begentry}%
+  \usebibmacro{title}%
+  \newunit\newblock
+  \printlist{location}%
+  \iflistundef{publisher}{}{\setunit*{\addcolon\space}\printlist{publisher}}%
+  \setunit*{\addcomma\space}\printfield{volume}%
+  \setunit*{\addcomma\space}\printfield{number}%
+  \setunit*{\addcomma\space}\printdate%
+  \newunit\newblock
+  \printfield{note}%
+  \newunit\newblock
+  \usebibmacro{url+urldate}%
+  \usebibmacro{finentry}}
+\DeclareBibliographyDriver{suppperiodical}{%
+  \usedriver{}{periodical}\usebibmacro{finentry}}
+% --- Eventos (4.2.4) --------------------------------------------------------
+% O nome do evento vai em caixa alta, seguido do numero da edicao, do ano e da
+% cidade -- "ENCONTRO ANUAL DA ANPAD, 14., 1982, Florianopolis." --, e so
+% depois vem o titulo dos anais, que e o elemento em destaque. Por isso o nome
+% do evento tem campo proprio (|eventtitle|, sinonimo |evento|) em vez de vir
+% empacotado no titulo: nada mais na entrada vai para caixa alta.
+\DeclareFieldFormat{eventtitle}{\MakeUppercase{#1}}
+\DeclareFieldFormat[proceedings,inproceedings]{number}{#1\adddot}
+\DeclareFieldFormat[proceedings,inproceedings]{volume}{v\adddot\addnbspace#1}
+\newbibmacro*{coppe:evento}{%
+  \printfield{eventtitle}%
+  \setunit*{\addcomma\space}\printfield{number}%
+  \setunit*{\addcomma\space}\printeventdate%
+  \setunit*{\addcomma\space}\printfield{venue}}
+\DeclareBibliographyDriver{proceedings}{%
+  \usebibmacro{bibindex}\usebibmacro{begentry}%
+  \usebibmacro{coppe:evento}%
+  \newunit\newblock
+  \usebibmacro{title}%
+  \newunit\newblock
+  \usebibmacro{coppe:imprenta}%
+  \newunit\newblock
+  \usebibmacro{url+urldate}%
+  \usebibmacro{finentry}}
+\DeclareBibliographyDriver{inproceedings}{%
+  \usebibmacro{bibindex}\usebibmacro{begentry}%
+  \usebibmacro{author/translator+others}%
+  \setunit{\labelnamepunct}\newblock
+  \usebibmacro{title}%
+  \newunit\newblock
+  \usebibmacro{in:}%
+  \usebibmacro{coppe:evento}%
+  \newunit\newblock
+  \printfield{booktitle}%
+  \newunit\newblock
+  \usebibmacro{coppe:imprenta}%
+  \newunit\newblock
+  \printfield{volume}%
+  \setunit*{\addcomma\space}\printfield{pages}%
+  \newunit\newblock
+  \usebibmacro{url+urldate}%
+  \usebibmacro{finentry}}
 \DeclareBibliographyDriver{game}{\usebibmacro{coppe:mediadriver}}
 \DeclareBibliographyDriver{videogame}{\usebibmacro{coppe:mediadriver}}
 \DeclareBibliographyDriver{boardgame}{\usebibmacro{coppe:mediadriver}}
@@ -5210,15 +5366,21 @@ postamble
 % Cartographic document (map, NBR 6023 4.2.12): like a book (author/title/
 % imprenta) plus the mandatory scale ("Escala 1:N").
 \DeclareFieldFormat{scale}{\bibstring{coppescale}\addnbspace#1}
+% O dois-pontos separa local e editora; sem editora ele vazava para a data
+% ("Recife: 1976"), e a 4.2.12 quer "Recife, 1976". Por isso a guarda.
+\newbibmacro*{coppe:imprenta}{%
+  \printlist{location}%
+  \iflistundef{publisher}
+    {}
+    {\setunit*{\addcolon\space}\printlist{publisher}}%
+  \setunit*{\addcomma\space}\printdate}
 \DeclareBibliographyDriver{map}{%
   \usebibmacro{bibindex}\usebibmacro{begentry}%
   \usebibmacro{author/translator+others}%
   \setunit{\labelnamepunct}\newblock
   \usebibmacro{title}%
   \newunit\newblock
-  \printlist{location}%
-  \setunit*{\addcolon\space}\printlist{publisher}%
-  \setunit*{\addcomma\space}\printdate%
+  \usebibmacro{coppe:imprenta}%
   \newunit\newblock
   \printfield{scale}%
   \newunit\newblock
@@ -5248,15 +5410,30 @@ postamble
   \printfield{type}%
   \setunit*{\addspace}\printfield{number}%
   \newunit\newblock
-  \printdate%
+% A 4.2.5 fecha a patente com as duas datas, nomeadas: "Deposito: 27 jan. 2006.
+% Concessao: 25 mar. 2008." Sem elas so saia o ano.
+  \iffieldundef{filingdate}
+    {}
+    {\printtext{\bibstring{coppefiling}\addcolon\space}\printfield{filingdate}%
+     \setunit{\adddot\space}}%
+  \iffieldundef{grantdate}
+    {}
+    {\printtext{\bibstring{coppegrant}\addcolon\space}\printfield{grantdate}}%
+  \ifboolexpr{ test {\iffieldundef{filingdate}} and test {\iffieldundef{grantdate}} }
+    {\printdate}
+    {}%
   \newunit\newblock
   \usebibmacro{url+urldate}%
   \usebibmacro{finentry}}
 % Exotic ABNT types that biblatex's standard style leaves without a driver:
 % give each a baseline (book-like for published docs: norma/partitura; misc for
 % the rest) so they print. Per-type ABNT refinements can follow later.
-\DeclareBibliographyDriver{standard}{\usedriver{}{book}}
-\DeclareBibliographyDriver{music}{\usedriver{}{book}}
+% \usedriver desliga o \finentry do driver chamado, porque quem chama e que
+% deve fechar a entrada -- e aqui ninguem fechava. Resultado: norma, partitura,
+% audiovisual, iconografico, obra de arte, tridimensional e conjunto de dados
+% saiam sem o ponto final, que a 4.2 poe em toda referencia.
+\DeclareBibliographyDriver{standard}{\usedriver{}{book}\usebibmacro{finentry}}
+\DeclareBibliographyDriver{music}{\usedriver{}{book}\usebibmacro{finentry}}
 % Legal documents (NBR 6023 4.2.6-4.2.8): jurisdiction/entity (CAPS author),
 % the law id + ementa (plain, not bold), then location and date.
 \newbibmacro*{coppe:legaldriver}{%
@@ -5268,6 +5445,12 @@ postamble
   % Jurisprudência: "Relator: <nome>." after the decision title (NBR 6023).
   \iffieldundef{relator}{}{\printtext{Relator\addcolon\space}\printfield{relator}\newunit\newblock}%
   \printlist{location}%
+% A 4.2.6 traz o veiculo de publicacao com volume, numero e pagina -- "Sao
+% Paulo, v. 62, n. 3, p. 217-220, 1998." --, que se perdiam por completo.
+  \iflistundef{publisher}{}{\setunit*{\addcolon\space}\printlist{publisher}}%
+  \setunit*{\addcomma\space}\printfield{volume}%
+  \setunit*{\addcomma\space}\printfield{number}%
+  \setunit*{\addcomma\space}\printfield{pages}%
   \setunit{\addcomma\space}\printdate%
   \newunit\newblock
   \usebibmacro{url+urldate}%
@@ -5275,13 +5458,13 @@ postamble
 \DeclareBibliographyDriver{legislation}{\usebibmacro{coppe:legaldriver}}
 \DeclareBibliographyDriver{jurisdiction}{\usebibmacro{coppe:legaldriver}}
 \DeclareBibliographyDriver{legal}{\usebibmacro{coppe:legaldriver}}
-\DeclareBibliographyDriver{audio}{\usedriver{}{misc}}
-\DeclareBibliographyDriver{video}{\usedriver{}{misc}}
-\DeclareBibliographyDriver{software}{\usedriver{}{misc}}
-\DeclareBibliographyDriver{image}{\usedriver{}{misc}}
-\DeclareBibliographyDriver{artwork}{\usedriver{}{misc}}
-\DeclareBibliographyDriver{performance}{\usedriver{}{misc}}
-\DeclareBibliographyDriver{dataset}{\usedriver{}{misc}}
+\DeclareBibliographyDriver{audio}{\usedriver{}{misc}\usebibmacro{finentry}}
+\DeclareBibliographyDriver{video}{\usedriver{}{misc}\usebibmacro{finentry}}
+\DeclareBibliographyDriver{software}{\usedriver{}{misc}\usebibmacro{finentry}}
+\DeclareBibliographyDriver{image}{\usedriver{}{misc}\usebibmacro{finentry}}
+\DeclareBibliographyDriver{artwork}{\usedriver{}{misc}\usebibmacro{finentry}}
+\DeclareBibliographyDriver{performance}{\usedriver{}{misc}\usebibmacro{finentry}}
+\DeclareBibliographyDriver{dataset}{\usedriver{}{misc}\usebibmacro{finentry}}
 
 % --- biber source map: Portuguese synonyms (entry types + fields) + thesis family ---
 \DeclareSourcemap{%
@@ -5329,14 +5512,14 @@ postamble
     % thesis family: retype to thesis and preset the (babel-aware) type word
     \map{\step[typesource=tese,typetarget=thesis]}
     \map{\step[typesource=dissertacao,typetarget=thesis]}
-    \map{\step[typesource=masterdissertation,typetarget=thesis,final]\step[fieldset=type,fieldvalue=mscdiss]}
-    \map{\step[typesource=mscdissertation,typetarget=thesis,final]\step[fieldset=type,fieldvalue=mscdiss]}
-    \map{\step[typesource=dissertacaomestrado,typetarget=thesis,final]\step[fieldset=type,fieldvalue=mscdiss]}
-    \map{\step[typesource=dscthesis,typetarget=thesis,final]\step[fieldset=type,fieldvalue=dscthesis]}
-    \map{\step[typesource=tesedoutorado,typetarget=thesis,final]\step[fieldset=type,fieldvalue=dscthesis]}
-    \map{\step[typesource=phdthesis,typetarget=thesis,final]\step[fieldset=type,fieldvalue=phdthesis]}
-    \map{\step[typesource=tesephd,typetarget=thesis,final]\step[fieldset=type,fieldvalue=phdthesis]}
-    \map{\step[typesource=tcc,typetarget=thesis,final]\step[fieldset=type,fieldvalue=tcc]}
+    \map{\step[typesource=masterdissertation,typetarget=thesis,final]\step[fieldset=type,fieldvalue=mscdiss]\step[fieldset=coppedegree,fieldvalue=coppemscdeg]}
+    \map{\step[typesource=mscdissertation,typetarget=thesis,final]\step[fieldset=type,fieldvalue=mscdiss]\step[fieldset=coppedegree,fieldvalue=coppemscdeg]}
+    \map{\step[typesource=dissertacaomestrado,typetarget=thesis,final]\step[fieldset=type,fieldvalue=mscdiss]\step[fieldset=coppedegree,fieldvalue=coppemscdeg]}
+    \map{\step[typesource=dscthesis,typetarget=thesis,final]\step[fieldset=type,fieldvalue=dscthesis]\step[fieldset=coppedegree,fieldvalue=coppedscdeg]}
+    \map{\step[typesource=tesedoutorado,typetarget=thesis,final]\step[fieldset=type,fieldvalue=dscthesis]\step[fieldset=coppedegree,fieldvalue=coppedscdeg]}
+    \map{\step[typesource=phdthesis,typetarget=thesis,final]\step[fieldset=type,fieldvalue=phdthesis]\step[fieldset=coppedegree,fieldvalue=coppephddeg]}
+    \map{\step[typesource=tesephd,typetarget=thesis,final]\step[fieldset=type,fieldvalue=phdthesis]\step[fieldset=coppedegree,fieldvalue=coppephddeg]}
+    \map{\step[typesource=tcc,typetarget=thesis,final]\step[fieldset=type,fieldvalue=tcc]\step[fieldset=coppedegree,fieldvalue=coppetccdeg]}
     % field PT synonyms (unaccented) -> canonical English
     \map{\step[fieldsource=periodico,fieldtarget=journaltitle]}
     \map{\step[fieldsource=revista,fieldtarget=journaltitle]}
@@ -5365,6 +5548,11 @@ postamble
     \map{\step[fieldsource=produtor,fieldtarget=producer]}
     \map{\step[fieldsource=versao,fieldtarget=version]}
     \map{\step[fieldsource=escala,fieldtarget=scale]}
+    \map{\step[fieldsource=evento,fieldtarget=eventtitle]}
+    \map{\step[fieldsource=dataevento,fieldtarget=eventdate]}
+    \map{\step[fieldsource=localevento,fieldtarget=venue]}
+    \map{\step[fieldsource=deposito,fieldtarget=filingdate]}
+    \map{\step[fieldsource=concessao,fieldtarget=grantdate]}
   }%
 }
 
@@ -5409,29 +5597,46 @@ postamble
 %<*lbxbr>
 \ProvidesFile{brazilian-coppe.lbx}[2026/09/09 v4.1 CoppeTeX brazilian strings]
 \InheritBibliographyExtras{brazilian}
-\NewBibliographyString{availablefrom,mscdiss,dscthesis,tcc,depositor,coppescale}
+\NewBibliographyString{availablefrom,mscdiss,dscthesis,tcc,depositor,coppescale,
+  coppemscdeg,coppedscdeg,coppephddeg,coppetccdeg,coppefiling,coppegrant}
 \DeclareBibliographyStrings{%
   inherit       = {brazilian},
   availablefrom = {{Dispon\'{\i}vel em}{Dispon\'{\i}vel em}},
+  coppemscdeg   = {{Mestrado}{Mestrado}},
+  coppedscdeg   = {{Doutorado}{Doutorado}},
+  coppephddeg   = {{Doutorado}{Doutorado}},
+  coppetccdeg   = {{Gradua\c{c}\~{a}o}{Gradua\c{c}\~{a}o}},
+  coppefiling   = {{Dep\'osito}{Dep\'osito}},
+  coppegrant    = {{Concess\~ao}{Concess\~ao}},
   urlseen       = {{Acesso em}{Acesso em}},
+% A 4.3 abrevia os meses nas tres primeiras letras seguidas de ponto -- menos
+% maio, que se escreve por extenso. O biblatex-brazilian abrevia "mai.".
+  may           = {{maio}{maio}},
   in            = {{In}{In}},
   editor        = {{organizador}{org\adddot}},
   editors       = {{organizadores}{org\adddot}},
   depositor     = {{Depositante}{Depositante}},
   coppescale    = {{Escala}{Escala}},
-  mscdiss       = {{Disserta\c{c}\~{a}o de Mestrado}{Disserta\c{c}\~{a}o de Mestrado}},
-  dscthesis     = {{Tese de Doutorado}{Tese de Doutorado}},
-  phdthesis     = {{Tese de Doutorado}{Tese de Doutorado}},
+  mscdiss       = {{Disserta\c{c}\~{a}o}{Disserta\c{c}\~{a}o}},
+  dscthesis     = {{Tese}{Tese}},
+  phdthesis     = {{Tese}{Tese}},
   tcc           = {{Trabalho de Conclus\~{a}o de Curso}{Trabalho de Conclus\~{a}o de Curso}},
 }
 %</lbxbr>
 %<*lbxen>
 \ProvidesFile{english-coppe.lbx}[2026/09/09 v4.1 CoppeTeX english strings]
 \InheritBibliographyExtras{english}
-\NewBibliographyString{availablefrom,mscdiss,dscthesis,tcc,depositor,coppescale}
+\NewBibliographyString{availablefrom,mscdiss,dscthesis,tcc,depositor,coppescale,
+  coppemscdeg,coppedscdeg,coppephddeg,coppetccdeg,coppefiling,coppegrant}
 \DeclareBibliographyStrings{%
   inherit       = {english},
   availablefrom = {{Available from}{Available from}},
+  coppemscdeg   = {{M\adddot Sc\adddot}{M\adddot Sc\adddot}},
+  coppedscdeg   = {{D\adddot Sc\adddot}{D\adddot Sc\adddot}},
+  coppephddeg   = {{Ph\adddot D\adddot}{Ph\adddot D\adddot}},
+  coppetccdeg   = {{B\adddot Sc\adddot}{B\adddot Sc\adddot}},
+  coppefiling   = {{Filed}{Filed}},
+  coppegrant    = {{Granted}{Granted}},
   urlseen       = {{Access on}{Access on}},
   in            = {{In}{In}},
   editor        = {{editor}{ed\adddot}},
@@ -5447,10 +5652,17 @@ postamble
 %<*lbxes>
 \ProvidesFile{spanish-coppe.lbx}[2026/09/09 v4.1 CoppeTeX spanish strings]
 \InheritBibliographyExtras{spanish}
-\NewBibliographyString{availablefrom,mscdiss,dscthesis,tcc,depositor,coppescale}
+\NewBibliographyString{availablefrom,mscdiss,dscthesis,tcc,depositor,coppescale,
+  coppemscdeg,coppedscdeg,coppephddeg,coppetccdeg,coppefiling,coppegrant}
 \DeclareBibliographyStrings{%
   inherit       = {spanish},
   availablefrom = {{Disponible en}{Disponible en}},
+  coppemscdeg   = {{Maestr\'{\i}a}{Maestr\'{\i}a}},
+  coppedscdeg   = {{Doctorado}{Doctorado}},
+  coppephddeg   = {{Doctorado}{Doctorado}},
+  coppetccdeg   = {{Grado}{Grado}},
+  coppefiling   = {{Dep\'osito}{Dep\'osito}},
+  coppegrant    = {{Concesi\'on}{Concesi\'on}},
   urlseen       = {{Consultado el}{Consultado el}},
   in            = {{En}{En}},
   editor        = {{editor}{ed\adddot}},
@@ -5466,10 +5678,17 @@ postamble
 %<*lbxfr>
 \ProvidesFile{french-coppe.lbx}[2026/09/09 v4.1 CoppeTeX french strings]
 \InheritBibliographyExtras{french}
-\NewBibliographyString{availablefrom,mscdiss,dscthesis,tcc,depositor,coppescale}
+\NewBibliographyString{availablefrom,mscdiss,dscthesis,tcc,depositor,coppescale,
+  coppemscdeg,coppedscdeg,coppephddeg,coppetccdeg,coppefiling,coppegrant}
 \DeclareBibliographyStrings{%
   inherit       = {french},
   availablefrom = {{Disponible \`a}{Disponible \`a}},
+  coppemscdeg   = {{Master}{Master}},
+  coppedscdeg   = {{Doctorat}{Doctorat}},
+  coppephddeg   = {{Doctorat}{Doctorat}},
+  coppetccdeg   = {{Licence}{Licence}},
+  coppefiling   = {{D\'ep\^ot}{D\'ep\^ot}},
+  coppegrant    = {{D\'elivrance}{D\'elivrance}},
   urlseen       = {{Consult\'e le}{Consult\'e le}},
   in            = {{Dans}{Dans}},
   editor        = {{\'editeur}{\'ed\adddot}},
@@ -5485,7 +5704,8 @@ postamble
 %<*lbxit>
 \ProvidesFile{italian-coppe.lbx}[2026/09/09 v4.1 CoppeTeX italian strings]
 \InheritBibliographyExtras{italian}
-\NewBibliographyString{availablefrom,mscdiss,dscthesis,tcc,depositor,coppescale}
+\NewBibliographyString{availablefrom,mscdiss,dscthesis,tcc,depositor,coppescale,
+  coppemscdeg,coppedscdeg,coppephddeg,coppetccdeg,coppefiling,coppegrant}
 \DeclareBibliographyStrings{%
   inherit       = {italian},
   availablefrom = {{Disponibile da}{Disponibile da}},
