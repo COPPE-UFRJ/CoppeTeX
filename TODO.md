@@ -287,6 +287,36 @@ folha correspondente.
 Precisa de `python3`, poppler (`pdftotext`, `pdftoppm`, `pdfinfo`). Roda em
 qualquer sistema.
 
+## 4g. A prova de referências (em curso)
+
+**Status: medida, corrigida, não recompilada.**
+
+`adversativa/referencias-manual.bib` traz uma entrada para cada categoria da
+seção 4.2 do Manual — 34 no total —, com os dados dos próprios exemplos do
+Manual, e o comentário `%%` acima de cada uma é a referência **como o Manual a
+imprime**: o gabarito. São citadas só pelos quatro adversativos em português,
+que cobrem os dois sistemas de chamada sobre a mesma bibliografia.
+
+```bash
+python3 tools/conferir-referencias.py adversativa/adv_dsc_pt.pdf
+```
+
+compara o que a classe compôs com o gabarito, ignorando o que não é da norma
+(quebras de linha e de hifenização do pdftotext, os espaços que o biblatex mete
+dentro de URLs longas, hífen contra meia-risca).
+
+Primeira medição: **31 divergências em 34 categorias**. Os estilos biblatex
+nunca tinham sido conferidos contra os exemplos do Manual. As correções estão
+no commit `estilos: as referências passam a seguir os exemplos do Manual` —
+`Disponível em: … Acesso em: …`, ordem da descrição física, ponto final nos
+sete drivers-atalho, "maio" por extenso, driver de periódico, drivers de
+evento, caixa alta do autor-entidade, forma da tese, datas da patente, campos
+da legislação, dois-pontos do mapa.
+
+**O que falta:** recompilar e medir de novo. O harness travou no meio da
+rodada e o número final ainda não existe. Enquanto ele não existir, **não se
+marca a v4.1**.
+
 ## 5. CTAN e Overleaf
 
 **Status:** pendentes de aprovação da CPGP.
