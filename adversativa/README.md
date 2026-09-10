@@ -1,5 +1,11 @@
 # Revisão adversativa
 
+> **`src/coppe.dtx` é a fonte única da classe.** Os doze documentos desta pasta
+> não saem dele — saem de `tools/mk-adversativa.py` — mas a classe que eles
+> exercitam sai. Uma correção descoberta aqui vai para `src/coppe.dtx`, nunca
+> para `src/coppe.cls`, que é regerado por cima. Veja
+> [`../src/README.md`](../src/README.md).
+
 Doze documentos que existem para quebrar a classe. Quatro tipos — exame de
 qualificação de mestrado, exame de qualificação de doutorado, dissertação e
 tese — em três idiomas de redação — português, inglês e espanhol.
@@ -83,6 +89,17 @@ Todos declaram a banca na forma da v4.1 — nome, sobrenome, titulação e
 instituição, com o tratamento no argumento opcional. O primeiro orientador leva
 tratamento e o segundo não, e um dos examinadores fica com a instituição em
 branco: os três caminhos precisam de prova.
+
+**Metade leva `orientadorexamina`.** Desde a v4.1 a folha de aprovação lista só
+os examinadores; a opção põe orientadores e coorientadores de volta, na frente
+deles. Os dois caminhos aparecem aqui em bancas de tamanhos diferentes, porque o
+espaçamento da folha depende de quantos nomes ela de fato imprime — um documento
+que não lista os orientadores não pode receber o espaçamento apertado de uma
+banca que ele não mostra.
+
+**Um documento fica sem `\dataaprovacao`**, o `adv_dscexam_en`. É o caso em que a
+folha tem de escrever "a ser determinada", e ele precisa de prova tanto quanto o
+caso com data, que os outros onze cobrem.
 
 Todos chamam `\agenciafomento` **duas vezes**. O Anexo H pede "Agência(s)", e é
 a segunda chamada que exercita a acumulação — uma só nunca a exercitaria.

@@ -244,8 +244,29 @@ Duas consequências para quem já usava `\examiner`:
 punha uma régua acima de cada nome, deixou de fazer efeito: com a entrega só
 digital, desde a Resolução CEPG n. 246/2023, não há o que assinar à mão. Quem
 tiver a opção no `\documentclass` pode deixá-la; ela apenas escreve um aviso na
-compilação. O que ainda tem uma linha na página é o campo "Aprovada em:", e só
-enquanto você não informar a data com `\dataaprovacao`.
+compilação.
+
+**A folha lista só os examinadores.** Ela registra quem examinou o trabalho, e o
+orientador o conduziu. Os orientadores continuam na capa e na folha de rosto,
+onde têm de estar. Se no seu Programa o orientador integra a banca e assina a
+aprovação, ponha a opção de classe `orientadorexamina`:
+
+```latex
+\documentclass[dsc,orientadorexamina]{coppe}
+```
+
+Com ela, orientadores e coorientadores voltam para a lista, na frente dos
+examinadores. Antes não havia escolha: eles saíam sempre, e a única saída era
+não declará-los — o que os tirava também da capa e da folha de rosto.
+
+**Não há mais linha em branco para a data.** Sem `\dataaprovacao`, a folha
+escreve "a ser determinada", no idioma do trabalho, em vez de desenhar uma régua
+para preencher à mão. Ninguém escreve à mão num PDF. Com a data informada, ela
+sai no lugar:
+
+```latex
+\dataaprovacao{15 de setembro de 2026}
+```
 
 ### 4.5 PDF/A no depósito
 

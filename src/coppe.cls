@@ -378,6 +378,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \DeclareOption{doublespacing}{\@coppedoublespacetrue}
 \newif\if@coppepdfa \@coppepdfafalse
 \DeclareOption{pdfa}{\@coppepdfatrue}
+\newif\if@coppeorientexam \@coppeorientexamfalse
+\DeclareOption{orientadorexamina}{\@coppeorientexamtrue}
 \DeclareOption{assinaturas}{\ClassWarningNoLine{coppe}{A opcao `assinaturas'
   nao faz mais nada: a folha de aprovacao nao tem mais linhas de assinatura,
   porque a entrega e digital desde a Resolucao CEPG n. 246/2023}}
@@ -495,6 +497,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \copperdefstring{brazilian}{coadvisors} {Coorientadores}
 \copperdefstring{brazilian}{ofname}     {de}
 \copperdefstring{brazilian}{researchline}{Linha de pesquisa}
+\copperdefstring{brazilian}{tbddate}   {a ser determinada}
 \copperdefstring{english}  {approvedmale}  {Approved by}
 \copperdefstring{english}  {approvedfemale}{Approved by}
 \copperdefstring{english}  {approvedonmale}  {Approved on}
@@ -505,6 +508,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \copperdefstring{english}  {coadvisors} {Co-advisors}
 \copperdefstring{english}  {ofname}     {of}
 \copperdefstring{english}  {researchline}{Research line}
+\copperdefstring{english}  {tbddate}    {to be determined}
 \copperdefstring{brazilian}{universityname}{Universidade Federal do Rio de Janeiro}
 \copperdefstring{english}  {universityname}{Universidade Federal do Rio de Janeiro}
 \copperdefstring{brazilian}{cityname}     {Rio de Janeiro}
@@ -1067,11 +1071,14 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \end{flushright}
   \vspace*{12mm}
   \noindent\local@approvedonname:\enspace
-  \ifthenelse{\equal{\coppe@dataaprov}{}}{\hrulefill}{\coppe@dataaprov}\par
+  \ifthenelse{\equal{\coppe@dataaprov}{}}
+    {\coppemainstring{tbddate}}{\coppe@dataaprov}\par
   \vspace*{12mm}
-  \coppe@bancasize=\@advisor
-  \advance\coppe@bancasize by \@coadvisor
-  \advance\coppe@bancasize by \@examiner
+  \coppe@bancasize=\@examiner
+  \if@coppeorientexam
+    \advance\coppe@bancasize by \@advisor
+    \advance\coppe@bancasize by \@coadvisor
+  \fi
   \ifnum\coppe@bancasize>7
     \setlength\coppe@membrogap{3.5mm minus 1.5mm}%
   \else\ifnum\coppe@bancasize>6
@@ -1080,28 +1087,30 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \setlength\coppe@membrogap{7mm minus 2mm}%
   \fi\fi\fi
   \gdef\coppe@bancalist{}%
-  \count1=0
-  \@whilenum\count1<\@advisor\do{%
-    \protected@edef\coppe@tmp{\noexpand\coppe@membro
-      {\csname CoppeAdvisorTitle:\the\count1\endcsname}%
-      {\csname CoppeAdvisorName:\the\count1\endcsname\space
-       \csname CoppeAdvisorSurname:\the\count1\endcsname}%
-      {\csname CoppeAdvisorDegree:\the\count1\endcsname}%
-      {\csname CoppeAdvisorInst:\the\count1\endcsname}}%
-    \expandafter\g@addto@macro\expandafter\coppe@bancalist
-      \expandafter{\coppe@tmp}%
-    \advance\count1 by 1}%
-  \count1=0
-  \@whilenum\count1<\@coadvisor\do{%
-    \protected@edef\coppe@tmp{\noexpand\coppe@membro
-      {\csname CoppeCoadvisorTitle:\the\count1\endcsname}%
-      {\csname CoppeCoadvisorName:\the\count1\endcsname\space
-       \csname CoppeCoadvisorSurname:\the\count1\endcsname}%
-      {\csname CoppeCoadvisorDegree:\the\count1\endcsname}%
-      {\csname CoppeCoadvisorInst:\the\count1\endcsname}}%
-    \expandafter\g@addto@macro\expandafter\coppe@bancalist
-      \expandafter{\coppe@tmp}%
-    \advance\count1 by 1}%
+  \if@coppeorientexam
+    \count1=0
+    \@whilenum\count1<\@advisor\do{%
+      \protected@edef\coppe@tmp{\noexpand\coppe@membro
+        {\csname CoppeAdvisorTitle:\the\count1\endcsname}%
+        {\csname CoppeAdvisorName:\the\count1\endcsname\space
+         \csname CoppeAdvisorSurname:\the\count1\endcsname}%
+        {\csname CoppeAdvisorDegree:\the\count1\endcsname}%
+        {\csname CoppeAdvisorInst:\the\count1\endcsname}}%
+      \expandafter\g@addto@macro\expandafter\coppe@bancalist
+        \expandafter{\coppe@tmp}%
+      \advance\count1 by 1}%
+    \count1=0
+    \@whilenum\count1<\@coadvisor\do{%
+      \protected@edef\coppe@tmp{\noexpand\coppe@membro
+        {\csname CoppeCoadvisorTitle:\the\count1\endcsname}%
+        {\csname CoppeCoadvisorName:\the\count1\endcsname\space
+         \csname CoppeCoadvisorSurname:\the\count1\endcsname}%
+        {\csname CoppeCoadvisorDegree:\the\count1\endcsname}%
+        {\csname CoppeCoadvisorInst:\the\count1\endcsname}}%
+      \expandafter\g@addto@macro\expandafter\coppe@bancalist
+        \expandafter{\coppe@tmp}%
+      \advance\count1 by 1}%
+  \fi
   \count1=0
   \@whilenum\count1<\@examiner\do{%
     \protected@edef\coppe@tmp{\noexpand\coppe@membro

@@ -1,0 +1,73 @@
+%%
+%% test_orientadorexamina.tex -- regression test for the coppe class.
+%%
+%% Guarda os dois lados da folha de aprovacao a partir da v4.1:
+%%
+%%   * com a opcao `orientadorexamina', orientadores e coorientadores voltam
+%%     para a lista, na frente dos examinadores, como presidencia da banca
+%%     (3.1.2.1.3(e)). O par sem a opcao esta em test_banca.tex, que declara a
+%%     mesma banca e tem de sair SO com os examinadores.
+%%   * sem \dataaprovacao, a folha escreve "a ser determinada" e NAO uma regua
+%%     para preencher a mao -- o deposito e digital. test_banca.tex cobre o
+%%     outro caminho, com a data dada.
+%%
+%% Dois orientadores e um coorientador de proposito: com a opcao ligada a lista
+%% tem de sair com os tres na frente, na ordem em que foram declarados, e so
+%% depois os examinadores.
+%%
+%% Run via ../tests/run-tests.ps1. Compile under pdfLaTeX.
+%%
+%% NAO e gerado pelo coppe.dtx e NAO e distribuido: a suite prova que a
+%% classe funciona, nao faz parte dela. Rode por tools\prova.ps1, ou por
+%% tests\run-tests.ps1 para so esta pasta.
+%%
+
+\documentclass[dsc,orientadorexamina]{coppe}
+
+\usepackage[brazilian]{babel}
+
+\title{Título de Teste do Orientador na Banca}
+\foreigntitle{Advisor on the Board Test Title}
+\author{Nome}{de Teste}
+
+\advisor[Prof.]{Primeiro}{Orientador}{D.Sc.}{UFRJ}
+\advisor{Segundo}{Orientador}{Ph.D.}{UFRJ}
+\coadvisor{Primeiro}{Coorientador}{D.Sc.}{UFF}
+
+\examiner{Primeiro Examinador}{D.Sc.}{UFRJ}
+\examiner{Segundo Examinador}{Ph.D.}{}
+\examiner{Terceiro Examinador}{D.Sc.}{UNIRIO}
+
+\department{PESC}
+\date{09}{2026}
+%% SEM \dataaprovacao de propósito: a folha tem de dizer "a ser determinada".
+
+\keyword{Banca}
+\keyword{Orientação}
+
+\areaconcentracao{Engenharia de Sistemas e Computação}
+\linhapesquisa{Engenharia de Dados e Conhecimento}
+\tipoproducao{bibliografica}
+\projetovinculado{nao}
+\agenciafomento{Conselho Nacional de Desenvolvimento Científico e
+                Tecnológico}{CNPq}
+
+\begin{document}
+  \maketitle
+  \frontmatter
+  \begin{abstract}
+    Resumo de teste.
+  \end{abstract}
+  \begin{foreignabstract}
+    Test abstract.
+  \end{foreignabstract}
+  \tableofcontents
+  \mainmatter
+  \chapter{Introdução}
+    Primeiro parágrafo, para conferir o recuo.
+  \section{Uma seção}
+    Texto da seção.
+\end{document}
+%%
+%%
+%% End of file `tests/test_orientadorexamina.tex'.

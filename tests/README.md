@@ -1,5 +1,12 @@
 # Regression tests for the coppe class
 
+> **`src/coppe.dtx` is the single source of the class.** The tests in this
+> folder are the exception: they are written by hand and are NOT generated from
+> it. But the `coppe.cls` they exercise IS generated — so a fix you make while
+> chasing a failing test goes into `src/coppe.dtx`, never into `src/coppe.cls`,
+> which is overwritten at the next generation. See
+> [`../src/README.md`](../src/README.md).
+
 This directory holds smoke tests that exercise public APIs of `coppe.cls`.
 Each `.tex` file is meant to compile cleanly (no LaTeX errors, no new warnings)
 under the standard pipeline:
@@ -33,6 +40,7 @@ that test and is reported in the summary at the end.
 | `test_brazilian_two_advisors.tex`   | Same with **two** `\advisor` calls (the "Orientadores" plural label kicks in). Full brazilian-main thesis feature sweep — see file header. |
 | `test_brazilian_three_advisors.tex` | Same with **three** `\advisor` calls — the maximum the class is expected to typeset reasonably on the COPPE/UFRJ cover. |
 | `test_banca.tex`                    | The board as v4.1 declares it: treatment in the optional argument, institution as the last mandatory one. Mixes a member with a treatment, one without, and one with an **empty** institution, so a regression in any of the three shows up. The approval sheet must come out with no signature rules. |
+| `test_orientadorexamina.tex`        | The other side of the same sheet: the `orientadorexamina` option puts advisors and coadvisors back on the board, ahead of the examiners. Also the only test with **no** `\dataaprovacao`, so the sheet must read "a ser determinada" rather than draw a rule. `test_banca.tex` declares a comparable board without the option and must come out with the examiners alone. |
 | `test_banca_7.tex`                  | The same with a **seven-member** board — the size at which the folha de aprovação used to spill onto a second sheet, and print a folio on it. |
 | `test_coorientador.tex`             | The `coorientador` option: coadvisors on all three abstract pages, with two of them so the plural label is exercised. |
 | `test_pdfa.tex`                     | The pre-textual pages reshaped for the 2026 manual — folha adicional with the Coleta CAPES fields, approval sheet of 3.1.2.1.3, mandatory institution argument — under the `pdfa` option. Validated by veraPDF in the harness. |

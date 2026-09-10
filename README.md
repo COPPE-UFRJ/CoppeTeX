@@ -159,6 +159,12 @@ September 2026 series did that, item by item. The full list is in
 - **no signature rules on the approval sheet** — the deposit is digital only,
   so there is nothing to sign by hand. The `assinaturas` option survives as a
   no-op that warns;
+- **the approval sheet lists only the examiners** — it records who examined the
+  work, and the advisor conducted it. `orientadorexamina` puts the advisors and
+  coadvisors back, ahead of the examiners, where the Programa seats the advisor
+  on the board;
+- **no blank rule for the date** — without `\dataaprovacao` the sheet reads
+  "a ser determinada", in the main language;
 - **sans-serif by default**, with `comserifa` for the serif face. Neither the
   Manual nor the COPPE norm prescribes a family, and the Manual itself is set
   in Arial.
@@ -175,7 +181,26 @@ became the last mandatory argument and may be left blank:
 `\coadvisor` takes the same four arguments as `\advisor`. See
 [`MIGRATION_v3_to_v4.md`](./MIGRATION_v3_to_v4.md).
 
+### Every folder has a README
+
+Each directory explains itself; start with the one you are about to touch.
+
+| Folder | README | What it is |
+|---|---|---|
+| `src/` | [src/README.md](./src/README.md) | The source, and the **programming guide**. Read it before editing anything: `coppe.dtx` is the single source. |
+| `tools/` | [tools/README.md](./tools/README.md) | The build and verification harness, and how to write for it. |
+| `tests/` | [tests/README.md](./tests/README.md) | The regression suite, test by test. |
+| `adversativa/` | [adversativa/README.md](./adversativa/README.md) | The twelve adversarial documents, and what each one proves. |
+| `dist/` | [dist/README.md](./dist/README.md) | The delivery: install it and start writing. |
+| `specs/` | [specs/README.md](./specs/README.md) | The normative documents the class implements. |
+
 ### Single source, and proving a release
+
+> **`src/coppe.dtx` is the single source.** Everything the project distributes
+> is generated from it; a hand edit to a generated file is lost at the next
+> generation, without warning. If you want to change the class, change the
+> `.dtx`. `tools\prova.ps1` checks this by git and refuses to close a release
+> when a derived file has diverged.
 
 `pdflatex coppe.ins` in `src/` generates **everything that is distributed** —
 the class, the biblatex styles, the language packs, the `.bib` bases, the

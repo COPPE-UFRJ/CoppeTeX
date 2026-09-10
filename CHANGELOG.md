@@ -45,6 +45,17 @@ to the CPGP is [`PROPOSTA_CPGP.md`](./PROPOSTA_CPGP.md).
   only since CEPG Res. 246/2023, so there is nothing to sign by hand. The
   `assinaturas` option is still accepted and only warns.
 
+- **The approval sheet lists only the examiners.** It records who examined the
+  work, and the advisor conducted it. The new `orientadorexamina` option puts
+  the advisors and coadvisors back, ahead of the examiners, for the Programas
+  that seat the advisor on the board. Before this there was no choice, and the
+  only way out was not to declare the advisor at all — which also removed them
+  from the capa and the folha de rosto, where they belong.
+
+- **No date given, no blank rule.** Without `\dataaprovacao` the approval sheet
+  now reads "a ser determinada", in the main language of the work, instead of
+  drawing a rule to fill in by hand. Nobody writes on a PDF.
+
 ### Added
 
 - **`pdfa` class option** — PDF/A-2b output through `pdfx`, with the XMP

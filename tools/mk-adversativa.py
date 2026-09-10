@@ -128,6 +128,11 @@ def doc(i, tipo, tiponome, lang):
     # Um documento leva `comserifa': desde a v4.1 a classe compoe sem serifa por
     # padrao, e a opcao de voltar a serifa precisa de pelo menos uma prova.
     if i == 5:     opts.append("comserifa")
+    # Metade leva `orientadorexamina'. Desde a v4.1 a folha de aprovacao lista
+    # so os examinadores; os dois caminhos -- com e sem o orientador na banca --
+    # precisam de prova, e em bancas de tamanhos diferentes, porque o
+    # espacamento da folha depende de quantos nomes ela realmente imprime.
+    if i % 2 == 1: opts.append("orientadorexamina")
     dept = DEPTS[i % len(DEPTS)]
     nadv  = 1 if i % 3 == 0 else 2
     nexam = 2 + (i % 4)
@@ -178,7 +183,11 @@ def doc(i, tipo, tiponome, lang):
         A("  \\examiner{Examinador Numero %d}{D.Sc.}{%s}" % (k+1, inst))
     A("  \\department{%s}" % dept)
     A("  \\date{09}{2026}")
-    A("  \\dataaprovacao{15 de setembro de 2026}")
+    # Um documento fica SEM data de aprovacao, de proposito: e o caso em que a
+    # folha tem de escrever "a ser determinada", e ele precisa de prova tanto
+    # quanto o caso com data.
+    if i != 4:
+        A("  \\dataaprovacao{15 de setembro de 2026}")
     A("  \\areaconcentracao{Engenharia de Sistemas e Computação}")
     A("  \\linhapesquisa{Engenharia de Dados e Conhecimento}")
     A("  \\tipoproducao{bibliografica}")

@@ -139,6 +139,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \changes{v4.1}{2026/09/10}{The folha adicional draws the Coleta CAPES fields as the closed frame of Annex H -- one cell per field, a rule between cells, and no rules to write on -- instead of loose paragraphs with dotted fill rules.}
 % \changes{v4.1}{2026/09/10}{The research-line label on the folha de rosto follows the main language of the work instead of being hard-coded in Portuguese.}
 % \changes{v4.1}{2026/09/10}{newcoppefloat fixed twice: newfloat was wrapped in a group, and since newfloat defines the environment locally the new float vanished when the group closed; and its list came out unnumbered and without leaders because l@figure was not inherited. Author-declared floats are now numbered within the chapter like every other illustration.}
+% \changes{v4.1}{2026/09/10}{The folha de aprovacao lists only the EXAMINERS. The sheet records who examined the work, and the advisor conducted it; the new orientadorexamina option puts advisors and coadvisors back, ahead of the examiners, for the Programas that seat the advisor on the board. Before this there was no choice, and the only way out was not to declare the advisor at all, which also removed them from the capa and the folha de rosto.}
+% \changes{v4.1}{2026/09/10}{With no dataaprovacao given, the folha de aprovacao writes the date as "a ser determinada" in the main language instead of drawing a rule to fill in by hand: the deposit is digital and nobody writes on a PDF.}
 % \changes{v4.0}{2026/05/30}{Catalog-label writers (coppe@mainBegin, coppe@bibBegin, coppe@bibEnd, coppe@hasLof) made language-agnostic: detokenize wrap on label names protects ':' and '.' from babel shorthand activation, and the raw etex primitives romannumeral/number replace LaTeX's roman/arabic to bypass spanish-babel's small-caps @roman redefinition that would otherwise crash pdftex with "Unbalanced write command" on every es-main document.}
 %
 % \DoNotIndex{\!,\',\.,\>,\^,\`,\',\=,\\}
@@ -361,6 +363,21 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %
 % A document written for v4.0 or earlier has to be rewritten. See
 % \texttt{MIGRATION\_v3\_to\_v4.md} for the mechanical rule.
+%
+% \textbf{Who appears on the folha de aprovacao.} Since v4.1, only the
+% EXAMINERS. The advisors stay on the capa and the folha de rosto, where they
+% belong, but the approval sheet records who examined the work, and the advisor
+% conducted it. Where the Programa does seat the advisor on the board, the
+% |orientadorexamina| class option puts the advisors and coadvisors back, ahead
+% of the examiners.
+%
+% \DescribeMacro{\dataaprovacao}
+% The date the board approved the work, printed on the folha de aprovacao after
+% ``Aprovada em''. Give it in words, the way the sheet should read:
+% |\dataaprovacao{15 de setembro de 2026}|. \textbf{With no date given the sheet
+% says ``a ser determinada''}, in the main language of the work -- there is no
+% blank rule to fill in by hand, because the deposit is digital and nobody
+% writes on a PDF.
 %
 % Remember that all names must be given before calling |\maketitle|.
 %
@@ -756,6 +773,15 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %   packages produce. The metadata reaches the PDF on the SECOND run, because
 %   |pdfx| reads it from a file the class writes at the end of the first one --
 %   which is no burden, since three runs are needed for cross-references anyway.
+%
+%   \item[\texttt{orientadorexamina}] Put the advisors and coadvisors back on
+%   the folha de aprovacao, ahead of the examiners, as president of the board
+%   (3.1.2.1.3(e)). \textbf{Off by default since v4.1}: the folha de aprovacao
+%   records who EXAMINED the work, and the advisor conducted it rather than
+%   examined it, so only the examiners are listed unless the Programa says
+%   otherwise. Before v4.1 there was no choice -- the advisors always appeared,
+%   and the only way out was not to declare them, which also removed them from
+%   the capa and the folha de rosto, where they belong.
 %
 %   \item[\texttt{assinaturas}] \textbf{Gone in v4.1, and now a no-op that only
 %   warns.} It used to draw a signature rule above each board member. The
@@ -1269,6 +1295,13 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \examiner{Nome do Quinto Examinador Sobrenome}{Ph.D.}{}
   \department{PESC}
   \date{06}{2026}
+  % Data da defesa, na folha de aprovacao. Sem esta linha a folha sai com
+  % "a ser determinada", que e o que se quer enquanto a data nao existe.
+  % \dataaprovacao{15 de setembro de 2026}
+  %
+  % A folha de aprovacao lista so os EXAMINADORES. Se no seu Programa o
+  % orientador integra a banca, passe a opcao de classe `orientadorexamina'
+  % la em cima e ele volta para a lista, na frente dos examinadores.
 
   \keyword{Primeira palavra-chave}
   \keyword{Segunda palavra-chave}
@@ -2887,10 +2920,6 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % blank where the ficha goes. The rascunhoficha option fills that blank with the
 % class's own LaTeX-composed ficha instead -- useful while writing, never valid
 % for deposit: the official ficha comes from the SiBI generator.
-% Annex D of the manual draws one signature rule per board member, with the
-% identification underneath. The COPPE folha de aprovacao has listed the names
-% compactly, without rules, for years. The compact list stays the default and
-% the rules are opt-in, so existing theses do not change shape overnight.
 % PDF/A output. Opt-in for now: 2.2(d) of the 2026 manual requires the deposited
 % file to be PDF/A, but the constraints (embedded fonts, colour profile, no
 % encryption, restricted transparency) can trip up a document that pulls in
@@ -2902,6 +2931,20 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % cada membro da banca. Com a entrega so digital (Resolucao CEPG n. 246/2023)
 % nao ha o que assinar a mao, e a v4.1 tirou as reguas. A opcao continua aceita,
 % sem efeito, para nao quebrar documento escrito antes disso.
+% Quem examina o trabalho e a BANCA EXAMINADORA, e a folha de aprovacao lista
+% quem examinou. O orientador nao e, por definicao, examinador: ele conduziu o
+% trabalho. Por isso a folha lista, por padrao, so os examinadores.
+%
+% Ha Programas em que o orientador integra a banca e assina a aprovacao. Para
+% esses existe `orientadorexamina': com ela, orientadores e coorientadores
+% voltam para a lista, na frente dos examinadores, na ordem que a 3.1.2.1.3(e)
+% prescreve para o presidente da banca.
+%
+% Ate a v4.1 nao havia escolha: os orientadores saiam sempre, e um Programa que
+% nao os quisesse ali tinha de nao os declarar -- o que os tirava tambem da capa
+% e da folha de rosto, onde eles tem de estar.
+\newif\if@coppeorientexam \@coppeorientexamfalse
+\DeclareOption{orientadorexamina}{\@coppeorientexamtrue}
 \DeclareOption{assinaturas}{\ClassWarningNoLine{coppe}{A opcao `assinaturas'
   nao faz mais nada: a folha de aprovacao nao tem mais linhas de assinatura,
   porque a entrega e digital desde a Resolucao CEPG n. 246/2023}}
@@ -3136,6 +3179,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \copperdefstring{brazilian}{coadvisors} {Coorientadores}
 \copperdefstring{brazilian}{ofname}     {de}
 \copperdefstring{brazilian}{researchline}{Linha de pesquisa}
+\copperdefstring{brazilian}{tbddate}   {a ser determinada}
 \copperdefstring{english}  {approvedmale}  {Approved by}
 \copperdefstring{english}  {approvedfemale}{Approved by}
 \copperdefstring{english}  {approvedonmale}  {Approved on}
@@ -3146,6 +3190,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \copperdefstring{english}  {coadvisors} {Co-advisors}
 \copperdefstring{english}  {ofname}     {of}
 \copperdefstring{english}  {researchline}{Research line}
+\copperdefstring{english}  {tbddate}    {to be determined}
 % Institutional names: always Portuguese on the cover/folha (UFRJ template).
 \copperdefstring{brazilian}{universityname}{Universidade Federal do Rio de Janeiro}
 \copperdefstring{english}  {universityname}{Universidade Federal do Rio de Janeiro}
@@ -3646,8 +3691,9 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \begin{macro}{\agenciafomento}
 % Data for the folha adicional (Coleta CAPES) and for the natureza block of
 % the folha de rosto and folha de aprovacao. Every one of them defaults to
-% empty; |\makefolhaadicional| prints an empty rule where a value is missing,
-% so the programme can complete the sheet by hand if need be.
+% empty, and each page says what it does with a missing value: the folha
+% adicional leaves the cell blank, and the folha de aprovacao writes the date as
+% ``a ser determinada''.
 %    \begin{macrocode}
 \newcommand\coppe@areaconc{}
 \newcommand\areaconcentracao[1]{\gdef\coppe@areaconc{#1}}
@@ -4063,15 +4109,18 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \end{minipage}
   \end{flushright}
   \vspace*{12mm}
-% (d) date of approval. Annex D prints "Aprovada em:" followed by a blank to be
-% filled in; \dataaprovacao supplies it when the date is already known.
+% (d) date of approval, from \dataaprovacao. With no date given the page used to
+% print a rule to fill in by hand, which the digital-only deposit made pointless
+% -- nobody writes on a PDF. It now says so in words, in the main language:
+% "a ser determinada". The line is never blank and never a rule.
   \noindent\local@approvedonname:\enspace
-  \ifthenelse{\equal{\coppe@dataaprov}{}}{\hrulefill}{\coppe@dataaprov}\par
+  \ifthenelse{\equal{\coppe@dataaprov}{}}
+    {\coppemainstring{tbddate}}{\coppe@dataaprov}\par
   \vspace*{12mm}
-% (e) the examining board, with the ORIENTADOR FIRST, as president of the board
-% (3.1.2.1.3(e)). Until v4.1 the advisors were printed in a block of their own
-% above a second list headed "Aprovada por:", which split the board in two and
-% did not mark the advisor as its president. They are now one list.
+% (e) the examining board. By DEFAULT only the examiners are listed: the folha
+% de aprovacao records who examined the work, and the advisor conducted it. With
+% the `orientadorexamina' option the advisors and coadvisors go back in, ahead
+% of the examiners, as president of the board (3.1.2.1.3(e)).
 %
 % The list is assembled into \coppe@bancalist with \g@addto@macro instead of
 % being built inside a tabularx: each entry now carries four fields (treatment,
@@ -4085,9 +4134,13 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % Spanish thesis whose longer natureza block leaves less room than the
 % Portuguese one. Boards of five or fewer keep the original 9mm, so every
 % document written before this change renders exactly as it did.
-  \coppe@bancasize=\@advisor
-  \advance\coppe@bancasize by \@coadvisor
-  \advance\coppe@bancasize by \@examiner
+% The count is of what actually gets PRINTED, so a document that leaves the
+% advisors out does not get the tight spacing of a board it does not show.
+  \coppe@bancasize=\@examiner
+  \if@coppeorientexam
+    \advance\coppe@bancasize by \@advisor
+    \advance\coppe@bancasize by \@coadvisor
+  \fi
   \ifnum\coppe@bancasize>7
     \setlength\coppe@membrogap{3.5mm minus 1.5mm}%
   \else\ifnum\coppe@bancasize>6
@@ -4096,30 +4149,34 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \setlength\coppe@membrogap{7mm minus 2mm}%
   \fi\fi\fi
   \gdef\coppe@bancalist{}%
-  \count1=0
-  \@whilenum\count1<\@advisor\do{%
-    \protected@edef\coppe@tmp{\noexpand\coppe@membro
-      {\csname CoppeAdvisorTitle:\the\count1\endcsname}%
-      {\csname CoppeAdvisorName:\the\count1\endcsname\space
-       \csname CoppeAdvisorSurname:\the\count1\endcsname}%
-      {\csname CoppeAdvisorDegree:\the\count1\endcsname}%
-      {\csname CoppeAdvisorInst:\the\count1\endcsname}}%
-    \expandafter\g@addto@macro\expandafter\coppe@bancalist
-      \expandafter{\coppe@tmp}%
-    \advance\count1 by 1}%
+% Orientadores e coorientadores so entram sob `orientadorexamina'. Fora dela a
+% folha lista apenas quem examinou.
+  \if@coppeorientexam
+    \count1=0
+    \@whilenum\count1<\@advisor\do{%
+      \protected@edef\coppe@tmp{\noexpand\coppe@membro
+        {\csname CoppeAdvisorTitle:\the\count1\endcsname}%
+        {\csname CoppeAdvisorName:\the\count1\endcsname\space
+         \csname CoppeAdvisorSurname:\the\count1\endcsname}%
+        {\csname CoppeAdvisorDegree:\the\count1\endcsname}%
+        {\csname CoppeAdvisorInst:\the\count1\endcsname}}%
+      \expandafter\g@addto@macro\expandafter\coppe@bancalist
+        \expandafter{\coppe@tmp}%
+      \advance\count1 by 1}%
 % Coorientadores come right after the orientadores and before the rest of the
 % board, keeping the order 3.1.2.1.3(e) prescribes.
-  \count1=0
-  \@whilenum\count1<\@coadvisor\do{%
-    \protected@edef\coppe@tmp{\noexpand\coppe@membro
-      {\csname CoppeCoadvisorTitle:\the\count1\endcsname}%
-      {\csname CoppeCoadvisorName:\the\count1\endcsname\space
-       \csname CoppeCoadvisorSurname:\the\count1\endcsname}%
-      {\csname CoppeCoadvisorDegree:\the\count1\endcsname}%
-      {\csname CoppeCoadvisorInst:\the\count1\endcsname}}%
-    \expandafter\g@addto@macro\expandafter\coppe@bancalist
-      \expandafter{\coppe@tmp}%
-    \advance\count1 by 1}%
+    \count1=0
+    \@whilenum\count1<\@coadvisor\do{%
+      \protected@edef\coppe@tmp{\noexpand\coppe@membro
+        {\csname CoppeCoadvisorTitle:\the\count1\endcsname}%
+        {\csname CoppeCoadvisorName:\the\count1\endcsname\space
+         \csname CoppeCoadvisorSurname:\the\count1\endcsname}%
+        {\csname CoppeCoadvisorDegree:\the\count1\endcsname}%
+        {\csname CoppeCoadvisorInst:\the\count1\endcsname}}%
+      \expandafter\g@addto@macro\expandafter\coppe@bancalist
+        \expandafter{\coppe@tmp}%
+      \advance\count1 by 1}%
+  \fi
   \count1=0
   \@whilenum\count1<\@examiner\do{%
     \protected@edef\coppe@tmp{\noexpand\coppe@membro
@@ -6034,6 +6091,7 @@ postamble
 \copperdefstring{spanish}{coadvisors} {Codirectores}
 \copperdefstring{spanish}{ofname}     {de}
 \copperdefstring{spanish}{researchline}{L\'\i nea de investigaci\'on}
+\copperdefstring{spanish}{tbddate}     {por determinar}
 \copperdefstring{spanish}{universityname}{Universidade Federal do Rio de Janeiro}
 \copperdefstring{spanish}{cityname}    {Rio de Janeiro}
 \copperdefstring{spanish}{statename}   {RJ}
@@ -6091,6 +6149,7 @@ postamble
 \copperdefstring{french}{coadvisors} {Co-directeurs}
 \copperdefstring{french}{ofname}     {de}
 \copperdefstring{french}{researchline}{Axe de recherche}
+\copperdefstring{french}{tbddate}     {\`a d\'eterminer}
 \copperdefstring{french}{universityname}{Universidade Federal do Rio de Janeiro}
 \copperdefstring{french}{cityname}    {Rio de Janeiro}
 \copperdefstring{french}{statename}   {RJ}
@@ -6147,6 +6206,7 @@ postamble
 \copperdefstring{italian}{coadvisors} {Correlatori}
 \copperdefstring{italian}{ofname}     {di}
 \copperdefstring{italian}{researchline}{Linea di ricerca}
+\copperdefstring{italian}{tbddate}     {da determinare}
 \copperdefstring{italian}{universityname}{Universidade Federal do Rio de Janeiro}
 \copperdefstring{italian}{cityname}    {Rio de Janeiro}
 \copperdefstring{italian}{statename}   {RJ}
