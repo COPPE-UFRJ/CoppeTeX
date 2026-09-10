@@ -48,6 +48,8 @@ def normaliza(s):
     s = s.replace("–", "-").replace("—", "-").replace("‐", "-")
     s = s.replace("­", "")            # hifen de hifenizacao
     s = re.sub(r"-\s*\n\s*", "", s)        # palavra quebrada por hifenizacao
+    s = re.sub(r"-{2,}", "-", s)          # o travessao do manual, transcrito
+    s = re.sub(r"(?m)^\s*\d{1,3}\s*$", "", s)  # folio solto entre folhas
     s = re.sub(r"\s+", " ", s)
     return s.strip()
 

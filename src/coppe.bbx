@@ -88,6 +88,12 @@
      \clearname{editor}}
     {}}
 
+\protected\def\coppe@ucfamily#1{%
+  \edef\coppe@ucstr{\detokenize{#1}}%
+  \expandafter\coppe@ucscan\coppe@ucstr.\coppe@ucstop{#1}}
+\protected\def\coppe@ucscan#1.#2\coppe@ucstop#3{%
+  \ifblank{#2}{\MakeUppercase{#3}}{#3}}
+\renewcommand*{\bibdaterangesep}{/}
 \protected\def\coppe@abntdate#1#2#3{%
   \iffieldundef{#3}{}{\stripzeros{\thefield{#3}}\nobreakspace}%
   \iffieldundef{#2}{}{\mkbibmonth{\thefield{#2}}\iffieldundef{#1}{}{\space}}%
@@ -95,7 +101,7 @@
 \AtBeginBibliography{%
   \singlespacing                        % entries single-spaced internally (2.4)
   \setlength{\bibitemsep}{\baselineskip}% one blank line between entries (2.4)
-  \renewcommand*{\mkbibnamefamily}[1]{\MakeUppercase{#1}}%
+  \renewcommand*{\mkbibnamefamily}[1]{\coppe@ucfamily{#1}}%
   \renewcommand*{\mkbibnameprefix}[1]{\MakeUppercase{#1}}%
   \let\mkbibdatelong\coppe@abntdate     % ABNT date format (drop the "de")
   \let\mkbibdateshort\coppe@abntdate
@@ -128,6 +134,8 @@
 \DeclareFieldFormat[thesis]{title}{\mkbibbold{#1}}
 \DeclareFieldFormat[patent]{title}{\mkbibbold{#1}}
 \DeclareFieldFormat[legislation,jurisdiction,legal]{title}{#1}
+\DeclareFieldFormat[legislation,jurisdiction,legal]{volume}{v\adddot\addnbspace#1}
+\DeclareFieldFormat[legislation,jurisdiction,legal]{number}{n\adddot\addnbspace#1}
 \DeclareFieldFormat{journaltitle}{\mkbibbold{#1}}
 \DeclareFieldFormat{booktitle}{\mkbibbold{#1}}
 \DeclareFieldFormat{maintitle}{\mkbibbold{#1}}
@@ -212,20 +220,31 @@
 
 \DeclareFieldFormat{type}{\ifbibstring{#1}{\bibstring{#1}}{#1}}
 
-\DeclareFieldFormat{course}{\mkbibparens{\coppestring{in:}\addspace#1}}
+\newcommand*\coppe@degword{%
+  \iffieldundef{coppedegree}
+    {\iffieldequalstr{type}{mscdiss}{\bibstring{coppemscdeg}}{%
+     \iffieldequalstr{type}{dscthesis}{\bibstring{coppedscdeg}}{%
+     \iffieldequalstr{type}{phdthesis}{\bibstring{coppephddeg}}{%
+     \iffieldequalstr{type}{tcc}{\bibstring{coppetccdeg}}{}}}}}
+    {\printfield{coppedegree}}}
+\DeclareFieldFormat{course}{%
+  \mkbibparens{\coppe@degword\addspace\coppestring{in:}\addspace#1}}
 \DeclareBibliographyDriver{thesis}{%
   \usebibmacro{bibindex}\usebibmacro{begentry}%
   \usebibmacro{author}%
   \setunit{\labelnamepunct}\newblock
   \usebibmacro{title}%
   \newunit\newblock
-  \printfield{type}\setunit*{\addspace}\printfield{course}%
-  \newunit\newblock
-  \printlist{institution}%
-  \setunit*{\addcomma\space}\printlist{location}%
-  \setunit*{\addcomma\space}\printdate%
+  \printdate%
   \newunit\newblock
   \printfield{pagetotal}%
+  \newunit\newblock
+  \printfield{type}\setunit*{\addspace}\printfield{course}%
+  \iflistundef{institution}
+    {}
+    {\setunit*{\addspace\textemdash\addspace}\printlist{institution}}%
+  \setunit*{\addcomma\space}\printlist{location}%
+  \setunit*{\addcomma\space}\printdate%
   \newunit\newblock
   \printfield{note}%
   \newunit\newblock
@@ -237,9 +256,9 @@
   \iffieldundef{platform}{}{\setunit{\addperiod\space}%
     \printtext{\coppestring{platform}\addcolon\space}\printfield{platform}}%
   \iflistundef{director}{}{\setunit{\addperiod\space}%
-    \printtext{\coppestring{directedby}\addcolon\space}\printlist{director}}%
+    \printtext{\coppestring{directedby}\addspace}\printlist{director}}%
   \iflistundef{producer}{}{\setunit{\addperiod\space}%
-    \printtext{\coppestring{producedby}\addcolon\space}\printlist{producer}}}
+    \printtext{\coppestring{producedby}\addspace}\printlist{producer}}}
 \newbibmacro*{coppe:mediadriver}{%
   \usebibmacro{bibindex}\usebibmacro{begentry}%
   \usebibmacro{author/translator+others}%
@@ -248,13 +267,67 @@
   \newunit\newblock
   \usebibmacro{coppe:media}%
   \newunit\newblock
-  \printlist{publisher}%
-  \setunit*{\addcomma\space}\printlist{location}%
-  \setunit*{\addcomma\space}\printdate%
+  \usebibmacro{coppe:imprenta}%
   \newunit\newblock
   \printfield{version}%
   \newunit\newblock
   \printfield{note}%
+  \newunit\newblock
+  \usebibmacro{url+urldate}%
+  \usebibmacro{finentry}}
+\DeclareFieldFormat[periodical,suppperiodical]{title}{\MakeUppercase{#1}}
+\DeclareFieldFormat[periodical,suppperiodical]{volume}{v\adddot\addnbspace#1}
+\DeclareFieldFormat[periodical,suppperiodical]{number}{n\adddot\addnbspace#1}
+\DeclareBibliographyDriver{periodical}{%
+  \usebibmacro{bibindex}\usebibmacro{begentry}%
+  \usebibmacro{title}%
+  \newunit\newblock
+  \printlist{location}%
+  \iflistundef{publisher}{}{\setunit*{\addcolon\space}\printlist{publisher}}%
+  \setunit*{\addcomma\space}\printfield{volume}%
+  \setunit*{\addcomma\space}\printfield{number}%
+  \setunit*{\addcomma\space}\printdate%
+  \newunit\newblock
+  \printfield{note}%
+  \newunit\newblock
+  \usebibmacro{url+urldate}%
+  \usebibmacro{finentry}}
+\DeclareBibliographyDriver{suppperiodical}{%
+  \usedriver{}{periodical}\usebibmacro{finentry}}
+\DeclareFieldFormat{eventtitle}{\MakeUppercase{#1}}
+\DeclareFieldFormat[proceedings]{title}{#1}
+\DeclareFieldFormat[proceedings,inproceedings]{number}{#1\adddot}
+\DeclareFieldFormat[proceedings,inproceedings]{volume}{v\adddot\addnbspace#1}
+\newbibmacro*{coppe:evento}{%
+  \printfield{eventtitle}%
+  \setunit*{\addcomma\space}\printfield{number}%
+  \setunit*{\addcomma\space}\printeventdate%
+  \setunit*{\addcomma\space}\printfield{venue}}
+\DeclareBibliographyDriver{proceedings}{%
+  \usebibmacro{bibindex}\usebibmacro{begentry}%
+  \usebibmacro{coppe:evento}%
+  \newunit\newblock
+  \printfield{title}%
+  \newunit\newblock
+  \usebibmacro{coppe:imprenta}%
+  \newunit\newblock
+  \usebibmacro{url+urldate}%
+  \usebibmacro{finentry}}
+\DeclareBibliographyDriver{inproceedings}{%
+  \usebibmacro{bibindex}\usebibmacro{begentry}%
+  \usebibmacro{author/translator+others}%
+  \setunit{\labelnamepunct}\newblock
+  \usebibmacro{title}%
+  \newunit\newblock
+  \usebibmacro{in:}%
+  \usebibmacro{coppe:evento}%
+  \newunit\newblock
+  \printfield{booktitle}%
+  \newunit\newblock
+  \usebibmacro{coppe:imprenta}%
+  \newunit\newblock
+  \printfield{volume}%
+  \setunit*{\addcomma\space}\printfield{pages}%
   \newunit\newblock
   \usebibmacro{url+urldate}%
   \usebibmacro{finentry}}
@@ -264,15 +337,21 @@
 \DeclareBibliographyDriver{movie}{\usebibmacro{coppe:mediadriver}}
 \DeclareBibliographyDriver{tvshow}{\usebibmacro{coppe:mediadriver}}
 \DeclareFieldFormat{scale}{\bibstring{coppescale}\addnbspace#1}
+\newbibmacro*{coppe:imprenta}{%
+  \printlist{location}%
+  \iflistundef{publisher}
+    {}
+    {\setunit*{\addcolon\space}\printlist{publisher}}%
+  \setunit*{\addcomma\space}\printdate}
 \DeclareBibliographyDriver{map}{%
   \usebibmacro{bibindex}\usebibmacro{begentry}%
   \usebibmacro{author/translator+others}%
   \setunit{\labelnamepunct}\newblock
   \usebibmacro{title}%
   \newunit\newblock
-  \printlist{location}%
-  \setunit*{\addcolon\space}\printlist{publisher}%
-  \setunit*{\addcomma\space}\printdate%
+  \usebibmacro{coppe:imprenta}%
+  \newunit\newblock
+  \iffieldundef{addendum}{}{\printfield{addendum}\clearfield{addendum}}%
   \newunit\newblock
   \printfield{scale}%
   \newunit\newblock
@@ -299,7 +378,16 @@
   \printfield{type}%
   \setunit*{\addspace}\printfield{number}%
   \newunit\newblock
-  \printdate%
+  \iffieldundef{filingdate}
+    {}
+    {\printtext{\bibstring{coppefiling}\addcolon\space}\printfield{filingdate}%
+     \setunit{\adddot\space}}%
+  \iffieldundef{grantdate}
+    {}
+    {\printtext{\bibstring{coppegrant}\addcolon\space}\printfield{grantdate}}%
+  \ifboolexpr{ test {\iffieldundef{filingdate}} and test {\iffieldundef{grantdate}} }
+    {\printdate}
+    {}%
   \newunit\newblock
   \usebibmacro{url+urldate}%
   \usebibmacro{finentry}}
@@ -313,16 +401,23 @@
   \newunit\newblock
   % Jurisprudência: "Relator: <nome>." after the decision title (NBR 6023).
   \iffieldundef{relator}{}{\printtext{Relator\addcolon\space}\printfield{relator}\newunit\newblock}%
+  \printfield{edition}%
+  \newunit\newblock
   \printlist{location}%
+  \iflistundef{publisher}{}{\setunit*{\addcolon\space}\printlist{publisher}}%
+  \setunit*{\addcomma\space}\printfield{volume}%
+  \setunit*{\addcomma\space}\printfield{number}%
+  \setunit*{\addcomma\space}\printfield{pages}%
   \setunit{\addcomma\space}\printdate%
+  \setunit*{\addcomma\space}\printfield{note}%
   \newunit\newblock
   \usebibmacro{url+urldate}%
   \usebibmacro{finentry}}
 \DeclareBibliographyDriver{legislation}{\usebibmacro{coppe:legaldriver}}
 \DeclareBibliographyDriver{jurisdiction}{\usebibmacro{coppe:legaldriver}}
 \DeclareBibliographyDriver{legal}{\usebibmacro{coppe:legaldriver}}
-\DeclareBibliographyDriver{audio}{\usedriver{}{misc}\usebibmacro{finentry}}
-\DeclareBibliographyDriver{video}{\usedriver{}{misc}\usebibmacro{finentry}}
+\DeclareBibliographyDriver{audio}{\usebibmacro{coppe:mediadriver}}
+\DeclareBibliographyDriver{video}{\usebibmacro{coppe:mediadriver}}
 \DeclareBibliographyDriver{software}{\usedriver{}{misc}\usebibmacro{finentry}}
 \DeclareBibliographyDriver{image}{\usedriver{}{misc}\usebibmacro{finentry}}
 \DeclareBibliographyDriver{artwork}{\usedriver{}{misc}\usebibmacro{finentry}}
@@ -410,6 +505,11 @@
     \map{\step[fieldsource=produtor,fieldtarget=producer]}
     \map{\step[fieldsource=versao,fieldtarget=version]}
     \map{\step[fieldsource=escala,fieldtarget=scale]}
+    \map{\step[fieldsource=evento,fieldtarget=eventtitle]}
+    \map{\step[fieldsource=dataevento,fieldtarget=eventdate]}
+    \map{\step[fieldsource=localevento,fieldtarget=venue]}
+    \map{\step[fieldsource=deposito,fieldtarget=filingdate]}
+    \map{\step[fieldsource=concessao,fieldtarget=grantdate]}
   }%
 }
 

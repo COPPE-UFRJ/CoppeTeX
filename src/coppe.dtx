@@ -2914,9 +2914,9 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \copperdefstring{english}  {art}          {Art}
 \copperdefstring{brazilian}{platform}     {Plataforma}
 \copperdefstring{english}  {platform}     {Platform}
-\copperdefstring{brazilian}{directedby}   {Dire\c{c}\~ao}
+\copperdefstring{brazilian}{directedby}   {Dire\c{c}\~ao de}
 \copperdefstring{english}  {directedby}   {Directed by}
-\copperdefstring{brazilian}{producedby}   {Produ\c{c}\~ao}
+\copperdefstring{brazilian}{producedby}   {Produ\c{c}\~ao de}
 \copperdefstring{english}  {producedby}   {Produced by}
 \copperdefstring{brazilian}{listabbreviation}{Lista de Abreviaturas e Siglas}
 \copperdefstring{english}  {listabbreviation}{List of Abbreviations and Acronyms}
@@ -5050,15 +5050,37 @@ postamble
 % pessoa e punha tudo em caixa alta. Corta-se no primeiro " (" e, dentro do que
 % sobra a esquerda, no primeiro ". ": o que estiver antes vai para caixa alta,
 % o resto sai como foi digitado.
-\protected\def\coppe@ucfamily#1{\coppe@ucparen#1 (\coppe@ucstop}
-\protected\def\coppe@ucparen#1 (#2\coppe@ucstop{%
-  \coppe@ucdot#1. \coppe@ucstop
-  \ifblank{#2}{}{\space(\coppe@uctrimparen#2\coppe@ucstop}}
-\protected\def\coppe@uctrimparen#1 (\coppe@ucstop{#1}
-\protected\def\coppe@ucdot#1. #2\coppe@ucstop{%
-  \MakeUppercase{#1}%
-  \ifblank{#2}{}{\adddot\space\coppe@uctrimdot#2\coppe@ucstop}}
-\protected\def\coppe@uctrimdot#1. \coppe@ucstop{#1}
+% O biber entrega o nome literal ENTRE CHAVES ("{Brasil. Supremo Tribunal
+% Federal}"), e as chaves escondem o ponto do casamento de padrao abaixo: sem
+% desembrulhar, o nome inteiro caia no \MakeUppercase. \coppe@ucstrip tira a
+% chave externa -- um argumento delimitado que seja um grupo unico perde as
+% chaves na captura.
+% Autor-entidade: a 4.3.2.13 poe em caixa alta a jurisdicao ou a entidade
+% superior e deixa o orgao subordinado em caixa normal -- "BRASIL. Supremo
+% Tribunal Federal." Qual das duas coisas o nome e, so quem escreve sabe:
+% "Associacao Brasileira de Normas Tecnicas" e uma entidade so, e vai inteira
+% para versal; "Brasil. Supremo Tribunal Federal" tem subordinacao, e a parte
+% depois do ponto fica como esta.
+%
+% A regra, entao, e mecanica e previsivel: um nome que TENHA ponto sai
+% exatamente como o autor digitou; um nome sem ponto vai para caixa alta. O
+% teste e feito sobre a forma detokenizada, porque entre as palavras de um
+% nome o biblatex nao poe espaco -- poe \bibnamedelimb e \bibnamedelimi --, e
+% procurar ". " no fluxo de tokens nunca encontra nada.
+% O parentese conta junto com o ponto: "Sao Paulo (Estado)" leva o
+% qualificador em caixa normal, e so quem escreve sabe disso.
+\protected\def\coppe@ucfamily#1{%
+  \edef\coppe@ucstr{\detokenize{#1}}%
+  \expandafter\coppe@ucscan\coppe@ucstr.\coppe@ucstop{#1}}
+\protected\def\coppe@ucscan#1.#2\coppe@ucstop#3{%
+  \ifblank{#2}
+    {\expandafter\coppe@ucscanp\coppe@ucstr(\coppe@ucstop{#3}}
+    {#3}}
+\protected\def\coppe@ucscanp#1(#2\coppe@ucstop#3{%
+  \ifblank{#2}{\MakeUppercase{#3}}{#3}}
+% A 4.3 separa os meses de um intervalo por barra -- "jan./jun. 1991" --, e o
+% biblatex usa travessao.
+\renewcommand*{\bibdaterangesep}{/}
 \protected\def\coppe@abntdate#1#2#3{%
   \iffieldundef{#3}{}{\stripzeros{\thefield{#3}}\nobreakspace}%
   \iffieldundef{#2}{}{\mkbibmonth{\thefield{#2}}\iffieldundef{#1}{}{\space}}%
@@ -5229,15 +5251,19 @@ postamble
 % parenteses, antes do curso, e deixa o substantivo do documento fora deles --
 % "Dissertacao (Mestrado em ...)". O grau vem do campo coppedegree, que o
 % sourcemap preenche junto com o tipo.
+% O grau sai do proprio tipo do trabalho, que ja e uma chave de string; passar
+% a chave por um campo e depois resolve-la com \ifbibstring nao funciona,
+% porque \thefield nao se expande onde \ifbibstring precisa. Um campo
+% coppedegree preenchido a mao pelo autor tem precedencia.
+\newcommand*\coppe@degword{%
+  \iffieldundef{coppedegree}
+    {\iffieldequalstr{type}{mscdiss}{\bibstring{coppemscdeg}}{%
+     \iffieldequalstr{type}{dscthesis}{\bibstring{coppedscdeg}}{%
+     \iffieldequalstr{type}{phdthesis}{\bibstring{coppephddeg}}{%
+     \iffieldequalstr{type}{tcc}{\bibstring{coppetccdeg}}{}}}}}
+    {\printfield{coppedegree}}}
 \DeclareFieldFormat{course}{%
-  \mkbibparens{%
-    \iffieldundef{coppedegree}
-      {}
-      {\ifbibstring{\thefield{coppedegree}}
-         {\bibstring{\thefield{coppedegree}}}
-         {\thefield{coppedegree}}%
-       \addspace}%
-    \coppestring{in:}\addspace#1}}
+  \mkbibparens{\coppe@degword\addspace\coppestring{in:}\addspace#1}}
 % A ordem da 4.2.1.1 para tese e dissertacao:
 %   AUTOR. Titulo. ano. NNN f. Tipo (Grau em Curso) -- Instituicao, Local, ano.
 % A data aparece duas vezes de proposito, como nos exemplos do manual: uma
@@ -5271,9 +5297,9 @@ postamble
   \iffieldundef{platform}{}{\setunit{\addperiod\space}%
     \printtext{\coppestring{platform}\addcolon\space}\printfield{platform}}%
   \iflistundef{director}{}{\setunit{\addperiod\space}%
-    \printtext{\coppestring{directedby}\addcolon\space}\printlist{director}}%
+    \printtext{\coppestring{directedby}\addspace}\printlist{director}}%
   \iflistundef{producer}{}{\setunit{\addperiod\space}%
-    \printtext{\coppestring{producedby}\addcolon\space}\printlist{producer}}}
+    \printtext{\coppestring{producedby}\addspace}\printlist{producer}}}
 \newbibmacro*{coppe:mediadriver}{%
   \usebibmacro{bibindex}\usebibmacro{begentry}%
   \usebibmacro{author/translator+others}%
@@ -5282,9 +5308,7 @@ postamble
   \newunit\newblock
   \usebibmacro{coppe:media}%
   \newunit\newblock
-  \printlist{publisher}%
-  \setunit*{\addcomma\space}\printlist{location}%
-  \setunit*{\addcomma\space}\printdate%
+  \usebibmacro{coppe:imprenta}%
   \newunit\newblock
   \printfield{version}%
   \newunit\newblock
@@ -5323,6 +5347,11 @@ postamble
 % do evento tem campo proprio (|eventtitle|, sinonimo |evento|) em vez de vir
 % empacotado no titulo: nada mais na entrada vai para caixa alta.
 \DeclareFieldFormat{eventtitle}{\MakeUppercase{#1}}
+% "Anais [...]" nao e uma obra entrada pelo titulo: quem faz as vezes de
+% cabeca da entrada e o nome do evento, ja em caixa alta. Sem esta declaracao
+% o titulo dos anais saia "ANAIS [...]" e ainda perdia o ponto que o separa
+% da imprenta.
+\DeclareFieldFormat[proceedings]{title}{#1}
 \DeclareFieldFormat[proceedings,inproceedings]{number}{#1\adddot}
 \DeclareFieldFormat[proceedings,inproceedings]{volume}{v\adddot\addnbspace#1}
 \newbibmacro*{coppe:evento}{%
@@ -5334,8 +5363,10 @@ postamble
   \usebibmacro{bibindex}\usebibmacro{begentry}%
   \usebibmacro{coppe:evento}%
   \newunit\newblock
-  \usebibmacro{title}%
-  \newunit\newblock
+  \printfield{title}%
+% O ponto que separa o titulo dos anais da imprenta tem de ser explicito: o
+% \newunit sozinho nao o produzia depois de um titulo terminado em "]".
+  \setunit{\adddot\space}\newblock
   \usebibmacro{coppe:imprenta}%
   \newunit\newblock
   \usebibmacro{url+urldate}%
@@ -5350,7 +5381,7 @@ postamble
   \usebibmacro{coppe:evento}%
   \newunit\newblock
   \printfield{booktitle}%
-  \newunit\newblock
+  \setunit{\adddot\space}\newblock
   \usebibmacro{coppe:imprenta}%
   \newunit\newblock
   \printfield{volume}%
@@ -5381,6 +5412,10 @@ postamble
   \usebibmacro{title}%
   \newunit\newblock
   \usebibmacro{coppe:imprenta}%
+  \newunit\newblock
+% "Recife, 1976. 71 fotografias. Escala 1: 20.000." -- a descricao fisica vem
+% ANTES da escala, e por isso ela nao pode esperar pelo bloco eletronico.
+  \iffieldundef{addendum}{}{\printfield{addendum}\clearfield{addendum}}%
   \newunit\newblock
   \printfield{scale}%
   \newunit\newblock
@@ -5444,6 +5479,8 @@ postamble
   \newunit\newblock
   % Jurisprudência: "Relator: <nome>." after the decision title (NBR 6023).
   \iffieldundef{relator}{}{\printtext{Relator\addcolon\space}\printfield{relator}\newunit\newblock}%
+  \printfield{edition}%
+  \newunit\newblock
   \printlist{location}%
 % A 4.2.6 traz o veiculo de publicacao com volume, numero e pagina -- "Sao
 % Paulo, v. 62, n. 3, p. 217-220, 1998." --, que se perdiam por completo.
@@ -5452,14 +5489,17 @@ postamble
   \setunit*{\addcomma\space}\printfield{number}%
   \setunit*{\addcomma\space}\printfield{pages}%
   \setunit{\addcomma\space}\printdate%
+  \setunit*{\addcomma\space}\printfield{note}%
   \newunit\newblock
   \usebibmacro{url+urldate}%
   \usebibmacro{finentry}}
 \DeclareBibliographyDriver{legislation}{\usebibmacro{coppe:legaldriver}}
 \DeclareBibliographyDriver{jurisdiction}{\usebibmacro{coppe:legaldriver}}
 \DeclareBibliographyDriver{legal}{\usebibmacro{coppe:legaldriver}}
-\DeclareBibliographyDriver{audio}{\usedriver{}{misc}\usebibmacro{finentry}}
-\DeclareBibliographyDriver{video}{\usedriver{}{misc}\usebibmacro{finentry}}
+% Audio e video vao pelo driver de midia, que imprime diretor e produtor --
+% "Producao de Jorge Ramos de Andrade." da 4.2.9. O driver misc os ignorava.
+\DeclareBibliographyDriver{audio}{\usebibmacro{coppe:mediadriver}}
+\DeclareBibliographyDriver{video}{\usebibmacro{coppe:mediadriver}}
 \DeclareBibliographyDriver{software}{\usedriver{}{misc}\usebibmacro{finentry}}
 \DeclareBibliographyDriver{image}{\usedriver{}{misc}\usebibmacro{finentry}}
 \DeclareBibliographyDriver{artwork}{\usedriver{}{misc}\usebibmacro{finentry}}
@@ -5512,14 +5552,14 @@ postamble
     % thesis family: retype to thesis and preset the (babel-aware) type word
     \map{\step[typesource=tese,typetarget=thesis]}
     \map{\step[typesource=dissertacao,typetarget=thesis]}
-    \map{\step[typesource=masterdissertation,typetarget=thesis,final]\step[fieldset=type,fieldvalue=mscdiss]\step[fieldset=coppedegree,fieldvalue=coppemscdeg]}
-    \map{\step[typesource=mscdissertation,typetarget=thesis,final]\step[fieldset=type,fieldvalue=mscdiss]\step[fieldset=coppedegree,fieldvalue=coppemscdeg]}
-    \map{\step[typesource=dissertacaomestrado,typetarget=thesis,final]\step[fieldset=type,fieldvalue=mscdiss]\step[fieldset=coppedegree,fieldvalue=coppemscdeg]}
-    \map{\step[typesource=dscthesis,typetarget=thesis,final]\step[fieldset=type,fieldvalue=dscthesis]\step[fieldset=coppedegree,fieldvalue=coppedscdeg]}
-    \map{\step[typesource=tesedoutorado,typetarget=thesis,final]\step[fieldset=type,fieldvalue=dscthesis]\step[fieldset=coppedegree,fieldvalue=coppedscdeg]}
-    \map{\step[typesource=phdthesis,typetarget=thesis,final]\step[fieldset=type,fieldvalue=phdthesis]\step[fieldset=coppedegree,fieldvalue=coppephddeg]}
-    \map{\step[typesource=tesephd,typetarget=thesis,final]\step[fieldset=type,fieldvalue=phdthesis]\step[fieldset=coppedegree,fieldvalue=coppephddeg]}
-    \map{\step[typesource=tcc,typetarget=thesis,final]\step[fieldset=type,fieldvalue=tcc]\step[fieldset=coppedegree,fieldvalue=coppetccdeg]}
+    \map{\step[typesource=masterdissertation,typetarget=thesis,final]\step[fieldset=type,fieldvalue=mscdiss]}
+    \map{\step[typesource=mscdissertation,typetarget=thesis,final]\step[fieldset=type,fieldvalue=mscdiss]}
+    \map{\step[typesource=dissertacaomestrado,typetarget=thesis,final]\step[fieldset=type,fieldvalue=mscdiss]}
+    \map{\step[typesource=dscthesis,typetarget=thesis,final]\step[fieldset=type,fieldvalue=dscthesis]}
+    \map{\step[typesource=tesedoutorado,typetarget=thesis,final]\step[fieldset=type,fieldvalue=dscthesis]}
+    \map{\step[typesource=phdthesis,typetarget=thesis,final]\step[fieldset=type,fieldvalue=phdthesis]}
+    \map{\step[typesource=tesephd,typetarget=thesis,final]\step[fieldset=type,fieldvalue=phdthesis]}
+    \map{\step[typesource=tcc,typetarget=thesis,final]\step[fieldset=type,fieldvalue=tcc]}
     % field PT synonyms (unaccented) -> canonical English
     \map{\step[fieldsource=periodico,fieldtarget=journaltitle]}
     \map{\step[fieldsource=revista,fieldtarget=journaltitle]}
