@@ -65,6 +65,14 @@ to the CPGP is [`PROPOSTA_CPGP.md`](./PROPOSTA_CPGP.md).
   measured on the rendered ink, not on font metrics.
 - **Pre-textual lists out of the sumário** (3.1.2.1.6), which now opens at the
   first numbered section.
+- **The sumário is the manual's, not `book`'s** (2.6 and 3.1.2.1.6). Every
+  indicative starts at the left margin and every title in a single column,
+  whose position is measured from the document's own widest indicative and
+  carried through the `.aux` — literally "a margem do título do indicativo mais
+  extenso". Dotted leaders on every level, uniform line spacing, and the
+  per-level graphic treatment of the body reproduced: primary in bold caps,
+  secondary in caps, tertiary bold, quaternary bold italic, quinary italic.
+  Only the first two levels had been reproduced before.
 - **Apêndice and Anexo headings centred** (2.6) — a letter is not a numeric
   indicative.
 - **Latin Modern** instead of the bitmap fonts: the whole document was coming
@@ -99,6 +107,13 @@ to the CPGP is [`PROPOSTA_CPGP.md`](./PROPOSTA_CPGP.md).
 - **`\thispagestyle` covering only one page** — when the approval sheet
   overflowed, the extra sheet inherited the current style and came out
   numbered.
+- **The indicative printed over the title in the sumário.** `\@dottedtocline`
+  gives each level a fixed-width box for the number; a thesis with ten chapters
+  reaches indicatives such as `10.10.10.10`, which overflowed the box by up to
+  4.6 mm and ran across the title — the opposite of 2.6's "separado por um
+  espaço". The measured column removes the ceiling. Covered by the new
+  `tests/test_sumario.tex`, which forces two-digit numbering at all five
+  levels; no sample document had ever produced the shape.
 - **Period in the Spanish sumário indicative** — with Spanish as the main
   language, babel redefines `\numberline` and the sumário read "2.1. SECCIÓN"
   while the heading read "2.1 SECCIÓN". `es-nosectiondot`, applied through the

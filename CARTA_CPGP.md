@@ -23,15 +23,15 @@ sua implementação de referência.
 A proposta é curta de propósito, e o que ela pede é uma decisão de método: que
 a COPPE **pare de manter uma descrição própria do formato** e passe a adotar
 integralmente o *Manual para Elaboração e Normalização de Trabalhos
-Acadêmicos* da UFRJ/SiBI, registrando apenas — em treze seções — onde a COPPE
+Acadêmicos* da UFRJ/SiBI, registrando apenas — em catorze seções — onde a COPPE
 o especializa: as logomarcas, o nome da instituição em três linhas, a lista de
 Programas, a identidade institucional em português, a posição da orientação,
 os orientadores nas páginas de resumo, o terceiro resumo, o idioma principal,
 as listas de Quadros, Programas e Algoritmos, a fonte das ilustrações, o
-formato de Apêndices e Anexos, a numeração das folhas e as edições ABNT
-adotadas.
+formato de Apêndices e Anexos, a numeração das folhas, o layout do sumário
+e as edições ABNT adotadas.
 
-Nenhum desses treze pontos é novo. Todos já são praticados. O que a proposta
+Nenhum desses catorze pontos é novo. Todos já são praticados. O que a proposta
 muda é que passam a estar escritos num só lugar, com a indicação de qual item
 do Manual cada um especializa, e passam a ser **verificáveis por medição** —
 não por leitura.

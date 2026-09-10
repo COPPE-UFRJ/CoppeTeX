@@ -69,7 +69,7 @@ que a realiza. **Não deve ser mesclada antes do voto da Comissão:** o
 ### O que se propõe
 
 - **Norma** — `NORMA_COPPE_2026.md` deixa de descrever o formato e adota o
-  Manual UFRJ/SiBI (9.ª ed. rev., 2026) integralmente, registrando em treze
+  Manual UFRJ/SiBI (9.ª ed. rev., 2026) integralmente, registrando em catorze
   seções apenas onde a COPPE o especializa.
 - **Implementação** — a classe `coppe` 4.1 como implementação de referência.
 - **Texto a ser votado** — `PROPOSTA_CPGP.md`, com o articulado e a

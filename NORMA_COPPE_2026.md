@@ -53,7 +53,8 @@ de informações acadêmicas da CAPES**, que dá origem à folha adicional.
 | 10. Fonte das ilustrações | 4.2 | Escolha |
 | 11. Apêndices e Anexos | 3.1.4.2, 3.1.4.3 | Escolha |
 | 12. Numeração das folhas | 2.7 | Reafirmação |
-| 13. Citações e Referências | 3.1.4.1 | Escolha |
+| 13. Sumário | 3.1.2.1.6 | Escolha |
+| 14. Citações e Referências | 3.1.4.1 | Escolha |
 
 ---
 
@@ -74,7 +75,7 @@ Programa vai o do **Instituto (COPPE)**, que é comum a todos os Programas.
   da Coleta CAPES, não como imagem.
 
 Os arquivos vetoriais em uso são distribuídos com a implementação de referência
-(Seção 14).
+(Seção 15).
 
 ## 2. Nome da instituição na capa — *Escolha*
 
@@ -221,7 +222,36 @@ borda superior, com o último algarismo a 2 cm da borda direita.
 
 Não se empregam algarismos romanos nas folhas pré-textuais.
 
-## 13. Citações e Referências — *Escolha*
+## 13. Sumário — *Escolha*
+
+O item 3.1.2.1.6 manda alinhar os títulos à esquerda e **recomenda** que o
+alinhamento seja "pela margem do título do indicativo mais extenso", mandando
+usar como exemplo o sumário do próprio Manual. Por ser recomendação, a COPPE
+fixa a forma:
+
+- todo **indicativo** começa na margem esquerda, qualquer que seja o nível;
+- todo **título** começa numa mesma coluna, cuja posição é dada pelo indicativo
+  mais extenso do trabalho, separado dele por um espaço — sem ponto, hífen ou
+  travessão, como determina a 2.6;
+- as linhas seguintes de um título longo alinham-se pela coluna do título;
+- o pontilhado que liga o título ao número da folha corre em todos os níveis, e
+  o espaçamento entre as linhas é uniforme.
+
+A grafia de cada nível reproduz a do corpo do trabalho, como determina a 2.6, e
+é a mesma que o Manual usa no seu próprio sumário:
+
+| Nível | Grafia |
+|---|---|
+| Primária | CAIXA ALTA, negrito |
+| Secundária | CAIXA ALTA |
+| Terciária | negrito |
+| Quaternária | negrito itálico |
+| Quinária | itálico |
+
+Os elementos pós-textuais — Referências, Apêndices, Anexos, Glossário, Índice —
+figuram no sumário com a grafia da seção primária.
+
+## 14. Citações e Referências — *Escolha*
 
 A COPPE adota as edições vigentes das normas ABNT pertinentes: **NBR 6023**
 (Referências) e **NBR 10520** (Citações). Qualquer dos sistemas de chamada
@@ -230,7 +260,7 @@ usado de forma consistente em todo o trabalho.
 
 ---
 
-## 14. Implementação de referência
+## 15. Implementação de referência
 
 A classe LaTeX `coppe`, versões 4.0 e posteriores (**CoppeTeX 4.x**),
 distribuída em <https://github.com/COPPE-UFRJ/CoppeTeX>, é a implementação de

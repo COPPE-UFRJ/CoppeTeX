@@ -152,6 +152,7 @@ API compatível.
 | "Apêndice A" e "Anexo A" à esquerda | Centralizados: letra não é indicativo numérico (2.6) |
 | Sem palavras-chave nos resumos | Cada resumo encerra com as suas, no próprio idioma (3.1.2.1.4) |
 | Fontes bitmap (Type 3 no PDF) | Latin Modern — sem isso não há PDF/A |
+| Sumário com recuo progressivo por nível | Indicativo na margem e título em coluna única, como o sumário do manual (3.1.2.1.6) |
 
 Quem for **imprimir** e quiser as margens espelhadas de volta usa a opção
 de classe `twoside`. Quem estiver nas últimas semanas de escrita e não
@@ -309,7 +310,31 @@ notaria no dia do depósito:
   Saía "2.1. SECCIÓN SECUNDARIA" no sumário e "2.1 SECCIÓN SECUNDARIA" no
   título da seção. Era o babel, e a 2.6 quer o espaço, não o ponto.
 
-### 4.9 "No room for a new \write"
+### 4.9 O sumário passou a ser o do manual
+
+É a mudança que mais salta aos olhos, e nenhuma linha do seu documento precisa
+mudar por causa dela.
+
+O sumário vinha com o recuo do `book` do LaTeX: cada nível recuado mais que o
+anterior, o título quinário começando a 9,2 cm da borda — 6,2 dos 16 cm de
+mancha. A 3.1.2.1.6 manda alinhar os títulos "pela margem do título do
+indicativo mais extenso" e usar como exemplo o sumário do próprio manual, que
+põe **todo indicativo na margem** e **todo título numa coluna só**. É o que a
+classe faz agora, com a coluna medida pelo indicativo mais extenso do seu
+trabalho — por isso o sumário assenta na segunda passada, como as referências
+cruzadas.
+
+Junto vieram duas correções que você talvez nunca tivesse visto:
+
+- **A grafia de cada nível** agora reproduz o corpo, como a 2.6 exige: primária
+  em CAIXA ALTA negrito, secundária em CAIXA ALTA, terciária em negrito,
+  quaternária em negrito itálico, quinária em itálico. Da terciária em diante o
+  sumário saía tudo em redondo.
+- **O indicativo não cobre mais o título.** A caixa que o LaTeX reservava para
+  o número tinha largura fixa por nível; com dez capítulos, um indicativo como
+  `10.10.10.10` entrava quase meio centímetro por cima do título.
+
+### 4.10 "No room for a new \write"
 
 Um trabalho que pede todas as listas — figuras, tabelas, quadros,
 programas, algoritmos, abreviaturas e símbolos — precisa de dezessete dos

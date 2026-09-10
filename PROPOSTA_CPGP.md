@@ -34,15 +34,15 @@ n. 302/2024 e para a nova folha de coleta CAPES. Manter dois textos que
 descrevem a mesma coisa produz divergências — e produziu.
 
 A proposta é **parar de descrever o formato** e passar a registrar **apenas as
-diferenças**. A Norma 2026 tem treze seções, cada uma identificada como
+diferenças**. A Norma 2026 tem catorze seções, cada uma identificada como
 *Escolha* (o Manual admite mais de uma forma e a COPPE fixa uma), *Dado
 próprio* (o Manual pede a informação e o valor é da COPPE), *Acréscimo* (o
 Manual não prevê e a COPPE exige) ou *Reafirmação* (nada se acrescenta;
-repete-se um ponto por ser fonte frequente de erro). Fora dessas treze
+repete-se um ponto por ser fonte frequente de erro). Fora dessas catorze
 seções, vale o Manual.
 
 O que a Comissão vota, portanto, não é um formato: é **onde a COPPE se separa
-do Manual da UFRJ, e por quê**. São treze pontos, todos já em uso, nenhum
+do Manual da UFRJ, e por quê**. São catorze pontos, todos já em uso, nenhum
 inventado por esta proposta — o que muda é que passam a estar escritos num só
 lugar, e verificáveis.
 
@@ -227,7 +227,7 @@ art. 8.º. A adoção imediata é facultada e não exige reescrever texto.
 
 | Documento | O que é |
 |---|---|
-| `NORMA_COPPE_2026.md` | Texto da Norma proposta (treze seções de diferenças). |
+| `NORMA_COPPE_2026.md` | Texto da Norma proposta (catorze seções de diferenças). |
 | `dist/NORMA_COPPE_2026.pdf` | A mesma Norma composta pela própria classe. |
 | `REVISAO_SIBI.md` | Conferência item a item contra o Manual 2026. |
 | `MIGRATION_v3_to_v4.md` | O que muda para quem já está escrevendo. |
