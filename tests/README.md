@@ -32,12 +32,12 @@ that test and is reported in the summary at the end.
 | `test_brazilian_one_advisor.tex`    | Cover and folha de rosto with exactly **one** `\advisor`. Regression guard for the historical single-orientador rendering bug. |
 | `test_brazilian_two_advisors.tex`   | Same with **two** `\advisor` calls (the "Orientadores" plural label kicks in). Full brazilian-main thesis feature sweep — see file header. |
 | `test_brazilian_three_advisors.tex` | Same with **three** `\advisor` calls — the maximum the class is expected to typeset reasonably on the COPPE/UFRJ cover. |
-| `test_assinaturas.tex`              | The `assinaturas` option: one signature rule per board member, as Annex D of the manual shows. |
-| `test_assinaturas_7.tex`            | The same with a **seven-member** board — the size at which the folha de aprovação used to spill onto a second sheet, and print a folio on it. |
+| `test_banca.tex`                    | The board as v4.1 declares it: treatment in the optional argument, institution as the last mandatory one. Mixes a member with a treatment, one without, and one with an **empty** institution, so a regression in any of the three shows up. The approval sheet must come out with no signature rules. |
+| `test_banca_7.tex`                  | The same with a **seven-member** board — the size at which the folha de aprovação used to spill onto a second sheet, and print a folio on it. |
 | `test_coorientador.tex`             | The `coorientador` option: coadvisors on all three abstract pages, with two of them so the plural label is exercised. |
-| `test_pdfa.tex`                     | The pre-textual pages reshaped for the 2026 manual — folha adicional with the Coleta CAPES fields, approval sheet of 3.1.2.1.3, optional institution argument — under the `pdfa` option. Validated by veraPDF in the harness. |
+| `test_pdfa.tex`                     | The pre-textual pages reshaped for the 2026 manual — folha adicional with the Coleta CAPES fields, approval sheet of 3.1.2.1.3, mandatory institution argument — under the `pdfa` option. Validated by veraPDF in the harness. |
 | `test_sumario.tex`                  | The sumário: the graphic treatment of all five levels, the single title column, what a two-line title does, and a block that forces two-digit indicatives at every level — the shape that used to print the number over the title. |
-| `test_semserifa.tex`                | The `semserifa` option together with `pdfa`: the question is not whether a sans-serif document compiles but whether it is still PDF/A. Validated by veraPDF in the harness. |
+| `test_comserifa.tex`                | The `comserifa` option together with `pdfa`. Sans serif is the default since v4.1, so this test guards the other road: the question is not whether a serif document compiles but whether it is still PDF/A. Validated by veraPDF in the harness. |
 
 ## Adding new tests
 
@@ -52,7 +52,7 @@ green forever.
 
 Two of these tests are also built and validated by
 [`tools/build-check.ps1`](../tools/build-check.ps1) in its `pdfa` scope, which
-runs veraPDF over the resulting PDFs: `test_pdfa` and `test_semserifa`. A test
+runs veraPDF over the resulting PDFs: `test_pdfa` and `test_comserifa`. A test
 that asks for the `pdfa` class option belongs on that list — add it to the
 `Build-Tex` calls and to `$veraTargets` there.
 

@@ -39,8 +39,9 @@ specs/*.txt
 *page-*.png
 *.synctex.gz
 
-# Regression test build artifacts (rebuild with tests/run-tests.ps1)
-tests/*.pdf
+# Os PDFs de tests/ e de adversativa/ SAO versionados de proposito: quem abre o
+# repositorio no GitHub tem de conseguir ver o resultado sem instalar TeX e sem
+# compilar nada. Regerar todos com tools\prova.ps1.
 /ABNT
 /LaTeXManuals
 /LIXO
@@ -59,11 +60,13 @@ tests/*.pdf
 # gerado pelo coppe.ins; o build-check o copia para latexmkrc
 src/latexmkrc.tex
 
-# adversativa/: prova de funcionamento, nao distribuida. So as fontes entram no
-# git; os 24 PDFs e os auxiliares sao produto de build e se regeram por
-# tools\prova.ps1.
+# adversativa/: prova de funcionamento, nao distribuida. Entram no git as
+# fontes, a base de referencias do Manual e os PDFs; os auxiliares de build,
+# nao. Os PDFs entram porque a prova precisa poder ser VISTA sem recompilar.
 adversativa/*
 !adversativa/*.tex
+!adversativa/*.bib
+!adversativa/*.pdf
 !adversativa/README.md
 
 # listas de floats criados pelo autor com \newcoppefloat (o exemplo cria "mapa")
