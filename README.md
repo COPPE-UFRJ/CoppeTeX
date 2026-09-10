@@ -247,85 +247,76 @@ the string files described above.
 
 ### Content
 
-The development of this class follows the Comprehensive TeX Archive
-Network (CTAN) standards. It is basically composed by an installation file ('coppe.ins') and the main source file ('coppe.dtx'). The full sources contain:
+The development of this class follows the Comprehensive TeX Archive Network
+(CTAN) standards. **Two files are the whole source**: `src/coppe.dtx`, which
+carries the code, the documentation and the demonstration documents, and
+`src/coppe.ins`, the docstrip script. One run,
 
-  1. COPYING: full text of the GNU General Policy License version 3.
+```bash
+cd src && pdflatex coppe.ins
+```
 
-  2. Makefile: used to extract the coppe class and build the
-     documentation and a sample thesis.
+writes every file that is distributed:
 
-  3. README.md: describe the CoppeTeX package.
+| File(s) | Role |
+| --- | --- |
+| `coppe.cls` | the document class |
+| `coppe.bbx`, `coppe.cbx`, `coppe.dbx` | ABNT author--date biblatex style and data model |
+| `coppe-numeric.bbx`, `coppe-numeric.cbx` | the numeric variant (class option `numbers`) |
+| `brazilian-coppe.lbx`, `english-coppe.lbx`, `spanish-coppe.lbx`, `french-coppe.lbx`, `italian-coppe.lbx` | biblatex localization strings |
+| `coppe-lang-spanish.def`, `coppe-lang-french.def`, `coppe-lang-italian.def` | class-level string packs |
+| `coppe.ist` | makeindex style for the lists of symbols and abbreviations |
+| `coppe.bib`, `example.bib` | the bibliography of the manual and the example's sample database |
+| `example.tex` | the full sample thesis |
+| `example_pt.tex`, `example_en.tex`, `example_es.tex`, `example_fr.tex`, `example_it.tex` | one short demonstration per main language |
+| `example_pdfa.tex` | the full example compiled as PDF/A-2b |
+| `covers_5languages.tex` | the side-by-side cover sheet |
+| `latexmkrc` | latexmk configuration (biber + the makeindex runs) |
 
-  4. coppe-{plain,unsrt}.bst: alphabetically sorted and unsorted numbered
-     BibTeX styles, Natbib compatible.
+No derived file is edited by hand. The bundle ships two logos,
+`coppe-logo.[eps,pdf]` and `ufrj-logo.pdf`, and `COPYING`.
 
-  5. coppe.dtx: main source file; contains the documentation, a sample
-     thesis and a Makeindex style.
+The BibTeX `.bst` styles of the 3.x series are gone: the bibliography engine
+is **biblatex with biber**.
 
-  7. coppe.ins: used to strip out the coppe document class from `coppe.dtx'.
-
-  8. coppe-logo.[eps,pdf]: images included in the front cover.
-
-  9. example.bib: sample BibTeX database for being used by example.tex.
-
-Our release packages contain the following files:
-
-  1. COPYING: full text of the GNU General Policy License version 3.
-
-  2. README.md: describe the CoppeTeX package.
-
-  3. coppe.cls: the main file. It is a LaTeX document class.
-
-  4. coppe-{plain,unsrt}.bst: alphabetically sorted and unsorted numbered
-     BibTeX styles, Natbib compatible.
-
-  5. coppe.ist: Makeindex style for creating lists of symbols
-     and abbreviations.
-
-  6. coppe.pdf: CoppeTeX documentation.
-
-  7. example.{tex,bib}: sample thesis using coppe class.
-
-  8. coppe-logo.[eps, pdf]: images included in the front cover.
-
+`dist/` holds a built copy of all of the above plus the compiled PDFs, so the
+package can be read and installed without running LaTeX at all.
 
 ## Installing
 
 If you have some experience with LaTeX classes and packages, you won't have any
 difficulty when installing CoppeTeX. It should be installed as any other LaTeX
-package you have ever used. So, you can save your time skipping this section.
+package you have ever used.
 
-The impatient user should get a thesis template [here](#).
+The simplest install is no install: copy the contents of `dist/` next to your
+thesis `.tex` and compile. LaTeX finds a class in the current directory first.
 
-For the enthusiastic newbies, we give here succinct instructions for installing
-the CoppeTeX bundle.
+### Into your local TeX tree
 
-There exist two possible ways of obtaining CoppeTeX. You can download a release
-or the sources. Each of these has its own installation method. We describe both
-in the following sections.
+Suppose `TEXMF` is your local LaTeX tree. Then:
 
-### From releases
+| From `dist/` | Goes to |
+| --- | --- |
+| `coppe.cls`, the `.bbx`/`.cbx`/`.dbx`, the `.lbx`, the `coppe-lang-*.def`, `coppe-logo.[eps,pdf]`, `ufrj-logo.pdf` | `$TEXMF/tex/latex/coppe` |
+| `coppe.ist` | `$TEXMF/makeindex/coppe` |
 
-Suppose TEXMF is a variable which stores the path of your local LaTeX tree.
-Then you should copy the files coppe.cls, coppe.ist and coppe-unsrt.bst to
-$TEXMF/tex/latex/coppe, $TEXMF/makeindex/coppe and $TEXMF/bibtex/bst/coppe,
-respectively. The image files minerva.eps and minerva.pdf go into the same
-directory as coppe.cls. In the end, you have to type 'texhash' to update your
-LaTeX tree and to make CoppeTeX visible to your LaTeX compiler.
+Then run `texhash` (or `initexmf --update-fndb` on MiKTeX) so the class becomes
+visible to your compiler.
 
 ### From sources
 
-For installing from sources, type:
-
 ```bash
-  latex coppe.ins
+cd src && pdflatex coppe.ins
 ```
 
-and you will get all the files you need. They are all stripped out from
-coppe.dtx. Now, you should follow the instructions in the 'From releases'
-section.
+gives you the same files, freshly generated from `coppe.dtx`. Then follow the
+section above.
 
+### Compiling a thesis
+
+`latexmkrc` ships with the bundle and already knows about biber and the two
+makeindex runs, so `latexmk -pdf yourthesis` is enough. By hand it is
+pdflatex, biber, pdflatex, pdflatex.
 
 ## Help & Support
 

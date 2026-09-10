@@ -51,8 +51,8 @@
 %%   Right brace   \}     Tilde         \~}
 %%
 \def\filename{coppe.dtx}
-\def\fileversion{v4.0}
-\def\filedate{2026/05/28}
+\def\fileversion{v4.1}
+\def\filedate{2026/09/09}
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{coppe}[\filedate\ \fileversion\ COPPE Dissertations and Thesis]
 \let\coppe@version\fileversion
@@ -360,7 +360,11 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \def\coppe@@brazilianstr{brazilian}
 \def\coppe@@englishstr{english}
 \edef\coppe@babelopts{\coppe@foreignlang,\coppe@mainlang}
-\expandafter\RequirePackage\expandafter[\coppe@babelopts]{babel}
+\@namedef{coppe@babelextra@spanish}{,es-nosectiondot}
+\let\coppe@babelload\coppe@babelopts
+\@ifundefined{coppe@babelextra@\coppe@mainlang}{}{%
+  \edef\coppe@babelload{\coppe@babelload\@nameuse{coppe@babelextra@\coppe@mainlang}}}
+\expandafter\RequirePackage\expandafter[\coppe@babelload]{babel}
 \providecommand{\copperdefstring}[3]{%
   \expandafter\gdef\csname coppe@str@#1@#2\endcsname{#3}}
 \providecommand{\coppestring}[1]{\@nameuse{coppe@str@\languagename @#1}}
@@ -775,9 +779,12 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
       continuing the count. Drop the option to comply}%
     \pagenumbering{roman}%
   \fi
-  \thispagestyle{empty}
-  \makefrontpage
-  \clearpage
+  \begingroup
+    \pagestyle{empty}\thispagestyle{empty}
+    \singlespacing
+    \makefrontpage
+    \clearpage
+  \endgroup
   \if@copperoman
     \fancypagestyle{plain}{\fancyhf{}\fancyhead[RO,LE]{\coppe@folio}%
       \renewcommand{\headrulewidth}{0pt}}%
@@ -805,7 +812,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \ifPDFTeX\hologo{pdfLaTeX}\fi
   \ifLuaTeX\hologo{LuaLaTeX}\fi
   \ifXeTeX\hologo{XeLaTeX}\fi}
-\providecommand{\coppefinalfont}{Computer Modern (padr\~ao \LaTeX{})}
+\providecommand{\coppefinalfont}{Latin Modern (\texttt{lmodern})}
 \providecommand{\coppefinalmanual}{%
   \emph{Norma para a Elabora\c c\~ao Gr\'afica de Teses e Disserta\c c\~oes
   da COPPE/UFRJ}}
@@ -839,6 +846,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \clearpage}
 \newcommand\makecover{%
   \begin{titlepage}%
+  \pagestyle{empty}%
+  \singlespacing
   \centering
   \makebox[\linewidth]{%
     \includegraphics[height=2cm]{ufrj-logo}\hfill
@@ -865,6 +874,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \makecover
   \pagenumbering{arabic}
   \begin{titlepage}
+  \pagestyle{empty}%
+  \singlespacing
   \begin{flushleft}
   \vspace*{1.5mm}
   \setlength\baselineskip{0pt}
@@ -992,11 +1003,13 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \coppe@bancasize=\@advisor
   \advance\coppe@bancasize by \@coadvisor
   \advance\coppe@bancasize by \@examiner
-  \ifnum\coppe@bancasize>6
+  \ifnum\coppe@bancasize>7
+    \setlength\coppe@membrogap{3.5mm minus 1.5mm}%
+  \else\ifnum\coppe@bancasize>6
     \setlength\coppe@membrogap{5mm minus 2mm}%
   \else\ifnum\coppe@bancasize>5
     \setlength\coppe@membrogap{7mm minus 2mm}%
-  \fi\fi
+  \fi\fi\fi
   \gdef\coppe@bancalist{}%
   \count1=0
   \@whilenum\count1<\@advisor\do{%

@@ -22,30 +22,46 @@ This version follows the [document](https://registro.daac.coppe.ufrj.br/wp-conte
 > (Revisada em 26/11/2019 – Alteração da Folha Aprovação, Anexo III, páginas 22 e 23) 
 
 
-## `nlinguas` branch — new proposal for CPGP
+## `nlinguas` branch — proposal for CPGP (v4.1)
 
-This branch (`nlinguas`) is the proposed multilingual extension of CoppeTeX 4.x
-submitted for evaluation by the Comissão de Programas de Pós-Graduação (CPGP)
-of COPPE/UFRJ. Subject to CPGP review and approval, it will become the next
-official release of the `coppe` class.
+This branch (`nlinguas`) carries CoppeTeX **4.1**, submitted for evaluation by
+the Comissão de Programas de Pós-Graduação (CPGP) of COPPE/UFRJ. Subject to
+CPGP review and approval, it becomes the next official release of the `coppe`
+class. **`master` holds the state the COPPE has approved and does not move
+before that vote.**
 
-The accompanying draft of the updated COPPE norm — short, in Portuguese, and
-written to delegate to the UFRJ 2025 *Manual para Elaboração e Normalização
-de Trabalhos Acadêmicos* — is in [`NORMA_COPPE_2026.md`](./NORMA_COPPE_2026.md).
-It lists only the COPPE-specific deltas (institutional identity, three-abstract
-structure, main-language choice, COPPE lists, apêndice/anexo layout,
-pre-textual numbering, ABNT post-2020 adoption) and cites CoppeTeX 4.x as the
-implementation of reference.
+Two things are proposed together:
+
+- **The norm.** [`NORMA_COPPE_2026.md`](./NORMA_COPPE_2026.md) stops describing
+  the format and adopts the UFRJ/SiBI *Manual para Elaboração e Normalização de
+  Trabalhos Acadêmicos*, **9th edition revised (2026)**, in full. What is left
+  is thirteen sections recording only where COPPE specializes the Manual —
+  each labelled *Escolha*, *Dado próprio*, *Acréscimo* or *Reafirmação* — plus
+  the logomarks, the list of the thirteen Programas, and the three-abstract
+  structure.
+- **The implementation.** The class is verified against that Manual item by
+  item ([`REVISAO_SIBI.md`](./REVISAO_SIBI.md)) and the norm cites it as the
+  implementation of reference.
+
+The text put to the Comissão for a vote is
+[`PROPOSTA_CPGP.md`](./PROPOSTA_CPGP.md); the covering letter is
+[`CARTA_CPGP.md`](./CARTA_CPGP.md). What changes for people already writing a
+thesis is in [`MIGRATION_v3_to_v4.md`](./MIGRATION_v3_to_v4.md).
 
 ### What it changes
 
 The class gains a three-slot multilingual model — *main* / *foreign* /
-optional *third* — with five built-in language options and a plug-in
+optional *third*. The languages a thesis may be WRITTEN in are the three
+allowed by art. 57 of CEPG Resolution 302/2024 (Portuguese, English,
+Spanish); French and Italian ship as demonstrations of the plug-in
+mechanism, not as permitted thesis languages. There are five built-in
+language options and a plug-in
 mechanism for any other Babel language:
 
 - **`brazilian`** (default) and **`english`** — strings shipped inside
   `coppe.cls`; no extra file needed; identical output to previous releases.
-- **`spanish`**, **`french`**, **`italian`** — language packs auto-loaded
+- **`spanish`** — language pack auto-loaded
+- **`french`**, **`italian`** — demonstration packs, auto-loaded
   from `coppe-lang-<lang>.def` (class strings) and `<lang>-coppe.lbx`
   (biblatex strings), both shipped alongside `coppe.cls` in `dist/`.
 - **Any other Babel language** — supply the same two files and pass the
@@ -98,29 +114,47 @@ The manual (`coppe.pdf`) gains a new "Multilingual support" subsection
 key list + the deferred `\DeclareLanguageMapping` idiom) and a complete
 Spanish-main worked example.
 
-### Implementation history on this branch
+### Conformance with the 2026 Manual (v4.1)
 
-Four commits, each independently verifiable, each rebuilt with the
-existing pt/en regression baseline:
+The revised 9th edition (2026) of the UFRJ/SiBI Manual absorbed three
+institutional decisions — exclusively digital deposit (CEPG Res. 246/2023), the
+writing languages of art. 57 of CEPG Res. 302/2024, and the new CAPES
+data-collection sheet — and the class had never been checked against it. The
+September 2026 series did that, item by item. The full list is in
+[`CHANGELOG.md`](./CHANGELOG.md); the headline items:
 
-1. **`775db80`** — *scaffolding (no behavior change)*: language registers,
-   dispatcher (`\copperdefstring`, `\coppestring`, `\coppemainstring`,
-   `\coppeforeignstring`), Brazilian + English string tables, new class
-   options, language-pack loader.
-2. **`a363bc6`** — *migrate every site*: every `\iflanguage{brazilian}{x}{y}`
-   and every `\if@english` design-time switch in `coppe.cls`, `coppe.bbx`
-   and the bibliography drivers now reads from the dispatcher. Adds
-   `\coppe@selecttitle`, `\titlein`, the `brazilianabstract` environment,
-   and routes `foreignabstract` through `\coppe@foreignlang`.
-3. **`466302a`** — *Spanish / French / Italian language packs*: six new
-   docstrip modules in `coppe.dtx`, matching `\file{...}` entries in
-   `coppe.ins`, sync rules in `doall.bat`, smoke-tested with full
-   cover + abstract + foreignabstract + brazilianabstract documents.
-4. **`bfd0b5d`** — *documentation*: §5.2 "Multilingual support" added to
-   the manual; the class-option list and the `\title` paragraph in the
-   pre-existing "Document identification" section updated to point at it.
+- pagination continuous from the folha de rosto, folio in 10 pt at 2 cm from
+  the top and right edges, one-sided layout with a 3 cm left margin;
+- the additional sheet with the catalog card and the CAPES collection fields;
+- the approval sheet of 3.1.2.1.3, with the date and each member's degree and
+  institution, and spacing that keeps a board of up to eight on one sheet;
+- keywords closing all three abstracts, pre-textual lists out of the sumário,
+  Apêndice and Anexo centred;
+- Latin Modern instead of bitmap fonts, and **PDF/A-2b** under the `pdfa`
+  option, validated by veraPDF;
+- `\coadvisor`, plus the `coorientador` option for the abstract pages.
 
+### Single source, and proving a release
 
+`pdflatex coppe.ins` in `src/` generates **everything that is distributed** —
+the class, the biblatex styles, the language packs, the `.bib` bases, the
+`.ist`, the five per-language examples, `example_pdfa`, the cover montage and
+the `latexmkrc`. No derived file is edited by hand.
+
+What exists only to *prove* the class works is not distributed and is not in
+the `.dtx`: the regression suite, the twelve adversarial documents in
+`adversativa/`, and the harness in `tools/`. One command runs the lot:
+
+```powershell
+.\tools\prova.ps1
+```
+
+It regenerates the distribution and checks by git that no derived file
+diverged, compiles everything under both pdfLaTeX and LuaLaTeX, runs veraPDF
+over every PDF/A, and prints a verdict. `python3 tools/conferir-norma.py
+adversativa/adv_*.pdf` then measures the finished PDFs against the Manual —
+paper size, margins, folio position on the rendered ink, pagination order,
+sumário contents, approval sheet, abstract pages.
 
 
 ## Required LaTeX packages
@@ -213,85 +247,76 @@ the string files described above.
 
 ### Content
 
-The development of this class follows the Comprehensive TeX Archive
-Network (CTAN) standards. It is basically composed by an installation file ('coppe.ins') and the main source file ('coppe.dtx'). The full sources contain:
+The development of this class follows the Comprehensive TeX Archive Network
+(CTAN) standards. **Two files are the whole source**: `src/coppe.dtx`, which
+carries the code, the documentation and the demonstration documents, and
+`src/coppe.ins`, the docstrip script. One run,
 
-  1. COPYING: full text of the GNU General Policy License version 3.
+```bash
+cd src && pdflatex coppe.ins
+```
 
-  2. Makefile: used to extract the coppe class and build the
-     documentation and a sample thesis.
+writes every file that is distributed:
 
-  3. README.md: describe the CoppeTeX package.
+| File(s) | Role |
+| --- | --- |
+| `coppe.cls` | the document class |
+| `coppe.bbx`, `coppe.cbx`, `coppe.dbx` | ABNT author--date biblatex style and data model |
+| `coppe-numeric.bbx`, `coppe-numeric.cbx` | the numeric variant (class option `numbers`) |
+| `brazilian-coppe.lbx`, `english-coppe.lbx`, `spanish-coppe.lbx`, `french-coppe.lbx`, `italian-coppe.lbx` | biblatex localization strings |
+| `coppe-lang-spanish.def`, `coppe-lang-french.def`, `coppe-lang-italian.def` | class-level string packs |
+| `coppe.ist` | makeindex style for the lists of symbols and abbreviations |
+| `coppe.bib`, `example.bib` | the bibliography of the manual and the example's sample database |
+| `example.tex` | the full sample thesis |
+| `example_pt.tex`, `example_en.tex`, `example_es.tex`, `example_fr.tex`, `example_it.tex` | one short demonstration per main language |
+| `example_pdfa.tex` | the full example compiled as PDF/A-2b |
+| `covers_5languages.tex` | the side-by-side cover sheet |
+| `latexmkrc` | latexmk configuration (biber + the makeindex runs) |
 
-  4. coppe-{plain,unsrt}.bst: alphabetically sorted and unsorted numbered
-     BibTeX styles, Natbib compatible.
+No derived file is edited by hand. The bundle ships two logos,
+`coppe-logo.[eps,pdf]` and `ufrj-logo.pdf`, and `COPYING`.
 
-  5. coppe.dtx: main source file; contains the documentation, a sample
-     thesis and a Makeindex style.
+The BibTeX `.bst` styles of the 3.x series are gone: the bibliography engine
+is **biblatex with biber**.
 
-  7. coppe.ins: used to strip out the coppe document class from `coppe.dtx'.
-
-  8. coppe-logo.[eps,pdf]: images included in the front cover.
-
-  9. example.bib: sample BibTeX database for being used by example.tex.
-
-Our release packages contain the following files:
-
-  1. COPYING: full text of the GNU General Policy License version 3.
-
-  2. README.md: describe the CoppeTeX package.
-
-  3. coppe.cls: the main file. It is a LaTeX document class.
-
-  4. coppe-{plain,unsrt}.bst: alphabetically sorted and unsorted numbered
-     BibTeX styles, Natbib compatible.
-
-  5. coppe.ist: Makeindex style for creating lists of symbols
-     and abbreviations.
-
-  6. coppe.pdf: CoppeTeX documentation.
-
-  7. example.{tex,bib}: sample thesis using coppe class.
-
-  8. coppe-logo.[eps, pdf]: images included in the front cover.
-
+`dist/` holds a built copy of all of the above plus the compiled PDFs, so the
+package can be read and installed without running LaTeX at all.
 
 ## Installing
 
 If you have some experience with LaTeX classes and packages, you won't have any
 difficulty when installing CoppeTeX. It should be installed as any other LaTeX
-package you have ever used. So, you can save your time skipping this section.
+package you have ever used.
 
-The impatient user should get a thesis template [here](#).
+The simplest install is no install: copy the contents of `dist/` next to your
+thesis `.tex` and compile. LaTeX finds a class in the current directory first.
 
-For the enthusiastic newbies, we give here succinct instructions for installing
-the CoppeTeX bundle.
+### Into your local TeX tree
 
-There exist two possible ways of obtaining CoppeTeX. You can download a release
-or the sources. Each of these has its own installation method. We describe both
-in the following sections.
+Suppose `TEXMF` is your local LaTeX tree. Then:
 
-### From releases
+| From `dist/` | Goes to |
+| --- | --- |
+| `coppe.cls`, the `.bbx`/`.cbx`/`.dbx`, the `.lbx`, the `coppe-lang-*.def`, `coppe-logo.[eps,pdf]`, `ufrj-logo.pdf` | `$TEXMF/tex/latex/coppe` |
+| `coppe.ist` | `$TEXMF/makeindex/coppe` |
 
-Suppose TEXMF is a variable which stores the path of your local LaTeX tree.
-Then you should copy the files coppe.cls, coppe.ist and coppe-unsrt.bst to
-$TEXMF/tex/latex/coppe, $TEXMF/makeindex/coppe and $TEXMF/bibtex/bst/coppe,
-respectively. The image files minerva.eps and minerva.pdf go into the same
-directory as coppe.cls. In the end, you have to type 'texhash' to update your
-LaTeX tree and to make CoppeTeX visible to your LaTeX compiler.
+Then run `texhash` (or `initexmf --update-fndb` on MiKTeX) so the class becomes
+visible to your compiler.
 
 ### From sources
 
-For installing from sources, type:
-
 ```bash
-  latex coppe.ins
+cd src && pdflatex coppe.ins
 ```
 
-and you will get all the files you need. They are all stripped out from
-coppe.dtx. Now, you should follow the instructions in the 'From releases'
-section.
+gives you the same files, freshly generated from `coppe.dtx`. Then follow the
+section above.
 
+### Compiling a thesis
+
+`latexmkrc` ships with the bundle and already knows about biber and the two
+makeindex runs, so `latexmk -pdf yourthesis` is enough. By hand it is
+pdflatex, biber, pdflatex, pdflatex.
 
 ## Help & Support
 
