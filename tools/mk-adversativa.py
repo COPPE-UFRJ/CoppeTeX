@@ -123,6 +123,10 @@ def doc(i, tipo, tiponome, lang):
     A("  \\projetovinculado{sim}")
     A("  \\nomeprojeto{Projeto Adversativo}")
     A("  \\agenciafomento{Conselho Nacional de Desenvolvimento Científico e Tecnológico}{CNPq}")
+    # Duas agências, e não uma: o Anexo H pede "Agência(s)", e a segunda
+    # chamada é a que exercita a acumulação -- uma só nunca a exercitaria.
+    A("  \\agenciafomento{Fundação Carlos Chagas Filho de Amparo à Pesquisa do "
+      "Estado do Rio de Janeiro}{FAPERJ}")
     if i % 2 == 1:
         A("  \\fichacatalografica{coppe-logo.pdf}")
     A("  \\keyword{Adversativo}\\keyword{Conformidade}")

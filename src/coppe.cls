@@ -263,6 +263,7 @@ p\kern-.025em e}}\kern-.08em
 T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \newboolean{maledoc}
 \setboolean{maledoc}{false}
+\newif\if@coppeexame \@coppeexamefalse
 \def\coppe@mainlang{brazilian}
 \def\coppe@foreignlang{english}
 \DeclareOption{brazilian}{%
@@ -288,7 +289,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \newcommand{\@degreename}{Doutorado}
   \newcommand{\local@degname}{Doutor}
   \newcommand{\foreign@degname}{Doctor}
-  \setboolean{maledoc}{true}
+  \setboolean{maledoc}{true}\@coppeexametrue
   \newcommand\local@doctype{Exame de Qualifica{\c c}{\~ a}o}
   \newcommand\foreign@doctype{Qualifying Exam}
 }
@@ -297,7 +298,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \newcommand{\@degreename}{Mestrado}
   \newcommand{\local@degname}{Mestre}
   \newcommand{\foreign@degname}{Master}
-  \setboolean{maledoc}{true}
+  \setboolean{maledoc}{true}\@coppeexametrue
   \newcommand\local@doctype{Exame de Qualifica{\c c}{\~ a}o}
   \newcommand\foreign@doctype{Qualifying Exam}
 }
@@ -954,12 +955,14 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \coppe@docyear
   \end{center}
   \end{titlepage}
-  % Ficha catalográfica on the verso of the folha de rosto (NBR 14724, R57):
-  % the title page is a recto, so this lands on the immediately following verso,
-  % ahead of the approval sheet produced by \frontmatter.
+  % Folha adicional (3.1.2.1.2): a sheet of its own right after the folha de
+  % rosto, ahead of the approval sheet produced by \frontmatter. Until the 2026
+  % edition this content lived on the VERSO of the folha de rosto (NBR 14724,
+  % R57); the verso is gone with the printed copy.
   \setcounter{page}{2}%
-  \ifthenelse{\boolean{maledoc}}{}{%
-    \makefolhaadicional\clearpage\addtocounter{page}{-1}}%
+  \if@coppeexame\else
+    \makefolhaadicional\clearpage\addtocounter{page}{-1}%
+  \fi
   \global\let\maketitle\relax%
   \global\let\and\relax}
 \newcommand\coppe@membroid[4]{%

@@ -1,0 +1,95 @@
+%%
+%% Guarda o SUMARIO: a grafia de cada um dos cinco niveis, o alinhamento dos
+%% indicativos e dos titulos, e o que acontece com um titulo que ocupa duas
+%% linhas.
+%%
+%% A 2.6 manda que "no sumario, as secoes devem ser grafadas conforme
+%% apresentadas no corpo do trabalho", e a 3.1.2.1.6 manda alinhar os titulos
+%% "pela margem do titulo do indicativo mais extenso" -- e usar como exemplo o
+%% sumario do proprio manual, cujo layout e: todo indicativo na margem
+%% esquerda, todo titulo numa unica coluna.
+%%
+%% Cada nivel aparece duas vezes: uma com titulo curto, para medir a coluna, e
+%% uma com titulo longo, para ver onde a segunda linha comeca.
+%%
+%% NAO e gerado pelo coppe.dtx e NAO e distribuido: a suite prova que a
+%% classe funciona, nao faz parte dela. Rode por tools\prova.ps1, ou por
+%% tests\run-tests.ps1 para so esta pasta.
+%%
+
+\documentclass[dsc]{coppe}
+
+\usepackage[brazilian]{babel}
+
+\title{Título de Teste do Sumário}
+\foreigntitle{Table of Contents Test}
+\author{Nome}{de Teste}
+
+\advisor[UFRJ]{Prof.}{Primeiro}{Orientador}{D.Sc.}
+\examiner[UFRJ]{Prof.}{Primeiro Examinador}{D.Sc.}
+\examiner{Prof.}{Segundo Examinador}{Ph.D.}
+
+\department{PESC}
+\date{09}{2026}
+\keyword{Sumário}
+
+\begin{document}
+  \maketitle
+  \frontmatter
+  \begin{abstract}
+    Resumo de teste.
+  \end{abstract}
+  \begin{foreignabstract}
+    Test abstract.
+  \end{foreignabstract}
+  \tableofcontents
+  \mainmatter
+
+  \chapter{Curto}
+    Texto.
+  \section{Curto}
+    Texto.
+  \subsection{Curto}
+    Texto.
+  \subsubsection{Curto}
+    Texto.
+  \paragraph{Curto}
+    Texto.
+
+  \chapter{Um título de seção primária deliberadamente longo, escrito para
+    ocupar mais de uma linha no sumário e mostrar onde a segunda linha começa}
+    Texto.
+  \section{Um título de seção secundária deliberadamente longo, escrito para
+    ocupar mais de uma linha no sumário e mostrar onde a segunda linha começa}
+    Texto.
+  \subsection{Um título de seção terciária deliberadamente longo, escrito para
+    ocupar mais de uma linha no sumário e mostrar onde a segunda linha começa}
+    Texto.
+  \subsubsection{Um título de seção quaternária deliberadamente longo, escrito
+    para ocupar mais de uma linha no sumário e mostrar onde a segunda começa}
+    Texto.
+  \paragraph{Um título de seção quinária deliberadamente longo, escrito para
+    ocupar mais de uma linha no sumário e mostrar onde a segunda linha começa}
+    Texto.
+% Indicativos de dois algarismos em todos os niveis. A caixa que o
+% \numberline reserva para o indicativo tem largura fixa por nivel; um
+% indicativo mais largo que ela nao empurra o titulo, ele entra por cima.
+  \setcounter{chapter}{9}
+  \chapter{Depois de nove}
+    Texto.
+  \setcounter{section}{9}
+  \section{Depois de nove}
+    Texto.
+  \setcounter{subsection}{9}
+  \subsection{Depois de nove}
+    Texto.
+  \setcounter{subsubsection}{9}
+  \subsubsection{Depois de nove}
+    Texto.
+  \setcounter{paragraph}{9}
+  \paragraph{Depois de nove}
+    Texto.
+\end{document}
+%%
+%%
+%% End of file `tests/test_sumario.tex'.

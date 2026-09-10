@@ -2459,6 +2459,13 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %    \begin{macrocode}
 \newboolean{maledoc}
 \setboolean{maledoc}{false}
+% maledoc diz apenas que o substantivo do tipo de documento e masculino
+% ("Exame de Qualificacao ... apresentado", "SUBMETIDO"): serve a concordancia,
+% e nada mais. Quem NAO vai a deposito -- e portanto nao tem ficha
+% catalografica nem folha da Coleta CAPES -- e o exame de qualificacao, que e
+% outra coisa. As duas condicoes coincidem hoje por acaso, e por isso ganham
+% cada uma o seu booleano.
+\newif\if@coppeexame \@coppeexamefalse
 %
 % Class options.
 % Multilingual model (CoppeTeX 4.x, branch nlinguas). The class holds three
@@ -2503,7 +2510,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \newcommand{\@degreename}{Doutorado}
   \newcommand{\local@degname}{Doutor}
   \newcommand{\foreign@degname}{Doctor}
-  \setboolean{maledoc}{true}
+  \setboolean{maledoc}{true}\@coppeexametrue
   \newcommand\local@doctype{Exame de Qualifica{\c c}{\~ a}o}
   \newcommand\foreign@doctype{Qualifying Exam}
 }
@@ -2512,7 +2519,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \newcommand{\@degreename}{Mestrado}
   \newcommand{\local@degname}{Mestre}
   \newcommand{\foreign@degname}{Master}
-  \setboolean{maledoc}{true}
+  \setboolean{maledoc}{true}\@coppeexametrue
   \newcommand\local@doctype{Exame de Qualifica{\c c}{\~ a}o}
   \newcommand\foreign@doctype{Qualifying Exam}
 }
@@ -3610,9 +3617,10 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \coppe@docyear
   \end{center}
   \end{titlepage}
-  % Ficha catalográfica on the verso of the folha de rosto (NBR 14724, R57):
-  % the title page is a recto, so this lands on the immediately following verso,
-  % ahead of the approval sheet produced by \frontmatter.
+  % Folha adicional (3.1.2.1.2): a sheet of its own right after the folha de
+  % rosto, ahead of the approval sheet produced by \frontmatter. Until the 2026
+  % edition this content lived on the VERSO of the folha de rosto (NBR 14724,
+  % R57); the verso is gone with the printed copy.
 % LaTeX's titlepage environment ends with \setcounter{page}{1} whenever the
 % document is one-sided (see \endtitlepage in classes.dtx). That silently ate
 % the folha de rosto from the count, putting the folha de aprovacao at 1 instead
@@ -3624,8 +3632,11 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % catalografica nao pode ser contada ou numerada"), and the 2025 edition said
 % the same of the verso of the folha de rosto. Hence the counter is stepped
 % back after it.
-  \ifthenelse{\boolean{maledoc}}{}{%
-    \makefolhaadicional\clearpage\addtocounter{page}{-1}}%
+% An exame de qualificacao is not deposited with the library: no ficha
+% catalografica, and no Coleta CAPES sheet. Everything else gets both.
+  \if@coppeexame\else
+    \makefolhaadicional\clearpage\addtocounter{page}{-1}%
+  \fi
   \global\let\maketitle\relax%
   \global\let\and\relax}
 %    \end{macrocode}
