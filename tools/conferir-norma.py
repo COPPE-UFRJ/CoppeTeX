@@ -161,8 +161,13 @@ def confere(pdf):
         prim = [l for l in corpo_sum.split("\n")[1:] if l.strip()]
         if "listasnosumario" in opts:
             ok("sumario abre nas listas pre-textuais, pedido por `listasnosumario'")
-        elif prim and re.match(r"^\s*1[.\s]", prim[0]):
-            # o babel espanhol grafa "1. INTRODUCCION"; o ponto e dele, nao da norma
+        elif prim and re.match(r"^\s*1([.\s]|$)", prim[0]):
+            # Duas licencas na expressao. O ponto: o babel espanhol grafa
+            # "1. INTRODUCCION", e o ponto e dele, nao da norma. O fim de
+            # linha: desde que o indicativo e o titulo passaram a ficar em
+            # colunas separadas (3.1.2.1.6), o vao entre os dois e largo o
+            # bastante para o pdftotext quebrar a linha ali, e a primeira
+            # linha do sumario vem a ser o indicativo sozinho.
             ok("sumario abre na primeira secao numerada (3.1.2.1.6)")
         else:
             erro("sumario abre com %r -- elementos pre-textuais nao entram (3.1.2.1.6)"

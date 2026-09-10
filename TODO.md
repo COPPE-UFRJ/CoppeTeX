@@ -229,9 +229,9 @@ build-check: cobre as três coisas que podem estar erradas sem ninguém notar.
 3. **A prova passa**: a suíte de regressão e os doze adversativos, nos **dois
    motores**, com o veraPDF em cima de todo PDF/A.
 
-Estado da v4.1: **243 passos, 0 falhas, 26 PDFs conformes com PDF/A-2b**, e
-**0 erro em 31 documentos** conferidos contra o Manual pelo `conferir-norma.py`
-— os 24 adversativos, nos dois motores, e os 7 exemplos.
+Estado da v4.1: **248 passos, 0 falhas, 27 PDFs conformes com PDF/A-2b**, e
+**0 erro em 34 documentos** conferidos contra o Manual pelo `conferir-norma.py`
+— os 24 adversativos, nos dois motores, os 7 exemplos e três da suíte.
 
 ## 4e. Os dezesseis fluxos de escrita
 

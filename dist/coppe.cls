@@ -179,10 +179,62 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
 \titlespacing*{\paragraph}{0pt}{2.5ex plus 1ex minus .2ex}{1.5ex plus .2ex}
 \setcounter{secnumdepth}{4}
 \setcounter{tocdepth}{4}
-\let\coppe@orig@lchapter\l@chapter
-\renewcommand\l@chapter[2]{\coppe@orig@lchapter{\MakeUppercase{#1}}{#2}}
-\let\coppe@orig@lsection\l@section
-\renewcommand\l@section[2]{\coppe@orig@lsection{\MakeUppercase{#1}}{#2}}
+\newlength\coppe@tocnumwidth
+\newlength\coppe@tocnummax
+\newlength\coppe@tocnumsep
+\setlength\coppe@tocnumsep{0.5em}
+\setlength\coppe@tocnumwidth{1.75cm}
+\setlength\coppe@tocnummax{\z@}
+\newcommand\coppe@tocnumberline[1]{%
+  \settowidth\@tempdima{#1}%
+  \ifdim\@tempdima>\coppe@tocnummax \global\coppe@tocnummax\@tempdima \fi
+  \hb@xt@\coppe@tocnumwidth{#1\hfil}}
+\AtBeginDocument{%
+  \@ifundefined{coppe@tocnumsaved}{}{%
+    \setlength\@tempdima{\coppe@tocnumsaved}%
+    \addtolength\@tempdima\coppe@tocnumsep
+    \ifdim\@tempdima>\coppe@tocnumwidth
+      \setlength\coppe@tocnumwidth\@tempdima
+    \fi}}
+\AtEndDocument{%
+  \ifdim\coppe@tocnummax>\z@
+    \if@filesw
+      \immediate\write\@auxout{\string\gdef\string\coppe@tocnumsaved
+        {\the\coppe@tocnummax}}%
+    \fi
+    \setlength\@tempdima\coppe@tocnummax
+    \addtolength\@tempdima\coppe@tocnumsep
+    \ifdim\@tempdima>\coppe@tocnumwidth
+      \ClassWarning{coppe}{A coluna do sumario cresceu; rode LaTeX de novo}%
+    \fi
+  \fi}
+\newcommand\coppe@tocline[4]{%
+  \ifnum #1>\c@tocdepth\else
+    \vskip\z@\@plus.2\p@
+    {\leftskip\z@ \rightskip\@tocrmarg \parfillskip-\rightskip
+     \parindent\z@ \interlinepenalty\@M
+     \leavevmode
+     #2%
+     \advance\leftskip\coppe@tocnumwidth
+     \null\nobreak\hskip-\leftskip
+     #3\nobreak
+     \leaders\hbox{$\m@th\mkern\@dotsep mu\hbox{.}\mkern\@dotsep mu$}%
+       \hfill\nobreak
+     \hb@xt@\@pnumwidth{\hss #4}\par}%
+  \fi}
+\renewcommand\@dotsep{2}
+\renewcommand*\l@chapter[2]{%
+  \addpenalty{-\@highpenalty}%
+  \coppe@tocline{0}{\bfseries}{\MakeUppercase{#1}}{#2}%
+  \penalty\@highpenalty}
+\renewcommand*\l@section[2]{%
+  \coppe@tocline{1}{\normalfont}{\MakeUppercase{#1}}{#2}}
+\renewcommand*\l@subsection[2]{%
+  \coppe@tocline{2}{\normalfont\bfseries}{#1}{#2}}
+\renewcommand*\l@subsubsection[2]{%
+  \coppe@tocline{3}{\normalfont\bfseries\itshape}{#1}{#2}}
+\renewcommand*\l@paragraph[2]{%
+  \coppe@tocline{4}{\normalfont\itshape}{#1}{#2}}
 \RequirePackage{caption}
 \captionsetup{font=footnotesize,labelsep=endash,justification=centering}
 \RequirePackage{subcaption}
@@ -241,7 +293,13 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
   \fi}
 \newcommand\coppe@wrapstarttoc{%
   \let\coppe@orig@starttoc\@starttoc
-  \def\@starttoc##1{\coppe@checkwrites{##1}\coppe@orig@starttoc{##1}}}
+  \def\@starttoc##1{%
+    \coppe@checkwrites{##1}%
+    \begingroup
+      \def\coppe@@ext{##1}\def\coppe@@toc{toc}%
+      \ifx\coppe@@ext\coppe@@toc \let\numberline\coppe@tocnumberline \fi
+      \coppe@orig@starttoc{##1}%
+    \endgroup}}
 \AtBeginDocument{\coppe@wrapstarttoc}
 \RequirePackage{fancyhdr}
 \newcommand\coppe@listtoc[1]{%
@@ -263,6 +321,7 @@ p\kern-.025em e}}\kern-.08em
 T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \newboolean{maledoc}
 \setboolean{maledoc}{false}
+\newif\if@coppeexame \@coppeexamefalse
 \def\coppe@mainlang{brazilian}
 \def\coppe@foreignlang{english}
 \DeclareOption{brazilian}{%
@@ -288,7 +347,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \newcommand{\@degreename}{Doutorado}
   \newcommand{\local@degname}{Doutor}
   \newcommand{\foreign@degname}{Doctor}
-  \setboolean{maledoc}{true}
+  \setboolean{maledoc}{true}\@coppeexametrue
   \newcommand\local@doctype{Exame de Qualifica{\c c}{\~ a}o}
   \newcommand\foreign@doctype{Qualifying Exam}
 }
@@ -297,7 +356,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \newcommand{\@degreename}{Mestrado}
   \newcommand{\local@degname}{Mestre}
   \newcommand{\foreign@degname}{Master}
-  \setboolean{maledoc}{true}
+  \setboolean{maledoc}{true}\@coppeexametrue
   \newcommand\local@doctype{Exame de Qualifica{\c c}{\~ a}o}
   \newcommand\foreign@doctype{Qualifying Exam}
 }
@@ -332,7 +391,12 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \newif\if@coppemwforced   \@coppemwforcedfalse
 \DeclareOption{morewrites}{\@coppemorewritestrue\@coppemwforcedtrue}
 \DeclareOption{semmorewrites}{\@coppemorewritesfalse}
+\newif\if@coppesansserif \@coppesansseriffalse
+\DeclareOption{semserifa}{\@coppesansseriftrue}
 \ProcessOptions\relax
+\if@coppesansserif
+  \renewcommand{\familydefault}{\sfdefault}%
+\fi
 \if@coppemorewrites
   \ifdefined\directlua
     \ClassInfo{coppe}{morewrites dispensado: o LuaTeX ja tem 128 fluxos}%
@@ -812,7 +876,12 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \ifPDFTeX\hologo{pdfLaTeX}\fi
   \ifLuaTeX\hologo{LuaLaTeX}\fi
   \ifXeTeX\hologo{XeLaTeX}\fi}
-\providecommand{\coppefinalfont}{Latin Modern (\texttt{lmodern})}
+\providecommand{\coppefinalfont}{%
+  \if@coppesansserif
+    Latin Modern Sans (\texttt{lmodern})%
+  \else
+    Latin Modern (\texttt{lmodern})%
+  \fi}
 \providecommand{\coppefinalmanual}{%
   \emph{Norma para a Elabora\c c\~ao Gr\'afica de Teses e Disserta\c c\~oes
   da COPPE/UFRJ}}
@@ -954,12 +1023,14 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \coppe@docyear
   \end{center}
   \end{titlepage}
-  % Ficha catalográfica on the verso of the folha de rosto (NBR 14724, R57):
-  % the title page is a recto, so this lands on the immediately following verso,
-  % ahead of the approval sheet produced by \frontmatter.
+  % Folha adicional (3.1.2.1.2): a sheet of its own right after the folha de
+  % rosto, ahead of the approval sheet produced by \frontmatter. Until the 2026
+  % edition this content lived on the VERSO of the folha de rosto (NBR 14724,
+  % R57); the verso is gone with the printed copy.
   \setcounter{page}{2}%
-  \ifthenelse{\boolean{maledoc}}{}{%
-    \makefolhaadicional\clearpage\addtocounter{page}{-1}}%
+  \if@coppeexame\else
+    \makefolhaadicional\clearpage\addtocounter{page}{-1}%
+  \fi
   \global\let\maketitle\relax%
   \global\let\and\relax}
 \newcommand\coppe@membroid[4]{%
