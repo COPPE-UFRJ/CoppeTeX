@@ -194,20 +194,40 @@ Nenhum é obrigatório; o que faltar sai como linha para preencher à mão.
 3.1.2.1.3(c) exigem a área de concentração também no bloco de natureza da
 folha de rosto e da folha de aprovação.
 
-### 4.4 `\advisor` e `\examiner` ganharam a instituição
+### 4.4 `\advisor` e `\examiner` mudaram de argumentos
 
-**Mudança de API, compatível para trás.** A instituição entra como
-argumento **opcional**, antes dos demais:
+**Esta é a única mudança que quebra documento antigo.** Você precisa editar as
+linhas da banca antes de recompilar.
+
+O tratamento (`Prof.`, `Prof.ª`) era o primeiro argumento obrigatório e a
+instituição era opcional. Agora é o contrário: o tratamento é o argumento
+**opcional** e vem vazio por padrão, e a instituição é o **último argumento
+obrigatório**.
 
 ```latex
-% antes -- continua funcionando, apenas sem instituição
-\advisor{Prof.}{Nome}{Sobrenome}{D.Sc.}
-\examiner{Prof.}{Nome Sobrenome}{D.Sc.}
-
-% agora
+% antes -- não compila mais
 \advisor[UFRJ]{Prof.}{Nome}{Sobrenome}{D.Sc.}
 \examiner[UFF]{Prof.}{Nome Sobrenome}{D.Sc.}
+
+% agora
+\advisor{Nome}{Sobrenome}{D.Sc.}{UFRJ}
+\examiner{Nome Sobrenome}{D.Sc.}{UFF}
 ```
+
+A regra para converter é mecânica: **tire o tratamento do começo, tire os
+colchetes da instituição, e ponha a instituição no fim.**
+
+O `\coadvisor` segue exatamente a mesma forma dos quatro argumentos do
+`\advisor`.
+
+Duas perguntas que aparecem sempre:
+
+- **E se eu quiser o "Prof." mesmo assim?** Ponha entre colchetes:
+  `\advisor[Prof.]{Nome}{Sobrenome}{D.Sc.}{UFRJ}`. A norma não pede tratamento
+  nenhum, e é por isso que ele deixou de ser o padrão.
+- **E se eu não souber a instituição?** Deixe vazia:
+  `\advisor{Nome}{Sobrenome}{D.Sc.}{}`. O argumento é obrigatório, mas aceita
+  ficar em branco e nada é impresso no lugar dela.
 
 Duas consequências para quem já usava `\examiner`:
 
@@ -220,8 +240,12 @@ Duas consequências para quem já usava `\examiner`:
    nessa página. Se você listava o orientador também como `\examiner`,
    ele agora aparece duas vezes — remova a duplicata.
 
-A opção de classe `assinaturas` troca a lista compacta por uma régua de
-assinatura por membro, como no Anexo D do manual.
+**Não há mais linhas de assinatura.** A opção de classe `assinaturas`, que
+punha uma régua acima de cada nome, deixou de fazer efeito: com a entrega só
+digital, desde a Resolução CEPG n. 246/2023, não há o que assinar à mão. Quem
+tiver a opção no `\documentclass` pode deixá-la; ela apenas escreve um aviso na
+compilação. O que ainda tem uma linha na página é o campo "Aprovada em:", e só
+enquanto você não informar a data com `\dataaprovacao`.
 
 ### 4.5 PDF/A no depósito
 
@@ -341,12 +365,16 @@ corpo menor uniforme das citações longas, notas de rodapé, paginação e lege
 — e mais nada. O manual do SiBI, que carrega essa regra, está ele próprio
 composto em Arial.
 
-O padrão da classe continua serifado. Para compor sem serifa, a opção de
-classe:
+**O padrão da classe passou a ser sem serifa.** Você não precisa fazer nada
+para ter isso; é o que sai. Para voltar à fonte serifada, a opção de classe:
 
 ```latex
-\documentclass[dsc,semserifa]{coppe}
+\documentclass[dsc,comserifa]{coppe}
 ```
+
+A opção antiga, `semserifa`, continua sendo aceita e agora não faz nada, porque
+o que ela pedia virou o padrão. Se estiver no seu `\documentclass`, pode
+deixar.
 
 **Não redefina `\familydefault` no seu preâmbulo** — o `example.tex` fazia
 isso e a linha vencia a opção; ela saiu de lá. Se quiser uma sem serifa

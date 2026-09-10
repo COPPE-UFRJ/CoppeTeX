@@ -133,6 +133,12 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \changes{v4.1}{2026/09/09}{New options: pdfa (PDF/A-2b via pdfx, XMP built from the document), assinaturas, coorientador, rascunhoficha, listasnosumario, morewrites/semmorewrites. New command coadvisor. Under pdfTeX the class loads morewrites by itself when installed, because a work that asks for every list needs seventeen of TeX's sixteen output streams.}
 % \changes{v4.1}{2026/09/09}{Single source: pdflatex coppe.ins generates everything distributed -- class, biblatex styles, language packs, .bib bases, .ist, the five per-language examples, example\_pdfa, the cover montage and latexmkrc. The regression suite, the adversarial documents and the harness prove the class and are NOT distributed.}
 % \changes{v4.1}{2026/09/09}{Fixes found by the adversarial review: cover and folha de rosto compose in single spacing so they do not overflow under doublespacing, no folio is printed on a pre-textual sheet when something does overflow, the approval sheet holds a board of eight, and es-nosectiondot removes the period babel-spanish put in the sumario indicative.}
+% \changes{v4.1}{2026/09/10}{Breaking change in how the board is declared: advisor, coadvisor and examiner now take the TREATMENT as the optional argument, empty by default, and the INSTITUTION as the last mandatory one, which may be left empty. 3.1.2.1.3(e) asks for name, titulacao and institution and asks for no treatment, so that is what the folha de aprovacao prints.}
+% \changes{v4.1}{2026/09/10}{The class sets the document in the sans-serif family by DEFAULT; comserifa restores the serif one. Neither the manual nor the COPPE norm prescribes a family, and the SiBI manual that carries the rule is itself set in Arial. semserifa is still accepted and now does nothing.}
+% \changes{v4.1}{2026/09/10}{No signature rules on the folha de aprovacao: the deposit has been digital only since Resolucao CEPG n. 246/2023, so there is nothing to sign by hand. The assinaturas option is still accepted and only warns.}
+% \changes{v4.1}{2026/09/10}{The folha adicional draws the Coleta CAPES fields as the closed frame of Annex H -- one cell per field, a rule between cells, and no rules to write on -- instead of loose paragraphs with dotted fill rules.}
+% \changes{v4.1}{2026/09/10}{The research-line label on the folha de rosto follows the main language of the work instead of being hard-coded in Portuguese.}
+% \changes{v4.1}{2026/09/10}{newcoppefloat fixed twice: newfloat was wrapped in a group, and since newfloat defines the environment locally the new float vanished when the group closed; and its list came out unnumbered and without leaders because l@figure was not inherited. Author-declared floats are now numbered within the chapter like every other illustration.}
 % \changes{v4.0}{2026/05/30}{Catalog-label writers (coppe@mainBegin, coppe@bibBegin, coppe@bibEnd, coppe@hasLof) made language-agnostic: detokenize wrap on label names protects ':' and '.' from babel shorthand activation, and the raw etex primitives romannumeral/number replace LaTeX's roman/arabic to bypass spanish-babel's small-caps @roman redefinition that would otherwise crash pdftex with "Unbalanced write command" on every es-main document.}
 %
 % \DoNotIndex{\!,\',\.,\>,\^,\`,\',\=,\\}
@@ -404,13 +410,24 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % sheet is always typeset in Portuguese regardless of the main language of
 % the work, as the COPPE norm requires of institutional identity.
 %
+% Since v4.1 the sheet is drawn as Annex H shows it: a CLOSED FRAME the width
+% of the text block, one cell per field, cells separated by a horizontal rule,
+% and \textbf{no rules to write on} -- the space to fill in is the blank space
+% of the cell. A field left empty simply leaves its cell blank. The ficha
+% catalografica sits centred below the frame, on the same sheet.
+%
 % \DescribeMacro{\areaconcentracao}
 % The area of concentration, e.g.
 % |\areaconcentracao{Engenharia de Sistemas e Computacao}|. It appears on the
 % folha de rosto, on the folha de aprovacao and on the folha adicional.
 %
 % \DescribeMacro{\linhapesquisa}
-% The research line, required by the CAPES model of the folha de rosto.
+% The research line, required by the CAPES model of the folha de rosto, where
+% it is printed at the left margin just above the advisors. Its label follows
+% the MAIN LANGUAGE of the work (``Linha de pesquisa'', ``Research line'',
+% ``L\'\i nea de investigaci\'on'', ``Axe de recherche'', ``Linea di ricerca'').
+% Leave it out, or give it an empty argument, and the folha de rosto comes out
+% without the line and without any error.
 %
 % \DescribeMacro{\tipoproducao}
 % The kind of intellectual output, one of |bibliografica|, |artistica|,
@@ -491,6 +508,52 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \end{verbatim}
 % Note the |-s| option for specifying the style |coppe.ist|. Now, rerun |latex|
 % twice to get the references solved and you are done.
+%
+%
+% \subsection*{Illustrations: caption on top, source below}
+%
+% \DescribeMacro{\source}
+% \DescribeMacro{\fonte}
+% \DescribeEnv{quadro}
+% \DescribeMacro{\newcoppefloat}
+% 2.10 of the Manual puts the CAPTION ABOVE every illustration -- figure, table,
+% quadro, code listing, algorithm -- with the designating word, the number in
+% arabic figures, an em dash and the title; and it makes the SOURCE mandatory,
+% BELOW the illustration, in the smaller size. The class does that for you: the
+% caption goes on top wherever you write |\caption|, and |\source{...}| (or
+% |\fonte{...}|, the same command) sets the source line. The source advances no
+% counter and appears in no list.
+%
+% \begin{verbatim}
+%   \begin{figure}[ht]
+%     \centering
+%     \caption{O que a figura mostra}   % em cima
+%     \label{fig:algo}
+%     \includegraphics[width=0.5\textwidth]{arquivo}
+%     \fonte{Elaboracao propria.}       % embaixo
+%   \end{figure}
+% \end{verbatim}
+%
+% If another package has already defined |\source| or |\fonte|, use |\cpsource|
+% and |\cpfonte|, which are always available.
+%
+% A \textbf{quadro} is an illustration whose data is bordered on all sides,
+% unlike a tabela, which is ruled only at the top and the bottom. The |quadro|
+% environment behaves like |figure| and |table| and has its own list,
+% |\listofquadros|.
+%
+% For an illustration the Manual does not name -- a map, a photograph, a score
+% -- declare your own float in the preamble:
+% \begin{verbatim}
+%   \newcoppefloat{mapa}{Mapa}{Lista de Mapas}
+% \end{verbatim}
+% You get the |mapa| environment, numbered within the chapter like every other
+% illustration, the caption on top, |\source| below, |\autoref| support, and a
+% |\listofmapas| command to put with the other pre-textual lists. The example
+% does exactly this.
+%
+% Long quotations, footnotes, captions and the folio all come out in the smaller
+% uniform size 2.2(b) prescribes; you do not set that yourself.
 %
 %
 % \subsection*{References}
@@ -2198,7 +2261,7 @@ No modelo \CoppeTeX os anexos devem obrigtoriamente vir depois dos apêndices e 
 %<*class>
 \def\filename{coppe.dtx}
 \def\fileversion{v4.1}
-\def\filedate{2026/09/09}
+\def\filedate{2026/09/10}
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{coppe}[\filedate\ \fileversion\ COPPE Dissertations and Thesis]
 % Save the class version and date into private macros immediately, before any

@@ -4,7 +4,7 @@ Project changes worth noting, newest first. Follows
 [Keep a Changelog](https://keepachangelog.com/) loosely; dates are
 ISO-8601.
 
-## [4.1] — 2026-09-09 — Conformance with the revised UFRJ/SiBI Manual (2026)
+## [4.1] — 2026-09-10 — Conformance with the revised UFRJ/SiBI Manual (2026)
 
 The September series aligned the class with the **9th edition, revised
 (2026)** of the UFRJ/SiBI *Manual para Elaboração e Normalização de Trabalhos
@@ -17,6 +17,33 @@ The item-by-item verification that produced this release is in
 [`REVISAO_SIBI.md`](./REVISAO_SIBI.md); what changed for thesis authors is in
 [`MIGRATION_v3_to_v4.md`](./MIGRATION_v3_to_v4.md), section 4; the proposal put
 to the CPGP is [`PROPOSTA_CPGP.md`](./PROPOSTA_CPGP.md).
+
+### Breaking changes
+
+- **`\advisor`, `\coadvisor` and `\examiner` changed argument order.** The
+  treatment (`Prof.`) was the first mandatory argument and the institution an
+  optional one; now the treatment is the OPTIONAL argument and comes empty by
+  default, and the institution is the last mandatory argument and may be left
+  blank. 3.1.2.1.3(e) asks for name, titulação and institution, and asks for no
+  treatment at all.
+
+  ```latex
+  \advisor{Ana}{Lima}{D.Sc.}{UFRJ}   % was \advisor[UFRJ]{Prof.}{Ana}{Lima}{D.Sc.}
+  \examiner{Bia Sousa}{Ph.D.}{UFF}   % was \examiner[UFF]{Prof.}{Bia Sousa}{Ph.D.}
+  ```
+
+  To convert a document: drop the treatment from the front, drop the brackets
+  from the institution, move the institution to the end. `MIGRATION_v3_to_v4.md`
+  §4.4 has the rule and the two questions everyone asks.
+
+- **Sans-serif is now the default.** `comserifa` restores the serif family.
+  `semserifa` is still accepted and now does nothing, so a pre-4.1 document
+  still compiles. Neither the Manual nor the COPPE norm prescribes a family,
+  and the Manual itself is set in Arial.
+
+- **No signature rules on the approval sheet.** The deposit has been digital
+  only since CEPG Res. 246/2023, so there is nothing to sign by hand. The
+  `assinaturas` option is still accepted and only warns.
 
 ### Added
 
@@ -32,19 +59,27 @@ to the CPGP is [`PROPOSTA_CPGP.md`](./PROPOSTA_CPGP.md).
 - **Front page fields** — área de concentração, linha de pesquisa, subtitle,
   number of volumes, year of deposit.
 - **Approval sheet** in the order of 3.1.2.1.3: date of approval, degree and
-  institution of every member, advisor as president; `assinaturas` adds
-  signature rules.
+  institution of every member, advisor as president.
 - **Keywords** at the end of all three abstracts (3.1.2.1.4).
 - **Fifth heading level** numbered and formatted (2.6).
 - **`listasnosumario`** — restores the pre-textual lists to the sumário, which
   3.1.2.1.6 keeps out of it.
-- **`semserifa`** — sets the document in the sans-serif family. Neither the
-  manual nor the COPPE norm prescribes a typeface: 2.2(b) fixes the colour, the
-  body size 12 and the smaller uniform size of the four items it lists, and
-  says nothing about the family — the SiBI manual that carries the rule is
-  itself set in Arial. `lmodern` brings both families as vector fonts, so
-  either way the document is PDF/A material, which `tests/test_semserifa.tex`
-  proves by asking for `semserifa` and `pdfa` at once and going through veraPDF.
+- **`comserifa`** — restores the serif family, now that sans is the default.
+  Neither the manual nor the COPPE norm prescribes a typeface: 2.2(b) fixes the
+  colour, the body size 12 and the smaller uniform size of the four items it
+  lists, and says nothing about the family — the SiBI manual that carries the
+  rule is itself set in Arial. `lmodern` brings both families as vector fonts,
+  so either way the document is PDF/A material, which `tests/test_comserifa.tex`
+  proves by asking for `comserifa` and `pdfa` at once and going through veraPDF.
+- **The CAPES sheet as a framed table** — Annex H draws the five fields inside
+  a closed frame, one cell each, with nothing to write on. The class did loose
+  paragraphs with dotted fill rules; it now draws the frame.
+- **`\newcoppefloat` usable in practice** — it wrapped `\newfloat` in a group,
+  and since `\newfloat` defines the environment locally the author's new float
+  vanished as soon as the group closed. Its list also came out unnumbered and
+  without leaders. Author-declared floats are now numbered within the chapter
+  like every other illustration, and `example.tex` declares one (`mapa`) and
+  uses it twice.
 - **`morewrites` / `semmorewrites`** — under pdfTeX the class now loads
   `morewrites` on its own when it is installed; a document that uses every
   list needs seventeen of TeX's sixteen output streams.

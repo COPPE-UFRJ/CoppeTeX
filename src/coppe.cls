@@ -52,7 +52,7 @@
 %%
 \def\filename{coppe.dtx}
 \def\fileversion{v4.1}
-\def\filedate{2026/09/09}
+\def\filedate{2026/09/10}
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{coppe}[\filedate\ \fileversion\ COPPE Dissertations and Thesis]
 \let\coppe@version\fileversion
