@@ -181,7 +181,7 @@ Todas corrigidas antes desta proposta.
 
 ## 4. Pontos que a Comissão pode querer decidir
 
-Três questões estão maduras, mas são de mérito e não de implementação:
+Quatro questões estão maduras, mas são de mérito e não de implementação:
 
 1. **PDF/A por padrão.** Hoje o PDF/A-2b é uma opção da classe, desligada.
    Está validado e não custa nada ao autor. A Comissão pode determinar que
@@ -190,7 +190,14 @@ Três questões estão maduras, mas são de mérito e não de implementação:
 2. **Coorientador nas páginas de resumo.** O art. 4.º proposto deixa a
    critério do Programa. A Comissão pode preferir uniformizar, em qualquer
    das duas direções.
-3. **Revisão do espanhol.** O pacote de espanhol está completo e conforme,
+3. **Família de fonte.** Nem o Manual nem esta Norma prescrevem tipo de letra:
+   a 2.2(b) fixa a cor, o corpo 12 e o corpo menor uniforme de quatro itens, e
+   cala sobre a família — e o próprio Manual está composto em Arial. A
+   implementação de referência oferece as duas formas (a opção `semserifa`) e
+   mantém a serifada por padrão. A Comissão pode fixar uma das duas, ou
+   registrar na Norma que a escolha é do autor, que é o que hoje se pratica sem
+   estar escrito.
+4. **Revisão do espanhol.** O pacote de espanhol está completo e conforme,
    mas ainda não foi revisto por falante nativo — três termos merecem
    conferência terminológica (`Cuadro`/`Recuadro`, `Solicitante`,
    `Tesis de Maestría`/`Tesina`). É o único item de trabalho humano pendente,

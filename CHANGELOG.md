@@ -38,6 +38,13 @@ to the CPGP is [`PROPOSTA_CPGP.md`](./PROPOSTA_CPGP.md).
 - **Fifth heading level** numbered and formatted (2.6).
 - **`listasnosumario`** — restores the pre-textual lists to the sumário, which
   3.1.2.1.6 keeps out of it.
+- **`semserifa`** — sets the document in the sans-serif family. Neither the
+  manual nor the COPPE norm prescribes a typeface: 2.2(b) fixes the colour, the
+  body size 12 and the smaller uniform size of the four items it lists, and
+  says nothing about the family — the SiBI manual that carries the rule is
+  itself set in Arial. `lmodern` brings both families as vector fonts, so
+  either way the document is PDF/A material, which `tests/test_semserifa.tex`
+  proves by asking for `semserifa` and `pdfa` at once and going through veraPDF.
 - **`morewrites` / `semmorewrites`** — under pdfTeX the class now loads
   `morewrites` on its own when it is installed; a document that uses every
   list needs seventeen of TeX's sixteen output streams.

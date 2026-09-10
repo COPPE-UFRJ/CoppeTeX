@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
     Verificação de build da CoppeTeX. Regenera a classe, compila os exemplos
     e roda a suíte de testes, deixando todos os logs em _scratch/build-logs/.
@@ -19,7 +19,8 @@
     tests    - class + a suíte tests/run-tests.ps1
     docs     - class + coppe.pdf (manual), NORMA_COPPE_2026.pdf,
                futuremanual2026.pdf e covers_5languages.pdf
-    pdfa     - class + example_pdfa.tex e tests/test_pdfa.tex, e passa os dois
+    pdfa     - class + example_pdfa.tex, tests/test_pdfa.tex e
+               tests/test_semserifa.tex, e passa os tres
                pelo veraPDF no perfil 2b. Precisa do veraPDF instalado (o
                script procura em %USERPROFILE%\verapdf e no PATH); sem ele o
                passo é PULADO, não falha.
@@ -255,6 +256,11 @@ if ($Scope -in @("pdfa", "all")) {
     # que vai para o deposito.
     Build-Tex -Stem "example_pdfa" -Dir $src     -WithBiber
     Build-Tex -Stem "test_pdfa"    -Dir $testDir -WithBiber
+    # A opcao `semserifa' troca a familia padrao do documento. A pergunta que
+    # interessa nao e se compila -- e se o documento sem serifa continua sendo
+    # PDF/A, que e o que a 2.2(d) exige do deposito. Sem fonte vetorial nao ha
+    # PDF/A, e era assim que a classe inteira saia antes do lmodern: em Type 3.
+    Build-Tex -Stem "test_semserifa" -Dir $testDir -WithBiber
 
     # O veraPDF nao esta no PATH depois da instalacao padrao no Windows; o
     # instalador deixa o .bat na raiz da pasta escolhida. Procura-se ali antes
@@ -276,8 +282,9 @@ if ($Scope -in @("pdfa", "all")) {
         Add-Line ""
         Add-Line "veraPDF: $vera"
         $veraTargets = @(
-            @{ Stem = "example_pdfa"; Dir = $src },
-            @{ Stem = "test_pdfa";    Dir = $testDir })
+            @{ Stem = "example_pdfa";   Dir = $src },
+            @{ Stem = "test_pdfa";      Dir = $testDir },
+            @{ Stem = "test_semserifa"; Dir = $testDir })
         # todo documento adversativo e compilado com a opcao pdfa: se algum
         # deles ja foi gerado, valida-se tambem
         $advDirV = Join-Path $root "adversativa"

@@ -334,7 +334,35 @@ Junto vieram duas correções que você talvez nunca tivesse visto:
   o número tinha largura fixa por nível; com dez capítulos, um indicativo como
   `10.10.10.10` entrava quase meio centímetro por cima do título.
 
-### 4.10 "No room for a new \write"
+### 4.10 Com ou sem serifa
+
+A norma **não manda em família de fonte**. A 2.2(b) fixa a cor, o corpo 12 e o
+corpo menor uniforme das citações longas, notas de rodapé, paginação e legendas
+— e mais nada. O manual do SiBI, que carrega essa regra, está ele próprio
+composto em Arial.
+
+O padrão da classe continua serifado. Para compor sem serifa, a opção de
+classe:
+
+```latex
+\documentclass[dsc,semserifa]{coppe}
+```
+
+**Não redefina `\familydefault` no seu preâmbulo** — o `example.tex` fazia
+isso e a linha vencia a opção; ela saiu de lá. Se quiser uma sem serifa
+diferente da Latin Modern, aí sim carregue o pacote da fonte e troque a
+família você mesmo:
+
+```latex
+\usepackage{helvet}\renewcommand{\familydefault}{\sfdefault}
+```
+
+Nesse caso, redefina também `\coppefinalfont`, senão o colofão anuncia uma
+fonte que não é a que você usou. E confira que a fonte escolhida é vetorial
+(Type 1 ou OpenType): fonte bitmap inviabiliza o PDF/A, que a 2.2(d) exige do
+depósito.
+
+### 4.11 "No room for a new \write"
 
 Um trabalho que pede todas as listas — figuras, tabelas, quadros,
 programas, algoritmos, abreviaturas e símbolos — precisa de dezessete dos

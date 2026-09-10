@@ -1,0 +1,83 @@
+%%
+%% test_semserifa.tex -- guarda a opcao de classe `semserifa'.
+%%
+%% A 2.2(b) do manual fixa a cor, o corpo 12 e o corpo menor uniforme das
+%% citacoes longas, notas, paginacao e legendas, e NAO prescreve familia de
+%% fonte; a Norma da COPPE tambem nao. A opcao existe para o autor que quer
+%% compor sem serifa sem ter de mexer em \familydefault -- e o manual do SiBI,
+%% que carrega a regra, esta ele proprio composto em Arial.
+%%
+%% O teste pede as duas coisas ao mesmo tempo, `semserifa' e `pdfa', porque a
+%% pergunta que interessa nao e se compila: e se o documento sem serifa
+%% continua sendo PDF/A. Sem serifa vetorial nao ha PDF/A, e foi exatamente
+%% assim que a classe inteira saia antes de carregar o lmodern: em Type 3.
+%% O veraPDF deste alvo esta no escopo `pdfa' do build-check.
+%%
+%% Cobre tambem os cinco niveis de secao, a citacao longa, a legenda e a nota
+%% de rodape -- os quatro itens que a 2.2(b) manda sair em corpo menor -- para
+%% que a troca de familia nao os deixe para tras.
+%%
+%% NAO e gerado pelo coppe.dtx e NAO e distribuido: a suite prova que a
+%% classe funciona, nao faz parte dela. Rode por tools\prova.ps1, ou por
+%% tests\run-tests.ps1 para so esta pasta.
+%%
+
+\documentclass[dsc,semserifa,pdfa]{coppe}
+
+\usepackage[brazilian]{babel}
+
+\title{Título de Teste sem Serifa}
+\foreigntitle{Sans-Serif Test Title}
+\author{Nome}{de Teste}
+
+\advisor[UFRJ]{Prof.}{Primeiro}{Orientador}{D.Sc.}
+\examiner[UFRJ]{Prof.}{Primeiro Examinador}{D.Sc.}
+\examiner{Prof.}{Segundo Examinador}{Ph.D.}
+
+\department{PESC}
+\date{09}{2026}
+\dataaprovacao{15 de setembro de 2026}
+
+\keyword{Sem serifa}
+\keyword{Tipografia}
+
+\areaconcentracao{Engenharia de Sistemas e Computação}
+\linhapesquisa{Engenharia de Dados e Conhecimento}
+\tipoproducao{bibliografica}
+\projetovinculado{nao}
+\agenciafomento{Conselho Nacional de Desenvolvimento Científico e
+                Tecnológico}{CNPq}
+
+\begin{document}
+  \maketitle
+  \frontmatter
+  \begin{abstract}
+    Resumo de teste, composto sem serifa.
+  \end{abstract}
+  \begin{foreignabstract}
+    Test abstract, set sans serif.
+  \end{foreignabstract}
+  \tableofcontents
+  \mainmatter
+
+  \chapter{Introdução}
+    Primeiro parágrafo, para conferir o recuo e a família da fonte.%
+    \footnote{A nota de rodapé sai em corpo menor, 2.2(b).}
+  \section{Uma seção}
+    Texto da seção.
+    \begin{longquote}
+      Citação de mais de três linhas, que sai em corpo menor e recuada,
+      como manda a 2.2(b), e que aqui serve para conferir se o recuo e o
+      corpo sobrevivem à troca de família da fonte padrão do documento.
+    \end{longquote}
+  \subsection{Uma Subseção}
+    Texto terciário.
+  \subsubsection{Uma Subsubseção}
+    Texto quaternário.
+  \paragraph{Um quinto nível}
+    Texto quinário. Uma fórmula, $e^{i\pi} + 1 = 0$, para lembrar que a
+    matemática não acompanha a família do texto.
+\end{document}
+%%
+%%
+%% End of file `tests/test_semserifa.tex'.

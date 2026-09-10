@@ -54,10 +54,11 @@ Três observações que talvez ajudem a apreciação:
   centímetros e em ordem, e o PDF/A validado pelo veraPDF. A Seção 3.4 da
   proposta traz os números, e um único comando os reproduz.
 
-A Seção 4 da proposta reúne três questões que são de mérito e não de
-implementação — PDF/A por padrão, coorientador nas páginas de resumo e a
-revisão terminológica do espanhol —, sobre as quais a equipe mantenedora
-gostaria de ouvir a Comissão.
+A Seção 4 da proposta reúne quatro questões que são de mérito e não de
+implementação — PDF/A por padrão, coorientador nas páginas de resumo, família
+de fonte (nem o Manual nem a Norma prescrevem tipo de letra, e o próprio Manual
+está composto em Arial) e a revisão terminológica do espanhol —, sobre as quais
+a equipe mantenedora gostaria de ouvir a Comissão.
 
 Permanecemos à disposição para apresentar a proposta presencialmente ou
 acolher quaisquer sugestões de ajuste.

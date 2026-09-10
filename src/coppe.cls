@@ -391,7 +391,12 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \newif\if@coppemwforced   \@coppemwforcedfalse
 \DeclareOption{morewrites}{\@coppemorewritestrue\@coppemwforcedtrue}
 \DeclareOption{semmorewrites}{\@coppemorewritesfalse}
+\newif\if@coppesansserif \@coppesansseriffalse
+\DeclareOption{semserifa}{\@coppesansseriftrue}
 \ProcessOptions\relax
+\if@coppesansserif
+  \renewcommand{\familydefault}{\sfdefault}%
+\fi
 \if@coppemorewrites
   \ifdefined\directlua
     \ClassInfo{coppe}{morewrites dispensado: o LuaTeX ja tem 128 fluxos}%
@@ -871,7 +876,12 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \ifPDFTeX\hologo{pdfLaTeX}\fi
   \ifLuaTeX\hologo{LuaLaTeX}\fi
   \ifXeTeX\hologo{XeLaTeX}\fi}
-\providecommand{\coppefinalfont}{Latin Modern (\texttt{lmodern})}
+\providecommand{\coppefinalfont}{%
+  \if@coppesansserif
+    Latin Modern Sans (\texttt{lmodern})%
+  \else
+    Latin Modern (\texttt{lmodern})%
+  \fi}
 \providecommand{\coppefinalmanual}{%
   \emph{Norma para a Elabora\c c\~ao Gr\'afica de Teses e Disserta\c c\~oes
   da COPPE/UFRJ}}

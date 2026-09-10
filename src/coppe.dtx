@@ -674,6 +674,19 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %   package becomes an error instead of a warning. Under LuaLaTeX, which has 128
 %   streams, none of this is loaded and none of it is needed.
 %
+%   \item[\texttt{semserifa}] Set the whole document in the sans-serif family
+%   instead of the serif one. \textbf{Neither the manual nor the COPPE norm
+%   prescribes a typeface}: 2.2(b) fixes the colour, the body size~12 and the
+%   smaller uniform size of the four items it lists, and says nothing about the
+%   family. The choice is the author's, and the SiBI manual that carries the
+%   rule is itself set in Arial. The class loads |lmodern|, which brings both
+%   families as vector fonts, so either way the document is PDF/A material.
+%   For a DIFFERENT sans face -- Helvetica, say -- load its package in the
+%   preamble and redefine |\familydefault| there; this option is for the common
+%   case of an author who does not want to choose a font, only to drop the
+%   serifs. Redefine |\coppefinalfont| if you do load another face, so the
+%   colophon does not announce Latin Modern.
+%
 %   \item[\texttt{listasnosumario}] Put the pre-textual lists -- figures,
 %   tables, quadros, programas, abreviaturas, simbolos -- back into the sumario.
 %   \textbf{Contrary to 3.1.2.1.6}, which tells the author to follow the
@@ -1093,9 +1106,11 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 
 \makelosymbols
 \makeloabbreviations
-% Algumas coisas opcioanais que não cabem no coppetex.sty
-%\renewcommand{\familydefault}{\sfdefault} % para usar fontes SEM serifa no default
-\renewcommand{\familydefault}{\rmdefault} % para usar fontes COM serifa no default
+% Fonte: a norma fixa o corpo 12, e não a família. Para compor sem serifa,
+% passe a opção de classe `semserifa' lá em cima -- NÃO redefina
+% \familydefault aqui, porque isso venceria a opção. Para uma sem serifa
+% diferente da Latin Modern, carregue o pacote da fonte e troque a família:
+%\usepackage{helvet}\renewcommand{\familydefault}{\sfdefault}
 
 
 \begin{document}
@@ -2735,10 +2750,26 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \newif\if@coppemwforced   \@coppemwforcedfalse
 \DeclareOption{morewrites}{\@coppemorewritestrue\@coppemwforcedtrue}
 \DeclareOption{semmorewrites}{\@coppemorewritesfalse}
+% A 2.2(b) fixa a cor, o corpo 12 e o corpo menor uniforme dos quatro itens
+% listados nela, e nao diz uma palavra sobre familia de fonte -- nem a Norma da
+% COPPE. A escolha e do autor. O padrao da classe e a serifada, que e a do
+% LaTeX; `semserifa' troca a familia padrao para a sem serifa. Note que o
+% manual do SiBI, que fixa a regra, esta ele proprio composto em Arial.
+\newif\if@coppesansserif \@coppesansseriffalse
+\DeclareOption{semserifa}{\@coppesansseriftrue}
 %    \end{macrocode}
 %
 %    \begin{macrocode}
 \ProcessOptions\relax
+% A troca da familia padrao vai aqui porque so agora se sabe se a opcao foi
+% pedida; o lmodern ja esta carregado la em cima e traz as duas familias, a
+% serifada e a sem serifa, ambas vetoriais -- que e o que o PDF/A exige.
+% Quem quiser uma sem serifa DIFERENTE (Helvetica, por exemplo) carrega o
+% pacote da fonte no preambulo e refaz \familydefault ali; esta opcao existe
+% para o caso comum, em que ninguem quer escolher fonte, so nao quer serifa.
+\if@coppesansserif
+  \renewcommand{\familydefault}{\sfdefault}%
+\fi
 % morewrites has to come before anything else allocates, so it goes first
 % thing after the options are read.
 \if@coppemorewrites
@@ -3533,7 +3564,12 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % A classe carrega lmodern (as bitmap da Computer Modern saiam em Type 3 e
 % inviabilizavam o PDF/A), entao o colofao diz Latin Modern -- quem trocar a
 % fonte redefine este comando.
-\providecommand{\coppefinalfont}{Latin Modern (\texttt{lmodern})}
+\providecommand{\coppefinalfont}{%
+  \if@coppesansserif
+    Latin Modern Sans (\texttt{lmodern})%
+  \else
+    Latin Modern (\texttt{lmodern})%
+  \fi}
 \providecommand{\coppefinalmanual}{%
   \emph{Norma para a Elabora\c c\~ao Gr\'afica de Teses e Disserta\c c\~oes
   da COPPE/UFRJ}}
