@@ -2295,22 +2295,113 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
 % own sumario is four levels deep, so tocdepth follows.
 \setcounter{secnumdepth}{4}
 \setcounter{tocdepth}{4}
-% 2.6: "no sumario, as secoes devem ser grafadas conforme apresentadas no corpo
-% do trabalho". The body sets chapter and section in ALL CAPS (via the
-% \MakeUppercase in their \titleformat), but that case change belongs to the
-% printed heading alone -- the .toc keeps the title as typed, so the sumario
-% came out in ordinary case and contradicted the body.
+% --- O sumario (2.6 e 3.1.2.1.6) ------------------------------------------
 %
-% \l@chapter and \l@section are the two TOC line formatters; wrapping their
-% entry argument is enough, and leaves \l@subsection and below untouched, which
-% is what we want since those levels are NOT uppercased in the body either.
-% The entry carries \numberline{N} plus the title; \MakeUppercase passes the
-% digits through unchanged and leaves robust commands (including hyperref's
-% link wrappers) intact.
-\let\coppe@orig@lchapter\l@chapter
-\renewcommand\l@chapter[2]{\coppe@orig@lchapter{\MakeUppercase{#1}}{#2}}
-\let\coppe@orig@lsection\l@section
-\renewcommand\l@section[2]{\coppe@orig@lsection{\MakeUppercase{#1}}{#2}}
+% Duas exigencias o governam, e a segunda tem um exemplo obrigatorio.
+%
+% A 2.6: "no sumario, as secoes devem ser grafadas conforme apresentadas no
+% corpo do trabalho". A gradacao do corpo -- primaria em CAIXA ALTA negrito,
+% secundaria em CAIXA ALTA, terciaria em negrito, quaternaria em negrito
+% italico, quinaria em italico -- tem de reaparecer aqui. So as duas primeiras
+% reapareciam: da terciaria em diante o sumario saia em redondo, contradizendo
+% o corpo.
+%
+% A 3.1.2.1.6: os titulos "devem ser alinhados a esquerda... pela margem do
+% titulo do indicativo mais extenso", e "utilize como exemplo o sumario deste
+% trabalho". Medido no PDF do manual: o indicativo comeca em 3,00 cm nos cinco
+% niveis -- a margem -- e o titulo em 4,75 cm nos cinco. Uma coluna so.
+%
+% O \@dottedtocline do LaTeX faz o contrario. Recua progressivamente (3,00 /
+% 3,62 / 4,57 / 5,89 / 7,13 cm nesta classe) e da a cada nivel uma caixa de
+% indicativo de largura fixa. Isso empurrava o titulo quinario para 9,20 cm --
+% 6,2 dos 16 cm de mancha -- e, pior, a caixa fixa ESTOURA: com o indicativo
+% "10.10.10.10.10", que uma tese de dez capitulos alcanca, o numero entrava
+% 4,6 mm POR CIMA do titulo. A 2.6 quer o titulo "separado por um espaco" do
+% indicativo; ali nao havia espaco nenhum.
+%
+% A coluna abaixo e medida, nao arbitrada: \coppe@tocnumberline mede cada
+% indicativo enquanto compoe o sumario e guarda o maior; o valor vai para o
+% .aux e governa a passada seguinte. E literalmente "a margem do titulo do
+% indicativo mais extenso". Custa uma passada -- a mesma que as referencias
+% cruzadas ja custam.
+\newlength\coppe@tocnumwidth
+\newlength\coppe@tocnummax
+\newlength\coppe@tocnumsep
+% O espaco entre o indicativo e o titulo (2.6, "separado por um espaco").
+\setlength\coppe@tocnumsep{0.5em}
+% Piso: a coluna do proprio manual. Pela regra literal, um trabalho so com
+% capitulos teria uma coluna de meio centimetro e o titulo quase colado na
+% margem; o piso evita isso. A coluna nunca fica MENOR que o indicativo mais
+% extenso mais o espaco -- o piso so a impede de ficar estreita demais.
+\setlength\coppe@tocnumwidth{1.75cm}
+\setlength\coppe@tocnummax{\z@}
+\newcommand\coppe@tocnumberline[1]{%
+  \settowidth\@tempdima{#1}%
+  \ifdim\@tempdima>\coppe@tocnummax \global\coppe@tocnummax\@tempdima \fi
+  \hb@xt@\coppe@tocnumwidth{#1\hfil}}
+% A largura medida na passada anterior chega pelo .aux, que o \document le
+% antes dos ganchos de \AtBeginDocument.
+\AtBeginDocument{%
+  \@ifundefined{coppe@tocnumsaved}{}{%
+    \setlength\@tempdima{\coppe@tocnumsaved}%
+    \addtolength\@tempdima\coppe@tocnumsep
+    \ifdim\@tempdima>\coppe@tocnumwidth
+      \setlength\coppe@tocnumwidth\@tempdima
+    \fi}}
+\AtEndDocument{%
+  \ifdim\coppe@tocnummax>\z@
+    \if@filesw
+      \immediate\write\@auxout{\string\gdef\string\coppe@tocnumsaved
+        {\the\coppe@tocnummax}}%
+    \fi
+    \setlength\@tempdima\coppe@tocnummax
+    \addtolength\@tempdima\coppe@tocnumsep
+    \ifdim\@tempdima>\coppe@tocnumwidth
+      \ClassWarning{coppe}{A coluna do sumario cresceu; rode LaTeX de novo}%
+    \fi
+  \fi}
+% Uma linha do sumario. #1 nivel, #2 fonte, #3 entrada, #4 folha. A entrada
+% traz \numberline{N} seguido do titulo; o \hskip-\leftskip puxa a primeira
+% linha de volta a margem, e o \leftskip deixa as linhas seguintes de um
+% titulo longo alinhadas pela coluna do titulo -- nunca debaixo do numero.
+% A folha herda a fonte do nivel, como no sumario do manual.
+\newcommand\coppe@tocline[4]{%
+  \ifnum #1>\c@tocdepth\else
+    \vskip\z@\@plus.2\p@
+    {\leftskip\z@ \rightskip\@tocrmarg \parfillskip-\rightskip
+     \parindent\z@ \interlinepenalty\@M
+     \leavevmode
+     #2%
+     \advance\leftskip\coppe@tocnumwidth
+     \null\nobreak\hskip-\leftskip
+     #3\nobreak
+     \leaders\hbox{$\m@th\mkern\@dotsep mu\hbox{.}\mkern\@dotsep mu$}%
+       \hfill\nobreak
+     \hb@xt@\@pnumwidth{\hss #4}\par}%
+  \fi}
+% O pontilhado do manual e mais fechado que o do book; \@dotsep e a distancia
+% entre os pontos, em unidades matematicas.
+\renewcommand\@dotsep{2}
+% Os cinco niveis. O \MakeUppercase vai so nos dois primeiros porque so eles
+% saem em caixa alta no corpo; ele atravessa os algarismos sem toca-los e
+% preserva comandos robustos, inclusive os do hyperref.
+%
+% O nivel 1 nao ganha mais o \addvspace{1.0em} do book: o sumario do manual
+% tem espacamento uniforme, sem folga extra antes da secao primaria. As
+% penalidades ficam, para que uma entrada de capitulo nao seja abandonada
+% sozinha no pe da folha.
+\renewcommand*\l@chapter[2]{%
+  \addpenalty{-\@highpenalty}%
+  \coppe@tocline{0}{\bfseries}{\MakeUppercase{#1}}{#2}%
+  \penalty\@highpenalty}
+\renewcommand*\l@section[2]{%
+  \coppe@tocline{1}{\normalfont}{\MakeUppercase{#1}}{#2}}
+\renewcommand*\l@subsection[2]{%
+  \coppe@tocline{2}{\normalfont\bfseries}{#1}{#2}}
+\renewcommand*\l@subsubsection[2]{%
+  \coppe@tocline{3}{\normalfont\bfseries\itshape}{#1}{#2}}
+\renewcommand*\l@paragraph[2]{%
+  \coppe@tocline{4}{\normalfont\itshape}{#1}{#2}}
 % --- Captions (manual2024 2.10-2.11 / proposta P6): smaller font, ABNT
 %     "Figura 1 -- titulo" travessao separator (sources handled by \source). ---
 \RequirePackage{caption}
@@ -2418,7 +2509,16 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
 % doubling, and the hook only has to call it.
 \newcommand\coppe@wrapstarttoc{%
   \let\coppe@orig@starttoc\@starttoc
-  \def\@starttoc##1{\coppe@checkwrites{##1}\coppe@orig@starttoc{##1}}}
+% \numberline mede o indicativo (ver \coppe@tocnumberline) apenas no sumario:
+% a lista de figuras e a de tabelas numeram ilustracoes, nao secoes, e nao tem
+% por que compartilhar a coluna.
+  \def\@starttoc##1{%
+    \coppe@checkwrites{##1}%
+    \begingroup
+      \def\coppe@@ext{##1}\def\coppe@@toc{toc}%
+      \ifx\coppe@@ext\coppe@@toc \let\numberline\coppe@tocnumberline \fi
+      \coppe@orig@starttoc{##1}%
+    \endgroup}}
 \AtBeginDocument{\coppe@wrapstarttoc}
 \RequirePackage{fancyhdr}
 % \headheight is set to 15pt by geometry up above (see the geometry call),

@@ -179,10 +179,62 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
 \titlespacing*{\paragraph}{0pt}{2.5ex plus 1ex minus .2ex}{1.5ex plus .2ex}
 \setcounter{secnumdepth}{4}
 \setcounter{tocdepth}{4}
-\let\coppe@orig@lchapter\l@chapter
-\renewcommand\l@chapter[2]{\coppe@orig@lchapter{\MakeUppercase{#1}}{#2}}
-\let\coppe@orig@lsection\l@section
-\renewcommand\l@section[2]{\coppe@orig@lsection{\MakeUppercase{#1}}{#2}}
+\newlength\coppe@tocnumwidth
+\newlength\coppe@tocnummax
+\newlength\coppe@tocnumsep
+\setlength\coppe@tocnumsep{0.5em}
+\setlength\coppe@tocnumwidth{1.75cm}
+\setlength\coppe@tocnummax{\z@}
+\newcommand\coppe@tocnumberline[1]{%
+  \settowidth\@tempdima{#1}%
+  \ifdim\@tempdima>\coppe@tocnummax \global\coppe@tocnummax\@tempdima \fi
+  \hb@xt@\coppe@tocnumwidth{#1\hfil}}
+\AtBeginDocument{%
+  \@ifundefined{coppe@tocnumsaved}{}{%
+    \setlength\@tempdima{\coppe@tocnumsaved}%
+    \addtolength\@tempdima\coppe@tocnumsep
+    \ifdim\@tempdima>\coppe@tocnumwidth
+      \setlength\coppe@tocnumwidth\@tempdima
+    \fi}}
+\AtEndDocument{%
+  \ifdim\coppe@tocnummax>\z@
+    \if@filesw
+      \immediate\write\@auxout{\string\gdef\string\coppe@tocnumsaved
+        {\the\coppe@tocnummax}}%
+    \fi
+    \setlength\@tempdima\coppe@tocnummax
+    \addtolength\@tempdima\coppe@tocnumsep
+    \ifdim\@tempdima>\coppe@tocnumwidth
+      \ClassWarning{coppe}{A coluna do sumario cresceu; rode LaTeX de novo}%
+    \fi
+  \fi}
+\newcommand\coppe@tocline[4]{%
+  \ifnum #1>\c@tocdepth\else
+    \vskip\z@\@plus.2\p@
+    {\leftskip\z@ \rightskip\@tocrmarg \parfillskip-\rightskip
+     \parindent\z@ \interlinepenalty\@M
+     \leavevmode
+     #2%
+     \advance\leftskip\coppe@tocnumwidth
+     \null\nobreak\hskip-\leftskip
+     #3\nobreak
+     \leaders\hbox{$\m@th\mkern\@dotsep mu\hbox{.}\mkern\@dotsep mu$}%
+       \hfill\nobreak
+     \hb@xt@\@pnumwidth{\hss #4}\par}%
+  \fi}
+\renewcommand\@dotsep{2}
+\renewcommand*\l@chapter[2]{%
+  \addpenalty{-\@highpenalty}%
+  \coppe@tocline{0}{\bfseries}{\MakeUppercase{#1}}{#2}%
+  \penalty\@highpenalty}
+\renewcommand*\l@section[2]{%
+  \coppe@tocline{1}{\normalfont}{\MakeUppercase{#1}}{#2}}
+\renewcommand*\l@subsection[2]{%
+  \coppe@tocline{2}{\normalfont\bfseries}{#1}{#2}}
+\renewcommand*\l@subsubsection[2]{%
+  \coppe@tocline{3}{\normalfont\bfseries\itshape}{#1}{#2}}
+\renewcommand*\l@paragraph[2]{%
+  \coppe@tocline{4}{\normalfont\itshape}{#1}{#2}}
 \RequirePackage{caption}
 \captionsetup{font=footnotesize,labelsep=endash,justification=centering}
 \RequirePackage{subcaption}
@@ -241,7 +293,13 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
   \fi}
 \newcommand\coppe@wrapstarttoc{%
   \let\coppe@orig@starttoc\@starttoc
-  \def\@starttoc##1{\coppe@checkwrites{##1}\coppe@orig@starttoc{##1}}}
+  \def\@starttoc##1{%
+    \coppe@checkwrites{##1}%
+    \begingroup
+      \def\coppe@@ext{##1}\def\coppe@@toc{toc}%
+      \ifx\coppe@@ext\coppe@@toc \let\numberline\coppe@tocnumberline \fi
+      \coppe@orig@starttoc{##1}%
+    \endgroup}}
 \AtBeginDocument{\coppe@wrapstarttoc}
 \RequirePackage{fancyhdr}
 \newcommand\coppe@listtoc[1]{%
