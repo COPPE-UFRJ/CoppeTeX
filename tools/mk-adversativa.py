@@ -65,6 +65,45 @@ SUB = {"pt":"tudo o que a classe oferece, ao mesmo tempo",
        "en":"everything the class offers, all at once",
        "es":"todo lo que ofrece la clase, a la vez"}
 
+# As categorias de referencia da secao 4.2 do Manual UFRJ/SiBI 2026, na ordem
+# do Manual, e a chave da entrada correspondente em referencias-manual.bib.
+PROVA_REFS = [
+    ("m-4211",  "4.2.1.1 monografia no todo"),
+    ("m-4212",  "4.2.1.2 monografia em meio eletrônico"),
+    ("m-4213",  "4.2.1.3 parte de monografia"),
+    ("m-422",   "4.2.2 correspondência"),
+    ("m-4221",  "4.2.2.1 correspondência em meio eletrônico"),
+    ("m-4231",  "4.2.3.1 publicação periódica no todo"),
+    ("m-4233",  "4.2.3.3 parte de revista"),
+    ("m-4234",  "4.2.3.4 artigo de revista"),
+    ("m-4235",  "4.2.3.5 artigo de revista em meio eletrônico"),
+    ("m-4236",  "4.2.3.6 matéria de jornal"),
+    ("m-4237",  "4.2.3.7 matéria de jornal assinada em meio eletrônico"),
+    ("m-4238",  "4.2.3.8 matéria de jornal não assinada em meio eletrônico"),
+    ("m-4241",  "4.2.4.1 evento no todo"),
+    ("m-4243",  "4.2.4.3 evento no todo em meio eletrônico"),
+    ("m-4245",  "4.2.4.5 trabalho apresentado em evento"),
+    ("m-4246",  "4.2.4.6 trabalho em evento em meio eletrônico"),
+    ("m-425",   "4.2.5 patente"),
+    ("m-4251",  "4.2.5.1 patente em meio eletrônico"),
+    ("m-4261",  "4.2.6.1 legislação"),
+    ("m-4262",  "4.2.6.2 jurisprudência"),
+    ("m-4263",  "4.2.6.3 ato administrativo normativo"),
+    ("m-427",   "4.2.7 documento jurídico em meio eletrônico"),
+    ("m-428",   "4.2.8 documento civil e de cartório"),
+    ("m-429",   "4.2.9 documento audiovisual"),
+    ("m-42101", "4.2.10 partitura"),
+    ("m-42102", "4.2.10.1 partitura em meio eletrônico"),
+    ("m-42111", "4.2.11 documento iconográfico"),
+    ("m-42112", "4.2.11.1 documento iconográfico em meio eletrônico"),
+    ("m-42121", "4.2.12 documento cartográfico"),
+    ("m-42122", "4.2.12.1 documento cartográfico em meio eletrônico"),
+    ("m-42131", "4.2.13 documento tridimensional"),
+    ("m-4214",  "4.2.14 documento de acesso exclusivo em meio eletrônico"),
+    ("m-diss",  "dissertação de mestrado"),
+    ("m-norma", "norma técnica"),
+]
+
 def doc(i, tipo, tiponome, lang):
     d = L[lang]
     opts = [tipo]
@@ -93,6 +132,12 @@ def doc(i, tipo, tiponome, lang):
     A("\\usepackage[most]{tcolorbox}")
     A("\\usepackage{makeidx}\\makeindex")
     A("\\addbibresource{example.bib}")
+    # Prova de referencias: so nos documentos em portugues, porque os dados sao
+    # os exemplos do proprio Manual UFRJ/SiBI e sao em portugues. Os quatro
+    # documentos pt cobrem os dois sistemas de chamada -- autor-data e, com a
+    # opcao `numbers', numerico -- sobre a MESMA bibliografia.
+    if lang == "pt":
+        A("\\addbibresource{referencias-manual.bib}")
     A("\\makelosymbols")
     A("\\makeloabbreviations")
     A("")
@@ -234,6 +279,18 @@ def doc(i, tipo, tiponome, lang):
     A("  \\chapter{%s}" % d["ch"][4])
     A("  %s" % d["body"])
     A("")
+    if lang == "pt":
+        A("  \\chapter{Prova de referências}")
+        A("  Um exemplo de cada categoria de referência da seção 4.2 do Manual")
+        A("  UFRJ/SiBI, 9.\\textsuperscript{a} ed. rev. (2026), com os dados do")
+        A("  próprio Manual. A referência composta pela classe está na lista de")
+        A("  referências; o gabarito, como o Manual a imprime, está no comentário")
+        A("  de cada entrada de \\texttt{referencias-manual.bib}.")
+        A("  \\begin{itemize}")
+        for chave, rot in PROVA_REFS:
+            A("    \\item %s \\citep{%s}" % (rot, chave))
+        A("  \\end{itemize}")
+        A("")
     A("  \\backmatter")
     A("  \\nocite{article-example,manualbib}")
     A("  \\printbibliography")
