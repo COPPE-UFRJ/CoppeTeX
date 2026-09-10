@@ -5069,8 +5069,12 @@ postamble
 % procurar ". " no fluxo de tokens nunca encontra nada.
 % O parentese conta junto com o ponto: "Sao Paulo (Estado)" leva o
 % qualificador em caixa normal, e so quem escreve sabe disso.
+% O argumento chega como \namepartfamily -- uma sequencia de controle, nao o
+% texto. Detokenizar sem expandir antes devolve a string "\namepartfamily",
+% que nao tem ponto nenhum, e por isso TODO nome caia no \MakeUppercase.
 \protected\def\coppe@ucfamily#1{%
-  \edef\coppe@ucstr{\detokenize{#1}}%
+  \protected@edef\coppe@uctmp{#1}%
+  \edef\coppe@ucstr{\detokenize\expandafter{\coppe@uctmp}}%
   \expandafter\coppe@ucscan\coppe@ucstr.\coppe@ucstop{#1}}
 \protected\def\coppe@ucscan#1.#2\coppe@ucstop#3{%
   \ifblank{#2}
@@ -5191,7 +5195,9 @@ postamble
   \usebibmacro{title}%
   \newunit\newblock
   \printfield{journaltitle}%
-  \setunit{\addcomma\space}\printlist{location}%
+% "J. Manag. Stud., Oxford": a virgula depois de um titulo abreviado terminado
+% em ponto e engolida pelo rastreador de pontuacao, e a 4.2.3.4 a exige.
+  \iflistundef{location}{}{\printtext{,}\setunit{\space}\printlist{location}}%
   \iffieldequalstr{entrysubtype}{newspaper}
     {\iffieldundef{caderno}
        {\setunit{\addcomma\space}\printfield{pages}%
@@ -5326,7 +5332,10 @@ postamble
 \DeclareFieldFormat[periodical,suppperiodical]{number}{n\adddot\addnbspace#1}
 \DeclareBibliographyDriver{periodical}{%
   \usebibmacro{bibindex}\usebibmacro{begentry}%
-  \usebibmacro{title}%
+% Pelo campo, e nao pelo bibmacro: o bibmacro `title' passa pelo formato
+% `titlecase', e num periodico -- que nao tem autor -- ele nao chegava a
+% imprimir coisa nenhuma. A entrada saia comecando por um ponto solto.
+  \printfield{title}%
   \newunit\newblock
   \printlist{location}%
   \iflistundef{publisher}{}{\setunit*{\addcolon\space}\printlist{publisher}}%
@@ -5363,10 +5372,11 @@ postamble
   \usebibmacro{bibindex}\usebibmacro{begentry}%
   \usebibmacro{coppe:evento}%
   \newunit\newblock
-  \printfield{title}%
-% O ponto que separa o titulo dos anais da imprenta tem de ser explicito: o
-% \newunit sozinho nao o produzia depois de um titulo terminado em "]".
-  \setunit{\adddot\space}\newblock
+% O ponto que separa o titulo dos anais da imprenta e literal: o rastreador de
+% pontuacao do biblatex nao reconhece o fim de um titulo terminado em "]", e
+% nem \newunit nem \adddot produziam alguma coisa ali.
+  \iffieldundef{title}{}{\printfield{title}\printtext{.}}%
+  \setunit{\space}\newblock
   \usebibmacro{coppe:imprenta}%
   \newunit\newblock
   \usebibmacro{url+urldate}%
@@ -5380,8 +5390,8 @@ postamble
   \usebibmacro{in:}%
   \usebibmacro{coppe:evento}%
   \newunit\newblock
-  \printfield{booktitle}%
-  \setunit{\adddot\space}\newblock
+  \iffieldundef{booktitle}{}{\printfield{booktitle}\printtext{.}}%
+  \setunit{\space}\newblock
   \usebibmacro{coppe:imprenta}%
   \newunit\newblock
   \printfield{volume}%
@@ -5418,6 +5428,8 @@ postamble
   \iffieldundef{addendum}{}{\printfield{addendum}\clearfield{addendum}}%
   \newunit\newblock
   \printfield{scale}%
+  \newunit\newblock
+  \printfield{note}%
   \newunit\newblock
   \usebibmacro{url+urldate}%
   \usebibmacro{finentry}}
@@ -5489,7 +5501,22 @@ postamble
   \setunit*{\addcomma\space}\printfield{number}%
   \setunit*{\addcomma\space}\printfield{pages}%
   \setunit{\addcomma\space}\printdate%
-  \setunit*{\addcomma\space}\printfield{note}%
+  \newunit\newblock
+  \printfield{note}%
+  \newunit\newblock
+  \usebibmacro{url+urldate}%
+  \usebibmacro{finentry}}
+% 4.2.14: "UNIVERSIDADE ... Rio de Janeiro, 1998. Disponivel em: ..." -- o
+% driver padrao do biblatex para @online nao imprime o local.
+\DeclareBibliographyDriver{online}{%
+  \usebibmacro{bibindex}\usebibmacro{begentry}%
+  \usebibmacro{author/translator+others}%
+  \setunit{\labelnamepunct}\newblock
+  \usebibmacro{title}%
+  \newunit\newblock
+  \usebibmacro{coppe:imprenta}%
+  \newunit\newblock
+  \printfield{note}%
   \newunit\newblock
   \usebibmacro{url+urldate}%
   \usebibmacro{finentry}}

@@ -25,20 +25,29 @@ BIB = os.path.join(os.path.dirname(os.path.abspath(__file__)),
 
 
 def gabaritos(caminho):
-    """{chave: referencia como o Manual a imprime}, lida dos comentarios %%."""
+    """{chave: (referencia do Manual, motivo aceito ou None)}.
+
+    O gabarito vem das linhas `%%'. Uma linha `%%!' registra uma divergencia
+    ACEITA, com o motivo -- o Manual tem erratas, e ha coisas que ele imprime
+    de um jeito que a norma nao exige; onde o certo e divergir, isso fica
+    escrito ao lado da entrada, e nao escondido no numero final.
+    """
     texto = open(caminho, encoding="utf-8").read()
-    saida, chave, buf = {}, None, []
+    saida, chave, buf, mot = {}, None, [], []
+    def fecha():
+        if chave and buf:
+            saida[chave] = (" ".join(buf), " ".join(mot) if mot else None)
     for linha in texto.split("\n"):
         m = re.match(r"^@\w+\{([^,]+),", linha)
         if m:
-            if chave and buf: saida[chave] = " ".join(buf)
-            chave, buf = m.group(1).strip(), []
+            fecha()
+            chave, buf, mot = m.group(1).strip(), [], []
             continue
-        if chave is not None and linha.startswith("%%"):
+        if chave is not None and linha.startswith("%%!"):
+            mot.append(linha[3:].strip())
+        elif chave is not None and linha.startswith("%%"):
             buf.append(linha[2:].strip())
-        elif chave is not None and buf and not linha.startswith("%%"):
-            saida[chave] = " ".join(buf); buf = []
-    if chave and buf: saida[chave] = " ".join(buf)
+    fecha()
     return saida
 
 
@@ -55,9 +64,15 @@ def normaliza(s):
 
 
 def so_letras(s):
-    """Para a comparacao: sem espacos nenhum, que e onde pdftotext e biblatex
-    discordam sem que a norma tenha opiniao."""
-    return re.sub(r"\s+", "", normaliza(s))
+    """Para a comparacao: sem espacos e sem hifens.
+
+    Espaco, porque e onde pdftotext e biblatex discordam sem que a norma tenha
+    opiniao -- o biblatex quebra URLs longas metendo espacos, e o extrator os
+    devolve. Hifen, pela mesma razao: numa URL quebrada entre linhas o hifen
+    tipografico as vezes sobra e as vezes some. Como a supressao vale para os
+    dois lados da comparacao, um intervalo de paginas continua batendo.
+    """
+    return re.sub(r"[\s-]+", "", normaliza(s))
 
 
 def referencias_do_pdf(pdf):
@@ -83,20 +98,33 @@ def referencias_do_pdf(pdf):
 def casa(gab, compostas):
     """Liga cada gabarito a referencia composta, pelo comeco do titulo."""
     usados, pares = set(), []
-    for chave, esperado in gab.items():
+    for chave, (esperado, motivo) in gab.items():
         # a primeira sequencia de 12+ letras do gabarito que nao seja o autor
         alvo = so_letras(esperado)[:40]
         achou = None
         for num, texto in compostas:
             if num in usados: continue
-            t = so_letras(texto)
-            # compara pelo inicio, tolerando caixa
-            if t[:40].lower() == alvo.lower() or alvo.lower()[:24] in t.lower():
+            t = so_letras(texto)[:40].lower()
+            # o casamento e pelo INICIO, e so pelo inicio: um "esta contido em"
+            # ja emparelhou gabarito com a entrada errada.
+            n = min(len(t), len(alvo), 24)
+            if t[:n] == alvo.lower()[:n]:
                 achou = (num, texto); break
+        if achou is None:
+            # Segunda tentativa, pelo titulo: quando o Manual abrevia a autoria
+            # com "et al." e a classe lista todos, o inicio nunca bate, mas a
+            # entrada e a mesma. Casa-se pela palavra mais longa do gabarito.
+            palavras = sorted(re.findall(r"\w{9,}", esperado), key=len, reverse=True)
+            for pal in palavras[:3]:
+                for num, texto in compostas:
+                    if num in usados: continue
+                    if pal.lower() in so_letras(texto).lower():
+                        achou = (num, texto); break
+                if achou: break
         if achou:
-            usados.add(achou[0]); pares.append((chave, esperado, achou[1]))
+            usados.add(achou[0]); pares.append((chave, esperado, achou[1], motivo))
         else:
-            pares.append((chave, esperado, None))
+            pares.append((chave, esperado, None, motivo))
     return pares
 
 
@@ -119,21 +147,25 @@ if __name__ == "__main__":
     for pdf in alvos:
         compostas = referencias_do_pdf(pdf)
         pares = casa(gab, compostas)
-        dif = 0
+        dif, aceitas = 0, 0
         print("\n=== %s -- %d referencias no gabarito, %d compostas"
               % (os.path.basename(pdf), len(gab), len(compostas)))
-        for chave, esperado, obtido in pares:
+        for chave, esperado, obtido, motivo in pares:
             if obtido is None:
                 print("   AUSENTE  %s" % chave); dif += 1; continue
             d = diferenca(esperado, obtido)
             if d is None:
                 if verboso: print("   ok       %s" % chave)
+            elif motivo:
+                aceitas += 1
+                if verboso:
+                    print("   aceita   %s -- %s" % (chave, motivo))
             else:
                 dif += 1
                 print("   DIFERE   %s" % chave)
                 print("     manual: %s" % esperado)
                 print("     classe: %s" % obtido)
         total_dif += dif
-        print("   --- %d divergencia(s)" % dif)
+        print("   --- %d divergencia(s), %d aceita(s)" % (dif, aceitas))
     print("\n=== TOTAL: %d divergencia(s) ===" % total_dif)
     sys.exit(1 if total_dif else 0)

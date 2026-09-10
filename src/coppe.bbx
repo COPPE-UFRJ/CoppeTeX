@@ -89,9 +89,14 @@
     {}}
 
 \protected\def\coppe@ucfamily#1{%
-  \edef\coppe@ucstr{\detokenize{#1}}%
+  \protected@edef\coppe@uctmp{#1}%
+  \edef\coppe@ucstr{\detokenize\expandafter{\coppe@uctmp}}%
   \expandafter\coppe@ucscan\coppe@ucstr.\coppe@ucstop{#1}}
 \protected\def\coppe@ucscan#1.#2\coppe@ucstop#3{%
+  \ifblank{#2}
+    {\expandafter\coppe@ucscanp\coppe@ucstr(\coppe@ucstop{#3}}
+    {#3}}
+\protected\def\coppe@ucscanp#1(#2\coppe@ucstop#3{%
   \ifblank{#2}{\MakeUppercase{#3}}{#3}}
 \renewcommand*{\bibdaterangesep}{/}
 \protected\def\coppe@abntdate#1#2#3{%
@@ -169,7 +174,7 @@
   \usebibmacro{title}%
   \newunit\newblock
   \printfield{journaltitle}%
-  \setunit{\addcomma\space}\printlist{location}%
+  \iflistundef{location}{}{\printtext{,}\setunit{\space}\printlist{location}}%
   \iffieldequalstr{entrysubtype}{newspaper}
     {\iffieldundef{caderno}
        {\setunit{\addcomma\space}\printfield{pages}%
@@ -280,7 +285,7 @@
 \DeclareFieldFormat[periodical,suppperiodical]{number}{n\adddot\addnbspace#1}
 \DeclareBibliographyDriver{periodical}{%
   \usebibmacro{bibindex}\usebibmacro{begentry}%
-  \usebibmacro{title}%
+  \printfield{title}%
   \newunit\newblock
   \printlist{location}%
   \iflistundef{publisher}{}{\setunit*{\addcolon\space}\printlist{publisher}}%
@@ -307,8 +312,8 @@
   \usebibmacro{bibindex}\usebibmacro{begentry}%
   \usebibmacro{coppe:evento}%
   \newunit\newblock
-  \printfield{title}%
-  \newunit\newblock
+  \iffieldundef{title}{}{\printfield{title}\printtext{.}}%
+  \setunit{\space}\newblock
   \usebibmacro{coppe:imprenta}%
   \newunit\newblock
   \usebibmacro{url+urldate}%
@@ -322,8 +327,8 @@
   \usebibmacro{in:}%
   \usebibmacro{coppe:evento}%
   \newunit\newblock
-  \printfield{booktitle}%
-  \newunit\newblock
+  \iffieldundef{booktitle}{}{\printfield{booktitle}\printtext{.}}%
+  \setunit{\space}\newblock
   \usebibmacro{coppe:imprenta}%
   \newunit\newblock
   \printfield{volume}%
@@ -354,6 +359,8 @@
   \iffieldundef{addendum}{}{\printfield{addendum}\clearfield{addendum}}%
   \newunit\newblock
   \printfield{scale}%
+  \newunit\newblock
+  \printfield{note}%
   \newunit\newblock
   \usebibmacro{url+urldate}%
   \usebibmacro{finentry}}
@@ -409,7 +416,20 @@
   \setunit*{\addcomma\space}\printfield{number}%
   \setunit*{\addcomma\space}\printfield{pages}%
   \setunit{\addcomma\space}\printdate%
-  \setunit*{\addcomma\space}\printfield{note}%
+  \newunit\newblock
+  \printfield{note}%
+  \newunit\newblock
+  \usebibmacro{url+urldate}%
+  \usebibmacro{finentry}}
+\DeclareBibliographyDriver{online}{%
+  \usebibmacro{bibindex}\usebibmacro{begentry}%
+  \usebibmacro{author/translator+others}%
+  \setunit{\labelnamepunct}\newblock
+  \usebibmacro{title}%
+  \newunit\newblock
+  \usebibmacro{coppe:imprenta}%
+  \newunit\newblock
+  \printfield{note}%
   \newunit\newblock
   \usebibmacro{url+urldate}%
   \usebibmacro{finentry}}
