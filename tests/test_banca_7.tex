@@ -1,0 +1,75 @@
+%%
+%% test_banca_7.tex -- regression test for the coppe class.
+%%
+%% The folha de aprovacao lists every board member. The class had only ever
+%% been exercised up to five members, and a doctoral board at the COPPE
+%% routinely reaches seven, so this test pins the tall end of the range: two
+%% advisors plus five examiners, one of them with a long name and a long
+%% institution, which is the combination most likely to wrap a line and push
+%% the sheet over.
+%%
+%% What "passing" means here is narrower than "pdflatex exited 0": the folha
+%% de aprovacao must still fit on ONE page. run-tests.ps1 only sees the exit
+%% code, so a silent overflow shows up as an Overfull \vbox in the log rather
+%% than as a failure -- read the log, not just the exit code.
+%%
+%% Run via ../tests/run-tests.ps1. Compile under pdfLaTeX.
+%%
+%% NAO e gerado pelo coppe.dtx e NAO e distribuido: a suite prova que a
+%% classe funciona, nao faz parte dela. Rode por tools\prova.ps1, ou por
+%% tests\run-tests.ps1 para so esta pasta.
+%%
+
+\documentclass[dsc]{coppe}
+
+\usepackage[brazilian]{babel}
+
+\title{Título de Teste com Banca Grande}
+\foreigntitle{Large Board Test Title}
+\author{Nome}{de Teste}
+
+\advisor{Primeiro}{Orientador}{D.Sc.}{UFRJ}
+\advisor{Segundo}{Orientador}{Ph.D.}{UFRJ}
+
+\examiner{Primeiro Examinador}{D.Sc.}{UFRJ}
+\examiner{Segundo Examinador}{Ph.D.}{UFRJ}
+\examiner{Terceiro Examinador}{D.Sc.}{UFF}
+\examiner{Quarto Examinador}{D.Sc.}{UNIRIO}
+ % nome e instituição longos de propósito: é o caso que estoura primeiro
+\examiner{Quinto
+  Examinador de Nome Bastante Comprido}{D.Sc.}{Universidade Federal do Estado do Rio de Janeiro}
+
+\department{PESC}
+\date{09}{2026}
+\dataaprovacao{15 de setembro de 2026}
+
+\keyword{Primeira}
+\keyword{Segunda}
+
+\areaconcentracao{Engenharia de Sistemas e Computação}
+\linhapesquisa{Engenharia de Dados e Conhecimento}
+\tipoproducao{bibliografica}
+\projetovinculado{sim}
+\nomeprojeto{Projeto de Teste}
+\agenciafomento{Conselho Nacional de Desenvolvimento Científico e
+                Tecnológico}{CNPq}
+
+\begin{document}
+  \maketitle
+  \frontmatter
+  \begin{abstract}
+    Resumo de teste.
+  \end{abstract}
+  \begin{foreignabstract}
+    Test abstract.
+  \end{foreignabstract}
+  \tableofcontents
+  \mainmatter
+  \chapter{Introdução}
+    Primeiro parágrafo, para conferir o recuo.
+  \section{Uma seção}
+    Texto da seção.
+\end{document}
+%% 
+%%
+%% End of file `tests/test_banca_7.tex'.

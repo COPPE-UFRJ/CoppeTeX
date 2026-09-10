@@ -1,28 +1,51 @@
 # specs/ — documentos normativos de referência
 
-Esta pasta guarda os documentos que a CoppeTeX implementa. **Os PDFs não são
-versionados** (ver `.gitignore`): são publicações do SiBI/UFRJ e de terceiros, e
-o repositório não os redistribui. Só os arquivos `.md` desta pasta entram no
-controle de versão.
+Esta pasta guarda os documentos normativos que a CoppeTeX implementa. Os dois
+PDFs abaixo **são versionados** junto com o código: quem clona o repositório já
+recebe a norma exatamente na versão contra a qual a classe foi conferida, sem
+depender de o SiBI manter os arquivos no ar.
 
-Se você acabou de clonar o repositório, esta pasta virá com apenas os `.md`.
-Baixe os documentos abaixo para reproduzir o ambiente de trabalho.
+## Os documentos
 
-| Arquivo | O que é | Onde obter |
-|---|---|---|
-| `manual-sibi-9ed-rev-2026.pdf` | **Norma vigente.** Manual para elaboração e normalização de trabalhos acadêmicos, UFRJ/SiBI, 9.ª ed. rev., 2026 | SiBI/UFRJ |
-| `folha-adicional-capes.pdf` | Modelo oficial da folha de rosto + folha adicional de Coleta CAPES, obrigatória desde agosto de 2026 | SiBI/UFRJ |
-| `manual-sibi-9ed-2025.pdf` | Edição anterior (9.ª ed., 2025), mantida para comparação | SiBI/UFRJ |
-| `oldmanual.pdf` | Norma COPPE anterior (2008, revisões 2009/2010/2019) | COPPE/UFRJ |
+### `Manual para elaboração e normalização de trabalhos acadêmicos 2024.pdf`
 
-Os arquivos `.txt` de mesmo nome são extrações de texto (`pdftotext -layout`),
-guardadas para permitir busca e comparação entre edições.
+A norma vigente. Universidade Federal do Rio de Janeiro, Sistema de Bibliotecas
+e Informação, *Manual para elaboração e normalização de trabalhos acadêmicos*,
+9.ª ed. rev., Rio de Janeiro, UFRJ/SiBI, 2026, 121 p. (Série Manuais de
+Procedimento, 5).
 
-**Atenção aos nomes antigos.** Até setembro de 2026 esta pasta tinha um
-`manual2024.pdf` que na verdade era a 9.ª ed. de **2025**, e a pasta
-`Nova Norma/` na raiz trazia um arquivo também chamado "2024" que era a edição
-revista de **2026**. Nenhum dos dois foi jamais o manual de 2024. Os nomes atuais
-dizem a edição e o ano de verdade.
+**O nome do arquivo diz 2024 e está errado.** A folha de rosto e a ficha
+catalográfica dizem 9.ª ed. rev., 2026. O nome é o que veio da distribuição do
+SiBI e foi mantido para que o arquivo continue localizável por ele; o que vale é
+a edição impressa na capa. Nunca existiu um manual de 2024.
+
+É o documento de referência para margens, sumário, destaque gradativo dos
+títulos de seção, elementos pré-textuais e as 34 categorias de referência
+implementadas em `coppe.bbx`.
+
+### `Folha adicional T&D Coleta+ CAPES.pdf`
+
+Duas páginas, modelo oficial do SiBI: a folha de rosto de tese ou dissertação e
+a folha adicional com as informações de Coleta CAPES (tipo de produção
+intelectual, projeto de pesquisa vinculado, área de concentração, agências de
+fomento) mais a ficha catalográfica. A folha adicional passou a ser obrigatória
+em agosto de 2026.
+
+É o documento de referência para a folha de rosto e para a página adicional
+geradas pela classe.
+
+## Sobre redistribuição
+
+Os dois PDFs são publicações do SiBI/UFRJ, distribuídas por ele para uso da
+comunidade da universidade. Não trazem declaração de licença. O repositório os
+inclui como documentação de referência da norma implementada; se o SiBI pedir a
+retirada, basta apagar os arquivos e voltar a ignorá-los no `.gitignore`.
+
+## Também nesta pasta
+
+- `ANOTACOES.md` — anotações de Geraldo Xexéo feitas na 9.ª ed. (2025) do
+  manual, transcritas do PDF anterior, com o estado de cada uma frente à edição
+  revista de 2026.
 
 ## Documentos relacionados, fora desta pasta
 
@@ -30,8 +53,6 @@ dizem a edição e o ano de verdade.
   do SiBI. É o documento que a CoppeTeX implementa em conjunto com ele.
 - `../REVISAO_SIBI.md` — verificação item a item da classe contra a edição 2026,
   e o plano de trabalho decorrente.
-- `ANOTACOES.md` — anotações feitas no manual de 2025, com o estado de cada uma
-  frente à edição de 2026.
 
 ## Resoluções citadas pelo manual
 

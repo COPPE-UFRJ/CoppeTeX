@@ -261,8 +261,10 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
 \@ifundefined{source}{\let\source\cpsource}{}%
 \@ifundefined{fonte}{\let\fonte\cpsource}{}%
 \newcommand{\newcoppefloat}[3]{%
-  {\floatstyle{plaintop}\newfloat{#1}{htbp}{lo#1}}%
+  \floatstyle{plaintop}\newfloat{#1}{htbp}{lo#1}[chapter]%
   \floatname{#1}{#2}%
+  \expandafter\let\csname l@#1\endcsname\l@figure
+  \expandafter\providecommand\csname #1autorefname\endcsname{#2}%
   \expandafter\newcommand\csname listof#1s\endcsname{%
     \chapter*{#3}\coppe@listtoc{#3}%
     \@mkboth{\MakeUppercase{#3}}{\MakeUppercase{#3}}%
@@ -376,8 +378,9 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \DeclareOption{doublespacing}{\@coppedoublespacetrue}
 \newif\if@coppepdfa \@coppepdfafalse
 \DeclareOption{pdfa}{\@coppepdfatrue}
-\newif\if@coppeassin \@coppeassinfalse
-\DeclareOption{assinaturas}{\@coppeassintrue}
+\DeclareOption{assinaturas}{\ClassWarningNoLine{coppe}{A opcao `assinaturas'
+  nao faz mais nada: a folha de aprovacao nao tem mais linhas de assinatura,
+  porque a entrega e digital desde a Resolucao CEPG n. 246/2023}}
 \newif\if@coppecoadvresumo \@coppecoadvresumofalse
 \DeclareOption{coorientador}{\@coppecoadvresumotrue}
 \newif\if@coppelistastoc \@coppelistastocfalse
@@ -391,8 +394,9 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \newif\if@coppemwforced   \@coppemwforcedfalse
 \DeclareOption{morewrites}{\@coppemorewritestrue\@coppemwforcedtrue}
 \DeclareOption{semmorewrites}{\@coppemorewritesfalse}
-\newif\if@coppesansserif \@coppesansseriffalse
+\newif\if@coppesansserif \@coppesansseriftrue
 \DeclareOption{semserifa}{\@coppesansseriftrue}
+\DeclareOption{comserifa}{\@coppesansseriffalse}
 \ProcessOptions\relax
 \if@coppesansserif
   \renewcommand{\familydefault}{\sfdefault}%
@@ -490,6 +494,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \copperdefstring{brazilian}{coadvisor}  {Coorientador}
 \copperdefstring{brazilian}{coadvisors} {Coorientadores}
 \copperdefstring{brazilian}{ofname}     {de}
+\copperdefstring{brazilian}{researchline}{Linha de pesquisa}
 \copperdefstring{english}  {approvedmale}  {Approved by}
 \copperdefstring{english}  {approvedfemale}{Approved by}
 \copperdefstring{english}  {approvedonmale}  {Approved on}
@@ -499,6 +504,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \copperdefstring{english}  {coadvisor}  {Co-advisor}
 \copperdefstring{english}  {coadvisors} {Co-advisors}
 \copperdefstring{english}  {ofname}     {of}
+\copperdefstring{english}  {researchline}{Research line}
 \copperdefstring{brazilian}{universityname}{Universidade Federal do Rio de Janeiro}
 \copperdefstring{english}  {universityname}{Universidade Federal do Rio de Janeiro}
 \copperdefstring{brazilian}{cityname}     {Rio de Janeiro}
@@ -710,11 +716,11 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \@ifundefined{coppe@subtitle@\coppe@mainlang}{}{: \coppe@selectsubtitle}}
 \newcount\@coadvisor\@coadvisor0
 \newcommand\coadvisor[5][]{%
-  \global\@namedef{CoppeCoadvisorInst:\expandafter\the\@coadvisor}{#1}
-  \global\@namedef{CoppeCoadvisorTitle:\expandafter\the\@coadvisor}{#2}
-  \global\@namedef{CoppeCoadvisorName:\expandafter\the\@coadvisor}{#3}
-  \global\@namedef{CoppeCoadvisorSurname:\expandafter\the\@coadvisor}{#4}
-  \global\@namedef{CoppeCoadvisorDegree:\expandafter\the\@coadvisor}{#5}
+  \global\@namedef{CoppeCoadvisorTitle:\expandafter\the\@coadvisor}{#1}
+  \global\@namedef{CoppeCoadvisorName:\expandafter\the\@coadvisor}{#2}
+  \global\@namedef{CoppeCoadvisorSurname:\expandafter\the\@coadvisor}{#3}
+  \global\@namedef{CoppeCoadvisorDegree:\expandafter\the\@coadvisor}{#4}
+  \global\@namedef{CoppeCoadvisorInst:\expandafter\the\@coadvisor}{#5}
   \global\advance\@coadvisor by 1
 }
 \newcommand\local@coadvisorstring{%
@@ -742,11 +748,11 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \fi}
 \newcount\@advisor\@advisor0
 \newcommand\advisor[5][]{%
-  \global\@namedef{CoppeAdvisorInst:\expandafter\the\@advisor}{#1}
-  \global\@namedef{CoppeAdvisorTitle:\expandafter\the\@advisor}{#2}
-  \global\@namedef{CoppeAdvisorName:\expandafter\the\@advisor}{#3}
-  \global\@namedef{CoppeAdvisorSurname:\expandafter\the\@advisor}{#4}
-  \global\@namedef{CoppeAdvisorDegree:\expandafter\the\@advisor}{#5}
+  \global\@namedef{CoppeAdvisorTitle:\expandafter\the\@advisor}{#1}
+  \global\@namedef{CoppeAdvisorName:\expandafter\the\@advisor}{#2}
+  \global\@namedef{CoppeAdvisorSurname:\expandafter\the\@advisor}{#3}
+  \global\@namedef{CoppeAdvisorDegree:\expandafter\the\@advisor}{#4}
+  \global\@namedef{CoppeAdvisorInst:\expandafter\the\@advisor}{#5}
   \global\advance\@advisor by 1
   \ifnum\@advisor>1
     \renewcommand\local@advisorstring{Orientadores}
@@ -755,11 +761,11 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 }
 \newcount\@examiner\@examiner0
 \newcommand\examiner[4][]{%
-  \global\@namedef{CoppeExaminerInst:\expandafter\the\@examiner}{#1}
-  \global\@namedef{CoppeExaminerTitle:\expandafter\the\@examiner}{#2}
-  \global\@namedef{CoppeExaminerName:\expandafter\the\@examiner}{#3}
-  \global\@namedef{CoppeExaminerDegree:\expandafter\the\@examiner}{#4}
-  \global\@namedef{CoppeExaminer:\expandafter\the\@examiner}{#2\ #3}
+  \global\@namedef{CoppeExaminerTitle:\expandafter\the\@examiner}{#1}
+  \global\@namedef{CoppeExaminerName:\expandafter\the\@examiner}{#2}
+  \global\@namedef{CoppeExaminerDegree:\expandafter\the\@examiner}{#3}
+  \global\@namedef{CoppeExaminerInst:\expandafter\the\@examiner}{#4}
+  \global\@namedef{CoppeExaminer:\expandafter\the\@examiner}{#1\ #2}
   \global\advance\@examiner by 1
 }
 \renewcommand\author[2]{%
@@ -969,7 +975,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \vspace*{12mm}
   {\singlespacing
   \ifthenelse{\equal{\coppe@linhapesq}{}}{}{%
-    \noindent Linha de pesquisa: \coppe@linhapesq\par
+    \noindent\coppemainstring{researchline}: \coppe@linhapesq\par
     \vspace*{5mm}}%
   \nohyphens{%
   \noindent\begin{tabularx}{\textwidth}[b]{@{}l@{ }>{\raggedright\arraybackslash}X@{}}
@@ -1034,25 +1040,17 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \global\let\maketitle\relax%
   \global\let\and\relax}
 \newcommand\coppe@membroid[4]{%
-  #1\ #2%
+  \ifthenelse{\equal{#1}{}}{}{#1\ }#2%
   \ifthenelse{\equal{#3}{}}{}{, #3}%
   \ifthenelse{\equal{#4}{}}{}{, #4}}
 \newlength\coppe@membrogap
 \setlength\coppe@membrogap{9mm minus 2mm}
 \newcount\coppe@bancasize
 \newcommand\coppe@membro[4]{%
-  \if@coppeassin
-    \vspace{\coppe@membrogap}%
-    \begin{center}
-      \rule{95mm}{0.4pt}\par
-      \nopagebreak{\footnotesize\coppe@membroid{#1}{#2}{#3}{#4}}\par
-    \end{center}%
-  \else
-    \noindent\hspace*{8mm}%
-    \begin{minipage}{\dimexpr\textwidth-8mm\relax}
-      \coppe@membroid{#1}{#2}{#3}{#4}
-    \end{minipage}\par\vspace{2mm}%
-  \fi}
+  \noindent\hspace*{8mm}%
+  \begin{minipage}{\dimexpr\textwidth-8mm\relax}
+    \coppe@membroid{#1}{#2}{#3}{#4}
+  \end{minipage}\par\vspace{2mm}}
 \newcommand\makefrontpage{%
   \begin{center}
     \nohyphens{\@authname\ \@authsurn}\par
@@ -1221,8 +1219,14 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \ifthenelse{\equal{\coppe@tipoproducao}{#1}}{$\times$}{\phantom{$\times$}}}
 \newcommand\coppe@marcavinc[1]{%
   \ifthenelse{\equal{\coppe@projetovinc}{#1}}{$\times$}{\phantom{$\times$}}}
+\newlength\coppe@capesgap
+\setlength\coppe@capesgap{11mm}
 \newcommand\coppe@campo[1]{%
-  \ifthenelse{\equal{#1}{}}{\hrulefill}{#1\enspace\hrulefill}}
+  \ifthenelse{\equal{#1}{}}{\vspace*{\coppe@capesgap}}{\par#1}}
+\newcommand\coppe@capescelula[2]{%
+  \begin{minipage}[t]{\dimexpr\linewidth-2\tabcolsep\relax}
+    \vspace{1mm}#1\par#2\vspace{1.5mm}
+  \end{minipage}\\\hline}
 \newcommand\coppe@checatipo{%
   \ifthenelse{\equal{\coppe@tipoproducao}{}}{}{%
     \ifthenelse{\equal{\coppe@tipoproducao}{bibliografica}\OR
@@ -1242,36 +1246,33 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     {\large\bfseries Informa\c c\~oes Coleta CAPES}
   \end{center}
   \vspace{7mm}
-  \noindent Tipo de produ\c c\~ao intelectual:\par
-  \vspace{1mm}
-  \hspace*{10mm}(\coppe@marcatipo{bibliografica})\enspace Bibliogr\'afica\par
-  \hspace*{10mm}(\coppe@marcatipo{artistica})\enspace Art\'{\i}stica\par
-  \hspace*{10mm}(\coppe@marcatipo{tecnologica})\enspace Tecnol\'ogica\par
-  \hspace*{10mm}(\coppe@marcatipo{tecnica})\enspace T\'ecnica\par
-  \vspace{5mm}
-  \noindent Projeto de pesquisa vinculado \`a produ\c c\~ao intelectual?\par
-  \vspace{1mm}
-  \hspace*{10mm}(\coppe@marcavinc{sim})\enspace Sim\par
-  \hspace*{10mm}(\coppe@marcavinc{nao})\enspace N\~ao\par
-  \vspace{5mm}
-  \noindent Nome do projeto de pesquisa:\par
-  \vspace{1mm}
-  \noindent\coppe@campo{\coppe@nomeprojeto}\par
-  \vspace{5mm}
-  \noindent \'Area de concentra\c c\~ao da produ\c c\~ao intelectual:\par
-  \vspace{1mm}
-  \noindent\coppe@campo{\coppe@areaconc}\par
-  \vspace{5mm}
-  \noindent Ag\^encia(s) de fomento financiadora(s) da produ\c c\~ao
-  intelectual:\par
-  \vspace{1mm}
-  \ifthenelse{\value{coppeagencias}=0}{%
-    \noindent\hrulefill\par}{%
-    \count1=0
-    \@whilenum\count1<\value{coppeagencias}\do{%
-      \noindent\hspace*{10mm}\csname CoppeAgencia:\the\count1\endcsname
-      \ (\csname CoppeAgenciaSigla:\the\count1\endcsname)\par
-      \advance\count1 by 1}}%
+  \noindent\begin{tabular}{|@{\hspace{\tabcolsep}}p{\dimexpr\textwidth-2\tabcolsep-2\arrayrulewidth\relax}@{\hspace{\tabcolsep}}|}
+    \hline
+    \coppe@capescelula{Tipo de produ\c c\~ao intelectual:}{%
+      \vspace{1mm}
+      \hspace*{10mm}(\coppe@marcatipo{bibliografica})\enspace
+        Bibliogr\'afica\par
+      \hspace*{10mm}(\coppe@marcatipo{artistica})\enspace Art\'{\i}stica\par
+      \hspace*{10mm}(\coppe@marcatipo{tecnologica})\enspace Tecnol\'ogica\par
+      \hspace*{10mm}(\coppe@marcatipo{tecnica})\enspace T\'ecnica}
+    \coppe@capescelula{Projeto de pesquisa vinculado \`a produ\c c\~ao
+      intelectual?}{%
+      \vspace{1mm}
+      \hspace*{10mm}(\coppe@marcavinc{sim})\enspace Sim\par
+      \hspace*{10mm}(\coppe@marcavinc{nao})\enspace N\~ao}
+    \coppe@capescelula{Nome do projeto de pesquisa:}{%
+      \coppe@campo{\coppe@nomeprojeto}}
+    \coppe@capescelula{\'Area de concentra\c c\~ao da produ\c c\~ao
+      intelectual:}{\coppe@campo{\coppe@areaconc}}
+    \coppe@capescelula{Ag\^encia(s) de fomento financiadora(s) da produ\c c\~ao
+      intelectual:}{%
+      \ifthenelse{\value{coppeagencias}=0}{\vspace*{\coppe@capesgap}}{%
+        \count1=0
+        \@whilenum\count1<\value{coppeagencias}\do{%
+          \hspace*{10mm}\csname CoppeAgencia:\the\count1\endcsname
+          \ (\csname CoppeAgenciaSigla:\the\count1\endcsname)\par
+          \advance\count1 by 1}}}
+  \end{tabular}\par
   \vspace{9mm}
   \begin{center}
     {\large\bfseries Ficha catalogr\'afica}\par

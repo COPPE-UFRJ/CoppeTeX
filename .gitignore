@@ -47,6 +47,7 @@ tests/*.pdf
 /InstrucoesClaude
 /specs/*
 !/specs/*.md
+!/specs/*.pdf
 
 # Configuração local do Claude Code
 .claude/
@@ -64,3 +65,9 @@ src/latexmkrc.tex
 adversativa/*
 !adversativa/*.tex
 !adversativa/README.md
+
+# listas de floats criados pelo autor com \newcoppefloat (o exemplo cria "mapa")
+*.lomapa
+# subprodutos do synctex, inclusive o arquivo parcial que fica durante o build
+*.synctex
+*.synctex(busy)

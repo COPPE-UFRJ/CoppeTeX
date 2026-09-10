@@ -20,7 +20,7 @@
     docs     - class + coppe.pdf (manual), NORMA_COPPE_2026.pdf,
                futuremanual2026.pdf e covers_5languages.pdf
     pdfa     - class + example_pdfa.tex, tests/test_pdfa.tex e
-               tests/test_semserifa.tex, e passa os tres
+               tests/test_comserifa.tex, e passa os tres
                pelo veraPDF no perfil 2b. Precisa do veraPDF instalado (o
                script procura em %USERPROFILE%\verapdf e no PATH); sem ele o
                passo é PULADO, não falha.
@@ -256,11 +256,11 @@ if ($Scope -in @("pdfa", "all")) {
     # que vai para o deposito.
     Build-Tex -Stem "example_pdfa" -Dir $src     -WithBiber
     Build-Tex -Stem "test_pdfa"    -Dir $testDir -WithBiber
-    # A opcao `semserifa' troca a familia padrao do documento. A pergunta que
-    # interessa nao e se compila -- e se o documento sem serifa continua sendo
+    # A opcao `comserifa' volta o documento para a familia serifada. A pergunta que
+    # interessa nao e se compila -- e se o documento com serifa continua sendo
     # PDF/A, que e o que a 2.2(d) exige do deposito. Sem fonte vetorial nao ha
     # PDF/A, e era assim que a classe inteira saia antes do lmodern: em Type 3.
-    Build-Tex -Stem "test_semserifa" -Dir $testDir -WithBiber
+    Build-Tex -Stem "test_comserifa" -Dir $testDir -WithBiber
 
     # O veraPDF nao esta no PATH depois da instalacao padrao no Windows; o
     # instalador deixa o .bat na raiz da pasta escolhida. Procura-se ali antes
@@ -284,7 +284,7 @@ if ($Scope -in @("pdfa", "all")) {
         $veraTargets = @(
             @{ Stem = "example_pdfa";   Dir = $src },
             @{ Stem = "test_pdfa";      Dir = $testDir },
-            @{ Stem = "test_semserifa"; Dir = $testDir })
+            @{ Stem = "test_comserifa"; Dir = $testDir })
         # todo documento adversativo e compilado com a opcao pdfa: se algum
         # deles ja foi gerado, valida-se tambem
         $advDirV = Join-Path $root "adversativa"

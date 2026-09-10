@@ -119,12 +119,15 @@ def doc(i, tipo, tiponome, lang):
     # as listas ao mesmo tempo, que e o caso em que o pdfTeX estoura os 16
     # fluxos, e o ponto e verificar que a classe resolve isso SOZINHA, no
     # caminho padrao, sem o autor saber que o problema existe.
-    opts += ["pdfa","assinaturas","coorientador"]
+    opts += ["pdfa","coorientador"]
     if i % 2 == 1: opts.append("numbers")
     if i % 3 == 0: opts.append("twoside")
     if i % 4 == 0: opts.append("doublespacing")
     if i % 2 == 0: opts.append("rascunhoficha")
     if i == 7:     opts.append("listasnosumario")
+    # Um documento leva `comserifa': desde a v4.1 a classe compoe sem serifa por
+    # padrao, e a opcao de voltar a serifa precisa de pelo menos uma prova.
+    if i == 5:     opts.append("comserifa")
     dept = DEPTS[i % len(DEPTS)]
     nadv  = 1 if i % 3 == 0 else 2
     nexam = 2 + (i % 4)
@@ -161,13 +164,18 @@ def doc(i, tipo, tiponome, lang):
         A("  \\subtitlein{spanish}{%s}" % SUB["es"])
     A("  \\volumes{2}\\volume{1}")
     A("  \\author{Nome do}{Autor Adversativo}")
+    # Ordem dos argumentos desde a v4.1: nome, sobrenome, titulacao e
+    # instituicao, com o tratamento no argumento OPCIONAL. O primeiro orientador
+    # leva tratamento e o segundo nao, de proposito: os dois caminhos precisam
+    # de prova. A instituicao vazia tambem: e obrigatoria, mas aceita ficar em
+    # branco.
     for k in range(nadv):
-        inst = "[UFRJ]" if k == 0 else ""
-        A("  \\advisor%s{Prof.}{Orientador}{Numero %d}{D.Sc.}" % (inst, k+1))
-    A("  \\coadvisor[UFF]{Prof.}{Coorientador}{Primeiro}{Ph.D.}")
+        trat = "[Prof.]" if k == 0 else ""
+        A("  \\advisor%s{Orientador}{Numero %d}{D.Sc.}{UFRJ}" % (trat, k+1))
+    A("  \\coadvisor{Coorientador}{Primeiro}{Ph.D.}{UFF}")
     for k in range(nexam):
-        inst = ["[UFRJ]","","[UFF]","[UNIRIO]","[USP]"][k % 5]
-        A("  \\examiner%s{Prof.}{Examinador Numero %d}{D.Sc.}" % (inst, k+1))
+        inst = ["UFRJ","","UFF","UNIRIO","USP"][k % 5]
+        A("  \\examiner{Examinador Numero %d}{D.Sc.}{%s}" % (k+1, inst))
     A("  \\department{%s}" % dept)
     A("  \\date{09}{2026}")
     A("  \\dataaprovacao{15 de setembro de 2026}")

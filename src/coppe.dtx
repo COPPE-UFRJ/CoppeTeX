@@ -312,6 +312,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % automatically by |coppe.cls|, so you do not need to load it yourself.
 %
 % \DescribeMacro{\advisor}
+% \DescribeMacro{\coadvisor}
 % \DescribeMacro{\examiner}
 % Every COPPE student is coordinated by at least one advisor.
 % M.Sc. and D.Sc. students can have at most 2 and 3 advisors,
@@ -319,20 +320,41 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % Their names must be provided by issuing the command |\advisor|
 % as below:
 % \begin{verbatim}
-%   \advisor{Title}{Advisor's Name}{Surname}{Degree}
-%   \advisor{Title}{Second Advisor's Name}{Surname}{Degree}
-%   \advisor{Title}{Third Advisor's Name}{Surname}{Degree}
+%   \advisor{Name}{Surname}{Degree}{Institution}
+%   \advisor{Second Advisor's Name}{Surname}{Degree}{Institution}
+%   \advisor{Third Advisor's Name}{Surname}{Degree}{Institution}
 % \end{verbatim}
+%
+% |\coadvisor| takes exactly the same four arguments.
 %
 % The advisors are not necessarily members of the thesis examination board.
 % Thus, it is required to enter the names of all examiners using the |\examiner| macro.
-% The examiners' names are entered differently:
+% The examiners' names are entered differently -- given name and surname go in
+% one argument:
 % \begin{verbatim}
-%   \examiner{Title}{First Examiner's Name Surname}{Degree}
-%   \examiner{Title}{Second Examiner's Name Surname}{Degree}
+%   \examiner{First Examiner's Name Surname}{Degree}{Institution}
+%   \examiner{Second Examiner's Name Surname}{Degree}{Institution}
 %   ...
-%   \examiner{Title}{N-th Examiner's Name Surname}{Degree}
+%   \examiner{N-th Examiner's Name Surname}{Degree}{Institution}
 % \end{verbatim}
+%
+% \textbf{The argument order changed in v4.1.} The treatment (``Prof.'',
+% ``Prof.\textsuperscript{a}'') used to be the first mandatory argument and the
+% institution an optional one; now the treatment is the optional argument and
+% is EMPTY by default, and the institution is the last mandatory argument.
+% 3.1.2.1.3(e) asks for name, titulacao and institution, and asks for no
+% treatment at all, so that is what the folha de aprovacao now prints. The
+% institution may be left empty -- |\advisor{Ana}{Lima}{D.Sc.}{}| compiles and
+% simply prints nothing in its place.
+%
+% To print a treatment anyway, pass it in the optional argument:
+% \begin{verbatim}
+%   \advisor[Prof.]{Ana}{Lima}{D.Sc.}{UFRJ}
+%   \examiner[Prof.\textsuperscript{a}]{Bia Sousa}{Ph.D.}{UFF}
+% \end{verbatim}
+%
+% A document written for v4.0 or earlier has to be rewritten. See
+% \texttt{MIGRATION\_v3\_to\_v4.md} for the mechanical rule.
 %
 % Remember that all names must be given before calling |\maketitle|.
 %
@@ -672,9 +694,12 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %   |pdfx| reads it from a file the class writes at the end of the first one --
 %   which is no burden, since three runs are needed for cross-references anyway.
 %
-%   \item[\texttt{assinaturas}] Give every member of the board a signature rule
-%   of its own on the folha de aprovacao, as Annex D of the manual shows,
-%   instead of the compact list. The spacing adapts to the size of the board.
+%   \item[\texttt{assinaturas}] \textbf{Gone in v4.1, and now a no-op that only
+%   warns.} It used to draw a signature rule above each board member. The
+%   deposit has been digital only since Resolucao CEPG n. 246/2023, so there is
+%   nothing to sign by hand; the folha de aprovacao now always uses the compact
+%   list. The option is still accepted so a document written before v4.1 still
+%   compiles.
 %
 %   \item[\texttt{coorientador}] List the coadvisors on the three abstract
 %   pages, under the advisors, in the same shape the folha de rosto uses.
@@ -704,18 +729,21 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %   package becomes an error instead of a warning. Under LuaLaTeX, which has 128
 %   streams, none of this is loaded and none of it is needed.
 %
-%   \item[\texttt{semserifa}] Set the whole document in the sans-serif family
-%   instead of the serif one. \textbf{Neither the manual nor the COPPE norm
+%   \item[\texttt{comserifa}, \texttt{semserifa}] \textbf{Since v4.1 the class
+%   sets the whole document in the sans-serif family by default}; |comserifa|
+%   goes back to the serif one. \textbf{Neither the manual nor the COPPE norm
 %   prescribes a typeface}: 2.2(b) fixes the colour, the body size~12 and the
 %   smaller uniform size of the four items it lists, and says nothing about the
 %   family. The choice is the author's, and the SiBI manual that carries the
-%   rule is itself set in Arial. The class loads |lmodern|, which brings both
-%   families as vector fonts, so either way the document is PDF/A material.
+%   rule is itself set in Arial -- which is why sans is now the default. The
+%   class loads |lmodern|, which brings both families as vector fonts, so either
+%   way the document is PDF/A material. |semserifa| is still accepted and now
+%   does nothing, so a document written before v4.1 still compiles.
 %   For a DIFFERENT sans face -- Helvetica, say -- load its package in the
-%   preamble and redefine |\familydefault| there; this option is for the common
-%   case of an author who does not want to choose a font, only to drop the
-%   serifs. Redefine |\coppefinalfont| if you do load another face, so the
-%   colophon does not announce Latin Modern.
+%   preamble and redefine |\familydefault| there; the default is for the common
+%   case of an author who does not want to choose a font at all. Redefine
+%   |\coppefinalfont| if you do load another face, so the colophon does not
+%   announce Latin Modern.
 %
 %   \item[\texttt{listasnosumario}] Put the pre-textual lists -- figures,
 %   tables, quadros, programas, abreviaturas, simbolos -- back into the sumario.
@@ -842,7 +870,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %       \foreigntitle{English title}           % English abstract slot
 %       \titlein{spanish}{T\'\i tulo en espa\~nol}  % cover/folha
 %       \author{Juan}{P\'erez}
-%       \advisor{Prof.}{Mar\'\i a}{Garc\'\i a}{D.Sc.}
+%       \advisor{Mar\'\i a}{Garc\'\i a}{D.Sc.}{UFRJ}
 %       \department{PESC}\date{01}{2026}
 %       \keyword{multilenguaje}
 %       \maketitle
@@ -1137,10 +1165,14 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 
 \makelosymbols
 \makeloabbreviations
-% Fonte: a norma fixa o corpo 12, e não a família. Para compor sem serifa,
-% passe a opção de classe `semserifa' lá em cima -- NÃO redefina
-% \familydefault aqui, porque isso venceria a opção. Para uma sem serifa
-% diferente da Latin Modern, carregue o pacote da fonte e troque a família:
+% Flutuante criado pelo autor: mesma regra dos demais (legenda acima, fonte
+% abaixo) e uma lista propria, \listofmapas.
+\newcoppefloat{mapa}{Mapa}{Lista de Mapas}
+% Fonte: a norma fixa o corpo 12, e não a família. A classe compõe sem serifa
+% por padrão; para compor com serifa, passe a opção de classe `comserifa' lá
+% em cima -- NÃO redefina \familydefault aqui, porque isso venceria a opção.
+% Para uma sem serifa diferente da Latin Modern, carregue o pacote da fonte e
+% troque a família:
 %\usepackage{helvet}\renewcommand{\familydefault}{\sfdefault}
 
 
@@ -1148,18 +1180,30 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \title{Título da Tese}
   \foreigntitle{Thesis Title}
   \author{Nome do Autor}{Sobrenome}
-  \advisor[UFRJ]{Prof.}{Nome do Primeiro Orientador}{Sobrenome}{D.Sc.}
-  \advisor[UFRJ]{Prof.}{Nome do Segundo Orientador}{Sobrenome}{Ph.D.}
+  % Orientador: nome, sobrenome, titulacao e instituicao. O tratamento
+  % ("Prof.") e o argumento OPCIONAL entre colchetes e vem vazio por padrao --
+  % a norma nao pede tratamento nenhum. A instituicao e obrigatoria, mas pode
+  % ficar vazia: \advisor{Ana}{Lima}{D.Sc.}{} compila sem erro.
+  \advisor{Nome do Primeiro Orientador}{Sobrenome}{D.Sc.}{UFRJ}
+  % O segundo orientador vai com tratamento, so para mostrar o argumento
+  % opcional funcionando; a norma nao pede tratamento nenhum.
+  \advisor[Prof.]{Nome do Segundo Orientador}{Sobrenome}{Ph.D.}{UFRJ}
+  % Coorientador: mesmos quatro argumentos de \advisor. Aparece na folha de
+  % rosto e na folha de aprovacao; para ve-lo tambem nas paginas de resumo,
+  % passe a opcao de classe `coorientador'.
+  \coadvisor{Nome do Coorientador}{Sobrenome}{D.Sc.}{UFF}
   % A classe aceita de um a tres \advisor; se houver apenas um, o rotulo na
   % capa e na folha de rosto sai como "Orientador" (singular), com dois ou
   % mais sai como "Orientadores" (plural). Para o caso 1/3 orientadores,
   % veja tests/test_brazilian_one_advisor.tex e tests/test_brazilian_three_advisors.tex.
 
-  \examiner[UFRJ]{Prof.}{Nome do Primeiro Examinador Sobrenome}{D.Sc.}
-  \examiner[UFRJ]{Prof.}{Nome do Segundo Examinador Sobrenome}{Ph.D.}
-  \examiner[UFF]{Prof.}{Nome do Terceiro Examinador Sobrenome}{D.Sc.}
-  \examiner[UNICAMP]{Prof.}{Nome do Quarto Examinador Sobrenome}{Ph.D.}
-  \examiner[USP]{Prof.}{Nome do Quinto Examinador Sobrenome}{Ph.D.}
+  \examiner{Nome do Primeiro Examinador Sobrenome}{D.Sc.}{UFRJ}
+  \examiner{Nome do Segundo Examinador Sobrenome}{Ph.D.}{UFRJ}
+  \examiner{Nome do Terceiro Examinador Sobrenome}{D.Sc.}{UFF}
+  \examiner{Nome do Quarto Examinador Sobrenome}{Ph.D.}{UNICAMP}
+  % Instituicao vazia: o argumento e obrigatorio, mas aceita ficar em branco e
+  % entao nada e impresso no lugar dela.
+  \examiner{Nome do Quinto Examinador Sobrenome}{Ph.D.}{}
   \department{PESC}
   \date{06}{2026}
 
@@ -1231,6 +1275,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \listoffigures
   \listoftables
   \listofquadros
+  \listofmapas
   \listofprogramas
   \listofalgorithms
   \printloabbreviations
@@ -1404,8 +1449,53 @@ Quadro & Linhas em todas as bordas. \\
 \fonte{Elabora\c{c}\~ao pr\'opria.}
 \end{quadro}
 
+Um segundo quadro, no \autoref{qua:segundo}, prova que o contador anda e que a lista de quadros recebe as duas entradas.
 
+\begin{quadro}[ht]
+\centering
+\caption{Segundo Quadro, para provar a numeração}
+\label{qua:segundo}
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Elemento} & \textbf{Onde fica} \\
+\hline
+Legenda & Acima da ilustração. \\
+\hline
+Fonte & Abaixo da ilustração. \\
+\hline
+\end{tabular}
+\fonte{Adaptado do manual do SiBI, 9.\textsuperscript{a} ed. rev., 2026.}
+\end{quadro}
 
+\section{Criando um float novo}
+
+\verb|\newcoppefloat{nome}{Nome}{Título da Lista}| cria um flutuante que segue a mesma regra: legenda acima, \verb|\source| abaixo e uma lista própria. O exemplo declara \verb|mapa| no preâmbulo e o usa duas vezes, no \autoref{mapa:primeiro} e no \autoref{mapa:segundo}; a lista sai com \verb|\listofmapas|.
+
+\begin{mapa}[ht]
+\centering
+\caption{Primeiro mapa, num float criado pelo autor}
+\label{mapa:primeiro}
+\begin{tikzpicture}[scale=0.8]
+  \draw[thick] (0,0) rectangle (4,2.4);
+  \draw[fill=gray!20] (0.4,0.4) rectangle (1.8,2);
+  \draw[fill=gray!40] (2.2,0.4) rectangle (3.6,1.2);
+  \node at (2,-0.4) {\footnotesize esquema de ocupação};
+\end{tikzpicture}
+\fonte{Elabora\c{c}\~ao pr\'opria.}
+\end{mapa}
+
+\begin{mapa}[ht]
+\centering
+\caption{Segundo mapa, para provar o contador e a lista}
+\label{mapa:segundo}
+\begin{tikzpicture}[scale=0.8]
+  \draw[thick] (0,0) circle (1.2);
+  \draw[->] (-1.6,0) -- (1.6,0);
+  \draw[->] (0,-1.6) -- (0,1.6);
+  \node at (0,-2) {\footnotesize esquema de alcance};
+\end{tikzpicture}
+\fonte{Elabora\c{c}\~ao pr\'opria.}
+\end{mapa}
 
 
 \section{Tabelas mais elegantes}
@@ -1863,9 +1953,19 @@ Para inserir código no meio do texto use \verb|\pythoninline|, como em \pythoni
 Olá, COPPE!
 \end{Verbatim}
 
-Há estilos prontos também para \verb|java|, \verb|xml|, \verb|html| e \verb|prolog|.
+Há estilos prontos também para \verb|java|, \verb|xml|, \verb|html| e \verb|prolog|. O \autoref{prog:java} usa o de Java e é a segunda listagem do documento, o que prova que o contador anda e que as duas entram na lista de programas.
+
+\begin{java}[caption={Exemplo de programa em Java},label=prog:java]
+public class Saudacao {
+    public static void main(String[] args) {
+        System.out.println("Olá, COPPE!");
+    }
+}
+\end{java}
+\fonte{Elaboração própria.}
+
 Há também \verb|\pythoninline| e \verb|\javainline| para código no meio do
-texto, e o ambiente \verb|Verbatim| (com as opções acima) para a saída de programas. Para algoritmos, use o ambiente \verb|algorithm| com as palavras-chave em português \verb|\Para| e \verb|\Enquanto|, como no \autoref{alg:soma}.
+texto, como em \javainline{new Saudacao()}, e o ambiente \verb|Verbatim| (com as opções acima) para a saída de programas. Para algoritmos, use o ambiente \verb|algorithm| com as palavras-chave em português \verb|\Para| e \verb|\Enquanto|, como no \autoref{alg:soma}.
 
 \begin{algorithm}[H]
 \caption{Soma dos elementos de um vetor}
@@ -1877,6 +1977,21 @@ $s \leftarrow 0$\;
   $s \leftarrow s + v[i]$\;
 }
 \Retorna $s$\;
+\end{algorithm}
+
+O \autoref{alg:busca} é o segundo algoritmo, e usa \verb|\Enquanto|. Como no caso das listagens, ele existe para mostrar a numeração andando e a lista de algoritmos com duas entradas.
+
+\begin{algorithm}[H]
+\caption{Busca sequencial em um vetor}
+\label{alg:busca}
+\Dados{vetor $v$ com $n$ elementos e uma chave $k$}
+\Resultado{posição de $k$ em $v$, ou $0$ se $k$ não estiver em $v$}
+$i \leftarrow 1$\;
+\Enquanto{$i \leq n$ \textbf{e} $v[i] \neq k$}{
+  $i \leftarrow i + 1$\;
+}
+\Se{$i > n$}{\Retorna $0$\;}
+\Retorna $i$\;
 \end{algorithm}
 
   \chapter{Escrevendo matemática}
@@ -2498,9 +2613,20 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
 \@ifundefined{fonte}{\let\fonte\cpsource}{}%
 % \newcoppefloat{env}{caption name}{list title}: declare an extra caption-on-top
 % float (e.g. "picture") that supports \source and gains a \listof<env>s command.
+% \floatstyle is NOT wrapped in a group here: \newfloat defines the environment
+% locally, so a group around it threw the new environment away as soon as it
+% closed and the document then failed with "Environment undefined". plaintop is
+% the class-wide style anyway, set once above and never changed, so leaving it
+% selected costs nothing.
+% The new float is numbered WITHIN THE CHAPTER, like figure, table and quadro,
+% and its list entries are laid out by \l@figure -- float's own \l@<env> runs
+% the number into the title and drops the leaders, which is what the Lista de
+% Mapas of the example showed the first time.
 \newcommand{\newcoppefloat}[3]{%
-  {\floatstyle{plaintop}\newfloat{#1}{htbp}{lo#1}}%
+  \floatstyle{plaintop}\newfloat{#1}{htbp}{lo#1}[chapter]%
   \floatname{#1}{#2}%
+  \expandafter\let\csname l@#1\endcsname\l@figure
+  \expandafter\providecommand\csname #1autorefname\endcsname{#2}%
   \expandafter\newcommand\csname listof#1s\endcsname{%
     \chapter*{#3}\coppe@listtoc{#3}%
     \@mkboth{\MakeUppercase{#3}}{\MakeUppercase{#3}}%
@@ -2709,8 +2835,13 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % be worse than letting the author switch it on when depositing.
 \newif\if@coppepdfa \@coppepdfafalse
 \DeclareOption{pdfa}{\@coppepdfatrue}
-\newif\if@coppeassin \@coppeassinfalse
-\DeclareOption{assinaturas}{\@coppeassintrue}
+% A opcao `assinaturas' punha uma regua para assinatura a mao acima do nome de
+% cada membro da banca. Com a entrega so digital (Resolucao CEPG n. 246/2023)
+% nao ha o que assinar a mao, e a v4.1 tirou as reguas. A opcao continua aceita,
+% sem efeito, para nao quebrar documento escrito antes disso.
+\DeclareOption{assinaturas}{\ClassWarningNoLine{coppe}{A opcao `assinaturas'
+  nao faz mais nada: a folha de aprovacao nao tem mais linhas de assinatura,
+  porque a entrega e digital desde a Resolucao CEPG n. 246/2023}}
 % As paginas de resumo listam os ORIENTADORES abaixo do titulo. O coorientador
 % nao aparece ali, e isso e tradicao da COPPE, nao exigencia do manual: a
 % 3.1.2.1.4 descreve o resumo e nao lista quem assina a orientacao. Como ha
@@ -2783,11 +2914,13 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \DeclareOption{semmorewrites}{\@coppemorewritesfalse}
 % A 2.2(b) fixa a cor, o corpo 12 e o corpo menor uniforme dos quatro itens
 % listados nela, e nao diz uma palavra sobre familia de fonte -- nem a Norma da
-% COPPE. A escolha e do autor. O padrao da classe e a serifada, que e a do
-% LaTeX; `semserifa' troca a familia padrao para a sem serifa. Note que o
-% manual do SiBI, que fixa a regra, esta ele proprio composto em Arial.
-\newif\if@coppesansserif \@coppesansseriffalse
+% COPPE. A escolha e do autor. Desde a v4.1 o padrao da classe e a SEM SERIFA,
+% que e como o proprio manual do SiBI, que fixa a regra, esta composto;
+% `comserifa' volta para a serifada, que e a do LaTeX. `semserifa' continua
+% aceita, agora sem efeito, para nao quebrar documento escrito antes da v4.1.
+\newif\if@coppesansserif \@coppesansseriftrue
 \DeclareOption{semserifa}{\@coppesansseriftrue}
+\DeclareOption{comserifa}{\@coppesansseriffalse}
 %    \end{macrocode}
 %
 %    \begin{macrocode}
@@ -2796,8 +2929,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % pedida; o lmodern ja esta carregado la em cima e traz as duas familias, a
 % serifada e a sem serifa, ambas vetoriais -- que e o que o PDF/A exige.
 % Quem quiser uma sem serifa DIFERENTE (Helvetica, por exemplo) carrega o
-% pacote da fonte no preambulo e refaz \familydefault ali; esta opcao existe
-% para o caso comum, em que ninguem quer escolher fonte, so nao quer serifa.
+% pacote da fonte no preambulo e refaz \familydefault ali; o padrao existe
+% para o caso comum, em que ninguem quer escolher fonte.
 \if@coppesansserif
   \renewcommand{\familydefault}{\sfdefault}%
 \fi
@@ -2939,6 +3072,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \copperdefstring{brazilian}{coadvisor}  {Coorientador}
 \copperdefstring{brazilian}{coadvisors} {Coorientadores}
 \copperdefstring{brazilian}{ofname}     {de}
+\copperdefstring{brazilian}{researchline}{Linha de pesquisa}
 \copperdefstring{english}  {approvedmale}  {Approved by}
 \copperdefstring{english}  {approvedfemale}{Approved by}
 \copperdefstring{english}  {approvedonmale}  {Approved on}
@@ -2948,6 +3082,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \copperdefstring{english}  {coadvisor}  {Co-advisor}
 \copperdefstring{english}  {coadvisors} {Co-advisors}
 \copperdefstring{english}  {ofname}     {of}
+\copperdefstring{english}  {researchline}{Research line}
 % Institutional names: always Portuguese on the cover/folha (UFRJ template).
 \copperdefstring{brazilian}{universityname}{Universidade Federal do Rio de Janeiro}
 \copperdefstring{english}  {universityname}{Universidade Federal do Rio de Janeiro}
@@ -3269,15 +3404,15 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % Number of volumes (3.1.1 and 3.1.2.1.1(d)): printed only when there is more
 % than one, since a single-volume work says nothing about volumes.
 % Coorientador (3.1.2.1.1(f)). Same shape as \advisor, including the optional
-% institution; the label switches to the plural on the second call, as the
+% treatment; the label switches to the plural on the second call, as the
 % advisor label already did.
 \newcount\@coadvisor\@coadvisor0
 \newcommand\coadvisor[5][]{%
-  \global\@namedef{CoppeCoadvisorInst:\expandafter\the\@coadvisor}{#1}
-  \global\@namedef{CoppeCoadvisorTitle:\expandafter\the\@coadvisor}{#2}
-  \global\@namedef{CoppeCoadvisorName:\expandafter\the\@coadvisor}{#3}
-  \global\@namedef{CoppeCoadvisorSurname:\expandafter\the\@coadvisor}{#4}
-  \global\@namedef{CoppeCoadvisorDegree:\expandafter\the\@coadvisor}{#5}
+  \global\@namedef{CoppeCoadvisorTitle:\expandafter\the\@coadvisor}{#1}
+  \global\@namedef{CoppeCoadvisorName:\expandafter\the\@coadvisor}{#2}
+  \global\@namedef{CoppeCoadvisorSurname:\expandafter\the\@coadvisor}{#3}
+  \global\@namedef{CoppeCoadvisorDegree:\expandafter\the\@coadvisor}{#4}
+  \global\@namedef{CoppeCoadvisorInst:\expandafter\the\@coadvisor}{#5}
   \global\advance\@coadvisor by 1
 }
 \newcommand\local@coadvisorstring{%
@@ -3314,14 +3449,19 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % Defines globally the title, name and academic degree of the advisors.
 %    \begin{macrocode}
 \newcount\@advisor\@advisor0
-% The optional first argument is the member's institution, required by
-% 3.1.2.1.3(e). Omitting it keeps every pre-4.1 call working unchanged.
+% Argument order since v4.1: the TREATMENT ("Prof.", "Prof.a") became the
+% optional slot, and comes empty by default -- no norm asks for it and it only
+% clutters the folha de aprovacao. The INSTITUTION, required by 3.1.2.1.3(e),
+% became the last mandatory argument; it may be left empty ({}) without error,
+% in which case nothing is printed for it. A pre-4.1 call has to be rewritten:
+% \advisor[UFRJ]{Prof.}{Nome}{Sobrenome}{D.Sc.} becomes
+% \advisor{Nome}{Sobrenome}{D.Sc.}{UFRJ}.
 \newcommand\advisor[5][]{%
-  \global\@namedef{CoppeAdvisorInst:\expandafter\the\@advisor}{#1}
-  \global\@namedef{CoppeAdvisorTitle:\expandafter\the\@advisor}{#2}
-  \global\@namedef{CoppeAdvisorName:\expandafter\the\@advisor}{#3}
-  \global\@namedef{CoppeAdvisorSurname:\expandafter\the\@advisor}{#4}
-  \global\@namedef{CoppeAdvisorDegree:\expandafter\the\@advisor}{#5}
+  \global\@namedef{CoppeAdvisorTitle:\expandafter\the\@advisor}{#1}
+  \global\@namedef{CoppeAdvisorName:\expandafter\the\@advisor}{#2}
+  \global\@namedef{CoppeAdvisorSurname:\expandafter\the\@advisor}{#3}
+  \global\@namedef{CoppeAdvisorDegree:\expandafter\the\@advisor}{#4}
+  \global\@namedef{CoppeAdvisorInst:\expandafter\the\@advisor}{#5}
   \global\advance\@advisor by 1
   \ifnum\@advisor>1
     \renewcommand\local@advisorstring{Orientadores}
@@ -3338,15 +3478,16 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \newcount\@examiner\@examiner0
 % Until v4.1 this stored only "#1 #2" and DISCARDED the third argument: the
 % titulacao every document passed was silently thrown away and never printed,
-% though 3.1.2.1.3(e) requires it. Each part is now kept separately, and the
-% optional first argument carries the institution.
+% though 3.1.2.1.3(e) requires it. Each part is now kept separately, in the same
+% order \advisor uses: the optional slot is the TREATMENT, and the institution
+% is the last mandatory argument, which may be left empty.
 % CoppeExaminer: is retained with its old meaning for anything reading it.
 \newcommand\examiner[4][]{%
-  \global\@namedef{CoppeExaminerInst:\expandafter\the\@examiner}{#1}
-  \global\@namedef{CoppeExaminerTitle:\expandafter\the\@examiner}{#2}
-  \global\@namedef{CoppeExaminerName:\expandafter\the\@examiner}{#3}
-  \global\@namedef{CoppeExaminerDegree:\expandafter\the\@examiner}{#4}
-  \global\@namedef{CoppeExaminer:\expandafter\the\@examiner}{#2\ #3}
+  \global\@namedef{CoppeExaminerTitle:\expandafter\the\@examiner}{#1}
+  \global\@namedef{CoppeExaminerName:\expandafter\the\@examiner}{#2}
+  \global\@namedef{CoppeExaminerDegree:\expandafter\the\@examiner}{#3}
+  \global\@namedef{CoppeExaminerInst:\expandafter\the\@examiner}{#4}
+  \global\@namedef{CoppeExaminer:\expandafter\the\@examiner}{#1\ #2}
   \global\advance\@examiner by 1
 }
 %    \end{macrocode}
@@ -3725,7 +3866,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \vspace*{12mm}
   {\singlespacing
   \ifthenelse{\equal{\coppe@linhapesq}{}}{}{%
-    \noindent Linha de pesquisa: \coppe@linhapesq\par
+    \noindent\coppemainstring{researchline}: \coppe@linhapesq\par
     \vspace*{5mm}}%
   \nohyphens{%
   \noindent\begin{tabularx}{\textwidth}[b]{@{}l@{ }>{\raggedright\arraybackslash}X@{}}
@@ -3819,39 +3960,29 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % this page opened with the title in caps and the author under it, and set the
 % natureza as a wall of uppercase (\frontpage@maintext). Annex D shows neither.
 % One board member. \coppe@membroid is the identification line required by
-% 3.1.2.1.3(e) -- name, titulacao and institution -- with the last two omitted
-% when not given, so a document that never supplied them looks as it did before.
+% 3.1.2.1.3(e): name, titulacao and institution. Since v4.1 the TREATMENT
+% ("Prof.", "Prof.a") is the optional slot and comes empty by default -- no norm
+% asks for it -- while titulacao and institution are what actually identify the
+% member and are shown whenever they are given. Each of the three is dropped
+% silently when empty, so nothing breaks if the author leaves one blank.
 \newcommand\coppe@membroid[4]{%
-  #1\ #2%
+  \ifthenelse{\equal{#1}{}}{}{#1\ }#2%
   \ifthenelse{\equal{#3}{}}{}{, #3}%
   \ifthenelse{\equal{#4}{}}{}{, #4}}
-% The gap above each signature rule is \coppe@membrogap, set from the size of
-% the board just before the list is assembled (see \makefrontpage). A fixed 9mm
-% fitted five members and overflowed at seven -- the sheet silently continued
-% onto a second page, which also printed a folio in the pre-textual part, where
-% 2.7 forbids one. The shrink lives in the length itself -- \newlength makes a
-% skip register, so "9mm minus 2mm" survives \setlength and reaches \vspace as
-% real glue, and a title long enough to wrap an extra line is absorbed instead
-% of costing a page. It has to go through \vspace and not a bare \vskip: the
-% board list is emitted inside \nohyphens, i.e. in horizontal mode, where
-% \vskip is an error and TeX then typesets the "plus ... minus ..." after it as
-% ordinary text -- which is exactly what landed on the page the first time.
+% Until v4.1 the class could draw a rule above each name, for a hand signature,
+% and \coppe@membrogap held the gap above that rule, shrinking as the board grew
+% so seven members still fitted on one sheet. The deposit has been digital only
+% since Resolucao CEPG n. 246/2023, so there is nothing left to sign by hand and
+% the rules are gone. The length stays declared because the seven-member sizing
+% below still uses it as the gap between entries.
 \newlength\coppe@membrogap
 \setlength\coppe@membrogap{9mm minus 2mm}
 \newcount\coppe@bancasize
 \newcommand\coppe@membro[4]{%
-  \if@coppeassin
-    \vspace{\coppe@membrogap}%
-    \begin{center}
-      \rule{95mm}{0.4pt}\par
-      \nopagebreak{\footnotesize\coppe@membroid{#1}{#2}{#3}{#4}}\par
-    \end{center}%
-  \else
-    \noindent\hspace*{8mm}%
-    \begin{minipage}{\dimexpr\textwidth-8mm\relax}
-      \coppe@membroid{#1}{#2}{#3}{#4}
-    \end{minipage}\par\vspace{2mm}%
-  \fi}
+  \noindent\hspace*{8mm}%
+  \begin{minipage}{\dimexpr\textwidth-8mm\relax}
+    \coppe@membroid{#1}{#2}{#3}{#4}
+  \end{minipage}\par\vspace{2mm}}
 \newcommand\makefrontpage{%
   \begin{center}
     \nohyphens{\@authname\ \@authsurn}\par
@@ -4074,8 +4205,21 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \ifthenelse{\equal{\coppe@tipoproducao}{#1}}{$\times$}{\phantom{$\times$}}}
 \newcommand\coppe@marcavinc[1]{%
   \ifthenelse{\equal{\coppe@projetovinc}{#1}}{$\times$}{\phantom{$\times$}}}
+% Annex H prints the five fields inside a CLOSED FRAME, one cell each, with a
+% horizontal rule between cells and NOTHING to write on: the space to fill in is
+% the blank space of the cell. Until v4.1 the class laid the fields out as loose
+% paragraphs and drew a dotted \hrulefill to write on, which is not what the
+% model shows. \coppe@campo now prints the value when there is one and leaves
+% empty vertical space when there is not.
+\newlength\coppe@capesgap
+\setlength\coppe@capesgap{11mm}
 \newcommand\coppe@campo[1]{%
-  \ifthenelse{\equal{#1}{}}{\hrulefill}{#1\enspace\hrulefill}}
+  \ifthenelse{\equal{#1}{}}{\vspace*{\coppe@capesgap}}{\par#1}}
+% One cell of the frame: the label, then whatever the field holds.
+\newcommand\coppe@capescelula[2]{%
+  \begin{minipage}[t]{\dimexpr\linewidth-2\tabcolsep\relax}
+    \vspace{1mm}#1\par#2\vspace{1.5mm}
+  \end{minipage}\\\hline}
 \newcommand\coppe@checatipo{%
   \ifthenelse{\equal{\coppe@tipoproducao}{}}{}{%
     \ifthenelse{\equal{\coppe@tipoproducao}{bibliografica}\OR
@@ -4095,36 +4239,33 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     {\large\bfseries Informa\c c\~oes Coleta CAPES}
   \end{center}
   \vspace{7mm}
-  \noindent Tipo de produ\c c\~ao intelectual:\par
-  \vspace{1mm}
-  \hspace*{10mm}(\coppe@marcatipo{bibliografica})\enspace Bibliogr\'afica\par
-  \hspace*{10mm}(\coppe@marcatipo{artistica})\enspace Art\'{\i}stica\par
-  \hspace*{10mm}(\coppe@marcatipo{tecnologica})\enspace Tecnol\'ogica\par
-  \hspace*{10mm}(\coppe@marcatipo{tecnica})\enspace T\'ecnica\par
-  \vspace{5mm}
-  \noindent Projeto de pesquisa vinculado \`a produ\c c\~ao intelectual?\par
-  \vspace{1mm}
-  \hspace*{10mm}(\coppe@marcavinc{sim})\enspace Sim\par
-  \hspace*{10mm}(\coppe@marcavinc{nao})\enspace N\~ao\par
-  \vspace{5mm}
-  \noindent Nome do projeto de pesquisa:\par
-  \vspace{1mm}
-  \noindent\coppe@campo{\coppe@nomeprojeto}\par
-  \vspace{5mm}
-  \noindent \'Area de concentra\c c\~ao da produ\c c\~ao intelectual:\par
-  \vspace{1mm}
-  \noindent\coppe@campo{\coppe@areaconc}\par
-  \vspace{5mm}
-  \noindent Ag\^encia(s) de fomento financiadora(s) da produ\c c\~ao
-  intelectual:\par
-  \vspace{1mm}
-  \ifthenelse{\value{coppeagencias}=0}{%
-    \noindent\hrulefill\par}{%
-    \count1=0
-    \@whilenum\count1<\value{coppeagencias}\do{%
-      \noindent\hspace*{10mm}\csname CoppeAgencia:\the\count1\endcsname
-      \ (\csname CoppeAgenciaSigla:\the\count1\endcsname)\par
-      \advance\count1 by 1}}%
+  \noindent\begin{tabular}{|@{\hspace{\tabcolsep}}p{\dimexpr\textwidth-2\tabcolsep-2\arrayrulewidth\relax}@{\hspace{\tabcolsep}}|}
+    \hline
+    \coppe@capescelula{Tipo de produ\c c\~ao intelectual:}{%
+      \vspace{1mm}
+      \hspace*{10mm}(\coppe@marcatipo{bibliografica})\enspace
+        Bibliogr\'afica\par
+      \hspace*{10mm}(\coppe@marcatipo{artistica})\enspace Art\'{\i}stica\par
+      \hspace*{10mm}(\coppe@marcatipo{tecnologica})\enspace Tecnol\'ogica\par
+      \hspace*{10mm}(\coppe@marcatipo{tecnica})\enspace T\'ecnica}
+    \coppe@capescelula{Projeto de pesquisa vinculado \`a produ\c c\~ao
+      intelectual?}{%
+      \vspace{1mm}
+      \hspace*{10mm}(\coppe@marcavinc{sim})\enspace Sim\par
+      \hspace*{10mm}(\coppe@marcavinc{nao})\enspace N\~ao}
+    \coppe@capescelula{Nome do projeto de pesquisa:}{%
+      \coppe@campo{\coppe@nomeprojeto}}
+    \coppe@capescelula{\'Area de concentra\c c\~ao da produ\c c\~ao
+      intelectual:}{\coppe@campo{\coppe@areaconc}}
+    \coppe@capescelula{Ag\^encia(s) de fomento financiadora(s) da produ\c c\~ao
+      intelectual:}{%
+      \ifthenelse{\value{coppeagencias}=0}{\vspace*{\coppe@capesgap}}{%
+        \count1=0
+        \@whilenum\count1<\value{coppeagencias}\do{%
+          \hspace*{10mm}\csname CoppeAgencia:\the\count1\endcsname
+          \ (\csname CoppeAgenciaSigla:\the\count1\endcsname)\par
+          \advance\count1 by 1}}}
+  \end{tabular}\par
   \vspace{9mm}
   \begin{center}
     {\large\bfseries Ficha catalogr\'afica}\par
@@ -5829,6 +5970,7 @@ postamble
 \copperdefstring{spanish}{coadvisor}  {Codirector}
 \copperdefstring{spanish}{coadvisors} {Codirectores}
 \copperdefstring{spanish}{ofname}     {de}
+\copperdefstring{spanish}{researchline}{L\'\i nea de investigaci\'on}
 \copperdefstring{spanish}{universityname}{Universidade Federal do Rio de Janeiro}
 \copperdefstring{spanish}{cityname}    {Rio de Janeiro}
 \copperdefstring{spanish}{statename}   {RJ}
@@ -5885,6 +6027,7 @@ postamble
 \copperdefstring{french}{coadvisor}  {Co-directeur}
 \copperdefstring{french}{coadvisors} {Co-directeurs}
 \copperdefstring{french}{ofname}     {de}
+\copperdefstring{french}{researchline}{Axe de recherche}
 \copperdefstring{french}{universityname}{Universidade Federal do Rio de Janeiro}
 \copperdefstring{french}{cityname}    {Rio de Janeiro}
 \copperdefstring{french}{statename}   {RJ}
@@ -5940,6 +6083,7 @@ postamble
 \copperdefstring{italian}{coadvisor}  {Correlatore}
 \copperdefstring{italian}{coadvisors} {Correlatori}
 \copperdefstring{italian}{ofname}     {di}
+\copperdefstring{italian}{researchline}{Linea di ricerca}
 \copperdefstring{italian}{universityname}{Universidade Federal do Rio de Janeiro}
 \copperdefstring{italian}{cityname}    {Rio de Janeiro}
 \copperdefstring{italian}{statename}   {RJ}
@@ -6352,9 +6496,9 @@ postamble
   \title{Demonstração da classe CoppeTeX 4.0 em português}
   \foreigntitle{CoppeTeX 4.0 class demonstration in English}
   \author{Nome do}{Autor}
-  \advisor{Prof.}{Primeiro}{Orientador}{D.Sc.}
-  \examiner{Prof.}{Primeiro Examinador}{D.Sc.}
-  \examiner{Prof.}{Segundo Examinador}{D.Sc.}
+  \advisor{Primeiro}{Orientador}{D.Sc.}{UFRJ}
+  \examiner{Primeiro Examinador}{D.Sc.}{UFRJ}
+  \examiner{Segundo Examinador}{D.Sc.}{UFRJ}
   \department{PESC}
   \date{05}{2026}
   \keyword{Multilíngue}
@@ -6395,9 +6539,9 @@ postamble
   \title{Demonstração da classe CoppeTeX 4.0 em português}
   \foreigntitle{CoppeTeX 4.0 class demonstration in English}
   \author{Author's}{Name}
-  \advisor{Prof.}{First}{Advisor}{D.Sc.}
-  \examiner{Prof.}{First Examiner}{D.Sc.}
-  \examiner{Prof.}{Second Examiner}{D.Sc.}
+  \advisor{First}{Advisor}{D.Sc.}{UFRJ}
+  \examiner{First Examiner}{D.Sc.}{UFRJ}
+  \examiner{Second Examiner}{D.Sc.}{UFRJ}
   \department{PESC}
   \date{05}{2026}
   \keyword{Multilingual}
@@ -6441,9 +6585,9 @@ postamble
   \foreigntitle{CoppeTeX 4.0 class demonstration in English}
   \titlein{spanish}{Demostración de la clase CoppeTeX 4.0 en espa\~nol}
   \author{Nombre del}{Autor}
-  \advisor{Prof.}{Primer}{Director}{D.Sc.}
-  \examiner{Prof.}{Primer Examinador}{D.Sc.}
-  \examiner{Prof.}{Segundo Examinador}{D.Sc.}
+  \advisor{Primer}{Director}{D.Sc.}{UFRJ}
+  \examiner{Primer Examinador}{D.Sc.}{UFRJ}
+  \examiner{Segundo Examinador}{D.Sc.}{UFRJ}
   \department{PESC}
   \date{05}{2026}
   \keyword{Multilenguaje}
@@ -6496,9 +6640,9 @@ postamble
   \foreigntitle{CoppeTeX 4.0 class demonstration in English}
   \titlein{french}{D\'emonstration de la classe CoppeTeX 4.0 en fran\c{c}ais}
   \author{Pr\'enom de}{l'Auteur}
-  \advisor{Prof.}{Premier}{Directeur}{D.Sc.}
-  \examiner{Prof.}{Premier Examinateur}{D.Sc.}
-  \examiner{Prof.}{Deuxi\`eme Examinateur}{D.Sc.}
+  \advisor{Premier}{Directeur}{D.Sc.}{UFRJ}
+  \examiner{Premier Examinateur}{D.Sc.}{UFRJ}
+  \examiner{Deuxi\`eme Examinateur}{D.Sc.}{UFRJ}
   \department{PESC}
   \date{05}{2026}
   \keyword{Multilingue}
@@ -6552,9 +6696,9 @@ postamble
   \foreigntitle{CoppeTeX 4.0 class demonstration in English}
   \titlein{italian}{Dimostrazione della classe CoppeTeX 4.0 in italiano}
   \author{Nome dell'}{Autore}
-  \advisor{Prof.}{Primo}{Relatore}{D.Sc.}
-  \examiner{Prof.}{Primo Esaminatore}{D.Sc.}
-  \examiner{Prof.}{Secondo Esaminatore}{D.Sc.}
+  \advisor{Primo}{Relatore}{D.Sc.}{UFRJ}
+  \examiner{Primo Esaminatore}{D.Sc.}{UFRJ}
+  \examiner{Secondo Esaminatore}{D.Sc.}{UFRJ}
   \department{PESC}
   \date{05}{2026}
   \keyword{Multilingue}

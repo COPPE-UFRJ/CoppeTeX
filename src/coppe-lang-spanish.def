@@ -86,6 +86,7 @@
 \copperdefstring{spanish}{coadvisor}  {Codirector}
 \copperdefstring{spanish}{coadvisors} {Codirectores}
 \copperdefstring{spanish}{ofname}     {de}
+\copperdefstring{spanish}{researchline}{L\'\i nea de investigaci\'on}
 \copperdefstring{spanish}{universityname}{Universidade Federal do Rio de Janeiro}
 \copperdefstring{spanish}{cityname}    {Rio de Janeiro}
 \copperdefstring{spanish}{statename}   {RJ}

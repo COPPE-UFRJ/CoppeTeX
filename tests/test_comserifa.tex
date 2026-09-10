@@ -1,15 +1,15 @@
 %%
-%% test_semserifa.tex -- guarda a opcao de classe `semserifa'.
+%% test_comserifa.tex -- guarda a opcao de classe `comserifa'.
 %%
 %% A 2.2(b) do manual fixa a cor, o corpo 12 e o corpo menor uniforme das
 %% citacoes longas, notas, paginacao e legendas, e NAO prescreve familia de
-%% fonte; a Norma da COPPE tambem nao. A opcao existe para o autor que quer
-%% compor sem serifa sem ter de mexer em \familydefault -- e o manual do SiBI,
-%% que carrega a regra, esta ele proprio composto em Arial.
+%% fonte; a Norma da COPPE tambem nao. Desde a v4.1 a classe compoe SEM SERIFA
+%% por padrao, como o proprio manual do SiBI, que carrega a regra e esta
+%% composto em Arial. `comserifa' existe para o autor que prefere a serifada.
 %%
-%% O teste pede as duas coisas ao mesmo tempo, `semserifa' e `pdfa', porque a
-%% pergunta que interessa nao e se compila: e se o documento sem serifa
-%% continua sendo PDF/A. Sem serifa vetorial nao ha PDF/A, e foi exatamente
+%% O teste pede as duas coisas ao mesmo tempo, `comserifa' e `pdfa', porque a
+%% pergunta que interessa nao e se compila: e se o documento com serifa
+%% continua sendo PDF/A. Sem fonte vetorial nao ha PDF/A, e foi exatamente
 %% assim que a classe inteira saia antes de carregar o lmodern: em Type 3.
 %% O veraPDF deste alvo esta no escopo `pdfa' do build-check.
 %%
@@ -22,23 +22,23 @@
 %% tests\run-tests.ps1 para so esta pasta.
 %%
 
-\documentclass[dsc,semserifa,pdfa]{coppe}
+\documentclass[dsc,comserifa,pdfa]{coppe}
 
 \usepackage[brazilian]{babel}
 
-\title{Título de Teste sem Serifa}
-\foreigntitle{Sans-Serif Test Title}
+\title{Título de Teste com Serifa}
+\foreigntitle{Serif Test Title}
 \author{Nome}{de Teste}
 
-\advisor[UFRJ]{Prof.}{Primeiro}{Orientador}{D.Sc.}
-\examiner[UFRJ]{Prof.}{Primeiro Examinador}{D.Sc.}
-\examiner{Prof.}{Segundo Examinador}{Ph.D.}
+\advisor{Primeiro}{Orientador}{D.Sc.}{UFRJ}
+\examiner{Primeiro Examinador}{D.Sc.}{UFRJ}
+\examiner{Segundo Examinador}{Ph.D.}{UFRJ}
 
 \department{PESC}
 \date{09}{2026}
 \dataaprovacao{15 de setembro de 2026}
 
-\keyword{Sem serifa}
+\keyword{Com serifa}
 \keyword{Tipografia}
 
 \areaconcentracao{Engenharia de Sistemas e Computação}
@@ -52,10 +52,10 @@
   \maketitle
   \frontmatter
   \begin{abstract}
-    Resumo de teste, composto sem serifa.
+    Resumo de teste, composto com serifa.
   \end{abstract}
   \begin{foreignabstract}
-    Test abstract, set sans serif.
+    Test abstract, set with serifs.
   \end{foreignabstract}
   \tableofcontents
   \mainmatter
@@ -80,4 +80,4 @@
 \end{document}
 %%
 %%
-%% End of file `tests/test_semserifa.tex'.
+%% End of file `tests/test_comserifa.tex'.

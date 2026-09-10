@@ -1,20 +1,20 @@
 %%
-%% test_assinaturas.tex -- regression test for the coppe class.
-%% Exercises the pre-textual pages introduced/reshaped for the SiBI manual,
-%% 9th revised edition (2026):
+%% test_banca.tex -- regression test for the coppe class.
+%% Exercises the pre-textual pages as the SiBI manual, 9th revised edition
+%% (2026), reshaped them:
 %%
-%%   * class option `assinaturas' -- folha de aprovacao with one signature
-%%     rule per board member instead of the compact list (Annex D)
-%%   * \examiner and \advisor with the OPTIONAL institution argument, and the
-%%     titulacao argument that pre-4.1 discarded silently
+%%   * folha de aprovacao as a compact list, with NO signature rules -- the
+%%     deposit is digital only (Resolucao CEPG n. 246/2023)
+%%   * \advisor and \examiner in the v4.1 argument order: the treatment is the
+%%     OPTIONAL argument and the institution the last mandatory one
 %%   * folha adicional with the Coleta CAPES fields (3.1.2.1.2, Annex H):
 %%     \tipoproducao, \projetovinculado, \nomeprojeto, \areaconcentracao,
 %%     \agenciafomento
 %%   * \linhapesquisa and \areaconcentracao on the folha de rosto
 %%   * \dataaprovacao on the folha de aprovacao
 %%
-%% Deliberately mixes calls WITH and WITHOUT the optional institution, so a
-%% regression in the optional-argument handling shows up here.
+%% Deliberately mixes calls WITH and WITHOUT the treatment, and one examiner
+%% with an EMPTY institution, so a regression in either shows up here.
 %%
 %% Run via ../tests/run-tests.ps1. Compile under pdfLaTeX.
 %%
@@ -23,22 +23,23 @@
 %% tests\run-tests.ps1 para so esta pasta.
 %%
 
-\documentclass[dsc,assinaturas]{coppe}
+\documentclass[dsc]{coppe}
 
 \usepackage[brazilian]{babel}
 
-\title{Título de Teste das Assinaturas}
-\foreigntitle{Signature Test Title}
+\title{Título de Teste da Banca}
+\foreigntitle{Board Test Title}
 \author{Nome}{de Teste}
 
- % com instituição
-\advisor[UFRJ]{Prof.}{Primeiro}{Orientador}{D.Sc.}
- % sem instituição -- deve continuar valendo (compatibilidade pré-4.1)
-\advisor{Prof.}{Segundo}{Orientador}{Ph.D.}
+ % com tratamento, no argumento opcional
+\advisor[Prof.]{Primeiro}{Orientador}{D.Sc.}{UFRJ}
+ % sem tratamento -- que é o padrão e o que a norma pede
+\advisor{Segundo}{Orientador}{Ph.D.}{UFRJ}
 
-\examiner[UFRJ]{Prof.}{Primeiro Examinador}{D.Sc.}
-\examiner{Prof.}{Segundo Examinador}{Ph.D.}
-\examiner[UFF]{Prof.}{Terceiro Examinador}{D.Sc.}
+\examiner{Primeiro Examinador}{D.Sc.}{UFRJ}
+ % instituição vazia: obrigatória, mas aceita ficar em branco
+\examiner{Segundo Examinador}{Ph.D.}{}
+\examiner[Prof.\textsuperscript{a}]{Terceira Examinadora}{D.Sc.}{UFF}
 
 \department{PESC}
 \date{09}{2026}
@@ -73,4 +74,4 @@
 \end{document}
 %% 
 %%
-%% End of file `tests/test_assinaturas.tex'.
+%% End of file `tests/test_banca.tex'.
