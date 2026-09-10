@@ -465,9 +465,9 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \copperdefstring{english}  {art}          {Art}
 \copperdefstring{brazilian}{platform}     {Plataforma}
 \copperdefstring{english}  {platform}     {Platform}
-\copperdefstring{brazilian}{directedby}   {Dire\c{c}\~ao}
+\copperdefstring{brazilian}{directedby}   {Dire\c{c}\~ao de}
 \copperdefstring{english}  {directedby}   {Directed by}
-\copperdefstring{brazilian}{producedby}   {Produ\c{c}\~ao}
+\copperdefstring{brazilian}{producedby}   {Produ\c{c}\~ao de}
 \copperdefstring{english}  {producedby}   {Produced by}
 \copperdefstring{brazilian}{listabbreviation}{Lista de Abreviaturas e Siglas}
 \copperdefstring{english}  {listabbreviation}{List of Abbreviations and Acronyms}
@@ -1500,8 +1500,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \if@restonecol\twocolumn\fi
     }
 \newcommand\printlosymbols{%
-\renewcommand\glossaryname{\listsymbolname}%
 \begingroup\@coppeglosspretrue
+\renewcommand\glossaryname{\listsymbolname}%
 \@input@{\jobname.los}\endgroup}
 \def\makelosymbols{%
   \newwrite\@losfile
@@ -1527,8 +1527,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \endgroup%
     \@esphack}}}%
 \newcommand\printloabbreviations{%
-\renewcommand\glossaryname{\listabbreviationname}%
 \begingroup\@coppeglosspretrue
+\renewcommand\glossaryname{\listabbreviationname}%
 \@input@{\jobname.lab}\endgroup}
 \def\makeloabbreviations{%
   \newwrite\@labfile

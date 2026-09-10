@@ -126,6 +126,52 @@ to the CPGP is [`PROPOSTA_CPGP.md`](./PROPOSTA_CPGP.md).
   while the heading read "2.1 SECCIÓN". `es-nosectiondot`, applied through the
   new `\coppe@babelextra@<lang>` hook, turns off that one adjustment.
 
+### Bibliography styles checked against the manual's own examples
+
+`adversativa/referencias-manual.bib` carries one entry for **each of the 34
+reference categories of section 4.2** of the manual, with the manual's own
+example data, and the `%%` comment above each entry is the reference **as the
+manual prints it**. `tools/conferir-referencias.py` compares the two. The first
+measurement found **31 divergences in 34 categories**; the styles had never
+been checked against anything but their author's memory. The run of record now
+reads **0 divergences, 3 accepted** — each accepted one marked `%%!` in the
+`.bib` with its reason.
+
+What that took:
+
+- `Disponível em: <url>. Acesso em: <data>.` — biblatex parenthesises the
+  access date and drops the colon; the manual does neither. Physical
+  description ("1 carta") moved ahead of the electronic block.
+- A final period on `standard`, `music`, `audio`, `video`, `software`, `image`,
+  `artwork`, `performance` and `dataset`: all nine are `\usedriver` aliases,
+  and `\usedriver` disables the called driver's `\finentry` expecting the
+  caller to close the entry — nobody did.
+- "maio" is not abbreviated (4.3), and a month range takes a slash.
+- The period after "Anais [...]" and the comma after an abbreviated journal
+  title: biblatex's punctuation tracker swallowed both.
+- **New drivers**: `periodical` (whose title printed as *nothing*, because the
+  `title` bibmacro goes through the `titlecase` format and an author-less
+  periodical produced no output), `proceedings` and `inproceedings` (with
+  `eventtitle`/`venue`/`eventdate` so the event name is set in capitals ahead
+  of the proceedings title), and `online` (which never printed the location).
+- **Corporate authors** now follow 4.3.2.13: a name containing a period or a
+  parenthesis prints as the author typed it, everything else goes to capitals.
+  The style cannot know whether "Associação Brasileira de Normas Técnicas" is
+  one entity or "Brasil. Supremo Tribunal Federal" has a subordinate organ —
+  the author can.
+- Theses in the shape of 4.2.1.1, patents with filing and grant dates,
+  legislation with the volume, number and pages of its vehicle, maps without
+  the stray colon when there is no publisher.
+
+### Fixed (found by the extended adversarial document)
+
+- **`\glossaryname` leaked out of `\printlosymbols`.** The `\renewcommand`
+  sat outside the `\begingroup`, so after the list of symbols every later use
+  of `\glossaryname` — the post-textual Glossário of 3.1.4.2 and its sumário
+  entry — came out titled "Lista de Símbolos". Only a document carrying both
+  the pre-textual lists and the glossary can show it, and none did until one
+  was built for it.
+
 ### Verification
 
 Everything above is proved by one command, `tools/prova.ps1`, which regenerates

@@ -229,9 +229,11 @@ build-check: cobre as três coisas que podem estar erradas sem ninguém notar.
 3. **A prova passa**: a suíte de regressão e os doze adversativos, nos **dois
    motores**, com o veraPDF em cima de todo PDF/A.
 
-Estado da v4.1: **248 passos, 0 falhas, 27 PDFs conformes com PDF/A-2b**, e
+Estado da v4.1: **248 passos, 0 falhas, 27 PDFs conformes com PDF/A-2b**;
 **0 erro em 34 documentos** conferidos contra o Manual pelo `conferir-norma.py`
-— os 24 adversativos, nos dois motores, os 7 exemplos e três da suíte.
+— os 24 adversativos, nos dois motores, os 7 exemplos e três da suíte —; e
+**0 divergência** nas 34 categorias de referência do Manual, com três aceitas
+e documentadas.
 
 ## 4e. Os dezesseis fluxos de escrita
 
@@ -287,35 +289,48 @@ folha correspondente.
 Precisa de `python3`, poppler (`pdftotext`, `pdftoppm`, `pdfinfo`). Roda em
 qualquer sistema.
 
-## 4g. A prova de referências (em curso)
+## 4g. A prova de referências
 
-**Status: medida, corrigida, não recompilada.**
+**Status: FEITA.** 31 divergências no começo, **0 no fim**, mais três aceitas
+com o motivo escrito ao lado da entrada.
 
 `adversativa/referencias-manual.bib` traz uma entrada para cada categoria da
 seção 4.2 do Manual — 34 no total —, com os dados dos próprios exemplos do
 Manual, e o comentário `%%` acima de cada uma é a referência **como o Manual a
-imprime**: o gabarito. São citadas só pelos quatro adversativos em português,
-que cobrem os dois sistemas de chamada sobre a mesma bibliografia.
+imprime**: o gabarito. Uma linha `%%!` registra divergência aceita, com o
+motivo. São citadas só pelos quatro adversativos em português, que cobrem os
+dois sistemas de chamada sobre a mesma bibliografia.
 
 ```bash
 python3 tools/conferir-referencias.py adversativa/adv_dsc_pt.pdf
+CONFERIR=-v python3 tools/conferir-referencias.py adversativa/adv_dsc_pt.pdf
 ```
 
-compara o que a classe compôs com o gabarito, ignorando o que não é da norma
-(quebras de linha e de hifenização do pdftotext, os espaços que o biblatex mete
-dentro de URLs longas, hífen contra meia-risca).
+A comparação ignora o que não é da norma: quebras de linha e de hifenização do
+pdftotext, os espaços e hífens que o biblatex mete dentro de URLs longas, e a
+diferença entre hífen, meia-risca e travessão.
 
-Primeira medição: **31 divergências em 34 categorias**. Os estilos biblatex
-nunca tinham sido conferidos contra os exemplos do Manual. As correções estão
-no commit `estilos: as referências passam a seguir os exemplos do Manual` —
-`Disponível em: … Acesso em: …`, ordem da descrição física, ponto final nos
-sete drivers-atalho, "maio" por extenso, driver de periódico, drivers de
-evento, caixa alta do autor-entidade, forma da tese, datas da patente, campos
-da legislação, dois-pontos do mapa.
+As três aceitas: uma errata do Manual (`LEVI, G;` sem o ponto da abreviatura),
+o `et al.` da patente onde a classe lista todos os autores (a 4.3.1.3 admite as
+duas formas), e o intervalo aberto `1941/` do periódico, porque o biblatex usa
+o mesmo separador para anos e meses e escolheu-se acertar o caso frequente.
 
-**O que falta:** recompilar e medir de novo. O harness travou no meio da
-rodada e o número final ainda não existe. Enquanto ele não existir, **não se
-marca a v4.1**.
+## 4h. O adversativo difícil
+
+Onze dos doze adversativos são enxutos de propósito — eles cobrem a matriz de
+opções e de idiomas. **Um** é levado ao extremo, o `adv_dsc_pt`, e é onde os
+defeitos raros aparecem: três figuras (uma com subfiguras), três tabelas em
+três estilos, três quadros, três programas em três linguagens, três algoritmos,
+oito símbolos, oito abreviaturas, seis siglas, todas as formas de citar, quatro
+formas de equação, listas aninhadas, `tcolorbox`, `Verbatim`, índice remissivo
+com subentradas e remissiva, glossário pós-textual, apêndice com longtable que
+atravessa folhas e anexo com PDF externo incluído por `pdfpages`.
+
+Foi ele que produziu o vazamento do `\glossaryname` — que só aparece num
+documento com as listas pré-textuais **e** o glossário.
+
+Estado: 66 folhas, 17 conferências de norma sem erro, 0 divergência nas 34
+categorias de referência.
 
 ## 5. CTAN e Overleaf
 

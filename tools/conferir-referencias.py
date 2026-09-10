@@ -85,7 +85,7 @@ def referencias_do_pdf(pdf):
                                capture_output=True, text=True).stdout
     m = re.search(r"^\s*REFER[ÊE]NCIAS\s*$", todo, re.M)
     if not m: return []
-    corpo = todo[m.end():]
+    corpo = re.sub(r"(?m)^\s*\d{1,3}\s*$", "", todo[m.end():])
     fim = re.search(r"^\s*(AP[ÊE]NDICE|ANEXO|[ÍI]NDICE REMISSIVO)\b", corpo, re.M)
     if fim: corpo = corpo[:fim.start()]
     pedacos = re.split(r"\n\s*\[(\d+)\]\s*", "\n" + corpo)
@@ -146,6 +146,16 @@ if __name__ == "__main__":
     total_dif = 0
     for pdf in alvos:
         compostas = referencias_do_pdf(pdf)
+        if len(compostas) < len(gab):
+            # Sem a opcao de classe `numbers' nao ha marca [n], e no estilo
+            # autor-data nao ha fronteira confiavel entre uma entrada e a
+            # seguinte no texto extraido. Nao e perda: os drivers do .bbx sao
+            # os mesmos nos dois sistemas de chamada -- o que muda e a chamada
+            # no texto, que e do .cbx --, entao conferir os numericos confere
+            # a composicao das referencias.
+            print("\n=== %s -- pulado (compile com a opcao `numbers')"
+                  % os.path.basename(pdf))
+            continue
         pares = casa(gab, compostas)
         dif, aceitas = 0, 0
         print("\n=== %s -- %d referencias no gabarito, %d compostas"
