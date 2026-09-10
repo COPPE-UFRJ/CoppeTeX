@@ -4412,9 +4412,13 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %
 % \begin{macro}{\printlosymbols}
 %    \begin{macrocode}
+% O \renewcommand ficava FORA do grupo e vazava: depois de imprimir a lista de
+% simbolos, \glossaryname continuava valendo "Lista de Simbolos" pelo resto do
+% documento, e o Glossario pos-textual da 3.1.4.2 saia com o titulo errado --
+% no sumario tambem. Dentro do grupo, a troca dura o que tem de durar.
 \newcommand\printlosymbols{%
-\renewcommand\glossaryname{\listsymbolname}%
 \begingroup\@coppeglosspretrue
+\renewcommand\glossaryname{\listsymbolname}%
 \@input@{\jobname.los}\endgroup}
 %    \end{macrocode}
 % \end{macro}
@@ -4453,8 +4457,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \begin{macro}{\printloabbreviations}
 %    \begin{macrocode}
 \newcommand\printloabbreviations{%
-\renewcommand\glossaryname{\listabbreviationname}%
 \begingroup\@coppeglosspretrue
+\renewcommand\glossaryname{\listabbreviationname}%
 \@input@{\jobname.lab}\endgroup}
 %    \end{macrocode}
 % \end{macro}

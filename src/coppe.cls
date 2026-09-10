@@ -1500,8 +1500,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \if@restonecol\twocolumn\fi
     }
 \newcommand\printlosymbols{%
-\renewcommand\glossaryname{\listsymbolname}%
 \begingroup\@coppeglosspretrue
+\renewcommand\glossaryname{\listsymbolname}%
 \@input@{\jobname.los}\endgroup}
 \def\makelosymbols{%
   \newwrite\@losfile
@@ -1527,8 +1527,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \endgroup%
     \@esphack}}}%
 \newcommand\printloabbreviations{%
-\renewcommand\glossaryname{\listabbreviationname}%
 \begingroup\@coppeglosspretrue
+\renewcommand\glossaryname{\listabbreviationname}%
 \@input@{\jobname.lab}\endgroup}
 \def\makeloabbreviations{%
   \newwrite\@labfile
