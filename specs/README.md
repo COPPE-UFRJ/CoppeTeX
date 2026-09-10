@@ -45,7 +45,13 @@ retirada, basta apagar os arquivos e voltar a ignorá-los no `.gitignore`.
 
 - `ANOTACOES.md` — anotações de Geraldo Xexéo feitas na 9.ª ed. (2025) do
   manual, transcritas do PDF anterior, com o estado de cada uma frente à edição
-  revista de 2026.
+  revista de 2026. **A edição de 2025 não está mais nesta pasta**, e é por isso
+  que as anotações foram transcritas: elas existiam só como comentários dentro
+  daquele PDF e teriam desaparecido com ele.
+
+Não há mais nenhum outro arquivo aqui. As extrações de texto que já ocuparam a
+pasta eram material de trabalho, continuam ignoradas pelo `.gitignore` e podem
+ser refeitas a qualquer momento com `pdftotext -layout`.
 
 ## Documentos relacionados, fora desta pasta
 

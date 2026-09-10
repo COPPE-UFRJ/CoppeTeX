@@ -1,8 +1,9 @@
 # Anotações no manual UFRJ/SiBI
 
 Anotações feitas por Geraldo Xexéo sobre a **9.ª ed. (2025)** do *Manual para
-elaboração e normalização de trabalhos acadêmicos* — hoje em
-`specs/manual-sibi-9ed-2025.pdf`.
+elaboração e normalização de trabalhos acadêmicos*. Aquele PDF **não está mais
+nesta pasta**: foi substituído pela edição revista de 2026, que é a norma
+vigente e a que a classe implementa.
 
 Elas existiam apenas como comentários dentro daquele PDF e não estavam
 registradas em nenhum outro lugar do repositório. Foram transcritas aqui para
@@ -71,5 +72,6 @@ Marcador colocado sobre os exemplos "… na seção 4 / … ver 2.2 / … em 1.1
 
 ---
 
-*Transcrito em 2026-09-04, a partir da extração de texto de
-`specs/manual-sibi-9ed-2025.pdf`.*
+*Transcrito em 2026-09-04, a partir da extração de texto da 9.ª ed. (2025) do
+manual, que estava então nesta pasta e saiu dela ao chegar a edição revista de
+2026.*

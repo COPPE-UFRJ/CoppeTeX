@@ -1,3 +1,24 @@
+<!-- AVISO-CPGP:INICIO — apagar deste comentário até AVISO-CPGP:FIM depois da aprovação -->
+> ## ⚠️ Versão nova, ainda não aprovada
+>
+> **Esta é a CoppeTeX 4.1, e ela ainda não foi aprovada.** Vai à próxima reunião
+> da Comissão de Programas de Pós-Graduação (CPGP) da COPPE/UFRJ.
+>
+> Enquanto isso: use-a para escrever e para experimentar, mas confirme com a
+> secretaria do seu Programa antes de depositar um trabalho com ela. A versão
+> que a COPPE já aprovou está no ramo `master` e não se move até a votação.
+>
+> Depois da aprovação, apague o bloco entre os comentários `AVISO-CPGP:INICIO`
+> e `AVISO-CPGP:FIM` no começo deste arquivo. Não há nada mais a mexer.
+>
+> ---
+>
+> **New version, not yet approved.** This is CoppeTeX 4.1, going to the next
+> meeting of COPPE/UFRJ's graduate programme committee (CPGP). Write and
+> experiment with it, but check with your Programa's office before depositing a
+> thesis. The approved state is on the `master` branch.
+<!-- AVISO-CPGP:FIM -->
+
 # CoppeTeX
 
 This project provides a LaTeX document class suitable for writing academic
@@ -132,7 +153,27 @@ September 2026 series did that, item by item. The full list is in
   Apêndice and Anexo centred;
 - Latin Modern instead of bitmap fonts, and **PDF/A-2b** under the `pdfa`
   option, validated by veraPDF;
-- `\coadvisor`, plus the `coorientador` option for the abstract pages.
+- `\coadvisor`, plus the `coorientador` option for the abstract pages;
+- the CAPES sheet drawn as the framed table Annex H shows, one cell per field
+  and nothing to write on;
+- **no signature rules on the approval sheet** — the deposit is digital only,
+  so there is nothing to sign by hand. The `assinaturas` option survives as a
+  no-op that warns;
+- **sans-serif by default**, with `comserifa` for the serif face. Neither the
+  Manual nor the COPPE norm prescribes a family, and the Manual itself is set
+  in Arial.
+
+**Two breaking changes**, both in how the board is declared. The treatment
+(`Prof.`) became the optional argument and is empty by default; the institution
+became the last mandatory argument and may be left blank:
+
+```latex
+\advisor{Ana}{Lima}{D.Sc.}{UFRJ}        % was \advisor[UFRJ]{Prof.}{Ana}{Lima}{D.Sc.}
+\examiner{Bia Sousa}{Ph.D.}{UFF}        % was \examiner[UFF]{Prof.}{Bia Sousa}{Ph.D.}
+```
+
+`\coadvisor` takes the same four arguments as `\advisor`. See
+[`MIGRATION_v3_to_v4.md`](./MIGRATION_v3_to_v4.md).
 
 ### Single source, and proving a release
 

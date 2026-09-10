@@ -38,23 +38,36 @@
 
 \makelosymbols
 \makeloabbreviations
+\newcoppefloat{mapa}{Mapa}{Lista de Mapas}
 
 \begin{document}
   \title{Título da Tese}
   \foreigntitle{Thesis Title}
   \author{Nome do Autor}{Sobrenome}
-  \advisor[UFRJ]{Prof.}{Nome do Primeiro Orientador}{Sobrenome}{D.Sc.}
-  \advisor[UFRJ]{Prof.}{Nome do Segundo Orientador}{Sobrenome}{Ph.D.}
+  % Orientador: nome, sobrenome, titulacao e instituicao. O tratamento
+  % ("Prof.") e o argumento OPCIONAL entre colchetes e vem vazio por padrao --
+  % a norma nao pede tratamento nenhum. A instituicao e obrigatoria, mas pode
+  % ficar vazia: \advisor{Ana}{Lima}{D.Sc.}{} compila sem erro.
+  \advisor{Nome do Primeiro Orientador}{Sobrenome}{D.Sc.}{UFRJ}
+  % O segundo orientador vai com tratamento, so para mostrar o argumento
+  % opcional funcionando; a norma nao pede tratamento nenhum.
+  \advisor[Prof.]{Nome do Segundo Orientador}{Sobrenome}{Ph.D.}{UFRJ}
+  % Coorientador: mesmos quatro argumentos de \advisor. Aparece na folha de
+  % rosto e na folha de aprovacao; para ve-lo tambem nas paginas de resumo,
+  % passe a opcao de classe `coorientador'.
+  \coadvisor{Nome do Coorientador}{Sobrenome}{D.Sc.}{UFF}
   % A classe aceita de um a tres \advisor; se houver apenas um, o rotulo na
   % capa e na folha de rosto sai como "Orientador" (singular), com dois ou
   % mais sai como "Orientadores" (plural). Para o caso 1/3 orientadores,
   % veja tests/test_brazilian_one_advisor.tex e tests/test_brazilian_three_advisors.tex.
 
-  \examiner[UFRJ]{Prof.}{Nome do Primeiro Examinador Sobrenome}{D.Sc.}
-  \examiner[UFRJ]{Prof.}{Nome do Segundo Examinador Sobrenome}{Ph.D.}
-  \examiner[UFF]{Prof.}{Nome do Terceiro Examinador Sobrenome}{D.Sc.}
-  \examiner[UNICAMP]{Prof.}{Nome do Quarto Examinador Sobrenome}{Ph.D.}
-  \examiner[USP]{Prof.}{Nome do Quinto Examinador Sobrenome}{Ph.D.}
+  \examiner{Nome do Primeiro Examinador Sobrenome}{D.Sc.}{UFRJ}
+  \examiner{Nome do Segundo Examinador Sobrenome}{Ph.D.}{UFRJ}
+  \examiner{Nome do Terceiro Examinador Sobrenome}{D.Sc.}{UFF}
+  \examiner{Nome do Quarto Examinador Sobrenome}{Ph.D.}{UNICAMP}
+  % Instituicao vazia: o argumento e obrigatorio, mas aceita ficar em branco e
+  % entao nada e impresso no lugar dela.
+  \examiner{Nome do Quinto Examinador Sobrenome}{Ph.D.}{}
   \department{PESC}
   \date{06}{2026}
 
@@ -126,6 +139,7 @@
   \listoffigures
   \listoftables
   \listofquadros
+  \listofmapas
   \listofprogramas
   \listofalgorithms
   \printloabbreviations
@@ -291,6 +305,54 @@ Quadro & Linhas em todas as bordas. \\
 \end{tabular}
 \fonte{Elabora\c{c}\~ao pr\'opria.}
 \end{quadro}
+
+Um segundo quadro, no \autoref{qua:segundo}, prova que o contador anda e que a lista de quadros recebe as duas entradas.
+
+\begin{quadro}[ht]
+\centering
+\caption{Segundo Quadro, para provar a numeração}
+\label{qua:segundo}
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Elemento} & \textbf{Onde fica} \\
+\hline
+Legenda & Acima da ilustração. \\
+\hline
+Fonte & Abaixo da ilustração. \\
+\hline
+\end{tabular}
+\fonte{Adaptado do manual do SiBI, 9.\textsuperscript{a} ed. rev., 2026.}
+\end{quadro}
+
+\section{Criando um float novo}
+
+\verb|\newcoppefloat{nome}{Nome}{Título da Lista}| cria um flutuante que segue a mesma regra: legenda acima, \verb|\source| abaixo e uma lista própria. O exemplo declara \verb|mapa| no preâmbulo e o usa duas vezes, no \autoref{mapa:primeiro} e no \autoref{mapa:segundo}; a lista sai com \verb|\listofmapas|.
+
+\begin{mapa}[ht]
+\centering
+\caption{Primeiro mapa, num float criado pelo autor}
+\label{mapa:primeiro}
+\begin{tikzpicture}[scale=0.8]
+  \draw[thick] (0,0) rectangle (4,2.4);
+  \draw[fill=gray!20] (0.4,0.4) rectangle (1.8,2);
+  \draw[fill=gray!40] (2.2,0.4) rectangle (3.6,1.2);
+  \node at (2,-0.4) {\footnotesize esquema de ocupação};
+\end{tikzpicture}
+\fonte{Elabora\c{c}\~ao pr\'opria.}
+\end{mapa}
+
+\begin{mapa}[ht]
+\centering
+\caption{Segundo mapa, para provar o contador e a lista}
+\label{mapa:segundo}
+\begin{tikzpicture}[scale=0.8]
+  \draw[thick] (0,0) circle (1.2);
+  \draw[->] (-1.6,0) -- (1.6,0);
+  \draw[->] (0,-1.6) -- (0,1.6);
+  \node at (0,-2) {\footnotesize esquema de alcance};
+\end{tikzpicture}
+\fonte{Elabora\c{c}\~ao pr\'opria.}
+\end{mapa}
 
 \section{Tabelas mais elegantes}
 
@@ -737,9 +799,19 @@ Para inserir código no meio do texto use \verb|\pythoninline|, como em \pythoni
 Olá, COPPE!
 \end{Verbatim}
 
-Há estilos prontos também para \verb|java|, \verb|xml|, \verb|html| e \verb|prolog|.
+Há estilos prontos também para \verb|java|, \verb|xml|, \verb|html| e \verb|prolog|. O \autoref{prog:java} usa o de Java e é a segunda listagem do documento, o que prova que o contador anda e que as duas entram na lista de programas.
+
+\begin{java}[caption={Exemplo de programa em Java},label=prog:java]
+public class Saudacao {
+    public static void main(String[] args) {
+        System.out.println("Olá, COPPE!");
+    }
+}
+\end{java}
+\fonte{Elaboração própria.}
+
 Há também \verb|\pythoninline| e \verb|\javainline| para código no meio do
-texto, e o ambiente \verb|Verbatim| (com as opções acima) para a saída de programas. Para algoritmos, use o ambiente \verb|algorithm| com as palavras-chave em português \verb|\Para| e \verb|\Enquanto|, como no \autoref{alg:soma}.
+texto, como em \javainline{new Saudacao()}, e o ambiente \verb|Verbatim| (com as opções acima) para a saída de programas. Para algoritmos, use o ambiente \verb|algorithm| com as palavras-chave em português \verb|\Para| e \verb|\Enquanto|, como no \autoref{alg:soma}.
 
 \begin{algorithm}[H]
 \caption{Soma dos elementos de um vetor}
@@ -751,6 +823,21 @@ $s \leftarrow 0$\;
   $s \leftarrow s + v[i]$\;
 }
 \Retorna $s$\;
+\end{algorithm}
+
+O \autoref{alg:busca} é o segundo algoritmo, e usa \verb|\Enquanto|. Como no caso das listagens, ele existe para mostrar a numeração andando e a lista de algoritmos com duas entradas.
+
+\begin{algorithm}[H]
+\caption{Busca sequencial em um vetor}
+\label{alg:busca}
+\Dados{vetor $v$ com $n$ elementos e uma chave $k$}
+\Resultado{posição de $k$ em $v$, ou $0$ se $k$ não estiver em $v$}
+$i \leftarrow 1$\;
+\Enquanto{$i \leq n$ \textbf{e} $v[i] \neq k$}{
+  $i \leftarrow i + 1$\;
+}
+\Se{$i > n$}{\Retorna $0$\;}
+\Retorna $i$\;
 \end{algorithm}
 
   \chapter{Escrevendo matemática}
