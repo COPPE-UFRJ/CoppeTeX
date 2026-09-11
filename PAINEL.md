@@ -46,13 +46,16 @@ coppetex.bat --ajuda
 | `--pdfa` | Passa os PDF/A pelo veraPDF no perfil 2b. Sem o veraPDF instalado o passo é **pulado**, não falha. |
 | `--conferir` | Os verificadores que não compilam nada: referências cruzadas em todos os `.log`, cobertura do manual (todo comando, ambiente e opção documentado) e versão sincronizada. |
 | `--tudo` | A prova completa, com veredito no fim. É o que tem de sair limpo antes de marcar uma versão. |
-| `--dist` | Copia para `dist/` o conjunto mínimo que o aluno precisa. **Só copia; nunca compila.** |
+| `--dist` | Copia para `dist/` os 31 arquivos que o aluno precisa: a classe, os estilos, os logotipos, os dois manuais, o guia rápido, um exemplo por idioma admitido e a licença. **Só copia; nunca compila.** A lista está em `PARA_DIST`, em `tools/painel.py`, e existe só lá. |
 | `--limpar` | Tira `.aux`, `.log` e companhia de `src/` e de `tests/`. Não toca em nenhum PDF. |
 
 Pode combinar quantas quiser. **A ordem em que você escreve não importa**: o
 painel roda na ordem que faz sentido — regerar antes de compilar, compilar antes
-de conferir, e a cópia para `dist/` sempre por último, porque `dist/` não pode
-receber o que ainda não foi provado.
+de copiar, e conferir por último. A cópia para `dist/` vem depois de tudo o que
+compila, porque `dist/` não pode receber o que ainda não foi provado, e **antes**
+de `--conferir`, porque um dos verificadores compara `dist/` com `src/` byte a
+byte — na ordem contrária ele reprovava uma cópia que o passo seguinte ia
+fazer.
 
 ---
 

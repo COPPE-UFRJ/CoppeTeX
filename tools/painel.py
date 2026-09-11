@@ -38,24 +38,37 @@ DIST = os.path.join(RAIZ, "dist")
 TESTES = os.path.join(RAIZ, "tests")
 TOOLS = os.path.join(RAIZ, "tools")
 
-# O conjunto minimo que o aluno precisa. E a mesma lista que o src/doall.bat
-# tinha, e o motivo de ela estar aqui e que ela precisa existir em UM lugar so.
+# O que o aluno precisa para escrever e depositar, e nada alem disso.
 #
-# O README.md de dist/ NAO entra, e isso ja foi bug: ele e um guia de
-# instalacao, escrito para quem so quer usar a classe, e uma versao antiga
-# deste passo copiava o README da raiz por cima dele a cada execucao. Os cinco
-# exemplos por idioma tambem nao entram -- sao demonstracao do mecanismo
-# multilingue, material de desenvolvimento (issue #75).
+# A lista existe em UM lugar -- aqui -- e o src/doall.bat e o alvo `build' do
+# Makefile chamam este passo. Ela ja esteve escrita em tres lugares, e os tres
+# divergiram; tests/regressivo/r92 cobra que nao volte a acontecer.
+#
+# Duas ausencias sao deliberadas:
+#
+#   * o README.md. O de dist/ e um guia de instalacao e NAO vem da raiz -- uma
+#     versao antiga deste passo copiava o da raiz por cima dele a cada
+#     execucao, apagando o guia (issue #75);
+#   * os exemplos em frances e italiano. Os pacotes desses dois idiomas vao,
+#     porque sao demonstracao do mecanismo de extensao e alguem pode querer
+#     usa-los; os documentos de exemplo, nao. O art. 57 da Resolucao CEPG
+#     n. 302/2024 admite portugues, ingles e espanhol para redigir uma tese, e
+#     e para esses tres que ha exemplo aqui.
 PARA_DIST = [
+    # A classe e o que ela carrega
     "coppe.cls", "coppe.dbx", "coppe.bbx", "coppe.cbx",
     "coppe-numeric.bbx", "coppe-numeric.cbx",
     "brazilian-coppe.lbx", "english-coppe.lbx", "spanish-coppe.lbx",
     "french-coppe.lbx", "italian-coppe.lbx",
     "coppe-lang-spanish.def", "coppe-lang-french.def", "coppe-lang-italian.def",
     "coppe.ist", "latexmkrc",
-    "coppe.pdf", "coppe-quickref.pdf",
     "coppe-logo.eps", "coppe-logo.pdf", "ufrj-logo.pdf",
+    # Os manuais: o da classe, o guia rapido em ingles e o da NORMA
+    "coppe.pdf", "coppe-quickref.pdf", "manual.pdf",
+    # Um exemplo por idioma admitido para redacao
     "example.tex", "example.bib", "coppe.bib", "example.pdf",
+    "example_en.tex", "example_en.pdf",
+    "example_es.tex", "example_es.pdf",
 ]
 
 # Restos de compilacao. O .pdf nunca entra nesta lista: e o produto.
@@ -169,12 +182,21 @@ def acao_dist(saida):
             continue
         shutil.copy2(de, os.path.join(DIST, nome))
         saida("   %s" % nome)
+    # A licenca vem da RAIZ, e nao de src/, e por isso esta fora da lista. Ela
+    # tem de ir junto: a GPL exige que o texto acompanhe o que se distribui.
+    licenca = os.path.join(RAIZ, "COPYING")
+    if os.path.exists(licenca):
+        shutil.copy2(licenca, os.path.join(DIST, "COPYING"))
+        saida("   COPYING")
+    else:
+        faltando.append("COPYING")
     if faltando:
         saida("")
         for nome in faltando:
-            saida("   FALTOU  %s nao existe em src/ -- compile antes" % nome)
+            saida("   FALTOU  %s -- compile antes" % nome)
         return False
-    saida("   %d arquivo(s)" % len(PARA_DIST))
+    saida("   %d arquivo(s) copiado(s)" % (len(PARA_DIST) + 1))
+    saida("   (dist/ fica com esses mais o README.md dela, que nao e copiado)")
     return True
 
 

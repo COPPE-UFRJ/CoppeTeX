@@ -46,7 +46,7 @@ Três observações que talvez ajudem a apreciação:
 
 - **Identidade institucional.** Capa, folha de rosto e ficha catalográfica
   permanecem em português em qualquer idioma de redação. As cinco capas lado a
-  lado, em `dist/covers_5languages.pdf`, mostram isso em uma página.
+  lado, em `src/covers_5languages.pdf`, mostram isso em uma página.
 
 - **Evidência.** A conformidade não é afirmada, é medida: seis documentos
   completos nos quatro tipos de trabalho e nos três idiomas admitidos,

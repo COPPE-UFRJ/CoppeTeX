@@ -4,14 +4,22 @@
 BUG: o passo que copia para dist/ levava junto o README.md da raiz e os cinco
 exemplos por idioma. O README da raiz e a proposta para a CPGP; o de dist/ e um
 guia de instalacao para quem so quer usar a classe. A copia sobrescrevia o guia
-a cada execucao, e os cinco exemplos voltavam para a distribuicao depois de
-terem sido tirados de proposito (issue #75). Estava escrito em dois lugares --
-no src/doall.bat e no Makefile -- e os dois divergiram.
+a cada execucao (issue #75). Estava escrito em dois lugares -- no src/doall.bat
+e no Makefile -- e os dois divergiram.
 
 Este teste nao compila nada: ele le a lista. Defeito de lista se conserta
 apagando uma linha, e volta do mesmo jeito, em qualquer um dos lugares onde a
-lista for copiada. O que se cobra e que ela continue existindo em UM lugar so e
-que os dois nomes proibidos nao estejam nela.
+lista for copiada. O que se cobra e que ela continue existindo em UM lugar so.
+
+Sobre os exemplos por idioma, a regra MUDOU e vale explicar por que. Eles foram
+todos tirados de dist/ de uma vez, como material de desenvolvimento. Depois
+voltaram tres: o art. 57 da Resolucao CEPG n. 302/2024 admite portugues, ingles
+e espanhol para redigir uma tese, e quem vai escrever em ingles precisa de um
+exemplo em ingles tanto quanto quem escreve em portugues precisa do dele.
+Frances e italiano continuam fora: os pacotes desses dois idiomas vao junto,
+porque sao a demonstracao do mecanismo de extensao, mas nao ha respaldo
+normativo para redigir uma tese neles, e um exemplo na pasta da entrega seria
+um convite a faze-lo.
 """
 import io
 import os
@@ -41,12 +49,21 @@ else:
     lista = m.group(1)
     if "README" in lista:
         problemas.append("PARA_DIST leva um README -- o de dist/ e outro documento")
-    for proibido in ("example_pt", "example_en", "example_es",
-                     "example_fr", "example_it"):
+    for proibido in ("example_fr", "example_it", "example_pdfa"):
         if proibido in lista:
             problemas.append(
-                "PARA_DIST leva %s -- os exemplos por idioma sao material de "
-                "desenvolvimento (issue #75)" % proibido)
+                "PARA_DIST leva %s -- so vai exemplo dos idiomas que o art. 57 "
+                "da Res. CEPG 302/2024 admite" % proibido)
+    # E o outro lado: o que tem de estar la. Um arquivo que sai da lista sem
+    # querer nao quebra nada no ato -- a distribuicao simplesmente fica sem ele,
+    # e quem descobre e o aluno, depois.
+    for preciso in ("coppe.cls", "coppe.pdf", "manual.pdf", "coppe-quickref.pdf",
+                    "example.tex", "example.pdf",
+                    "example_en.tex", "example_en.pdf",
+                    "example_es.tex", "example_es.pdf",
+                    "latexmkrc", "coppe.ist", "ufrj-logo.pdf"):
+        if '"%s"' % preciso not in lista:
+            problemas.append("PARA_DIST nao leva %s" % preciso)
 
 # 2. Nem o doall.bat nem o Makefile podem ter voltado a ter lista propria.
 doall = ler("src/doall.bat")

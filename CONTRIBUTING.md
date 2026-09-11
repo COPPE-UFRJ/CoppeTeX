@@ -92,8 +92,10 @@ If you would like the pack to ship with the official CoppeTeX:
    `src/coppe.dtx`, plus the matching `\file{...}` entries in
    `src/coppe.ins` and the `PARA_DIST` list in `tools/painel.py`.
 2. Run `pdflatex coppe.ins` once to regenerate everything.
-3. Include the example file (`src/example_<lang>.tex` +
-   `dist/example_<lang>.{tex,pdf}`).
+3. Include the example file, `src/example_<lang>.tex`. It goes to `dist/`
+   only for a language art. 57 of CEPG Res. 302/2024 admits for writing a
+   thesis — Portuguese, English and Spanish. A new language pack is a
+   demonstration of the extension mechanism until that changes.
 4. Submit. The maintainers will review the translations (preferably
    with help from a native speaker) before merging.
 

@@ -21,6 +21,23 @@
 
 # CoppeTeX
 
+## Vou escrever uma tese. O que eu baixo?
+
+**Baixe a pasta [`dist/`](./dist), e só ela.** Lá está tudo o que é preciso para
+escrever e depositar: a classe, os estilos de bibliografia, os logotipos, os
+dois manuais e um exemplo completo em cada idioma que a UFRJ admite. O
+[`dist/README.md`](./dist/README.md) diz como instalar e por onde começar.
+
+Todo o resto deste repositório é para **quem mexe na classe**: a fonte
+comentada, os testes, os documentos normativos e as ferramentas. Se é o seu
+caso, clone o repositório inteiro e comece pelo [`PAINEL.md`](./PAINEL.md).
+
+*Writing a thesis? Download only [`dist/`](./dist) — it has the class, the
+styles, the logos, both manuals and one complete example per language. Working
+**on** the class? Clone everything and start from [`PAINEL.md`](./PAINEL.md).*
+
+---
+
 This project provides a LaTeX document class suitable for writing academic
 dissertations and thesis according to the formatting rules established by the
 Alberto Luiz Coimbra Institute for Graduate Studies and Research in Engineering
@@ -184,19 +201,27 @@ became the last mandatory argument and may be left blank:
 `\coadvisor` takes the same four arguments as `\advisor`. See
 [`MIGRATION_v3_to_v4.md`](./MIGRATION_v3_to_v4.md).
 
-### Every folder has a README
+### What each folder is for
 
-Each directory explains itself; start with the one you are about to touch.
+Every directory explains itself in its own README; start with the one you are
+about to touch. Only one of them is meant for people writing a thesis.
 
-| Folder | README | What it is |
+| Folder | For whom | What it is |
 |---|---|---|
-| `src/` | [src/README.md](./src/README.md) | The source, and the **programming guide**. Read it before editing anything: `coppe.dtx` is the single source. |
-| `tools/` | [tools/README.md](./tools/README.md) | The build and verification harness, and how to write for it. |
-| `tests/` | [tests/README.md](./tests/README.md) | The three layers of testing, and what each one asks. |
-| `tests/adversativa/` | [tests/adversativa/README.md](./tests/adversativa/README.md) | Six documents that fire everything at once, and what each one proves. |
-| `tests/regressivo/` | [tests/regressivo/README.md](./tests/regressivo/README.md) | One minimal test per defect already fixed. Opt-in. |
-| `dist/` | [dist/README.md](./dist/README.md) | The delivery: install it and start writing. |
-| `specs/` | [specs/README.md](./specs/README.md) | The normative documents the class implements. |
+| **`dist/`** | **Anyone writing a thesis** | **The delivery — download this and nothing else.** The class, the bibliography styles, the logos, both manuals and one complete example per admitted language. 31 files plus its own README, which is the installation guide. → [dist/README.md](./dist/README.md) |
+| `src/` | Whoever changes the class | The source, and the **programming guide**. `coppe.dtx` is the single source: everything distributed is generated from it, and a hand edit to a generated file is lost at the next generation. Also holds the norm manual and the five per-language demos. → [src/README.md](./src/README.md) |
+| `tools/` | Whoever changes the class | The build and verification harness, and the developer panel behind `coppetex.bat`. → [tools/README.md](./tools/README.md) |
+| `tests/` | Whoever changes the class | Three layers of testing, each asking a different question. No PDF here is versioned. → [tests/README.md](./tests/README.md) |
+| `tests/adversativa/` | Whoever changes the class | Six documents that fire everything at once, under both engines. → [tests/adversativa/README.md](./tests/adversativa/README.md) |
+| `tests/regressivo/` | Whoever changes the class | One minimal test per defect already fixed. Opt-in. → [tests/regressivo/README.md](./tests/regressivo/README.md) |
+| `specs/` | Whoever changes the class | The normative documents the class implements, as PDFs. → [specs/README.md](./specs/README.md) |
+
+The root also carries the documents *about* the release rather than the code:
+[`PAINEL.md`](./PAINEL.md) (how to build and test), [`CHANGELOG.md`](./CHANGELOG.md),
+[`NORMA_COPPE_2026.md`](./NORMA_COPPE_2026.md) (what COPPE decides on top of the
+UFRJ Manual), [`REVISAO_SIBI.md`](./REVISAO_SIBI.md) (the item-by-item check
+against it), [`MIGRATION_v3_to_v4.md`](./MIGRATION_v3_to_v4.md) and
+[`CONTRIBUTING.md`](./CONTRIBUTING.md).
 
 ### Single source, and proving a release
 

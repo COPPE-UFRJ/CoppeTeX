@@ -146,7 +146,7 @@ sem arquivo de configuração adicional.
 A identidade institucional. Capa, folha de rosto e ficha catalográfica
 permanecem em português em qualquer idioma de redação — só o título, o
 subtítulo, a natureza e a área de concentração acompanham o idioma principal.
-Ver as capas lado a lado em `dist/covers_5languages.pdf`.
+Ver as capas lado a lado em `src/covers_5languages.pdf`.
 
 ### 3.4 Evidência de conformidade
 
@@ -157,9 +157,10 @@ se apoia em "o modelo foi revisado", e sim em medição do PDF pronto.
   [`REVISAO_SIBI.md`](./REVISAO_SIBI.md): formato, margens, espaçamento,
   paginação, capa e pré-textuais, parte textual e pós-textual, ilustrações e
   idiomas.
-- **Doze documentos completos** — mestrado, doutorado e as duas qualificações,
-  em português, inglês e espanhol —, cada um acionando ao mesmo tempo tudo o
-  que a classe oferece, compilados nos dois motores (pdfLaTeX e LuaLaTeX).
+- **Seis documentos completos** — quatro em português, um de cada tipo de
+  trabalho, mais um em inglês e um em espanhol de tipos diferentes —, cada um
+  acionando ao mesmo tempo tudo o que a classe oferece, compilados nos dois
+  motores (pdfLaTeX e LuaLaTeX).
 - **Verificação automática do resultado**: `tools/conferir-norma.py` mede no
   PDF pronto o que a norma fixa em centímetros e em ordem — A4, fólio a 2 cm
   das duas bordas medido na tinta, margem esquerda, primeira folha numerada e
