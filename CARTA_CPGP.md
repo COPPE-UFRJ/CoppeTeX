@@ -73,5 +73,8 @@ COPPE/UFRJ
 ---
 
 *Esta carta encontra-se sob versionamento no repositório
-<https://github.com/COPPE-UFRJ/CoppeTeX>, no branch `nlinguas`, e acompanha a
-Pull Request a ser aberta para o branch `master`.*
+<https://github.com/COPPE-UFRJ/CoppeTeX>. A versão 4.1 está no branch `master`,
+etiquetada como `v4.1` e publicada como release, para que os Programas e os
+alunos possam experimentá-la antes da votação; até lá, o que está ali é proposta,
+e não norma aprovada, e o repositório o diz na primeira tela. O último estado
+aprovado pela Comissão continua na etiqueta `coppetex-3.5.1`.*

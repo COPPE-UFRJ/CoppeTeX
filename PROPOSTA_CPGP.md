@@ -210,10 +210,19 @@ Quatro questões estão maduras, mas são de mérito e não de implementação:
 
 ## 5. Regime de transição
 
-O `master` do repositório guarda hoje o estado aprovado pela COPPE, e não se
-move sem esta deliberação. Aprovada a proposta, a versão 4.1 é publicada com
-etiqueta, disponibilizada no CTAN e como modelo no Overleaf, e o `master`
-passa a refletir o que a Comissão aprovou.
+O `master` do repositório **carrega hoje a própria 4.1**, que é o que esta
+proposta submete à Comissão. É assim que os Programas e os alunos conseguem
+experimentá-la antes da votação, e é de lá que sai a pasta de entrega. O
+repositório diz isso em letra grande, logo na primeira tela: **até a votação, o
+que está no `master` é proposta, e não norma aprovada.**
+
+O último estado que a Comissão aprovou continua onde sempre esteve, na etiqueta
+`coppetex-3.5.1`, que não se move. Trabalhos em curso podem ser depositados com
+ela até a data do art. 8.º.
+
+Aprovada a proposta, o que muda é só o rótulo: cai o aviso do `README.md` — dois
+cortes, entre dois comentários marcados — e a 4.1 passa a ser disponibilizada no
+CTAN e como modelo no Overleaf.
 
 Trabalhos em fase final podem ser depositados na versão anterior até a data do
 art. 8.º. A adoção imediata é facultada e não exige reescrever texto.

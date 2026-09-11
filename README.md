@@ -5,8 +5,14 @@
 > da Comissão de Programas de Pós-Graduação (CPGP) da COPPE/UFRJ.
 >
 > Enquanto isso: use-a para escrever e para experimentar, mas confirme com a
-> secretaria do seu Programa antes de depositar um trabalho com ela. A versão
-> que a COPPE já aprovou está no ramo `master` e não se move até a votação.
+> secretaria do seu Programa antes de depositar um trabalho com ela.
+>
+> **O `master` carrega esta versão, e não a aprovada.** A decisão de trazê-la
+> para o `master` antes da votação foi deliberada: é assim que os Programas e os
+> alunos conseguem experimentar a proposta, e é daqui que sai a entrega em
+> [`dist/`](./dist). O último estado que a CPGP aprovou é a tag
+> [`coppetex-3.5.1`](https://github.com/COPPE-UFRJ/CoppeTeX/tree/coppetex-3.5.1),
+> que continua onde sempre esteve e não se move.
 >
 > Depois da aprovação, apague o bloco entre os comentários `AVISO-CPGP:INICIO`
 > e `AVISO-CPGP:FIM` no começo deste arquivo. Não há nada mais a mexer.
@@ -16,7 +22,8 @@
 > **New version, not yet approved.** This is CoppeTeX 4.1, going to the next
 > meeting of COPPE/UFRJ's graduate programme committee (CPGP). Write and
 > experiment with it, but check with your Programa's office before depositing a
-> thesis. The approved state is on the `master` branch.
+> thesis. **`master` carries this version, not the approved one**; the last
+> state the CPGP approved is the tag `coppetex-3.5.1`.
 <!-- AVISO-CPGP:FIM -->
 
 # CoppeTeX
@@ -60,13 +67,18 @@ This version follows the [document](https://registro.daac.coppe.ufrj.br/wp-conte
 > (Revisada em 26/11/2019 – Alteração da Folha Aprovação, Anexo III, páginas 22 e 23) 
 
 
-## `nlinguas` branch — proposal for CPGP (v4.1)
+## The proposal for CPGP (v4.1)
 
-This branch (`nlinguas`) carries CoppeTeX **4.1**, submitted for evaluation by
-the Comissão de Programas de Pós-Graduação (CPGP) of COPPE/UFRJ. Subject to
-CPGP review and approval, it becomes the next official release of the `coppe`
-class. **`master` holds the state the COPPE has approved and does not move
-before that vote.**
+`master` carries CoppeTeX **4.1**, submitted for evaluation by the Comissão de
+Programas de Pós-Graduação (CPGP) of COPPE/UFRJ. Subject to CPGP review and
+approval, it becomes the next official release of the `coppe` class. It was
+developed on the `nlinguas` branch and merged so that Programas and students can
+try it and so that the delivery in [`dist/`](./dist) comes from one place.
+
+**Until the vote, `master` is a proposal, not an approved norm.** The last state
+the CPGP approved is the tag
+[`coppetex-3.5.1`](https://github.com/COPPE-UFRJ/CoppeTeX/tree/coppetex-3.5.1),
+which does not move.
 
 Two things are proposed together:
 
