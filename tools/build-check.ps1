@@ -88,10 +88,24 @@ function Invoke-Step {
     } finally { Pop-Location }
 }
 
+# As listas de abreviaturas e de simbolos NAO saem de uma passada do pdflatex:
+# a primeira passada escreve .abx e .syx, o makeindex os ordena com o estilo
+# coppe.ist em .lab e .los, e so a passada seguinte os imprime. Sem esse passo
+# as listas saem do que estivesse em disco -- ou seja, do build anterior, ou de
+# uma versao da classe que ja mudou. Era o caso do example.pdf ate aqui: o
+# escopo `adversativa' rodava o makeindex e os demais nao, e a lista de
+# abreviaturas do exemplo, que e o documento que todo mundo abre, vinha de um
+# .lab velho.
 function Build-Tex {
     param([string]$Stem, [string]$Dir, [switch]$WithBiber)
     Invoke-Step "$Stem-1" $Dir { & pdflatex -interaction=nonstopmode -halt-on-error "$Stem.tex" }
     if ($WithBiber) { Invoke-Step "$Stem-biber" $Dir { & biber $Stem } }
+    if (Test-Path (Join-Path $Dir "$Stem.abx")) {
+        Invoke-Step "$Stem-lab" $Dir { & makeindex -s (Join-Path $script:src "coppe.ist") -o "$Stem.lab" "$Stem.abx" }
+    }
+    if (Test-Path (Join-Path $Dir "$Stem.syx")) {
+        Invoke-Step "$Stem-los" $Dir { & makeindex -s (Join-Path $script:src "coppe.ist") -o "$Stem.los" "$Stem.syx" }
+    }
     Invoke-Step "$Stem-2" $Dir { & pdflatex -interaction=nonstopmode -halt-on-error "$Stem.tex" }
     Invoke-Step "$Stem-3" $Dir { & pdflatex -interaction=nonstopmode -halt-on-error "$Stem.tex" }
 }

@@ -74,3 +74,7 @@ adversativa/*
 # subprodutos do synctex, inclusive o arquivo parcial que fica durante o build
 *.synctex
 *.synctex(busy)
+
+# arquivo temporario do morewrites: zero byte, produto de build, e um deles
+# rastreado no git ja bloqueou a compilacao por conflito de escrita
+*.mw

@@ -141,6 +141,9 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \changes{v4.1}{2026/09/10}{newcoppefloat fixed twice: newfloat was wrapped in a group, and since newfloat defines the environment locally the new float vanished when the group closed; and its list came out unnumbered and without leaders because l@figure was not inherited. Author-declared floats are now numbered within the chapter like every other illustration.}
 % \changes{v4.1}{2026/09/10}{The folha de aprovacao lists only the EXAMINERS. The sheet records who examined the work, and the advisor conducted it; the new orientadorexamina option puts advisors and coadvisors back, ahead of the examiners, for the Programas that seat the advisor on the board. Before this there was no choice, and the only way out was not to declare the advisor at all, which also removed them from the capa and the folha de rosto.}
 % \changes{v4.1}{2026/09/10}{With no dataaprovacao given, the folha de aprovacao writes the date as "a ser determinada" in the main language instead of drawing a rule to fill in by hand: the deposit is digital and nobody writes on a PDF.}
+% \changes{v4.1}{2026/09/10}{The lists of abbreviations and of symbols no longer carry a page number, nor the dot leaders that led to it. 4.1.1 describes both as an alphabetical list of the term and its meaning and asks for no location; the folio was inherited from building them with the index machinery. makeindex always writes the number, so the class discards it at composition through the coppe@semfolio encapsulator, and every delimiter in coppe.ist is now empty.}
+% \changes{v4.1}{2026/09/10}{New option semlinks: hidelinks over everything else, so the links keep working and lose only the colour and the frame. For anyone printing.}
+% \changes{v4.1}{2026/09/10}{A missing cover logo now raises a class error naming the file and saying it ships with the class, instead of TeX's bare "File not found". No graphicspath is set: kpathsea finds a logo installed beside the class and does not report where it found anything, so the class cannot deduce its own directory.}
 % \changes{v4.0}{2026/05/30}{Catalog-label writers (coppe@mainBegin, coppe@bibBegin, coppe@bibEnd, coppe@hasLof) made language-agnostic: detokenize wrap on label names protects ':' and '.' from babel shorthand activation, and the raw etex primitives romannumeral/number replace LaTeX's roman/arabic to bypass spanish-babel's small-caps @roman redefinition that would otherwise crash pdftex with "Unbalanced write command" on every es-main document.}
 %
 % \DoNotIndex{\!,\',\.,\>,\^,\`,\',\=,\\}
@@ -773,6 +776,13 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %   packages produce. The metadata reaches the PDF on the SECOND run, because
 %   |pdfx| reads it from a file the class writes at the end of the first one --
 %   which is no burden, since three runs are needed for cross-references anyway.
+%
+%   \item[\texttt{semlinks}] Drop the colour and the frame from every hyperlink.
+%   The class loads |hyperref| and colours links; this option calls |hidelinks|
+%   after everything else, so the page comes out sober while the links stay
+%   clickable and the bookmarks stay in the reader's panel. Neither the Manual
+%   nor the COPPE norm has an opinion: 2.2(b) fixes the colour of the TEXT, and
+%   a link is not text. Use it if you are going to print.
 %
 %   \item[\texttt{orientadorexamina}] Put the advisors and coadvisors back on
 %   the folha de aprovacao, ahead of the examiners, as president of the board
@@ -2166,7 +2176,7 @@ $i \leftarrow 1$\;
 
   \section{hyperref e marcadores}
 
-  A classe carrega o \verb|hyperref|: o sumário, as citações e os \verb|\ref|/\verb|\autoref| viram \emph{links} clicáveis e o leitor de PDF ganha um painel de \emph{bookmarks} (navegação por capítulos). Não é preciso configurar nada; para mudar a cor dos links, use \verb|\hypersetup{...}| no preâmbulo.
+  A classe carrega o \verb|hyperref|: o sumário, as citações e os \verb|\ref|/\verb|\autoref| viram \emph{links} clicáveis e o leitor de PDF ganha um painel de \emph{bookmarks} (navegação por capítulos). Não é preciso configurar nada; para mudar a cor dos links, use \verb|\hypersetup{...}| no preâmbulo. Para tirar a cor e a moldura de todos eles de uma vez --- útil para quem vai imprimir --- passe a opção de classe \verb|semlinks|; os links continuam clicáveis e os \emph{bookmarks} continuam no painel.
 
   \section{URLs}
 
@@ -2320,6 +2330,29 @@ No modelo \CoppeTeX os anexos devem obrigtoriamente vir depois dos apêndices e 
 \RequirePackage{lastpage}
 \RequirePackage{ifthen}
 \RequirePackage{graphicx}
+% Os logotipos da capa. Nao ha \graphicspath aqui, e nao adianta haver: quando a
+% classe e instalada na arvore do TeX, o kpathsea a encontra sem dizer a
+% ninguem ONDE a encontrou -- \CurrentFilePath vem vazio e \@filef@und devolve
+% so o nome. Nao ha como a classe deduzir a propria pasta.
+%
+% Nem e preciso. O \includegraphics procura pelo kpathsea, o mesmo mecanismo que
+% achou o .cls, de modo que um logotipo instalado AO LADO da classe e achado sem
+% mais nada -- conferido em MiKTeX, compilando de outra pasta com so o TEXINPUTS
+% apontando para a da classe.
+%
+% O que quebrava, e e o que esta corrigido aqui, e o outro caso: quem copia so o
+% coppe.cls para a pasta do trabalho e deixa os logotipos para tras. Ai o TeX
+% dizia "File `coppe-logo' not found" e mandava digitar outro nome, sem nenhuma
+% pista de que o arquivo vem junto com a classe. \coppe@logo diz.
+\newcommand\coppe@logo[2][2cm]{%
+  \IfFileExists{#2.pdf}
+    {\includegraphics[height=#1]{#2}}
+    {\ClassError{coppe}{Logotipo `#2.pdf' nao encontrado}%
+      {Ele vem junto com a classe, na mesma pasta do coppe.cls.\MessageBreak
+       Copie coppe-logo.pdf e ufrj-logo.pdf para a pasta do seu\MessageBreak
+       trabalho, ou instale-os ao lado do coppe.cls na arvore do TeX.\MessageBreak
+       Os dois estao em dist/ no repositorio da CoppeTeX.}%
+     \framebox[3cm][c]{\rule{0pt}{#1}\ttfamily #2?}}}
 \RequirePackage{tabularx}
 \RequirePackage{booktabs}      % regras de tabela profissionais (toprule/midrule/bottomrule)
 \RequirePackage{longtable}     % tabelas que quebram entre páginas
@@ -2945,6 +2978,13 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % e da folha de rosto, onde eles tem de estar.
 \newif\if@coppeorientexam \@coppeorientexamfalse
 \DeclareOption{orientadorexamina}{\@coppeorientexamtrue}
+% A classe carrega o hyperref e colore os links. Quem vai IMPRIMIR, ou quem
+% simplesmente prefere a pagina sobria, pedia isso a mao com \hypersetup no
+% preambulo -- que funciona, mas exige saber que a classe carrega o hyperref e
+% em que ordem. `semlinks' faz o mesmo sem exigir nada disso. Os links continuam
+% existindo e clicaveis; some so a cor e a moldura.
+\newif\if@coppesemlinks \@coppesemlinksfalse
+\DeclareOption{semlinks}{\@coppesemlinkstrue}
 \DeclareOption{assinaturas}{\ClassWarningNoLine{coppe}{A opcao `assinaturas'
   nao faz mais nada: a folha de aprovacao nao tem mais linhas de assinatura,
   porque a entrega e digital desde a Resolucao CEPG n. 246/2023}}
@@ -3905,8 +3945,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \singlespacing
   \centering
   \makebox[\linewidth]{%
-    \includegraphics[height=2cm]{ufrj-logo}\hfill
-    \includegraphics[height=2cm]{coppe-logo}}\par
+    \coppe@logo{ufrj-logo}\hfill
+    \coppe@logo{coppe-logo}}\par
   \vspace{1.5cm}
   {\singlespacing 
  \MakeUppercase{\local@universityname}\par
@@ -3948,8 +3988,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \setlength\baselineskip{0pt}
   \setlength\parskip{1mm}
   \makebox[\linewidth]{%
-    \includegraphics[height=2cm]{ufrj-logo}\hfill
-    \includegraphics[height=2cm]{coppe-logo}}
+    \coppe@logo{ufrj-logo}\hfill
+    \coppe@logo{coppe-logo}}
   \end{flushleft}
   \vspace{1.05cm}
   \begin{center}
@@ -4235,7 +4275,12 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   breaklinks={true},
   raiselinks={true},
   pageanchor={true},
-}}
+}%
+% `semlinks' vai por ultimo, para vencer o que vier antes, e usa hidelinks em
+% vez de colorlinks=false: hidelinks tira a cor E a moldura, que sao os dois
+% jeitos de o hyperref marcar um link, e nao mexe em mais nada. Os links
+% continuam existindo, clicaveis, e os bookmarks continuam no painel.
+  \if@coppesemlinks\hypersetup{hidelinks}\fi}
 %    \end{macrocode}
 %
 % \begin{macro}{\makecatalog}
@@ -4701,18 +4746,17 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \end{macro}
 %
 %    \begin{macrocode}
-\AtBeginDocument{%
-\@ifpackageloaded{hyperref}{%
-  \newcommand\@wrlos[3]{%
-    \protected@write\@losfile{}%
-      {\string\indexentry{#1[#2] #3|hyperpage}{\thepage}}%
-    \endgroup%
-    \@esphack}}{%
-  \newcommand\@wrlos[3]{%
-    \protected@write\@losfile{}%
-      {\string\indexentry{#1[#2] #3}{\thepage}}%
-    \endgroup%
-    \@esphack}}}%
+% \coppe@semfolio engole o numero de pagina que o makeindex insiste em escrever.
+% As duas listas nao levam pagina (ver o comentario no modulo `glossary'), e o
+% makeindex nao tem como nao escrever o numero -- entao ele escreve, e este
+% comando o descarta na composicao. E tambem o que substitui \hyperpage: sem
+% numero nao ha para onde o link levar.
+\newcommand\coppe@semfolio[1]{}
+\newcommand\@wrlos[3]{%
+  \protected@write\@losfile{}%
+    {\string\indexentry{#1[#2] #3|coppe@semfolio}{\thepage}}%
+  \endgroup%
+  \@esphack}
 %    \end{macrocode}
 %
 % \begin{macro}{\printloabbreviations}
@@ -4741,18 +4785,11 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \end{macro}
 %
 %    \begin{macrocode}
-\AtBeginDocument{%
-\@ifpackageloaded{hyperref}{%
-  \newcommand\@wrlab[3]{%
-    \protected@write\@labfile{}%
-      {\string\indexentry{#1[#2] #3|hyperpage}{\thepage}}%
-    \endgroup%
-    \@esphack}}{%
-  \newcommand\@wrlab[3]{%
-    \protected@write\@labfile{}%
-      {\string\indexentry{#1[#2] #3}{\thepage}}%
-    \endgroup%
-    \@esphack}}}%
+\newcommand\@wrlab[3]{%
+  \protected@write\@labfile{}%
+    {\string\indexentry{#1[#2] #3|coppe@semfolio}{\thepage}}%
+  \endgroup%
+  \@esphack}
 %    \end{macrocode}
 %
 % \begin{macro}{\newsigla}
@@ -5187,8 +5224,26 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 actual '='
 quote '!'
 level '>'
-%%%% delim_0   ", p. "
-delim_0 "\\dotfill "
+%%%% Sem numero de pagina, e portanto sem pontilhado.
+%%%%
+%%%% A 4.1.1 do Manual descreve a lista de abreviaturas e siglas como uma
+%%%% relacao alfabetica das siglas com o SIGNIFICADO de cada uma, e a de
+%%%% simbolos do mesmo modo. Nenhuma das duas e lista de ilustracoes, e nenhuma
+%%%% pede localizacao. O numero de pagina era heranca de as duas listas terem
+%%%% sido construidas com a maquina do indice remissivo, onde a pagina e o
+%%%% ponto.
+%%%%
+%%%% O makeindex sempre escreve o numero; quem o descarta e o encapsulador
+%%%% \coppe@semfolio, definido na classe, que engole o argumento e nao imprime
+%%%% nada. Por isso todos os delimitadores ficam vazios: sem numero, o
+%%%% pontilhado levaria o olho ate coisa nenhuma, e a descricao longa passa a
+%%%% quebrar como texto comum, alinhada sob a primeira linha -- que era o outro
+%%%% pedido do issue #60.
+delim_0 ""
+delim_1 ""
+delim_2 ""
+delim_n ""
+delim_r ""
 lethead_flag  0
 headings_flag 0
 preamble

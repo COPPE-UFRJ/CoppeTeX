@@ -44,9 +44,28 @@ def opcoes_da_classe(pdf):
     m = re.search(r"\\documentclass\[([^\]]*)\]", fonte)
     return [o.strip() for o in m.group(1).split(",")] if m else []
 
+def _pdftotext(args):
+    """Roda o pdftotext e devolve a saida como texto.
+
+    Decodifica sempre em UTF-8 com substituicao. Sem isso, no Windows o Python
+    tenta a codificacao do console (cp1252) e explode no primeiro acento, o que
+    aparecia como um erro de thread no meio da conferencia.
+    """
+    out = subprocess.run(["pdftotext"] + args, capture_output=True)
+    return out.stdout.decode("utf-8", "replace")
+
 def texto_bbox(pdf):
-    out = subprocess.run(["pdftotext", "-bbox", pdf, "-"], capture_output=True, text=True)
-    paginas = re.split(r"<page ", out.stdout)[1:]
+    saida = _pdftotext(["-bbox", pdf, "-"])
+    # O pdftotext do Xpdf nao tem -bbox e sai sem escrever nada. Antes disto, a
+    # conferencia seguia com zero palavras e acusava o DOCUMENTO de nao ter
+    # folha numerada nem sumario -- culpava o inocente. Precisa ser o poppler.
+    if "<page " not in saida:
+        raise SystemExit(
+            "pdftotext sem suporte a -bbox: nenhuma palavra foi extraida.\n"
+            "Este script precisa do pdftotext do poppler; o do Xpdf nao serve.\n"
+            "No Windows, o do MiKTeX serve: rode por um terminal em que ele\n"
+            "venha antes no PATH, ou instale o poppler.")
+    paginas = re.split(r"<page ", saida)[1:]
     res = []
     for p in paginas:
         ws = [(float(a), float(b), float(c), float(d), e) for a, b, c, d, e in
@@ -55,8 +74,7 @@ def texto_bbox(pdf):
     return res
 
 def texto(pdf, p):
-    return subprocess.run(["pdftotext", "-f", str(p), "-l", str(p), pdf, "-"],
-                          capture_output=True, text=True).stdout
+    return _pdftotext(["-f", str(p), "-l", str(p), pdf, "-"])
 
 def tinta_folio(pdf, pagina, dpi=300):
     """Topo e borda direita do folio, em cm, medidos na tinta."""
@@ -115,6 +133,53 @@ def confere(pdf):
             alto = [w for w in bb[j-1] if w[1] < 80 and re.fullmatch(r"\d+", w[4].strip())]
             if alto:
                 erro("folha %d, pre-textual, esta numerada (2.7)" % j)
+
+        # --- o VALOR do folio, e nao so a posicao ---------------------------
+        # A 2.7 e literal sobre a contagem: "Todas as folhas ou paginas, a
+        # partir da folha de rosto, devem ser contadas sequencialmente, mas nao
+        # numeradas. A folha adicional que contem a ficha catalografica, nao
+        # pode ser contada ou numerada." Ou seja, duas folhas ficam de fora da
+        # contagem -- a CAPA, que vem antes da folha de rosto, e a FOLHA
+        # ADICIONAL -- e a numeracao so aparece da parte textual em diante.
+        #
+        # Conferir a posicao do folio nao basta: uma classe pode acertar os 2 cm
+        # e errar a contagem, e o numero errado so aparece na ficha
+        # catalografica, meses depois, quando a biblioteca devolve o trabalho.
+        # Aqui se confere o VALOR: o primeiro folio impresso tem de valer a
+        # posicao da folha no PDF menos as folhas nao contadas, e dali em diante
+        # os numeros tem de andar de um em um.
+        folios = {}
+        for i, ws in enumerate(bb, 1):
+            alto = [w for w in ws if w[1] < 80 and re.fullmatch(r"\d+", w[4].strip())]
+            if alto:
+                folios[i] = int(alto[0][4].strip())
+        # A folha adicional so existe fora do exame de qualificacao; procura-se
+        # pelo titulo dela entre as pre-textuais.
+        temadicional = any("Coleta CAPES" in texto(pdf, j)
+                           for j in range(1, prim_num))
+        previsto = 2 if temadicional else 1
+        naocontadas = prim_num - folios[prim_num]
+        comose = ("a capa e a folha adicional" if temadicional else "a capa")
+        if naocontadas == previsto:
+            ok("contagem comeca na folha de rosto: folio %d na folha %d do PDF, "
+               "com %s fora da contagem (2.7)"
+               % (folios[prim_num], prim_num, comose))
+        elif naocontadas < previsto:
+            erro("a folha adicional esta sendo contada; a 2.7 diz que ela nao "
+                 "pode ser contada nem numerada")
+        else:
+            erro("a contagem pula %d folhas antes da primeira numerada, e so "
+                 "%s deveria(m) ficar de fora (2.7)" % (naocontadas, comose))
+        quebras = [i for i in sorted(folios)
+                   if i > prim_num and folios[i] != i - naocontadas]
+        if quebras:
+            erro("folio fora da sequencia em %d folha(s), a primeira e a folha "
+                 "%d, que traz %d e deveria trazer %d (2.7)"
+                 % (len(quebras), quebras[0], folios[quebras[0]],
+                    quebras[0] - naocontadas))
+        else:
+            ok("%d folhas numeradas, todas em sequencia continua ate o fim, "
+               "apendices e anexos inclusive (2.7)" % len(folios))
 
     # --- folio: 2 cm dos dois lados -----------------------------------------
     if prim_num:

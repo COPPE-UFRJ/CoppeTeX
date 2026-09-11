@@ -1,0 +1,92 @@
+%%
+%% test_listas.tex -- regression test for the coppe class.
+%%
+%% Guarda a lista de abreviaturas e siglas e a lista de simbolos:
+%%
+%%   * SEM numero de pagina e SEM pontilhado. A 4.1.1 descreve as duas como
+%%     relacao alfabetica do termo e do seu SIGNIFICADO, e nao pede localizacao.
+%%     O folio era heranca de as duas terem sido construidas com a maquina do
+%%     indice remissivo. Se ele voltar, volta aqui.
+%%   * a chave de ordenacao opcional, que e o que poe IoT, eMBB e uRLLC no lugar
+%%     certo do alfabeto -- o makeindex ordena por codigo de caractere e sem a
+%%     chave joga toda minuscula para depois de toda maiuscula.
+%%   * uma descricao LONGA, que quebra em duas linhas. Era o caso feio: com o
+%%     folio no fim, a quebra deixava o numero sozinho na linha seguinte.
+%%
+%% Nao basta compilar: as listas so aparecem depois do makeindex com o estilo
+%% coppe.ist, entre a primeira e a segunda passada. O build-check.ps1 faz isso.
+%%
+%% NAO e gerado pelo coppe.dtx e NAO e distribuido: a suite prova que a
+%% classe funciona, nao faz parte dela. Rode por tools\prova.ps1, ou por
+%% tests\run-tests.ps1 para so esta pasta.
+%%
+
+\documentclass[dsc]{coppe}
+
+\usepackage[brazilian]{babel}
+
+\makelosymbols
+\makeloabbreviations
+
+\title{Título de Teste das Listas}
+\foreigntitle{Lists Test Title}
+\author{Nome}{de Teste}
+
+\advisor{Primeiro}{Orientador}{D.Sc.}{UFRJ}
+\examiner{Primeiro Examinador}{D.Sc.}{UFRJ}
+\examiner{Segundo Examinador}{Ph.D.}{UFRJ}
+
+\department{PESC}
+\date{09}{2026}
+\dataaprovacao{15 de setembro de 2026}
+
+\keyword{Listas}
+\keyword{Siglas}
+
+\areaconcentracao{Engenharia de Sistemas e Computação}
+
+\begin{document}
+  \maketitle
+  \frontmatter
+  \begin{abstract}
+    Resumo de teste.
+  \end{abstract}
+  \begin{foreignabstract}
+    Test abstract.
+  \end{foreignabstract}
+  \printloabbreviations
+  \printlosymbols
+  \tableofcontents
+  \mainmatter
+
+  \chapter{Introdução}
+
+  Siglas sem chave de ordenação, que saem na ordem que o \texttt{makeindex}
+  quiser: \abbrev{UFRJ}{Universidade Federal do Rio de Janeiro}, \abbrev{IoT}{IoT
+  com ordenação padrão}.
+
+  Siglas com chave de ordenação, que é o que as põe no lugar certo do alfabeto:
+  \abbrev[IOT]{IoT}{IoT ordenado como IOT},
+  \abbrev[EMBB]{eMBB}{eMBB ordenado como EMBB},
+  \abbrev[URLLC]{uRLLC}{uRLLC ordenado como URLLC}.
+
+  Uma descrição comprida de propósito, para forçar a quebra de linha:
+  \abbrev[CPGP]{CPGP}{Comissão de Programas de Pós-Graduação e Pesquisa de
+  Engenharia do Instituto Alberto Luiz Coimbra, da Universidade Federal do Rio
+  de Janeiro}.
+
+  \section{Símbolos}
+
+  Símbolos sem chave: \symbl{$\emptyset$}{Conjunto vazio},
+  \symbl{$\mathbb{R}$}{Conjunto dos números reais}.
+
+  Símbolo com chave de ordenação: \symbl[Alpha]{$\alpha$}{A letra alfa}.
+
+  Um símbolo com descrição comprida:
+  \symbl[Sigma]{$\sum_{i=1}^{n} x_i$}{Somatório dos elementos de um vetor de $n$
+  posições, usado em toda parte deste documento de teste e escrito por extenso
+  para forçar a quebra}.
+\end{document}
+%%
+%%
+%% End of file `tests/test_listas.tex'.

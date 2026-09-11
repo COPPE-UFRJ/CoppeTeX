@@ -67,11 +67,14 @@ copy /Y ufrj-logo.pdf ..\dist\ >nul
 copy /Y example.tex ..\dist\ >nul
 copy /Y example.bib ..\dist\ >nul
 copy /Y example.pdf ..\dist\ >nul
-for %%L in (pt en es fr it) do (
-  copy /Y example_%%L.tex ..\dist\ >nul
-  copy /Y example_%%L.pdf ..\dist\ >nul
-)
-copy /Y ..\README.md ..\dist\ >nul
+:: Os cinco exemplos de idioma NAO vao para dist\. Eles sao demonstracao do
+:: mecanismo multilingue, material de desenvolvimento, e ficam em src\. Ver
+:: https://github.com/COPPE-UFRJ/CoppeTeX/issues/75
+::
+:: O README.md de dist\ tambem NAO e copiado da raiz. Ele e um GUIA DE
+:: INSTALACAO, escrito para quem so quer usar a classe; o da raiz e a proposta
+:: para a CPGP e a discussao da norma, que nao interessam a esse leitor. Esta
+:: linha existia e sobrescrevia o guia a cada execucao.
 copy /Y ..\COPYING ..\dist\ >nul
 :: Remove the retired bibtex styles (replaced by the biblatex style files).
 del /Q ..\dist\coppe-plain.bst ..\dist\coppe-unsrt.bst ..\dist\en-coppe-plain.bst ..\dist\en-coppe-unsrt.bst 2>nul

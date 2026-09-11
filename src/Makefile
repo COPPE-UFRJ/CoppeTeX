@@ -132,7 +132,11 @@ build: doc class example.pdf
 	@${_printf} "Copying example files.\n"
 	cp -vp example.tex example.pdf example.bib $(BUILDDIR)
 	@${_printf} "Copying files from root directory.\n"
-	cp -vp ../README.md ../COPYING $(BUILDDIR)
+# O README.md de dist/ NAO vem da raiz. Ele e um guia de instalacao, escrito
+# para quem so quer usar a classe; o da raiz e a proposta para a CPGP e a
+# discussao da norma. Copia-lo por cima apagava o guia.
+# Ver https://github.com/COPPE-UFRJ/CoppeTeX/issues/75
+	cp -vp ../COPYING $(BUILDDIR)
 
 help:
 	@${_printf} "Usage: make [TARGET]\n" "${PROGRAM_NAME}"

@@ -133,6 +133,10 @@ def doc(i, tipo, tiponome, lang):
     # precisam de prova, e em bancas de tamanhos diferentes, porque o
     # espacamento da folha depende de quantos nomes ela realmente imprime.
     if i % 2 == 1: opts.append("orientadorexamina")
+    # Um documento leva `semlinks': os links continuam existindo, so perdem a
+    # cor e a moldura. Precisa de prova em documento grande porque o que se quer
+    # verificar e que os bookmarks e os \autoref continuam funcionando.
+    if i == 2:     opts.append("semlinks")
     dept = DEPTS[i % len(DEPTS)]
     nadv  = 1 if i % 3 == 0 else 2
     nexam = 2 + (i % 4)

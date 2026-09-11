@@ -52,6 +52,12 @@ to the CPGP is [`PROPOSTA_CPGP.md`](./PROPOSTA_CPGP.md).
   only way out was not to declare the advisor at all — which also removed them
   from the capa and the folha de rosto, where they belong.
 
+- **No page numbers in the abbreviation and symbol lists.** 4.1.1 describes both
+  as an alphabetical list of the term and its MEANING, and asks for no location;
+  the folio was inherited from building the two lists with the index machinery,
+  where the page is the point. The dot leaders went with it, which also fixes the
+  long description that used to break awkwardly before a trailing number.
+
 - **No date given, no blank rule.** Without `\dataaprovacao` the approval sheet
   now reads "a ser determinada", in the main language of the work, instead of
   drawing a rule to fill in by hand. Nobody writes on a PDF.
@@ -75,6 +81,15 @@ to the CPGP is [`PROPOSTA_CPGP.md`](./PROPOSTA_CPGP.md).
 - **Fifth heading level** numbered and formatted (2.6).
 - **`listasnosumario`** — restores the pre-textual lists to the sumário, which
   3.1.2.1.6 keeps out of it.
+- **`semlinks`** — drops the colour and the frame from every hyperlink, for
+  anyone who is going to print. The links stay clickable and the bookmarks stay
+  in the reader's panel. It used to take a `\hypersetup` in the preamble, which
+  worked but required knowing that the class loads `hyperref` and in what order.
+- **A real message when a cover logo is missing.** `\includegraphics` finds the
+  logos through the same search that found the class, so a logo installed beside
+  `coppe.cls` needs nothing. What broke was copying `coppe.cls` alone into a
+  project folder: TeX said "File `coppe-logo' not found" with no hint that the
+  file ships with the class. It now says so, and names where to get it.
 - **`comserifa`** — restores the serif family, now that sans is the default.
   Neither the manual nor the COPPE norm prescribes a typeface: 2.2(b) fixes the
   colour, the body size 12 and the smaller uniform size of the four items it

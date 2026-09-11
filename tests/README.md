@@ -45,6 +45,7 @@ that test and is reported in the summary at the end.
 | `test_coorientador.tex`             | The `coorientador` option: coadvisors on all three abstract pages, with two of them so the plural label is exercised. |
 | `test_pdfa.tex`                     | The pre-textual pages reshaped for the 2026 manual — folha adicional with the Coleta CAPES fields, approval sheet of 3.1.2.1.3, mandatory institution argument — under the `pdfa` option. Validated by veraPDF in the harness. |
 | `test_sumario.tex`                  | The sumário: the graphic treatment of all five levels, the single title column, what a two-line title does, and a block that forces two-digit indicatives at every level — the shape that used to print the number over the title. |
+| `test_listas.tex`                   | The lists of abbreviations and of symbols: **no page numbers and no dot leaders** (4.1.1), the optional sort key that puts `IoT` and `eMBB` in alphabetical order, and a description long enough to wrap, which used to break badly before a trailing folio. Needs `makeindex -s ../src/coppe.ist`; `build-check.ps1` runs it. |
 | `test_comserifa.tex`                | The `comserifa` option together with `pdfa`. Sans serif is the default since v4.1, so this test guards the other road: the question is not whether a serif document compiles but whether it is still PDF/A. Validated by veraPDF in the harness. |
 
 ## Adding new tests

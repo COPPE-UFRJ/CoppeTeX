@@ -49,6 +49,17 @@ foreach ($t in $tests) {
             & biber $stem | Out-Null
             if ($LASTEXITCODE -ne 0) { $ok = $false }
         }
+        # As listas de abreviaturas e de simbolos so aparecem depois do
+        # makeindex com o estilo coppe.ist, entre a primeira passada, que
+        # escreve o .abx e o .syx, e a segunda, que os imprime. Sem isto, um
+        # teste dessas listas passava com elas VAZIAS.
+        $ist = Join-Path $here "..\src\coppe.ist"
+        if ($ok -and (Test-Path (Join-Path $here "$stem.abx"))) {
+            & makeindex -s $ist -o "$stem.lab" "$stem.abx" | Out-Null
+        }
+        if ($ok -and (Test-Path (Join-Path $here "$stem.syx"))) {
+            & makeindex -s $ist -o "$stem.los" "$stem.syx" | Out-Null
+        }
         if ($ok) {
             & pdflatex -interaction=nonstopmode -halt-on-error $t.Name | Out-Null
             if ($LASTEXITCODE -ne 0) { $ok = $false }

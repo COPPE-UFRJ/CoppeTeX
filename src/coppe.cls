@@ -64,6 +64,15 @@
 \RequirePackage{lastpage}
 \RequirePackage{ifthen}
 \RequirePackage{graphicx}
+\newcommand\coppe@logo[2][2cm]{%
+  \IfFileExists{#2.pdf}
+    {\includegraphics[height=#1]{#2}}
+    {\ClassError{coppe}{Logotipo `#2.pdf' nao encontrado}%
+      {Ele vem junto com a classe, na mesma pasta do coppe.cls.\MessageBreak
+       Copie coppe-logo.pdf e ufrj-logo.pdf para a pasta do seu\MessageBreak
+       trabalho, ou instale-os ao lado do coppe.cls na arvore do TeX.\MessageBreak
+       Os dois estao em dist/ no repositorio da CoppeTeX.}%
+     \framebox[3cm][c]{\rule{0pt}{#1}\ttfamily #2?}}}
 \RequirePackage{tabularx}
 \RequirePackage{booktabs}      % regras de tabela profissionais (toprule/midrule/bottomrule)
 \RequirePackage{longtable}     % tabelas que quebram entre páginas
@@ -380,6 +389,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \DeclareOption{pdfa}{\@coppepdfatrue}
 \newif\if@coppeorientexam \@coppeorientexamfalse
 \DeclareOption{orientadorexamina}{\@coppeorientexamtrue}
+\newif\if@coppesemlinks \@coppesemlinksfalse
+\DeclareOption{semlinks}{\@coppesemlinkstrue}
 \DeclareOption{assinaturas}{\ClassWarningNoLine{coppe}{A opcao `assinaturas'
   nao faz mais nada: a folha de aprovacao nao tem mais linhas de assinatura,
   porque a entrega e digital desde a Resolucao CEPG n. 246/2023}}
@@ -929,8 +940,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \singlespacing
   \centering
   \makebox[\linewidth]{%
-    \includegraphics[height=2cm]{ufrj-logo}\hfill
-    \includegraphics[height=2cm]{coppe-logo}}\par
+    \coppe@logo{ufrj-logo}\hfill
+    \coppe@logo{coppe-logo}}\par
   \vspace{1.5cm}
   {\singlespacing
  \MakeUppercase{\local@universityname}\par
@@ -960,8 +971,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \setlength\baselineskip{0pt}
   \setlength\parskip{1mm}
   \makebox[\linewidth]{%
-    \includegraphics[height=2cm]{ufrj-logo}\hfill
-    \includegraphics[height=2cm]{coppe-logo}}
+    \coppe@logo{ufrj-logo}\hfill
+    \coppe@logo{coppe-logo}}
   \end{flushleft}
   \vspace{1.05cm}
   \begin{center}
@@ -1162,7 +1173,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   breaklinks={true},
   raiselinks={true},
   pageanchor={true},
-}}
+}%
+  \if@coppesemlinks\hypersetup{hidelinks}\fi}
 \newcommand\makecatalog{%
   \vspace*{\fill}
   \begin{center}
@@ -1524,18 +1536,12 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \let\makelosymbols\@empty%
 }%
 \@onlypreamble\makelosymbols
-\AtBeginDocument{%
-\@ifpackageloaded{hyperref}{%
-  \newcommand\@wrlos[3]{%
-    \protected@write\@losfile{}%
-      {\string\indexentry{#1[#2] #3|hyperpage}{\thepage}}%
-    \endgroup%
-    \@esphack}}{%
-  \newcommand\@wrlos[3]{%
-    \protected@write\@losfile{}%
-      {\string\indexentry{#1[#2] #3}{\thepage}}%
-    \endgroup%
-    \@esphack}}}%
+\newcommand\coppe@semfolio[1]{}
+\newcommand\@wrlos[3]{%
+  \protected@write\@losfile{}%
+    {\string\indexentry{#1[#2] #3|coppe@semfolio}{\thepage}}%
+  \endgroup%
+  \@esphack}
 \newcommand\printloabbreviations{%
 \begingroup\@coppeglosspretrue
 \renewcommand\glossaryname{\listabbreviationname}%
@@ -1551,18 +1557,11 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \let\makeloabbreviations\@empty
 }
 \@onlypreamble\makeloabbreviations
-\AtBeginDocument{%
-\@ifpackageloaded{hyperref}{%
-  \newcommand\@wrlab[3]{%
-    \protected@write\@labfile{}%
-      {\string\indexentry{#1[#2] #3|hyperpage}{\thepage}}%
-    \endgroup%
-    \@esphack}}{%
-  \newcommand\@wrlab[3]{%
-    \protected@write\@labfile{}%
-      {\string\indexentry{#1[#2] #3}{\thepage}}%
-    \endgroup%
-    \@esphack}}}%
+\newcommand\@wrlab[3]{%
+  \protected@write\@labfile{}%
+    {\string\indexentry{#1[#2] #3|coppe@semfolio}{\thepage}}%
+  \endgroup%
+  \@esphack}
 \newcommand\newsigla[3]{%
   \@namedef{coppe@sigla@s@#1}{#2}%
   \@namedef{coppe@sigla@l@#1}{#3}}
