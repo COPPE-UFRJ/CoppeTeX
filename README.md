@@ -30,8 +30,8 @@
 
 ## Vou escrever uma tese. O que eu baixo?
 
-**Baixe a pasta [`dist/`](./dist), e só ela.** Lá está tudo o que é preciso para
-escrever e depositar: a classe, os estilos de bibliografia, os logotipos, os
+**Baixe o arquivo .zip no release e só ele.** ou **aixe a pasta [`dist/`](./dist), e só ela.** 
+Lá está tudo o que é preciso para escrever e depositar: a classe, os estilos de bibliografia, os logotipos, os
 dois manuais e um exemplo completo em cada idioma que a UFRJ admite. O
 [`dist/README.md`](./dist/README.md) diz como instalar e por onde começar.
 
