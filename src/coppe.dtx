@@ -155,6 +155,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \changes{v4.1}{2026/09/10}{The lists of abbreviations and of symbols no longer carry a page number, nor the dot leaders that led to it. 4.1.1 describes both as an alphabetical list of the term and its meaning and asks for no location; the folio was inherited from building them with the index machinery. makeindex always writes the number, so the class discards it at composition through the coppe@semfolio encapsulator, and every delimiter in coppe.ist is now empty.}
 % \changes{v4.1}{2026/09/10}{New option semlinks: hidelinks over everything else, so the links keep working and lose only the colour and the frame. For anyone printing.}
 % \changes{v4.1}{2026/09/10}{A missing cover logo now raises a class error naming the file and saying it ships with the class, instead of TeX's bare "File not found". No graphicspath is set: kpathsea finds a logo installed beside the class and does not report where it found anything, so the class cannot deduce its own directory.}
+% \changes{v4.1}{2026/09/11}{Everything the class writes on an abstract sheet -- the opening sentence, the title, the month, the advisor and department labels -- now follows the language of that sheet. It was pinned to Portuguese on the abstract page and to English on the foreignabstract page, whatever the languages of the work: an English-written thesis came out with its English text under a Portuguese heading and its Portuguese text under an English one, and a Spanish-written thesis had TWO Portuguese-headed sheets and no Spanish heading at all. Portuguese output is unchanged, character for character.}
 % \changes{v4.1}{2026/09/11}{New work type mscsem, the Seminario de Mestrado that some Programas require and that is not a qualifying exam. It came as PR \#61, which edited the generated coppe.cls -- lost at the next generation -- and left out the exam flag, so the seminar would have come out with the CAPES sheet, the catalogue card and the reference above the abstract, three things that belong only to a work deposited in the library.}
 % \changes{v4.1}{2026/09/11}{The three abstracts open with the work's own bibliographic reference, composed by the class from the folha de rosto data. 3.1.2.1.4 suggests it and Annexes E and F show both the resumo and the abstract beginning with it; the class printed none. It is the same reference on the three pages and always in Portuguese, because a reference is not translated, and only the title follows the language of the work. An exame de qualificacao gets none, and resumosemreferencia turns it off for an abstract already at the 500-word limit.}
 % \changes{v4.0}{2026/05/30}{Catalog-label writers (coppe@mainBegin, coppe@bibBegin, coppe@bibEnd, coppe@hasLof) made language-agnostic: detokenize wrap on label names protects ':' and '.' from babel shorthand activation, and the raw etex primitives romannumeral/number replace LaTeX's roman/arabic to bypass spanish-babel's small-caps @roman redefinition that would otherwise crash pdftex with "Unbalanced write command" on every es-main document.}
@@ -1055,6 +1056,22 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % estrangeiro --- ingl\^es, por padr\~ao, quando o trabalho \'e em portugu\^es.
 % O |brazilianabstract| \'e o terceiro, em portugu\^es, para o trabalho escrito
 % em espanhol, franc\^es ou italiano que precise de um resumo leg\'ivel pela UFRJ.
+%
+% \paragraph{Cada folha inteira no seu idioma.} Tudo o que a \emph{classe}
+% escreve numa folha de resumo --- a frase de abertura, o t\'itulo, o m\^es, os
+% r\'otulos \textbf{Orientador} e \textbf{Programa}, as palavras-chave --- sai no
+% idioma daquela folha. Voc\^e escreve o corpo em um idioma e a folha inteira
+% sai naquele idioma; n\~ao h\'a nada a configurar.
+%
+% A \'unica coisa que n\~ao se traduz \'e o \textbf{nome do Programa}: a COPPE tem
+% nome oficial para cada Programa em portugu\^es e em ingl\^es, e s\'o. Numa folha
+% em espanhol, franc\^es ou italiano vai o nome em portugu\^es, que \'e o nome
+% pr\'oprio da unidade --- a mesma regra da se\c c\~ao~4 da Norma COPPE, que
+% mant\'em a identidade institucional em portugu\^es.
+%
+% A capa, a folha de rosto e a folha de aprova\c c\~ao seguem outra regra e
+% continuam em portugu\^es, qualquer que seja o idioma do trabalho: ali o texto
+% \'e identidade institucional, e n\~ao resumo.
 %
 % Cada resumo cabe em \textbf{uma folha} e a 3.1.2.1.4 pede um par\'agrafo s\'o,
 % em espa\c co 1,5, de \textbf{150 a 500 palavras}, de prefer\^encia na terceira
@@ -4279,6 +4296,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \DeclareOption{italian}{%
   \def\coppe@mainlang{italian}\def\coppe@foreignlang{english}}
 \DeclareOption{msc}{%
+  \def\coppe@doctypekey{msc}\def\coppe@degkey{msc}
   \newcommand{\@degree}{M.Sc.}
   \newcommand{\@degreename}{Mestrado}
   \newcommand{\local@degname}{Mestre}
@@ -4287,6 +4305,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \newcommand\foreign@doctype{Dissertation}
 }
 \DeclareOption{dscexam}{%
+  \def\coppe@doctypekey{exam}\def\coppe@degkey{dsc}
   \newcommand{\@degree}{D.Sc.}
   \newcommand{\@degreename}{Doutorado}
   \newcommand{\local@degname}{Doutor}
@@ -4296,6 +4315,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \newcommand\foreign@doctype{Qualifying Exam}
 }
 \DeclareOption{mscexam}{%
+  \def\coppe@doctypekey{exam}\def\coppe@degkey{msc}
  \newcommand{\@degree}{M.Sc.}
   \newcommand{\@degreename}{Mestrado}
   \newcommand{\local@degname}{Mestre}
@@ -4326,6 +4346,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % Nao ha `dscsem': ninguem pediu, e nenhum Programa da COPPE tem um seminario de
 % doutorado com esse nome. O molde esta aqui para o dia em que houver.
 \DeclareOption{mscsem}{%
+  \def\coppe@doctypekey{sem}\def\coppe@degkey{msc}
   \newcommand{\@degree}{M.Sc.}
   \newcommand{\@degreename}{Mestrado}
   \newcommand{\local@degname}{Mestre}
@@ -4335,6 +4356,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \newcommand\foreign@doctype{Seminar}
 }
 \DeclareOption{dsc}{%
+  \def\coppe@doctypekey{dsc}\def\coppe@degkey{dsc}
   \newcommand{\@degree}{D.Sc.}
   \newcommand{\@degreename}{Doutorado}
   \newcommand{\local@degname}{Doutor}
@@ -4627,6 +4649,58 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \copperdefstring{english}  {listsymbol}      {List of Symbols}
 \copperdefstring{brazilian}{glossary}        {Gloss{\' a}rio}
 \copperdefstring{english}  {glossary}        {Glossary}
+% --- A folha de resumo -------------------------------------------------------
+% Tudo o que a CLASSE escreve numa folha de resumo sai no idioma daquela folha:
+% a frase de abertura, o tipo do trabalho, o grau, o mes, os rotulos. Antes, a
+% folha do ambiente `abstract' saia com esse texto preso ao portugues e a do
+% `foreignabstract' presa ao ingles, quaisquer que fossem os idiomas do
+% trabalho. Numa tese em portugues os dois coincidem e nada aparecia; numa tese
+% em ingles, o texto em ingles saia sob "Resumo da Tese apresentada...", com o
+% titulo em portugues, "Maio/2026" e "Orientador:", e o texto em portugues sob a
+% abertura inglesa. Numa tese em espanhol era pior: como so havia duas formas, a
+% folha do resumo em espanhol e a do resumo em portugues saiam com o MESMO
+% cabecalho em portugues.
+%
+% A frase de abertura e montada de pedacos porque a concordancia muda de idioma
+% para idioma: em portugues o genero governa "do/da" e "apresentado/apresentada",
+% em ingles nao ha genero, em espanhol governa "del/de la". Montar de pedacos
+% deixa cada idioma resolver a propria concordancia sem que a classe saiba de
+% gramatica.
+%
+% ACOPLAMENTO: toda chave abaixo precisa existir nos CINCO idiomas. As de
+% portugues e ingles ficam aqui; as de espanhol, frances e italiano nos pacotes
+% coppe-lang-<idioma>.def. Faltando uma, a folha sai com um buraco no lugar da
+% palavra e nada avisa.
+\copperdefstring{brazilian}{abstractname}     {Resumo}
+\copperdefstring{english}  {abstractname}     {Abstract}
+\copperdefstring{brazilian}{abstractofmale}   {do}
+\copperdefstring{brazilian}{abstractoffemale} {da}
+\copperdefstring{english}  {abstractofmale}   {of}
+\copperdefstring{english}  {abstractoffemale} {of}
+\copperdefstring{brazilian}{presentedmale}    {apresentado}
+\copperdefstring{brazilian}{presentedfemale}  {apresentada}
+\copperdefstring{english}  {presentedmale}    {presented}
+\copperdefstring{english}  {presentedfemale}  {presented}
+\copperdefstring{brazilian}{abstracttail}{{\` a} COPPE/UFRJ como parte dos
+  requisitos necess{\' a}rios para a obten{\c c}{\~ a}o do grau de}
+\copperdefstring{english}{abstracttail}{to COPPE/UFRJ as a partial fulfillment
+  of the requirements for the degree of}
+\copperdefstring{brazilian}{sciencename}      {em Ci{\^ e}ncias}
+\copperdefstring{english}  {sciencename}      {of Science}
+% O tipo do trabalho e o grau, por idioma. A chave e escolhida pela opcao de
+% tipo de trabalho, que grava \coppe@doctypekey e \coppe@degkey.
+\copperdefstring{brazilian}{doctypemsc}  {Disserta{\c c}{\~ a}o}
+\copperdefstring{english}  {doctypemsc}  {Dissertation}
+\copperdefstring{brazilian}{doctypedsc}  {Tese}
+\copperdefstring{english}  {doctypedsc}  {Thesis}
+\copperdefstring{brazilian}{doctypeexam} {Exame de Qualifica{\c c}{\~ a}o}
+\copperdefstring{english}  {doctypeexam} {Qualifying Exam}
+\copperdefstring{brazilian}{doctypesem}  {Semin{\' a}rio}
+\copperdefstring{english}  {doctypesem}  {Seminar}
+\copperdefstring{brazilian}{degnamemsc}  {Mestre}
+\copperdefstring{english}  {degnamemsc}  {Master}
+\copperdefstring{brazilian}{degnamedsc}  {Doutor}
+\copperdefstring{english}  {degnamedsc}  {Doctor}
 \copperdefstring{brazilian}{advisor}      {Orientador}
 \copperdefstring{english}  {advisor}      {Advisor}
 \copperdefstring{brazilian}{advisors}     {Orientadores}
@@ -6003,19 +6077,20 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \newenvironment{abstract}{%
   \cleardoublepage
   \thispagestyle{plain}
-  \abstract@toptext\par
+  \edef\coppe@reslang{\coppe@mainlang}%
+  \coppe@toptext{\coppe@reslang}\par
   \vspace*{8.6mm}
   \begin{center}
-    \sloppy\nohyphens{\MakeUppercase\local@title}\par
+    \sloppy\nohyphens{\MakeUppercase{\coppe@res@title{\coppe@reslang}}}\par
     \vspace*{13.2mm}
     \@authname\ \@authsurn \par
     \vspace*{7mm}
-    \local@monthname/\coppe@docyear
+    \coppe@res@month{\coppe@reslang}/\coppe@docyear
   \end{center}\par
   \vspace*{1.5cm}
   \noindent%
   \begin{tabularx}{\textwidth}[b]{@{}l@{ }>{\raggedright\arraybackslash}X@{}}
-    \local@advisorstring: &
+    \coppe@res@advisor{\coppe@reslang}: &
     \count1=0
     \toks@={}
     \@whilenum \count1<\@advisor \do{%
@@ -6034,9 +6109,10 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \advance\count1 by 1}
     \the\toks@
   \end{tabularx}%
-  \coppe@coadvisorrows{\local@coadvisorstring}\par
+  \coppe@coadvisorrows{\coppe@res@coadvisor{\coppe@reslang}}\par
   \vspace*{2mm}
-  \noindent\local@deptstring: \local@deptname\par
+  \noindent\coppe@res@deptlabel{\coppe@reslang}:
+    \coppe@res@deptname{\coppe@reslang}\par
   \vspace*{7mm}%
   \coppe@refresumo}{%
   \coppe@printkeywords{\coppemainstring{keywordsname}}%
@@ -6051,20 +6127,21 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \newenvironment{foreignabstract}{%
   \cleardoublepage
   \thispagestyle{plain}
+  \edef\coppe@reslang{\coppe@foreignlang}%
   \begin{otherlanguage}{\coppe@foreignlang}
-  \foreignabstract@toptext\par
+  \coppe@toptext{\coppe@reslang}\par
   \vspace*{8.6mm}
   \begin{center}
-    \sloppy\nohyphens{\MakeUppercase\foreign@title}\par
+    \sloppy\nohyphens{\MakeUppercase{\coppe@res@title{\coppe@reslang}}}\par
     \vspace*{13.2mm}
     \@authname\ \@authsurn \par
     \vspace*{7mm}
-    \foreign@monthname/\coppe@docyear
+    \coppe@res@month{\coppe@reslang}/\coppe@docyear
   \end{center}\par
   \vspace*{1.5cm}
   \noindent%
   \begin{tabularx}{\textwidth}[b]{@{}l@{ }>{\raggedright\arraybackslash}X@{}}
-    \foreign@advisorstring: &
+    \coppe@res@advisor{\coppe@reslang}: &
     \count1=0
     \toks@={}
     \@whilenum \count1<\@advisor \do{%
@@ -6083,9 +6160,10 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \advance\count1 by 1}
     \the\toks@
   \end{tabularx}%
-  \coppe@coadvisorrows{\foreign@coadvisorstring}\par
+  \coppe@coadvisorrows{\coppe@res@coadvisor{\coppe@reslang}}\par
   \vspace*{2mm}
-  \noindent\foreign@deptstring: \foreign@deptname\par
+  \noindent\coppe@res@deptlabel{\coppe@reslang}:
+    \coppe@res@deptname{\coppe@reslang}\par
   \vspace*{7mm}%
   \coppe@refresumo}{%
   \ifnum\value{foreignkeywords}>0
@@ -6127,20 +6205,21 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \newenvironment{brazilianabstract}{%
   \cleardoublepage
   \thispagestyle{plain}
+  \def\coppe@reslang{brazilian}%
   \begin{otherlanguage}{brazilian}
-  \abstract@toptext\par
+  \coppe@toptext{\coppe@reslang}\par
   \vspace*{8.6mm}
   \begin{center}
-    \sloppy\nohyphens{\MakeUppercase\local@title}\par
+    \sloppy\nohyphens{\MakeUppercase{\coppe@res@title{\coppe@reslang}}}\par
     \vspace*{13.2mm}
     \@authname\ \@authsurn \par
     \vspace*{7mm}
-    \local@monthname/\coppe@docyear
+    \coppe@res@month{\coppe@reslang}/\coppe@docyear
   \end{center}\par
   \vspace*{1.5cm}
   \noindent%
   \begin{tabularx}{\textwidth}[b]{@{}l@{ }>{\raggedright\arraybackslash}X@{}}
-    \local@advisorstring: &
+    \coppe@res@advisor{\coppe@reslang}: &
     \count1=0
     \toks@={}
     \@whilenum \count1<\@advisor \do{%
@@ -6159,9 +6238,10 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \advance\count1 by 1}
     \the\toks@
   \end{tabularx}%
-  \coppe@coadvisorrows{\local@coadvisorstring}\par
+  \coppe@coadvisorrows{\coppe@res@coadvisor{\coppe@reslang}}\par
   \vspace*{2mm}
-  \noindent\local@deptstring: \local@deptname\par
+  \noindent\coppe@res@deptlabel{\coppe@reslang}:
+    \coppe@res@deptname{\coppe@reslang}\par
   \vspace*{7mm}%
   \coppe@refresumo}{%
 % \coppestring takes ONE argument and resolves against the current language;
@@ -6534,18 +6614,65 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \end{center}%
 }
 %
-\newcommand\abstract@toptext{%
-  \noindent Resumo \ifthenelse{\boolean{maledoc}}{do}{da}
-  \local@doctype\ \ifthenelse{\boolean{maledoc}}{apresentado}{apresentada}
-  \sloppy\nohyphens{{\` a} COPPE/UFRJ como parte dos requisitos
-  necess{\' a}rios para a obten{\c c}{\~ a}o do grau de
-  \local@degname\ em Ci{\^ e}ncias (\@degree)}
+% A frase de abertura da folha de resumo, num idioma qualquer. O argumento e o
+% NOME do idioma, e nao o texto: e dele que saem todas as pecas.
+%
+% Em portugues e em ingles o resultado e, palavra por palavra, o que a classe
+% escrevia antes -- isto foi conferido comparando o texto extraido dos PDFs.
+\newcommand\coppe@toptext[1]{%
+  \noindent \@nameuse{coppe@str@#1@abstractname}\
+  \ifthenelse{\boolean{maledoc}}%
+    {\@nameuse{coppe@str@#1@abstractofmale}}%
+    {\@nameuse{coppe@str@#1@abstractoffemale}}\
+  \@nameuse{coppe@str@#1@doctype\coppe@doctypekey}\
+  \ifthenelse{\boolean{maledoc}}%
+    {\@nameuse{coppe@str@#1@presentedmale}}%
+    {\@nameuse{coppe@str@#1@presentedfemale}}
+  \sloppy\nohyphens{\@nameuse{coppe@str@#1@abstracttail}\
+  \@nameuse{coppe@str@#1@degname\coppe@degkey}\
+  \@nameuse{coppe@str@#1@sciencename} (\@degree)}%
 }
-\newcommand\foreignabstract@toptext{%
-  \noindent \sloppy\nohyphens{Abstract of \foreign@doctype\ presented to
-  COPPE/UFRJ as a partial fulfillment of the requirements for the
-  degree of \foreign@degname\ of Science (\@degree)}
-}
+% As demais pecas que a classe escreve na folha. Sao macros, e nao texto solto
+% dentro do ambiente, porque as tres folhas de resumo usam as mesmas seis e a
+% unica diferenca entre elas e o idioma.
+%
+% O TITULO vem do compartimento daquele idioma. Se o autor nao tiver preenchido
+% o compartimento -- \titlein{spanish}{...} num trabalho em espanhol --, cai no
+% titulo em portugues, que e melhor que uma folha sem titulo.
+\newcommand\coppe@res@title[1]{%
+  \@ifundefined{coppe@title@#1}%
+    {\@nameuse{coppe@title@brazilian}}%
+    {\@nameuse{coppe@title@#1}}}
+% O MES pelo numero. \number tira o zero a esquerda de \date{09}{2026}, que de
+% outro modo procuraria a chave monthname09.
+\newcommand\coppe@res@month[1]{%
+  \@nameuse{coppe@str@#1@monthname\number\coppe@docmonth}}
+% Os ROTULOS de orientacao e de programa, no singular ou no plural.
+\newcommand\coppe@res@advisor[1]{%
+  \ifnum\@advisor>1
+    \@nameuse{coppe@str@#1@advisors}%
+  \else
+    \@nameuse{coppe@str@#1@advisor}%
+  \fi}
+\newcommand\coppe@res@coadvisor[1]{%
+  \ifnum\@coadvisor>1
+    \@nameuse{coppe@str@#1@coadvisors}%
+  \else
+    \@nameuse{coppe@str@#1@coadvisor}%
+  \fi}
+\newcommand\coppe@res@deptlabel[1]{\@nameuse{coppe@str@#1@dept}}
+% O NOME do Programa nao se traduz para qualquer idioma: a COPPE tem nome
+% oficial para cada Programa em portugues e em ingles, e so. Numa folha em
+% espanhol, frances ou italiano vai o nome em portugues, que e o nome proprio
+% da unidade -- a mesma regra da secao 4 da Norma COPPE, que mantem a identidade
+% institucional em portugues.
+% \edef, e nao \def: o argumento chega como \coppe@reslang, que e uma MACRO com
+% o nome do idioma dentro. Com \def o teste comparava o nome da macro com a
+% palavra "english" e nunca dava certo -- a folha em ingles saia com "Department:
+% Engenharia de Sistemas e Computacao", rotulo em ingles e nome em portugues.
+\newcommand\coppe@res@deptname[1]{%
+  \edef\coppe@@lg{#1}\def\coppe@@en{english}%
+  \ifx\coppe@@lg\coppe@@en \foreign@deptname \else \local@deptname \fi}
 %
 %    \end{macrocode}
 %
@@ -7647,6 +7774,28 @@ postamble
 %% are deliberately kept Portuguese: the COPPE/UFRJ cover and folha de
 %% rosto are a Brazilian institutional template that does not translate.
 \ProvidesFile{coppe-lang-spanish.def}[2026/09/09 v4.1 CoppeTeX spanish class strings]
+%% --- A folha de resumo ------------------------------------------------------
+%% Tudo o que a classe escreve numa folha de resumo sai no idioma daquela folha.
+%% A frase de abertura e montada de pedacos porque a concordancia muda de idioma
+%% para idioma; ver o comentario no coppe.dtx, na tabela de portugues e ingles.
+%%
+%% O NOME do Programa nao entra aqui: a COPPE tem nome oficial para cada Programa
+%% em portugues e em ingles, e so. Numa folha neste idioma vai o nome em
+%% portugues, que e o nome proprio da unidade.
+\copperdefstring{spanish}{abstractname}     {Resumen}
+\copperdefstring{spanish}{abstractofmale}   {del}
+\copperdefstring{spanish}{abstractoffemale} {de la}
+\copperdefstring{spanish}{presentedmale}    {presentado}
+\copperdefstring{spanish}{presentedfemale}  {presentada}
+\copperdefstring{spanish}{abstracttail}{a la COPPE/UFRJ como parte de los
+  requisitos necesarios para la obtenci\'on del grado de}
+\copperdefstring{spanish}{sciencename}      {en Ciencias}
+\copperdefstring{spanish}{doctypemsc}  {Disertaci\'on}
+\copperdefstring{spanish}{doctypedsc}  {Tesis}
+\copperdefstring{spanish}{doctypeexam} {Examen de Calificaci\'on}
+\copperdefstring{spanish}{doctypesem}  {Seminario}
+\copperdefstring{spanish}{degnamemsc}  {Maestro}
+\copperdefstring{spanish}{degnamedsc}  {Doctor}
 \copperdefstring{spanish}{appendix}        {Ap\'endice}
 \copperdefstring{spanish}{annex}           {Anexo}
 \copperdefstring{spanish}{frame}           {Cuadro}
@@ -7705,6 +7854,28 @@ postamble
 %% See coppe-lang-spanish.def for the structure. Institutional names
 %% remain Portuguese; only document-content strings translate.
 \ProvidesFile{coppe-lang-french.def}[2026/09/09 v4.1 CoppeTeX french class strings]
+%% --- A folha de resumo ------------------------------------------------------
+%% Tudo o que a classe escreve numa folha de resumo sai no idioma daquela folha.
+%% A frase de abertura e montada de pedacos porque a concordancia muda de idioma
+%% para idioma; ver o comentario no coppe.dtx, na tabela de portugues e ingles.
+%%
+%% O NOME do Programa nao entra aqui: a COPPE tem nome oficial para cada Programa
+%% em portugues e em ingles, e so. Numa folha neste idioma vai o nome em
+%% portugues, que e o nome proprio da unidade.
+\copperdefstring{french}{abstractname}     {R\'esum\'e}
+\copperdefstring{french}{abstractofmale}   {du}
+\copperdefstring{french}{abstractoffemale} {de la}
+\copperdefstring{french}{presentedmale}    {pr\'esent\'e}
+\copperdefstring{french}{presentedfemale}  {pr\'esent\'ee}
+\copperdefstring{french}{abstracttail}{\`a la COPPE/UFRJ comme partie des
+  exigences requises pour l'obtention du grade de}
+\copperdefstring{french}{sciencename}      {en Sciences}
+\copperdefstring{french}{doctypemsc}  {M\'emoire}
+\copperdefstring{french}{doctypedsc}  {Th\`ese}
+\copperdefstring{french}{doctypeexam} {Examen de Qualification}
+\copperdefstring{french}{doctypesem}  {S\'eminaire}
+\copperdefstring{french}{degnamemsc}  {Ma\^itre}
+\copperdefstring{french}{degnamedsc}  {Docteur}
 \copperdefstring{french}{appendix}        {Annexe}
 \copperdefstring{french}{annex}           {Annexe}
 \copperdefstring{french}{frame}           {Encadr\'e}
@@ -7762,6 +7933,28 @@ postamble
 %% spelling algorithm2e ships, even though babel calls the language
 %% "italian".
 \ProvidesFile{coppe-lang-italian.def}[2026/09/09 v4.1 CoppeTeX italian class strings]
+%% --- A folha de resumo ------------------------------------------------------
+%% Tudo o que a classe escreve numa folha de resumo sai no idioma daquela folha.
+%% A frase de abertura e montada de pedacos porque a concordancia muda de idioma
+%% para idioma; ver o comentario no coppe.dtx, na tabela de portugues e ingles.
+%%
+%% O NOME do Programa nao entra aqui: a COPPE tem nome oficial para cada Programa
+%% em portugues e em ingles, e so. Numa folha neste idioma vai o nome em
+%% portugues, que e o nome proprio da unidade.
+\copperdefstring{italian}{abstractname}     {Riassunto}
+\copperdefstring{italian}{abstractofmale}   {del}
+\copperdefstring{italian}{abstractoffemale} {della}
+\copperdefstring{italian}{presentedmale}    {presentato}
+\copperdefstring{italian}{presentedfemale}  {presentata}
+\copperdefstring{italian}{abstracttail}{alla COPPE/UFRJ come parte dei
+  requisiti necessari per il conseguimento del titolo di}
+\copperdefstring{italian}{sciencename}      {in Scienze}
+\copperdefstring{italian}{doctypemsc}  {Dissertazione}
+\copperdefstring{italian}{doctypedsc}  {Tesi}
+\copperdefstring{italian}{doctypeexam} {Esame di Qualificazione}
+\copperdefstring{italian}{doctypesem}  {Seminario}
+\copperdefstring{italian}{degnamemsc}  {Magistrale}
+\copperdefstring{italian}{degnamedsc}  {Dottore}
 \copperdefstring{italian}{appendix}        {Appendice}
 \copperdefstring{italian}{annex}           {Allegato}
 \copperdefstring{italian}{frame}           {Riquadro}

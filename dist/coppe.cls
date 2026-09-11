@@ -346,6 +346,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \DeclareOption{italian}{%
   \def\coppe@mainlang{italian}\def\coppe@foreignlang{english}}
 \DeclareOption{msc}{%
+  \def\coppe@doctypekey{msc}\def\coppe@degkey{msc}
   \newcommand{\@degree}{M.Sc.}
   \newcommand{\@degreename}{Mestrado}
   \newcommand{\local@degname}{Mestre}
@@ -354,6 +355,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \newcommand\foreign@doctype{Dissertation}
 }
 \DeclareOption{dscexam}{%
+  \def\coppe@doctypekey{exam}\def\coppe@degkey{dsc}
   \newcommand{\@degree}{D.Sc.}
   \newcommand{\@degreename}{Doutorado}
   \newcommand{\local@degname}{Doutor}
@@ -363,6 +365,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \newcommand\foreign@doctype{Qualifying Exam}
 }
 \DeclareOption{mscexam}{%
+  \def\coppe@doctypekey{exam}\def\coppe@degkey{msc}
  \newcommand{\@degree}{M.Sc.}
   \newcommand{\@degreename}{Mestrado}
   \newcommand{\local@degname}{Mestre}
@@ -372,6 +375,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \newcommand\foreign@doctype{Qualifying Exam}
 }
 \DeclareOption{mscsem}{%
+  \def\coppe@doctypekey{sem}\def\coppe@degkey{msc}
   \newcommand{\@degree}{M.Sc.}
   \newcommand{\@degreename}{Mestrado}
   \newcommand{\local@degname}{Mestre}
@@ -381,6 +385,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \newcommand\foreign@doctype{Seminar}
 }
 \DeclareOption{dsc}{%
+  \def\coppe@doctypekey{dsc}\def\coppe@degkey{dsc}
   \newcommand{\@degree}{D.Sc.}
   \newcommand{\@degreename}{Doutorado}
   \newcommand{\local@degname}{Doutor}
@@ -503,6 +508,34 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \copperdefstring{english}  {listsymbol}      {List of Symbols}
 \copperdefstring{brazilian}{glossary}        {Gloss{\' a}rio}
 \copperdefstring{english}  {glossary}        {Glossary}
+\copperdefstring{brazilian}{abstractname}     {Resumo}
+\copperdefstring{english}  {abstractname}     {Abstract}
+\copperdefstring{brazilian}{abstractofmale}   {do}
+\copperdefstring{brazilian}{abstractoffemale} {da}
+\copperdefstring{english}  {abstractofmale}   {of}
+\copperdefstring{english}  {abstractoffemale} {of}
+\copperdefstring{brazilian}{presentedmale}    {apresentado}
+\copperdefstring{brazilian}{presentedfemale}  {apresentada}
+\copperdefstring{english}  {presentedmale}    {presented}
+\copperdefstring{english}  {presentedfemale}  {presented}
+\copperdefstring{brazilian}{abstracttail}{{\` a} COPPE/UFRJ como parte dos
+  requisitos necess{\' a}rios para a obten{\c c}{\~ a}o do grau de}
+\copperdefstring{english}{abstracttail}{to COPPE/UFRJ as a partial fulfillment
+  of the requirements for the degree of}
+\copperdefstring{brazilian}{sciencename}      {em Ci{\^ e}ncias}
+\copperdefstring{english}  {sciencename}      {of Science}
+\copperdefstring{brazilian}{doctypemsc}  {Disserta{\c c}{\~ a}o}
+\copperdefstring{english}  {doctypemsc}  {Dissertation}
+\copperdefstring{brazilian}{doctypedsc}  {Tese}
+\copperdefstring{english}  {doctypedsc}  {Thesis}
+\copperdefstring{brazilian}{doctypeexam} {Exame de Qualifica{\c c}{\~ a}o}
+\copperdefstring{english}  {doctypeexam} {Qualifying Exam}
+\copperdefstring{brazilian}{doctypesem}  {Semin{\' a}rio}
+\copperdefstring{english}  {doctypesem}  {Seminar}
+\copperdefstring{brazilian}{degnamemsc}  {Mestre}
+\copperdefstring{english}  {degnamemsc}  {Master}
+\copperdefstring{brazilian}{degnamedsc}  {Doutor}
+\copperdefstring{english}  {degnamedsc}  {Doctor}
 \copperdefstring{brazilian}{advisor}      {Orientador}
 \copperdefstring{english}  {advisor}      {Advisor}
 \copperdefstring{brazilian}{advisors}     {Orientadores}
@@ -1379,19 +1412,20 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \newenvironment{abstract}{%
   \cleardoublepage
   \thispagestyle{plain}
-  \abstract@toptext\par
+  \edef\coppe@reslang{\coppe@mainlang}%
+  \coppe@toptext{\coppe@reslang}\par
   \vspace*{8.6mm}
   \begin{center}
-    \sloppy\nohyphens{\MakeUppercase\local@title}\par
+    \sloppy\nohyphens{\MakeUppercase{\coppe@res@title{\coppe@reslang}}}\par
     \vspace*{13.2mm}
     \@authname\ \@authsurn \par
     \vspace*{7mm}
-    \local@monthname/\coppe@docyear
+    \coppe@res@month{\coppe@reslang}/\coppe@docyear
   \end{center}\par
   \vspace*{1.5cm}
   \noindent%
   \begin{tabularx}{\textwidth}[b]{@{}l@{ }>{\raggedright\arraybackslash}X@{}}
-    \local@advisorstring: &
+    \coppe@res@advisor{\coppe@reslang}: &
     \count1=0
     \toks@={}
     \@whilenum \count1<\@advisor \do{%
@@ -1410,9 +1444,10 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \advance\count1 by 1}
     \the\toks@
   \end{tabularx}%
-  \coppe@coadvisorrows{\local@coadvisorstring}\par
+  \coppe@coadvisorrows{\coppe@res@coadvisor{\coppe@reslang}}\par
   \vspace*{2mm}
-  \noindent\local@deptstring: \local@deptname\par
+  \noindent\coppe@res@deptlabel{\coppe@reslang}:
+    \coppe@res@deptname{\coppe@reslang}\par
   \vspace*{7mm}%
   \coppe@refresumo}{%
   \coppe@printkeywords{\coppemainstring{keywordsname}}%
@@ -1421,20 +1456,21 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \newenvironment{foreignabstract}{%
   \cleardoublepage
   \thispagestyle{plain}
+  \edef\coppe@reslang{\coppe@foreignlang}%
   \begin{otherlanguage}{\coppe@foreignlang}
-  \foreignabstract@toptext\par
+  \coppe@toptext{\coppe@reslang}\par
   \vspace*{8.6mm}
   \begin{center}
-    \sloppy\nohyphens{\MakeUppercase\foreign@title}\par
+    \sloppy\nohyphens{\MakeUppercase{\coppe@res@title{\coppe@reslang}}}\par
     \vspace*{13.2mm}
     \@authname\ \@authsurn \par
     \vspace*{7mm}
-    \foreign@monthname/\coppe@docyear
+    \coppe@res@month{\coppe@reslang}/\coppe@docyear
   \end{center}\par
   \vspace*{1.5cm}
   \noindent%
   \begin{tabularx}{\textwidth}[b]{@{}l@{ }>{\raggedright\arraybackslash}X@{}}
-    \foreign@advisorstring: &
+    \coppe@res@advisor{\coppe@reslang}: &
     \count1=0
     \toks@={}
     \@whilenum \count1<\@advisor \do{%
@@ -1453,9 +1489,10 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \advance\count1 by 1}
     \the\toks@
   \end{tabularx}%
-  \coppe@coadvisorrows{\foreign@coadvisorstring}\par
+  \coppe@coadvisorrows{\coppe@res@coadvisor{\coppe@reslang}}\par
   \vspace*{2mm}
-  \noindent\foreign@deptstring: \foreign@deptname\par
+  \noindent\coppe@res@deptlabel{\coppe@reslang}:
+    \coppe@res@deptname{\coppe@reslang}\par
   \vspace*{7mm}%
   \coppe@refresumo}{%
   \ifnum\value{foreignkeywords}>0
@@ -1470,20 +1507,21 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \newenvironment{brazilianabstract}{%
   \cleardoublepage
   \thispagestyle{plain}
+  \def\coppe@reslang{brazilian}%
   \begin{otherlanguage}{brazilian}
-  \abstract@toptext\par
+  \coppe@toptext{\coppe@reslang}\par
   \vspace*{8.6mm}
   \begin{center}
-    \sloppy\nohyphens{\MakeUppercase\local@title}\par
+    \sloppy\nohyphens{\MakeUppercase{\coppe@res@title{\coppe@reslang}}}\par
     \vspace*{13.2mm}
     \@authname\ \@authsurn \par
     \vspace*{7mm}
-    \local@monthname/\coppe@docyear
+    \coppe@res@month{\coppe@reslang}/\coppe@docyear
   \end{center}\par
   \vspace*{1.5cm}
   \noindent%
   \begin{tabularx}{\textwidth}[b]{@{}l@{ }>{\raggedright\arraybackslash}X@{}}
-    \local@advisorstring: &
+    \coppe@res@advisor{\coppe@reslang}: &
     \count1=0
     \toks@={}
     \@whilenum \count1<\@advisor \do{%
@@ -1502,9 +1540,10 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \advance\count1 by 1}
     \the\toks@
   \end{tabularx}%
-  \coppe@coadvisorrows{\local@coadvisorstring}\par
+  \coppe@coadvisorrows{\coppe@res@coadvisor{\coppe@reslang}}\par
   \vspace*{2mm}
-  \noindent\local@deptstring: \local@deptname\par
+  \noindent\coppe@res@deptlabel{\coppe@reslang}:
+    \coppe@res@deptname{\coppe@reslang}\par
   \vspace*{7mm}%
   \coppe@refresumo}{%
   \ifnum\value{braziliankeywords}>0
@@ -1762,18 +1801,41 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   {\MakeUppercase\local@monthname\ DE \coppe@docyear}
   \end{center}%
 }
-\newcommand\abstract@toptext{%
-  \noindent Resumo \ifthenelse{\boolean{maledoc}}{do}{da}
-  \local@doctype\ \ifthenelse{\boolean{maledoc}}{apresentado}{apresentada}
-  \sloppy\nohyphens{{\` a} COPPE/UFRJ como parte dos requisitos
-  necess{\' a}rios para a obten{\c c}{\~ a}o do grau de
-  \local@degname\ em Ci{\^ e}ncias (\@degree)}
+\newcommand\coppe@toptext[1]{%
+  \noindent \@nameuse{coppe@str@#1@abstractname}\
+  \ifthenelse{\boolean{maledoc}}%
+    {\@nameuse{coppe@str@#1@abstractofmale}}%
+    {\@nameuse{coppe@str@#1@abstractoffemale}}\
+  \@nameuse{coppe@str@#1@doctype\coppe@doctypekey}\
+  \ifthenelse{\boolean{maledoc}}%
+    {\@nameuse{coppe@str@#1@presentedmale}}%
+    {\@nameuse{coppe@str@#1@presentedfemale}}
+  \sloppy\nohyphens{\@nameuse{coppe@str@#1@abstracttail}\
+  \@nameuse{coppe@str@#1@degname\coppe@degkey}\
+  \@nameuse{coppe@str@#1@sciencename} (\@degree)}%
 }
-\newcommand\foreignabstract@toptext{%
-  \noindent \sloppy\nohyphens{Abstract of \foreign@doctype\ presented to
-  COPPE/UFRJ as a partial fulfillment of the requirements for the
-  degree of \foreign@degname\ of Science (\@degree)}
-}
+\newcommand\coppe@res@title[1]{%
+  \@ifundefined{coppe@title@#1}%
+    {\@nameuse{coppe@title@brazilian}}%
+    {\@nameuse{coppe@title@#1}}}
+\newcommand\coppe@res@month[1]{%
+  \@nameuse{coppe@str@#1@monthname\number\coppe@docmonth}}
+\newcommand\coppe@res@advisor[1]{%
+  \ifnum\@advisor>1
+    \@nameuse{coppe@str@#1@advisors}%
+  \else
+    \@nameuse{coppe@str@#1@advisor}%
+  \fi}
+\newcommand\coppe@res@coadvisor[1]{%
+  \ifnum\@coadvisor>1
+    \@nameuse{coppe@str@#1@coadvisors}%
+  \else
+    \@nameuse{coppe@str@#1@coadvisor}%
+  \fi}
+\newcommand\coppe@res@deptlabel[1]{\@nameuse{coppe@str@#1@dept}}
+\newcommand\coppe@res@deptname[1]{%
+  \edef\coppe@@lg{#1}\def\coppe@@en{english}%
+  \ifx\coppe@@lg\coppe@@en \foreign@deptname \else \local@deptname \fi}
 \RequirePackage{setspace}
 \if@coppedoublespace\doublespacing\else\onehalfspacing\fi
 \if@coppepdfa

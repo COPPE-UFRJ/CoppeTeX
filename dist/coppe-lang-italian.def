@@ -56,6 +56,28 @@
 %% spelling algorithm2e ships, even though babel calls the language
 %% "italian".
 \ProvidesFile{coppe-lang-italian.def}[2026/09/09 v4.1 CoppeTeX italian class strings]
+%% --- A folha de resumo ------------------------------------------------------
+%% Tudo o que a classe escreve numa folha de resumo sai no idioma daquela folha.
+%% A frase de abertura e montada de pedacos porque a concordancia muda de idioma
+%% para idioma; ver o comentario no coppe.dtx, na tabela de portugues e ingles.
+%%
+%% O NOME do Programa nao entra aqui: a COPPE tem nome oficial para cada Programa
+%% em portugues e em ingles, e so. Numa folha neste idioma vai o nome em
+%% portugues, que e o nome proprio da unidade.
+\copperdefstring{italian}{abstractname}     {Riassunto}
+\copperdefstring{italian}{abstractofmale}   {del}
+\copperdefstring{italian}{abstractoffemale} {della}
+\copperdefstring{italian}{presentedmale}    {presentato}
+\copperdefstring{italian}{presentedfemale}  {presentata}
+\copperdefstring{italian}{abstracttail}{alla COPPE/UFRJ come parte dei
+  requisiti necessari per il conseguimento del titolo di}
+\copperdefstring{italian}{sciencename}      {in Scienze}
+\copperdefstring{italian}{doctypemsc}  {Dissertazione}
+\copperdefstring{italian}{doctypedsc}  {Tesi}
+\copperdefstring{italian}{doctypeexam} {Esame di Qualificazione}
+\copperdefstring{italian}{doctypesem}  {Seminario}
+\copperdefstring{italian}{degnamemsc}  {Magistrale}
+\copperdefstring{italian}{degnamedsc}  {Dottore}
 \copperdefstring{italian}{appendix}        {Appendice}
 \copperdefstring{italian}{annex}           {Allegato}
 \copperdefstring{italian}{frame}           {Riquadro}

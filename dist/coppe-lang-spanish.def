@@ -58,6 +58,28 @@
 %% are deliberately kept Portuguese: the COPPE/UFRJ cover and folha de
 %% rosto are a Brazilian institutional template that does not translate.
 \ProvidesFile{coppe-lang-spanish.def}[2026/09/09 v4.1 CoppeTeX spanish class strings]
+%% --- A folha de resumo ------------------------------------------------------
+%% Tudo o que a classe escreve numa folha de resumo sai no idioma daquela folha.
+%% A frase de abertura e montada de pedacos porque a concordancia muda de idioma
+%% para idioma; ver o comentario no coppe.dtx, na tabela de portugues e ingles.
+%%
+%% O NOME do Programa nao entra aqui: a COPPE tem nome oficial para cada Programa
+%% em portugues e em ingles, e so. Numa folha neste idioma vai o nome em
+%% portugues, que e o nome proprio da unidade.
+\copperdefstring{spanish}{abstractname}     {Resumen}
+\copperdefstring{spanish}{abstractofmale}   {del}
+\copperdefstring{spanish}{abstractoffemale} {de la}
+\copperdefstring{spanish}{presentedmale}    {presentado}
+\copperdefstring{spanish}{presentedfemale}  {presentada}
+\copperdefstring{spanish}{abstracttail}{a la COPPE/UFRJ como parte de los
+  requisitos necesarios para la obtenci\'on del grado de}
+\copperdefstring{spanish}{sciencename}      {en Ciencias}
+\copperdefstring{spanish}{doctypemsc}  {Disertaci\'on}
+\copperdefstring{spanish}{doctypedsc}  {Tesis}
+\copperdefstring{spanish}{doctypeexam} {Examen de Calificaci\'on}
+\copperdefstring{spanish}{doctypesem}  {Seminario}
+\copperdefstring{spanish}{degnamemsc}  {Maestro}
+\copperdefstring{spanish}{degnamedsc}  {Doctor}
 \copperdefstring{spanish}{appendix}        {Ap\'endice}
 \copperdefstring{spanish}{annex}           {Anexo}
 \copperdefstring{spanish}{frame}           {Cuadro}

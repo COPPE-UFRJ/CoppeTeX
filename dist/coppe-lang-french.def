@@ -54,6 +54,28 @@
 %% See coppe-lang-spanish.def for the structure. Institutional names
 %% remain Portuguese; only document-content strings translate.
 \ProvidesFile{coppe-lang-french.def}[2026/09/09 v4.1 CoppeTeX french class strings]
+%% --- A folha de resumo ------------------------------------------------------
+%% Tudo o que a classe escreve numa folha de resumo sai no idioma daquela folha.
+%% A frase de abertura e montada de pedacos porque a concordancia muda de idioma
+%% para idioma; ver o comentario no coppe.dtx, na tabela de portugues e ingles.
+%%
+%% O NOME do Programa nao entra aqui: a COPPE tem nome oficial para cada Programa
+%% em portugues e em ingles, e so. Numa folha neste idioma vai o nome em
+%% portugues, que e o nome proprio da unidade.
+\copperdefstring{french}{abstractname}     {R\'esum\'e}
+\copperdefstring{french}{abstractofmale}   {du}
+\copperdefstring{french}{abstractoffemale} {de la}
+\copperdefstring{french}{presentedmale}    {pr\'esent\'e}
+\copperdefstring{french}{presentedfemale}  {pr\'esent\'ee}
+\copperdefstring{french}{abstracttail}{\`a la COPPE/UFRJ comme partie des
+  exigences requises pour l'obtention du grade de}
+\copperdefstring{french}{sciencename}      {en Sciences}
+\copperdefstring{french}{doctypemsc}  {M\'emoire}
+\copperdefstring{french}{doctypedsc}  {Th\`ese}
+\copperdefstring{french}{doctypeexam} {Examen de Qualification}
+\copperdefstring{french}{doctypesem}  {S\'eminaire}
+\copperdefstring{french}{degnamemsc}  {Ma\^itre}
+\copperdefstring{french}{degnamedsc}  {Docteur}
 \copperdefstring{french}{appendix}        {Annexe}
 \copperdefstring{french}{annex}           {Annexe}
 \copperdefstring{french}{frame}           {Encadr\'e}

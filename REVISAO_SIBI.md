@@ -281,6 +281,16 @@ Prioridade: **P0** = bloqueia o PR / a conformidade a partir de agosto de 2026 �
       classe monta a referência sozinha, com dados que a folha de rosto já
       exige, deixá-la de fora exigiria do aluno uma decisão que ele não tem
       como tomar melhor que a norma.
+- [x] **S-4** *(não estava nesta lista; achado em 2026-09-11, ao escrever a
+      suíte de regressão)* **Cada folha de resumo inteira no idioma do seu
+      resumo.** O texto que a classe escreve na folha estava preso ao português
+      na folha do `abstract` e ao inglês na do `foreignabstract`, quaisquer que
+      fossem os idiomas do trabalho. Numa tese em inglês cada folha saía com
+      metade de cada idioma; numa tese em espanhol — idioma que o art. 57 da
+      Res. CEPG 302/2024 admite — duas folhas saíam com o mesmo cabeçalho em
+      português e não havia cabeçalho em espanhol em lugar nenhum. A revisão
+      contra o Manual não pegou isto porque foi feita sobre um documento em
+      português, onde os dois idiomas coincidem e o defeito não aparece.
 - [ ] **S-3 (P2)** Avisar no log quando o resumo ficar fora da faixa de
       150–500 palavras.
 

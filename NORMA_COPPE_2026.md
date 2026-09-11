@@ -166,6 +166,15 @@ Cada resumo ocupa uma página própria, na ordem acima, e encerra com as
 palavras-chave **no seu próprio idioma**, separadas por ponto e vírgula, como
 determina o 3.1.2.1.4.
 
+**A página inteira fica no idioma do seu resumo**: a frase de abertura, o
+título, o mês e os rótulos de orientação e de Programa. Uma página com metade do
+texto em um idioma e metade em outro não serve a nenhum leitor. A única exceção é
+o **nome do Programa**, que é nome próprio: a COPPE o tem em português e em
+inglês, e nos demais idiomas vai o nome em português, na mesma regra da Seção 4.
+
+Isso vale só para as páginas de resumo. A capa, a folha de rosto e a folha de
+aprovação são identidade institucional e continuam em português.
+
 ## 8. Referência no alto do resumo — *Escolha*
 
 O item 3.1.2.1.4 diz que "sugere-se que o resumo venha antecedido por uma

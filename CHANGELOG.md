@@ -90,6 +90,29 @@ to the CPGP is [`PROPOSTA_CPGP.md`](./PROPOSTA_CPGP.md).
   not deposited. `resumosemreferencia` turns it off for an abstract already at
   the 500-word ceiling, which the three added lines could push onto a second
   sheet.
+- **Each abstract sheet is now entirely in its own language.** Everything the
+  *class* writes on it — the opening sentence, the title, the month, the
+  advisor and department labels, the keywords — follows the language of the
+  abstract below it. It used to be pinned to Portuguese on the `abstract` page
+  and to English on the `foreignabstract` page, whatever the languages of the
+  work, so an English-written thesis came out with its English text under
+  "Resumo da Tese apresentada à COPPE/UFRJ", the Portuguese title, "Maio/2026"
+  and "Orientador:", and its Portuguese text under the English heading. A
+  Spanish-written thesis was worse: with only two shapes available, the Spanish
+  abstract and the Portuguese one came out under the **same** Portuguese
+  heading, and no Spanish heading existed anywhere — in a language art. 57 of
+  CEPG Res. 302/2024 admits for writing a thesis.
+
+  The one thing that does not translate is the **Programa's name**: COPPE has an
+  official name for each Programa in Portuguese and in English, and no other.
+  On a Spanish, French or Italian sheet the Portuguese name is used, as a proper
+  noun — the same rule as section 4 of the COPPE norm. The cover, the title page
+  and the approval sheet are institutional identity and stay in Portuguese.
+
+  Portuguese output is unchanged, character for character, which is how the
+  change was verified. Guarded by `tests/regressivo/r25`, which compiles a work
+  in each main language and checks, sheet by sheet, that every piece is in the
+  right language *and* that no piece of another language is there.
 - **`mscsem` — the Seminário de Mestrado**, a fifth work type. Some Programas
   require it — Mechanical Engineering among them — and it is technically *not* a
   qualifying exam: they are different moments of the course, with different
