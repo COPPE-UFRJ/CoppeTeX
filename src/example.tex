@@ -646,7 +646,7 @@ Colocar a tabela ou imagem dentro de \verb|figure|/\verb|table| (um \emph{float}
 
   Os comandos do \texttt{natbib} (\verb|\citet|, \verb|\citep|) continuam disponíveis porque a classe carrega o BibLaTeX com a opção \texttt{natbib=true}; assim, você pode usar tanto os comandos nativos do BibLaTeX (\verb|\autocite|, \verb|\textcite|) quanto os do \texttt{natbib}. As Tabelas~\ref{tab:citation} e~\ref{tab:citation1} apresentam \verb|\cite| e \verb|\citet| para vários tipos de obra contidos na norma da CPGP (a primeira com regras manuais, a segunda com \texttt{booktabs}), no estilo numérico. Tirando o parâmetro opcional numérico da classe, as citações passam de numéricas para autor-data.
 
-  \begin{table}[h]
+  \begin{table}[htb]
   \caption{Exemplos de cita{\c c}\~oes utilizando o comando padr\~ao
     \texttt{\textbackslash cite} do \LaTeX\ e
     o comando \texttt{\textbackslash citep},
@@ -674,7 +674,7 @@ Colocar a tabela ou imagem dentro de \verb|figure|/\verb|table| (um \emph{float}
   \fonte{Elabora\c{c}\~ao pr\'opria.}
   \end{table}
 
- \begin{table}[h]
+ \begin{table}[htb]
   \caption{Exemplos de cita{\c c}\~oes utilizando o comando padr\~ao
     \texttt{\textbackslash cite} do \LaTeX\ e
     o comando \texttt{\textbackslash citet},

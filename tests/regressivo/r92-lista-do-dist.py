@@ -65,6 +65,19 @@ else:
         if '"%s"' % preciso not in lista:
             problemas.append("PARA_DIST nao leva %s" % preciso)
 
+    # E, o que pegou de verdade: toda base de referencias que um exemplo da
+    # entrega DECLARA tem de estar na lista. A tipos.bib nao estava, e o
+    # example.tex a declara -- quem baixava a entrega recebia um PDF com as
+    # citacoes em branco. Perguntar ao proprio .tex e melhor que manter uma
+    # segunda lista aqui, que envelheceria do mesmo jeito.
+    for exemplo in ("example", "example_en", "example_es"):
+        fonte = ler("src/%s.tex" % exemplo)
+        for base in re.findall(r"\\addbibresource\{([^}]+)\}", fonte):
+            if '"%s"' % base not in lista:
+                problemas.append(
+                    "PARA_DIST nao leva %s, que o %s.tex declara em "
+                    "\\addbibresource" % (base, exemplo))
+
 # 2. Nem o doall.bat nem o Makefile podem ter voltado a ter lista propria.
 doall = ler("src/doall.bat")
 if re.search(r"(?im)^\s*copy\b", doall):

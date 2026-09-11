@@ -1,0 +1,871 @@
+% !TeX TS-program = lualatex
+% !TeX encoding = UTF-8
+% !TeX spellcheck = pt_BR
+% !BIB TS-program = biber
+%% manual.tex
+%%
+%% Manual de elaboração gráfica de teses e dissertações COPPE/UFRJ, escrito com
+%% a própria classe coppe e seus estilos BibLaTeX/biber.
+%%
+%% NÃO confundir com coppe.pdf: aquele é o manual da CLASSE, que ensina os
+%% comandos; este é o manual da NORMA, que diz como o trabalho tem de sair. Este
+%% documento é, ele mesmo, a demonstração: ele obedece a tudo o que enuncia.
+%%
+%% Conforme o Manual para elaboração e normalização de trabalhos acadêmicos,
+%% UFRJ/SiBI, 9.ª ed. rev. (2026), e a Norma para a Elaboração Gráfica de Teses
+%% e Dissertações da COPPE/UFRJ.
+%%
+%% Compilação:  pdflatex manual ; biber manual ;
+%%              makeindex -s coppe.ist -o manual.lab manual.abx ;
+%%              makeindex -s coppe.ist -o manual.los manual.syx ;
+%%              pdflatex manual ; pdflatex manual
+%% Ou, mais curto:  latexmk -pdf manual
+\documentclass[dsc]{coppe}
+
+%% A classe já carrega booktabs e hyperref. Carregá-los de novo aqui era o que
+%% este documento fazia, e é exatamente o que o manual da classe diz para não
+%% fazer: a ordem entre hyperref, setspace e biblatex é delicada, e um segundo
+%% \usepackage{hyperref} com outras opções é erro de compilação esperando para
+%% acontecer.
+
+\addbibresource{example.bib}
+
+\makelosymbols
+\makeloabbreviations
+
+\newsigla{coppe}{COPPE}{Instituto Alberto Luiz Coimbra de Pós-Graduação e
+  Pesquisa de Engenharia}
+\newsigla{ufrj}{UFRJ}{Universidade Federal do Rio de Janeiro}
+\newsigla{abnt}{ABNT}{Associação Brasileira de Normas Técnicas}
+\newsigla{sibi}{SiBI}{Sistema de Bibliotecas e Informação}
+\newsigla{capes}{CAPES}{Coordenação de Aperfeiçoamento de Pessoal de Nível
+  Superior}
+\newsigla{cepg}{CEPG}{Conselho de Ensino para Graduados}
+\newsigla{cpgp}{CPGP}{Comissão de Programas de Pós-Graduação e Pesquisa de
+  Engenharia}
+
+\begin{document}
+
+  \title{Manual de elaboração gráfica de teses e dissertações}
+  \subtitle{a norma da COPPE/UFRJ, demonstrada por um documento que a obedece}
+  \foreigntitle{Manual for the graphic preparation of theses and dissertations}
+  \foreignsubtitle{the COPPE/UFRJ norm, demonstrated by a document that obeys it}
+
+  \author{Comissão de Programas de}{Pós-Graduação e Pesquisa de Engenharia}
+
+  \advisor{Geraldo}{Xexéo}{D.Sc.}{UFRJ}
+  \examiner{Vicente H. F. Batista}{D.Sc.}{UFRJ}
+  \examiner{George O. Ainsworth Jr.}{D.Sc.}{UFRJ}
+  \examiner{Eduardo Mangeli}{D.Sc.}{UFRJ}
+
+  \department{PESC}
+  \date{09}{2026}
+
+  \areaconcentracao{Engenharia de Sistemas e Computação}
+  \linhapesquisa{Engenharia de Dados e Conhecimento}
+  \tipoproducao{bibliografica}
+  \projetovinculado{nao}
+  \agenciafomento{Conselho Nacional de Desenvolvimento Científico e
+    Tecnológico}{CNPq}
+
+  \keyword{Normalização}
+  \keyword{Trabalhos acadêmicos}
+  \keyword{LaTeX}
+  \foreignkeyword{Standardisation}
+  \foreignkeyword{Academic works}
+  \foreignkeyword{LaTeX}
+
+  \maketitle
+
+  \frontmatter
+
+  \dedication{A quem vai depositar a tese na semana que vem.}
+
+  \chapter*{Agradecimentos}
+
+  Este manual é devedor do trabalho do \sigla{sibi} da \sigla{ufrj}, que mantém e
+  revisa o \emph{Manual para elaboração e normalização de trabalhos acadêmicos},
+  e dos alunos da \sigla{coppe} que, ao longo dos anos, relataram cada
+  divergência entre a norma escrita e o que a classe produzia. Boa parte do que
+  está correto aqui foi corrigido por causa de um relato de aluno.
+
+  \begin{abstract}
+    \label{norma:resumo}%
+    Este manual reúne as regras de apresentação gráfica de teses, dissertações e
+    exames de qualificação defendidos na \sigla{coppe} da \sigla{ufrj}, na forma
+    em que elas valem depois da 9.ª edição revista (2026) do \emph{Manual para
+    elaboração e normalização de trabalhos acadêmicos} do \sigla{sibi}. Trata do
+    formato da página, da estrutura do trabalho, das ilustrações, das citações,
+    das referências, das siglas e dos elementos pré e pós-textuais. Cada regra é
+    enunciada e, em seguida, demonstrada: este documento foi composto com a
+    classe \CoppeTeX\ e obedece a tudo o que enuncia, de modo que a sua margem, a
+    sua paginação, as suas legendas e as suas referências servem de exemplo
+    verificável. Registram-se também as três decisões institucionais que a edição
+    de 2026 absorveu e que mudaram a forma do trabalho: o depósito exclusivamente
+    digital, os idiomas de redação admitidos e a folha adicional de coleta de
+    dados.
+  \end{abstract}
+
+  \begin{foreignabstract}
+    This manual collects the rules for the graphic presentation of theses,
+    dissertations and qualifying exams defended at COPPE/UFRJ, as they stand
+    after the revised 9th edition (2026) of the UFRJ Library System's manual for
+    the preparation and standardisation of academic works. It covers page
+    format, document structure, illustrations, citations, references, acronyms
+    and the pre- and post-textual elements. Every rule is stated and then
+    demonstrated: this document was typeset with the CoppeTeX class and obeys
+    everything it states, so that its own margins, pagination, captions and
+    references serve as a verifiable example. It also records the three
+    institutional decisions absorbed by the 2026 edition that changed the shape
+    of the work: digital-only deposit, the admitted writing languages, and the
+    additional data-collection sheet.
+  \end{foreignabstract}
+
+  \listoffigures
+  \listoftables
+  \listofquadros
+  \listofprogramas
+  \listofalgorithms
+  \printloabbreviations
+  \printlosymbols
+  \tableofcontents
+
+  \mainmatter
+
+  \chapter{Introdução}
+
+  Este manual estabelece as regras de apresentação gráfica de teses,
+  dissertações e exames de qualificação defendidos na \sigla{coppe} da
+  \sigla{ufrj}, e as demonstra usando a classe \CoppeTeX.
+
+  Ele está alinhado ao \emph{Manual para elaboração e normalização de trabalhos
+  acadêmicos} do \sigla{sibi}, 9.ª edição revista, de 2026, que é a norma
+  vigente na \sigla{ufrj}, e às normas da \sigla{abnt} que aquele manual aplica:
+  \mbox{NBR~14724} (estrutura do trabalho), \mbox{NBR~6027} (sumário),
+  \mbox{NBR~6024} (numeração progressiva), \mbox{NBR~10520:2023} (citações) e
+  \mbox{NBR~6023} (referências).
+
+  \section{A quem se destina}
+
+  A estudantes de mestrado e doutorado, a orientadores e à secretaria acadêmica.
+
+  O documento é, ele mesmo, um trabalho válido segundo as normas que descreve.
+  Sua margem, sua paginação, seus títulos, suas legendas e suas referências
+  seguem exatamente as regras enunciadas nos capítulos seguintes. Quando este
+  manual disser que a legenda fica no topo, basta olhar para a legenda mais
+  próxima para conferir.
+
+  \section{O que mudou, e por quê}
+
+  A edição de 2026 do manual do \sigla{sibi} não foi uma revisão de redação.
+  Ela absorveu três decisões institucionais, e cada uma delas mudou a forma do
+  trabalho:
+
+  \begin{alineas}
+    \item a Resolução \sigla{cepg} n.º 246/2023 acabou com a via impressa: a
+      entrega passou a ser exclusivamente digital. Daí decorrem o fim das
+      margens espelhadas, o fim das linhas de assinatura na folha de aprovação e
+      a exigência de arquivo em PDF/A;
+    \item o art.\ 57 da Resolução \sigla{cepg} n.º 302/2024 fixou os idiomas em
+      que o trabalho pode ser redigido: português, inglês ou espanhol;
+    \item a coleta de dados da \sigla{capes} passou a exigir uma folha adicional,
+      obrigatória desde agosto de 2026, logo após a folha de rosto.
+  \end{alineas}
+
+  Quem escreveu a tese sob a norma anterior e vai depositar agora precisa
+  conferir três coisas em particular: as margens, que deixaram de ser
+  espelhadas; a folha adicional, que não existia; e o formato do arquivo, que
+  agora é PDF/A.
+
+  \section{Como usar a classe \CoppeTeX}
+
+  Basta declarar a classe e o tipo do trabalho:
+
+\begin{verbatim}
+\documentclass[dsc]{coppe}
+\end{verbatim}
+
+  O tipo é \verb|dsc| para tese de doutorado, \verb|msc| para dissertação de
+  mestrado, \verb|dscexam| e \verb|mscexam| para os exames de qualificação, e
+  \verb|mscsem| para o seminário de mestrado, que é requisito obrigatório de
+  alguns Programas e não se confunde com a qualificação.
+
+  As opções mais usadas são \verb|numbers|, que troca as citações autor-data
+  pelo sistema numérico; \verb|english| ou \verb|spanish|, para o idioma de
+  redação; \verb|pdfa|, que produz o arquivo no formato exigido para depósito;
+  e \verb|comserifa|, para quem prefere a fonte serifada à sem serifa que a
+  classe usa por padrão.
+
+  A bibliografia usa BibLaTeX com o motor \texttt{biber}, e não BibTeX. Declare
+  a base no preâmbulo com \verb|\addbibresource{arquivo.bib}| e imprima a lista
+  com \verb|\printbibliography|. O capítulo~\ref{cap:referencias} volta ao
+  assunto.
+
+  O manual da classe, que descreve todos os comandos um a um, é o
+  \texttt{coppe.pdf}, distribuído junto. Este aqui descreve a norma; aquele
+  descreve a ferramenta.
+
+  \chapter{Formato gráfico}
+
+  \section{Papel, fonte e cor}
+
+  O trabalho usa papel \textbf{A4} --- 21{,}0\,cm por 29{,}7\,cm --- em
+  orientação retrato.
+
+  O texto sai em \textbf{corpo 12} e em \textbf{cor preta}. Outras cores só são
+  admitidas nas ilustrações, quando a cor for parte da informação; um gráfico em
+  que as séries só se distinguem pela cor perde o sentido em impressão
+  monocromática, e por isso é boa prática distingui-las também por traço ou
+  marcador.
+
+  A norma \textbf{não prescreve família de fonte}. A 2.2(b) fixa a cor, o corpo
+  e o corpo menor de quatro itens, e cala sobre a família. A escolha é do autor.
+  A classe compõe sem serifa por padrão, que é como o próprio manual do
+  \sigla{sibi} está composto, e a opção \verb|comserifa| volta à serifada.
+
+  \section{Margens}
+
+  As margens são de \textbf{3\,cm à esquerda e no topo} e \textbf{2\,cm à
+  direita e embaixo}, em todas as folhas.
+
+  \textbf{Não há mais margem de verso.} Até a edição anterior, as margens eram
+  espelhadas, porque o trabalho era impresso em frente e verso. Com a entrega
+  digital, a folha é uma só e a margem esquerda é sempre a interna.
+
+  Quem ainda vai imprimir e encadernar pode pedir o formato antigo com a opção
+  de classe \verb|twoside|, mas o arquivo depositado é o de folha única.
+
+  \section{Espaçamento}
+
+  O texto usa entrelinhas de \textbf{1,5}.
+
+  Saem em \textbf{espaço simples} e em corpo menor: as citações longas, as notas
+  de rodapé\footnote{Como esta. As notas ficam em corpo menor, espaço simples, e
+  separadas do texto por um filete de 5\,cm a partir da margem esquerda.}, as
+  legendas das ilustrações, as fontes, a paginação, as referências, e os dados
+  da folha de rosto e da ficha catalográfica.
+
+  Entre uma referência e a seguinte, na lista de referências, vai uma linha em
+  branco.
+
+  \section{Paginação}\label{sec:paginacao}
+
+  Esta é a regra que mais causa erro, e vale enunciá-la inteira, porque são
+  quatro coisas distintas:
+
+  \begin{alineas}
+    \item todas as folhas, \textbf{a partir da folha de rosto}, são contadas
+      sequencialmente. A capa não é contada;
+    \item a \textbf{folha adicional}, que traz a ficha catalográfica, não pode
+      ser contada nem numerada;
+    \item o número só \textbf{aparece} a partir da primeira folha da parte
+      textual, ou seja, da primeira folha do primeiro capítulo;
+    \item o número fica no canto superior direito, a \textbf{2\,cm da borda
+      superior}, com o último algarismo a \textbf{2\,cm da borda direita}, em
+      algarismos arábicos e em corpo menor.
+  \end{alineas}
+
+  Apêndices e anexos continuam a numeração do texto principal, sem interrupção.
+  Num trabalho em mais de um volume, a sequência é única do primeiro ao último
+  volume.
+
+  A consequência prática: quando a introdução começa, o número que aparece não é
+  1. É a posição daquela folha na contagem que começou na folha de rosto. Num
+  trabalho com resumo, abstract e cinco listas, a introdução costuma abrir por
+  volta da folha 15.
+
+  Na classe, quem liga e desliga tudo isso são os comandos \verb|\frontmatter| e
+  \verb|\mainmatter|. Esquecê-los é o modo mais comum de errar a paginação sem
+  perceber.
+
+  \section{Títulos de seção}\label{sec:titulos}
+
+  A 2.6 pede que os títulos das seções sejam destacados \textbf{gradativamente},
+  do capítulo ao quinto nível, usando negrito, itálico, caixa alta e versal.
+
+  O manual dá um exemplo e não fecha uma tabela. A leitura de referência adotada
+  pela \CoppeTeX\ está no \autoref{qua:titulos}, e é o que a classe implementa.
+
+  \begin{quadro}[ht]
+    \centering
+    \caption{Destaque gradativo dos títulos de seção}
+    \label{qua:titulos}
+    \begin{tabular}{|l|l|}
+      \hline
+      \textbf{Nível} & \textbf{Forma} \\
+      \hline
+      Capítulo (primário) & todas maiúsculas, negrito \\
+      \hline
+      Seção (secundário) & todas maiúsculas, sem negrito \\
+      \hline
+      Subseção (terciário) & iniciais maiúsculas, negrito \\
+      \hline
+      Subsubseção (quaternário) & iniciais maiúsculas, negrito e itálico \\
+      \hline
+      Quinto nível & itálico, só a primeira palavra em maiúscula \\
+      \hline
+    \end{tabular}
+    \fonte{Elaboração própria, a partir do §2.6 do manual do SiBI.}
+  \end{quadro}
+
+  Os títulos \textbf{sem} indicativo numérico --- agradecimentos, listas, resumo,
+  sumário, referências, glossário, apêndices, anexos e índice --- são
+  centralizados. Os numerados são alinhados à esquerda.
+
+  A numeração progressiva segue a \mbox{NBR~6024}: algarismos arábicos separados
+  por ponto, sem ponto no fim, e a recomendação é não passar do quinto nível.
+
+  \chapter{Estrutura do trabalho}
+
+  A estrutura segue a \mbox{NBR~14724}, na ordem do \autoref{qua:estrutura}.
+
+  \begin{quadro}[ht]
+    \centering
+    \caption{Ordem dos elementos do trabalho}
+    \label{qua:estrutura}
+    \begin{tabular}{|l|l|l|}
+      \hline
+      \textbf{Parte} & \textbf{Elemento} & \textbf{Obrigatório?} \\
+      \hline
+      Pré-textual & Capa & sim \\
+      \hline
+      Pré-textual & Folha de rosto & sim \\
+      \hline
+      Pré-textual & Folha adicional (Coleta CAPES e ficha) & sim \\
+      \hline
+      Pré-textual & Errata & se houver \\
+      \hline
+      Pré-textual & Folha de aprovação & sim \\
+      \hline
+      Pré-textual & Dedicatória, agradecimentos, epígrafe & não \\
+      \hline
+      Pré-textual & Resumo no idioma do trabalho & sim \\
+      \hline
+      Pré-textual & Resumo em idioma estrangeiro & sim \\
+      \hline
+      Pré-textual & Listas de ilustrações, tabelas e quadros & se houver \\
+      \hline
+      Pré-textual & Listas de abreviaturas, siglas e símbolos & se houver \\
+      \hline
+      Pré-textual & Sumário & sim \\
+      \hline
+      Textual & Introdução, desenvolvimento, conclusão & sim \\
+      \hline
+      Pós-textual & Referências & sim \\
+      \hline
+      Pós-textual & Glossário, apêndices, anexos, índice & não \\
+      \hline
+    \end{tabular}
+    \fonte{Elaboração própria, a partir da NBR 14724 e do manual do SiBI.}
+  \end{quadro}
+
+  \section{A folha adicional}
+
+  É o elemento novo, e o que mais surpreende quem escreveu a tese antes de 2026.
+
+  Vem \textbf{logo depois da folha de rosto}, é preenchida pelo Programa, e traz
+  duas coisas: os campos da coleta de dados da \sigla{capes} --- tipo de produção
+  intelectual, projeto de pesquisa vinculado, nome do projeto, área de
+  concentração e agências de fomento --- e, abaixo deles, a ficha catalográfica.
+
+  Ela \textbf{não é contada nem numerada}, como diz a \autoref{sec:paginacao}.
+
+  A ficha catalográfica não é composta pelo autor nem pela classe: vem do gerador
+  do \sigla{sibi} ou da biblioteca do Programa, e entra no trabalho como um PDF.
+
+  Os exames de qualificação e o seminário de mestrado não levam folha adicional,
+  nem ficha, nem a referência no alto dos resumos: eles não são depositados na
+  biblioteca, e as três coisas só cabem a trabalho que entra no acervo.
+
+  \section{A folha de aprovação}
+
+  Traz, na ordem: o autor, o título por extenso, o texto da natureza do trabalho,
+  a data de aprovação e a banca examinadora, com a titulação e a instituição de
+  cada membro.
+
+  \textbf{Não há mais linhas de assinatura.} Elas existiam para a via impressa.
+  Com o depósito digital, a aprovação é registrada por outros meios, e a folha
+  apenas lista quem examinou.
+
+  A folha lista os \textbf{examinadores}. Nos Programas em que o orientador
+  integra a banca, ele entra na lista também, à frente dos examinadores, como
+  presidência; na classe, isso é a opção \verb|orientadorexamina|.
+
+  \section{Os resumos}
+
+  São dois, no mínimo: um no idioma do trabalho e um em idioma estrangeiro. Cada
+  um cabe em \textbf{uma folha}, em espaço 1,5, num parágrafo só, de
+  \textbf{150 a 500 palavras}, de preferência na terceira pessoa do singular e
+  com o verbo na voz ativa.
+
+  Cada resumo começa pela \textbf{referência do próprio trabalho} e termina com
+  as \textbf{palavras-chave}.
+
+  A referência é a mesma que apareceria numa bibliografia que citasse a tese:
+
+  \begin{quote}
+    \singlespacing\small
+    SOBRENOME, Nome. Título: subtítulo. Rio de Janeiro, 2026. Tese (Doutorado em
+    Engenharia de Sistemas e Computação) --- Instituto Alberto Luiz Coimbra de
+    Pós-Graduação e Pesquisa de Engenharia, Universidade Federal do Rio de
+    Janeiro, Rio de Janeiro, 2026.
+  \end{quote}
+
+  Ela é a mesma nas duas folhas e fica sempre em português, porque uma
+  referência descreve um documento e não se traduz. Só o título acompanha o
+  trabalho: uma tese escrita em inglês é referenciada pelo título em inglês.
+  Veja a folha de resumo deste manual, na página~\pageref{norma:resumo}, e a
+  do exemplo principal.
+
+  Na classe, você não escreve nada: ela monta a referência com o que a folha de
+  rosto já exige. A opção \verb|resumosemreferencia| a retira, e serve a quem
+  tem um resumo no limite das 500 palavras e não quer empurrá-lo para uma
+  segunda folha.
+
+  Num trabalho redigido em espanhol, são \textbf{três}: o espanhol, o inglês e um
+  em português, para a banca da \sigla{ufrj}.
+
+  \section{O formato do arquivo}
+
+  O arquivo depositado é \textbf{PDF/A}, que é o formato de PDF pensado para
+  preservação de longo prazo: fontes embutidas, sem criptografia, sem
+  dependência de recurso externo.
+
+  Na classe, é a opção \verb|pdfa|. Ligue-a ao depositar. Ela não é o padrão
+  porque as restrições do formato podem tropeçar num documento que carregue
+  imagens ou pacotes arbitrários, e é melhor descobrir isso no momento de
+  depositar do que ter a compilação quebrada durante toda a escrita.
+
+  \chapter{Ilustrações, tabelas e quadros}
+
+  \section{A regra}
+
+  Toda ilustração tem a \textbf{legenda no topo} --- a palavra designativa, o
+  número em algarismos arábicos, um travessão e o título --- e a \textbf{fonte
+  logo abaixo}, obrigatória mesmo quando a ilustração é de elaboração própria.
+
+  A fonte é obrigatória porque ela responde a uma pergunta que o leitor tem
+  direito de fazer: de onde veio este dado. ``Elaboração própria'' é uma resposta
+  legítima; a ausência de resposta não é.
+
+  Na \CoppeTeX, a fonte é dada por \verb|\source{...}|, ou \verb|\fonte{...}|,
+  que são o mesmo comando. Ele não numera nem avança contadores, e não entra em
+  lista nenhuma.
+
+  \section{Figuras}
+
+  Vale para gráfico, desenho, esquema, diagrama, fluxograma, fotografia, mapa,
+  planta, retrato e o que mais houver. A \autoref{fig:exemplo} mostra a forma.
+
+  \begin{figure}[ht]
+    \centering
+    \caption{Exemplo de figura com legenda no topo e fonte abaixo}
+    \label{fig:exemplo}
+    \includegraphics[width=0.35\textwidth]{coppe-logo}
+    \fonte{COPPE/UFRJ.}
+  \end{figure}
+
+  Prefira formato vetorial --- PDF --- para desenho, gráfico e diagrama: ele não
+  perde qualidade na ampliação e ocupa menos espaço. PNG e JPEG só para imagem
+  que já nasceu em pixels, como fotografia ou captura de tela.
+
+  \section{Tabelas e quadros}
+
+  A diferença entre os dois não é de conteúdo, é de \textbf{delimitação}, e a
+  norma é explícita.
+
+  A \textbf{tabela} apresenta dados, em geral numéricos, e tem linhas apenas no
+  topo e na base, mais uma separando o cabeçalho. Suas laterais são abertas. É o
+  que mostra a \autoref{tab:exemplo}.
+
+  \begin{table}[ht]
+    \centering
+    \caption{Exemplo de tabela, com linhas só no topo e na base}
+    \label{tab:exemplo}
+    \begin{tabular}{lcc}
+      \toprule
+      Elemento & Legenda & Fonte \\
+      \midrule
+      Figura & topo & abaixo \\
+      Tabela & topo & abaixo \\
+      Quadro & topo & abaixo \\
+      Programa & topo & abaixo \\
+      Algoritmo & topo & abaixo \\
+      \bottomrule
+    \end{tabular}
+    \fonte{Elaboração própria.}
+  \end{table}
+
+  O \textbf{quadro} é fechado por linhas em todas as bordas, e costuma trazer
+  informação textual, não numérica. É o que mostra o \autoref{qua:exemplo} --- e
+  também o \autoref{qua:titulos} e o \autoref{qua:estrutura}, usados nos
+  capítulos anteriores.
+
+  \begin{quadro}[ht]
+    \centering
+    \caption{Exemplo de quadro, fechado em todas as bordas}
+    \label{qua:exemplo}
+    \begin{tabular}{|l|l|}
+      \hline
+      \textbf{Ilustração} & \textbf{Delimitação} \\
+      \hline
+      Tabela & Linhas no topo e na base; laterais abertas. \\
+      \hline
+      Quadro & Linhas em todas as bordas. \\
+      \hline
+    \end{tabular}
+    \fonte{Elaboração própria.}
+  \end{quadro}
+
+  \section{Tabelas que não cabem}
+
+  Uma tabela mais alta que a folha atravessa folhas, e nesse caso o cabeçalho se
+  repete e a legenda aparece uma vez só, na primeira parte; nas seguintes, indica-se
+  a continuação. Uma tabela mais larga que a mancha pode ser girada, ou reduzida,
+  mas não a ponto de o corpo ficar ilegível.
+
+  \section{Criar um tipo de ilustração novo}
+
+  A norma lista os tipos mais comuns e não fecha a lista. Se o seu trabalho tem
+  um tipo que não está lá --- mapas, partituras, fotografias tratadas como
+  categoria própria --- ele pode ter numeração e lista próprias:
+
+\begin{verbatim}
+\newcoppefloat{mapa}{Mapa}{Lista de Mapas}
+\end{verbatim}
+
+  O novo flutuante segue a mesma regra: legenda no topo, fonte abaixo, numeração
+  por capítulo, e uma lista chamada \verb|\listofmapas| para pôr com as demais.
+
+  \chapter{Citações}
+
+  \section{Citar e transcrever}
+
+  Citar é apontar a fonte. Transcrever é copiar as palavras dela. A norma trata
+  as duas coisas de modo diferente, e o corte está em \textbf{três linhas}.
+
+  As citações seguem a \mbox{NBR~10520:2023}. Os nomes aparecem em caixa normal
+  no texto, e o ponto final encerra a frase, fora da citação.
+
+  \section{As duas formas}
+
+  A forma \textbf{narrativa} põe o autor na frase, como em
+  \citet{article-example}, que discute o assunto. A forma \textbf{parentética}
+  põe autor e ano entre parênteses, ao fim da ideia \citep{book-example}.
+
+  Em citação parentética com mais de uma obra, o separador é o ponto e vírgula.
+
+  \section{Transcrição curta}
+
+  Até três linhas, a transcrição fica dentro do parágrafo, entre aspas. O comando
+  \verb|\citacao| dá as aspas no formato do idioma do trabalho, e não as do
+  teclado: \citacao{a forma segue a função}.
+
+  \section{Transcrição longa}
+
+  Mais de três linhas, a transcrição sai do parágrafo, é recuada em quatro
+  centímetros a partir da margem esquerda, composta em corpo menor e em espaço
+  simples, e \textbf{não leva aspas}:
+
+  \begin{longquote}
+    Uma citação com mais de três linhas é recuada em quatro centímetros a partir
+    da margem esquerda, composta em corpo menor e em espaço simples, e não leva
+    aspas. Este parágrafo é ele próprio a demonstração da regra, e é longo o
+    bastante para que o recuo se veja com clareza na folha.
+  \end{longquote}
+
+  Repare que o recuo é de 4\,cm \emph{além} da margem. Como a margem esquerda é
+  de 3\,cm, o texto citado começa a 7\,cm da borda do papel.
+
+  \section{Citação de citação}
+
+  Quando não se teve acesso ao original, mas apenas a uma obra que o cita, usa-se
+  a expressão \emph{apud}, em itálico. Pela \sigla{abnt}, entra na lista de
+  referências \textbf{apenas a obra efetivamente consultada}; a obra original,
+  que não foi lida, é informada no texto e não é referenciada.
+
+  Daí a forma dos comandos: eles recebem o autor e o ano do original, que saem
+  como texto, e a \emph{chave} da obra consultada, que é a que vai para a lista.
+  Na forma narrativa, \citetapud{Drumond}{1953}{article-example}; na
+  parentética, \citepapud[145]{Drumond}{1953}{article-example}.
+
+\begin{verbatim}
+\citetapud{Autor original}{ano}{chave-da-obra-lida}
+\citepapud[pagina]{Autor original}{ano}{chave-da-obra-lida}
+\end{verbatim}
+
+  A norma admite, mas é recurso de último caso: sempre que possível, leia o
+  original e cite-o diretamente.
+
+  \section{Página e tradução}
+
+  A página citada vai junto da citação, e o mesmo lugar recebe a indicação de
+  tradução quando o trecho foi vertido pelo autor do trabalho:
+
+\begin{verbatim}
+\cite[p.~45]{chave}
+\cite[p.~45, tradução nossa]{chave}
+\end{verbatim}
+
+  \chapter{Elaboração das referências}\label{cap:referencias}
+
+  \section{A lista}
+
+  A lista pós-textual chama-se \textbf{Referências}, e não ``Bibliografia''. Ela
+  reúne apenas as obras efetivamente citadas no texto.
+
+  As entradas saem com o sobrenome do autor em caixa alta, em espaço simples
+  interno, com uma linha em branco entre uma entrada e a seguinte. No sistema
+  autor-data, que é o padrão, a lista sai em ordem alfabética; com a opção de
+  classe \verb|numbers|, sai na ordem em que as obras foram citadas.
+
+  \section{Os sistemas de chamada}
+
+  A \mbox{NBR~10520} admite os dois, e a escolha é do Programa ou do orientador.
+  Não misture: trocar de sistema no meio da escrita muda a ordem da lista inteira
+  e invalida qualquer referência que tenha sido escrita à mão no texto.
+
+  \section{Como as referências são produzidas}
+
+  As referências seguem a \mbox{NBR~6023} e são geradas por BibLaTeX com o motor
+  \texttt{biber}. Os tipos de entrada têm nomes em inglês, com sinônimos em
+  português --- \verb|@livro| para \verb|@book|, \verb|titulo| para
+  \verb|title| ---, e cobrem as 34 categorias que a seção 4.2 do manual do
+  \sigla{sibi} enumera: monografia e parte de monografia, correspondência,
+  publicação periódica, artigo de revista e de jornal, evento e trabalho
+  apresentado em evento, patente, legislação, jurisprudência, ato normativo,
+  documento civil, documento audiovisual, partitura, documento iconográfico,
+  documento cartográfico, documento tridimensional, e documento de acesso
+  exclusivo em meio eletrônico.
+
+  Cada uma dessas categorias foi conferida contra o exemplo impresso no próprio
+  manual do \sigla{sibi}.
+
+  \section{Documento em meio eletrônico}
+
+  Toda referência a documento consultado na internet leva o endereço e a
+  \textbf{data de acesso}. É o campo \verb|urldate| da entrada, escrito em
+  formato ISO, e sai como ``Acesso em: 28 ago. 2026''.
+
+  A lista de referências deste manual, a seguir, traz um exemplo de cada tipo
+  usado aqui.
+
+  \nocite{*}
+
+  \chapter{Siglas, abreviaturas e símbolos}
+
+  \section{A regra da primeira ocorrência}
+
+  A 2.8 do manual é direta: quando a sigla aparece pela primeira vez no texto,
+  ela vem precedida da forma completa, com a sigla entre parênteses. Nas demais
+  ocorrências, só a sigla.
+
+  Cumprir isso à mão, num trabalho com trinta siglas, é garantir que uma vai
+  escapar --- em geral porque um capítulo mudou de lugar durante a revisão e a
+  primeira ocorrência passou a ser outra.
+
+  Na \CoppeTeX, declara-se a sigla uma vez, no preâmbulo, e usa-se sempre o mesmo
+  comando:
+
+\begin{verbatim}
+\newsigla{ufrj}{UFRJ}{Universidade Federal do Rio de Janeiro}
+...
+A \sigla{ufrj} mantem ...     % primeira vez: forma completa (UFRJ)
+Na \sigla{ufrj}, o programa ...  % depois: so a sigla
+\end{verbatim}
+
+  A forma \verb|\sigla*{chave}| força a forma completa mesmo depois da primeira
+  vez, o que é útil na abertura de um capítulo distante.
+
+  Este manual usa o mecanismo: a primeira ocorrência de cada sigla dele saiu por
+  extenso, e as seguintes não.
+
+  \section{As listas}
+
+  A lista de abreviaturas e siglas e a lista de símbolos são relações
+  alfabéticas do termo e do seu \textbf{significado}. Elas \textbf{não levam
+  número de página}: não são listas de ilustrações, e não indicam localização.
+
+  Abreviaturas e símbolos são registrados no ponto do texto em que aparecem, com
+  \verb|\abbrev| e \verb|\symbl|.
+
+  \symbl[A]{$A$}{área de uma figura}
+  \symbl[V]{$V$}{volume de um sólido}
+  \symbl[SIGMA]{$\sum$}{somatório}
+  \abbrev{p.}{página}
+  \abbrev{ed.}{edição}
+  \abbrev{et al.}{e outros}
+
+  \section{Ordem alfabética}
+
+  A ordenação é alfabética. Numa sigla de caixa mista --- \emph{IoT},
+  \emph{eMBB} --- a ordenação automática por código de caractere põe todas as
+  maiúsculas antes de todas as minúsculas, e a sigla cai fora do alfabeto. Para
+  esses casos, informe a chave de ordenação:
+
+\begin{verbatim}
+\abbrev[IOT]{IoT}{Internet das Coisas}
+\end{verbatim}
+
+  \chapter{Listagens de código e algoritmos}
+
+  \section{Programas}
+
+  Um trecho de programa é uma ilustração como as outras: legenda no topo, fonte
+  abaixo, e uma lista própria, obtida com \verb|\listofprogramas|. O
+  \autoref{prog:ex} mostra um exemplo em Python.
+
+  \begin{python}[caption={Olá, COPPE, em Python},label=prog:ex]
+def saudacao(nome):
+    print(f"Olá, {nome}!")
+
+saudacao("COPPE")
+  \end{python}
+  \fonte{Elaboração própria.}
+
+  Há estilos prontos para Python, Java, XML, HTML e Prolog. O \autoref{prog:java}
+  usa o de Java.
+
+  \begin{java}[caption={O mesmo programa em Java},label=prog:java]
+public class Saudacao {
+    public static void main(String[] args) {
+        System.out.println("Olá, COPPE!");
+    }
+}
+  \end{java}
+  \fonte{Elaboração própria.}
+
+  Para uma expressão curta no meio do texto, sem quebrar o parágrafo, use
+  \verb|\pythoninline|, como em \pythoninline{saudacao(nome)}.
+
+  \section{Algoritmos}
+
+  Algoritmos usam o ambiente \verb|algorithm|, com as palavras-chave no idioma do
+  trabalho, e a lista sai com \verb|\listofalgorithms|. O \autoref{alg:ex} é o
+  caso mais simples.
+
+  \begin{algorithm}[H]
+    \caption{Máximo de um vetor}
+    \label{alg:ex}
+    \Dados{vetor $v$ com $n$ elementos}
+    \Resultado{maior elemento $m$}
+    $m \leftarrow v[1]$\;
+    \Para{$i \leftarrow 2$ \Ate{} $n$}{
+      \Se{$v[i] > m$}{$m \leftarrow v[i]$\;}
+    }
+    \Retorna $m$\;
+  \end{algorithm}
+
+  O \autoref{alg:busca} usa a estrutura de repetição condicional, e existe para
+  mostrar que o contador anda e que a lista de algoritmos recebe as duas
+  entradas.
+
+  \begin{algorithm}[H]
+    \caption{Busca sequencial}
+    \label{alg:busca}
+    \Dados{vetor $v$ com $n$ elementos e uma chave $k$}
+    \Resultado{posição de $k$ em $v$, ou zero se $k$ não estiver em $v$}
+    $i \leftarrow 1$\;
+    \Enquanto{$i \leq n$ \textbf{e} $v[i] \neq k$}{
+      $i \leftarrow i + 1$\;
+    }
+    \Se{$i > n$}{\Retorna $0$\;}
+    \Retorna $i$\;
+  \end{algorithm}
+
+  \section{Quando o código é longo demais}
+
+  Um programa de duzentas linhas não cabe no corpo do texto sem atrapalhar a
+  leitura. O lugar dele é o apêndice, e o corpo fica com o trecho que interessa à
+  argumentação.
+
+  \chapter{Conclusão}
+
+  Este manual enunciou as regras de apresentação gráfica da \sigla{coppe}, na
+  forma em que elas valem depois da edição de 2026 do manual do \sigla{sibi}, e
+  as demonstrou no próprio formato: cada regra sobre margem, paginação, legenda,
+  citação e referência pode ser conferida olhando para a folha em que está
+  escrita.
+
+  Três recomendações práticas para quem vai depositar:
+
+  \begin{alineas}
+    \item confira a paginação antes de tudo. É o erro mais comum, o mais fácil de
+      cometer sem perceber e o que a secretaria mais devolve;
+    \item gere a ficha catalográfica com antecedência. Ela vem de fora, depende
+      de terceiros e costuma ser lembrada tarde demais;
+    \item gere o arquivo em PDF/A e abra-o antes de entregar. O formato é
+      exigência, e um arquivo que não abre é um arquivo que não foi entregue.
+  \end{alineas}
+
+  \appendix
+
+  \chapter{Referência rápida de comandos}
+
+  Os comandos da classe \CoppeTeX\ que este manual usou, por assunto. A descrição
+  completa de cada um está no \texttt{coppe.pdf}.
+
+  \begin{alineas}
+    \item identificação: \verb|\title|, \verb|\foreigntitle|, \verb|\subtitle|,
+      \verb|\author|, \verb|\advisor|, \verb|\coadvisor|, \verb|\examiner|,
+      \verb|\department|, \verb|\date|, \verb|\keyword|;
+    \item folha adicional: \verb|\areaconcentracao|, \verb|\linhapesquisa|,
+      \verb|\tipoproducao|, \verb|\projetovinculado|, \verb|\nomeprojeto|,
+      \verb|\agenciafomento|, \verb|\fichacatalografica|;
+    \item estrutura: \verb|\maketitle|, \verb|\frontmatter|, \verb|\mainmatter|,
+      \verb|\backmatter|, \verb|\dedication|, \verb|\appendix|, \verb|\annex|;
+    \item ilustrações: \verb|\source| e \verb|\fonte|, ambiente \verb|quadro|,
+      \verb|\listofquadros|, \verb|\newcoppefloat|;
+    \item siglas e símbolos: \verb|\newsigla|, \verb|\sigla|, \verb|\sigla*|,
+      \verb|\abbrev|, \verb|\symbl|;
+    \item listas: ambiente \verb|alineas|, \verb|\listofprogramas|,
+      \verb|\listofalgorithms|, \verb|\printloabbreviations|,
+      \verb|\printlosymbols|;
+    \item citações: \verb|\citacao|, ambiente \verb|longquote|, \verb|\citet|,
+      \verb|\citep|, \verb|\citetapud|, \verb|\citepapud|,
+      \verb|\printbibliography|.
+  \end{alineas}
+
+  \chapter{Lista de verificação antes do depósito}
+
+  \begin{alineas}
+    \item a folha A4 tem 3\,cm à esquerda e no topo, 2\,cm à direita e embaixo,
+      em todas as folhas;
+    \item o número da folha aparece só a partir do primeiro capítulo, no canto
+      superior direito, a 2\,cm das duas bordas;
+    \item a folha adicional está presente, não numerada, com a ficha
+      catalográfica oficial;
+    \item a folha de aprovação traz a data e a banca com titulação e
+      instituição;
+    \item há dois resumos, cada um em uma folha, cada um começando pela
+      referência do trabalho e terminando com as palavras-chave;
+    \item toda ilustração tem legenda no topo e fonte abaixo;
+    \item as listas pré-textuais vêm antes do sumário;
+    \item as referências estão em ordem, sob o título ``Referências'';
+    \item o arquivo está em PDF/A e abre sem aviso.
+  \end{alineas}
+
+  \annex
+
+  \chapter{Normas de referência}
+
+  \begin{alineas}
+    \item UNIVERSIDADE FEDERAL DO RIO DE JANEIRO. Sistema de Bibliotecas e
+      Informação. \emph{Manual para elaboração e normalização de trabalhos
+      acadêmicos}. 9.\,ed.\ rev.\ Rio de Janeiro: UFRJ/SiBI, 2026;
+    \item COPPE/UFRJ. \emph{Norma para a Elaboração Gráfica de Teses e
+      Dissertações};
+    \item ABNT \mbox{NBR~14724}, estrutura do trabalho acadêmico;
+    \item ABNT \mbox{NBR~6027}, sumário;
+    \item ABNT \mbox{NBR~6024}, numeração progressiva das seções;
+    \item ABNT \mbox{NBR~10520:2023}, citações;
+    \item ABNT \mbox{NBR~6023}, referências;
+    \item Resolução CEPG n.º 246/2023, depósito exclusivamente digital;
+    \item Resolução CEPG n.º 302/2024, art.\ 57, idiomas de redação;
+    \item Resolução CEPG n.º 128/2022, defesas de trabalhos de conclusão.
+  \end{alineas}
+
+  \backmatter
+  \printbibliography
+
+\end{document}

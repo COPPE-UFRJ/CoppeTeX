@@ -15,6 +15,7 @@ Demora mais que os outros: sao tres documentos com biber e duas passadas cada.
 """
 import io
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -57,8 +58,23 @@ try:
             for passo in (["pdflatex", "-interaction=nonstopmode", stem + ".tex"],
                           ["biber", stem],
                           ["pdflatex", "-interaction=nonstopmode", stem + ".tex"]):
-                subprocess.run(passo, cwd=pasta, env=ambiente,
-                               stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+                p = subprocess.run(passo, cwd=pasta, env=ambiente,
+                                   stdout=subprocess.PIPE,
+                                   stderr=subprocess.STDOUT)
+                # O BIBER tem de ser cobrado pelo codigo de saida dele, e nao
+                # pelo do pdflatex. Faltando uma base .bib na entrega, o biber
+                # reclama e sai com erro, mas o pdflatex seguinte compila assim
+                # mesmo e escreve "Output written on": sai um PDF com as
+                # citacoes em branco. Foi exatamente o que aconteceu -- a
+                # tipos.bib ficou de fora de dist/ e este teste aprovou.
+                if passo[0] == "biber" and p.returncode != 0:
+                    saida = p.stdout.decode("utf-8", "replace")
+                    faltou = [l.strip() for l in saida.splitlines()
+                              if "not found" in l or "Cannot find" in l][:2]
+                    problemas.append(
+                        "%s: o biber falhou (exit %d)%s" %
+                        (stem, p.returncode,
+                         " -- " + "; ".join(faltou) if faltou else ""))
             log = os.path.join(pasta, stem + ".log")
             texto = ""
             if os.path.exists(log):
@@ -78,9 +94,19 @@ try:
                 if "not found" not in linha:
                     continue
                 if ("coppe" in linha or "ufrj" in linha
-                        or "latexmkrc" in linha):
+                        or "latexmkrc" in linha or ".bib" in linha):
                     problemas.append("%s: %s" % (stem, linha.strip()[:100]))
                     break
+
+            # Citacao sem resolver e o sintoma de base .bib faltando que CHEGA
+            # ao PDF: sai "[?]" na pagina e a bibliografia vem curta. O pdflatex
+            # devolve zero assim mesmo.
+            citacoes = re.findall(r"Citation [`'\"]([^'\"]+)['\"] on page \S+ undefined",
+                                  texto)
+            if citacoes:
+                problemas.append(
+                    "%s: %d citacao(oes) sem resolver so com o que ha em dist/"
+                    " -- a primeira e `%s'" % (stem, len(citacoes), citacoes[0]))
 finally:
     shutil.rmtree(pasta, ignore_errors=True)
 

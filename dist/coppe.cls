@@ -317,7 +317,13 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
   \if@coppelistastoc\addcontentsline{toc}{chapter}{#1}\fi}
 \newif\if@coppeglosspre \@coppeglossprefalse
 \newcommand\coppe@folio{{\footnotesize\thepage}}
-\fancypagestyle{coppe}{\fancyhf{}\fancyhead[RO,LE]{\coppe@folio}%
+\newcommand\coppe@foliohead{%
+  \if@coppetwoside
+    \fancyhead[RO,LE]{\coppe@folio}%
+  \else
+    \fancyhead[R]{\coppe@folio}%
+  \fi}
+\fancypagestyle{coppe}{\fancyhf{}\coppe@foliohead
   \renewcommand{\headrulewidth}{0pt}}
 \renewcommand{\cleardoublepage}{%
   \clearpage
@@ -327,7 +333,7 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
       \if@twocolumn\hbox{}\newpage\fi
     \fi
   \fi}
-\def\CoppeTeX{{\rm C\kern-.05em{\sc o\kern-.025em p\kern-.025em
+\def\CoppeTeX{{\rmfamily C\kern-.05em{\scshape o\kern-.025em p\kern-.025em
 p\kern-.025em e}}\kern-.08em
 T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \newboolean{maledoc}
@@ -915,7 +921,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \clearpage
   \endgroup
   \if@copperoman
-    \fancypagestyle{plain}{\fancyhf{}\fancyhead[RO,LE]{\coppe@folio}%
+    \fancypagestyle{plain}{\fancyhf{}\coppe@foliohead
       \renewcommand{\headrulewidth}{0pt}}%
     \pagestyle{coppe}%
   \else
@@ -927,7 +933,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \coppe@mainBegin
   \cleardoublepage
   \@mainmattertrue
-  \fancypagestyle{plain}{\fancyhf{}\fancyhead[RO,LE]{\coppe@folio}%
+  \fancypagestyle{plain}{\fancyhf{}\coppe@foliohead
     \renewcommand{\headrulewidth}{0pt}}%
   \pagestyle{coppe}%
   \if@copperoman\pagenumbering{arabic}\fi}
@@ -964,7 +970,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \begin{otherlanguage}{brazilian}%
     \begin{center}
       {\footnotesize\setstretch{1.0}%
-      \textsc{Colof\~ao}\par
+      \textbf{Colof\~ao}\par
       \vspace{0.7em}
       \begin{minipage}{0.75\textwidth}\centering
       Este documento foi composto em \LaTeX{} com \coppefinalengine{}

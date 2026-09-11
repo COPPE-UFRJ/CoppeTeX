@@ -63,10 +63,23 @@ PARA_DIST = [
     "coppe-lang-spanish.def", "coppe-lang-french.def", "coppe-lang-italian.def",
     "coppe.ist", "latexmkrc",
     "coppe-logo.eps", "coppe-logo.pdf", "ufrj-logo.pdf",
-    # Os manuais: o da classe, o guia rapido em ingles e o da NORMA
+    # Os manuais: o da classe, o guia rapido em ingles e o da NORMA, com a
+    # fonte de cada um ao lado.
+    #
+    # Nao ha `coppe.tex': o manual da classe e o proprio coppe.dtx, e quem o
+    # compoe e o coppe.ins. Os dois vao junto para que a entrega baste tambem
+    # para REFAZER o manual e a classe, e nao so para usa-los -- e porque o
+    # coppe.dtx e o unico lugar onde o codigo esta comentado.
     "coppe.pdf", "coppe-quickref.pdf", "manual.pdf",
-    # Um exemplo por idioma admitido para redacao
-    "example.tex", "example.bib", "coppe.bib", "example.pdf",
+    "coppe.dtx", "coppe.ins", "manual.tex",
+    # Um exemplo por idioma admitido para redacao, e as bases que eles citam.
+    #
+    # A tipos.bib nao estava aqui, e o example.tex a declara: quem baixava a
+    # entrega compilava, recebia um PDF com as citacoes em branco e o biber
+    # dizendo "Cannot find 'tipos.bib'". Toda base que um exemplo declarar tem
+    # de estar nesta lista -- tests/regressivo/r92 cobra isso lendo os proprios
+    # \addbibresource dos exemplos, e r93 cobra compilando.
+    "example.tex", "example.bib", "tipos.bib", "coppe.bib", "example.pdf",
     "example_en.tex", "example_en.pdf",
     "example_es.tex", "example_es.pdf",
 ]

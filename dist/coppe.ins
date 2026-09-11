@@ -1,0 +1,182 @@
+%
+% This is file `coppe.ins'.
+%
+% It uses the docstrip utility to generate the `coppe'
+% document class and a sample manuscript `example.tex'
+% from file `coppe.dtx'.
+%
+% Copyright (C) 2011 CoppeTeX Project and any individual authors listed
+% elsewhere in this file.
+% Copyright (C) 2023 CoppeTeX Project and any individual authors listed
+% elsewhere in this file.
+%
+% This program is free software; you can redistribute it and/or modify
+% it under the terms of the GNU General Public License version 3 as
+% published by the Free Software Foundation.
+%
+% This program is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+% GNU General Public License version 3 for more details.
+%
+% You should have received a copy of the GNU General Public License
+% version 3 along with this package (see COPYING file).
+% If not, see <http://www.gnu.org/licenses/>.
+%
+% $URL$
+% $Id$
+%
+% Author(s): Vicente H. F. Batista
+%            George O. Ainsworth Jr.
+%            Geraldo Xexéo
+%            Eduardo Mangeli
+%
+
+\input docstrip
+
+\keepsilent
+\askforoverwritefalse
+
+\declarepreamble\classpreamble
+
+This is the `coppe' document class used for composition of LaTeX
+monographs (master and PhD thesis, and PhD qualifying exams)
+satisfying the requirements of the Coordination of Research and
+Graduate Courses in Engineering at the Federal University of
+Rio de Janeiro.
+
+Copyright (C) 2008 Vicente Helano and George Ainsworth Jr.
+Copyright (C) 2024 Vicente Helano and George Ainsworth Jr. and Geraldo Xexéo and Eduardo Mangeli
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License version 3 as
+published by the Free Software Foundation.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License version 3 for more details.
+
+You should have received a copy of the GNU General Public License
+version 3 along with this package (see COPYING file).
+If not, see <http://www.gnu.org/licenses/>.
+
+Author(s): Vicente Helano,
+           George Ainsworth
+           Geraldo Xexéo
+           Eduardo Mangeli
+
+\endpreamble
+
+\declarepreamble\glossarypreamble
+
+This is the makeindex style for creating ordered glossaries
+when using the `coppe' document class.
+
+Copyright (C) 2008 Vicente Helano and George Ainsworth Jr.
+Copyright (C) 2024 Vicente Helano and George Ainsworth Jr. and Geraldo Xexéo and Eduardo Mangeli
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License version 3 as
+published by the Free Software Foundation.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License version 3 for more details.
+
+You should have received a copy of the GNU General Public License
+version 3 along with this package (see COPYING file).
+If not, see <http://www.gnu.org/licenses/>.
+
+Author(s): Vicente Helano,
+           George Ainsworth
+           Geraldo Xexéo
+           Eduardo Mangeli
+
+\endpreamble
+
+\declarepreamble\examplepreamble
+
+This is a sample monograph which illustrates the use of the `coppe' document
+class and its biblatex/biber bibliography style.
+
+\endpreamble
+
+\declarepreamble\bibpreamble
+
+This is a BibLaTeX/biber bibliographic database for the `coppe' document
+class.  It is generated from coppe.dtx by docstrip; edit the .dtx source,
+not this file.
+
+\endpreamble
+
+\declarepreamble\demopreamble
+
+This is one of the demonstration documents of the `coppe' document class:
+the five main-language demos, the PDF/A build of the full example and the
+side-by-side cover sheet.  It is generated from coppe.dtx by docstrip; edit
+the .dtx source, not this file.
+
+\endpreamble
+
+\postamble
+% end of `coppe' customized files
+\endpostamble
+
+\usedir{tex/latex/coppe}
+\generate{%
+  \usepreamble\glossarypreamble
+  \file{coppe.ist}{\from{coppe.dtx}{glossary}}%
+  \usepreamble\examplepreamble
+  \file{example.tex}{\from{coppe.dtx}{example}}%
+  \usepreamble\bibpreamble
+  \file{example.bib}{\from{coppe.dtx}{examplebib}}%
+  \file{coppe.bib}{\from{coppe.dtx}{coppebib}}%
+  \file{tipos.bib}{\from{coppe.dtx}{tiposbib}}%
+  \usepreamble\classpreamble
+  \file{coppe.cls}{\from{coppe.dtx}{class}}%
+  \file{coppe.dbx}{\from{coppe.dtx}{dbx}}%
+  \file{coppe.bbx}{\from{coppe.dtx}{bbx}}%
+  \file{coppe.cbx}{\from{coppe.dtx}{cbx}}%
+  \file{brazilian-coppe.lbx}{\from{coppe.dtx}{lbxbr}}%
+  \file{english-coppe.lbx}{\from{coppe.dtx}{lbxen}}%
+  \file{spanish-coppe.lbx}{\from{coppe.dtx}{lbxes}}%
+  \file{french-coppe.lbx}{\from{coppe.dtx}{lbxfr}}%
+  \file{italian-coppe.lbx}{\from{coppe.dtx}{lbxit}}%
+  \file{coppe-lang-spanish.def}{\from{coppe.dtx}{langes}}%
+  \file{coppe-lang-french.def}{\from{coppe.dtx}{langfr}}%
+  \file{coppe-lang-italian.def}{\from{coppe.dtx}{langit}}%
+  \file{coppe-numeric.bbx}{\from{coppe.dtx}{numbbx}}%
+  \file{coppe-numeric.cbx}{\from{coppe.dtx}{numcbx}}%
+% Documentos de demonstracao: os cinco idiomas principais, a montagem das
+% capas e a versao PDF/A do exemplo completo.
+  \usepreamble\demopreamble
+  \file{example_pt.tex}{\from{coppe.dtx}{examplept}}%
+  \file{example_en.tex}{\from{coppe.dtx}{exampleen}}%
+  \file{example_es.tex}{\from{coppe.dtx}{examplees}}%
+  \file{example_fr.tex}{\from{coppe.dtx}{examplefr}}%
+  \file{example_it.tex}{\from{coppe.dtx}{exampleit}}%
+  \file{example_pdfa.tex}{\from{coppe.dtx}{examplepdfa}}%
+  \file{covers_5languages.tex}{\from{coppe.dtx}{covers}}%
+% Referencia rapida em ingles: uma tabela com toda opcao, comando e ambiente.
+% O manual (coppe.pdf) e em portugues, porque o leitor dele e o aluno da COPPE;
+% isto e o que serve a quem escreve a tese em ingles ou espanhol, como o art. 57
+% da Resolucao CEPG n. 302/2024 permite.
+  \file{coppe-quickref.tex}{\from{coppe.dtx}{quickref}}%
+% O latexmkrc e Perl e nao pode levar o preambulo em %% que o docstrip
+% acrescenta por padrao, entao o aviso de arquivo gerado vai dentro do proprio
+% modulo, em comentario de Perl.
+%
+% Sai como latexmkrc.tex, e nao latexmkrc, porque o \openout do TeX acrescenta
+% .tex a todo nome sem extensao e recusa nome comecado por ponto: nao ha como
+% pedir a ele um arquivo chamado exatamente "latexmkrc". Quem usa
+% tools/build-check.ps1 nao precisa fazer nada -- ele poe o arquivo no lugar
+% depois de cada geracao. Quem rodar o coppe.ins na mao copia:
+%     copy latexmkrc.tex latexmkrc      (Windows)
+%     cp   latexmkrc.tex latexmkrc      (Unix)
+  \nopreamble
+  \nopostamble
+  \file{latexmkrc.tex}{\from{coppe.dtx}{latexmkrc}}%
+}
+\endbatchfile
