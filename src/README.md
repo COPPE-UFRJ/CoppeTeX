@@ -149,9 +149,15 @@ ferramenta os cita. Estão registrados no
 [issue #79](https://github.com/COPPE-UFRJ/CoppeTeX/issues/79), à espera de quem
 decida se saem ou mudam de pasta.
 
-O `Makefile` e o `doall.bat` são de antes do harness em PowerShell. O `Makefile`
-ainda declara a versão 3.2. Quem trabalha no Windows usa `tools\build-check.ps1`;
-quem trabalha no Unix usa o `coppe.ins` direto.
+O `Makefile` é de antes do harness em PowerShell e ainda declara a versão 3.2;
+quem trabalha no Unix costuma usar o `coppe.ins` direto. O `doall.bat` virou um
+atalho para `..\coppetex.bat --regerar --docs --dist`, porque a lista de arquivos
+que vão para `dist/` estava escrita nele **e** no `Makefile`, e as duas versões
+divergiram. No Windows, o caminho é o painel:
+
+```bat
+..\coppetex.bat
+```
 
 ## Onde fica o resto
 

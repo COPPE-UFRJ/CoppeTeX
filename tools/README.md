@@ -33,6 +33,13 @@ compilar veio do `.dtx`, e não de um arquivo que ficou para trás.
 | `versao.py` | Confere se a versão está sincronizada nos 28 arquivos gerados e nos 6 lugares em prosa, e sobe o segundo ou o terceiro nível. Nunca o primeiro. |
 | `conferir-norma.py` | Lê um PDF pronto e mede, em centímetros, o que a norma fixa: margens, corpo, recuos, ordem das páginas pré-textuais. |
 | `conferir-referencias.py` | Compõe as referências e as compara, uma a uma, com o texto que o Manual imprime. O gabarito está nos comentários `%%` de `../tests/adversativa/referencias-manual.bib`. |
+| `conferir-referencias-cruzadas.py` | Caça `\ref` e `\cite` sem resolver em todos os `.log`. Nada disso aparece no código de saída do `pdflatex`: sai `??` na página e o PDF é gerado assim mesmo. |
+| `conferir-manual.py` | Cobra que todo comando público, todo ambiente e toda opção da classe estejam documentados, e que a tabela "onde ver" do manual ainda bata com o `example.tex`. |
+| `atualizar-onde-ver.py` | Reescreve essa tabela a partir do `example.tex` atual, quando ela envelhece. |
+
+A suíte de regressão tem rodador próprio, em
+[`../tests/regressivo/run-regressivo.py`](../tests/regressivo/README.md). Ele
+não fica aqui porque não é ferramenta de build: é teste, e mora com os testes.
 
 ## Os escopos do `build-check.ps1`
 
@@ -61,7 +68,7 @@ Do mais rápido ao mais completo. Todos começam regenerando a distribuição.
    limpo mudou. Se mudou, alguém editou um derivado à mão e a edição acabou de
    ser perdida — que é o que se quer descobrir antes de publicar, não depois.
 2. **O que é distribuído compila.** A classe, os exemplos, os manuais.
-3. **O que prova que funciona.** A suíte de regressão e os doze documentos
+3. **O que prova que funciona.** As três camadas de teste e os seis documentos
    adversativos, nos dois motores, com todos os PDF/A pelo veraPDF.
 
 Um escopo **pulado conta como reprovação**. Se o veraPDF não estiver instalado,

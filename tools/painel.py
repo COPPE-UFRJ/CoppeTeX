@@ -23,6 +23,15 @@ import subprocess
 import sys
 import threading
 
+# O console do Windows e cp1252 e nao sabe escrever uma seta nem um travessao.
+# Como o painel repassa a saida de programas que escrevem os dois, sem isto ele
+# morre no meio de um build por causa de um caractere de mensagem.
+if hasattr(sys.stdout, "reconfigure"):
+    try:
+        sys.stdout.reconfigure(errors="replace")
+    except (ValueError, OSError):
+        pass
+
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SRC = os.path.join(RAIZ, "src")
 DIST = os.path.join(RAIZ, "dist")
@@ -228,13 +237,16 @@ ACOES = [
 #     velha. `tudo' ja regera por dentro, e por isso vem antes das camadas de
 #     teste -- rodar o regressivo ANTES dele seria testar a classe que estava
 #     em disco, e nao a que acabou de sair do .dtx;
-#   * `conferir' depois de compilar, porque ele le os .log que a compilacao
-#     acabou de escrever;
-#   * `dist' por ultimo, porque dist/ nao pode receber o que ainda nao foi
-#     provado;
-#   * `limpar' depois de dist, senao apaga o que dist ainda nao copiou.
+#   * `dist' depois de compilar, porque dist/ nao pode receber o que ainda nao
+#     foi provado -- e ANTES de `conferir', porque um dos verificadores compara
+#     dist/ com src/ byte a byte. Na ordem contraria ele reprovava uma copia que
+#     o passo seguinte ia fazer, e o painel terminava dizendo "houve falha" com
+#     tudo certo;
+#   * `conferir' por ultimo entre os que leem, porque ele le os .log que a
+#     compilacao acabou de escrever e a copia que o dist acabou de fazer;
+#   * `limpar' no fim de tudo, senao apaga o que ainda nao foi lido nem copiado.
 ORDEM = ["regerar", "tudo", "docs", "testes", "adversativo", "regressivo",
-         "pdfa", "conferir", "dist", "limpar"]
+         "pdfa", "dist", "conferir", "limpar"]
 
 
 def executar(pedidas, versao, saida):

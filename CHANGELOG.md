@@ -129,9 +129,11 @@ to the CPGP is [`PROPOSTA_CPGP.md`](./PROPOSTA_CPGP.md).
   scopes, `tools/watch-build.ps1`, `tools/prova.ps1` (the release proof),
   `tools/mk-adversativa.py`, and `tools/conferir-norma.py`, which measures the
   finished PDF against the Manual in centimetres and in order.
-- **`adversativa/`** (not distributed) — twelve complete documents, four work
-  types × three languages, each exercising everything the class offers at
-  once, compiled under both engines.
+- **`tests/adversativa/`** (not distributed) — six complete documents, four in
+  Portuguese, one per work type, plus one in English and one in Spanish of
+  different types, each exercising everything the class offers at once,
+  compiled under both engines. See *Verification* below for why six and not
+  twelve.
 - **`NORMA_COPPE_2026`** rewritten as a *differences* document against the
   UFRJ Manual, and **`PROPOSTA_CPGP.md`**, the text put to the CPGP for a vote.
 
@@ -201,7 +203,7 @@ to the CPGP is [`PROPOSTA_CPGP.md`](./PROPOSTA_CPGP.md).
 
 ### Bibliography styles checked against the manual's own examples
 
-`adversativa/referencias-manual.bib` carries one entry for **each of the 34
+`tests/adversativa/referencias-manual.bib` carries one entry for **each of the 34
 reference categories of section 4.2** of the manual, with the manual's own
 example data, and the `%%` comment above each entry is the reference **as the
 manual prints it**. `tools/conferir-referencias.py` compares the two. The first
@@ -235,6 +237,17 @@ What that took:
 - Theses in the shape of 4.2.1.1, patents with filing and grant dates,
   legislation with the volume, number and pages of its vehicle, maps without
   the stray colon when there is no publisher.
+
+### Fixed (found while writing the regression suite)
+
+- **The third abstract came out with no title.** On the way out,
+  `foreignabstract` cleared `\local@title`, `\foreign@title`, `\@author` and
+  `\@date` with `\global\let ... \relax` — housekeeping from when it was the
+  last pre-textual sheet. Since v4.0 it is not: `brazilianabstract`, the third
+  abstract of a Spanish-written work, comes after it and sets its title from
+  the macro that had just been erased. A sheet of the deposit was going out
+  titleless, and only in Spanish theses, which are few and had never been read
+  sheet by sheet. Guarded by `tests/regressivo/r23`.
 
 ### Fixed (found by the extended adversarial document)
 

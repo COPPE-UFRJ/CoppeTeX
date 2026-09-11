@@ -31,6 +31,16 @@ import datetime
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DTX = os.path.join(RAIZ, "src", "coppe.dtx")
 
+# O console do Windows e cp1252 e nao sabe escrever uma seta, um travessao nem
+# um til combinante. Sem isto, o script MORRE no meio ao imprimir uma linha de
+# arquivo que tenha um desses -- e o que ele estava imprimindo era justamente o
+# relatorio. Substituir o caractere e feio; interromper o relatorio e pior.
+if hasattr(sys.stdout, "reconfigure"):
+    try:
+        sys.stdout.reconfigure(errors="replace")
+    except (ValueError, OSError):
+        pass
+
 # Arquivos gerados pelo docstrip que carimbam a versao num \ProvidesFile ou
 # \ProvidesClass. Divergencia aqui quase sempre quer dizer a mesma coisa: o
 # coppe.ins nao foi rodado depois da ultima mudanca no .dtx.
@@ -145,7 +155,15 @@ def conferir(detalhe=False):
 
     if detalhe:
         print("")
-        print("mencoes historicas (informativo, nao sao erro):")
+        print("mencoes a OUTRA versao (informativo, nao sao erro):")
+        # O padrao exige contexto de versao -- "v4.0", "CoppeTeX 4.0", "versao
+        # 3.8". Sem isso a lista vinha cheia de numeros de item do Manual, que
+        # se parecem com versao e nao sao: 3.1.2.1.4, 4.2, 2.6. Uma lista que e
+        # quase toda ruido nao e lida, e deixa de servir para alguma coisa.
+        contexto = re.compile(
+            r"(?:\bv(\d+\.\d+(?:\.\d+)?)\b"
+            r"|CoppeTeX\s+(\d+\.\d+(?:\.\d+)?)\b"
+            r"|[Vv]ers[aã]o\D{0,12}?(\d+\.\d+(?:\.\d+)?)\b)")
         for raiz, _, arquivos in os.walk(RAIZ):
             if any(p in raiz for p in (".git", "_scratch", "specs", "dist")):
                 continue
@@ -155,10 +173,10 @@ def conferir(detalhe=False):
                 caminho = os.path.join(raiz, a)
                 rel = os.path.relpath(caminho, RAIZ)
                 for n, linha in enumerate(ler(caminho).splitlines(), 1):
-                    for v in re.findall(r"\b[Vv]?(\d\.\d+(?:\.\d+)?)\b", linha):
-                        if v != alvo and v.split(".")[0] in ("3", "4", "5"):
-                            print("   %s:%d  %s" % (rel, n, linha.strip()[:90]))
-                            break
+                    achados = [g for m in contexto.finditer(linha)
+                               for g in m.groups() if g]
+                    if achados and all(v != alvo for v in achados):
+                        print("   %s:%d  %s" % (rel, n, linha.strip()[:88]))
 
     print("")
     if problemas:

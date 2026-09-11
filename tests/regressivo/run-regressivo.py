@@ -52,11 +52,22 @@ import subprocess
 import sys
 import unicodedata
 
+# O console do Windows e cp1252, e as cobrancas que este rodador imprime saem
+# do texto do PDF, que tem acento, travessao e aspas tipograficas. Sem isto o
+# rodador morre ao IMPRIMIR a falha que acabou de achar.
+if hasattr(sys.stdout, "reconfigure"):
+    try:
+        sys.stdout.reconfigure(errors="replace")
+    except (ValueError, OSError):
+        pass
+
 AQUI = os.path.dirname(os.path.abspath(__file__))
 RAIZ = os.path.dirname(os.path.dirname(AQUI))
 SRC = os.path.join(RAIZ, "src")
 
 DIRETIVA = re.compile(r"^%%\s*([A-Z-]+):\s*(.*?)\s*$")
+# r<numero>-<apelido>.tex ou .py. Ver o comentario em main().
+RE_NOME = re.compile(r"^r\d+-.*\.(tex|py)$")
 
 
 def ler_diretivas(caminho):
@@ -278,8 +289,13 @@ def um_teste_python(caminho):
 def main():
     argv = [a for a in sys.argv[1:] if not a.startswith("-")]
     manter = "--manter" in sys.argv
+    # O nome de um teste e r<numero>-<apelido>. O numero nao e enfeite: sem ele,
+    # "r" no comeco do nome bastava, e este proprio arquivo -- run-regressivo.py
+    # -- se enquadrava. O rodador achava a si mesmo, rodava a si mesmo, e cada
+    # copia achava a si mesma outra vez: uma recursao que so parou quando alguem
+    # foi matar os processos na mao.
     testes = sorted(f for f in os.listdir(AQUI)
-                    if f.startswith("r") and (f.endswith(".tex") or f.endswith(".py")))
+                    if RE_NOME.match(f))
     if argv:
         testes = [t for t in testes if any(a in t for a in argv)]
     if not testes:

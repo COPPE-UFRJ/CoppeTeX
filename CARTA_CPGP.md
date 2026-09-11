@@ -48,7 +48,7 @@ Três observações que talvez ajudem a apreciação:
   permanecem em português em qualquer idioma de redação. As cinco capas lado a
   lado, em `dist/covers_5languages.pdf`, mostram isso em uma página.
 
-- **Evidência.** A conformidade não é afirmada, é medida: doze documentos
+- **Evidência.** A conformidade não é afirmada, é medida: seis documentos
   completos nos quatro tipos de trabalho e nos três idiomas admitidos,
   compilados nos dois motores, com o PDF pronto conferido contra a norma em
   centímetros e em ordem, e o PDF/A validado pelo veraPDF. A Seção 3.4 da

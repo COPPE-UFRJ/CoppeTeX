@@ -100,7 +100,11 @@ function Invoke-Step {
             $code = $LASTEXITCODE
         }
         if ($tentativa -gt 1) {
-            Add-Line "         ($Name: arquivo estava preso; $tentativa tentativa(s))"
+            # ${Name}, e nao $Name: em PowerShell os dois pontos depois de um
+            # nome de variavel comecam um qualificador de unidade, e "$Name:"
+            # e erro de sintaxe -- que derruba o script inteiro na leitura,
+            # antes de qualquer passo rodar.
+            Add-Line "         (${Name}: arquivo estava preso; $tentativa tentativa(s))"
         }
 
         $out | Out-File -FilePath (Join-Path $logDir "$Name.log") -Encoding utf8

@@ -1,4 +1,4 @@
-# Migration guide — CoppeTeX v3.x → v4.0
+# Migration guide — CoppeTeX v3.x → v4.x
 
 Short guide for thesis authors currently using CoppeTeX v3.x who want to
 move to v4.0. Read once, do at most one of the three sections below

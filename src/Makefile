@@ -123,19 +123,22 @@ build: doc class example.pdf
 	  rm -rf $(BUILDDIR); \
 	fi
 	mkdir -vp $(BUILDDIR)
-	@${_printf} "Copying class files.\n"
-	cp -vp $(PACKAGE_NAME).cls $(PACKAGE_NAME).ist \
-		$(PACKAGE_NAME).bbx $(PACKAGE_NAME).cbx $(PACKAGE_NAME).dbx \
-		$(PACKAGE_NAME)-numeric.bbx $(PACKAGE_NAME)-numeric.cbx \
-		brazilian-$(PACKAGE_NAME).lbx english-$(PACKAGE_NAME).lbx \
-		$(PACKAGE_NAME)-logo.* ufrj-logo.pdf $(PACKAGE_NAME).pdf $(BUILDDIR)
-	@${_printf} "Copying example files.\n"
-	cp -vp example.tex example.pdf example.bib $(BUILDDIR)
-	@${_printf} "Copying files from root directory.\n"
-# O README.md de dist/ NAO vem da raiz. Ele e um guia de instalacao, escrito
-# para quem so quer usar a classe; o da raiz e a proposta para a CPGP e a
-# discussao da norma. Copia-lo por cima apagava o guia.
-# Ver https://github.com/COPPE-UFRJ/CoppeTeX/issues/75
+# A lista dos arquivos que vao para dist/ NAO fica aqui.
+#
+# Ela ficava, e era a terceira copia dela no projeto -- uma aqui, uma no
+# doall.bat, uma no harness --, e as tres divergiram. Uma delas copiava o
+# README.md da raiz por cima do guia de instalacao de dist/ (issue #75); esta
+# aqui esquecia os pacotes de idioma, o latexmkrc e o guia rapido, e ninguem
+# percebia porque quase todo mundo usa o harness no Windows.
+#
+# A lista agora existe em UM lugar, em tools/painel.py, e o painel roda em
+# qualquer sistema -- e so Python.
+#
+# O painel escreve em dist/, e nao em $(BUILDDIR). Os dois sao a mesma pasta na
+# configuracao padrao (BUILDDIR=../dist, la em cima); quem trocar o BUILDDIR tem
+# de copiar de dist/ para onde quiser depois.
+	@${_printf} "Copying the distributable set (list lives in tools/painel.py).\n"
+	cd .. && python3 tools/painel.py --dist
 	cp -vp ../COPYING $(BUILDDIR)
 
 help:

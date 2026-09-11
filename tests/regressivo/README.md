@@ -101,6 +101,7 @@ sempre que o defeito for de uma folha só.
 | `r20-folha-adicional-capes` | A folha adicional do Anexo H não existia; depois existiu com parágrafos soltos e pontilhado, em vez da moldura fechada do modelo. |
 | `r21-tratamento-e-instituicao` | `\advisor` e `\examiner` pediam o tratamento como obrigatório e a instituição como opcional. A 3.1.2.1.3(e) pede o contrário. |
 | `r22-nivel-quinario` | A 2.6 admite até a seção quinária, e a classe parava na quaternária. |
+| `r23-terceiro-resumo-com-titulo` | O terceiro resumo saía **sem título**. Ao fechar, o `foreignabstract` apagava `\local@title` — faxina de quando ele era a última folha pré-textual. Desde a v4.0 não é: o `brazilianabstract` vem depois e compõe o título com o que acabara de ser apagado. Só aparece em trabalho escrito em espanhol, e ia para o depósito assim. |
 
 ### As ferramentas
 
@@ -111,3 +112,10 @@ que verificador nenhum, porque parece que alguém conferiu.
 |---|---|
 | `r90-log-de-uma-passada` | Os verificadores liam só o trecho do `.log` depois do **último** `LaTeX2e <`, achando que o arquivo guardasse várias passadas. Não guarda: o que aparece duas vezes é o banner, que o LaTeX repete no fim. O corte jogava fora o corpo da passada — onde estão os avisos — e o verificador passou a aprovar qualquer coisa. |
 | `r91-logotipo-ausente` | Quem copiava só o `coppe.cls` recebia `File 'coppe-logo' not found`, sem pista de que o arquivo vem com a classe. |
+| `r92-lista-do-dist` | A cópia para `dist/` levava junto o `README.md` da raiz — que é a proposta para a CPGP, não o guia de instalação — e os cinco exemplos por idioma, que tinham sido tirados de propósito. A lista estava escrita em dois lugares e os dois divergiram. Este teste lê a lista; não compila nada. Cobra também que o rodador da primeira camada não volte a morrer no banner do `makeindex`. |
+
+Um defeito do próprio rodador ficou de fora da tabela porque está corrigido no
+código e comentado lá: ele descobria os testes por "nome que começa com `r`", e
+`run-regressivo.py` começa com `r`. Rodava a si mesmo, e cada cópia rodava a si
+mesma de novo. Agora o nome de um teste é `r<número>-<apelido>`, e o número não
+é enfeite.

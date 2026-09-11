@@ -1457,16 +1457,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
       {CoppeKeyword:}{\value{keywords}}%
   \fi
   \end{otherlanguage}
-  \vspace*{\fill}
-  \global\let\@author\@empty
-  \global\let\@date\@empty
-  \global\let\foreign@title\@empty
-  \global\let\foreign@title\relax
-  \global\let\local@title\@empty
-  \global\let\local@title\relax
-  \global\let\author\relax
-  \global\let\author\relax
-  \global\let\date\relax}
+  \vspace*{\fill}}
 \newenvironment{brazilianabstract}{%
   \cleardoublepage
   \thispagestyle{plain}

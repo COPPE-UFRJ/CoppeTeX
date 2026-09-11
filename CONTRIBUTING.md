@@ -15,7 +15,7 @@ questions](#reporting-bugs-or-asking-questions).
 
 ## Adding a new language pack
 
-CoppeTeX 4.0 ships with five built-in main languages: `brazilian`,
+CoppeTeX 4.1 ships with five built-in main languages: `brazilian`,
 `english`, `spanish`, `french`, `italian`. Adding a new one — say
 **`german`** — is a self-contained, ~5-minute task. You need to write
 two small files and either drop them next to your `coppe.cls` or open a

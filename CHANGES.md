@@ -1,6 +1,14 @@
 # CoppeTeX 4.0 — Registro de mudanças
 
-Versão da classe: **3.8** (`coppe.cls`, 2026).
+> **Documento histórico.** Este arquivo descreve o trabalho da **4.0**, quando
+> ele ainda vivia no ramo `futuro2026` e a classe em disco dizia 3.8. Ele ficou
+> como registro daquele momento e **não acompanha a versão corrente**.
+>
+> O registro que vale é o [`CHANGELOG.md`](./CHANGELOG.md), que cobre a 4.1, a
+> 4.0 e o que veio antes. A versão corrente da classe está em
+> `src/coppe.dtx` e pode ser conferida com `python tools/versao.py`.
+
+Versão da classe à época: **3.8** (`coppe.cls`, 2026).
 
 Este documento resume **todas** as mudanças do CoppeTeX 4.0 em relação à versão
 anterior (3.4). O 4.0 tem dois eixos:

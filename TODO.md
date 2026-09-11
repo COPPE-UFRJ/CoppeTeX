@@ -33,7 +33,7 @@ Registrado aqui para que ninguém refaça:
   algoritmo com travessão, alinhamento único de legendas, e fim dos 17
   estouros de margem do exemplo.
 - Norma COPPE 2026 (`.md` e `.tex`) reconciliada com o manual.
-- **Revisão adversativa**: doze documentos completos, quatro tipos de trabalho
+- **Revisão adversativa**: seis documentos completos, quatro tipos de trabalho
   por três idiomas, nos dois motores. Achou quatro não conformidades que os
   exemplos e os testes não pegavam — capa transbordando sob `doublespacing`,
   fólio impresso em folha pré-textual, banca de oito sem caber numa folha, e o
@@ -94,7 +94,7 @@ documentos adversativos nos dois motores, e passa o veraPDF em todo PDF/A.
 Depois:
 
 ```bash
-python3 tools/conferir-norma.py adversativa/adv_*.pdf src/example*.pdf
+python3 tools/conferir-norma.py tests/adversativa/adv_*.pdf src/example*.pdf
 ```
 
 mede o PDF pronto contra o Manual — papel, margens, fólio na tinta, ordem
@@ -207,7 +207,7 @@ A linha para aí. O que existe só para **provar** que a classe funciona não sa
 do `.dtx` e não é distribuído:
 
 - `tests/` — a suíte de regressão, sete arquivos escritos à mão;
-- `adversativa/` — doze documentos, quatro tipos de trabalho por três idiomas,
+- `tests/adversativa/` — seis documentos: quatro em português, um por tipo de trabalho, mais um em inglês e um em espanhol,
   cada um acionando ao mesmo tempo tudo o que a classe oferece;
 - `tools/*.ps1` — o harness;
 - `NORMA_COPPE_2026.tex` e `futuremanual2026.tex` — documentos sobre a norma,
@@ -226,7 +226,7 @@ build-check: cobre as três coisas que podem estar erradas sem ninguém notar.
    distribuído mudou. Se mudou, alguém editou um derivado à mão — e a edição
    acabou de ser perdida. Melhor descobrir antes de publicar.
 2. **O que é distribuído compila.**
-3. **A prova passa**: a suíte de regressão e os doze adversativos, nos **dois
+3. **A prova passa**: as três camadas de teste e os seis adversativos, nos **dois
    motores**, com o veraPDF em cima de todo PDF/A.
 
 Estado da v4.1: **248 passos, 0 falhas, 27 PDFs conformes com PDF/A-2b**;
@@ -238,7 +238,7 @@ e documentadas.
 ## 4e. Os dezesseis fluxos de escrita
 
 Um trabalho que usa todas as listas estoura os 16 `\write` do pdfTeX. Medido
-pela sonda `adversativa/_writes_probe.tex`, num documento que aciona tudo:
+pela sonda `tests/adversativa/_writes_probe.tex`, num documento que aciona tudo:
 
 | | fluxos |
 |---|---|
@@ -270,7 +270,7 @@ centímetros e em ordem — que é o que nenhuma compilação bem-sucedida garan
 uma tese compila perfeitamente com a margem errada.
 
 ```bash
-python3 tools/conferir-norma.py adversativa/adv_*.pdf src/example*.pdf
+python3 tools/conferir-norma.py tests/adversativa/adv_*.pdf src/example*.pdf
 CONFERIR=-v python3 tools/conferir-norma.py src/example.pdf   # mostra os ok
 ```
 
@@ -294,7 +294,7 @@ qualquer sistema.
 **Status: FEITA.** 31 divergências no começo, **0 no fim**, mais três aceitas
 com o motivo escrito ao lado da entrada.
 
-`adversativa/referencias-manual.bib` traz uma entrada para cada categoria da
+`tests/adversativa/referencias-manual.bib` traz uma entrada para cada categoria da
 seção 4.2 do Manual — 34 no total —, com os dados dos próprios exemplos do
 Manual, e o comentário `%%` acima de cada uma é a referência **como o Manual a
 imprime**: o gabarito. Uma linha `%%!` registra divergência aceita, com o
@@ -302,8 +302,8 @@ motivo. São citadas só pelos quatro adversativos em português, que cobrem os
 dois sistemas de chamada sobre a mesma bibliografia.
 
 ```bash
-python3 tools/conferir-referencias.py adversativa/adv_dsc_pt.pdf
-CONFERIR=-v python3 tools/conferir-referencias.py adversativa/adv_dsc_pt.pdf
+python3 tools/conferir-referencias.py tests/adversativa/adv_dsc_pt.pdf
+CONFERIR=-v python3 tools/conferir-referencias.py tests/adversativa/adv_dsc_pt.pdf
 ```
 
 A comparação ignora o que não é da norma: quebras de linha e de hifenização do
@@ -317,7 +317,7 @@ o mesmo separador para anos e meses e escolheu-se acertar o caso frequente.
 
 ## 4h. O adversativo difícil
 
-Onze dos doze adversativos são enxutos de propósito — eles cobrem a matriz de
+Cinco dos seis adversativos são enxutos de propósito — eles cobrem a matriz de
 opções e de idiomas. **Um** é levado ao extremo, o `adv_dsc_pt`, e é onde os
 defeitos raros aparecem: três figuras (uma com subfiguras), três tabelas em
 três estilos, três quadros, três programas em três linguagens, três algoritmos,
