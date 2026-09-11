@@ -30,7 +30,7 @@ names, and the table keys all use this single string.
 ### 2. Write `coppe-lang-<lang>.def`
 
 Take an existing pack as your template. The simplest reference is
-[`dist/coppe-lang-spanish.def`](./dist/coppe-lang-spanish.def).
+[`dist/coppe-lang-spanish.def`](./dist/es/coppe-lang-spanish.def).
 
 The file consists of:
 
@@ -60,7 +60,7 @@ The file consists of:
 ### 3. Write `<lang>-coppe.lbx`
 
 This is the biblatex localization file. Template:
-[`dist/spanish-coppe.lbx`](./dist/spanish-coppe.lbx).
+[`dist/spanish-coppe.lbx`](./dist/es/spanish-coppe.lbx).
 
 It consists of:
 

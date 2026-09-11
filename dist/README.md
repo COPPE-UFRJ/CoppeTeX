@@ -12,72 +12,109 @@
 **Esta pasta é tudo o que você precisa para escrever uma tese, e nada além
 disso.**
 
-Se você é aluno da COPPE e veio escrever um trabalho, **baixe só esta pasta** e
-pode ignorar o resto do repositório. O que está fora daqui é fonte comentada,
-testes, documentos de prova e ferramentas de quem mantém a classe — útil para
-quem vai mexer nela, inútil para quem vai usá-la.
+Se você é aluno da COPPE e veio escrever um trabalho, **baixe só esta pasta** —
+ou o `.zip` do *release*, que é a mesma coisa — e pode ignorar o resto do
+repositório. O que está fora daqui é fonte comentada, testes, documentos de
+prova e ferramentas de quem mantém a classe.
 
 > Este README é **diferente** do da raiz e do de `src/`. O da raiz apresenta o
 > projeto e a proposta levada à CPGP; o de `src/` é o guia de programação. Este
 > aqui é o **guia de instalação e uso**, e é o único que interessa a quem só
 > quer escrever.
 
-## Os arquivos que têm de estar aqui
+## A regra da arrumação, em uma frase
 
-São **31**, mais este README: 32 arquivos ao todo. Se faltar algum, a pasta
-está incompleta — refaça a cópia com `coppetex.bat --dist` a partir da raiz do
-repositório, ou baixe o pacote da entrega de novo.
+**O que está na raiz funciona sem você mexer em nada. O que está numa subpasta
+de idioma só funciona depois de você trazer o conteúdo dela para a raiz.**
 
-### A classe e o que ela carrega — 19 arquivos
+Isso não é capricho: o LaTeX procura a classe, os estilos e as bases de
+referências **ao lado do documento que está compilando**, e não dentro de
+subpastas. Um arquivo que fique em `es/` é um arquivo que o LaTeX não vê.
+
+| Pasta | O que é | O que fazer |
+|---|---|---|
+| **raiz** | A classe, os estilos de bibliografia e o **exemplo em português** | Nada. Já funciona. |
+| `logos/` | Os três logotipos da capa | Nada. A classe procura aqui. |
+| `manuais/` | Os PDFs para ler | Nada. São leitura. |
+| `en/` | O exemplo em **inglês** | **Copie o conteúdo para a raiz** antes de usar |
+| `es/` | O exemplo em **espanhol** e os arquivos que só ele precisa | **Copie o conteúdo para a raiz** antes de usar |
+| `outraslinguas/` | Francês e italiano | **Copie para a raiz**, ciente de que não são idiomas admitidos para redigir tese |
+
+## Vou escrever em português
+
+É o caso de quase todo trabalho da COPPE, e não há nada a fazer. Copie **todos
+os arquivos da raiz, mais a pasta `logos/`**, para a pasta do seu trabalho, abra
+o `example.tex` e comece a trocar o conteúdo.
+
+## Vou escrever em inglês
+
+Copie o conteúdo de `en/` para a raiz, e depois a raiz inteira mais `logos/`
+para a pasta do seu trabalho. O seu documento passa a ser o `example_en.tex`.
+
+O `english-coppe.lbx` **já está na raiz**, e não em `en/`: toda tese da COPPE
+tem um resumo em idioma estrangeiro, que por convenção é o inglês, e por isso
+ele é necessário mesmo num trabalho escrito em português.
+
+## Vou escrever em espanhol
+
+Copie o conteúdo de `es/` para a raiz, e depois a raiz inteira mais `logos/`
+para a pasta do seu trabalho. O seu documento passa a ser o `example_es.tex`.
+São dois arquivos além do exemplo: o `spanish-coppe.lbx`, com os termos de
+bibliografia, e o `coppe-lang-spanish.def`, com os textos fixos da classe.
+
+Um trabalho em espanhol tem **três** resumos: espanhol, inglês e português. O
+exemplo já vem com os três.
+
+## E francês ou italiano?
+
+Dá para compor, e a pasta `outraslinguas/` traz o que é preciso — mas **não há
+respaldo normativo para redigir uma tese da COPPE nesses idiomas**. O art. 57 da
+Resolução CEPG n. 302/2024 admite português, inglês e espanhol. Os dois pacotes
+existem como demonstração do mecanismo de extensão a outros idiomas, e é por
+isso que não há exemplo pronto para eles.
+
+## Os arquivos, um a um
+
+### Na raiz — a classe, os estilos e o exemplo em português
 
 | Arquivo | Para que serve |
 |---|---|
 | `coppe.cls` | A classe. É o arquivo que o seu documento carrega. |
 | `coppe.dbx`, `coppe.bbx`, `coppe.cbx` | O estilo de bibliografia e de citação, em autor-data. |
 | `coppe-numeric.bbx`, `coppe-numeric.cbx` | O mesmo, no sistema numérico, usado pela opção `numbers`. |
-| `brazilian-coppe.lbx`, `english-coppe.lbx`, `spanish-coppe.lbx`, `french-coppe.lbx`, `italian-coppe.lbx` | Os termos de bibliografia em cada idioma. |
-| `coppe-lang-spanish.def`, `coppe-lang-french.def`, `coppe-lang-italian.def` | Os textos fixos da classe — rótulos, meses, capa — nesses três idiomas. Português e inglês vêm dentro da própria classe. |
+| `brazilian-coppe.lbx`, `english-coppe.lbx` | Os termos de bibliografia em português e em inglês. **Os dois são necessários em qualquer trabalho**, por causa do resumo em idioma estrangeiro. |
 | `coppe.ist` | O estilo de ordenação da lista de abreviaturas, da lista de símbolos e do índice. |
 | `latexmkrc` | A receita de compilação, para quem usa `latexmk` ou o Overleaf. |
-| `coppe-logo.pdf`, `coppe-logo.eps`, `ufrj-logo.pdf` | Os logotipos da capa e da folha de rosto. |
+| `example.tex`, `example.bib`, `tipos.bib` | **O exemplo completo, em português**, comentado linha a linha, e as duas bases que ele cita. A `tipos.bib` traz uma entrada de **cada tipo** de referência da seção 4.2 do Manual. |
+| `coppe.bib` | A base com as referências da própria classe e da norma. |
+| `coppe.dtx`, `coppe.ins`, `manual.tex` | As **fontes** dos manuais. Não são necessárias para escrever; estão aqui para que a entrega baste também para refazer o manual e a classe. Não existe `coppe.tex`: o manual da classe é o próprio `coppe.dtx`, e quem o compõe é o `coppe.ins`. |
+| `COPYING` | A licença, GNU GPL versão 3. |
 
-### Os manuais — 3 arquivos
+### `logos/`
+
+`coppe-logo.pdf`, `coppe-logo.eps` e `ufrj-logo.pdf`, os logotipos da capa e da
+folha de rosto. A classe procura primeiro em `logos/` e depois ao lado do
+documento, então funciona com a pasta ou sem ela.
+
+### `manuais/`
 
 | Arquivo | O que é |
 |---|---|
 | `coppe.pdf` | **O manual da classe.** Todos os comandos, todas as opções, com exemplos. Comece por ele. |
-| `manual.pdf` | **O manual da norma.** O que o trabalho tem de ser — margens, estrutura, ilustrações, citações, referências — segundo o Manual da UFRJ/SiBI e as decisões da COPPE. Ele é, ele mesmo, a demonstração: foi composto com a classe e obedece a tudo o que enuncia. |
-| `coppe-quickref.pdf` | Uma referência rápida de uma tabela só, em inglês: comando, exemplo, onde se usa. Para consultar sem abrir o manual. |
-
-### Um exemplo por idioma — 8 arquivos
-
-O art. 57 da Resolução CEPG n. 302/2024 admite **português, inglês ou
-espanhol**. Há um exemplo para cada um.
-
-| Arquivo | O que é |
-|---|---|
-| `example.tex`, `example.pdf` | **O exemplo completo, em português.** Um trabalho inteiro, comentado linha a linha. É por onde quase todo mundo começa. |
-| `example_en.tex`, `example_en.pdf` | O mesmo modelo com o inglês como idioma principal. |
-| `example_es.tex`, `example_es.pdf` | Com o espanhol como idioma principal — o caso em que a classe compõe **três** resumos: espanhol, inglês e português. |
-| `example.bib`, `coppe.bib` | As bases de referências que os exemplos usam. `example.bib` traz um exemplo de **cada tipo** de referência da seção 4.2 do Manual. |
-
-Francês e italiano **não** têm exemplo aqui, embora os pacotes de idioma deles
-estejam na lista acima. Eles existem como demonstração do mecanismo de extensão
-a outros idiomas; não há respaldo normativo para redigir uma tese neles.
-
-### A licença — 1 arquivo
-
-`COPYING`, a GNU General Public License versão 3.
+| `manual.pdf` | **O manual da norma.** O que o trabalho tem de ser — margens, estrutura, ilustrações, citações, referências. Ele é, ele mesmo, a demonstração: foi composto com a classe e obedece a tudo o que enuncia. |
+| `coppe-quickref.pdf` | Uma referência rápida de uma tabela só, em inglês: comando, exemplo, onde se usa. |
+| `example.pdf` | O exemplo em português, já compilado, para você ver o resultado antes de compilar. |
 
 ## Instalação
 
-O caminho mais curto é **não instalar nada**: copie estes arquivos para a pasta
-do seu trabalho e compile ali. No Overleaf é igual — suba os arquivos junto com
-o seu `.tex`.
+O caminho mais curto é **não instalar nada**: copie os arquivos da raiz e a
+pasta `logos/` para a pasta do seu trabalho e compile ali. No Overleaf é igual —
+suba os arquivos junto com o seu `.tex`.
 
 Para instalar de vez, ponha os arquivos na árvore local do seu TeX, em
 `tex/latex/coppe`, e mande o sistema reindexar (`texhash` no TeX Live,
-`initexmf --update-fndb` no MiKTeX).
+`initexmf --update-fndb` no MiKTeX). Nesse caso os logotipos ficam ao lado do
+`coppe.cls`, e a classe os encontra do mesmo jeito.
 
 ## Como compilar
 
@@ -104,15 +141,24 @@ Um trabalho que pede todas as listas ao mesmo tempo pode esbarrar no limite de
 
 ## O primeiro documento
 
-Abra `example.tex` — ou `example_en.tex`, ou `example_es.tex`, conforme o idioma
-em que vai escrever. Ele traz, comentado linha a linha, tudo o que a classe
-oferece: capa, folha de rosto com linha de pesquisa, folha da Coleta CAPES,
-ficha catalográfica, folha de aprovação, os resumos, todas as listas
-pré-textuais, os cinco níveis de seção, os flutuantes com legenda acima e fonte
-abaixo, as citações, os apêndices e os anexos.
+Abra o exemplo do idioma em que vai escrever. Ele traz, comentado linha a linha,
+tudo o que a classe oferece: capa, folha de rosto com linha de pesquisa, folha
+da Coleta CAPES, ficha catalográfica, folha de aprovação, os resumos, todas as
+listas pré-textuais, os cinco níveis de seção, os flutuantes com legenda acima e
+fonte abaixo, as citações, os apêndices e os anexos.
 
 Troque o conteúdo e apague o que não usar. Se algo não estiver claro,
-`coppe.pdf` explica o comando e `manual.pdf` explica a regra.
+`manuais/coppe.pdf` explica o comando e `manuais/manual.pdf` explica a regra.
+
+Se preferir começar de uma folha em branco em vez de apagar o exemplo, o
+repositório traz um gerador: **`coppetex-novo.bat`** abre uma janela que pergunta
+os dados do trabalho e escreve o `.tex` e o `.bib` prontos, com os cinco
+capítulos de sempre.
+
+Ele tem uma opção que evita todo o trabalho desta seção: **Baixar a classe do
+GitHub**. Marcada, ela traz para a mesma pasta a classe, os estilos, os pacotes
+de idioma e os logotipos, e — se o trabalho não for em português — já poe na
+raiz o conteúdo da pasta daquele idioma. A pasta fica pronta para compilar.
 
 ## Antes de depositar
 
@@ -127,13 +173,18 @@ Programa:
 \fichacatalografica{ficha.pdf}
 ```
 
-A lista de verificação completa está no fim do `manual.pdf`.
+A lista de verificação completa está no fim do `manuais/manual.pdf`.
 
 ## Se der problema
 
 Pegue a última versão em <https://github.com/COPPE-UFRJ/CoppeTeX>, atualize a
 sua instalação do LaTeX, e, se ainda assim não funcionar, abra uma *issue* lá.
-O capítulo de solução de problemas do `coppe.pdf` cobre os casos comuns.
+O capítulo de solução de problemas do `manuais/coppe.pdf` cobre os casos comuns.
+
+**O erro mais comum desta versão** é compilar um exemplo sem ter trazido a pasta
+do idioma para a raiz. O sintoma é `File 'coppe-lang-spanish.def' not found` ou
+`Cannot find 'example.bib'`. Volte à regra da arrumação, no começo deste
+arquivo.
 
 ## Licença
 

@@ -30,6 +30,7 @@ compilar veio do `.dtx`, e não de um arquivo que ficou para trás.
 | `watch-build.ps1` | Fica observando `_scratch/BUILD_REQUEST` e roda o `build-check` quando o arquivo aparece. Deixe rodando numa janela enquanto trabalha. |
 | `mk-adversativa.py` | Gera os seis documentos de `../tests/adversativa/`. Eles não são escritos à mão: para mudar o que provam, mude a matriz no topo do gerador. |
 | `painel.py` | O painel do desenvolvedor, com janela e linha de comando. É o que o `coppetex.bat` da raiz chama. Manual em [`../PAINEL.md`](../PAINEL.md). |
+| `geradocvazio.py` | O gerador de documento vazio, com janela e linha de comando: escreve o `.tex` e o `.bib` de um trabalho novo, com os cinco capítulos e o texto de preenchimento. É o que o `coppetex-novo.bat` da raiz chama. É a única ferramenta daqui feita para o ALUNO, e não para quem mantém a classe. |
 | `versao.py` | Confere se a versão está sincronizada nos 28 arquivos gerados e nos 6 lugares em prosa, e sobe o segundo ou o terceiro nível. Nunca o primeiro. |
 | `conferir-norma.py` | Lê um PDF pronto e mede, em centímetros, o que a norma fixa: margens, corpo, recuos, ordem das páginas pré-textuais. |
 | `conferir-referencias.py` | Compõe as referências e as compara, uma a uma, com o texto que o Manual imprime. O gabarito está nos comentários `%%` de `../tests/adversativa/referencias-manual.bib`. |

@@ -64,15 +64,19 @@
 \RequirePackage{lastpage}
 \RequirePackage{ifthen}
 \RequirePackage{graphicx}
+\graphicspath{{./}{logos/}}
 \newcommand\coppe@logo[2][2cm]{%
-  \IfFileExists{#2.pdf}
-    {\includegraphics[height=#1]{#2}}
-    {\ClassError{coppe}{Logotipo `#2.pdf' nao encontrado}%
-      {Ele vem junto com a classe, na mesma pasta do coppe.cls.\MessageBreak
-       Copie coppe-logo.pdf e ufrj-logo.pdf para a pasta do seu\MessageBreak
-       trabalho, ou instale-os ao lado do coppe.cls na arvore do TeX.\MessageBreak
-       Os dois estao em dist/ no repositorio da CoppeTeX.}%
-     \framebox[3cm][c]{\rule{0pt}{#1}\ttfamily #2?}}}
+  \IfFileExists{logos/#2.pdf}
+    {\includegraphics[height=#1]{logos/#2}}
+    {\IfFileExists{#2.pdf}
+      {\includegraphics[height=#1]{#2}}
+      {\ClassError{coppe}{Logotipo `#2.pdf' nao encontrado}%
+        {Ele vem junto com a classe. Procurei em logos/#2.pdf e em\MessageBreak
+         #2.pdf, e nao achei em nenhum dos dois.\MessageBreak
+         Copie a pasta logos/ para junto do seu trabalho, ou ponha\MessageBreak
+         coppe-logo.pdf e ufrj-logo.pdf ao lado do coppe.cls na\MessageBreak
+         arvore do TeX. Os tres estao em dist/logos/ no repositorio.}%
+       \framebox[3cm][c]{\rule{0pt}{#1}\ttfamily #2?}}}}
 \RequirePackage{tabularx}
 \RequirePackage{booktabs}      % regras de tabela profissionais (toprule/midrule/bottomrule)
 \RequirePackage{longtable}     % tabelas que quebram entre páginas

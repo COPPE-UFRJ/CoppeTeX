@@ -38,7 +38,22 @@ DIST = os.path.join(RAIZ, "dist")
 TESTES = os.path.join(RAIZ, "tests")
 TOOLS = os.path.join(RAIZ, "tools")
 
-# O que o aluno precisa para escrever e depositar, e nada alem disso.
+# O que o aluno precisa para escrever e depositar, e nada alem disso, com a
+# subpasta de cada arquivo dentro de dist/.
+#
+# A ARRUMACAO tem uma regra so, e ela e a chave para entender a lista: o que
+# esta na RAIZ de dist/ e o que funciona sem voce mexer em nada -- a classe, os
+# estilos, e o exemplo em PORTUGUES, que e o caso de quase todo trabalho da
+# COPPE. Quem vai escrever em outro idioma tem de TRAZER PARA A RAIZ o conteudo
+# da pasta daquele idioma; o LaTeX procura os arquivos ao lado do documento, e
+# nao dentro de subpastas.
+#
+#   raiz            a classe, os estilos, e o exemplo em portugues
+#   logos/          os tres logotipos da capa
+#   manuais/        os PDFs: manual da classe, da norma, guia rapido, exemplo
+#   en/             o exemplo em ingles e o que ele precisa
+#   es/             o exemplo em espanhol e o que ele precisa
+#   outraslinguas/  frances e italiano, que NAO sao admitidos para redigir tese
 #
 # A lista existe em UM lugar -- aqui -- e o src/doall.bat e o alvo `build' do
 # Makefile chamam este passo. Ela ja esteve escrita em tres lugares, e os tres
@@ -55,33 +70,44 @@ TOOLS = os.path.join(RAIZ, "tools")
 #     n. 302/2024 admite portugues, ingles e espanhol para redigir uma tese, e
 #     e para esses tres que ha exemplo aqui.
 PARA_DIST = [
-    # A classe e o que ela carrega
-    "coppe.cls", "coppe.dbx", "coppe.bbx", "coppe.cbx",
-    "coppe-numeric.bbx", "coppe-numeric.cbx",
-    "brazilian-coppe.lbx", "english-coppe.lbx", "spanish-coppe.lbx",
-    "french-coppe.lbx", "italian-coppe.lbx",
-    "coppe-lang-spanish.def", "coppe-lang-french.def", "coppe-lang-italian.def",
-    "coppe.ist", "latexmkrc",
-    "coppe-logo.eps", "coppe-logo.pdf", "ufrj-logo.pdf",
-    # Os manuais: o da classe, o guia rapido em ingles e o da NORMA, com a
-    # fonte de cada um ao lado.
-    #
-    # Nao ha `coppe.tex': o manual da classe e o proprio coppe.dtx, e quem o
-    # compoe e o coppe.ins. Os dois vao junto para que a entrega baste tambem
-    # para REFAZER o manual e a classe, e nao so para usa-los -- e porque o
-    # coppe.dtx e o unico lugar onde o codigo esta comentado.
-    "coppe.pdf", "coppe-quickref.pdf", "manual.pdf",
-    "coppe.dtx", "coppe.ins", "manual.tex",
-    # Um exemplo por idioma admitido para redacao, e as bases que eles citam.
-    #
+    # --- raiz: a classe, os estilos e o exemplo em portugues ----------------
+    ("", "coppe.cls"), ("", "coppe.dbx"), ("", "coppe.bbx"), ("", "coppe.cbx"),
+    ("", "coppe-numeric.bbx"), ("", "coppe-numeric.cbx"),
+    # Os termos de bibliografia em portugues E EM INGLES ficam os dois na raiz,
+    # e o ingles nao e engano: TODA tese da COPPE tem um resumo em idioma
+    # estrangeiro, que por convencao e o ingles, e o biblatex carrega o arquivo
+    # de idioma de cada idioma que o documento usa. Com o english-coppe.lbx
+    # dentro de en/, um trabalho em PORTUGUES ja saia com "File
+    # 'english-coppe.lbx' not found".
+    ("", "brazilian-coppe.lbx"), ("", "english-coppe.lbx"),
+    ("", "coppe.ist"), ("", "latexmkrc"),
     # A tipos.bib nao estava aqui, e o example.tex a declara: quem baixava a
     # entrega compilava, recebia um PDF com as citacoes em branco e o biber
     # dizendo "Cannot find 'tipos.bib'". Toda base que um exemplo declarar tem
     # de estar nesta lista -- tests/regressivo/r92 cobra isso lendo os proprios
     # \addbibresource dos exemplos, e r93 cobra compilando.
-    "example.tex", "example.bib", "tipos.bib", "coppe.bib", "example.pdf",
-    "example_en.tex", "example_en.pdf",
-    "example_es.tex", "example_es.pdf",
+    ("", "example.tex"), ("", "example.bib"), ("", "tipos.bib"),
+    ("", "coppe.bib"),
+    # Nao ha `coppe.tex': o manual da classe e o proprio coppe.dtx, e quem o
+    # compoe e o coppe.ins. Os dois vao para que a entrega baste tambem para
+    # REFAZER o manual e a classe, e nao so para usa-los -- e porque o
+    # coppe.dtx e o unico lugar onde o codigo esta comentado.
+    ("", "coppe.dtx"), ("", "coppe.ins"), ("", "manual.tex"),
+    # --- logos/ -------------------------------------------------------------
+    ("logos", "coppe-logo.eps"), ("logos", "coppe-logo.pdf"),
+    ("logos", "ufrj-logo.pdf"),
+    # --- manuais/ -----------------------------------------------------------
+    ("manuais", "coppe.pdf"), ("manuais", "coppe-quickref.pdf"),
+    ("manuais", "manual.pdf"), ("manuais", "example.pdf"),
+    # --- en/ e es/: traga para a raiz para usar -----------------------------
+    ("en", "example_en.tex"), ("en", "example_en.pdf"),
+    ("es", "example_es.tex"), ("es", "example_es.pdf"),
+    ("es", "spanish-coppe.lbx"), ("es", "coppe-lang-spanish.def"),
+    # --- outraslinguas/ -----------------------------------------------------
+    ("outraslinguas", "french-coppe.lbx"),
+    ("outraslinguas", "italian-coppe.lbx"),
+    ("outraslinguas", "coppe-lang-french.def"),
+    ("outraslinguas", "coppe-lang-italian.def"),
 ]
 
 # Restos de compilacao. O .pdf nunca entra nesta lista: e o produto.
@@ -188,13 +214,17 @@ def acao_dist(saida):
     saida("")
     saida("copiando para dist/")
     faltando = []
-    for nome in PARA_DIST:
-        de = os.path.join(SRC, nome)
+    for subpasta, nome in PARA_DIST:
+        de = os.path.join(SRC, "logos", nome) if subpasta == "logos" \
+            else os.path.join(SRC, nome)
         if not os.path.exists(de):
             faltando.append(nome)
             continue
-        shutil.copy2(de, os.path.join(DIST, nome))
-        saida("   %s" % nome)
+        destino = os.path.join(DIST, subpasta) if subpasta else DIST
+        if not os.path.isdir(destino):
+            os.makedirs(destino)
+        shutil.copy2(de, os.path.join(destino, nome))
+        saida("   %s" % (subpasta + "/" + nome if subpasta else nome))
     # A licenca vem da RAIZ, e nao de src/, e por isso esta fora da lista. Ela
     # tem de ir junto: a GPL exige que o texto acompanhe o que se distribui.
     licenca = os.path.join(RAIZ, "COPYING")
@@ -229,23 +259,45 @@ def acao_pacote(saida):
     if not os.path.isdir(DIST):
         saida("nao existe a pasta dist/")
         return False
-    # Sem os arquivos que comecam por ponto: o .gitignore de dist/ e plumbing
-    # do repositorio e nao tem o que fazer na mao de quem baixa a entrega.
-    arquivos = sorted(f for f in os.listdir(DIST)
-                      if os.path.isfile(os.path.join(DIST, f))
-                      and not f.startswith("."))
+    # A arvore inteira, e nao so os arquivos da raiz: desde a reorganizacao a
+    # entrega tem subpastas -- logos/, manuais/, en/, es/, outraslinguas/ --, e
+    # um zip so com a raiz sairia sem os logotipos e sem os manuais.
+    #
+    # Sem os arquivos que comecam por ponto: o .gitignore de dist/ e plumbing do
+    # repositorio e nao tem o que fazer na mao de quem baixa a entrega.
+    arquivos = []
+    for raiz, pastas, nomes in os.walk(DIST):
+        pastas[:] = [p for p in pastas if not p.startswith(".")]
+        for nome in sorted(nomes):
+            if nome.startswith("."):
+                continue
+            caminho = os.path.join(raiz, nome)
+            arquivos.append((caminho,
+                             os.path.relpath(caminho, DIST).replace(os.sep, "/")))
+    arquivos.sort(key=lambda x: x[1])
     if not arquivos:
         saida("dist/ esta vazia -- rode --dist antes")
         return False
     if not os.path.isdir(os.path.dirname(destino)):
         os.makedirs(os.path.dirname(destino))
     with zipfile.ZipFile(destino, "w", zipfile.ZIP_DEFLATED) as z:
-        for nome in arquivos:
-            z.write(os.path.join(DIST, nome), "CoppeTeX-%s/%s" % (versao, nome))
+        for caminho, relativo in arquivos:
+            z.write(caminho, "CoppeTeX-%s/%s" % (versao, relativo))
     tamanho = os.path.getsize(destino)
     saida("%s" % destino)
     saida("   %d arquivo(s), %.1f MB" % (len(arquivos), tamanho / 1048576.0))
     return True
+
+
+def acao_gerador(saida):
+    """Abre o gerador de documento vazio, que e para quem vai ESCREVER.
+
+    Ele tem porta propria, o coppetex-novo.bat, porque o publico e outro: o
+    painel e de quem mexe na classe. Esta acao existe para quem ja esta com o
+    painel aberto e nao quer procurar o outro atalho.
+    """
+    return roda([sys.executable, os.path.join(TOOLS, "geradocvazio.py")],
+                RAIZ, saida)
 
 
 def acao_limpar(saida):
@@ -298,6 +350,8 @@ ACOES = [
      "dist/ e copia do que esta em src/, e nada mais"),
     ("pacote", "Fechar o zip da entrega", acao_pacote,
      "empacota dist/ em _scratch/CoppeTeX-<versao>.zip, para anexar ao release"),
+    ("gerador", "Abrir o gerador de documento", acao_gerador,
+     "a janela que escreve o .tex e o .bib de um trabalho novo"),
     ("limpar", "Limpar intermediarios", acao_limpar,
      "tira .aux, .log e companhia de src/ e de tests/; nao toca em PDF"),
 ]
@@ -318,7 +372,7 @@ ACOES = [
 #     compilacao acabou de escrever e a copia que o dist acabou de fazer;
 #   * `limpar' no fim de tudo, senao apaga o que ainda nao foi lido nem copiado.
 ORDEM = ["regerar", "tudo", "docs", "testes", "adversativo", "regressivo",
-         "pdfa", "dist", "conferir", "pacote", "limpar"]
+         "pdfa", "dist", "conferir", "pacote", "gerador", "limpar"]
 
 
 def executar(pedidas, versao, saida):

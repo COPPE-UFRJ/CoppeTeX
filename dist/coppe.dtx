@@ -3656,9 +3656,20 @@ No modelo \CoppeTeX os anexos devem obrigtoriamente vir depois dos apêndices e 
 \RequirePackage{lastpage}
 \RequirePackage{ifthen}
 \RequirePackage{graphicx}
-% Os logotipos da capa. Nao ha \graphicspath aqui, e nao adianta haver: quando a
-% classe e instalada na arvore do TeX, o kpathsea a encontra sem dizer a
-% ninguem ONDE a encontrou -- \CurrentFilePath vem vazio e \@filef@und devolve
+% A pasta `logos' entra no caminho de busca de IMAGENS, e so isso. Desde que os
+% logotipos passaram a morar numa subpasta, um \includegraphics{coppe-logo}
+% escrito no documento -- e o manual da norma tem um -- nao os achava mais. Com
+% a linha abaixo, o nome simples volta a funcionar, venha o arquivo da subpasta
+% ou de junto do documento.
+%
+% A ordem importa: `./' primeiro, para que uma figura DO AUTOR com o mesmo nome
+% ganhe da nossa. E isto NAO substitui a busca do \coppe@logo, que usa
+% \IfFileExists -- o \graphicspath vale para o \includegraphics e nao para o
+% \IfFileExists, que procura pelo kpathsea.
+\graphicspath{{./}{logos/}}
+% Os logotipos da capa. Nao ha \graphicspath que resolva o caso da INSTALACAO:
+% quando a classe e instalada na arvore do TeX, o kpathsea a encontra sem dizer
+% a ninguem ONDE a encontrou -- \CurrentFilePath vem vazio e \@filef@und devolve
 % so o nome. Nao ha como a classe deduzir a propria pasta.
 %
 % Nem e preciso. O \includegraphics procura pelo kpathsea, o mesmo mecanismo que
@@ -3670,15 +3681,30 @@ No modelo \CoppeTeX os anexos devem obrigtoriamente vir depois dos apêndices e 
 % coppe.cls para a pasta do trabalho e deixa os logotipos para tras. Ai o TeX
 % dizia "File `coppe-logo' not found" e mandava digitar outro nome, sem nenhuma
 % pista de que o arquivo vem junto com a classe. \coppe@logo diz.
+% Os logotipos moram numa subpasta `logos', tanto no repositorio quanto na
+% entrega. Mas quem copia tudo para a pasta do trabalho costuma achatar a
+% arvore, e quem instala na arvore do TeX poe os arquivos ao lado do .cls. Os
+% tres arranjos sao legitimos, e procurar nos tres custa duas linhas:
+%
+%   1. logos/<nome>.pdf  -- a subpasta, que e como o repositorio e a entrega vem
+%   2. <nome>.pdf        -- ao lado do documento, ou ao lado do coppe.cls na
+%                           arvore do TeX, que o kpathsea acha sozinho
+%
+% Sem isso o erro seria "File `coppe-logo' not found" sem pista nenhuma de onde
+% o arquivo devia estar -- que e o defeito que esta mensagem existe para nao
+% repetir.
 \newcommand\coppe@logo[2][2cm]{%
-  \IfFileExists{#2.pdf}
-    {\includegraphics[height=#1]{#2}}
-    {\ClassError{coppe}{Logotipo `#2.pdf' nao encontrado}%
-      {Ele vem junto com a classe, na mesma pasta do coppe.cls.\MessageBreak
-       Copie coppe-logo.pdf e ufrj-logo.pdf para a pasta do seu\MessageBreak
-       trabalho, ou instale-os ao lado do coppe.cls na arvore do TeX.\MessageBreak
-       Os dois estao em dist/ no repositorio da CoppeTeX.}%
-     \framebox[3cm][c]{\rule{0pt}{#1}\ttfamily #2?}}}
+  \IfFileExists{logos/#2.pdf}
+    {\includegraphics[height=#1]{logos/#2}}
+    {\IfFileExists{#2.pdf}
+      {\includegraphics[height=#1]{#2}}
+      {\ClassError{coppe}{Logotipo `#2.pdf' nao encontrado}%
+        {Ele vem junto com a classe. Procurei em logos/#2.pdf e em\MessageBreak
+         #2.pdf, e nao achei em nenhum dos dois.\MessageBreak
+         Copie a pasta logos/ para junto do seu trabalho, ou ponha\MessageBreak
+         coppe-logo.pdf e ufrj-logo.pdf ao lado do coppe.cls na\MessageBreak
+         arvore do TeX. Os tres estao em dist/logos/ no repositorio.}%
+       \framebox[3cm][c]{\rule{0pt}{#1}\ttfamily #2?}}}}
 \RequirePackage{tabularx}
 \RequirePackage{booktabs}      % regras de tabela profissionais (toprule/midrule/bottomrule)
 \RequirePackage{longtable}     % tabelas que quebram entre páginas

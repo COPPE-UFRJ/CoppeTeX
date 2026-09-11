@@ -48,6 +48,7 @@ coppetex.bat --ajuda
 | `--tudo` | A prova completa, com veredito no fim. É o que tem de sair limpo antes de marcar uma versão. |
 | `--dist` | Copia para `dist/` os 31 arquivos que o aluno precisa: a classe, os estilos, os logotipos, os dois manuais, o guia rápido, um exemplo por idioma admitido e a licença. **Só copia; nunca compila.** A lista está em `PARA_DIST`, em `tools/painel.py`, e existe só lá. |
 | `--pacote` | Fecha `dist/` num `.zip` com o número da versão, em `_scratch/`, pronto para anexar ao *release*. O zip leva uma pasta dentro, `CoppeTeX-<versão>/`, e não os arquivos soltos. |
+| `--gerador` | Abre o **gerador de documento vazio**, que escreve o `.tex` e o `.bib` de um trabalho novo. Tem porta própria, o `coppetex-novo.bat`, porque o público é outro: esta ação existe para quem já está com o painel aberto. |
 | `--limpar` | Tira `.aux`, `.log` e companhia de `src/` e de `tests/`. Não toca em nenhum PDF. |
 
 Pode combinar quantas quiser. **A ordem em que você escreve não importa**: o
@@ -133,6 +134,56 @@ que o *release* precisa ter. O resto do repositório o GitHub já publica sozinh
 como o código-fonte da tag.
 
 ---
+
+## O outro bat: `coppetex-novo.bat`
+
+Este manual é do `coppetex.bat`, que é o painel de quem **mexe na classe**. Há
+um segundo bat na raiz, o `coppetex-novo.bat`, que é para quem vai **escrever
+uma tese** — público diferente, por isso porta diferente.
+
+```bat
+coppetex-novo.bat                       abre a janela
+coppetex-novo.bat --gerar               gera com os padrões da COPPE
+coppetex-novo.bat --gerar --tipo=msc --programa=PEM
+coppetex-novo.bat --ajuda               a lista de todos os campos
+```
+
+Ele escreve o `.tex` e o `.bib` com que um trabalho começa, já com a estrutura
+que a norma pede e os cinco capítulos de sempre — Introdução, Fundamentação
+Teórica, Materiais e Métodos, Resultados e Conclusões —, com texto de
+preenchimento para que o documento compile e mostre cada folha.
+
+Existe porque começar do `example.tex` significa **apagar**: aquele é um
+documento de demonstração, cheio de figuras, tabelas e comentários que ensinam,
+e quem vai escrever passa a primeira hora limpando o que não vai usar. Aqui é o
+contrário: sai o esqueleto, e você escreve por cima.
+
+Tudo o que é opcional tem um sim/não, e o padrão de tudo é o **padrão completo
+da COPPE**, como no exemplo: quem aperta Gerar sem mexer em nada recebe um
+trabalho com todas as folhas que a norma prevê. Tirar é escolha de quem gera.
+
+### Ele também busca a classe
+
+A opção **Baixar a classe do GitHub** (`--baixar=sim`) traz, para a mesma pasta,
+a classe, os estilos, os pacotes de idioma e os logotipos — do *release* mais
+recente, ou do ramo `master` se não houver *release*. A pasta fica compilável na
+hora, sem nenhuma cópia manual.
+
+E faz de uma vez o passo que todo mundo esquece: se o trabalho não for em
+português, ela **traz para a raiz** o conteúdo da pasta daquele idioma, que é
+onde o LaTeX procura. Sem isso, o erro seria um arquivo que está ali do lado e
+que o LaTeX diz não achar.
+
+Não traz os exemplos nem as fontes dos manuais: você pediu um documento em
+branco, e um exemplo ao lado é justamente o que se queria evitar.
+
+Guardado por `tests/regressivo/r26`, que gera dois documentos — o padrão e um
+com tudo ligado ao mesmo tempo — e **compila os dois**, só com o que há na
+entrega. Um gerador erra de um jeito particular: produz um arquivo que parece
+certo e só quebra quando alguém compila, e quem compila é o aluno, na véspera.
+O download em si não é exercitado no teste — teste que depende da rede falha no
+avião e no proxy da universidade, e teste que falha por motivo alheio deixa de
+ser lido —, mas a regra do que vem e do que não vem é cobrada.
 
 ## Como as peças se encaixam
 

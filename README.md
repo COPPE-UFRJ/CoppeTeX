@@ -30,10 +30,22 @@
 
 ## Vou escrever uma tese. O que eu baixo?
 
-**Baixe o arquivo .zip no release e só ele.** ou **aixe a pasta [`dist/`](./dist), e só ela.** 
-Lá está tudo o que é preciso para escrever e depositar: a classe, os estilos de bibliografia, os logotipos, os
-dois manuais e um exemplo completo em cada idioma que a UFRJ admite. O
-[`dist/README.md`](./dist/README.md) diz como instalar e por onde começar.
+**Baixe o `.zip` do [release](https://github.com/COPPE-UFRJ/CoppeTeX/releases/latest)**, ou a
+pasta [`dist/`](./dist), que é a mesma coisa. Lá está tudo o que é preciso para
+escrever e depositar: a classe, os estilos de bibliografia, os logotipos, os
+dois manuais e um exemplo completo em cada idioma que a UFRJ admite.
+
+A entrega tem uma **regra de arrumação** que vale saber antes de abrir: o que
+está na raiz dela funciona sem você mexer em nada, e quem vai escrever em
+**inglês, espanhol ou outro idioma** tem de trazer o conteúdo da pasta daquele
+idioma **para a raiz** — o LaTeX procura a classe e as bases de referências ao
+lado do documento, e não dentro de subpastas. O
+[`dist/README.md`](./dist/README.md) explica isso e diz por onde começar.
+
+Se preferir começar de uma folha em branco em vez de apagar o exemplo, há um
+gerador: **`coppetex-novo.bat`**, na raiz. Ele abre uma janela, pergunta os dados
+do trabalho e escreve o `.tex` e o `.bib` prontos, com os cinco capítulos de
+sempre e o texto de preenchimento. Os padrões são os da COPPE completa.
 
 Todo o resto deste repositório é para **quem mexe na classe**: a fonte
 comentada, os testes, os documentos normativos e as ferramentas. Se é o seu

@@ -44,20 +44,31 @@ if hasattr(sys.stdout, "reconfigure"):
 # Arquivos gerados pelo docstrip que carimbam a versao num \ProvidesFile ou
 # \ProvidesClass. Divergencia aqui quase sempre quer dizer a mesma coisa: o
 # coppe.ins nao foi rodado depois da ultima mudanca no .dtx.
-GERADOS = [
-    "src/coppe.cls", "src/coppe.dbx", "src/coppe.bbx", "src/coppe.cbx",
-    "src/coppe-numeric.bbx", "src/coppe-numeric.cbx",
-    "src/brazilian-coppe.lbx", "src/english-coppe.lbx", "src/spanish-coppe.lbx",
-    "src/french-coppe.lbx", "src/italian-coppe.lbx",
-    "src/coppe-lang-spanish.def", "src/coppe-lang-french.def",
-    "src/coppe-lang-italian.def",
-    "dist/coppe.cls", "dist/coppe.dbx", "dist/coppe.bbx", "dist/coppe.cbx",
-    "dist/coppe-numeric.bbx", "dist/coppe-numeric.cbx",
-    "dist/brazilian-coppe.lbx", "dist/english-coppe.lbx",
-    "dist/spanish-coppe.lbx", "dist/french-coppe.lbx", "dist/italian-coppe.lbx",
-    "dist/coppe-lang-spanish.def", "dist/coppe-lang-french.def",
-    "dist/coppe-lang-italian.def",
+#
+# Os de src/ estao escritos aqui; os de dist/ NAO, e sao deduzidos da lista do
+# painel. A razao: dist/ tem subpastas -- es/, outraslinguas/ --, e a lista de
+# quem vai para onde ja existe em tools/painel.py. Escrever os caminhos aqui de
+# novo criaria a segunda copia da mesma lista, e ela divergiu no dia seguinte a
+# reorganizacao: este verificador cobrava dist/spanish-coppe.lbx, que tinha
+# passado a ser dist/es/spanish-coppe.lbx.
+ESTILOS = [
+    "coppe.cls", "coppe.dbx", "coppe.bbx", "coppe.cbx",
+    "coppe-numeric.bbx", "coppe-numeric.cbx",
+    "brazilian-coppe.lbx", "english-coppe.lbx", "spanish-coppe.lbx",
+    "french-coppe.lbx", "italian-coppe.lbx",
+    "coppe-lang-spanish.def", "coppe-lang-french.def", "coppe-lang-italian.def",
 ]
+
+GERADOS = ["src/" + n for n in ESTILOS]
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+try:
+    from painel import PARA_DIST
+except ImportError:                      # sem o painel, confere so o src/
+    PARA_DIST = []
+for subpasta, nome in PARA_DIST:
+    if nome in ESTILOS:
+        GERADOS.append("dist/" + (subpasta + "/" + nome if subpasta else nome))
 
 # Lugares em prosa que TEM de trazer a versao corrente. A lista e explicita, e
 # nao uma varredura, porque o repositorio esta cheio de mencoes historicas

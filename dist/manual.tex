@@ -185,6 +185,27 @@
 \documentclass[dsc]{coppe}
 \end{verbatim}
 
+  \section{Os arquivos, e onde eles ficam}
+
+  A entrega da classe vem arrumada por uma regra só: \textbf{o que está na raiz
+  dela funciona sem você mexer em nada; o que está numa pasta de idioma só
+  funciona depois de você trazer o conteúdo dela para a raiz}. O \LaTeX{}
+  procura a classe, os estilos e as bases de referências \emph{ao lado do
+  documento que está compilando}, e não dentro de subpastas.
+
+  Na raiz estão a classe, os estilos de bibliografia, os termos em português e
+  em inglês --- os dois, porque toda tese tem resumo em idioma estrangeiro --- e
+  o exemplo em português. Em \verb|logos| estão os logotipos da capa; em
+  \verb|manuais|, os PDFs para ler. As pastas \verb|en| e \verb|es| trazem o
+  exemplo naquele idioma e o que só ele precisa, e \verb|outraslinguas| traz
+  francês e italiano, que não são idiomas admitidos para redigir tese.
+
+  Quem vai escrever em português não faz nada. Quem vai escrever em inglês ou
+  em espanhol copia o conteúdo da pasta daquele idioma para a raiz, e só então
+  compila.
+
+  \section{A opção de tipo de trabalho}
+
   O tipo é \verb|dsc| para tese de doutorado, \verb|msc| para dissertação de
   mestrado, \verb|dscexam| e \verb|mscexam| para os exames de qualificação, e
   \verb|mscsem| para o seminário de mestrado, que é requisito obrigatório de
