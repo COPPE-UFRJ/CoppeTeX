@@ -1,0 +1,33 @@
+%% Teste de regressao da CoppeTeX. NAO roda na suite normal.
+%% Rode com: python tests/regressivo/run-regressivo.py
+%% BUG: com o espanhol como idioma principal, o babel redefine o \numberline e
+%% o sumario saia "1.1. SECCION" enquanto o titulo do capitulo saia "1.1
+%% SECCION". A opcao es-nosectiondot, aplicada pelo gancho
+%% \coppe@babelextra@spanish, desliga esse ajuste e so ele.
+%% PASSADAS: 3
+%% ESPERA-TEXTO: 1.1 Una seccion
+%% NAO-ESPERA-TEXTO: 1.1. Una seccion
+\documentclass[dsc,spanish]{coppe}
+\title{Punto en el sumario}
+\foreigntitle{The period in the table of contents}
+\titlein{spanish}{El punto en el sumario}
+\author{Nombre del}{Autor}
+\advisor{Primer}{Director}{D.Sc.}{UFRJ}
+\examiner{Primer Examinador}{D.Sc.}{UFRJ}
+\department{PESC}
+\date{09}{2026}
+\keyword{Regresion}
+\foreignkeyword{Regression}
+\braziliankeyword{Regressao}
+\begin{document}
+  \maketitle
+  \frontmatter
+  \begin{abstract}Resumen.\end{abstract}
+  \begin{foreignabstract}Abstract.\end{foreignabstract}
+  \begin{brazilianabstract}Resumo.\end{brazilianabstract}
+  \tableofcontents
+  \mainmatter
+  \chapter{Un capitulo}
+  \section{Una seccion}
+  Texto.
+\end{document}

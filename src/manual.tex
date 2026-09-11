@@ -90,6 +90,7 @@
   está correto aqui foi corrigido por causa de um relato de aluno.
 
   \begin{abstract}
+    \label{norma:resumo}%
     Este manual reúne as regras de apresentação gráfica de teses, dissertações e
     exames de qualificação defendidos na \sigla{coppe} da \sigla{ufrj}, na forma
     em que elas valem depois da 9.ª edição revista (2026) do \emph{Manual para
@@ -390,10 +391,33 @@
   \section{Os resumos}
 
   São dois, no mínimo: um no idioma do trabalho e um em idioma estrangeiro. Cada
-  um cabe em uma folha, e a recomendação é que tenha um parágrafo só, com até
-  250 palavras.
+  um cabe em \textbf{uma folha}, em espaço 1,5, num parágrafo só, de
+  \textbf{150 a 500 palavras}, de preferência na terceira pessoa do singular e
+  com o verbo na voz ativa.
 
-  Cada resumo termina com as palavras-chave.
+  Cada resumo começa pela \textbf{referência do próprio trabalho} e termina com
+  as \textbf{palavras-chave}.
+
+  A referência é a mesma que apareceria numa bibliografia que citasse a tese:
+
+  \begin{quote}
+    \singlespacing\small
+    SOBRENOME, Nome. Título: subtítulo. Rio de Janeiro, 2026. Tese (Doutorado em
+    Engenharia de Sistemas e Computação) --- Instituto Alberto Luiz Coimbra de
+    Pós-Graduação e Pesquisa de Engenharia, Universidade Federal do Rio de
+    Janeiro, Rio de Janeiro, 2026.
+  \end{quote}
+
+  Ela é a mesma nas duas folhas e fica sempre em português, porque uma
+  referência descreve um documento e não se traduz. Só o título acompanha o
+  trabalho: uma tese escrita em inglês é referenciada pelo título em inglês.
+  Veja a folha de resumo deste manual, na página~\pageref{norma:resumo}, e a
+  do exemplo principal.
+
+  Na classe, você não escreve nada: ela monta a referência com o que a folha de
+  rosto já exige. A opção \verb|resumosemreferencia| a retira, e serve a quem
+  tem um resumo no limite das 500 palavras e não quer empurrá-lo para uma
+  segunda folha.
 
   Num trabalho redigido em espanhol, são \textbf{três}: o espanhol, o inglês e um
   em português, para a banca da \sigla{ufrj}.
@@ -810,8 +834,8 @@ public class Saudacao {
       catalográfica oficial;
     \item a folha de aprovação traz a data e a banca com titulação e
       instituição;
-    \item há dois resumos, cada um em uma folha, cada um terminando com as
-      palavras-chave;
+    \item há dois resumos, cada um em uma folha, cada um começando pela
+      referência do trabalho e terminando com as palavras-chave;
     \item toda ilustração tem legenda no topo e fonte abaixo;
     \item as listas pré-textuais vêm antes do sumário;
     \item as referências estão em ordem, sob o título ``Referências'';

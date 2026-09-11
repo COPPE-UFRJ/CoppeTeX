@@ -98,6 +98,7 @@ tornou incorreto o que hoje existe.
 | **V16** | **Folha adicional com ficha catalográfica** (§3.1.2.1.2, Anexo H): obrigatória **a partir de agosto de 2026**, **imediatamente após a folha de rosto**, **preenchida pelo programa de pós-graduação**. Contém os campos de Coleta CAPES — tipo de produção intelectual (bibliográfica / artística / tecnológica / técnica), projeto de pesquisa vinculado (sim/não), nome do projeto, área de concentração, agências de fomento (nome por extenso + sigla) — **e** a ficha catalográfica gerada em <http://fichacatalografica.sibi.ufrj.br/>. **Não é contada nem numerada** | **SIM — elemento inteiramente novo** | `\makecatalog` compõe a ficha em LaTeX e a imprime no **verso da folha de rosto** | **QUEBRADO — a mudança mais importante de todas** |
 | **V17** | **Folha de aprovação** (§3.1.2.1.3, Anexo D): (a) autor, (b) título por extenso + subtítulo, (c) natureza/objetivo/instituição/**área de concentração** (do meio da mancha à direita), (d) **data de aprovação** ("Aprovada em: ___"), (e) **nome, titulação e instituição** de cada membro da banca, **com o orientador em primeiro lugar por ser o presidente**. Sem bloco separado de orientadores; sem local/data no rodapé | Não | Título antes do autor e em caixa alta; bloco "Orientadores:" separado; **`"Aprovada por:"` fixo em português**; `\examiner{titulação}{nome}{grau}` **descarta o 3.º argumento** e não tem campo de instituição; sem data de aprovação; rodapé com local e data | AJUSTAR — **7 divergências**. **Correção ao parecer: o orientador deve sim aparecer, como primeiro membro da banca** |
 | **V18** | **Resumo em língua vernácula** (§3.1.2.1.4, Anexo E): espaço **1,5**; parágrafo único; 3.ª pessoa do singular, voz ativa; 150 a 500 palavras; **sugere-se** que venha antecedido da referência bibliográfica completa; **palavras-chave ao final**, precedidas de "Palavras-chave:", separadas por ponto e vírgula | Não | Página no formato COPPE (título, autor, mês/ano, orientadores, programa); **não imprime palavras-chave**, embora `\keyword` exista e alimente só o `hyperref` | AJUSTAR — palavras-chave é **defeito**; a referência é **sugestão**, não obrigação |
+| **V18 — atualização de 2026-09-11** | | | **FEITO, e além do previsto.** As palavras-chave saíram na 4.1. A referência também: a COPPE decidiu adotar a sugestão **como regra**, e a classe a compõe sozinha com os dados da folha de rosto, nas três páginas de resumo. Ela é a mesma nas três e sempre em português, porque referência não se traduz — é o que o Anexo F mostra. A opção `resumosemreferencia` a retira, para o resumo que já esteja no limite das 500 palavras. Registrado na Norma COPPE 2026, seção 8 |
 | **V19** | **Resumo em língua estrangeira** (§3.1.2.1.5): a versão do resumo vernáculo no idioma de divulgação internacional — portanto **dois** resumos | Não | Dois resumos + terceiro opcional (`brazilianabstract`), por decisão da Norma COPPE 2026 §3 | Compatível como **acréscimo** da COPPE; documentar |
 | **V20** | **Sumário** é o último elemento pré-textual; títulos alinhados à esquerda; sem ponto final (sua anotação) | **SIM** — saiu "iniciar no anverso, usando o verso se necessário" | Verificar o ponto final e o alinhamento | AJUSTAR |
 | **V21** | Dedicatória e epígrafe: do meio da mancha à margem direita, parte inferior; não numeradas (§2.6, §3.1.2.2) | Não | Verificar | AJUSTAR |
@@ -141,7 +142,7 @@ tornou incorreto o que hoje existe.
 | **D-2**, parte "orientadores na folha de aprovação" | **APAGADA — o parecer estava errado.** O §3.1.2.1.3 manda o orientador aparecer, em primeiro lugar, como presidente da banca. O que muda é a forma: um único bloco de banca, não um bloco "Orientadores:" separado |
 | **D-3** — esclarecer a paginação com o SiBI | **APAGADA.** O §2.7 responde sem ambiguidade (V07). A Introdução **não** é a página 1 |
 | **D-5** — decidir se a classe continua gerando a ficha | **APAGADA.** A Nova Norma decidiu |
-| **S-3** — reescrever a página de resumo começando pela referência | **REBAIXADA a P2.** O §3.1.2.1.4 diz "**sugere-se**". A página no formato COPPE é defensável |
+| **S-3** — reescrever a página de resumo começando pela referência | **REBAIXADA a P2** em 2026-09-04, porque o §3.1.2.1.4 diz "**sugere-se**" e a página no formato COPPE é defensável. **REVERTIDO em 2026-09-11:** a página no formato COPPE continua, e a referência entra logo acima do texto do resumo, como nos Anexos E e F. As duas coisas não eram alternativas — é o que a releitura dos anexos mostrou |
 | **T-7** — verificar o esquema de títulos contra o manual | **CONVERTIDA em ação concreta** (V09), com base na sua anotação: `\section` em caixa alta **sem negrito** |
 | **T-2** — avaliar `oneside` | **PROMOVIDA a P0.** Deixou de ser questão de gosto: a edição 2026 eliminou as margens de verso e a entrega é digital (V02, V03) |
 | **D-1** — decidir entre convergir para o SiBI ou manter a identidade COPPE | **REDUZIDA.** Com a ficha fora da classe e a paginação resolvida, sobra praticamente só a página de resumo. Não é mais uma decisão de política, é um item |
@@ -270,9 +271,16 @@ Prioridade: **P0** = bloqueia o PR / a conformidade a partir de agosto de 2026 �
       precedidas de "Palavras-chave:" (e equivalentes por idioma),
       separadas por ponto e vírgula. Hoje `\keyword` só alimenta o
       `hyperref`.
-- [ ] **S-2 (P2)** Oferecer, como **opção**, a referência bibliográfica
+- [x] **S-2 (P2)** Oferecer, como **opção**, a referência bibliográfica
       completa no topo da página de resumo (Anexo E) — "sugere-se", não
       obrigatório.
+      **Feito em 2026-09-11, e ao contrário: a referência é o padrão e a opção
+      (`resumosemreferencia`) serve para tirá-la.** O que decidiu a inversão
+      foram os próprios Anexos E e F, que mostram o resumo e o *abstract*
+      começando por ela: um modelo vale mais que o verbo "sugere-se". Como a
+      classe monta a referência sozinha, com dados que a folha de rosto já
+      exige, deixá-la de fora exigiria do aluno uma decisão que ele não tem
+      como tomar melhor que a norma.
 - [ ] **S-3 (P2)** Avisar no log quando o resumo ficar fora da faixa de
       150–500 palavras.
 

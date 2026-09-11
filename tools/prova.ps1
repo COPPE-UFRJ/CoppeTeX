@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
     Prova de funcionamento do CoppeTeX. Tem de sair limpa antes de marcar uma
     versao.
@@ -14,14 +14,20 @@
     2. O QUE E DISTRIBUIDO COMPILA. A classe, os cinco exemplos por idioma, a
        versao PDF/A do exemplo, a montagem das capas e os manuais.
 
-    3. O QUE PROVA QUE FUNCIONA. A suite de regressao em tests\ e os doze
-       documentos adversativos em adversativa\ -- quatro tipos de trabalho por
-       tres idiomas, cada um acionando ao mesmo tempo tudo o que a classe
-       oferece --, compilados nos DOIS motores, pdfLaTeX e LuaLaTeX, e todos os
-       PDF/A passados pelo veraPDF.
+    3. O QUE PROVA QUE FUNCIONA. A primeira camada de testes, em tests\, e os
+       seis documentos adversativos em tests\adversativa\ -- quatro em
+       portugues, um em ingles e um em espanhol, cada um de um tipo diferente
+       de trabalho, todos acionando ao mesmo tempo tudo o que a classe oferece
+       --, compilados nos DOIS motores, pdfLaTeX e LuaLaTeX, e todos os PDF/A
+       passados pelo veraPDF.
 
-    Nem tests\ nem adversativa\ sao distribuidos, e nenhum dos dois sai do
-    coppe.dtx: provam que a classe funciona, nao fazem parte dela.
+    NAO entra aqui a suite de regressao, em tests\regressivo\: ela e a terceira
+    camada, roda sozinha e cobra outra coisa -- que defeito ja corrigido nao
+    voltou. Rode-a tambem antes de marcar uma versao:
+        python tests\regressivo\run-regressivo.py
+
+    tests\ nao e distribuido, e nada dele sai do coppe.dtx: prova que a classe
+    funciona, nao faz parte dela.
 
     O veredito fica no fim de _scratch\RESULTADO.txt; o codigo de saida e o
     numero de falhas.

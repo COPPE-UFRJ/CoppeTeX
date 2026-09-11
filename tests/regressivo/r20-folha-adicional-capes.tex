@@ -1,0 +1,37 @@
+%% Teste de regressao da CoppeTeX. NAO roda na suite normal.
+%% Rode com: python tests/regressivo/run-regressivo.py
+%% BUG: (desconformidade) a folha adicional exigida desde agosto de 2026
+%% (3.1.2.1.2 e Anexo H) nao existia. O Anexo H desenha os cinco campos da
+%% Coleta CAPES dentro de uma MOLDURA FECHADA, uma celula por campo, sem regua
+%% para escrever; a classe fazia paragrafos soltos com pontilhado.
+%% ESPERA-TEXTO: Informacoes Coleta CAPES
+%% ESPERA-TEXTO: Tipo de producao intelectual:
+%% ESPERA-TEXTO: Projeto de pesquisa vinculado a producao intelectual?
+%% ESPERA-TEXTO: Nome do projeto de pesquisa:
+%% ESPERA-TEXTO: Area de concentracao da producao intelectual:
+%% ESPERA-TEXTO: Agencia(s) de fomento financiadora(s) da producao intelectual:
+%% ESPERA-TEXTO: Ficha catalografica
+\documentclass[dsc]{coppe}
+\title{Folha adicional}
+\foreigntitle{The additional sheet}
+\author{Nome}{Sobrenome}
+\advisor{Primeiro}{Orientador}{D.Sc.}{UFRJ}
+\examiner{Primeiro Examinador}{D.Sc.}{UFRJ}
+\department{PESC}
+\date{09}{2026}
+\areaconcentracao{Engenharia de Sistemas e Computacao}
+\tipoproducao{bibliografica}
+\projetovinculado{sim}
+\nomeprojeto{Projeto de Teste}
+\agenciafomento{Conselho Nacional de Desenvolvimento Cientifico e Tecnologico}{CNPq}
+\keyword{Regressao}
+\begin{document}
+  \maketitle
+  \frontmatter
+  \begin{abstract}Resumo.\end{abstract}
+  \begin{foreignabstract}Abstract.\end{foreignabstract}
+  \tableofcontents
+  \mainmatter
+  \chapter{Um capitulo}
+  Texto.
+\end{document}

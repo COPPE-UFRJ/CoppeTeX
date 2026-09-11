@@ -1,0 +1,33 @@
+%% Teste de regressao da CoppeTeX. NAO roda na suite normal.
+%% Rode com: python tests/regressivo/run-regressivo.py
+%% BUG: \newcoppefloat embrulhava o \newfloat num grupo, e como o \newfloat
+%% define o ambiente localmente, o flutuante do autor sumia ao fechar o grupo.
+%% A lista tambem saia sem numero e sem pontilhado, porque nao herdava \l@figure.
+%% ESPERA-TEXTO: Mapa 1.1 - Um mapa de teste
+%% ESPERA-TEXTO: Fonte: Elaboracao propria.
+%% ESPERA-ARQUIVO: lomapa::\contentsline {mapa}
+\documentclass[dsc]{coppe}
+\newcoppefloat{mapa}{Mapa}{Lista de Mapas}
+\title{Flutuante do autor}
+\foreigntitle{Author-declared float}
+\author{Nome}{Sobrenome}
+\advisor{Primeiro}{Orientador}{D.Sc.}{UFRJ}
+\examiner{Primeiro Examinador}{D.Sc.}{UFRJ}
+\department{PESC}
+\date{09}{2026}
+\keyword{Regressao}
+\begin{document}
+  \maketitle
+  \frontmatter
+  \begin{abstract}Resumo.\end{abstract}
+  \begin{foreignabstract}Abstract.\end{foreignabstract}
+  \listofmapas
+  \tableofcontents
+  \mainmatter
+  \chapter{Um capitulo}
+  \begin{mapa}
+    \caption{Um mapa de teste}
+    \centering Conteudo do mapa.
+    \source{Elaboracao propria.}
+  \end{mapa}
+\end{document}

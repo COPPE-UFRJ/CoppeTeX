@@ -47,17 +47,41 @@
 %%   Grave accent  \`     Left brace    \{     Vertical bar  \|
 %%   Right brace   \}     Tilde         \~}
 %%
+%%%% ACOPLAMENTO: este arquivo (coppe.ist) e o \coppe@semfolio da classe sao um
+%%%% par -- veja o comentario la. E ele so entra em acao se alguem rodar o
+%%%% makeindex com ele, o que o latexmkrc, o tools/build-check.ps1 e o
+%%%% tests/run-tests.ps1 fazem. Quem compilar a mao sem esse passo recebe as
+%%%% listas VAZIAS, sem aviso nenhum.
 actual '='
 quote '!'
 level '>'
-%%%% delim_0   ", p. "
-delim_0 "\\dotfill "
+%%%% Sem numero de pagina, e portanto sem pontilhado.
+%%%%
+%%%% A 4.1.1 do Manual descreve a lista de abreviaturas e siglas como uma
+%%%% relacao alfabetica das siglas com o SIGNIFICADO de cada uma, e a de
+%%%% simbolos do mesmo modo. Nenhuma das duas e lista de ilustracoes, e nenhuma
+%%%% pede localizacao. O numero de pagina era heranca de as duas listas terem
+%%%% sido construidas com a maquina do indice remissivo, onde a pagina e o
+%%%% ponto.
+%%%%
+%%%% O makeindex sempre escreve o numero; quem o descarta e o encapsulador
+%%%% \coppe@semfolio, definido na classe, que engole o argumento e nao imprime
+%%%% nada. Por isso todos os delimitadores ficam vazios: sem numero, o
+%%%% pontilhado levaria o olho ate coisa nenhuma, e a descricao longa passa a
+%%%% quebrar como texto comum, alinhada sob a primeira linha -- que era o outro
+%%%% pedido do issue #60.
+delim_0 ""
+delim_1 ""
+delim_2 ""
+delim_n ""
+delim_r ""
 lethead_flag  0
 headings_flag 0
 preamble
 "\n\\begin{theglossary}\n  \\makeatletter"
 postamble
 "\n  \\end{theglossary}\n"
+
 %% 
 %%
 %% End of file `coppe.ist'.

@@ -13,7 +13,16 @@ param(
     [string]$Filter = ""
 )
 
-$ErrorActionPreference = "Stop"
+# "Continue", e nao "Stop", e a escolha e deliberada.
+#
+# Todo programa chamado aqui -- pdflatex, biber, makeindex -- e executavel
+# nativo, e no Windows PowerShell 5.1 o que um executavel escreve em stderr vira
+# um ErrorRecord (NativeCommandError) assim que alguem captura essa saida. O
+# makeindex escreve o proprio banner em stderr e termina com codigo 0; com
+# "Stop", esse banner derrubava a suite inteira no meio, como se o teste tivesse
+# falhado. Quem julga aprovacao aqui e o $LASTEXITCODE, conferido depois de cada
+# chamada, e para isso "Stop" nao acrescenta nada.
+$ErrorActionPreference = "Continue"
 
 # Make pdflatex see ../src/. The trailing ; matters on Windows -- it tells
 # kpathsea "and then the normal TEXINPUTS path after this".

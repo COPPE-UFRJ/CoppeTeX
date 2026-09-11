@@ -2,7 +2,8 @@
 # -*- coding: utf-8 -*-
 """Confere a lista de referencias contra os exemplos do Manual UFRJ/SiBI 2026.
 
-O gabarito nao e inventado: cada entrada de `adversativa/referencias-manual.bib'
+O gabarito nao e inventado: cada entrada de
+`tests/adversativa/referencias-manual.bib'
 traz, num comentario `%%' logo abaixo da chave, a referencia EXATAMENTE como a
 secao 4.2 do Manual a imprime. Este script compoe o que a classe produziu, o
 compara com esse gabarito e diz onde diverge.
@@ -11,8 +12,8 @@ A comparacao ignora o que nao e da norma: quebras de linha e de hifenizacao do
 pdftotext, os espacos que o biblatex mete dentro de URLs longas, e a diferenca
 entre hifen, meia-risca e travessao. O resto conta.
 
-    python3 tools/conferir-referencias.py adversativa/adv_dsc_pt.pdf
-    CONFERIR=-v python3 tools/conferir-referencias.py adversativa/adv_dsc_pt.pdf
+    python3 tools/conferir-referencias.py tests/adversativa/adv_dsc_pt.pdf
+    CONFERIR=-v python3 tools/conferir-referencias.py tests/adversativa/adv_dsc_pt.pdf
 
 Precisa de python3 e poppler (pdftotext, pdfinfo). O documento tem de ter sido
 compilado com a opcao de classe `numbers': e a marca [n] que separa uma
@@ -21,7 +22,7 @@ referencia da seguinte no texto extraido.
 import sys, re, os, subprocess, unicodedata
 
 BIB = os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                   "..", "adversativa", "referencias-manual.bib")
+                   "..", "tests", "adversativa", "referencias-manual.bib")
 
 
 def gabaritos(caminho):

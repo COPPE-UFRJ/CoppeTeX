@@ -1,0 +1,30 @@
+%% Teste de regressao da CoppeTeX. NAO roda na suite normal.
+%% Rode com: python tests/regressivo/run-regressivo.py
+%% BUG: o rotulo da linha de pesquisa na folha de rosto estava fixo em
+%% portugues, e saia "Linha de pesquisa" num trabalho escrito em ingles. Ele
+%% passou pelo despachante de textos e acompanha o idioma principal.
+%%
+%% A folha de rosto e a SEGUNDA folha.
+%% ESPERA-TEXTO-PAGINA: 2::Research line: Data and Knowledge Engineering
+%% NAO-ESPERA-TEXTO-PAGINA: 2::Linha de pesquisa
+\documentclass[dsc,english]{coppe}
+\title{Rotulo no idioma do trabalho}
+\foreigntitle{The label in the main language}
+\author{Name}{Surname}
+\advisor{First}{Advisor}{D.Sc.}{UFRJ}
+\examiner{First Examiner}{D.Sc.}{UFRJ}
+\department{PESC}
+\date{09}{2026}
+\linhapesquisa{Data and Knowledge Engineering}
+\keyword{Regression}
+\foreignkeyword{Regressao}
+\begin{document}
+  \maketitle
+  \frontmatter
+  \begin{abstract}Abstract.\end{abstract}
+  \begin{foreignabstract}Resumo.\end{foreignabstract}
+  \tableofcontents
+  \mainmatter
+  \chapter{A chapter}
+  Text.
+\end{document}

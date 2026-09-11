@@ -83,7 +83,7 @@ módulos de código, cada um com sua documentação intercalada.
 Os escopos do `build-check.ps1` vão do mais rápido ao mais completo: `class` só
 regenera; `example` compila o exemplo; `langs`, os cinco idiomas; `tests`, a
 suíte de regressão; `docs`, o manual e a norma; `pdfa`, o que passa pelo
-veraPDF; `adversativa`, os doze documentos de prova nos dois motores; `all`,
+veraPDF; `adversativa`, os seis documentos de prova nos dois motores; `all`,
 tudo; `prova`, tudo mais a verificação de fonte única e um veredito.
 
 Enquanto se trabalha, `tools\watch-build.ps1` fica observando e compila sozinho
@@ -122,7 +122,8 @@ e deve virar opção de classe, não decisão embutida.
 escrevendo uma tese há dois anos não lê commit.
 
 **Toda mudança de comportamento ganha um teste.** Em `tests/`, se for um ponto
-isolado; no gerador de `adversativa/`, se for uma opção que interage com outras.
+isolado; no gerador de `../tests/adversativa/`, se for uma opção que interage
+com outras; em `../tests/regressivo/`, se for a correção de um defeito.
 O teste tem de falhar antes da correção e passar depois.
 
 ## Duas armadilhas conhecidas
@@ -155,7 +156,7 @@ quem trabalha no Unix usa o `coppe.ins` direto.
 ## Onde fica o resto
 
 - `../tests/` — a suíte de regressão.
-- `../adversativa/` — doze documentos que acionam tudo ao mesmo tempo.
+- `../tests/adversativa/` — seis documentos que acionam tudo ao mesmo tempo.
 - `../tools/` — o harness. Tem README próprio.
 - `../dist/` — a entrega.
 - `../specs/` — a norma que tudo isto implementa.

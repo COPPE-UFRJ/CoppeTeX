@@ -28,9 +28,11 @@ compilar veio do `.dtx`, e não de um arquivo que ficou para trás.
 | `build-check.ps1` | O motor. Regenera a distribuição e compila o que o escopo pedir, deixando os logs em `_scratch/build-logs/` e um resumo legível em `_scratch/RESULTADO.txt`. |
 | `prova.ps1` | Atalho para `build-check.ps1 -Scope prova`. É o que tem de sair limpo antes de marcar uma versão. |
 | `watch-build.ps1` | Fica observando `_scratch/BUILD_REQUEST` e roda o `build-check` quando o arquivo aparece. Deixe rodando numa janela enquanto trabalha. |
-| `mk-adversativa.py` | Gera os doze documentos de `adversativa/`. Eles não são escritos à mão: para mudar o que provam, mude o gerador. |
+| `mk-adversativa.py` | Gera os seis documentos de `../tests/adversativa/`. Eles não são escritos à mão: para mudar o que provam, mude a matriz no topo do gerador. |
+| `painel.py` | O painel do desenvolvedor, com janela e linha de comando. É o que o `coppetex.bat` da raiz chama. Manual em [`../PAINEL.md`](../PAINEL.md). |
+| `versao.py` | Confere se a versão está sincronizada nos 28 arquivos gerados e nos 6 lugares em prosa, e sobe o segundo ou o terceiro nível. Nunca o primeiro. |
 | `conferir-norma.py` | Lê um PDF pronto e mede, em centímetros, o que a norma fixa: margens, corpo, recuos, ordem das páginas pré-textuais. |
-| `conferir-referencias.py` | Compõe as referências e as compara, uma a uma, com o texto que o Manual imprime. O gabarito está nos comentários `%%` de `adversativa/referencias-manual.bib`. |
+| `conferir-referencias.py` | Compõe as referências e as compara, uma a uma, com o texto que o Manual imprime. O gabarito está nos comentários `%%` de `../tests/adversativa/referencias-manual.bib`. |
 
 ## Os escopos do `build-check.ps1`
 
@@ -44,7 +46,7 @@ Do mais rápido ao mais completo. Todos começam regenerando a distribuição.
 | `tests` | A suíte de regressão de `tests/`. |
 | `docs` | O manual de uso, a norma da COPPE, o manual futuro e a montagem de capas. |
 | `pdfa` | O que tem de ser PDF/A, passado pelo veraPDF. |
-| `adversativa` | Os doze documentos de prova, nos dois motores, com ciclo completo. É o escopo demorado. |
+| `adversativa` | Os seis documentos de prova, nos dois motores, com ciclo completo. É o escopo demorado. |
 | `all` | Tudo acima. |
 | `prova` | `all`, mais a verificação de fonte única antes e um veredito depois. |
 
@@ -81,7 +83,8 @@ terminar, ele escreve `_scratch/BUILD_DONE` e o resultado legível em
 
 Tudo isso vive em `_scratch/`, que o git ignora. **Nenhuma ferramenta daqui
 escreve em arquivo versionado**, com uma exceção declarada: `mk-adversativa.py`
-reescreve os doze `.tex` de `adversativa/`, porque é para isso que ele existe.
+reescreve os seis `.tex` de `../tests/adversativa/`, porque é para isso que ele
+existe.
 
 ## Se você for escrever uma ferramenta nova
 
@@ -113,6 +116,6 @@ que permite alguém entender o harness sem ter estado aqui.
 
 - [`../src/README.md`](../src/README.md) — o guia de programação da classe.
 - [`../tests/README.md`](../tests/README.md) — o que cada teste guarda.
-- [`../adversativa/README.md`](../adversativa/README.md) — o que cada documento
+- [`../tests/adversativa/README.md`](../tests/adversativa/README.md) — o que cada documento
   de prova está provando.
 - [`../CONTRIBUTING.md`](../CONTRIBUTING.md) — como contribuir vindo de fora.

@@ -90,7 +90,7 @@ If you would like the pack to ship with the official CoppeTeX:
 1. Open a pull request adding the two new docstrip modules
    (`<*lang<xx>>...</lang<xx>>` and `<*lbx<xx>>...</lbx<xx>>`) inside
    `src/coppe.dtx`, plus the matching `\file{...}` entries in
-   `src/coppe.ins` and the `copy /Y` lines in `src/doall.bat`.
+   `src/coppe.ins` and the `PARA_DIST` list in `tools/painel.py`.
 2. Run `pdflatex coppe.ins` once to regenerate everything.
 3. Include the example file (`src/example_<lang>.tex` +
    `dist/example_<lang>.{tex,pdf}`).
@@ -102,7 +102,7 @@ If you would like the pack to ship with the official CoppeTeX:
 ## Fixing the class or the manual
 
 The class lives in `src/coppe.dtx` — a documented `.dtx` file. Run
-`pdflatex coppe.ins` (or `./doall.bat` on Windows) to regenerate
+`pdflatex coppe.ins` (or `coppetex.bat --regerar` on Windows) to regenerate
 `coppe.cls`, the `.bbx/.cbx/.dbx`, the `.lbx` files, the `.def` files
 and `example.tex` from it. The manual `coppe.pdf` is also rebuilt from
 the same `.dtx` by running `pdflatex coppe.dtx` three times with
@@ -119,7 +119,7 @@ When you edit `coppe.dtx`:
 - **Anything affecting documentation?** Update the relevant section of
   the documentation prose in `coppe.dtx` (the lines starting with `%`).
 - **dist/ in sync?** When you finalise, copy the generated files to
-  `dist/` (or run `./doall.bat` on Windows, which does it).
+  `dist/` (or run `coppetex.bat --dist` on Windows, which does it).
 
 For larger restructurings, see how the v4.0 multilingual refactor was
 sequenced (commits `775db80`, `a363bc6`, `466302a`, `bfd0b5d`) — three

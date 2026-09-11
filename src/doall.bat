@@ -1,80 +1,22 @@
-:: Generate the class and example sources from the .dtx/.ins
-pdflatex coppe.ins
+@echo off
+setlocal
+rem ===========================================================================
+rem  doall.bat -- atalho historico. O bat central agora e ..\coppetex.bat.
+rem
+rem  Este arquivo fazia tres coisas de uma vez: gerava o src a partir do .dtx,
+rem  compilava os PDFs e copiava o conjunto minimo para ..\dist. Ele continua
+rem  fazendo exatamente isso, mas por intermedio do painel, e nao mais com uma
+rem  lista de copias propria.
+rem
+rem  A razao da mudanca: a lista de arquivos que vao para dist\ estava escrita
+rem  aqui E no Makefile, e as duas versoes divergiram -- uma delas copiava o
+rem  README.md da raiz por cima do guia de instalacao de dist\ a cada execucao,
+rem  e reintroduzia os cinco exemplos por idioma que tinham sido retirados de
+rem  proposito. Agora a lista existe em um lugar so, em tools\painel.py.
+rem
+rem  Quem quiser escolher o que fazer, em vez de fazer tudo:
+rem      ..\coppetex.bat
+rem ===========================================================================
 
-:: --- Documentation (coppe.pdf) ---
-pdflatex coppe.dtx
-makeindex -s gglo.ist -o coppe.gls coppe.glo
-makeindex -s gind.ist -o coppe.ind coppe.idx
-pdflatex coppe.dtx
-pdflatex coppe.dtx
-
-:: --- Example (example.pdf): biblatex/biber bibliography + coppe lists ---
-:: First pass writes example.bcf (for biber) and example.abx/.syx (for the
-:: lists of abbreviations and symbols); biber resolves the bibliography;
-:: makeindex builds the lists; two final passes settle citations and refs.
-pdflatex example.tex
-biber example
-makeindex -s coppe.ist -o example.lab example.abx
-makeindex -s coppe.ist -o example.los example.syx
-pdflatex example.tex
-pdflatex example.tex
-
-:: --- Multilingual demo PDFs (CPGP submission): one per built-in language.
-:: Short documents (cover + folha + abstracts + 1 chapter) that exercise
-:: the v4.0 three-slot multilingual model with each main language.
-for %%L in (pt en es fr it) do (
-  pdflatex example_%%L.tex
-  biber example_%%L
-  makeindex -s coppe.ist -o example_%%L.lab example_%%L.abx
-  makeindex -s coppe.ist -o example_%%L.los example_%%L.syx
-  pdflatex example_%%L.tex
-  pdflatex example_%%L.tex
-)
-
-:: --- Manual (manual.pdf): the COPPE thesis norms written with the
-:: coppe class; same build chain as the example (biblatex + lists). ---
-pdflatex manual.tex
-biber manual
-makeindex -s coppe.ist -o manual.lab manual.abx
-makeindex -s coppe.ist -o manual.los manual.syx
-pdflatex manual.tex
-pdflatex manual.tex
-
-:: --- Sync the minimal distributable set from src to ..\dist ---
-:: Only the files an end user needs: the class, the biblatex style files, the
-:: makeindex style, the logos, the manual, the example, and the docs. Build
-:: intermediates (.aux/.log/.bcf/...) are never copied, to keep dist minimal.
-copy /Y coppe.cls ..\dist\ >nul
-copy /Y coppe.dbx ..\dist\ >nul
-copy /Y coppe.bbx ..\dist\ >nul
-copy /Y coppe.cbx ..\dist\ >nul
-copy /Y coppe-numeric.bbx ..\dist\ >nul
-copy /Y coppe-numeric.cbx ..\dist\ >nul
-copy /Y brazilian-coppe.lbx ..\dist\ >nul
-copy /Y english-coppe.lbx ..\dist\ >nul
-copy /Y spanish-coppe.lbx ..\dist\ >nul
-copy /Y french-coppe.lbx ..\dist\ >nul
-copy /Y italian-coppe.lbx ..\dist\ >nul
-copy /Y coppe-lang-spanish.def ..\dist\ >nul
-copy /Y coppe-lang-french.def ..\dist\ >nul
-copy /Y coppe-lang-italian.def ..\dist\ >nul
-copy /Y coppe.ist ..\dist\ >nul
-copy /Y latexmkrc ..\dist\ >nul
-copy /Y coppe.pdf ..\dist\ >nul
-copy /Y coppe-logo.eps ..\dist\ >nul
-copy /Y coppe-logo.pdf ..\dist\ >nul
-copy /Y ufrj-logo.pdf ..\dist\ >nul
-copy /Y example.tex ..\dist\ >nul
-copy /Y example.bib ..\dist\ >nul
-copy /Y example.pdf ..\dist\ >nul
-:: Os cinco exemplos de idioma NAO vao para dist\. Eles sao demonstracao do
-:: mecanismo multilingue, material de desenvolvimento, e ficam em src\. Ver
-:: https://github.com/COPPE-UFRJ/CoppeTeX/issues/75
-::
-:: O README.md de dist\ tambem NAO e copiado da raiz. Ele e um GUIA DE
-:: INSTALACAO, escrito para quem so quer usar a classe; o da raiz e a proposta
-:: para a CPGP e a discussao da norma, que nao interessam a esse leitor. Esta
-:: linha existia e sobrescrevia o guia a cada execucao.
-copy /Y ..\COPYING ..\dist\ >nul
-:: Remove the retired bibtex styles (replaced by the biblatex style files).
-del /Q ..\dist\coppe-plain.bst ..\dist\coppe-unsrt.bst ..\dist\en-coppe-plain.bst ..\dist\en-coppe-unsrt.bst 2>nul
+call "%~dp0..\coppetex.bat" --regerar --docs --dist
+exit /b %errorlevel%

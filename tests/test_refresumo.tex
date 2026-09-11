@@ -1,0 +1,59 @@
+%%
+%% Guards the reference the class prints above each abstract (3.1.2.1.4 and
+%% Annex E of the SiBI manual: "Sugere-se que o resumo venha antecedido por uma
+%% referencia conforme apresentado no ANEXO E").
+%%
+%% Spanish main language on purpose, so the THREE abstract environments are
+%% exercised at once -- abstract, foreignabstract and brazilianabstract -- and
+%% so the reference is seen to stay in Portuguese on all three while the title
+%% follows the language of the work. The subtitle is given as well, because it
+%% is the one optional piece of the reference.
+%%
+%% NAO e gerado pelo coppe.dtx e NAO e distribuido: a suite prova que a
+%% classe funciona, nao faz parte dela. Rode por tools\prova.ps1, ou por
+%% tests\run-tests.ps1 para so esta pasta.
+%%
+
+\documentclass[dsc,spanish]{coppe}
+
+\title{Título de teste da referência no resumo}
+\foreigntitle{Reference on the abstract page test}
+\titlein{spanish}{T\'itulo de prueba de la referencia en el resumen}
+\subtitlein{spanish}{con subt\'itulo, que tambi\'en entra en la referencia}
+\author{Nombre del}{Autor}
+
+\advisor{Primer}{Director}{D.Sc.}{UFRJ}
+
+\examiner{Primer Examinador}{D.Sc.}{UFRJ}
+\examiner{Segundo Examinador}{Ph.D.}{UFF}
+
+\department{PESC}
+\date{09}{2026}
+
+\keyword{Primera}
+\keyword{Segunda}
+\foreignkeyword{First}
+\foreignkeyword{Second}
+\braziliankeyword{Primeira}
+\braziliankeyword{Segunda}
+
+\begin{document}
+  \maketitle
+  \frontmatter
+  \begin{abstract}
+    Resumen de prueba en espa\~nol.
+  \end{abstract}
+  \begin{foreignabstract}
+    Test abstract in English.
+  \end{foreignabstract}
+  \begin{brazilianabstract}
+    Resumo de teste em português.
+  \end{brazilianabstract}
+  \tableofcontents
+  \mainmatter
+  \chapter{Introducci\'on}
+    Primer p\'arrafo.
+\end{document}
+%%
+%%
+%% End of file `tests/test_refresumo.tex'.

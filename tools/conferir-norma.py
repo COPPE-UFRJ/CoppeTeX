@@ -9,7 +9,7 @@ a margem errada.
 Precisa de python3, poppler (pdftotext, pdftoppm, pdfinfo) e pypdf. Roda em
 qualquer sistema; no Windows, instale poppler e `pip install pypdf'.
 
-    python3 tools/conferir-norma.py adversativa/adv_*.pdf
+    python3 tools/conferir-norma.py tests/adversativa/adv_*.pdf
     python3 tools/conferir-norma.py src/example.pdf
 """
 import sys, re, subprocess, os, tempfile, io
@@ -29,7 +29,7 @@ APROVACAO = re.compile(r"APROVAD[AO] POR|APPROVED BY|APROBAD[AO] POR")
 
 
 def opcoes_da_classe(pdf):
-    """As opcoes de \documentclass do .tex que gerou este PDF, se estiver ao lado.
+    r"""As opcoes de \documentclass do .tex que gerou este PDF, se estiver ao lado.
 
     Uma opcao muda o que a norma pede: `listasnosumario' devolve as listas
     pre-textuais ao sumario, e entao abrir na lista de figuras e o pedido, nao
@@ -44,6 +44,43 @@ def opcoes_da_classe(pdf):
     m = re.search(r"\\documentclass\[([^\]]*)\]", fonte)
     return [o.strip() for o in m.group(1).split(",")] if m else []
 
+_PDFTOTEXT = None
+
+
+def _acha_pdftotext():
+    """Escolhe um pdftotext que tenha -bbox, e nao o primeiro do PATH.
+
+    Existem DOIS programas com esse nome. O do poppler tem -bbox, que e como
+    este script mede posicao no PDF pronto; o do Xpdf nao tem, e sai calado.
+    Quando o do Xpdf vem antes no PATH -- e vem, se o Git Bash estiver instalado
+    -- a conferencia seguia com zero palavras e acusava o DOCUMENTO de nao ter
+    folha numerada nem sumario. Culpava o inocente, e por uma razao que nao
+    estava em lugar nenhum da saida.
+    """
+    global _PDFTOTEXT
+    if _PDFTOTEXT:
+        return _PDFTOTEXT
+    candidatos = []
+    for pasta in os.environ.get("PATH", "").split(os.pathsep):
+        for nome in ("pdftotext.exe", "pdftotext"):
+            caminho = os.path.join(pasta, nome)
+            if os.path.isfile(caminho) and caminho not in candidatos:
+                candidatos.append(caminho)
+    for caminho in candidatos:
+        try:
+            out = subprocess.run([caminho, "-h"], capture_output=True)
+        except OSError:
+            continue
+        ajuda = (out.stdout + out.stderr).decode("utf-8", "replace")
+        if "-bbox" in ajuda:
+            _PDFTOTEXT = caminho
+            return caminho
+    # Nenhum serve. Devolve o primeiro assim mesmo, para que a mensagem de erro
+    # de texto_bbox() explique o que falta em vez de estourar um OSError seco.
+    _PDFTOTEXT = candidatos[0] if candidatos else "pdftotext"
+    return _PDFTOTEXT
+
+
 def _pdftotext(args):
     """Roda o pdftotext e devolve a saida como texto.
 
@@ -51,7 +88,7 @@ def _pdftotext(args):
     tenta a codificacao do console (cp1252) e explode no primeiro acento, o que
     aparecia como um erro de thread no meio da conferencia.
     """
-    out = subprocess.run(["pdftotext"] + args, capture_output=True)
+    out = subprocess.run([_acha_pdftotext()] + args, capture_output=True)
     return out.stdout.decode("utf-8", "replace")
 
 def texto_bbox(pdf):

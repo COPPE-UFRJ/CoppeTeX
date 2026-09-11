@@ -151,6 +151,9 @@ September 2026 series did that, item by item. The full list is in
   institution, and spacing that keeps a board of up to eight on one sheet;
 - keywords closing all three abstracts, pre-textual lists out of the sumário,
   Apêndice and Anexo centred;
+- **the work's own reference opening each abstract**, as Annexes E and F show
+  it, composed by the class from the folha de rosto data. `resumosemreferencia`
+  takes it back out;
 - Latin Modern instead of bitmap fonts, and **PDF/A-2b** under the `pdfa`
   option, validated by veraPDF;
 - `\coadvisor`, plus the `coorientador` option for the abstract pages;
@@ -189,8 +192,9 @@ Each directory explains itself; start with the one you are about to touch.
 |---|---|---|
 | `src/` | [src/README.md](./src/README.md) | The source, and the **programming guide**. Read it before editing anything: `coppe.dtx` is the single source. |
 | `tools/` | [tools/README.md](./tools/README.md) | The build and verification harness, and how to write for it. |
-| `tests/` | [tests/README.md](./tests/README.md) | The regression suite, test by test. |
-| `adversativa/` | [adversativa/README.md](./adversativa/README.md) | The twelve adversarial documents, and what each one proves. |
+| `tests/` | [tests/README.md](./tests/README.md) | The three layers of testing, and what each one asks. |
+| `tests/adversativa/` | [tests/adversativa/README.md](./tests/adversativa/README.md) | Six documents that fire everything at once, and what each one proves. |
+| `tests/regressivo/` | [tests/regressivo/README.md](./tests/regressivo/README.md) | One minimal test per defect already fixed. Opt-in. |
 | `dist/` | [dist/README.md](./dist/README.md) | The delivery: install it and start writing. |
 | `specs/` | [specs/README.md](./specs/README.md) | The normative documents the class implements. |
 
@@ -208,19 +212,27 @@ the class, the biblatex styles, the language packs, the `.bib` bases, the
 the `latexmkrc`. No derived file is edited by hand.
 
 What exists only to *prove* the class works is not distributed and is not in
-the `.dtx`: the regression suite, the twelve adversarial documents in
-`adversativa/`, and the harness in `tools/`. One command runs the lot:
+the `.dtx`: everything under `tests/` and the harness in `tools/`. One command
+does the lot, and asks you what to do:
 
-```powershell
-.\tools\prova.ps1
+```bat
+coppetex.bat
+```
+
+That is the **developer panel** — a window with everything it can do, and the
+same set of actions on the command line. Its manual is
+[PAINEL.md](./PAINEL.md). To go straight to what a release needs:
+
+```bat
+coppetex.bat --tudo --regressivo --conferir --dist
 ```
 
 It regenerates the distribution and checks by git that no derived file
 diverged, compiles everything under both pdfLaTeX and LuaLaTeX, runs veraPDF
-over every PDF/A, and prints a verdict. `python3 tools/conferir-norma.py
-adversativa/adv_*.pdf` then measures the finished PDFs against the Manual —
-paper size, margins, folio position on the rendered ink, pagination order,
-sumário contents, approval sheet, abstract pages.
+over every PDF/A, runs the three layers of tests, and prints a verdict.
+`python3 tools/conferir-norma.py src/*.pdf` then measures the finished PDFs
+against the Manual — paper size, margins, folio position on the rendered ink,
+pagination order, sumário contents, approval sheet, abstract pages.
 
 
 ## Required LaTeX packages

@@ -105,6 +105,7 @@
 \copperdefstring{italian}{algorithm2eopt}{italiano}
 \copperdefstring{italian}{babelname}     {italian}
 \AtBeginDocument{\DeclareLanguageMapping{italian}{italian-coppe}}
+
 %% 
 %%
 %% End of file `coppe-lang-italian.def'.

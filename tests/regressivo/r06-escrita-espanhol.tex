@@ -1,0 +1,32 @@
+%% Teste de regressao da CoppeTeX. NAO roda na suite normal.
+%% Rode com: python tests/regressivo/run-regressivo.py
+%% BUG: num documento com o espanhol como idioma principal o pdftex morria com
+%% "Unbalanced write command". Os rotulos que a classe escreve para a ficha
+%% passavam pelo \roman e pelo \arabic do LaTeX, e o babel-espanhol redefine o
+%% \@roman para versalete; a escrita saia desbalanceada. Passaram a usar as
+%% primitivas romannumeral e number, e os nomes de rotulo vao detokenizados,
+%% porque ':' e '.' sao abreviacoes ativas em espanhol.
+%% NAO-ESPERA-LOG: Unbalanced write command
+\documentclass[dsc,spanish,rascunhoficha]{coppe}
+\title{Escritura desbalanceada}
+\foreigntitle{Unbalanced write}
+\titlein{spanish}{La escritura desbalanceada}
+\author{Nombre del}{Autor}
+\advisor{Primer}{Director}{D.Sc.}{UFRJ}
+\examiner{Primer Examinador}{D.Sc.}{UFRJ}
+\department{PESC}
+\date{09}{2026}
+\keyword{Regresion}
+\foreignkeyword{Regression}
+\braziliankeyword{Regressao}
+\begin{document}
+  \maketitle
+  \frontmatter
+  \begin{abstract}Resumen.\end{abstract}
+  \begin{foreignabstract}Abstract.\end{foreignabstract}
+  \begin{brazilianabstract}Resumo.\end{brazilianabstract}
+  \tableofcontents
+  \mainmatter
+  \chapter{Un capitulo}
+  Texto.
+\end{document}

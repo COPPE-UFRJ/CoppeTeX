@@ -24,9 +24,13 @@
                pelo veraPDF no perfil 2b. Precisa do veraPDF instalado (o
                script procura em %USERPROFILE%\verapdf e no PATH); sem ele o
                passo é PULADO, não falha.
-    adversativa - os 12 documentos de adversativa/ (4 tipos x 3 idiomas),
+    adversativa - os 6 documentos de tests\adversativa\ (quatro em portugues,
+               um em ingles e um em espanhol, cada um de um tipo diferente),
                com o ciclo completo: biber, makeindex das listas e do indice
                remissivo, tres passadas, e veraPDF em cada um.
+    regressivo - a suite de regressao de tests\regressivo\: um teste minimo
+               para cada defeito ja corrigido. NAO entra no `all'; rode-a
+               antes de marcar uma versao.
     all      - tudo acima. Padrão.
     prova    - `all' mais a verificacao de fonte unica (nenhum arquivo derivado
                divergiu do .dtx) e um veredito final. E o que tem de sair limpo
@@ -50,10 +54,12 @@ if ($prova) { $Scope = "all" }
 
 $root    = Split-Path -Parent (Split-Path -Parent $MyInvocation.MyCommand.Path)
 $src     = Join-Path $root "src"
-# tests/ e adversativa/ ficam FORA de src/: nao sao distribuidos e nao saem do
-# coppe.dtx. Provam que a classe funciona; nao fazem parte dela.
+# tests/ fica FORA de src/, e nada dele e distribuido nem sai do coppe.dtx. A
+# pasta prova que a classe funciona; nao faz parte dela. Dentro dela,
+# tests\adversativa\ traz os documentos extremos e tests\regressivo\ um teste
+# minimo para cada defeito ja corrigido.
 $testDir = Join-Path $root "tests"
-$advDir  = Join-Path $root "adversativa"
+$advDir  = Join-Path $root "tests\adversativa"
 $logDir  = Join-Path $root "_scratch\build-logs"
 $result  = Join-Path $root "_scratch\RESULTADO.txt"
 
@@ -75,6 +81,28 @@ function Invoke-Step {
     try {
         $out = & $Body 2>&1
         $code = $LASTEXITCODE
+
+        # "I can't write on file X.pdf" nao e defeito do documento: e alguem
+        # segurando o arquivo. Costuma ser um leitor de PDF aberto na mesa, e
+        # dentro da propria prova costuma ser o veraPDF, que valida um PDF e
+        # ainda nao o soltou quando o passo seguinte tenta reescreve-lo. O
+        # arquivo sai livre em um ou dois segundos.
+        #
+        # Tentar de novo NAO esconde erro de verdade: se o arquivo continuar
+        # preso depois de tres tentativas, o passo falha do mesmo jeito, e o
+        # log diz quantas vezes se tentou.
+        $tentativa = 1
+        while ($code -ne 0 -and $tentativa -lt 3 -and
+               ($out -join "`n") -match "I can't write on file") {
+            $tentativa++
+            Start-Sleep -Seconds 2
+            $out = & $Body 2>&1
+            $code = $LASTEXITCODE
+        }
+        if ($tentativa -gt 1) {
+            Add-Line "         ($Name: arquivo estava preso; $tentativa tentativa(s))"
+        }
+
         $out | Out-File -FilePath (Join-Path $logDir "$Name.log") -Encoding utf8
         if ($code -ne 0) {
             $script:failed++
@@ -86,6 +114,29 @@ function Invoke-Step {
             Add-Line "ok       $Name"
         }
     } finally { Pop-Location }
+}
+
+# Le o .log inteiro.
+#
+# Aqui houve um erro que vale registrar, porque ele APROVAVA errado. A versao
+# anterior lia so o trecho depois do ULTIMO "LaTeX2e <", na crenca de que o
+# arquivo guardasse varias passadas e que o ultimo banner marcasse o comeco da
+# ultima. Nao guarda: o pdflatex REESCREVE o .log a cada passada, e um .log e
+# sempre uma passada so -- "This is pdfTeX" aparece uma vez, sempre.
+#
+# O que aparece duas vezes e o BANNER, porque o LaTeX repete a identificacao do
+# formato no fim do log, logo antes do resumo de avisos. Cortar no ultimo banner
+# jogava fora o corpo inteiro da passada e deixava so essas ultimas linhas --
+# onde os avisos NOMEADOS ("Reference `x' on page 3 undefined") nao estao. O
+# veredito de referencia passou a nunca achar nada e a aprovar qualquer coisa.
+#
+# ACOPLAMENTO: tools/conferir-referencias-cruzadas.py lia o .log pela mesma
+# regra, e pelo mesmo motivo. Os dois foram corrigidos juntos.
+function Get-LogTexto([string]$caminho) {
+    if (-not (Test-Path $caminho)) { return "" }
+    $t = Get-Content $caminho -Raw -ErrorAction SilentlyContinue
+    if (-not $t) { return "" }
+    return $t
 }
 
 # As listas de abreviaturas e de simbolos NAO saem de uma passada do pdflatex:
@@ -117,23 +168,10 @@ function Build-Tex {
     # Em vez de fixar um numero de passadas, pergunta-se ao .log: enquanto ele
     # pedir, roda mais um ciclo, ate tres vezes. Se depois disso ainda pedir, e
     # defeito do documento e o passo falha.
-    # O .log as vezes guarda MAIS DE UMA passada, uma atras da outra. Ler o
-    # arquivo inteiro faz um aviso da primeira passada -- que a segunda ja
-    # resolveu -- parecer um problema atual. So a ultima passada conta, e ela
-    # comeca no ultimo banner do LaTeX.
-    function Ultima-Passada([string]$caminho) {
-        if (-not (Test-Path $caminho)) { return "" }
-        $t = Get-Content $caminho -Raw -ErrorAction SilentlyContinue
-        if (-not $t) { return "" }
-        $i = $t.LastIndexOf("LaTeX2e <")
-        if ($i -gt 0) { return $t.Substring($i) }
-        return $t
-    }
-
     $log = Join-Path $Dir "$Stem.log"
     for ($i = 1; $i -le 3; $i++) {
         if (-not (Test-Path $log)) { break }
-        $txt = Ultima-Passada $log
+        $txt = Get-LogTexto $log
         $pedeBiber = $txt -match 'Please \(re\)run Biber'
         $pedeLatex = $txt -match 'Rerun to get|There were undefined references'
         if (-not ($pedeBiber -or $pedeLatex)) { break }
@@ -152,7 +190,7 @@ function Build-Tex {
     #
     # Prova e uma referencia ou citacao NOMEADA como indefinida -- que e o que
     # produz o "??" na pagina.
-    $txt = Ultima-Passada $log
+    $txt = Get-LogTexto $log
     $m = [regex]::Matches($txt, "(?m)^.*(Reference|Citation) ``[^']+' on page .* undefined.*$")
     if ($m.Count -gt 0) {
         $script:failed++
@@ -161,24 +199,13 @@ function Build-Tex {
     }
 }
 
-# Le so a ULTIMA passada de um .log: o arquivo as vezes guarda mais de uma, e um
-# aviso da primeira, que a segunda ja resolveu, nao e problema atual.
-function Get-UltimaPassada([string]$caminho) {
-    if (-not (Test-Path $caminho)) { return "" }
-    $t = Get-Content $caminho -Raw -ErrorAction SilentlyContinue
-    if (-not $t) { return "" }
-    $i = $t.LastIndexOf("LaTeX2e <")
-    if ($i -gt 0) { return $t.Substring($i) }
-    return $t
-}
-
 # Roda mais passadas enquanto o documento pedir, e cobra se ele continuar
 # pedindo. Serve aos documentos adversativos, que nao usam Build-Tex.
 function Estabilizar {
     param([string]$Stem, [string]$Dir, [string]$Motor, [string]$Fonte, [string]$JobName)
     $log = Join-Path $Dir "$Stem.log"
     for ($i = 1; $i -le 3; $i++) {
-        $txt = Get-UltimaPassada $log
+        $txt = Get-LogTexto $log
         $pedeBiber = $txt -match 'Please \(re\)run Biber'
         $pedeLatex = $txt -match 'Rerun to get|There were undefined references|Please rerun LaTeX'
         if (-not ($pedeBiber -or $pedeLatex)) { break }
@@ -191,7 +218,7 @@ function Estabilizar {
     }
     # Mesma regra do Build-Tex: so falha com prova -- uma referencia ou citacao
     # nomeada como indefinida. Ver o comentario la.
-    $txt = Get-UltimaPassada $log
+    $txt = Get-LogTexto $log
     $m = [regex]::Matches($txt, "(?m)^.*(Reference|Citation) ``[^']+' on page .* undefined.*$")
     if ($m.Count -gt 0) {
         $script:failed++
@@ -311,8 +338,11 @@ if ($Scope -in @("tests", "all")) {
 }
 
 if ($Scope -in @("adversativa", "all")) {
-    # Revisao adversativa: 4 tipos de documento x 3 idiomas, cada um acionando
-    # o maximo possivel da API ao mesmo tempo. Ciclo COMPLETO -- e o unico lugar
+    # Revisao adversativa: seis documentos -- quatro em portugues, um de cada
+    # tipo de trabalho, mais um em ingles e um em espanhol, cada um de um tipo
+    # diferente --, todos acionando o maximo possivel da API ao mesmo tempo.
+    # A matriz das opcoes esta em tools/mk-adversativa.py, explicita, para que
+    # se possa conferir que nenhuma ficou sem prova. Ciclo COMPLETO -- e o unico lugar
     # do harness onde o makeindex das listas de abreviaturas e de simbolos e do
     # indice remissivo tambem roda, que e o que essas listas exigem de verdade.
     $env:TEXINPUTS = "$src;$advDir;$env:TEXINPUTS"
@@ -408,7 +438,7 @@ if ($Scope -in @("pdfa", "all")) {
             @{ Stem = "test_comserifa"; Dir = $testDir })
         # todo documento adversativo e compilado com a opcao pdfa: se algum
         # deles ja foi gerado, valida-se tambem
-        $advDirV = Join-Path $root "adversativa"
+        $advDirV = Join-Path $root "tests\adversativa"
         if (Test-Path $advDirV) {
             foreach ($f in (Get-ChildItem -Path $advDirV -Filter "adv_*.pdf" -ErrorAction SilentlyContinue | Sort-Object Name)) {
                 $veraTargets += @{ Stem = [System.IO.Path]::GetFileNameWithoutExtension($f.Name); Dir = $advDirV }

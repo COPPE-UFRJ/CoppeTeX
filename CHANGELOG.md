@@ -78,6 +78,18 @@ to the CPGP is [`PROPOSTA_CPGP.md`](./PROPOSTA_CPGP.md).
 - **Approval sheet** in the order of 3.1.2.1.3: date of approval, degree and
   institution of every member, advisor as president.
 - **Keywords** at the end of all three abstracts (3.1.2.1.4).
+- **The work's own reference at the top of each abstract** (3.1.2.1.4, Annexes
+  E and F). The Manual says "sugere-se que o resumo venha antecedido por uma
+  referência conforme apresentado no ANEXO E", and both model annexes show the
+  resumo and the abstract opening with it; the class printed none. It is now
+  composed by the class from the folha de rosto data — author, title, subtitle,
+  city, year, work type, degree and Programa — so nobody types it. The same
+  reference appears on all three abstract pages and always in Portuguese,
+  because a reference describes a document and is not translated; only the title
+  follows the language of the work. An exame de qualificação gets none: it is
+  not deposited. `resumosemreferencia` turns it off for an abstract already at
+  the 500-word ceiling, which the three added lines could push onto a second
+  sheet.
 - **Fifth heading level** numbered and formatted (2.6).
 - **`listasnosumario`** — restores the pre-textual lists to the sumário, which
   3.1.2.1.6 keeps out of it.
@@ -235,12 +247,95 @@ What that took:
 
 ### Verification
 
-Everything above is proved by one command, `tools/prova.ps1`, which regenerates
-the distribution from the `.dtx`, checks by git that no derived file diverged,
-compiles the whole distribution, the regression suite and the twelve
-adversarial documents under **both engines**, and runs veraPDF over every
-PDF/A. `tools/conferir-norma.py` then measures the finished PDFs against the
-Manual. See the release notes in the pull request for the run of record.
+Everything above is proved by one command — `coppetex.bat`, the developer
+panel, or `tools/prova.ps1` under it — which regenerates the distribution from
+the `.dtx`, checks by git that no derived file diverged, compiles the whole
+distribution and the test documents under **both engines**, and runs veraPDF
+over every PDF/A. `tools/conferir-norma.py` then measures the finished PDFs
+against the Manual. See the release notes in the pull request for the run of
+record.
+
+Testing is now **three layers**, each asking a different question:
+
+- `tests/*.tex` — *does the class compile?* The verdict is pdflatex's exit
+  code. Runs in every build.
+- `tests/adversativa/` — *does it survive everything at once?* Cut from twelve
+  documents to **six**, because a proof that takes too long is a proof that
+  stops being run. The cut was not uniform: Portuguese keeps four, one per work
+  type, and English and Spanish keep one each, of *different* types, so the
+  sample crosses language with type instead of repeating the same pair. The
+  option matrix became explicit in `tools/mk-adversativa.py` so that one can
+  check by eye that no option lost its proof and that all three spacing steps
+  of the approval sheet — five names, six, seven or more — are still there,
+  the ceiling of eight included.
+- `tests/regressivo/` — *did an old defect come back?* **New.** One minimal
+  test per defect already fixed, 24 of them, each declaring in its own header
+  what must and must not appear in the PDF, in the log, in an auxiliary file or
+  in the raw bytes. It is opt-in: it answers a different question and does not
+  belong in every build. It exists because nearly every bug this class ever had
+  **compiled with exit code zero** and came out wrong — the first layer could
+  never have caught them.
+
+**No PDF under `tests/` is versioned any more.** The versioned PDFs are the
+ones in `src/` and `dist/`, which are the deliverable and let anyone read the
+manual on GitHub without installing TeX. The test PDFs are proof of work: they
+change on every compile, and versioning them filled the history with binary
+nobody reads.
+
+### Fixed in the harness itself
+
+Defects in the tools that check the class are worth the same attention, because
+a checker that approves everything is worse than no checker: it looks as though
+someone checked.
+
+- **The checkers were reading ten lines of each log.** Both
+  `tools/conferir-referencias-cruzadas.py` and the reference verdict in
+  `tools/build-check.ps1` cut the `.log` at the **last** `LaTeX2e <`, believing
+  the file held several passes and that the last banner marked the last one. It
+  does not: pdflatex rewrites the log on every pass, and what appears twice is
+  the banner, which LaTeX repeats at the end of the log just before the warning
+  summary. The cut threw away the body of the pass — which is exactly where the
+  named warnings are — and the reference verdict had stopped finding anything
+  at all. Guarded by `tests/regressivo/r90`.
+- **A locked PDF failed the whole run.** "I can't write on file X.pdf" is not a
+  defect of the document: it is someone holding the file, usually a PDF reader
+  on the desk, or veraPDF itself, which validates a PDF and has not let go of it
+  when the next step tries to rewrite it. The step now retries up to three
+  times and says how many attempts it took; if the file is still locked, it
+  still fails.
+- **The test suite died mid-run over a banner.** `makeindex` writes its own
+  banner to stderr and exits zero; under `$ErrorActionPreference = "Stop"` that
+  banner became a terminating error in PowerShell 5.1 and aborted the suite as
+  if a test had failed.
+- **`tools/conferir-norma.py` blamed the document for a missing tool.** There
+  are two programs called `pdftotext`; only poppler's has `-bbox`, which is how
+  the script measures position on the finished PDF. With Xpdf's first on the
+  PATH the check ran with zero words and accused the document of having no
+  numbered folio and no sumário. It now picks a `pdftotext` that has `-bbox`,
+  whatever the PATH order.
+
+### Developer panel
+
+`coppetex.bat`, at the root, is the single entry point: with no argument it
+opens a window and asks what to do; with arguments it does exactly that and asks
+nothing. Every action exists both ways — the window has no path of its own, so
+the two cannot drift apart. It can regenerate `src/` from the `.dtx`, compile
+the deliverable PDFs, run each of the three test layers, validate PDF/A, run the
+checkers, copy to `dist/` and raise the version. Manual in
+[`PAINEL.md`](./PAINEL.md).
+
+`tools/versao.py` checks that the version is in step across 28 generated files
+and 6 places in prose, and compares `dist/` with `src/` byte for byte — the
+version number is the same in both even when the copy fell behind, which is
+precisely the case nobody notices. It raises the second or the third level;
+**the first is deliberately not offered**, because changing major on this class
+has always meant changing the model, and that is a decision of the project and
+of the CPGP, not of a script.
+
+`src/doall.bat` became a shortcut for `coppetex.bat --regerar --docs --dist`.
+It had a copy list of its own, and that list had already drifted from the
+`Makefile`'s: one of the two overwrote `dist/README.md` — the installation
+guide — with the root README on every run.
 
 ### Backward compatibility
 

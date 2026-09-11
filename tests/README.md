@@ -7,6 +7,18 @@
 > which is overwritten at the next generation. See
 > [`../src/README.md`](../src/README.md).
 
+## Three layers, three questions
+
+| Where | Question it answers | Runs with |
+|---|---|---|
+| `tests/*.tex` (here) | **Does the class compile?** Smoke tests over the public API; the verdict is pdflatex's exit code. | `coppetex.bat --testes` |
+| [`tests/adversativa/`](./adversativa/README.md) | **Does it survive everything at once?** Six documents that fire every feature together, under both engines, validated by veraPDF. | `coppetex.bat --adversativo` |
+| [`tests/regressivo/`](./regressivo/README.md) | **Did an old defect come back?** One minimal test per bug already fixed, each asserting what must and must not appear. Opt-in: it is *not* part of the normal run. | `coppetex.bat --regressivo` |
+
+**No PDF in this tree is versioned.** The versioned PDFs are the ones in `src/`
+and `dist/`, which are the deliverable. These are proof of work: they change on
+every compile and only matter to whoever is running the tests at that moment.
+
 This directory holds smoke tests that exercise public APIs of `coppe.cls`.
 Each `.tex` file is meant to compile cleanly (no LaTeX errors, no new warnings)
 under the standard pipeline:
@@ -43,6 +55,8 @@ that test and is reported in the summary at the end.
 | `test_orientadorexamina.tex`        | The other side of the same sheet: the `orientadorexamina` option puts advisors and coadvisors back on the board, ahead of the examiners. Also the only test with **no** `\dataaprovacao`, so the sheet must read "a ser determinada" rather than draw a rule. `test_banca.tex` declares a comparable board without the option and must come out with the examiners alone. |
 | `test_banca_7.tex`                  | The same with a **seven-member** board — the size at which the folha de aprovação used to spill onto a second sheet, and print a folio on it. |
 | `test_coorientador.tex`             | The `coorientador` option: coadvisors on all three abstract pages, with two of them so the plural label is exercised. |
+| `test_refresumo.tex`                | The work's own reference above each abstract (3.1.2.1.4, Annex E). Spanish-main, so all three abstract environments are exercised at once and the reference is seen to stay in Portuguese while the title follows the language of the work. Carries a subtitle, the one optional piece of the reference. |
+| `test_semrefresumo.tex`             | The other side: the `resumosemreferencia` option takes that reference back out, for an abstract already at the 500-word ceiling that would otherwise spill onto a second sheet. |
 | `test_pdfa.tex`                     | The pre-textual pages reshaped for the 2026 manual — folha adicional with the Coleta CAPES fields, approval sheet of 3.1.2.1.3, mandatory institution argument — under the `pdfa` option. Validated by veraPDF in the harness. |
 | `test_sumario.tex`                  | The sumário: the graphic treatment of all five levels, the single title column, what a two-line title does, and a block that forces two-digit indicatives at every level — the shape that used to print the number over the title. |
 | `test_listas.tex`                   | The lists of abbreviations and of symbols: **no page numbers and no dot leaders** (4.1.1), the optional sort key that puts `IoT` and `eMBB` in alphabetical order, and a description long enough to wrap, which used to break badly before a trailing folio. Needs `makeindex -s ../src/coppe.ist`; `build-check.ps1` runs it. |
@@ -58,6 +72,12 @@ every `test_*.tex` in the folder.
 
 A new test should fail *before* the fix and pass *after*, so it stays
 green forever.
+
+**A test for a bug goes in [`regressivo/`](./regressivo/README.md), not here.**
+The difference is what gets checked: here the verdict is the exit code, and
+nearly every bug this class ever had compiled with zero and came out wrong. A
+regression test declares, in its own header, what must appear in the PDF and
+what must not.
 
 Two of these tests are also built and validated by
 [`tools/build-check.ps1`](../tools/build-check.ps1) in its `pdfa` scope, which

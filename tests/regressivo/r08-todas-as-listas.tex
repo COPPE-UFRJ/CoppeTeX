@@ -1,0 +1,43 @@
+%% Teste de regressao da CoppeTeX. NAO roda na suite normal.
+%% Rode com: python tests/regressivo/run-regressivo.py
+%% BUG: o TeX tem dezesseis fluxos de escrita, e um trabalho que pede TODAS as
+%% listas precisa de dezessete. O documento morria com "No room for a new
+%% \write". A classe passou a carregar o morewrites sozinha, no caminho padrao,
+%% sem o autor saber que o problema existe.
+%% MAKEINDEX: sim
+%% PASSADAS: 2
+%% NAO-ESPERA-LOG: No room for a new
+\documentclass[dsc]{coppe}
+\usepackage{makeidx}\makeindex
+\newcoppefloat{mapa}{Mapa}{Lista de Mapas}
+\makelosymbols
+\makeloabbreviations
+\title{Todas as listas ao mesmo tempo}
+\foreigntitle{Every list at once}
+\author{Nome}{Sobrenome}
+\advisor{Primeiro}{Orientador}{D.Sc.}{UFRJ}
+\examiner{Primeiro Examinador}{D.Sc.}{UFRJ}
+\department{PESC}
+\date{09}{2026}
+\keyword{Regressao}
+\begin{document}
+  \maketitle
+  \frontmatter
+  \begin{abstract}Resumo.\end{abstract}
+  \begin{foreignabstract}Abstract.\end{foreignabstract}
+  \listoffigures
+  \listoftables
+  \listofquadros
+  \listofprogramas
+  \listofalgorithms
+  \listofmapas
+  \printloabbreviations
+  \printlosymbols
+  \tableofcontents
+  \mainmatter
+  \chapter{Um capitulo}
+  Um simbolo \symbl{$\alpha$}{Primeira letra}, uma sigla
+  \abbrev{UFRJ}{Universidade Federal do Rio de Janeiro} e uma entrada de
+  indice\index{entrada}.
+  \printindex
+\end{document}

@@ -48,13 +48,14 @@ de informações acadêmicas da CAPES**, que dá origem à folha adicional.
 | 5. Orientação na folha de rosto | 3.1.2.1.1(f) | Escolha |
 | 6. Orientadores nas páginas de resumo | 3.1.2.1.4 | Acréscimo |
 | 7. Terceiro resumo | 3.1.2.1.4, 3.1.2.1.5 | Acréscimo |
-| 8. Idioma principal | art. 57 da Res. CEPG 302/2024 | Escolha |
-| 9. Listas de Quadros, Programas e Algoritmos | 3.1.2.2.4 | Acréscimo |
-| 10. Fonte das ilustrações | 4.2 | Escolha |
-| 11. Apêndices e Anexos | 3.1.4.2, 3.1.4.3 | Escolha |
-| 12. Numeração das folhas | 2.7 | Reafirmação |
-| 13. Sumário | 3.1.2.1.6 | Escolha |
-| 14. Citações e Referências | 3.1.4.1 | Escolha |
+| 8. Referência no alto do resumo | 3.1.2.1.4, Anexo E | Escolha |
+| 9. Idioma principal | art. 57 da Res. CEPG 302/2024 | Escolha |
+| 10. Listas de Quadros, Programas e Algoritmos | 3.1.2.2.4 | Acréscimo |
+| 11. Fonte das ilustrações | 4.2 | Escolha |
+| 12. Apêndices e Anexos | 3.1.4.2, 3.1.4.3 | Escolha |
+| 13. Numeração das folhas | 2.7 | Reafirmação |
+| 14. Sumário | 3.1.2.1.6 | Escolha |
+| 15. Citações e Referências | 3.1.4.1 | Escolha |
 
 ---
 
@@ -75,7 +76,7 @@ Programa vai o do **Instituto (COPPE)**, que é comum a todos os Programas.
   da Coleta CAPES, não como imagem.
 
 Os arquivos vetoriais em uso são distribuídos com a implementação de referência
-(Seção 15).
+(Seção 16).
 
 ## 2. Nome da instituição na capa — *Escolha*
 
@@ -165,7 +166,32 @@ Cada resumo ocupa uma página própria, na ordem acima, e encerra com as
 palavras-chave **no seu próprio idioma**, separadas por ponto e vírgula, como
 determina o 3.1.2.1.4.
 
-## 8. Idioma principal do trabalho — *Escolha*
+## 8. Referência no alto do resumo — *Escolha*
+
+O item 3.1.2.1.4 diz que "sugere-se que o resumo venha antecedido por uma
+referência conforme apresentado no ANEXO E", e os Anexos E e F mostram o resumo
+e o *abstract* começando por ela. **A COPPE adota a sugestão como regra**: cada
+página de resumo abre pela referência do próprio trabalho, logo acima do texto.
+
+A referência segue o Anexo E e a NBR 6023:
+
+> SOBRENOME, Nome. Título: subtítulo. Rio de Janeiro, 2026. Tese (Doutorado em
+> Engenharia de Sistemas e Computação) — Instituto Alberto Luiz Coimbra de
+> Pós-Graduação e Pesquisa de Engenharia, Universidade Federal do Rio de
+> Janeiro, Rio de Janeiro, 2026.
+
+É a **mesma** nas páginas de resumo e fica **sempre em português**, porque a
+referência descreve um documento e não se traduz — é o que o Anexo F faz ao
+repeti-la na página do *abstract*. Só o título acompanha o idioma do trabalho.
+
+O **exame de qualificação** não a recebe: não é depositado na biblioteca nem
+entra no acervo, e portanto não é documento referenciável.
+
+A implementação de referência compõe a referência sozinha, com os dados que a
+folha de rosto já exige, e oferece uma opção para retirá-la — útil ao resumo que
+já esteja no limite das 500 palavras e não caiba em uma folha com ela.
+
+## 9. Idioma principal do trabalho — *Escolha*
 
 O trabalho pode ser redigido em **português**, **inglês** ou **espanhol**, que
 são os idiomas admitidos pelo art. 57 da Resolução CEPG n. 302/2024. Não há na
@@ -176,7 +202,7 @@ das seções pré-textuais, o título do trabalho na capa e na folha de rosto e 
 texto de abertura do resumo em idioma principal. Não afeta a identidade
 institucional (Seção 4).
 
-## 9. Listas de Quadros, Programas e Algoritmos — *Acréscimo*
+## 10. Listas de Quadros, Programas e Algoritmos — *Acréscimo*
 
 Em complemento às listas do item 3.1.2.2.4, a COPPE reconhece três listas
 próprias, cada uma presente quando houver ao menos uma ocorrência no corpo do
@@ -187,14 +213,14 @@ trabalho, entre a Lista de Tabelas e a Lista de Abreviaturas:
 - **Lista de Programas** — listagens de código-fonte;
 - **Lista de Algoritmos** — pseudo-código.
 
-## 10. Fonte das ilustrações — *Escolha*
+## 11. Fonte das ilustrações — *Escolha*
 
 Para toda ilustração — figura, tabela, quadro, programa, algoritmo — a legenda
 figura **acima** e a fonte é **obrigatória** e figura **abaixo**, em corpo
 menor, espaçamento simples, centralizada, antecedida da palavra "Fonte:" ou de
 seu equivalente no idioma principal.
 
-## 11. Apêndices e Anexos — *Escolha*
+## 12. Apêndices e Anexos — *Escolha*
 
 Os capítulos de Apêndice e de Anexo são apresentados, tanto na abertura do
 capítulo quanto no Sumário, no formato
@@ -206,7 +232,7 @@ capítulo quanto no Sumário, no formato
 com a palavra em caixa alta, a letra identificadora, travessão e o título,
 respeitando o idioma principal.
 
-## 12. Numeração das folhas — *Reafirmação*
+## 13. Numeração das folhas — *Reafirmação*
 
 Nada se acrescenta aqui ao item 2.7 do Manual. A seção existe porque é o ponto
 em que mais se observaram divergências de implementação.
@@ -222,7 +248,7 @@ borda superior, com o último algarismo a 2 cm da borda direita.
 
 Não se empregam algarismos romanos nas folhas pré-textuais.
 
-## 13. Sumário — *Escolha*
+## 14. Sumário — *Escolha*
 
 O item 3.1.2.1.6 manda alinhar os títulos à esquerda e **recomenda** que o
 alinhamento seja "pela margem do título do indicativo mais extenso", mandando
@@ -251,7 +277,7 @@ A grafia de cada nível reproduz a do corpo do trabalho, como determina a 2.6, e
 Os elementos pós-textuais — Referências, Apêndices, Anexos, Glossário, Índice —
 figuram no sumário com a grafia da seção primária.
 
-## 14. Citações e Referências — *Escolha*
+## 15. Citações e Referências — *Escolha*
 
 A COPPE adota as edições vigentes das normas ABNT pertinentes: **NBR 6023**
 (Referências) e **NBR 10520** (Citações). Qualquer dos sistemas de chamada
@@ -260,7 +286,7 @@ usado de forma consistente em todo o trabalho.
 
 ---
 
-## 15. Implementação de referência
+## 16. Implementação de referência
 
 A classe LaTeX `coppe`, versões 4.0 e posteriores (**CoppeTeX 4.x**),
 distribuída em <https://github.com/COPPE-UFRJ/CoppeTeX>, é a implementação de
@@ -280,7 +306,7 @@ deve ser comunicada à equipe mantenedora para correção na revisão seguinte.
   item 3.1.2.1.2, preenchida pelo Programa.
 - **Os pacotes de francês e italiano distribuídos com a classe não habilitam
   esses idiomas para redação.** Servem de demonstração do mecanismo de extensão
-  a novos idiomas; os idiomas admitidos são os da Seção 8.
+  a novos idiomas; os idiomas admitidos são os da Seção 9.
 
 ---
 

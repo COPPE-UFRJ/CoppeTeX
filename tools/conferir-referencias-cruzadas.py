@@ -18,8 +18,8 @@ Este script le os .log e cobra os quatro:
     python3 tools/conferir-referencias-cruzadas.py
     python3 tools/conferir-referencias-cruzadas.py src/manual.log
 
-Sem argumento, varre src/, tests/ e adversativa/. Sai com codigo 1 se achar
-qualquer coisa.
+Sem argumento, varre src/, tests/, tests/adversativa/ e tests/regressivo/. Sai
+com codigo 1 se achar qualquer coisa.
 """
 import glob
 import io
@@ -41,7 +41,8 @@ def logs(argv):
     if argv:
         return argv
     achados = []
-    for pasta in ("src", "tests", "adversativa"):
+    for pasta in ("src", "tests", os.path.join("tests", "adversativa"),
+                  os.path.join("tests", "regressivo")):
         achados += sorted(glob.glob(os.path.join(RAIZ, pasta, "*.log")))
     return achados
 
@@ -54,13 +55,21 @@ def main():
 
     total = 0
     for caminho in arquivos:
+        # O .log inteiro, e nao um pedaco dele.
+        #
+        # Aqui houve um erro que vale registrar, porque ele APROVAVA errado:
+        # este script cortava o texto no ULTIMO "LaTeX2e <", na crenca de que o
+        # arquivo guardasse varias passadas e que o ultimo banner marcasse o
+        # comeco da ultima. Nao guarda -- o pdflatex REESCREVE o .log a cada
+        # passada, e "This is pdfTeX" aparece uma vez em cada arquivo. O que
+        # aparece duas vezes e o BANNER, que o LaTeX repete no fim do log, logo
+        # antes do resumo de avisos. O corte jogava fora o corpo da passada, que
+        # e justamente onde estao os quatro avisos procurados aqui, e o script
+        # passou a dizer "nenhuma referencia quebrada" sempre.
+        #
+        # ACOPLAMENTO: tools/build-check.ps1 lia o .log pela mesma regra, e pelo
+        # mesmo motivo. Os dois foram corrigidos juntos.
         texto = io.open(caminho, encoding="utf-8", errors="replace").read()
-        # O .log as vezes guarda mais de uma passada, uma atras da outra. Um
-        # aviso da primeira, que a segunda ja resolveu, nao e problema; so a
-        # ultima passada conta, e ela comeca no ultimo banner do LaTeX.
-        corte = texto.rfind("LaTeX2e <")
-        if corte > 0:
-            texto = texto[corte:]
         nome = os.path.relpath(caminho, RAIZ)
         achados = []
         for rotulo, padrao in PADROES:

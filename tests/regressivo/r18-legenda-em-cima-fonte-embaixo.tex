@@ -1,0 +1,38 @@
+%% Teste de regressao da CoppeTeX. NAO roda na suite normal.
+%% Rode com: python tests/regressivo/run-regressivo.py
+%% BUG: (desconformidade) a legenda de ilustracao ficava embaixo, como no
+%% \caption padrao do LaTeX. A norma vigente poe a legenda EM CIMA de toda
+%% ilustracao -- figura, tabela e quadro -- e a fonte obrigatoria EMBAIXO.
+%% A ordem no texto extraido prova as duas coisas de uma vez.
+%% ESPERA-TEXTO: Tabela 1.1 - Uma tabela Celula Fonte: Elaboracao propria.
+%% ESPERA-TEXTO: Quadro 1.1 - Um quadro Celula Fonte: Elaboracao propria.
+\documentclass[dsc]{coppe}
+\title{Legenda em cima, fonte embaixo}
+\foreigntitle{Caption on top, source below}
+\author{Nome}{Sobrenome}
+\advisor{Primeiro}{Orientador}{D.Sc.}{UFRJ}
+\examiner{Primeiro Examinador}{D.Sc.}{UFRJ}
+\department{PESC}
+\date{09}{2026}
+\keyword{Regressao}
+\begin{document}
+  \maketitle
+  \frontmatter
+  \begin{abstract}Resumo.\end{abstract}
+  \begin{foreignabstract}Abstract.\end{foreignabstract}
+  \tableofcontents
+  \mainmatter
+  \chapter{Um capitulo}
+  \begin{table}[htb]
+    \caption{Uma tabela}
+    \centering
+    \begin{tabular}{c} Celula \end{tabular}
+    \source{Elaboracao propria.}
+  \end{table}
+  \begin{quadro}[htb]
+    \caption{Um quadro}
+    \centering
+    \begin{tabular}{|c|} \hline Celula \\ \hline \end{tabular}
+    \source{Elaboracao propria.}
+  \end{quadro}
+\end{document}

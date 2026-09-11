@@ -1,0 +1,37 @@
+%% Teste de regressao da CoppeTeX. NAO roda na suite normal.
+%% Rode com: python tests/regressivo/run-regressivo.py
+%% BUG: com doublespacing a capa transbordava para uma segunda folha, e a folha
+%% de sobra saia com folio na parte pre-textual, o que a 2.7 proibe. Capa e
+%% folha de rosto sao formulario institucional e compoem em espaco simples
+%% qualquer que seja o espacamento do corpo.
+%%
+%% A cobranca e o comeco E o fim da capa na MESMA folha: se ela transbordar, a
+%% cidade e o ano caem na folha seguinte.
+%% ESPERA-TEXTO-PAGINA: 1::UNIVERSIDADE FEDERAL DO RIO DE JANEIRO
+%% ESPERA-TEXTO-PAGINA: 1::RIO DE JANEIRO 2026
+%% ESPERA-TEXTO-PAGINA: 2::Rio de Janeiro 2026
+\documentclass[dsc,doublespacing]{coppe}
+\title{Um titulo longo o bastante para transbordar a capa inteira quando composto
+em espaco duplo, com subtitulo e tudo mais que a folha de rosto exige}
+\subtitle{e um subtitulo que tambem ocupa duas linhas inteiras da mancha}
+\foreigntitle{A title long enough to overflow the whole cover}
+\author{Nome Composto do}{Autor de Sobrenome Longo}
+\advisor{Primeiro}{Orientador}{D.Sc.}{UFRJ}
+\advisor{Segundo}{Orientador}{Ph.D.}{UFF}
+\examiner{Primeiro Examinador}{D.Sc.}{UFRJ}
+\examiner{Segundo Examinador}{Ph.D.}{UFF}
+\department{PESC}
+\date{09}{2026}
+\areaconcentracao{Engenharia de Sistemas e Computacao}
+\linhapesquisa{Engenharia de Dados e Conhecimento}
+\keyword{Regressao}
+\begin{document}
+  \maketitle
+  \frontmatter
+  \begin{abstract}Resumo.\end{abstract}
+  \begin{foreignabstract}Abstract.\end{foreignabstract}
+  \tableofcontents
+  \mainmatter
+  \chapter{Um capitulo}
+  Texto.
+\end{document}

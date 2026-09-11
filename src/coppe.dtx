@@ -155,6 +155,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \changes{v4.1}{2026/09/10}{The lists of abbreviations and of symbols no longer carry a page number, nor the dot leaders that led to it. 4.1.1 describes both as an alphabetical list of the term and its meaning and asks for no location; the folio was inherited from building them with the index machinery. makeindex always writes the number, so the class discards it at composition through the coppe@semfolio encapsulator, and every delimiter in coppe.ist is now empty.}
 % \changes{v4.1}{2026/09/10}{New option semlinks: hidelinks over everything else, so the links keep working and lose only the colour and the frame. For anyone printing.}
 % \changes{v4.1}{2026/09/10}{A missing cover logo now raises a class error naming the file and saying it ships with the class, instead of TeX's bare "File not found". No graphicspath is set: kpathsea finds a logo installed beside the class and does not report where it found anything, so the class cannot deduce its own directory.}
+% \changes{v4.1}{2026/09/11}{The three abstracts open with the work's own bibliographic reference, composed by the class from the folha de rosto data. 3.1.2.1.4 suggests it and Annexes E and F show both the resumo and the abstract beginning with it; the class printed none. It is the same reference on the three pages and always in Portuguese, because a reference is not translated, and only the title follows the language of the work. An exame de qualificacao gets none, and resumosemreferencia turns it off for an abstract already at the 500-word limit.}
 % \changes{v4.0}{2026/05/30}{Catalog-label writers (coppe@mainBegin, coppe@bibBegin, coppe@bibEnd, coppe@hasLof) made language-agnostic: detokenize wrap on label names protects ':' and '.' from babel shorthand activation, and the raw etex primitives romannumeral/number replace LaTeX's roman/arabic to bypass spanish-babel's small-caps @roman redefinition that would otherwise crash pdftex with "Unbalanced write command" on every es-main document.}
 %
 % \DoNotIndex{\!,\',\.,\>,\^,\`,\',\=,\\}
@@ -810,6 +811,12 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %     adicional com uma ficha catalogr\'afica composta pela pr\'opria classe, para
 %     que a folha n\~ao seja uma moldura vazia. \textbf{Nunca vale para
 %     dep\'osito}: a ficha de verdade vem do gerador do SiBI.
+%   \item[\texttt{resumosemreferencia}] Tira a refer\^encia do trabalho que a
+%     classe imprime acima do texto dos tr\^es resumos. \textbf{Ligada por
+%     padr\~ao}, porque a 3.1.2.1.4 sugere a refer\^encia e os Anexos E e F
+%     mostram os dois resumos come\c cando por ela. Desligue-a se o seu resumo
+%     estiver no limite das 500 palavras e as tr\^es linhas da refer\^encia o
+%     empurrarem para uma segunda folha --- o resumo tem de caber em uma s\'o.
 %   \item[\texttt{listasnosumario}] Devolve as listas pr\'e-textuais ao sum\'ario.
 %     A 3.1.2.1.6 as mant\'em fora dele, e \'e o padr\~ao da classe.
 %   \item[\texttt{assinaturas}] Aceita e \textbf{sem efeito} desde a v4.1. Punha
@@ -1036,8 +1043,29 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % O |brazilianabstract| \'e o terceiro, em portugu\^es, para o trabalho escrito
 % em espanhol, franc\^es ou italiano que precise de um resumo leg\'ivel pela UFRJ.
 %
-% Cada resumo cabe em uma folha e a recomenda\c c\~ao \'e ficar num par\'agrafo
-% s\'o, com at\'e 250 palavras.
+% Cada resumo cabe em \textbf{uma folha} e a 3.1.2.1.4 pede um par\'agrafo s\'o,
+% em espa\c co 1,5, de \textbf{150 a 500 palavras}, de prefer\^encia na terceira
+% pessoa do singular e com o verbo na voz ativa.
+%
+% \paragraph{A refer\^encia no alto do resumo.} A mesma 3.1.2.1.4 diz que
+% ``\emph{sugere-se que o resumo venha antecedido por uma refer\^encia conforme
+% apresentado no ANEXO E}'', e os Anexos E e F mostram o resumo e o
+% \emph{abstract} come\c cando por ela. A classe comp\~oe essa refer\^encia
+% sozinha, com o que voc\^e j\'a deu para a folha de rosto --- autor, t\'itulo,
+% subt\'itulo, cidade, ano, tipo de trabalho, grau e Programa:
+% \begin{quote}\footnotesize
+% SOBRENOME, Nome. \emph{T\'itulo}: subt\'itulo. Rio de Janeiro, 2026. Tese
+% (Doutorado em Engenharia de Sistemas e Computa\c c\~ao) -- Instituto Alberto
+% Luiz Coimbra de P\'os-Gradua\c c\~ao e Pesquisa de Engenharia, Universidade
+% Federal do Rio de Janeiro, Rio de Janeiro, 2026.
+% \end{quote}
+% Voc\^e n\~ao escreve nada: ela sai nos tr\^es resumos, sempre em portugu\^es e
+% sempre igual, porque uma refer\^encia descreve um documento e n\~ao se traduz
+% --- \'e assim que o Anexo F a repete na p\'agina do \emph{abstract}. S\'o o
+% t\'itulo acompanha o trabalho: uma tese escrita em ingl\^es \'e referenciada
+% pelo t\'itulo em ingl\^es. O exame de qualifica\c c\~ao n\~ao a recebe, porque
+% n\~ao \'e depositado na biblioteca. Para tir\'a-la, use a op\c c\~ao
+% |resumosemreferencia|.
 %
 % \DescribeMacro{\coppetexfinalpage}
 % A folha de col\'ofon, no fim de tudo: diz com que vers\~ao da classe, em que
@@ -2285,6 +2313,7 @@ oneside   & [dsc,oneside]   & \pre & One-sided, 3\,cm left margin on every sheet
 orientadorexamina & [dsc,orientadorexamina] & \pre & Put advisors back on the approval sheet. Off by default: the sheet records who examined. \\
 coorientador & [dsc,coorientador] & \pre & List coadvisors on the abstract pages too. \\
 rascunhoficha & [dsc,rascunhoficha] & \pre & Draft catalogue card while writing. \textbf{Never valid for deposit.} \\
+resumosemreferencia & [dsc,resumosemreferencia] & \pre & Drop the work's own reference from the top of the three abstracts. It is printed by default (3.1.2.1.4, Annexes E and F). \\
 listasnosumario & [dsc,listasnosumario] & \pre & Put the pre-textual lists back in the table of contents. \\
 assinaturas & ---           & \pre & Accepted, does nothing. Signature rules are gone: deposit is digital. \\
 numeraisromanos & [dsc,numeraisromanos] & \pre & Roman numerals on pre-textual sheets. \textbf{Against 2.7}; legacy only. \\
@@ -4332,6 +4361,20 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % paginas de resumo, no mesmo formato da folha de rosto. Sem a opcao nada muda.
 \newif\if@coppecoadvresumo \@coppecoadvresumofalse
 \DeclareOption{coorientador}{\@coppecoadvresumotrue}
+% A referencia do proprio trabalho, logo acima do texto do resumo. A 3.1.2.1.4
+% do Manual diz "Sugere-se que o resumo venha antecedido por uma referencia
+% conforme apresentado no ANEXO E", e os Anexos E e F mostram os dois resumos
+% comecando por ela. A classe passa a compo-la sozinha, com os dados que a folha
+% de rosto ja exige -- autor, titulo, cidade, ano, tipo de trabalho, grau e
+% Programa --, no formato do Anexo E e da NBR 6023. Ligada por padrao; quem nao
+% a quiser pede `resumosemreferencia'.
+%
+% ACOPLAMENTO: a referencia cresce a pagina do resumo em tres ou quatro linhas.
+% O resumo tem de caber em UMA folha (3.1.2.1.4), entao um resumo ja no limite
+% das 500 palavras pode passar para a folha seguinte; e para esse caso que a
+% opcao existe.
+\newif\if@copperefresumo \@copperefresumotrue
+\DeclareOption{resumosemreferencia}{\@copperefresumofalse}
 % 3.1.2.1.6 says the sumario enumerates the divisions "na mesma ordem e grafia
 % em que a materia nele se sucede" and adds "inclusive os elementos
 % pos-textuais" -- and then settles the question by pointing at its own sumario
@@ -5861,6 +5904,55 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %    \end{macrocode}
 % \end{macro}
 %
+% \begin{macro}{\coppe@refresumo}
+% The work's own bibliographic reference, printed immediately above the text of
+% each of the three abstracts. 3.1.2.1.4 of the 2024 manual: ``Sugere-se que o
+% resumo venha antecedido por uma refer\^encia conforme apresentado no ANEXO
+% E'', and Annexes E and F show both abstracts opening with it.
+%
+% The reference is assembled from data the folha de rosto already demands, in
+% the order Annex E prints it and NBR 6023 prescribes for a thesis:
+% \begin{quote}\footnotesize
+% SOBRENOME, Nome. T\'itulo: subt\'itulo. Cidade, ano. Tese (Doutorado em
+% Programa) -- Instituto, Universidade, Cidade, ano.
+% \end{quote}
+%
+% Three decisions worth recording:
+% \begin{itemize}
+%   \item The reference is the same on all three pages, and always in
+%     Portuguese, because a reference describes a document and is not
+%     translated. Annex F shows exactly that: the |abstract| page carries the
+%     very same reference as the |resumo| page. Only the title follows the
+%     document, through |\coppe@selecttitle|, so an English-written thesis is
+%     referenced by its English title inside a Brazilian institution.
+%   \item An exame de qualifica\c c\~ao gets none. It is not deposited in the
+%     library, has no ficha catalogr\'afica and is not a referenceable
+%     document.
+%   \item ACOPLAMENTO: the institution's long name also appears, broken across
+%     two lines by hand, in |\makecover|. Change one and look at the other.
+%    \end{itemize}
+%    \begin{macrocode}
+\newcommand\local@instname{Instituto Alberto Luiz Coimbra de
+  P{\' o}s-Gradua{\c c}{\~ a}o e Pesquisa de Engenharia}
+\newcommand\coppe@refresumo{%
+  \if@copperefresumo
+    \if@coppeexame\else
+      {\singlespacing\noindent\sloppy
+        \nohyphens{%
+          \MakeUppercase{\@authsurn}, \@authname.
+          \coppe@selecttitle
+          \@ifundefined{coppe@subtitle@\coppe@mainlang}{}{%
+            : \coppe@selectsubtitle}.
+          \local@cityname, \coppe@docyear.
+          \local@doctype\ (\@degreename\ em \local@deptname) --
+          \local@instname, \local@universityname,
+          \local@cityname, \coppe@docyear.}\par}%
+      \vspace*{5mm}
+    \fi
+  \fi}
+%    \end{macrocode}
+% \end{macro}
+%
 % \begin{environment}{abstract}
 % This is a specialization of the abstract in the article standard class.
 %    \begin{macrocode}
@@ -5901,7 +5993,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \coppe@coadvisorrows{\local@coadvisorstring}\par
   \vspace*{2mm}
   \noindent\local@deptstring: \local@deptname\par
-  \vspace*{7mm}}{%
+  \vspace*{7mm}%
+  \coppe@refresumo}{%
   \coppe@printkeywords{\coppemainstring{keywordsname}}%
     {CoppeKeyword:}{\value{keywords}}%
   \vspace*{\fill}}
@@ -5949,7 +6042,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \coppe@coadvisorrows{\foreign@coadvisorstring}\par
   \vspace*{2mm}
   \noindent\foreign@deptstring: \foreign@deptname\par
-  \vspace*{7mm}}{%
+  \vspace*{7mm}%
+  \coppe@refresumo}{%
   \ifnum\value{foreignkeywords}>0
     \coppe@printkeywords{\coppeforeignstring{keywordsname}}%
       {CoppeForeignKeyword:}{\value{foreignkeywords}}%
@@ -5958,16 +6052,20 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
       {CoppeKeyword:}{\value{keywords}}%
   \fi
   \end{otherlanguage}
-  \vspace*{\fill}
-  \global\let\@author\@empty
-  \global\let\@date\@empty
-  \global\let\foreign@title\@empty
-  \global\let\foreign@title\relax
-  \global\let\local@title\@empty
-  \global\let\local@title\relax
-  \global\let\author\relax
-  \global\let\author\relax
-  \global\let\date\relax}
+  \vspace*{\fill}}
+% Aqui havia uma faxina: ao fechar, o ambiente apagava \@author, \@date,
+% \local@title, \foreign@title, \author e \date, todos com \global\let ...
+% \relax. Era limpeza de quando o |foreignabstract| era a ULTIMA folha
+% pre-textual e ninguem mais ia precisar deles.
+%
+% Desde a v4.0 ele nao e a ultima: o |brazilianabstract|, o terceiro resumo de
+% um trabalho em espanhol, vem depois -- e compoe o titulo com \local@title, que
+% acabara de ser apagado. O resultado era uma folha de resumo SEM TITULO no
+% deposito, e so em trabalhos em espanhol, que sao poucos e nao tinham sido
+% olhados folha a folha.
+%
+% A faxina saiu inteira. Ela nao economizava nada que importe: sao seis nomes de
+% macro, e o documento inteiro ja esta composto quando eles seriam liberados.
 %    \end{macrocode}
 % \changes{v0.5}{2008/05/25}{Changed from macro to environment.}
 % \end{environment}
@@ -6020,7 +6118,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \coppe@coadvisorrows{\local@coadvisorstring}\par
   \vspace*{2mm}
   \noindent\local@deptstring: \local@deptname\par
-  \vspace*{7mm}}{%
+  \vspace*{7mm}%
+  \coppe@refresumo}{%
 % \coppestring takes ONE argument and resolves against the current language;
 % this runs before \end{otherlanguage}, so \languagename is already brazilian.
   \ifnum\value{braziliankeywords}>0

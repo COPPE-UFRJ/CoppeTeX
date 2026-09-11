@@ -1,0 +1,26 @@
+%% Teste de regressao da CoppeTeX. NAO roda na suite normal.
+%% Rode com: python tests/regressivo/run-regressivo.py
+%% BUG: sem \dataaprovacao a folha de aprovacao desenhava uma regua para
+%% preencher a mao. A entrega e digital desde a Resolucao CEPG n. 246/2023, e
+%% ninguem escreve num PDF: a folha passou a dizer, em palavras, "a ser
+%% determinada".
+%% ESPERA-TEXTO: Aprovada em: a ser determinada
+\documentclass[dsc]{coppe}
+\title{Data a ser determinada}
+\foreigntitle{Date to be determined}
+\author{Nome}{Sobrenome}
+\advisor{Primeiro}{Orientador}{D.Sc.}{UFRJ}
+\examiner{Primeiro Examinador}{D.Sc.}{UFRJ}
+\department{PESC}
+\date{09}{2026}
+\keyword{Regressao}
+\begin{document}
+  \maketitle
+  \frontmatter
+  \begin{abstract}Resumo.\end{abstract}
+  \begin{foreignabstract}Abstract.\end{foreignabstract}
+  \tableofcontents
+  \mainmatter
+  \chapter{Um capitulo}
+  Texto.
+\end{document}

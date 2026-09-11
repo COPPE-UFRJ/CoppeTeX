@@ -103,6 +103,7 @@
 \copperdefstring{french}{algorithm2eopt}{french}
 \copperdefstring{french}{babelname}     {french}
 \AtBeginDocument{\DeclareLanguageMapping{french}{french-coppe}}
+
 %% 
 %%
 %% End of file `coppe-lang-french.def'.

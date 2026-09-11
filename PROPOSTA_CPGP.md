@@ -132,7 +132,8 @@ Pouco, e todo o pouco está em [`MIGRATION_v3_to_v4.md`](./MIGRATION_v3_to_v4.md
   Coleta CAPES (3.1.2.1.2);
 - a folha de aprovação ganha data, titulação e instituição de cada membro da
   banca (3.1.2.1.3);
-- os três resumos encerram com palavras-chave no próprio idioma (3.1.2.1.4);
+- os três resumos começam pela referência do próprio trabalho, como nos
+  Anexos E e F, e encerram com palavras-chave no próprio idioma (3.1.2.1.4);
 - as listas pré-textuais saem do Sumário, que passa a abrir na primeira seção
   numerada (3.1.2.1.6).
 

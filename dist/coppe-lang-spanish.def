@@ -110,6 +110,7 @@
 %% language-mapping registration until \begin{document} so biblatex's
 %% \DeclareLanguageMapping is available.
 \AtBeginDocument{\DeclareLanguageMapping{spanish}{spanish-coppe}}
+
 %% 
 %%
 %% End of file `coppe-lang-spanish.def'.

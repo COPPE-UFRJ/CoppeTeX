@@ -151,6 +151,7 @@ API compatível.
 | Fólio em corpo 12 | Corpo 10, junto das legendas, notas e citações longas (2.2b) |
 | "Apêndice A" e "Anexo A" à esquerda | Centralizados: letra não é indicativo numérico (2.6) |
 | Sem palavras-chave nos resumos | Cada resumo encerra com as suas, no próprio idioma (3.1.2.1.4) |
+| Resumo começando pelo texto | Começa pela referência do próprio trabalho, como nos Anexos E e F. A classe a compõe sozinha; `resumosemreferencia` a retira |
 | Fontes bitmap (Type 3 no PDF) | Latin Modern — sem isso não há PDF/A |
 | Sumário com recuo progressivo por nível | Indicativo na margem e título em coluna única, como o sumário do manual (3.1.2.1.6) |
 

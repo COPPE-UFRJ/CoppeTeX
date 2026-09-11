@@ -396,6 +396,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   porque a entrega e digital desde a Resolucao CEPG n. 246/2023}}
 \newif\if@coppecoadvresumo \@coppecoadvresumofalse
 \DeclareOption{coorientador}{\@coppecoadvresumotrue}
+\newif\if@copperefresumo \@copperefresumotrue
+\DeclareOption{resumosemreferencia}{\@copperefresumofalse}
 \newif\if@coppelistastoc \@coppelistastocfalse
 \DeclareOption{listasnosumario}{\@coppelistastoctrue}
 \newif\if@copperascunho \@copperascunhofalse
@@ -1347,6 +1349,24 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
       \end{tabularx}%
     \fi
   \fi}
+\newcommand\local@instname{Instituto Alberto Luiz Coimbra de
+  P{\' o}s-Gradua{\c c}{\~ a}o e Pesquisa de Engenharia}
+\newcommand\coppe@refresumo{%
+  \if@copperefresumo
+    \if@coppeexame\else
+      {\singlespacing\noindent\sloppy
+        \nohyphens{%
+          \MakeUppercase{\@authsurn}, \@authname.
+          \coppe@selecttitle
+          \@ifundefined{coppe@subtitle@\coppe@mainlang}{}{%
+            : \coppe@selectsubtitle}.
+          \local@cityname, \coppe@docyear.
+          \local@doctype\ (\@degreename\ em \local@deptname) --
+          \local@instname, \local@universityname,
+          \local@cityname, \coppe@docyear.}\par}%
+      \vspace*{5mm}
+    \fi
+  \fi}
 \newenvironment{abstract}{%
   \cleardoublepage
   \thispagestyle{plain}
@@ -1384,7 +1404,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \coppe@coadvisorrows{\local@coadvisorstring}\par
   \vspace*{2mm}
   \noindent\local@deptstring: \local@deptname\par
-  \vspace*{7mm}}{%
+  \vspace*{7mm}%
+  \coppe@refresumo}{%
   \coppe@printkeywords{\coppemainstring{keywordsname}}%
     {CoppeKeyword:}{\value{keywords}}%
   \vspace*{\fill}}
@@ -1426,7 +1447,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \coppe@coadvisorrows{\foreign@coadvisorstring}\par
   \vspace*{2mm}
   \noindent\foreign@deptstring: \foreign@deptname\par
-  \vspace*{7mm}}{%
+  \vspace*{7mm}%
+  \coppe@refresumo}{%
   \ifnum\value{foreignkeywords}>0
     \coppe@printkeywords{\coppeforeignstring{keywordsname}}%
       {CoppeForeignKeyword:}{\value{foreignkeywords}}%
@@ -1483,7 +1505,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \coppe@coadvisorrows{\local@coadvisorstring}\par
   \vspace*{2mm}
   \noindent\local@deptstring: \local@deptname\par
-  \vspace*{7mm}}{%
+  \vspace*{7mm}%
+  \coppe@refresumo}{%
   \ifnum\value{braziliankeywords}>0
     \coppe@printkeywords{\coppestring{keywordsname}}%
       {CoppeBrazilianKeyword:}{\value{braziliankeywords}}%

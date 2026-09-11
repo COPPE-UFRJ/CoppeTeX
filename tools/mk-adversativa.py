@@ -1,7 +1,27 @@
 # -*- coding: utf-8 -*-
-"""Gera os 12 documentos da revisao adversativa em src/adversativa/."""
+"""Gera os documentos da revisao adversativa em tests/adversativa/.
+
+Eram doze -- quatro tipos de trabalho vezes tres idiomas -- e passaram a ser
+SEIS. A razao e o relogio: cada documento e compilado duas vezes, no pdfTeX e no
+LuaTeX, com biber, dois makeindex e o indice remissivo, e depois validado pelo
+veraPDF. Doze documentos faziam a prova demorar mais do que qualquer um esta
+disposto a esperar antes de marcar uma versao, e o preco disso e a prova deixar
+de ser rodada.
+
+O corte nao foi uniforme, e isso e o ponto. O portugues fica com QUATRO
+documentos, um de cada tipo de trabalho, porque e o idioma de quase todo
+trabalho da COPPE e o unico em que os quatro tipos aparecem de verdade. Cada um
+dos outros dois idiomas fica com UM, e de um tipo DIFERENTE, para que a
+amostragem cruze idioma com tipo em vez de repetir o mesmo par.
+
+O que nao podia sumir junto com os seis documentos era a cobertura das OPCOES.
+A matriz abaixo e explicita, e nao mais calculada por resto de divisao, justo
+para que se possa conferir com o dedo que nenhuma opcao ficou sem prova e que os
+tres degraus do espacamento da folha de aprovacao -- ate cinco nomes, seis, e
+sete ou mais -- continuam todos representados, com o teto de oito inclusive.
+"""
 import os
-OUT = "adversativa"
+OUT = os.path.join("tests", "adversativa")
 
 L = {
  "pt": dict(babel="brazilian", opt=None,
@@ -56,6 +76,47 @@ TIPOS = [("mscexam","Exame de Qualificação de Mestrado"),
          ("msc","Dissertação de Mestrado"),
          ("dsc","Tese de Doutorado")]
 
+# A matriz. Uma linha por documento, e cada coluna dita alguma coisa:
+#
+#   extra   opcoes alem de pdfa e coorientador, que todos levam
+#   nadv    quantos \advisor
+#   nexam   quantos \examiner
+#   ficha   "real" inclui um PDF externo; "rascunho" pede a opcao rascunhoficha
+#   data    False deixa o documento SEM \dataaprovacao, que e o caso em que a
+#           folha tem de escrever "a ser determinada"
+#   ext     o documento levado ao extremo -- longtable que atravessa folhas,
+#           indice com subentradas, glossario e anexo com PDF incluido
+#
+# A coluna "imprime" do comentario de cada linha e quantos nomes a folha de
+# aprovacao realmente imprime: so os examinadores, ou tambem os orientadores e o
+# coorientador quando ha `orientadorexamina'. E esse numero, e nao o total de
+# pessoas declaradas, que decide o espacamento da folha.
+MATRIZ = [
+    # imprime 4 -- degrau curto. Unico com twoside e doublespacing juntos.
+    dict(tipo="mscexam", lang="pt", extra=["twoside", "doublespacing"],
+         nadv=1, nexam=4, ficha="rascunho", data=True, ext=False),
+    # imprime 7 -- degrau alto, e na folha mais curta (exame nao tem folha
+    # adicional). Unico com semlinks e unico SEM data de aprovacao.
+    dict(tipo="dscexam", lang="pt", extra=["numbers", "semlinks",
+                                           "orientadorexamina"],
+         nadv=2, nexam=4, ficha="rascunho", data=False, ext=False),
+    # imprime 5 -- o degrau original. Unico com comserifa.
+    dict(tipo="msc", lang="pt", extra=["comserifa"],
+         nadv=2, nexam=5, ficha="real", data=True, ext=False),
+    # imprime 6 -- degrau do meio. E o documento extremo da suite.
+    dict(tipo="dsc", lang="pt", extra=[],
+         nadv=2, nexam=6, ficha="real", data=True, ext=True),
+    # imprime 8 -- o TETO que a folha tem de aguentar numa folha so.
+    # Unico com listasnosumario.
+    dict(tipo="msc", lang="en", extra=["listasnosumario", "numbers",
+                                       "orientadorexamina"],
+         nadv=2, nexam=5, ficha="real", data=True, ext=False),
+    # imprime 7 na folha curta do exame, em espanhol -- o idioma que obriga a
+    # classe a compor TRES resumos.
+    dict(tipo="dscexam", lang="es", extra=["doublespacing"],
+         nadv=1, nexam=7, ficha="rascunho", data=True, ext=False),
+]
+
 DEPTS = ["PESC","PEB","PEC","PEE","PEM","PEMM","PEN","PENO","PEP","PEQ","PET","PPE"]
 
 TIT = {"pt":"Um documento adversativo para a classe CoppeTeX",
@@ -104,42 +165,29 @@ PROVA_REFS = [
     ("m-norma", "norma técnica"),
 ]
 
-def doc(i, tipo, tiponome, lang):
+def doc(i, linha, tiponome):
+    tipo, lang = linha["tipo"], linha["lang"]
     d = L[lang]
     # UM documento da suite -- a tese de doutorado em portugues -- e levado ao
     # extremo: mais de um exemplo em cada lista, indice remissivo com
     # subentradas e remissivas, glossario pos-textual, apendice com longtable
-    # que atravessa folhas e anexo com PDF externo incluido. Os outros onze
-    # ficam enxutos de proposito: eles cobrem a matriz de opcoes e de idiomas,
-    # e um documento gigante em cada um deles so faria a prova demorar.
-    ext = (tipo == "dsc" and lang == "pt")
+    # que atravessa folhas e anexo com PDF externo incluido. Os outros ficam
+    # enxutos de proposito: eles cobrem a matriz de opcoes e de idiomas, e um
+    # documento gigante em cada um deles so faria a prova demorar.
+    ext = linha["ext"]
     opts = [tipo]
     if d["opt"]: opts.append(d["opt"])
     # Nenhuma opcao de fluxo aqui, de proposito: estes documentos acionam TODAS
     # as listas ao mesmo tempo, que e o caso em que o pdfTeX estoura os 16
     # fluxos, e o ponto e verificar que a classe resolve isso SOZINHA, no
     # caminho padrao, sem o autor saber que o problema existe.
-    opts += ["pdfa","coorientador"]
-    if i % 2 == 1: opts.append("numbers")
-    if i % 3 == 0: opts.append("twoside")
-    if i % 4 == 0: opts.append("doublespacing")
-    if i % 2 == 0: opts.append("rascunhoficha")
-    if i == 7:     opts.append("listasnosumario")
-    # Um documento leva `comserifa': desde a v4.1 a classe compoe sem serifa por
-    # padrao, e a opcao de voltar a serifa precisa de pelo menos uma prova.
-    if i == 5:     opts.append("comserifa")
-    # Metade leva `orientadorexamina'. Desde a v4.1 a folha de aprovacao lista
-    # so os examinadores; os dois caminhos -- com e sem o orientador na banca --
-    # precisam de prova, e em bancas de tamanhos diferentes, porque o
-    # espacamento da folha depende de quantos nomes ela realmente imprime.
-    if i % 2 == 1: opts.append("orientadorexamina")
-    # Um documento leva `semlinks': os links continuam existindo, so perdem a
-    # cor e a moldura. Precisa de prova em documento grande porque o que se quer
-    # verificar e que os bookmarks e os \autoref continuam funcionando.
-    if i == 2:     opts.append("semlinks")
+    opts += ["pdfa", "coorientador"]
+    opts += linha["extra"]
+    if linha["ficha"] == "rascunho":
+        opts.append("rascunhoficha")
     dept = DEPTS[i % len(DEPTS)]
-    nadv  = 1 if i % 3 == 0 else 2
-    nexam = 2 + (i % 4)
+    nadv = linha["nadv"]
+    nexam = linha["nexam"]
 
     t = []
     A = t.append
@@ -190,7 +238,7 @@ def doc(i, tipo, tiponome, lang):
     # Um documento fica SEM data de aprovacao, de proposito: e o caso em que a
     # folha tem de escrever "a ser determinada", e ele precisa de prova tanto
     # quanto o caso com data.
-    if i != 4:
+    if linha["data"]:
         A("  \\dataaprovacao{15 de setembro de 2026}")
     A("  \\areaconcentracao{Engenharia de Sistemas e Computação}")
     A("  \\linhapesquisa{Engenharia de Dados e Conhecimento}")
@@ -202,7 +250,11 @@ def doc(i, tipo, tiponome, lang):
     # chamada é a que exercita a acumulação -- uma só nunca a exercitaria.
     A("  \\agenciafomento{Fundação Carlos Chagas Filho de Amparo à Pesquisa do "
       "Estado do Rio de Janeiro}{FAPERJ}")
-    if i % 2 == 1:
+    # A ficha REAL entra como PDF externo, que e como ela chega de verdade: o
+    # aluno a gera no site do SiBI e inclui o arquivo. O logotipo faz as vezes
+    # dela aqui -- o que se prova e o caminho do \includegraphics dentro da
+    # folha adicional, nao o conteudo da ficha.
+    if linha["ficha"] == "real":
         A("  \\fichacatalografica{coppe-logo.pdf}")
     A("  \\keyword{Adversativo}\\keyword{Conformidade}")
     A("  \\foreignkeyword{Adversarial}\\foreignkeyword{Conformance}")
@@ -561,12 +613,31 @@ def doc(i, tipo, tiponome, lang):
     return "\n".join(t) + "\n"
 
 os.makedirs(OUT, exist_ok=True)
-i = 0
+NOMEDOTIPO = dict(TIPOS)
+
+# Os seis documentos da matriz sao escritos; os que sobraram da matriz antiga de
+# doze sao APAGADOS, e nao deixados para tras. Arquivo de teste que ninguem roda
+# apodrece calado: continua compilando com a classe de meses atras e da a
+# impressao de cobertura que nao existe mais.
+antigos = set()
+for tipo, _ in TIPOS:
+    for lang in ("pt", "en", "es"):
+        antigos.add("adv_%s_%s" % (tipo, lang))
+
 nomes = []
-for tipo, tiponome in TIPOS:
-    for lang in ("pt","en","es"):
-        nome = "adv_%s_%s" % (tipo, lang)
-        open(os.path.join(OUT, nome + ".tex"), "w", encoding="utf-8").write(doc(i, tipo, tiponome, lang))
-        nomes.append(nome); i += 1
+for i, linha in enumerate(MATRIZ):
+    nome = "adv_%s_%s" % (linha["tipo"], linha["lang"])
+    caminho = os.path.join(OUT, nome + ".tex")
+    open(caminho, "w", encoding="utf-8").write(
+        doc(i, linha, NOMEDOTIPO[linha["tipo"]]))
+    nomes.append(nome)
+
+for velho in sorted(antigos - set(nomes)):
+    for ext in (".tex", ".pdf", ".log", ".aux"):
+        f = os.path.join(OUT, velho + ext)
+        if os.path.exists(f):
+            os.remove(f)
+            print("apagado", os.path.basename(f))
+
 print("\n".join(nomes))
 print("total:", len(nomes))
