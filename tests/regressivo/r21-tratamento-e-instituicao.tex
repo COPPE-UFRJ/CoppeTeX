@@ -1,0 +1,31 @@
+%% Teste de regressao da CoppeTeX. NAO roda na suite normal.
+%% Rode com: python tests/regressivo/run-regressivo.py
+%% BUG: (desconformidade) \advisor e \examiner pediam o TRATAMENTO como
+%% argumento obrigatorio e a instituicao como opcional. A 3.1.2.1.3(e) pede
+%% nome, titulacao e instituicao, e nao pede tratamento nenhum. Os papeis se
+%% inverteram: tratamento no argumento opcional, vazio por padrao, e
+%% instituicao como ultimo obrigatorio, que pode ficar em branco.
+%% ESPERA-TEXTO: Prof. Com Tratamento, D.Sc., UFRJ
+%% ESPERA-TEXTO: Sem Tratamento, D.Sc., UFF
+%% ESPERA-TEXTO: Sem Instituicao, Ph.D.
+\documentclass[dsc,orientadorexamina]{coppe}
+\title{Tratamento e instituicao}
+\foreigntitle{Treatment and institution}
+\author{Nome}{Sobrenome}
+\advisor[Prof.]{Com}{Tratamento}{D.Sc.}{UFRJ}
+\examiner{Sem Tratamento}{D.Sc.}{UFF}
+\examiner{Sem Instituicao}{Ph.D.}{}
+\department{PESC}
+\date{09}{2026}
+\dataaprovacao{15 de setembro de 2026}
+\keyword{Regressao}
+\begin{document}
+  \maketitle
+  \frontmatter
+  \begin{abstract}Resumo.\end{abstract}
+  \begin{foreignabstract}Abstract.\end{foreignabstract}
+  \tableofcontents
+  \mainmatter
+  \chapter{Um capitulo}
+  Texto.
+\end{document}

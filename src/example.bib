@@ -1,30 +1,35 @@
-%
-% This is file `coppe.bib'.
-%
-% Bibliographic references for the documentation.
-%
-% Copyright (C) 2011 CoppeTeX Project and any individual authors listed
-% elsewhere in this file.
-%
-% This program is free software; you can redistribute it and/or modify
-% it under the terms of the GNU General Public License version 3 as
-% published by the Free Software Foundation.
-%
-% This program is distributed in the hope that it will be useful,
-% but WITHOUT ANY WARRANTY; without even the implied warranty of
-% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-% GNU General Public License version 3 for more details.
-%
-% You should have received a copy of the GNU General Public License
-% version 3 along with this package (see COPYING file).
-% If not, see <http://www.gnu.org/licenses/>.
-%
-% $URL: https://coppetex.svn.sourceforge.net/svnroot/coppetex/trunk/coppe.bib $
-% $Id: coppe.bib 118 2008-10-18 14:17:06Z helano $
-%
-% Author(s): Vicente H. F. Batista
-%            George O. Ainsworth Jr.
-%
+%%
+%% This is file `example.bib',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% coppe.dtx  (with options: `examplebib')
+%% 
+%% This is a BibLaTeX/biber bibliographic database for the `coppe' document
+%% class.  It is generated from coppe.dtx by docstrip; edit the .dtx source,
+%% not this file.
+%% 
+%% \CheckSum{0}
+%% \CharacterTable
+%%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+%%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+%%   Digits        \0\1\2\3\4\5\6\7\8\9
+%%   Exclamation   \!     Double quote  \"     Hash (number) \#
+%%   Dollar        \$     Percent       \%     Ampersand     \&
+%%   Acute accent  \'     Left paren    \(     Right paren   \)
+%%   Asterisk      \*     Plus          \+     Comma         \,
+%%   Minus         \-     Point         \.     Solidus       \/
+%%   Colon         \:     Semicolon     \;     Less than     \<
+%%   Equals        \=     Greater than  \>     Question mark \?
+%%   Commercial at \@     Left bracket  \[     Backslash     \\
+%%   Right bracket \]     Circumflex    \^     Underscore    \_
+%%   Grave accent  \`     Left brace    \{     Vertical bar  \|
+%%   Right brace   \}     Tilde         \~}
+%%
+@Comment{ example.bib -- one entry per ABNT document type, exercised in the
+  Referencias of this manual. Many entries use the Portuguese field/type
+  synonyms (autor, titulo, editora, local, ano, organizador, ...). }
 
 @BOOK{book-example,
    author = "R. Abraham and J. E. Marsden and T. Ratiu",
@@ -74,7 +79,6 @@
    year = 1977,
 }
 
-
 @INCOLLECTION{incollection-example,
    author = "S. C. Cowin",
    title = "Adaptive Anisotropy: An Example in Living Bone",
@@ -113,5 +117,134 @@
    school = "COPPE/UFRJ",
    address = "Rio de Janeiro, RJ, Brasil",
    type = "Tese de {D.Sc.}",
+   curso = "Engenharia Metal{\'u}rgica e de Materiais",
    year = 1994,
 }
+
+@videogame{videogame-example,
+   author = "Meier, Sid",
+   title = "Sid Meier's Civilization VI",
+   artista = "Firaxis Games",
+   plataforma = "PC",
+   editora = "2K Games",
+   versao = "1.0",
+   ano = 2016,
+}
+
+@filme{filme-example,
+   title = "Cidade de Deus",
+   diretor = "Meirelles, Fernando and L{\'u}nd, K{\'a}tia",
+   produtor = "O2 Filmes",
+   editora = "Globo Filmes",
+   local = "Rio de Janeiro",
+   ano = 2002,
+}
+
+@Comment{ Exotic ABNT types (NBR 6023 4.2.5-4.2.12), via the Portuguese synonyms. }
+
+@patente{patente-example,
+   autor = "Silva, J. A.",
+   title = "Dispositivo de medi{\c c}{\~a}o de fluxo t{\'e}rmico",
+   number = "BR 10 2020 012345 6",
+   type = "Patente de Invento",
+   holder = "{Universidade Federal do Rio de Janeiro}",
+   ano = 2021,
+}
+
+@legislacao{legislacao-example,
+   author = "{Brasil}",
+   title = "Lei n. 9.610, de 19 de fevereiro de 1998: altera, atualiza e consolida a legisla{\c c}{\~a}o sobre direitos autorais",
+   type = "Lei Federal",
+   local = "Bras{\'i}lia, DF",
+   ano = 1998,
+}
+
+@norma{norma-example,
+   author = "{Associa{\c c}{\~a}o Brasileira de Normas T{\'e}cnicas}",
+   title = "{NBR} 6023: informa{\c c}{\~a}o e documenta{\c c}{\~a}o: refer{\^e}ncias: elabora{\c c}{\~a}o",
+   local = "Rio de Janeiro",
+   ano = 2018,
+}
+
+@mapa{mapa-example,
+   autor = "{Instituto Brasileiro de Geografia e Estat{\'i}stica}",
+   title = "Mapa pol{\'i}tico do Brasil",
+   escala = "1:5.000.000",
+   local = "Rio de Janeiro",
+   editora = "IBGE",
+   ano = 2016,
+}
+
+@partitura{partitura-example,
+   author = "Villa-Lobos, Heitor",
+   title = "Bachianas Brasileiras n. 5",
+   local = "Rio de Janeiro",
+   publisher = "Academia Brasileira de M{\'u}sica",
+   ano = 1945,
+   addendum = "1 partitura",
+}
+
+@Comment{ Obra sem autor: entra pelo titulo (1a palavra em CAIXA ALTA, ABNT 4.2). }
+@book{semautor-example,
+   title = "Diagn{\'o}stico do setor editorial brasileiro",
+   local = "S{\~a}o Paulo",
+   editora = "C{\^a}mara Brasileira do Livro",
+   ano = 2019,
+}
+
+@Comment{ Artigo/materia de jornal (NBR 6023 4.2.3.6). Com caderno/secao: a
+  data precede o caderno e a pagina vem por ultimo. }
+@artigodejornal{jornalcaderno-example,
+   autor = "J. Byrne",
+   titulo = "A explos{\~a}o de cursos para executivos nos EUA",
+   jornal = "Gazeta Mercantil",
+   local = "S{\~a}o Paulo",
+   data = "1992-02-04",
+   caderno = "Administra{\c c}{\~a}o e Servi{\c c}os",
+   paginas = "28",
+}
+
+@Comment{ Artigo de jornal sem caderno/secao: a paginacao precede a data. }
+@artigodejornal{jornal-example,
+   autor = "L. N. P. Leal",
+   titulo = "MP fiscaliza com autonomia total",
+   jornal = "Jornal do Brasil",
+   local = "Rio de Janeiro",
+   paginas = "3",
+   data = "1999-04-25",
+}
+
+@Comment{ Jurisprudencia / decisao judicial (NBR 6023 4.2.6.2): jurisdicao +
+  orgao (autor, CAIXA ALTA), titulo da decisao, Relator, local e data. }
+@jurisprudencia{jurisprudencia-example,
+   author = "{Brasil. Supremo Tribunal Federal}",
+   title = "Habeas Corpus 12.345",
+   relator = "Min. Fulano de Tal",
+   local = "Bras{\'i}lia, DF",
+   data = "2020-03-10",
+}
+
+@Comment{ Obra sem autor iniciada por artigo: o artigo e a 1a palavra
+  significativa ficam em CAIXA ALTA (ABNT 4.2) -- AS NORMAS de... }
+@book{semautorart-example,
+   title = "As normas de documenta{\c c}{\~a}o acad{\^e}mica",
+   local = "Rio de Janeiro",
+   editora = "ABNT",
+   ano = 2021,
+}
+
+@manual{manualbib,
+   editor = "Sousa, Amanda Moura de and Oliveira, Lidia da Costa and Arias, Luiza Coutinho",
+   title = "Manual para elabora{\c c}{\~a}o e normaliza{\c c}{\~a}o de trabalhos acad{\^e}micos",
+   edition = 9,
+   publisher = "UFRJ/SiBI",
+   location = "Rio de Janeiro",
+   date = 2025,
+   pagetotal = 121,
+   url = "https://drive.google.com/file/d/1IfNy51_qMf8cXEabOlm1U6zMXcH10FWL/view",
+   urldate = "2026-05-30",
+}
+
+%% 
+%%
+%% End of file `example.bib'.

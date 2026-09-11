@@ -1,0 +1,28 @@
+%% Teste de regressao da CoppeTeX. NAO roda na suite normal.
+%% Rode com: python tests/regressivo/run-regressivo.py
+%% BUG: (desconformidade) a 2.6 admite ate a secao quinaria, e a classe parava
+%% na quaternaria: o quinto nivel saia sem numero e sem entrada no sumario.
+%% ESPERA-TEXTO: 1.1.1.1.1
+\documentclass[dsc]{coppe}
+\title{Nivel quinario}
+\foreigntitle{The fifth heading level}
+\author{Nome}{Sobrenome}
+\advisor{Primeiro}{Orientador}{D.Sc.}{UFRJ}
+\examiner{Primeiro Examinador}{D.Sc.}{UFRJ}
+\department{PESC}
+\date{09}{2026}
+\keyword{Regressao}
+\begin{document}
+  \maketitle
+  \frontmatter
+  \begin{abstract}Resumo.\end{abstract}
+  \begin{foreignabstract}Abstract.\end{foreignabstract}
+  \tableofcontents
+  \mainmatter
+  \chapter{Um capitulo}
+  \section{Secundaria}
+  \subsection{Terciaria}
+  \subsubsection{Quaternaria}
+  \paragraph{Quinaria}
+  Texto.
+\end{document}

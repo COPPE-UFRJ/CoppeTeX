@@ -1,0 +1,28 @@
+%% Teste de regressao da CoppeTeX. NAO roda na suite normal.
+%% Rode com: python tests/regressivo/run-regressivo.py
+%% BUG: a opcao pdfa nunca tinha sido compilada num documento de verdade. O
+%% .xmpdata era escrito antes de \title e \author existirem, e saia vazio. Ele
+%% passou a ser escrito pela classe e lido na passada SEGUINTE, que e por que
+%% este teste roda tres vezes.
+%% PASSADAS: 3
+%% ESPERA-ARQUIVO: xmpdata::Metadados do documento
+%% ESPERA-BYTES: pdfaid
+\documentclass[dsc,pdfa]{coppe}
+\title{Metadados do documento}
+\foreigntitle{Document metadata}
+\author{Nome}{Sobrenome}
+\advisor{Primeiro}{Orientador}{D.Sc.}{UFRJ}
+\examiner{Primeiro Examinador}{D.Sc.}{UFRJ}
+\department{PESC}
+\date{09}{2026}
+\keyword{Regressao}
+\begin{document}
+  \maketitle
+  \frontmatter
+  \begin{abstract}Resumo.\end{abstract}
+  \begin{foreignabstract}Abstract.\end{foreignabstract}
+  \tableofcontents
+  \mainmatter
+  \chapter{Um capitulo}
+  Texto.
+\end{document}

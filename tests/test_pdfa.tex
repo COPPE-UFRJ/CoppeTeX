@@ -1,0 +1,87 @@
+%%
+%% test_pdfa.tex -- regression test for the coppe class.
+%% Exercises the pre-textual pages introduced/reshaped for the SiBI manual,
+%% 9th revised edition (2026):
+%%
+%%   * class option `assinaturas' -- folha de aprovacao with one signature
+%%     rule per board member instead of the compact list (Annex D)
+%%   * \examiner and \advisor with the OPTIONAL institution argument, and the
+%%     titulacao argument that pre-4.1 discarded silently
+%%   * folha adicional with the Coleta CAPES fields (3.1.2.1.2, Annex H):
+%%     \tipoproducao, \projetovinculado, \nomeprojeto, \areaconcentracao,
+%%     \agenciafomento
+%%   * \linhapesquisa and \areaconcentracao on the folha de rosto
+%%   * \dataaprovacao on the folha de aprovacao
+%%
+%% Deliberately mixes calls WITH and WITHOUT the optional institution, so a
+%% regression in the optional-argument handling shows up here.
+%%
+%% Run via ../tests/run-tests.ps1. Compile under pdfLaTeX.
+%%
+%% NAO e gerado pelo coppe.dtx e NAO e distribuido: a suite prova que a
+%% classe funciona, nao faz parte dela. Rode por tools\prova.ps1, ou por
+%% tests\run-tests.ps1 para so esta pasta.
+%%
+
+\documentclass[dsc,pdfa]{coppe}
+
+\usepackage[brazilian]{babel}
+
+\title{Título de Teste do PDF/A}
+\foreigntitle{Signature Test Title}
+\subtitle{um subtítulo para conferir os dois pontos}
+\foreignsubtitle{a subtitle to check the colon}
+\volumes{3}
+\volume{2}
+\author{Nome}{de Teste}
+
+ % com instituição
+\advisor{Primeiro}{Orientador}{D.Sc.}{UFRJ}
+ % sem instituição -- deve continuar valendo (compatibilidade pré-4.1)
+\advisor{Segundo}{Orientador}{Ph.D.}{UFRJ}
+\coadvisor{Primeiro}{Coorientador}{D.Sc.}{UFF}
+
+\examiner{Primeiro Examinador}{D.Sc.}{UFRJ}
+\examiner{Segundo Examinador}{Ph.D.}{UFRJ}
+\examiner{Terceiro Examinador}{D.Sc.}{UFF}
+
+\department{PESC}
+\date{09}{2026}
+\dataaprovacao{15 de setembro de 2026}
+
+\keyword{Primeira}
+\keyword{Segunda}
+
+\areaconcentracao{Engenharia de Sistemas e Computação}
+\linhapesquisa{Engenharia de Dados e Conhecimento}
+\tipoproducao{bibliografica}
+\projetovinculado{sim}
+\nomeprojeto{Projeto de Teste}
+\agenciafomento{Conselho Nacional de Desenvolvimento Científico e
+                Tecnológico}{CNPq}
+
+\begin{document}
+  \maketitle
+  \frontmatter
+  \begin{abstract}
+    Resumo de teste.
+  \end{abstract}
+  \begin{foreignabstract}
+    Test abstract.
+  \end{foreignabstract}
+  \tableofcontents
+  \mainmatter
+  \chapter{Introdução}
+    Primeiro parágrafo, para conferir o recuo.
+  \section{Uma seção}
+    Texto da seção.
+  \subsection{Uma Subseção}
+    Texto terciário.
+  \subsubsection{Uma Subsubseção}
+    Texto quaternário.
+  \paragraph{Um quinto nível}
+    Texto quinário.
+\end{document}
+%% 
+%%
+%% End of file `tests/test_pdfa.tex'.

@@ -1,0 +1,47 @@
+%%
+%% Guards the |resumosemreferencia| class option: it takes the work's own
+%% bibliographic reference back OUT of the abstract pages, for the abstract
+%% already at the 500-word ceiling of 3.1.2.1.4 that would not otherwise fit on
+%% one sheet. Everything else on the page has to stay where it was.
+%%
+%% NAO e gerado pelo coppe.dtx e NAO e distribuido: a suite prova que a
+%% classe funciona, nao faz parte dela. Rode por tools\prova.ps1, ou por
+%% tests\run-tests.ps1 para so esta pasta.
+%%
+
+\documentclass[dsc,resumosemreferencia]{coppe}
+
+\usepackage[brazilian]{babel}
+
+\title{Título de teste do resumo sem referência}
+\foreigntitle{Abstract without the reference test}
+\author{Nome}{de Teste}
+
+\advisor{Primeiro}{Orientador}{D.Sc.}{UFRJ}
+
+\examiner{Primeiro Examinador}{D.Sc.}{UFRJ}
+\examiner{Segundo Examinador}{Ph.D.}{UFF}
+
+\department{PESC}
+\date{09}{2026}
+
+\keyword{Primeira}
+\keyword{Segunda}
+
+\begin{document}
+  \maketitle
+  \frontmatter
+  \begin{abstract}
+    Resumo de teste.
+  \end{abstract}
+  \begin{foreignabstract}
+    Test abstract.
+  \end{foreignabstract}
+  \tableofcontents
+  \mainmatter
+  \chapter{Introdução}
+    Primeiro parágrafo.
+\end{document}
+%%
+%%
+%% End of file `tests/test_semrefresumo.tex'.

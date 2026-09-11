@@ -1,0 +1,43 @@
+# Normalização de fim de linha.
+#
+# O repositório guarda sempre LF; na cópia de trabalho o git entrega o fim de
+# linha nativo da plataforma. Sem isto, editar no Windows produz milhares de
+# linhas "alteradas" que diferem apenas por CRLF e tornam o diff ilegível.
+* text=auto
+
+# Fontes de texto (redundante com text=auto, mas explícito é melhor).
+*.tex    text
+*.dtx    text
+*.ins    text
+*.cls    text
+*.sty    text
+*.bbx    text
+*.cbx    text
+*.lbx    text
+*.dbx    text
+*.def    text
+*.bib    text
+*.ist    text
+*.md     text
+*.txt    text
+*.eps    text
+LEIAME   text
+COPYING  text
+
+# Binários: nunca converter.
+*.pdf    binary
+*.png    binary
+*.jpg    binary
+*.jpeg   binary
+*.gif    binary
+*.zip    binary
+*.gz     binary
+*.ttf    binary
+*.otf    binary
+
+# Scripts precisam do fim de linha da sua plataforma.
+*.ps1    text eol=crlf
+*.cmd    text eol=crlf
+*.bat    text eol=crlf
+*.sh     text eol=lf
+Makefile text eol=lf

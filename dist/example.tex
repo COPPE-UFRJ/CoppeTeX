@@ -6,10 +6,10 @@
 %%
 %% coppe.dtx  (with options: `example')
 %% 
-%% This is a sample monograph which illustrates the use of `coppe' document
-%% class and `coppe-unsrt' BibTeX style.
+%% This is a sample monograph which illustrates the use of the `coppe' document
+%% class and its biblatex/biber bibliography style.
 %% 
-%% \CheckSum{1656}
+%% \CheckSum{0}
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
 %%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
@@ -28,36 +28,75 @@
 %%
 \documentclass[dsc]{coppe}
 
-\usepackage{booktabs}% tabelas mais bonitas
-\usepackage{rotating}% rodando coisas, como tabelas
-\usepackage{longtable} % tabelas longas
+\usepackage{rotating}        % rodando coisas, como tabelas
 \usepackage[most]{tcolorbox} % caixas de texto
-\usepackage{amsmath,amssymb}
-\usepackage{hyperref}
-\usepackage{listings} % para usar listagens
+\usepackage{tikz}            % gráficos vetoriais (o tcolorbox já o traz)
+\DeclareMathOperator{\RMSE}{RMSE}   % operadores próprios (cap. de matemática)
+\DeclareMathOperator{\diag}{diag}
+
+\addbibresource{example.bib}% base de referências (biblatex/biber)
+\addbibresource{tipos.bib}% uma entrada por categoria da secao 4.2
 
 \makelosymbols
 \makeloabbreviations
+\newcoppefloat{mapa}{Mapa}{Lista de Mapas}
 
 \begin{document}
   \title{Título da Tese}
   \foreigntitle{Thesis Title}
   \author{Nome do Autor}{Sobrenome}
-  \advisor{Prof.}{Nome do Primeiro Orientador}{Sobrenome}{D.Sc.}
-  \advisor{Prof.}{Nome do Segundo Orientador}{Sobrenome}{Ph.D.}
-  \advisor{Prof.}{Nome do Terceiro Orientador}{Sobrenome}{D.Sc.}
+  % Orientador: nome, sobrenome, titulacao e instituicao. O tratamento
+  % ("Prof.") e o argumento OPCIONAL entre colchetes e vem vazio por padrao --
+  % a norma nao pede tratamento nenhum. A instituicao e obrigatoria, mas pode
+  % ficar vazia: \advisor{Ana}{Lima}{D.Sc.}{} compila sem erro.
+  \advisor{Nome do Primeiro Orientador}{Sobrenome}{D.Sc.}{UFRJ}
+  % O segundo orientador vai com tratamento, so para mostrar o argumento
+  % opcional funcionando; a norma nao pede tratamento nenhum.
+  \advisor[Prof.]{Nome do Segundo Orientador}{Sobrenome}{Ph.D.}{UFRJ}
+  % Coorientador: mesmos quatro argumentos de \advisor. Aparece na folha de
+  % rosto e na folha de aprovacao; para ve-lo tambem nas paginas de resumo,
+  % passe a opcao de classe `coorientador'.
+  \coadvisor{Nome do Coorientador}{Sobrenome}{D.Sc.}{UFF}
+  % A classe aceita de um a tres \advisor; se houver apenas um, o rotulo na
+  % capa e na folha de rosto sai como "Orientador" (singular), com dois ou
+  % mais sai como "Orientadores" (plural). Para o caso 1/3 orientadores,
+  % veja tests/test_brazilian_one_advisor.tex e tests/test_brazilian_three_advisors.tex.
 
-  \examiner{Prof.}{Nome do Primeiro Examinador Sobrenome}{D.Sc.}
-  \examiner{Prof.}{Nome do Segundo Examinador Sobrenome}{Ph.D.}
-  \examiner{Prof.}{Nome do Terceiro Examinador Sobrenome}{D.Sc.}
-  \examiner{Prof.}{Nome do Quarto Examinador Sobrenome}{Ph.D.}
-  \examiner{Prof.}{Nome do Quinto Examinador Sobrenome}{Ph.D.}
+  \examiner{Nome do Primeiro Examinador Sobrenome}{D.Sc.}{UFRJ}
+  \examiner{Nome do Segundo Examinador Sobrenome}{Ph.D.}{UFRJ}
+  \examiner{Nome do Terceiro Examinador Sobrenome}{D.Sc.}{UFF}
+  \examiner{Nome do Quarto Examinador Sobrenome}{Ph.D.}{UNICAMP}
+  % Instituicao vazia: o argumento e obrigatorio, mas aceita ficar em branco e
+  % entao nada e impresso no lugar dela.
+  \examiner{Nome do Quinto Examinador Sobrenome}{Ph.D.}{}
   \department{PESC}
-  \date{01}{2024}
+  \date{06}{2026}
+  % Data da defesa, na folha de aprovacao. Sem esta linha a folha sai com
+  % "a ser determinada", que e o que se quer enquanto a data nao existe.
+  % \dataaprovacao{15 de setembro de 2026}
+  %
+  % A folha de aprovacao lista so os EXAMINADORES. Se no seu Programa o
+  % orientador integra a banca, passe a opcao de classe `orientadorexamina'
+  % la em cima e ele volta para a lista, na frente dos examinadores.
 
   \keyword{Primeira palavra-chave}
   \keyword{Segunda palavra-chave}
   \keyword{Terceira palavra-chave}
+
+  % Dados da folha adicional (Coleta CAPES), obrigatoria desde agosto de 2026.
+  % A folha e preenchida pelo Programa; estes campos apenas a compoem.
+  \areaconcentracao{Engenharia de Sistemas e Computa\c c\~ao}
+  \linhapesquisa{Engenharia de Dados e Conhecimento}
+  \tipoproducao{bibliografica}   % bibliografica | artistica | tecnologica | tecnica
+  \projetovinculado{sim}         % sim | nao
+  \nomeprojeto{Nome do Projeto de Pesquisa ao qual o trabalho se vincula}
+  \agenciafomento{Conselho Nacional de Desenvolvimento Cientifico e
+                  Tecnologico}{CNPq}
+  \agenciafomento{Fundacao Carlos Chagas Filho de Amparo a Pesquisa do
+                  Estado do Rio de Janeiro}{FAPERJ}
+  % A ficha oficial vem de fichacatalografica.sibi.ufrj.br; tendo o arquivo,
+  % descomente a linha abaixo e a moldura vazia da folha adicional some.
+  % \fichacatalografica{ficha.pdf}
 
   \maketitle
 
@@ -66,50 +105,84 @@
 
   \chapter*{Agradecimentos}
 
-  Gostaria de agradecer a todos.
+  Gostaria de agradecer a todos os que contribu\'iram para este trabalho:
+  orientadores, colegas, familiares e \`as ag\^encias de fomento. Lorem ipsum
+  dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
+  ut labore et dolore magna aliqua.
 
   \begin{abstract}
 
-  Apresenta-se, nesta tese, ...
+  Apresenta-se, nesta tese, um exemplo de resumo. Lorem ipsum dolor sit amet,
+  consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+  dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+  ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+  in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+  pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
+  officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis
+  iste natus error sit voluptatem accusantium doloremque laudantium, totam rem
+  aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae
+  vitae dicta sunt explicabo, nemo enim ipsam voluptatem quia voluptas sit
+  aspernatur aut odit aut fugit.
 
   \end{abstract}
 
   \begin{foreignabstract}
 
-  In this work, we present ...
+  In this work, we present an example abstract. Lorem ipsum dolor sit amet,
+  consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+  dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+  ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+  in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+  pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
+  officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis
+  iste natus error sit voluptatem accusantium doloremque laudantium, totam rem
+  aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae
+  vitae dicta sunt explicabo, nemo enim ipsam voluptatem quia voluptas sit
+  aspernatur aut odit aut fugit.
 
   \end{foreignabstract}
 
-  \tableofcontents
+  % Ordem pre-textual (NBR 14724/6027, R55): listas (ilustracoes, tabelas,
+  % abreviaturas e siglas, simbolos) ANTES do sumario; sumario por ultimo.
   \listoffigures
   \listoftables
-  \printlosymbols
+  \listofquadros
+  \listofmapas
+  \listofprogramas
+  \listofalgorithms
   \printloabbreviations
+  \printlosymbols
+  \tableofcontents
 
   \mainmatter
   \chapter{Introdução}
 
-  Este é um documento exemplo para o uso da classe CoppeTeX, destinado a ajudar os alunos da do Instituto Alberto Luiz Coimbra de Pós-graduação e Pesquisa de Engenharia (COPPE), da Universidade Federal do Rio de Janeiro.
+  Este é um documento exemplo para o uso da classe CoppeTeX, destinado a ajudar os alunos do Instituto Alberto Luiz Coimbra de Pós-graduação e Pesquisa de Engenharia (COPPE), da Universidade Federal do Rio de Janeiro.
 
-  A classe \verb|coppe| foi criada por Vicente Helano e George Ainsworth, porém, em 2024, é mantida por Geraldo Xexéo e Eduardo Mangeli. Provavelmente Geraldo Xexéo, professor do Programa de Engenharia de Sistemas e Computação, deve continuar mantendo ou apoiando a manutenção por alguns anos. Se você quiser particiar do grupo de manutenção, é só entrar em contato.
+  A classe \verb|coppe| foi criada originalmente por Vicente Helano e George Ainsworth, porém, em 2024, passou a ser mantida por Geraldo Xexéo e Eduardo Mangeli.
+  Em 2026, Geraldo Xexéo, com forte ajuda das ferramentas Claude 4.7 Opus e Max e 4.8 Opus Max, fez modificações de alta monta para suportar o novo \citetitle{manualbib}, que implementava normas recentes da ABNT.
+
+   Provavelmente Geraldo Xexéo, professor do Programa de Engenharia de Sistemas e Computação, deve continuar mantendo ou apoiando a manutenção por alguns anos. Se você quiser particiar do grupo de manutenção, é só entrar em contato via github.
 
   A versão mais atual dessa classe é mantida no GitHub, no repositório \url{https://github.com/COPPE-UFRJ/CoppeTeX}. De maneira arbitrária o prof. Geraldo Xexéo criou a organização COPPE-UFRJ no GitHub, e também está disposto a compartilhar com outras iniciativas semelhantes.
 
   Esse documento segue a norma de formatação de teses e dissertações da COPPE. Ele também pode ser usado para exames de qualificação. As principais instruções estão no documento que explica a classe, ``The \verb|coppe| document class'', que fica disponível no GitHub.
 
+  Há um grupo de WhatsApp para perguntas e discussões do estilo: \href{https://github.com/COPPE-UFRJ/CoppeTeX/wiki}{here}.
+
+  Bugs devem ser reportados na \href{https://github.com/COPPE-UFRJ/CoppeTeX/issues}{página de \textit{issues} do GitHub do CoppeTeX}.
+
   Esse documento é usado como exemplo de coisas que podem ser feitas. Ele está configurado para usar citações do tipo author-data. Para usar citações do tipo numérica é necessário colocar, entre as opções de \verb|documentclass|, a opção \verb|numbers|.
 
   É importante de notar que essa classe não foi construída sobre a classe \LaTeX \  para a ABNT, e que segue de forma geral as regras da ABNT, mas não necessariamente de forma exata, já que o foco foi seguir as regras da Coppe. Essas mesmas regras da Coppe não especificam tudo que realmente seria necessário, então algumas coisas são decisões arbitrárias.
 
-  Apesar desse modelo ser muito bom, ele tem um defeito: a limitação do sistema de referências criados. Primeiramente ele foi criado para o Bib\TeX, e não para o mais poderoso Bib\LaTeX, em segundo lugar, não foi criado de forma independente de linguagem, mas sim apenas para o Português, porque era a regra da época que as monografias deveriam ser exclusivamente em Português. Finalmente, o número de tipos de entrada é pequeno. Isso ainda não foi resolvido, mas está na fila para ser resolvido.
-
-  Mais ainda, as regras da COPPE ainda não se adaptaram, no início de 2024, as novas regras da ABNT para citação, que são mais elegantes por não exigir o uso indiscriminado de maiúsculas.
+  Essa classe implementa citações ABNT modernas e vários tipos de entrada descritos na norma.
 
   Este documento não substitui, mas complementa, o documento que descreve a classe.
 
 \chapter{Configurações Iniciais}
 
-   A primeira coisa a fazer é escolher o tipo de documento. Isso é feito como uma opção no comando inicial do arquivo, \verb|documentclass|. A classe \verb|coppe| suporta quatro formatos: tese de doutorado (\verb|dsc|), dissertação de mestrado (\verb|msc|), exame de qualificação de doutorado (\verb|dscexam|) e exame de qualificação de mestrado (\verb|mscexam|). Na verdade, o padrão da Coppe não cobre os exames de qualificação, mas é interessante seguir o padrão nesses casos também.
+   A primeira coisa a fazer é escolher o tipo de documento. Isso é feito como uma opção no comando inicial do arquivo, \verb|documentclass|. A classe \verb|coppe| suporta cinco formatos: tese de doutorado (\verb|dsc|), dissertação de mestrado (\verb|msc|), exame de qualificação de doutorado (\verb|dscexam|), exame de qualificação de mestrado (\verb|mscexam|) e seminário de mestrado (\verb|mscsem|), que é requisito obrigatório de alguns Programas e não se confunde com a qualificação. Na verdade, a norma da COPPE não cobre os exames nem o seminário, mas é interessante seguir o padrão nesses casos também: os três saem sem folha adicional da Coleta CAPES, sem ficha catalográfica e sem a referência no alto dos resumos, porque não são depositados na biblioteca.
 
    Como pode ser visto nesse documento, muita coisa pode ser configurada, o que gerará o tratamento correto segundo as normas da COPPE. Para isso, logo após o \verb|\begin{document}| várias variáveis devem receber valor. Isso é feito com os comandos descritos que aparecem nesse exemplo.
 
@@ -120,10 +193,10 @@
   Essa classe considera que o texto principal está em português e algumas partes específicas, como o \textit{abstract}, estão em inglês. Caso o texto principal seja em inglês as seguintes opções devem ser usadas:
  \begin{itemize}
  \item A opção \verb|english| deve ser usada no comando \verb|\documentclass|.
- \item Os estilos de bibliografia usados devem ser \verb|en-coppe-plain.bst| ou \verb|en-coppe-unsrt.bst|
+ \item A bibliografia segue automaticamente o idioma do Babel (português ou inglês); não é preciso escolher um estilo separado.
  \end{itemize}
 
-  A variação de linguagem, em inglês ou português apenas, já é suportada pela classe Coppe\TeX  com o pacote Babel. Não é necessário incluí-lo.
+  A variação de linguagem, em inglês ou português apenas, já é suportada pela classe \CoppeTeX  com o pacote Babel. Não é necessário incluí-lo.
 
 \section{Por que usar o \LaTeX}
 
@@ -137,7 +210,7 @@
 
   Existem muitos tutoriais de \LaTeX, mas basicamente, em 2024, ele é usado em dois ambientes:
   \begin{enumerate}
-  \item Na sua máquina, instalando uma versão completa como o Mik\TeX, típico do Windows, ou simplesmente os pacotes padrão do Linux\footnote{Também existem versões para Mac, das quais eu não estou informado}.
+  \item Na sua máquina, instalando uma versão completa como o \hologo{MiKTeX}, típico do Windows, ou simplesmente os pacotes padrão do Linux\footnote{Também existem versões para Mac, das quais eu não estou informado}.
   \item Usar um ambiente na rede, como o Overleaf.
   \end{enumerate}
 
@@ -157,24 +230,27 @@
   Como as listas de símbolos e de abreviaturas usamo o mesmo comando usado para criar índices, e também não há uma expectativa que a tese tenha um índice, se for desejado criar índices é necessário tanto criar, ou adotar, um novo arquivo \verb*|.ist|, que define o formato do índice, como alterar o \verb*|latexmkrc| para fazer também esse passo. Ou fazer o passo de rodar o \verb*|makeindex| na mão.
 
 \section{Citações}
+\label{sec:citacoes}
 
- Citações curtas podem ser feitas \quote{o comando quote} ou direto com ``duas crases e dois apóstrofos.'' Citações longas devem usar o comando \verb*|longuote|
+ Citações curtas podem ser feitas \enquote{o comando quote} ou direto com ``duas crases e dois apóstrofos.'' Citações longas devem usar o comando \verb*|longquote|
 
   \begin{longquote}
   Um exemplo de citação longa nas regras da ABNT (4cm de recuo e fonte menor)
-  feita com o ambiente  \verb=longquote= The primary objective of this
+  feita com o ambiente  \verb*|longquote| The primary objective of this
   investigation was to determine the feasibility of detecting corrosion in
   aluminum Naval aircraft components with neutron radiographic interrogation
   and the use of standard corrosion penetrameters. Secondary objectives
   included the determination of the effect of object thickness on image quality,
   the defining of minimum levels of detectability and a preliminary investigation
   of a means whereby the degree of corrosion could be quantified with neutron
-  radiographic data. \cite{article-example}
+  radiographic data. \citep{article-example}
   \end{longquote}
 
   Citações devem apontar as referências. Para isso, está disponível o ótimo pacote \verb*|natbib| que permite criar citações em dois formatos, o totalmente dentro de parênteses (\verb*|\citep|), como em \citep{article-example} como o de citação pertencente ao texto, como em \citet{article-example}. Veja o capítulo sobre referências bibliográficas.
 
   Em todo caso, \textbf{deve se tomar enorme atenção com as citações, para evitar ocorrer em plágio não intencional}.
+
+  Quando se cita uma obra por meio de outra (\textit{apud}), pela ABNT entra na lista de referências \emph{apenas a obra efetivamente consultada}. A obra original (não consultada) é informada como texto e \emph{não} é referenciada. Use \verb*|\citetapud{autor}{ano}{chave}|, como em \citetapud{Drumond}{1953}{article-example}, ou a forma entre parênteses \verb*|\citepapud|, como em \citepapud[145]{Drumond}{1953}{article-example}. Note que, nas Referências, aparece somente a obra consultada.
 
 \chapter{Floats}
 
@@ -182,9 +258,9 @@ Grande parte dos problemas de iniciantes, e veteranos, em \LaTeX é da localiza�
 
 A regra geral de posicionamento é que uma figura ou quadro só pode aparecer a partir da mesma página onde é citado pela primeira vez, nunca antes. Normalmente eu sigo a ordem de preferência aqui, fim da página, topo da página, isto é \verb*|hbt|. Se desejado, pode ser usado o \verb*|p|, que coloca os floats em uma página única. Para forçar mais o posicionamento, é possível usar o pacote \verb*|float| e usar a opção \verb*|H|. Além disso é possível usar o pacote \verb*|placeins| que permite tanto definir que \textit{floats} devem sempre ser colocados na mesma seção ou outra regra, quanto usar o comando \verb*|FlaotBarrier|, que obriga a todos os \textit{floats} aparecerem.
 
-\textbf{Segundo a norma da ABNT, as legendas} \verb|\caption| \textbf{das figuras e quadros ficam em baixo deles, enquanto as legendas das tabelas ficam em cima. }
+\textbf{Pela norma atual (manual2024), a legenda} \verb|\caption| \textbf{de toda ilustração --- figura, tabela ou quadro --- fica \emph{acima} dela}, com o número em algarismos arábicos, travessão e o título. \textbf{A fonte é obrigatória e fica \emph{abaixo}}, indicada com \verb|\source{...}| (sinônimo: \verb|\fonte{...}|), em letra menor; ela não numera nem avança nenhum contador. Se outro pacote já definir \verb|\source| ou \verb|\fonte|, use \verb|\cpsource| / \verb|\cpfonte|.
 
-Quadros são opcionais. Quando usados, tabelas passam a só conter números, enquanto quadros contém números e outras coisas. \textbf{O CoppeTeX ainda não suporta quadros!}
+Quadros são ilustrações cujos dados são delimitados por linhas em \emph{todas} as bordas (ao contrário das tabelas, com linhas só no topo e na base). O CoppeTeX oferece o float \verb|quadro| (sinônimo em inglês: \verb|frame|) e o comando \verb|\listofquadros| para a lista correspondente. Para criar outros floats com a mesma regra (legenda acima, \verb|\source| abaixo e uma \verb|\listof...|), use \verb|\newcoppefloat{nome}{Nome}{Título da Lista}|.
 
 \section{Tabelas e Figuras Padrão}
 
@@ -196,7 +272,7 @@ Vamos ver uma tabela padrão, como a \autoref{tab:exemplo_numeros}.
 \label{tab:exemplo_numeros}
 \begin{tabular}{ccc} % Define a quantidade de colunas
 \hline % Linha superior
-\textbf{Coluna 1} & \textbf{Coluna 2} & \textbf{Coluna 3} \\ % Cabeçalhos
+\textbf{Col. 1} & \textbf{Col. 2} & \textbf{Col. 3} \\ % Cabeçalhos
 \hline % Linha média
 1 & 2 & 3 \\ % Primeira linha de dados
 \hline
@@ -207,16 +283,84 @@ Vamos ver uma tabela padrão, como a \autoref{tab:exemplo_numeros}.
 10 & 11 & 12 \\ % Quarta linha de dados
 \hline % Linha inferior
 \end{tabular}
+\fonte{Elabora\c{c}\~ao pr\'opria.} % fonte obrigatoria, abaixo do float
 \end{table}
 
 Já a \autoref{fig:exemplo_figura} é uma figura padrão, com controle da largura.
 
 \begin{figure}[ht]
 \centering % Centraliza a figura
-\includegraphics[width=0.5\textwidth]{coppe-logo.pdf} % Inclui a imagem com metade da largura do texto
-\caption{Exemplo de Figura com Legenda Abaixo} % Legenda da figura
+\caption{Exemplo de Figura com Legenda Acima} % Legenda em cima (norma atual)
 \label{fig:exemplo_figura} % Etiqueta para referência cruzada
+\includegraphics[width=0.5\textwidth]{coppe-logo.pdf} % Inclui a imagem com metade da largura do texto
+\source{COPPE/UFRJ.} % fonte obrigatoria, abaixo da figura
 \end{figure}
+
+Quadros têm a mesma regra (legenda acima, fonte abaixo), mas com linhas em todas as bordas. O \autoref{qua:exemplo} ilustra o float \verb|quadro|.
+
+\begin{quadro}[ht]
+\centering
+\caption{Exemplo de Quadro}
+\label{qua:exemplo}
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Ilustração} & \textbf{Delimitação} \\
+\hline
+Tabela & Linhas apenas no topo e na base. \\
+\hline
+Quadro & Linhas em todas as bordas. \\
+\hline
+\end{tabular}
+\fonte{Elabora\c{c}\~ao pr\'opria.}
+\end{quadro}
+
+Um segundo quadro, no \autoref{qua:segundo}, prova que o contador anda e que a lista de quadros recebe as duas entradas.
+
+\begin{quadro}[ht]
+\centering
+\caption{Segundo Quadro, para provar a numeração}
+\label{qua:segundo}
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Elemento} & \textbf{Onde fica} \\
+\hline
+Legenda & Acima da ilustração. \\
+\hline
+Fonte & Abaixo da ilustração. \\
+\hline
+\end{tabular}
+\fonte{Adaptado do manual do SiBI, 9.\textsuperscript{a} ed. rev., 2026.}
+\end{quadro}
+
+\section{Criando um float novo}
+
+\verb|\newcoppefloat{nome}{Nome}{Título da Lista}| cria um flutuante que segue a mesma regra: legenda acima, \verb|\source| abaixo e uma lista própria. O exemplo declara \verb|mapa| no preâmbulo e o usa duas vezes, no \autoref{mapa:primeiro} e no \autoref{mapa:segundo}; a lista sai com \verb|\listofmapas|.
+
+\begin{mapa}[ht]
+\centering
+\caption{Primeiro mapa, num float criado pelo autor}
+\label{mapa:primeiro}
+\begin{tikzpicture}[scale=0.8]
+  \draw[thick] (0,0) rectangle (4,2.4);
+  \draw[fill=gray!20] (0.4,0.4) rectangle (1.8,2);
+  \draw[fill=gray!40] (2.2,0.4) rectangle (3.6,1.2);
+  \node at (2,-0.4) {\footnotesize esquema de ocupação};
+\end{tikzpicture}
+\fonte{Elabora\c{c}\~ao pr\'opria.}
+\end{mapa}
+
+\begin{mapa}[ht]
+\centering
+\caption{Segundo mapa, para provar o contador e a lista}
+\label{mapa:segundo}
+\begin{tikzpicture}[scale=0.8]
+  \draw[thick] (0,0) circle (1.2);
+  \draw[->] (-1.6,0) -- (1.6,0);
+  \draw[->] (0,-1.6) -- (0,1.6);
+  \node at (0,-2) {\footnotesize esquema de alcance};
+\end{tikzpicture}
+\fonte{Elabora\c{c}\~ao pr\'opria.}
+\end{mapa}
 
 \section{Tabelas mais elegantes}
 
@@ -228,7 +372,7 @@ Atualmente a tendência é usar tabelas mais leves, como \autoref{tab:exemplo_nu
 \label{tab:exemplo_numerosbom}
 \begin{tabular}{ccc} % Define a quantidade de colunas
 \toprule % Linha superior
-\textbf{Coluna 1} & \textbf{Coluna 2} & \textbf{Coluna 3} \\ % Cabeçalhos
+\textbf{Col. 1} & \textbf{Col. 2} & \textbf{Col. 3} \\ % Cabeçalhos
 \midrule % Linha média
 1 & 2 & 3 \\ % Primeira linha de dados
 4 & 5 & 6 \\ % Segunda linha de dados
@@ -236,6 +380,7 @@ Atualmente a tendência é usar tabelas mais leves, como \autoref{tab:exemplo_nu
 10 & 11 & 12 \\ % Quarta linha de dados
 \bottomrule % Linha inferior
 \end{tabular}
+\fonte{Elabora\c{c}\~ao pr\'opria.}
 \end{table}
 
 \section{Tabelas Longas ou Largas}
@@ -261,13 +406,14 @@ A \autoref{tab:tabela_largafns} é larga demais, e nela isso é resolvido diminu
 \footnotesize % Aplica uma fonte menor para a tabela
 \begin{tabular}{cccccccc} % Aumente o número de colunas conforme necessário
 \toprule
-\textbf{Coluna 1} & \textbf{Coluna 2} & \textbf{Coluna 3} & \textbf{Coluna 4} & \textbf{Coluna 5} & \textbf{Coluna 6} & \textbf{Coluna 7} & \textbf{Coluna 8} \\
+\textbf{Col. 1} & \textbf{Col. 2} & \textbf{Col. 3} & \textbf{Col. 4} & \textbf{Col. 5} & \textbf{Col. 6} & \textbf{Col. 7} & \textbf{Col. 8} \\
 \midrule
 Dado 1.1 & Dado 1.2 & Dado 1.3 & Dado 1.4 & Dado 1.5 & Dado 1.6 & Dado 1.7 & Dado 1.8 \\
 Dado 2.1 & Dado 2.2 & Dado 2.3 & Dado 2.4 & Dado 2.5 & Dado 2.6 & Dado 2.7 & Dado 2.8 \\
 Dado 3.1 & Dado 3.2 & Dado 3.3 & Dado 3.4 & Dado 3.5 & Dado 3.6 & Dado 3.7 & Dado 3.8 \\
 \bottomrule
 \end{tabular}
+\fonte{Elabora\c{c}\~ao pr\'opria.}
 \end{table}
 
 O comando \verb|\resizebox{width}{height}{content}| permite ajustar o tamanho de qualquer coisa, inclusive uma tabela, como na \autoref{tab:examplerb}. No caso, estou fazendo a tabela ficar maior, para ocupar o espaço, mas funciona para qualquer tamanho.
@@ -286,6 +432,7 @@ Dados 5 & Dados 6 & Dados 7 & Dados 8 \\
 \bottomrule
 \end{tabular}%
 }
+\fonte{Elabora\c{c}\~ao pr\'opria.}
 \end{table}
 
 Para rodar uma tabela muito larga em 90 graus no LaTeX, você pode usar o pacote \verb*|rotating|. Este pacote fornece o ambiente \verb*|sidewaystable|, que automaticamente gira a tabela, incluindo sua legenda, em 90 graus. Isso é especialmente útil para acomodar tabelas largas em documentos, garantindo que elas caibam na página sem comprometer a legibilidade.
@@ -304,17 +451,18 @@ Item 1 & Item 2 & Item 3 \\
 Item 4 & Item 5 & Item 6 \\
 \bottomrule
 \end{tabular}
+\fonte{Elabora\c{c}\~ao pr\'opria.}
 \end{sidewaystable}
 
 Se a tabela for muito longa, o ambiente \verb|longtable| é o ideal. Ele fornece comandos para \textit{headers}, cabeçalhos, e \textit{footers} tanto no ínicio e no fim da tabela, como em todas as páginas. A \autoref{tab:longa} fornece um exemplo de 3 páginas.
 
 \begin{longtable}{|c|c|c|}
 \caption{Exemplo de Tabela Longa}\label{tab:longa} \\
-\hline \textbf{Coluna 1} & \textbf{Coluna 2} & \textbf{Coluna 3} \\ \hline
+\hline \textbf{Col. 1} & \textbf{Col. 2} & \textbf{Col. 3} \\ \hline
 \endfirsthead
 \multicolumn{3}{c}%
 {{\tablename\ \thetable{} -- continuação da página anterior}} \\
-\hline \textbf{Coluna 1} & \textbf{Coluna 2} & \textbf{Coluna 3} \\ \hline
+\hline \textbf{Col. 1} & \textbf{Col. 2} & \textbf{Col. 3} \\ \hline
 \endhead
 \hline \multicolumn{3}{|r|}{{Continua na próxima página}} \\ \hline
 \endfoot
@@ -432,46 +580,105 @@ Se a tabela for muito longa, o ambiente \verb|longtable| é o ideal. Ele fornece
 4 & 5 & 6 \\
 
 \end{longtable}
+\fonte{Elabora\c{c}\~ao pr\'opria.}% a longtable não é float: a fonte vem após o ambiente
 
-  \chapter{Revis\~ao Bibliogr\'afica}
+\section{Subfiguras (subcaption)}
 
-  Para ilustrar a completa ades\~ao ao estilo de cita{\c c}\~oes e listagem de
-  refer\^encias bibliogr\'aficas, a Tabela~\ref{tab:citation} apresenta cita{\c
-  c}\~oes de alguns dos trabalhos contidos na norma fornecida pela CPGP da
-  COPPE, utilizando o estilo numérico. Tirando do comando inicial o parâmetro opcional numérico, ele usará o nome-ano.
+Para colocar várias imagens (ou tabelas) lado a lado, cada uma com sua própria legenda, use o pacote \verb|subcaption|. \textbf{Evite} \verb|subfigure| e \verb|subfig|: são obsoletos e conflitam com a configuração de legendas. A \autoref{fig:subs} traz duas subfiguras:
+
+\begin{figure}[ht]
+  \centering
+  \begin{subfigure}[b]{0.42\textwidth}
+    \centering\includegraphics[width=\linewidth]{example-image-a}
+    \caption{Primeira vista}\label{fig:sub-a}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0.42\textwidth}
+    \centering\includegraphics[width=\linewidth]{example-image-b}
+    \caption{Segunda vista}\label{fig:sub-b}
+  \end{subfigure}
+  \caption{Figura com duas subfiguras}
+  \label{fig:subs}
+  \fonte{Elabora\c{c}\~ao pr\'opria.}
+\end{figure}
+
+Referencie a figura inteira com \verb|\autoref{fig:subs}|. Cada parte tem
+rótulo próprio: \verb|\autoref{fig:sub-a}| leva à \autoref{fig:sub-a}.
+
+\section{Imagens (graphicx)}
+
+A classe já carrega o \verb|graphicx|. Insira imagens com \verb|\includegraphics|; as opções mais úteis são:
+\begin{itemize}
+  \item \verb|[width=0.8\textwidth]| ou \verb|[scale=0.5]| --- tamanho;
+  \item \verb|[angle=90]| --- rotação;
+  \item \verb|[trim=l b r t, clip]| --- recorte (corta as bordas \emph{esquerda, baixo, direita, topo}).
+\end{itemize}
+Formatos aceitos com \hologo{pdfLaTeX}/\hologo{LuaLaTeX}: \texttt{pdf}, \texttt{png}, \texttt{jpg}. Arquivos \texttt{eps} são convertidos automaticamente (\texttt{epstopdf}). Imagens \texttt{svg} exigem um programa externo (ex.: Inkscape) ou o pacote \verb|svg| com \verb|--shell-escape|; o mais simples é exportar o \texttt{svg} para \texttt{pdf} antes de incluí-lo.
+
+\section{Introdução ao tikz}
+
+O \verb|tikz| (disponível também via \verb|tcolorbox|) desenha gráficos vetoriais no próprio \LaTeX. Um exemplo simples:
+
+\begin{figure}[ht]
+  \centering
+  \begin{tikzpicture}
+    \node[draw, rounded corners] (a) at (0,0) {Início};
+    \node[draw, rounded corners] (b) at (4,0) {Fim};
+    \draw[->, thick] (a) -- (b) node[midway, above] {processo};
+  \end{tikzpicture}
+  \caption{Diagrama simples em tikz}
+  \label{fig:tikz}
+  \fonte{Elabora\c{c}\~ao pr\'opria.}
+\end{figure}
+
+Para gráficos de dados (curvas, barras), veja o \verb|pgfplots|, construído sobre o \verb|tikz|.
+
+\section{Float ou direto no texto?}
+
+Colocar a tabela ou imagem dentro de \verb|figure|/\verb|table| (um \emph{float}) deixa o \LaTeX\ posicioná-la onde melhor couber (topo ou base da página), numerá-la e incluí-la na lista; em troca, a posição exata não é garantida. Colocá-la \emph{diretamente} no texto fixa a posição, mas perde a numeração, a legenda e a entrada na lista, além de poder gerar quebras de página ruins. Para teses, prefira sempre o float, com \verb|\caption| e \verb|\source|.
+
+  \chapter{Using BibLaTeX}
+  \label{cap:biblatex}
+
+  Esta classe gera as referências com BibLaTeX e o \emph{backend} \texttt{biber}, no padrão ABNT (NBR~6023 para as referências e NBR~10520 para as citações), seguindo as normas da CPGP da COPPE. O antigo \hologo{BibTeX} e os arquivos \texttt{.bst} foram aposentados.
+
+  \textbf{É obrigatório compilar com \texttt{biber}} (e não com \hologo{BibTeX}). A sequência de compilação é: \hologo{LaTeX}, depois \texttt{biber}, e mais duas vezes \hologo{LaTeX}. Em editores como o \hologo{TeX}studio ou o Overleaf, configure o \emph{bibliography backend} como \texttt{biber} (veja o capítulo sobre \texttt{latexmkrc}).
+
+  Os comandos do \texttt{natbib} (\verb|\citet|, \verb|\citep|) continuam disponíveis porque a classe carrega o BibLaTeX com a opção \texttt{natbib=true}; assim, você pode usar tanto os comandos nativos do BibLaTeX (\verb|\autocite|, \verb|\textcite|) quanto os do \texttt{natbib}. As Tabelas~\ref{tab:citation} e~\ref{tab:citation1} apresentam \verb|\cite| e \verb|\citet| para vários tipos de obra contidos na norma da CPGP (a primeira com regras manuais, a segunda com \texttt{booktabs}), no estilo numérico. Tirando o parâmetro opcional numérico da classe, as citações passam de numéricas para autor-data.
 
   \begin{table}[h]
   \caption{Exemplos de cita{\c c}\~oes utilizando o comando padr\~ao
     \texttt{\textbackslash cite} do \LaTeX\ e
-    o comando \texttt{\textbackslash citet},
-    fornecido pelo pacote \texttt{natbib}.}
+    o comando \texttt{\textbackslash citep},
+    disponível pela opção \texttt{natbib} do BibLaTeX.}
   \label{tab:citation}
   \centering
   {\footnotesize
   \begin{tabular}{|c|c|c|}
     \hline
-    Tipo da Publicação & \verb|\cite| & \verb|\citet|\\
+    Tipo da Publicação & \verb|\cite| & \verb|\citep|\\
     \hline
-    Livro & \cite{book-example} & \citet{book-example}\\
-    Artigo & \cite{article-example} & \citet{article-example}\\
-    Relatório & \cite{techreport-example} & \citet{techreport-example}\\
-    Relatório & \cite{techreport-exampleIn} & \citet{techreport-exampleIn}\\
+    Livro & \cite{book-example} & \citep{book-example}\\
+    Artigo & \cite{article-example} & \citep{article-example}\\
+    Relatório & \cite{techreport-example} & \citep{techreport-example}\\
+    Relatório & \cite{techreport-exampleIn} & \citep{techreport-exampleIn}\\
     Anais de Congresso & \cite{inproceedings-example} &
-      \citet{inproceedings-example}\\
-    Séries & \cite{incollection-example} & \citet{incollection-example}\\
-    Em Livro & \cite{inbook-example} & \citet{inbook-example}\\
+      \citep{inproceedings-example}\\
+    Séries & \cite{incollection-example} & \citep{incollection-example}\\
+    Em Livro & \cite{inbook-example} & \citep{inbook-example}\\
     Dissertação de mestrado & \cite{mastersthesis-example} &
-      \citet{mastersthesis-example}\\
-    Tese de doutorado & \cite{phdthesis-example} & \citet{phdthesis-example}\\
+      \citep{mastersthesis-example}\\
+    Tese de doutorado & \cite{phdthesis-example} & \citep{phdthesis-example}\\
     \hline
   \end{tabular}}
+  \fonte{Elabora\c{c}\~ao pr\'opria.}
   \end{table}
 
  \begin{table}[h]
   \caption{Exemplos de cita{\c c}\~oes utilizando o comando padr\~ao
     \texttt{\textbackslash cite} do \LaTeX\ e
     o comando \texttt{\textbackslash citet},
-    fornecido pelo pacote \texttt{natbib}. Além disso, usando o booktabs.}
+    disponível pela opção \texttt{natbib} do BibLaTeX. Além disso, usando o booktabs.}
   \label{tab:citation1}
   \centering
   {\footnotesize
@@ -492,7 +699,114 @@ Se a tabela for muito longa, o ambiente \verb|longtable| é o ideal. Ele fornece
     Tese de doutorado & \cite{phdthesis-example} & \citet{phdthesis-example}\\
     \bottomrule
   \end{tabular}}
+  \fonte{Elabora\c{c}\~ao pr\'opria.}
   \end{table}
+
+  \section{Comandos de citação}
+
+  Os principais comandos são: \verb|\cite| (referência simples), \verb|\citet| (autor por extenso, ano entre parênteses --- ``citação no texto''), \verb|\citep| (tudo entre parênteses) e os nativos do BibLaTeX \verb|\autocite| e \verb|\textcite|. Por exemplo, \citet{article-example} tratou do tema, o que também aparece em \citep{article-example}.
+
+  \subsection{Parâmetro opcional: página e ``tradução nossa''}
+
+  Todos os comandos aceitam um parâmetro opcional para a localização (página, seção) e observações. Por exemplo, \verb|\citep[p.~45, tradução nossa]{chave}| produz \citep[p.~45, tradução nossa]{article-example}. Use ``tradução nossa'' quando você mesmo traduziu o trecho citado (NBR~10520): coloque a tradução no corpo do texto e, se a precisão lexical importar, o original em nota de rodapé.
+
+  \subsection{Citação de citação (\emph{apud})}
+
+  Para citar uma obra através de outra, use \verb|\citetapud| e \verb|\citepapud| (demonstrados na Seção~\ref{sec:citacoes}): pela ABNT, entra na lista de referências \emph{apenas} a obra efetivamente consultada; a obra original (não consultada) é informada como texto.
+
+  \subsection{Múltiplas bibliografias}
+
+  Para separar as referências (por tipo, capítulo ou tema), use o ambiente \verb|refsection| e vários \verb|\printbibliography| com filtros, como \verb|\printbibliography[type=article]| ou \verb|\printbibliography[keyword=lei]|. Cada chamada imprime um subconjunto das entradas citadas.
+
+  \section{Tipos de entrada bibliográfica}
+
+  Cada tipo de documento da ABNT corresponde a um tipo de entrada do BibLaTeX, com um sinônimo em português (sem acentos) que você pode usar no \texttt{.bib}. Todos os tipos abaixo estão demonstrados nas Referências deste documento (veja \texttt{example.bib}). Entre parênteses, os sinônimos em português.
+
+  \subsection{Tipos acadêmicos principais}
+  \begin{itemize}
+    \item Livro / monografia --- \verb|@book| (\verb|@livro|)
+    \item Artigo de periódico --- \verb|@article| (\verb|@artigo|); matéria de jornal --- \verb|@article| (\verb|@artigodejornal|)
+    \item Capítulo de livro --- \verb|@incollection| (\verb|@partedelivro|), \verb|@inbook| (\verb|@emlivro|); verbete --- \verb|@inreference| (\verb|@verbete|)
+    \item Evento no todo (anais) --- \verb|@proceedings| (\verb|@anais|); trabalho em evento --- \verb|@inproceedings| (\verb|@trabalhodeevento|)
+    \item Tese/dissertação --- \verb|@thesis| (\verb|@tese|, \verb|@dissertacao|); com tipo predefinido: \verb|@dissertacaomestrado|, \verb|@tesedoutorado|, \verb|@tesephd|, \verb|@tcc|
+    \item Relatório --- \verb|@report| (\verb|@relatorio|, \verb|@relatoriotecnico|); periódico no todo --- \verb|@periodical| (\verb|@periodico|)
+    \item Manual --- \verb|@manual|; diversos --- \verb|@misc| (\verb|@diverso|); página/site --- \verb|@online|
+  \end{itemize}
+
+  \subsection{Tipos especiais (ABNT §4.2.5--4.2.14)}
+  \begin{itemize}
+    \item Patente --- \verb|@patent| (\verb|@patente|)
+    \item Legislação / ato normativo --- \verb|@legislation| (\verb|@legislacao|, \verb|@atonormativo|); jurisprudência --- \verb|@jurisdiction| (\verb|@jurisprudencia|); documento jurídico/civil --- \verb|@legal| (\verb|@documentojuridico|, \verb|@documentocivil|)
+    \item Norma técnica --- \verb|@standard| (\verb|@norma|); partitura --- \verb|@music| (\verb|@partitura|)
+    \item Documento cartográfico (mapa) --- \verb|@map| (\verb|@mapa|, \verb|@cartografico|); iconográfico --- \verb|@image| (\verb|@iconografico|); obra de arte/3D --- \verb|@artwork| (\verb|@obradearte|, \verb|@tridimensional|)
+    \item Audiovisual --- \verb|@video| (\verb|@audiovisual|); filme --- \verb|@movie| (\verb|@filme|); correspondência --- \verb|@letter| (\verb|@correspondencia|); conjunto de dados --- \verb|@dataset| (\verb|@conjuntodedados|)
+  \end{itemize}
+
+  \subsection{Jogos e TV (tipos próprios da CoppeTeX)}
+  \begin{itemize}
+    \item Jogo --- \verb|@game| (\verb|@jogo|); de tabuleiro --- \verb|@boardgame| (\verb|@jogodetabuleiro|); eletrônico --- \verb|@videogame| (\verb|@jogoeletronico|)
+    \item Programa de TV / série --- \verb|@tvshow| (\verb|@programadetv|, \verb|@serietv|)
+  \end{itemize}
+
+  Os campos também aceitam sinônimos em português (sem acentos): \verb|autor|, \verb|titulo|, \verb|subtitulo|, \verb|editora|, \verb|local|, \verb|ano|, \verb|data|, \verb|paginas|, \verb|edicao|, \verb|numero|, \verb|periodico|/\verb|jornal|/\verb|revista|, \verb|caderno|, \verb|escala|, \verb|organizador|, \verb|tradutor|, entre outros. Sem autor nem organizador, a entrada é feita pelo título, com a 1ª palavra em CAIXA ALTA.
+
+  \section{Uma referência de cada categoria do Manual}\label{sec:todosostipos}
+
+  A seção 4.2 do Manual do SiBI enumera 34 categorias de documento, da monografia à partitura. O arquivo \verb|tipos.bib|, que acompanha a classe, traz \textbf{uma entrada de cada uma}, com os dados dos próprios exemplos do Manual, e todas são citadas aqui. Confira cada uma na lista de Referências: é assim que ela tem de sair.
+
+  Metade das entradas está escrita com os nomes de tipo e de campo em \textbf{inglês} e metade com os sinônimos em \textbf{português}, de propósito, para que as duas formas apareçam funcionando lado a lado. \textbf{Prefira a inglesa}: é a do \texttt{biblatex}, é a que os gerenciadores de referência exportam, e é a que outra pessoa vai reconhecer quatro anos depois. Os sinônimos em português existem para quem chega de uma base antiga e não quer reescrever tudo.
+
+  \begin{longtable}{@{}p{0.46\textwidth}p{0.17\textwidth}p{0.28\textwidth}@{}}
+    \caption{Uma referência de cada categoria da seção 4.2 do Manual}
+    \label{tab:todosostipos}\\
+    \toprule
+    \textbf{Categoria} & \textbf{Forma usada} & \textbf{Citação} \\
+    \midrule
+    \endfirsthead
+    \toprule
+    \textbf{Categoria} & \textbf{Forma usada} & \textbf{Citação} \\
+    \midrule
+    \endhead
+    \bottomrule
+    \endfoot
+    4.2.1.1 monografia no todo & inglesa & \cite{m-4211} \\
+    4.2.1.2 monografia em meio eletrônico & portuguesa & \cite{m-4212} \\
+    4.2.1.3 parte de monografia & inglesa & \cite{m-4213} \\
+    4.2.2 correspondência & portuguesa & \cite{m-422} \\
+    4.2.2.1 correspondência em meio eletrônico & inglesa & \cite{m-4221} \\
+    4.2.3.1 publicação periódica no todo & portuguesa & \cite{m-4231} \\
+    4.2.3.3 parte de revista & inglesa & \cite{m-4233} \\
+    4.2.3.4 artigo de revista & portuguesa & \cite{m-4234} \\
+    4.2.3.5 artigo de revista em meio eletrônico & inglesa & \cite{m-4235} \\
+    4.2.3.6 matéria de jornal & portuguesa & \cite{m-4236} \\
+    4.2.3.7 matéria de jornal assinada, em meio eletrônico & inglesa & \cite{m-4237} \\
+    4.2.3.8 matéria de jornal não assinada, em meio eletrônico & portuguesa & \cite{m-4238} \\
+    4.2.4.1 evento no todo & inglesa & \cite{m-4241} \\
+    4.2.4.3 evento no todo em meio eletrônico & portuguesa & \cite{m-4243} \\
+    4.2.4.5 trabalho apresentado em evento & inglesa & \cite{m-4245} \\
+    4.2.4.6 trabalho em evento, em meio eletrônico & portuguesa & \cite{m-4246} \\
+    4.2.5 patente & inglesa & \cite{m-425} \\
+    4.2.5.1 patente em meio eletrônico & portuguesa & \cite{m-4251} \\
+    4.2.6.1 legislação & inglesa & \cite{m-4261} \\
+    4.2.6.2 jurisprudência & portuguesa & \cite{m-4262} \\
+    4.2.6.3 ato administrativo normativo & inglesa & \cite{m-4263} \\
+    4.2.7 documento jurídico em meio eletrônico & portuguesa & \cite{m-427} \\
+    4.2.8 documento civil e de cartório & inglesa & \cite{m-428} \\
+    4.2.9 documento audiovisual & portuguesa & \cite{m-429} \\
+    4.2.10 partitura & inglesa & \cite{m-42101} \\
+    4.2.10.1 partitura em meio eletrônico & portuguesa & \cite{m-42102} \\
+    4.2.11 documento iconográfico & inglesa & \cite{m-42111} \\
+    4.2.11.1 documento iconográfico em meio eletrônico & portuguesa & \cite{m-42112} \\
+    4.2.12 documento cartográfico & inglesa & \cite{m-42121} \\
+    4.2.12.1 documento cartográfico em meio eletrônico & portuguesa & \cite{m-42122} \\
+    4.2.13 documento tridimensional & inglesa & \cite{m-42131} \\
+    4.2.14 documento de acesso exclusivo em meio eletrônico & portuguesa & \cite{m-4214} \\
+    dissertação de mestrado & inglesa & \cite{m-diss} \\
+    norma técnica & portuguesa & \cite{m-norma} \\
+  \end{longtable}
+  \fonte{Elaboração própria, a partir da seção 4.2 do Manual do SiBI.}
+
+  Se alguma dessas referências sair diferente do que o Manual imprime, é defeito da classe, e o lugar de relatar é o repositório do projeto. O gabarito de cada uma está no próprio \verb|tipos.bib|, em comentário acima da entrada.
 
 \chapter{Alguns outros exemplo úteis}
 
@@ -519,6 +833,7 @@ Este é o conteúdo do meu textbox sem título. Você pode adicionar qualquer te
     \end{tikzpicture}
     \caption{Figura com Textbox}
     \label{fig:figura_com_textbox1}
+    \fonte{Elabora\c{c}\~ao pr\'opria.}
 \end{figure}
 
 \begin{figure}[ht]
@@ -528,7 +843,183 @@ Este é o conteúdo do meu textbox sem título. Você pode adicionar qualquer te
 \end{tcolorbox}
     \caption{Figura com Textbox simples}
     \label{fig:figura_com_textbox}
+    \fonte{Elabora\c{c}\~ao pr\'opria.}
 \end{figure}
+
+\section{Listagens de código e algoritmos}
+
+O CoppeTeX traz embutido o suporte a listagens de programas (pacote \verb|listings|) e a algoritmos (\verb|algorithm2e|). A legenda fica no topo (``Programa N''), como em qualquer ilustração, e a lista correspondente é gerada por \verb|\listofprogramas|. O \autoref{prog:exemplo} mostra um exemplo em Python.
+
+\begin{python}[caption={Exemplo de programa em Python},label=prog:exemplo]
+def saudacao(nome):
+    # imprime uma saudação acentuada
+    print(f"Olá, {nome}!")
+
+saudacao("COPPE")
+\end{python}
+\source{Elaboração própria.}
+
+Para inserir código no meio do texto use \verb|\pythoninline|, como em \pythoninline{saudacao(nome)}; e para mostrar a saída de um programa use o ambiente \verb|Verbatim| do \texttt{fancyvrb}, que a classe já carrega:
+
+\begin{Verbatim}[frame=lines,numbers=left,numbersep=0.5em]
+Olá, COPPE!
+\end{Verbatim}
+
+Há estilos prontos também para \verb|java|, \verb|xml|, \verb|html| e \verb|prolog|. O \autoref{prog:java} usa o de Java e é a segunda listagem do documento, o que prova que o contador anda e que as duas entram na lista de programas.
+
+\begin{java}[caption={Exemplo de programa em Java},label=prog:java]
+public class Saudacao {
+    public static void main(String[] args) {
+        System.out.println("Olá, COPPE!");
+    }
+}
+\end{java}
+\fonte{Elaboração própria.}
+
+Há também \verb|\pythoninline| e \verb|\javainline| para código no meio do
+texto, como em \javainline{new Saudacao()}, e o ambiente \verb|Verbatim| (com as opções acima) para a saída de programas. Para algoritmos, use o ambiente \verb|algorithm| com as palavras-chave em português \verb|\Para| e \verb|\Enquanto|, como no \autoref{alg:soma}.
+
+\begin{algorithm}[H]
+\caption{Soma dos elementos de um vetor}
+\label{alg:soma}
+\Dados{vetor $v$ com $n$ elementos}
+\Resultado{soma $s$ dos elementos de $v$}
+$s \leftarrow 0$\;
+\Para{$i \leftarrow 1$ \Ate{} $n$}{
+  $s \leftarrow s + v[i]$\;
+}
+\Retorna $s$\;
+\end{algorithm}
+
+O \autoref{alg:busca} é o segundo algoritmo, e usa \verb|\Enquanto|. Como no caso das listagens, ele existe para mostrar a numeração andando e a lista de algoritmos com duas entradas.
+
+\begin{algorithm}[H]
+\caption{Busca sequencial em um vetor}
+\label{alg:busca}
+\Dados{vetor $v$ com $n$ elementos e uma chave $k$}
+\Resultado{posição de $k$ em $v$, ou $0$ se $k$ não estiver em $v$}
+$i \leftarrow 1$\;
+\Enquanto{$i \leq n$ \textbf{e} $v[i] \neq k$}{
+  $i \leftarrow i + 1$\;
+}
+\Se{$i > n$}{\Retorna $0$\;}
+\Retorna $i$\;
+\end{algorithm}
+
+  \chapter{Escrevendo matemática}
+
+  A classe carrega \texttt{amsmath} em qualquer motor. Sob \hologo{pdfLaTeX} ela também carrega \texttt{amssymb} (símbolos clássicos $\mathbb{R}$, $\hbar$, $\varnothing$, \ldots). Sob \hologo{LuaLaTeX}/\hologo{XeLaTeX}, \textbf{a classe NÃO carrega \texttt{amssymb}} (ele é incompatível com o \texttt{unicode-math}); se você terminar o documento sem ter carregado nem \texttt{unicode-math} nem \texttt{amssymb}, a classe emite um \emph{ClassWarning} no fim da compilação pedindo que você adicione \verb|\usepackage{unicode-math}| ao preâmbulo (veja a~\autoref{sec:unicode-math}). Fórmulas no texto vão entre \verb|$...$|; fórmulas destacadas e numeradas usam o ambiente \verb|equation|.
+
+  \section{Alinhamento (align)}
+  O ambiente \verb|align| alinha equações pelo \verb|&| e numera cada linha (\verb|\\| quebra a linha; \verb|align*| não numera):
+  \begin{align}
+    f(x) &= (x+1)^2 \\
+         &= x^2 + 2x + 1 .
+  \end{align}
+
+  \section{Matrizes (matrix)}
+  O \texttt{amsmath} traz \verb|pmatrix|, \verb|bmatrix|, \verb|vmatrix|, entre outros:
+  \begin{equation}
+    A = \begin{bmatrix} a_{11} & a_{12} \\ a_{21} & a_{22} \end{bmatrix}
+    \qquad
+    \det A = \begin{vmatrix} a_{11} & a_{12} \\ a_{21} & a_{22} \end{vmatrix}
+  \end{equation}
+
+  \section{Subequações (subequations)}
+  Para numerar um grupo de equações sob o mesmo número, com letras (a), (b):
+  \begin{subequations}
+  \begin{align}
+    a &= b + c , \\
+    d &= e - f .
+  \end{align}
+  \end{subequations}
+
+  \section{Estruturas alinhadas (array)}
+  O \verb|array| monta estruturas dentro do modo matemático, como definições por partes:
+  \begin{equation}
+    |x| = \left\{ \begin{array}{ll}
+      x,  & \text{se } x \ge 0 , \\
+      -x, & \text{caso contrário.}
+    \end{array} \right.
+  \end{equation}
+
+  \section{Operadores (\textbackslash DeclareMathOperator)}
+  Para operadores com a tipografia correta (romano, espaçamento adequado), declare-os no preâmbulo:
+  \begin{verbatim}
+  \usepackage{amsmath}
+  \DeclareMathOperator{\RMSE}{RMSE}
+  \DeclareMathOperator{\diag}{diag}
+  \end{verbatim}
+  Assim:
+  \begin{itemize}
+    \item \verb|$\RMSE(y,\hat{y})$| produz $\RMSE(y,\hat{y})$;
+    \item \verb|$\diag(\lambda_1,\lambda_2)$| produz
+          $\diag(\lambda_1,\lambda_2)$.
+  \end{itemize}
+
+  \section{Unicode e LuaLaTeX (unicode-math)}
+  \label{sec:unicode-math}
+  Ao migrar para \hologo{LuaLaTeX} (ou \hologo{XeLaTeX}), \textbf{não carregue} \texttt{amssymb}: ele é o pacote AMS legado, escrito para as fontes Type~1 de 8~bits (\texttt{msam}/\texttt{msbm}), e colide com \texttt{unicode-math} -- o pacote moderno que controla a fonte matemática OpenType. Por isso a classe \texttt{coppe} já \emph{omite} \texttt{amssymb} sob motores Unicode e emite um aviso na compilação (procure por \texttt{Class coppe Warning} no log) lembrando que cabe a você completar o preâmbulo:
+  \begin{verbatim}
+  \usepackage{amsmath}      % a classe já carrega
+  \usepackage{unicode-math} % NÃO use \usepackage{amssymb} junto
+  \setmathfont{Latin Modern Math}  % ou STIX Two Math
+  \end{verbatim}
+  O código clássico continua valendo ($\mathbb{R}$, $\int_a^b f(x)\,dx$, $\alpha$) e você ainda pode digitar os próprios símbolos Unicode no editor. A vantagem é que o PDF passa a indexar os símbolos em Unicode real: ao copiar uma fórmula do PDF, o significado dos símbolos é preservado.
+
+  \chapter{Referências cruzadas, notas e índices}
+  \label{cap:refs}
+
+  Este capítulo reúne os recursos para \emph{apontar} para coisas: rótulos, notas de rodapé, hyperlinks, URLs e índices. (Para a bibliografia, veja o Capítulo~\ref{cap:biblatex}.)
+
+  \section{Rótulos e referências cruzadas}
+
+  Marque um elemento com \verb|\label{tipo:nome}| e aponte para ele com \verb|\ref| (só o número), \verb|\autoref| (tipo + número, p.\,ex.\ ``Figura 4.1'') ou \verb|\pageref| (a página). O número vem do contador do elemento \emph{no momento} do \verb|\label|; por isso o \verb|\label| deve vir logo após o \verb|\caption| (em floats) ou o título da seção. Adote prefixos por tipo: \verb|cap:|, \verb|sec:|, \verb|fig:|, \verb|tab:|, \verb|eq:|. Por exemplo, este é o \autoref{cap:refs} e a \autoref{fig:tikz} está no capítulo de floats.
+
+  \section{Notas de rodapé}
+
+  Use \verb|\footnote{texto}|\footnote{Como esta nota, que a classe imprime em espaçamento simples.}. Para repetir a marca sem renumerar, use \verb|\footnotemark| e \verb|\footnotetext|.
+
+  \section{hyperref e marcadores}
+
+  A classe carrega o \verb|hyperref|: o sumário, as citações e os \verb|\ref|/\verb|\autoref| viram \emph{links} clicáveis e o leitor de PDF ganha um painel de \emph{bookmarks} (navegação por capítulos). Não é preciso configurar nada; para mudar a cor dos links, use \verb|\hypersetup{...}| no preâmbulo. Para tirar a cor e a moldura de todos eles de uma vez --- útil para quem vai imprimir --- passe a opção de classe \verb|semlinks|; os links continuam clicáveis e os \emph{bookmarks} continuam no painel.
+
+  \section{URLs}
+
+  Para endereços, use \verb|\url{https://exemplo.org}|: o \verb|hyperref| cria o link e quebra a URL no fim da linha. Para um texto-âncora,
+use \verb|\href{https://exemplo.org}{texto}|. Evite digitar URLs como texto comum --- elas não quebram e estouram a margem.
+
+  \section{Índice remissivo}
+
+  Marque os termos com \verb|\index{termo}| e imprima o índice com \verb|\printindex| (carregue \verb|makeidx| e use \verb|\makeindex| no preâmbulo). O índice é montado pelo programa \verb|makeindex|. Como as listas de abreviaturas e símbolos também usam \verb|makeindex| (com o estilo \verb|coppe.ist|), o mais prático é deixar o \verb|latexmk| rodar tudo (veja o \texttt{latexmkrc}). Atenção: o \verb|latexmk| é um script \emph{Perl} --- no Windows, instale o \emph{Strawberry Perl}; no Linux e no macOS o Perl já costuma vir instalado. Para vários índices, use \verb|imakeidx| ou \verb|index|.
+
+  \section{Traduções (NBR 10520)}
+
+  Ao citar um trecho que você mesmo traduziu, coloque a tradução no corpo do texto e escreva ``tradução nossa'' na chamada; se a precisão do original importar, ponha-o em nota de rodapé. Segundo \citet[p.~45]{article-example}, a interpretação depende das práticas (tradução nossa).\footnote{Original: ``the interpretation depends on the practices''.} Veja também o parâmetro opcional de \verb|\citep| no Capítulo~\ref{cap:biblatex}.
+
+  \chapter{Truques de \LaTeX}
+
+  \section{Comentários mágicos (\texttt{\% !TeX})}
+  Linhas \verb|% !TeX| no topo do arquivo dizem ao editor (\hologo{TeX}studio, Overleaf, \hologo{TeX}works) como compilar. O padrão recomendado nesta classe:
+  \begin{verbatim}
+  % !TeX program = lualatex
+  % !TeX encoding = UTF-8
+  % !TeX spellcheck = pt_BR
+  % !BIB program = biber
+  \end{verbatim}
+  Com isso o documento compila igual em qualquer ambiente. O \texttt{latexmkrc} cumpre papel parecido para o \verb|latexmk|.
+
+  \section{Espaço engolido}
+  Um comando sem argumento engole o espaço seguinte: \verb|\LaTeX é bom| sai como ``\LaTeX é bom'' (coladinho). Para preservar o espaço use \verb|\LaTeX\ é| (barra-espaço), \verb|\LaTeX{} é| (chaves vazias) ou o pacote \verb|xspace| ao definir o comando (\verb|\newcommand\foo{...\xspace}|).
+
+  \section{Escopo (grupos)}
+  Chaves \verb|{...}| (ou \verb|\begingroup|\dots\verb|\endgroup|) criam um escopo: mudanças de fonte, espaçamento e até definições de pacotes ficam locais. Para reaproveitar um pseudocódigo escrito para um pacote de algoritmos diferente do seu, isole-o num grupo em vez de reescrevê-lo.
+
+  \section{Descarregar figuras: \texttt{\textbackslash clearpage} × \texttt{\textbackslash newpage}}
+  \verb|\newpage| apenas quebra a página e leva os floats pendentes adiante, acumulando-os. \verb|\clearpage| quebra a página \emph{e} despeja todos os floats em espera antes de continuar --- use-o para evitar o ``congestionamento'' de figuras no fim de um capítulo.
+
+  \section{\texttt{latexmkrc}, perl e Overleaf}
+  O \verb|latexmk| automatiza a compilação (roda \LaTeX, \verb|biber| e \verb|makeindex| quantas vezes for preciso) e lê o \texttt{latexmkrc} do diretório. Como o \verb|latexmk| é um script \emph{Perl}, no Windows instale o \emph{Strawberry Perl}; no Linux e no macOS o Perl já vem instalado. No Overleaf, o \verb|latexmk| roda sozinho e lê o \texttt{latexmkrc} do projeto.
 
   \chapter{Método Proposto}
   \chapter{Resultados e Discuss\~oes}
@@ -553,12 +1044,22 @@ Este é o conteúdo do meu textbox sem título. Você pode adicionar qualquer te
   \abbrev{IoT}{IoT com ordenação default}
   \abbrev[ITU]{ITU}{ITU mesmo}
 
+  \newsigla{ufrj}{UFRJ}{Universidade Federal do Rio de Janeiro}
+  \newsigla{cpgp}{CPGP}{Comissão de Pós-Graduação e Pesquisa de Engenharia}
+
+  As siglas (manual2024, seção 2.8) são expandidas na primeira ocorrência e registradas automaticamente na lista. Declaradas com \verb|\newsigla|, basta usá-las: a \sigla{ufrj} oferece vários cursos de pós-graduação, e este programa segue as normas da \sigla{cpgp}. Em menções seguintes aparecem apenas as siglas, como \sigla{ufrj} e \sigla{cpgp}; use \verb|\sigla*| para forçar a forma extensa.
+
   \chapter{Conclusões}
 
   \backmatter
 
-  \bibliographystyle{coppe-unsrt}
-  \bibliography{example}
+  % Tipos exóticos da ABNT (NBR 6023): patente, legislação, norma, mapa,
+  % partitura --- declarados via sinônimos em português em example.bib.
+  \nocite{patente-example,legislacao-example,norma-example,mapa-example,partitura-example}
+  \nocite{jurisprudencia-example}
+  \nocite{videogame-example,filme-example,semautor-example,semautorart-example}
+  \nocite{jornalcaderno-example,jornal-example}
+  \printbibliography
 
 \appendix
 
@@ -581,14 +1082,11 @@ No modelo \CoppeTeX os anexos devem obrigtoriamente vir depois dos apêndices e 
 
 \chapter{Outro Anexo}
 
+\coppetexfinalpage% colofão institucional (página par, face do contracapa)
+
 \end{document}
 
-\newcommand{\annex}{
-    \iflanguage{brazilian}
-        {\renewcommand{\appendixname}{Anexo}}
-        {\renewcommand{\appendixname}{Annex}}
-    \appendix
-}
+
 %% 
 %%
 %% End of file `example.tex'.

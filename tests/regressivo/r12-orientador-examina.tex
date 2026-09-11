@@ -1,0 +1,27 @@
+%% Teste de regressao da CoppeTeX. NAO roda na suite normal.
+%% Rode com: python tests/regressivo/run-regressivo.py
+%% BUG: o outro lado do r11. Nos Programas em que o orientador integra a banca,
+%% a opcao orientadorexamina o poe de volta na folha de aprovacao, na FRENTE dos
+%% examinadores, como presidencia (3.1.2.1.3(e)).
+%% ESPERA-TEXTO-PAGINA: 4::Zebedeu
+%% ESPERA-TEXTO-PAGINA: 4::Examinador Zacarias
+\documentclass[dsc,orientadorexamina]{coppe}
+\title{Quem assina tambem examina}
+\foreigntitle{The advisor on the board}
+\author{Nome}{Sobrenome}
+\advisor{Zebedeu}{Orientatti}{D.Sc.}{UFRJ}
+\examiner{Examinador Zacarias}{D.Sc.}{UFRJ}
+\department{PESC}
+\date{09}{2026}
+\dataaprovacao{15 de setembro de 2026}
+\keyword{Regressao}
+\begin{document}
+  \maketitle
+  \frontmatter
+  \begin{abstract}Resumo.\end{abstract}
+  \begin{foreignabstract}Abstract.\end{foreignabstract}
+  \tableofcontents
+  \mainmatter
+  \chapter{Um capitulo}
+  Texto.
+\end{document}

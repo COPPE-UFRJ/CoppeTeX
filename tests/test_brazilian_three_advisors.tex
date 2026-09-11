@@ -1,0 +1,76 @@
+%%
+%% test_brazilian_three_advisors.tex -- upper-bound regression test.
+%%
+%% Three \advisor calls is the most the COPPE/UFRJ cover is expected to
+%% typeset reasonably; the class must still render the cover and folha de
+%% rosto cleanly, with the plural label "Orientadores".
+%%
+%% Scope: just enough thesis to render \maketitle and the front pages.
+%% No body chapters -- they are covered by test_brazilian_two_advisors.tex.
+%%
+%% Run via ../tests/run-tests.ps1.
+%%
+%% NAO e gerado pelo coppe.dtx e NAO e distribuido: a suite prova que a
+%% classe funciona, nao faz parte dela. Rode por tools\prova.ps1, ou por
+%% tests\run-tests.ps1 para so esta pasta.
+%%
+
+\documentclass[dsc]{coppe}
+
+\addbibresource{example.bib}% only loaded so biblatex initialises cleanly
+
+\begin{document}
+  \title{Teste de tr\^es orientadores}
+  \foreigntitle{Three-advisor regression test}
+  \author{Teste}{Da Silva}
+
+  % EXACTLY THREE advisors.
+  \advisor{Primeiro}{Orientador}{D.Sc.}{UFRJ}
+  \advisor{Segundo}{Orientador}{Ph.D.}{UFRJ}
+  \advisor{Terceiro}{Orientador}{D.Sc.}{UFRJ}
+
+  \examiner{Primeiro Examinador Sobrenome}{D.Sc.}{UFRJ}
+  \examiner{Segundo Examinador Sobrenome}{Ph.D.}{UFRJ}
+  \examiner{Terceiro Examinador Sobrenome}{D.Sc.}{UFRJ}
+  \examiner{Quarto Examinador Sobrenome}{D.Sc.}{UFRJ}
+  \examiner{Quinto Examinador Sobrenome}{Ph.D.}{UFRJ}
+  \department{PESC}
+  \date{05}{2026}
+
+  \keyword{teste}
+  \keyword{regress\~ao}
+  \keyword{tr\^es orientadores}
+
+  \maketitle
+
+  \frontmatter
+  \dedication{Dedico a quem revisar este teste.}
+
+  \chapter*{Agradecimentos}
+  Bloco m\'inimo apenas para validar a folha p\'os-dedicat\'oria com tr\^es
+  orientadores.
+
+  \begin{abstract}
+  Resumo m\'inimo para validar o ambiente \texttt{abstract} no caminho
+  ``tr\^es orientadores''. O r\'otulo no folha de rosto deve aparecer no
+  plural (``Orientadores'').
+  \end{abstract}
+
+  \begin{foreignabstract}
+  Minimal foreign abstract to validate the \texttt{foreignabstract}
+  environment with three advisors. Content is irrelevant; only the page
+  layout matters.
+  \end{foreignabstract}
+
+  \tableofcontents
+
+  \mainmatter
+  \chapter{Cap\'itulo \'unico}
+  Conte\'udo m\'inimo para que o documento tenha um cap\'itulo de corpo
+  textual e o sum\'ario n\~ao fique vazio.
+
+  \coppetexfinalpage% colofao institucional, sempre na pagina par final
+\end{document}
+%% 
+%%
+%% End of file `tests/test_brazilian_three_advisors.tex'.

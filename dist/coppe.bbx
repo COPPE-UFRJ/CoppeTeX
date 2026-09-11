@@ -1,0 +1,542 @@
+%%
+%% This is file `coppe.bbx',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% coppe.dtx  (with options: `bbx')
+%% 
+%% This is the `coppe' document class used for composition of LaTeX
+%% monographs (master and PhD thesis, and PhD qualifying exams)
+%% satisfying the requirements of the Coordination of Research and
+%% Graduate Courses in Engineering at the Federal University of
+%% Rio de Janeiro.
+%% 
+%% Copyright (C) 2008 Vicente Helano and George Ainsworth Jr.
+%% Copyright (C) 2024 Vicente Helano and George Ainsworth Jr. and Geraldo Xexéo and Eduardo Mangeli
+%% 
+%% This program is free software; you can redistribute it and/or modify
+%% it under the terms of the GNU General Public License version 3 as
+%% published by the Free Software Foundation.
+%% 
+%% This program is distributed in the hope that it will be useful,
+%% but WITHOUT ANY WARRANTY; without even the implied warranty of
+%% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+%% GNU General Public License version 3 for more details.
+%% 
+%% You should have received a copy of the GNU General Public License
+%% version 3 along with this package (see COPYING file).
+%% If not, see <http://www.gnu.org/licenses/>.
+%% 
+%% Author(s): Vicente Helano,
+%%            George Ainsworth
+%%            Geraldo Xexéo
+%%            Eduardo Mangeli
+%% 
+%% \CheckSum{0}
+%% \CharacterTable
+%%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+%%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+%%   Digits        \0\1\2\3\4\5\6\7\8\9
+%%   Exclamation   \!     Double quote  \"     Hash (number) \#
+%%   Dollar        \$     Percent       \%     Ampersand     \&
+%%   Acute accent  \'     Left paren    \(     Right paren   \)
+%%   Asterisk      \*     Plus          \+     Comma         \,
+%%   Minus         \-     Point         \.     Solidus       \/
+%%   Colon         \:     Semicolon     \;     Less than     \<
+%%   Equals        \=     Greater than  \>     Question mark \?
+%%   Commercial at \@     Left bracket  \[     Backslash     \\
+%%   Right bracket \]     Circumflex    \^     Underscore    \_
+%%   Grave accent  \`     Left brace    \{     Vertical bar  \|
+%%   Right brace   \}     Tilde         \~}
+%%
+\ProvidesFile{coppe.bbx}[2026/09/09 v4.1 CoppeTeX ABNT bibliography style]
+\RequirePackage{setspace}
+\RequireBibliographyStyle{standard}
+
+\ExecuteBibliographyOptions{%
+  maxbibnames=99,      % ABNT 4.3.1.3: list all authors by default
+  giveninits=false,
+  uniquename=false,
+  uniquelist=false,
+  labeldateparts=true, % needed for author-date extradate (1999a/1999b)
+  sorting=nyt,
+}
+
+\DeclareLanguageMapping{brazilian}{brazilian-coppe}
+\DeclareLanguageMapping{english}{english-coppe}
+
+\DeclareNameAlias{author}{family-given}
+\DeclareNameAlias{editor}{family-given}
+\DeclareNameAlias{translator}{family-given}
+\DeclareNameAlias{default}{family-given}
+\DeclareDelimFormat[bib,biblist]{multinamedelim}{\addsemicolon\space}
+\DeclareDelimFormat[bib,biblist]{finalnamedelim}{\addsemicolon\space}
+
+\renewbibmacro*{editor+others}{%
+  \ifboolexpr{ test \ifuseeditor and not test {\ifnameundef{editor}} }
+    {\printnames{editor}%
+     \setunit*{\addspace}%
+     \printtext{\mkbibparens{\usebibmacro{editor+othersstrg}}}%
+     \clearname{editor}}
+    {}}
+\renewbibmacro*{editor}{%
+  \ifboolexpr{ test \ifuseeditor and not test {\ifnameundef{editor}} }
+    {\printnames{editor}%
+     \setunit*{\addspace}%
+     \printtext{\mkbibparens{\usebibmacro{editorstrg}}}%
+     \clearname{editor}}
+    {}}
+
+\protected\def\coppe@ucfamily#1{%
+  \protected@edef\coppe@uctmp{#1}%
+  \edef\coppe@ucstr{\detokenize\expandafter{\coppe@uctmp}}%
+  \expandafter\coppe@ucscan\coppe@ucstr.\coppe@ucstop{#1}}
+\protected\def\coppe@ucscan#1.#2\coppe@ucstop#3{%
+  \ifblank{#2}
+    {\expandafter\coppe@ucscanp\coppe@ucstr(\coppe@ucstop{#3}}
+    {#3}}
+\protected\def\coppe@ucscanp#1(#2\coppe@ucstop#3{%
+  \ifblank{#2}{\MakeUppercase{#3}}{#3}}
+\renewcommand*{\bibdaterangesep}{/}
+\protected\def\coppe@abntdate#1#2#3{%
+  \iffieldundef{#3}{}{\stripzeros{\thefield{#3}}\nobreakspace}%
+  \iffieldundef{#2}{}{\mkbibmonth{\thefield{#2}}\iffieldundef{#1}{}{\space}}%
+  \iffieldundef{#1}{}{\stripzeros{\thefield{#1}}}}
+\AtBeginBibliography{%
+  \singlespacing                        % entries single-spaced internally (2.4)
+  \setlength{\bibitemsep}{\baselineskip}% one blank line between entries (2.4)
+  \renewcommand*{\mkbibnamefamily}[1]{\coppe@ucfamily{#1}}%
+  \renewcommand*{\mkbibnameprefix}[1]{\MakeUppercase{#1}}%
+  \let\mkbibdatelong\coppe@abntdate     % ABNT date format (drop the "de")
+  \let\mkbibdateshort\coppe@abntdate
+}
+
+\protected\def\coppeUCtitle#1{\coppeUCtitleA#1 \coppeUCstop}
+\protected\def\coppeUCtitleA#1 #2\coppeUCstop{%
+  \coppeUCifart{#1}
+    {\MakeUppercase{#1}\ifblank{#2}{}{\space\coppeUCtitleB#2\coppeUCstop}}%
+    {\MakeUppercase{#1}\ifblank{#2}{}{\space\coppeUCkeep#2\coppeUCstop}}}
+\protected\def\coppeUCtitleB#1 #2\coppeUCstop{%
+  \MakeUppercase{#1}\ifblank{#2}{}{\space\coppeUCkeep#2\coppeUCstop}}
+\protected\def\coppeUCkeep#1 \coppeUCstop{#1}
+\protected\def\coppeUCifart#1{%
+  \begingroup
+  \lowercase{\def\coppeUC@w{#1}}%
+  \edef\coppeUC@w{,\coppeUC@w,}%
+  \expandafter\in@\expandafter{\coppeUC@w}{,a,o,as,os,um,uma,uns,umas,the,an,}%
+  \ifin@\aftergroup\@firstoftwo\else\aftergroup\@secondoftwo\fi
+  \endgroup}
+\DeclareFieldFormat{title}{%
+  \ifboolexpr{ test {\ifnameundef{labelname}} }
+    {#1}%
+    {\mkbibbold{#1}}}
+\DeclareFieldFormat{titlecase}{%
+  \ifboolexpr{ test {\ifnameundef{labelname}} }
+    {\coppeUCtitle{#1}}%
+    {#1}}
+\DeclareFieldFormat[article,incollection,inbook,inproceedings,suppperiodical,review]{title}{#1}
+\DeclareFieldFormat[thesis]{title}{\mkbibbold{#1}}
+\DeclareFieldFormat[patent]{title}{\mkbibbold{#1}}
+\DeclareFieldFormat[legislation,jurisdiction,legal]{title}{#1}
+\DeclareFieldFormat[legislation,jurisdiction,legal]{volume}{v\adddot\addnbspace#1}
+\DeclareFieldFormat[legislation,jurisdiction,legal]{number}{n\adddot\addnbspace#1}
+\DeclareFieldFormat{journaltitle}{\mkbibbold{#1}}
+\DeclareFieldFormat{booktitle}{\mkbibbold{#1}}
+\DeclareFieldFormat{maintitle}{\mkbibbold{#1}}
+
+\DeclareFieldFormat{pagetotal}{#1\addnbspace p\adddot}
+\DeclareFieldFormat[thesis]{pagetotal}{#1\addnbspace f\adddot}
+\DeclareFieldFormat{pages}{p\adddot\addnbspace#1}
+
+\DeclareFieldFormat[article]{volume}{v\adddot\addnbspace#1}
+\DeclareFieldFormat[article]{number}{n\adddot\addnbspace#1}
+
+\renewbibmacro*{in:}{\printtext{\bibstring{in}\addcolon\space}}
+
+\DeclareFieldFormat{url}{\bibstring{availablefrom}\addcolon\space\url{#1}}
+\DeclareFieldFormat{urldate}{\bibstring{urlseen}\addcolon\space#1}
+\renewbibmacro*{url+urldate}{%
+  \iffieldundef{addendum}
+    {}
+    {\printfield{addendum}\clearfield{addendum}%
+     \setunit{\adddot\space}}%
+  \iffieldundef{url}
+    {}
+    {\printfield{url}%
+     \iffieldundef{urlyear}{}{\setunit{\adddot\space}\printurldate}}}
+
+\DeclareBibliographyDriver{article}{%
+  \usebibmacro{bibindex}%
+  \usebibmacro{begentry}%
+  \usebibmacro{author/translator+others}%
+  \setunit{\labelnamepunct}\newblock
+  \usebibmacro{title}%
+  \newunit\newblock
+  \printfield{journaltitle}%
+  \iflistundef{location}{}{\printtext{,}\setunit{\space}\printlist{location}}%
+  \iffieldequalstr{entrysubtype}{newspaper}
+    {\iffieldundef{caderno}
+       {\setunit{\addcomma\space}\printfield{pages}%
+        \setunit{\addcomma\space}\printdate}%
+       {\setunit{\addcomma\space}\printdate%
+        \setunit{\adddot\space}\printfield{caderno}%
+        \setunit{\addcomma\space}\printfield{pages}}}%
+    {\setunit{\addcomma\space}\printfield{volume}%
+     \setunit{\addcomma\space}\printfield{number}%
+     \setunit{\addcomma\space}\printfield{pages}%
+     \setunit{\addcomma\space}\printdate}%
+  \newunit\newblock
+  \printfield{doi}%
+  \newunit\newblock
+  \usebibmacro{url+urldate}%
+  \usebibmacro{finentry}}
+
+\newbibmacro*{coppe:bookeditor}{%
+  \ifnameundef{editor}
+    {}
+    {\printnames{editor}%
+     \setunit*{\addspace}\printtext{\mkbibparens{\usebibmacro{editorstrg}}}%
+     \clearname{editor}%
+     \setunit{\adddot\space}}}
+\newbibmacro*{coppe:partdriver}{%
+  \usebibmacro{bibindex}\usebibmacro{begentry}%
+  \usebibmacro{author/translator+others}%
+  \setunit{\labelnamepunct}\newblock
+  \usebibmacro{title}%
+  \newunit\newblock
+  \usebibmacro{in:}%
+  \usebibmacro{coppe:bookeditor}%
+  \printfield{booktitle}%
+  \newunit\newblock
+  \printfield{edition}%
+  \newunit\newblock
+  \printlist{location}%
+  \setunit*{\addcolon\space}\printlist{publisher}%
+  \setunit*{\addcomma\space}\printdate%
+  \newunit\newblock
+  \printfield{pages}%
+  \setunit{\addcomma\space}\printfield{chapter}%
+  \newunit\newblock
+  \usebibmacro{url+urldate}%
+  \usebibmacro{finentry}}
+\DeclareBibliographyDriver{incollection}{\usebibmacro{coppe:partdriver}}
+\DeclareBibliographyDriver{inbook}{\usebibmacro{coppe:partdriver}}
+
+\DeclareFieldFormat{type}{\ifbibstring{#1}{\bibstring{#1}}{#1}}
+
+\newcommand*\coppe@degword{%
+  \iffieldundef{coppedegree}
+    {\iffieldequalstr{type}{mscdiss}{\bibstring{coppemscdeg}}{%
+     \iffieldequalstr{type}{dscthesis}{\bibstring{coppedscdeg}}{%
+     \iffieldequalstr{type}{phdthesis}{\bibstring{coppephddeg}}{%
+     \iffieldequalstr{type}{tcc}{\bibstring{coppetccdeg}}{}}}}}
+    {\printfield{coppedegree}}}
+\DeclareFieldFormat{course}{%
+  \mkbibparens{\coppe@degword\addspace\coppestring{in:}\addspace#1}}
+\DeclareBibliographyDriver{thesis}{%
+  \usebibmacro{bibindex}\usebibmacro{begentry}%
+  \usebibmacro{author}%
+  \setunit{\labelnamepunct}\newblock
+  \usebibmacro{title}%
+  \newunit\newblock
+  \printdate%
+  \newunit\newblock
+  \printfield{pagetotal}%
+  \newunit\newblock
+  \printfield{type}\setunit*{\addspace}\printfield{course}%
+  \iflistundef{institution}
+    {}
+    {\setunit*{\addspace\textemdash\addspace}\printlist{institution}}%
+  \setunit*{\addcomma\space}\printlist{location}%
+  \setunit*{\addcomma\space}\printdate%
+  \newunit\newblock
+  \printfield{note}%
+  \newunit\newblock
+  \usebibmacro{url+urldate}%
+  \usebibmacro{finentry}}
+\newbibmacro*{coppe:media}{%
+  \iflistundef{artist}{}{\setunit{\addperiod\space}%
+    \printtext{\coppestring{art}\addcolon\space}\printlist{artist}}%
+  \iffieldundef{platform}{}{\setunit{\addperiod\space}%
+    \printtext{\coppestring{platform}\addcolon\space}\printfield{platform}}%
+  \iflistundef{director}{}{\setunit{\addperiod\space}%
+    \printtext{\coppestring{directedby}\addspace}\printlist{director}}%
+  \iflistundef{producer}{}{\setunit{\addperiod\space}%
+    \printtext{\coppestring{producedby}\addspace}\printlist{producer}}}
+\newbibmacro*{coppe:mediadriver}{%
+  \usebibmacro{bibindex}\usebibmacro{begentry}%
+  \usebibmacro{author/translator+others}%
+  \setunit{\labelnamepunct}\newblock
+  \usebibmacro{title}%
+  \newunit\newblock
+  \usebibmacro{coppe:media}%
+  \newunit\newblock
+  \usebibmacro{coppe:imprenta}%
+  \newunit\newblock
+  \printfield{version}%
+  \newunit\newblock
+  \printfield{note}%
+  \newunit\newblock
+  \usebibmacro{url+urldate}%
+  \usebibmacro{finentry}}
+\DeclareFieldFormat[periodical,suppperiodical]{title}{\MakeUppercase{#1}}
+\DeclareFieldFormat[periodical,suppperiodical]{volume}{v\adddot\addnbspace#1}
+\DeclareFieldFormat[periodical,suppperiodical]{number}{n\adddot\addnbspace#1}
+\DeclareBibliographyDriver{periodical}{%
+  \usebibmacro{bibindex}\usebibmacro{begentry}%
+  \printfield{title}%
+  \newunit\newblock
+  \printlist{location}%
+  \iflistundef{publisher}{}{\setunit*{\addcolon\space}\printlist{publisher}}%
+  \setunit*{\addcomma\space}\printfield{volume}%
+  \setunit*{\addcomma\space}\printfield{number}%
+  \setunit*{\addcomma\space}\printdate%
+  \newunit\newblock
+  \printfield{note}%
+  \newunit\newblock
+  \usebibmacro{url+urldate}%
+  \usebibmacro{finentry}}
+\DeclareBibliographyDriver{suppperiodical}{%
+  \usedriver{}{periodical}\usebibmacro{finentry}}
+\DeclareFieldFormat{eventtitle}{\MakeUppercase{#1}}
+\DeclareFieldFormat[proceedings]{title}{#1}
+\DeclareFieldFormat[proceedings,inproceedings]{number}{#1\adddot}
+\DeclareFieldFormat[proceedings,inproceedings]{volume}{v\adddot\addnbspace#1}
+\newbibmacro*{coppe:evento}{%
+  \printfield{eventtitle}%
+  \setunit*{\addcomma\space}\printfield{number}%
+  \setunit*{\addcomma\space}\printeventdate%
+  \setunit*{\addcomma\space}\printfield{venue}}
+\DeclareBibliographyDriver{proceedings}{%
+  \usebibmacro{bibindex}\usebibmacro{begentry}%
+  \usebibmacro{coppe:evento}%
+  \newunit\newblock
+  \iffieldundef{title}{}{\printfield{title}\printtext{.}}%
+  \setunit{\space}\newblock
+  \usebibmacro{coppe:imprenta}%
+  \newunit\newblock
+  \usebibmacro{url+urldate}%
+  \usebibmacro{finentry}}
+\DeclareBibliographyDriver{inproceedings}{%
+  \usebibmacro{bibindex}\usebibmacro{begentry}%
+  \usebibmacro{author/translator+others}%
+  \setunit{\labelnamepunct}\newblock
+  \usebibmacro{title}%
+  \newunit\newblock
+  \usebibmacro{in:}%
+  \usebibmacro{coppe:evento}%
+  \newunit\newblock
+  \iffieldundef{booktitle}{}{\printfield{booktitle}\printtext{.}}%
+  \setunit{\space}\newblock
+  \usebibmacro{coppe:imprenta}%
+  \newunit\newblock
+  \printfield{volume}%
+  \setunit*{\addcomma\space}\printfield{pages}%
+  \newunit\newblock
+  \usebibmacro{url+urldate}%
+  \usebibmacro{finentry}}
+\DeclareBibliographyDriver{game}{\usebibmacro{coppe:mediadriver}}
+\DeclareBibliographyDriver{videogame}{\usebibmacro{coppe:mediadriver}}
+\DeclareBibliographyDriver{boardgame}{\usebibmacro{coppe:mediadriver}}
+\DeclareBibliographyDriver{movie}{\usebibmacro{coppe:mediadriver}}
+\DeclareBibliographyDriver{tvshow}{\usebibmacro{coppe:mediadriver}}
+\DeclareFieldFormat{scale}{\bibstring{coppescale}\addnbspace#1}
+\newbibmacro*{coppe:imprenta}{%
+  \printlist{location}%
+  \iflistundef{publisher}
+    {}
+    {\setunit*{\addcolon\space}\printlist{publisher}}%
+  \setunit*{\addcomma\space}\printdate}
+\DeclareBibliographyDriver{map}{%
+  \usebibmacro{bibindex}\usebibmacro{begentry}%
+  \usebibmacro{author/translator+others}%
+  \setunit{\labelnamepunct}\newblock
+  \usebibmacro{title}%
+  \newunit\newblock
+  \usebibmacro{coppe:imprenta}%
+  \newunit\newblock
+  \iffieldundef{addendum}{}{\printfield{addendum}\clearfield{addendum}}%
+  \newunit\newblock
+  \printfield{scale}%
+  \newunit\newblock
+  \printfield{note}%
+  \newunit\newblock
+  \usebibmacro{url+urldate}%
+  \usebibmacro{finentry}}
+\newbibmacro*{coppe:depositor}{%
+  \ifnameundef{holder}
+    {}
+    {\printtext{\bibstring{depositor}\addcolon\space}%
+     \begingroup
+       \def\mkbibnamefamily##1{##1}%
+       \def\mkbibnameprefix##1{##1}%
+       \printnames{holder}%
+     \endgroup}}
+\DeclareBibliographyDriver{patent}{%
+  \usebibmacro{bibindex}%
+  \usebibmacro{begentry}%
+  \usebibmacro{author/translator+others}%
+  \setunit{\labelnamepunct}\newblock
+  \usebibmacro{title}%
+  \newunit\newblock
+  \usebibmacro{coppe:depositor}%
+  \newunit\newblock
+  \printfield{type}%
+  \setunit*{\addspace}\printfield{number}%
+  \newunit\newblock
+  \iffieldundef{filingdate}
+    {}
+    {\printtext{\bibstring{coppefiling}\addcolon\space}\printfield{filingdate}%
+     \setunit{\adddot\space}}%
+  \iffieldundef{grantdate}
+    {}
+    {\printtext{\bibstring{coppegrant}\addcolon\space}\printfield{grantdate}}%
+  \ifboolexpr{ test {\iffieldundef{filingdate}} and test {\iffieldundef{grantdate}} }
+    {\printdate}
+    {}%
+  \newunit\newblock
+  \usebibmacro{url+urldate}%
+  \usebibmacro{finentry}}
+\DeclareBibliographyDriver{standard}{\usedriver{}{book}\usebibmacro{finentry}}
+\DeclareBibliographyDriver{music}{\usedriver{}{book}\usebibmacro{finentry}}
+\newbibmacro*{coppe:legaldriver}{%
+  \usebibmacro{bibindex}\usebibmacro{begentry}%
+  \usebibmacro{author/translator+others}%
+  \setunit{\labelnamepunct}\newblock
+  \usebibmacro{title}%
+  \newunit\newblock
+  % Jurisprudência: "Relator: <nome>." after the decision title (NBR 6023).
+  \iffieldundef{relator}{}{\printtext{Relator\addcolon\space}\printfield{relator}\newunit\newblock}%
+  \printfield{edition}%
+  \newunit\newblock
+  \printlist{location}%
+  \iflistundef{publisher}{}{\setunit*{\addcolon\space}\printlist{publisher}}%
+  \setunit*{\addcomma\space}\printfield{volume}%
+  \setunit*{\addcomma\space}\printfield{number}%
+  \setunit*{\addcomma\space}\printfield{pages}%
+  \setunit{\addcomma\space}\printdate%
+  \newunit\newblock
+  \printfield{note}%
+  \newunit\newblock
+  \usebibmacro{url+urldate}%
+  \usebibmacro{finentry}}
+\DeclareBibliographyDriver{online}{%
+  \usebibmacro{bibindex}\usebibmacro{begentry}%
+  \usebibmacro{author/translator+others}%
+  \setunit{\labelnamepunct}\newblock
+  \usebibmacro{title}%
+  \newunit\newblock
+  \usebibmacro{coppe:imprenta}%
+  \newunit\newblock
+  \printfield{note}%
+  \newunit\newblock
+  \usebibmacro{url+urldate}%
+  \usebibmacro{finentry}}
+\DeclareBibliographyDriver{legislation}{\usebibmacro{coppe:legaldriver}}
+\DeclareBibliographyDriver{jurisdiction}{\usebibmacro{coppe:legaldriver}}
+\DeclareBibliographyDriver{legal}{\usebibmacro{coppe:legaldriver}}
+\DeclareBibliographyDriver{audio}{\usebibmacro{coppe:mediadriver}}
+\DeclareBibliographyDriver{video}{\usebibmacro{coppe:mediadriver}}
+\DeclareBibliographyDriver{software}{\usedriver{}{misc}\usebibmacro{finentry}}
+\DeclareBibliographyDriver{image}{\usedriver{}{misc}\usebibmacro{finentry}}
+\DeclareBibliographyDriver{artwork}{\usedriver{}{misc}\usebibmacro{finentry}}
+\DeclareBibliographyDriver{performance}{\usedriver{}{misc}\usebibmacro{finentry}}
+\DeclareBibliographyDriver{dataset}{\usedriver{}{misc}\usebibmacro{finentry}}
+
+\DeclareSourcemap{%
+  \maps[datatype=bibtex]{%
+    % entry-type PT synonyms -> canonical English
+    \map{\step[typesource=livro,typetarget=book]}
+    \map{\step[typesource=artigo,typetarget=article]}
+    \map{\step[typesource=artigodejornal,typetarget=article,final]\step[fieldset=entrysubtype,fieldvalue=newspaper]}
+    \map{\step[typesource=partedelivro,typetarget=incollection]}
+    \map{\step[typesource=emlivro,typetarget=inbook]}
+    \map{\step[typesource=verbete,typetarget=inreference]}
+    \map{\step[typesource=anais,typetarget=proceedings]}
+    \map{\step[typesource=trabalhodeevento,typetarget=inproceedings]}
+    \map{\step[typesource=periodico,typetarget=periodical]}
+    \map{\step[typesource=relatorio,typetarget=report]}
+    \map{\step[typesource=relatoriotecnico,typetarget=report]}
+    \map{\step[typesource=manual,typetarget=manual]}
+    \map{\step[typesource=correspondencia,typetarget=letter]}
+    \map{\step[typesource=patente,typetarget=patent]}
+    \map{\step[typesource=diverso,typetarget=misc]}
+    \map{\step[typesource=jogo,typetarget=game]}
+    \map{\step[typesource=jogoeletronico,typetarget=videogame]}
+    \map{\step[typesource=jogodetabuleiro,typetarget=boardgame]}
+    \map{\step[typesource=filme,typetarget=movie]}
+    \map{\step[typesource=serietv,typetarget=tvshow]}
+    \map{\step[typesource=programadetv,typetarget=tvshow]}
+    % Exotic ABNT types (NBR 6023 4.2.5-4.2.14); targets are biblatex-native
+    % except map (declared in coppe.dbx).
+    \map{\step[typesource=legislacao,typetarget=legislation]}
+    \map{\step[typesource=atonormativo,typetarget=legislation]}
+    \map{\step[typesource=jurisprudencia,typetarget=jurisdiction]}
+    \map{\step[typesource=documentojuridico,typetarget=legal]}
+    \map{\step[typesource=documentocivil,typetarget=legal]}
+    \map{\step[typesource=norma,typetarget=standard]}
+    \map{\step[typesource=partitura,typetarget=music]}
+    \map{\step[typesource=iconografico,typetarget=image]}
+    \map{\step[typesource=obradearte,typetarget=artwork]}
+    \map{\step[typesource=tridimensional,typetarget=artwork]}
+    \map{\step[typesource=cartografico,typetarget=map]}
+    \map{\step[typesource=mapa,typetarget=map]}
+    \map{\step[typesource=audiovisual,typetarget=video]}
+    \map{\step[typesource=conjuntodedados,typetarget=dataset]}
+    \map{\step[typesource=fasciculo,typetarget=suppperiodical]}
+    \map{\step[typesource=trabalhoapresentado,typetarget=unpublished]}
+    % thesis family: retype to thesis and preset the (babel-aware) type word
+    \map{\step[typesource=tese,typetarget=thesis]}
+    \map{\step[typesource=dissertacao,typetarget=thesis]}
+    \map{\step[typesource=masterdissertation,typetarget=thesis,final]\step[fieldset=type,fieldvalue=mscdiss]}
+    \map{\step[typesource=mscdissertation,typetarget=thesis,final]\step[fieldset=type,fieldvalue=mscdiss]}
+    \map{\step[typesource=dissertacaomestrado,typetarget=thesis,final]\step[fieldset=type,fieldvalue=mscdiss]}
+    \map{\step[typesource=dscthesis,typetarget=thesis,final]\step[fieldset=type,fieldvalue=dscthesis]}
+    \map{\step[typesource=tesedoutorado,typetarget=thesis,final]\step[fieldset=type,fieldvalue=dscthesis]}
+    \map{\step[typesource=phdthesis,typetarget=thesis,final]\step[fieldset=type,fieldvalue=phdthesis]}
+    \map{\step[typesource=tesephd,typetarget=thesis,final]\step[fieldset=type,fieldvalue=phdthesis]}
+    \map{\step[typesource=tcc,typetarget=thesis,final]\step[fieldset=type,fieldvalue=tcc]}
+    % field PT synonyms (unaccented) -> canonical English
+    \map{\step[fieldsource=periodico,fieldtarget=journaltitle]}
+    \map{\step[fieldsource=revista,fieldtarget=journaltitle]}
+    \map{\step[fieldsource=jornal,fieldtarget=journaltitle]}
+    \map{\step[fieldsource=titulo,fieldtarget=title]}
+    \map{\step[fieldsource=subtitulo,fieldtarget=subtitle]}
+    \map{\step[fieldsource=autor,fieldtarget=author]}
+    \map{\step[fieldsource=editora,fieldtarget=publisher]}
+    \map{\step[fieldsource=local,fieldtarget=location]}
+    \map{\step[fieldsource=ano,fieldtarget=year]}
+    \map{\step[fieldsource=data,fieldtarget=date]}
+    \map{\step[fieldsource=edicao,fieldtarget=edition]}
+    \map{\step[fieldsource=paginas,fieldtarget=pages]}
+    \map{\step[fieldsource=numero,fieldtarget=number]}
+    \map{\step[fieldsource=tradutor,fieldtarget=translator]}
+    \map{\step[fieldsource=organizador,fieldtarget=editor]}
+    \map{\step[fieldsource=instituicao,fieldtarget=institution]}
+    \map{\step[fieldsource=tipo,fieldtarget=type]}
+    \map{\step[fieldsource=nota,fieldtarget=note]}
+    \map{\step[fieldsource=dataacesso,fieldtarget=urldate]}
+    \map{\step[fieldsource=curso,fieldtarget=course]}
+    \map{\step[fieldsource=grau,fieldtarget=coppedegree]}
+    \map{\step[fieldsource=artista,fieldtarget=artist]}
+    \map{\step[fieldsource=plataforma,fieldtarget=platform]}
+    \map{\step[fieldsource=diretor,fieldtarget=director]}
+    \map{\step[fieldsource=produtor,fieldtarget=producer]}
+    \map{\step[fieldsource=versao,fieldtarget=version]}
+    \map{\step[fieldsource=escala,fieldtarget=scale]}
+    \map{\step[fieldsource=evento,fieldtarget=eventtitle]}
+    \map{\step[fieldsource=dataevento,fieldtarget=eventdate]}
+    \map{\step[fieldsource=localevento,fieldtarget=venue]}
+    \map{\step[fieldsource=deposito,fieldtarget=filingdate]}
+    \map{\step[fieldsource=concessao,fieldtarget=grantdate]}
+  }%
+}
+
+\setlength{\bibhang}{0pt}
+\setlength{\bibitemsep}{\baselineskip}
+
+
+%% 
+%%
+%% End of file `coppe.bbx'.

@@ -1,0 +1,37 @@
+%% Teste de regressao da CoppeTeX. NAO roda na suite normal.
+%% Rode com: python tests/regressivo/run-regressivo.py
+%% BUG: o \@dottedtocline da o numero da secao numa caixa de largura fixa, e um
+%% trabalho com dez capitulos chega a indicativos como 10.10.10.10, que
+%% estouravam a caixa em ate 4,6mm e passavam por cima do titulo -- o contrario
+%% do "separado por um espaco" da 2.6. A coluna passou a ser medida.
+%% PASSADAS: 3
+%% ESPERA-ARQUIVO: aux::coppe@tocnumsaved
+%% ESPERA-TEXTO: 10.10.10.10.10
+\documentclass[dsc]{coppe}
+\title{Sumario com indicativo de dois digitos}
+\foreigntitle{Two-digit indicatives in the table of contents}
+\author{Nome}{Sobrenome}
+\advisor{Primeiro}{Orientador}{D.Sc.}{UFRJ}
+\examiner{Primeiro Examinador}{D.Sc.}{UFRJ}
+\department{PESC}
+\date{09}{2026}
+\keyword{Regressao}
+\begin{document}
+  \maketitle
+  \frontmatter
+  \begin{abstract}Resumo.\end{abstract}
+  \begin{foreignabstract}Abstract.\end{foreignabstract}
+  \tableofcontents
+  \mainmatter
+  \setcounter{chapter}{9}
+  \chapter{Decimo capitulo}
+  \setcounter{section}{9}
+  \section{Decima secao}
+  \setcounter{subsection}{9}
+  \subsection{Decima subsecao}
+  \setcounter{subsubsection}{9}
+  \subsubsection{Decima subsubsecao}
+  \setcounter{paragraph}{9}
+  \paragraph{Decimo nivel quinario}
+  Texto.
+\end{document}

@@ -1,4 +1,3 @@
-
 *.lab
 dist/example.los
 dist/exemple.los
@@ -18,6 +17,9 @@ src/coppe.aux
 *.out
 *.lot
 *.lof
+*.loq
+*.lol
+*.loa
 *.syx
 *.toc
 *.abx
@@ -26,3 +28,63 @@ src/coppe.aux
 src/example.synctex.gz
 src/example.fdb_latexmk
 src/example.fls
+
+# CoppeTeX 4.0 working artifacts
+_scratch/
+specs/*.txt
+*.log
+*.bcf
+*.run.xml
+*page-*.png
+*.synctex.gz
+
+# Os PDFs versionados sao os de src/ e os de dist/, e so esses. Eles sao a
+# ENTREGA: quem abre o repositorio no GitHub tem de conseguir ver o manual, o
+# exemplo e a norma sem instalar TeX. Os de dist/ sao copia dos de src/.
+#
+# Os de tests/ NAO entram, e a razao e outra: eles sao prova de funcionamento,
+# mudam a cada compilacao e so interessam a quem esta rodando os testes naquele
+# momento. Versiona-los enchia o historico de binario que ninguem le e fazia
+# cada rodada dos testes aparecer como alteracao do repositorio. Quem quiser
+# ve-los roda coppetex.bat --testes.
+tests/**/*.pdf
+
+/ABNT
+/LaTeXManuals
+/LIXO
+/InstrucoesClaude
+/specs/*
+!/specs/*.md
+!/specs/*.pdf
+
+# Configuração local do Claude Code
+.claude/
+
+# cache do Python; aparece assim que o painel importa qualquer coisa de tools/
+__pycache__/
+*.pyc
+
+# metadados XMP gerados pela opcao pdfa
+*.xmpdata
+*.xmpi
+
+# gerado pelo coppe.ins; o build-check o copia para latexmkrc
+src/latexmkrc.tex
+
+# tests/adversativa/: prova de funcionamento, nao distribuida. Entram no git as
+# fontes e a base de referencias do Manual; os PDFs e os auxiliares de build,
+# nao -- ver a regra de tests/**/*.pdf acima.
+tests/adversativa/*
+!tests/adversativa/*.tex
+!tests/adversativa/*.bib
+!tests/adversativa/README.md
+
+# listas de floats criados pelo autor com \newcoppefloat (o exemplo cria "mapa")
+*.lomapa
+# subprodutos do synctex, inclusive o arquivo parcial que fica durante o build
+*.synctex
+*.synctex(busy)
+
+# arquivo temporario do morewrites: zero byte, produto de build, e um deles
+# rastreado no git ja bloqueou a compilacao por conflito de escrita
+*.mw

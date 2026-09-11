@@ -1,5 +1,8 @@
-Try \'make help' for more information.
+Leia README.md nesta pasta.
 
-In Windows, doall.bat will do the job in a simple way, it is not the best solution.
+Em uma linha, para quem não vai ler: coppe.dtx é a fonte única. Todo o resto
+desta pasta é gerado dele por `pdflatex coppe.ins`, e uma edição feita num
+arquivo gerado se perde na próxima geração, sem aviso.
 
-We need to work on a latex solution for this "make"
+Este arquivo trazia instruções sobre o Makefile e o doall.bat, que são de antes
+do harness em PowerShell. O caminho de hoje é tools\build-check.ps1.

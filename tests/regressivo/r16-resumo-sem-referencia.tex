@@ -1,0 +1,26 @@
+%% Teste de regressao da CoppeTeX. NAO roda na suite normal.
+%% Rode com: python tests/regressivo/run-regressivo.py
+%% BUG: o outro lado do r15. O resumo tem de caber em UMA folha (3.1.2.1.4), e
+%% um resumo ja no limite das 500 palavras pode nao caber com as tres linhas da
+%% referencia. A opcao resumosemreferencia a retira, e nada mais muda na folha.
+%% ESPERA-TEXTO: Programa: Engenharia de Sistemas e Computacao
+%% NAO-ESPERA-TEXTO: SOBRENOME, Nome. Titulo do trabalho
+\documentclass[dsc,resumosemreferencia]{coppe}
+\title{Titulo do trabalho}
+\foreigntitle{The work title}
+\author{Nome}{Sobrenome}
+\advisor{Primeiro}{Orientador}{D.Sc.}{UFRJ}
+\examiner{Primeiro Examinador}{D.Sc.}{UFRJ}
+\department{PESC}
+\date{09}{2026}
+\keyword{Regressao}
+\begin{document}
+  \maketitle
+  \frontmatter
+  \begin{abstract}Resumo.\end{abstract}
+  \begin{foreignabstract}Abstract.\end{foreignabstract}
+  \tableofcontents
+  \mainmatter
+  \chapter{Um capitulo}
+  Texto.
+\end{document}

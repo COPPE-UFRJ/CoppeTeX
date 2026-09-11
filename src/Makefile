@@ -39,7 +39,7 @@ BUILDDIR=../dist
 SOURCEDIR=
 
 TEX = pdflatex
-BIBTEX = bibtex
+BIBER = biber
 MAKEIDX = makeindex
 _printf=printf
 _rm=rm
@@ -51,7 +51,6 @@ ISTDIR=$(DESTDIR)/makeindex/coppe
 DOCDIR=$(DESTDIR)/doc/latex/coppe
 
 TEXFLAGS  =
-BIBTEXFLAGS = -terse
 IDXFLAGS = -q -s gind.ist
 GLOFLAGS = -q -s gglo.ist
 LSTFLAGS = -q -s coppe.ist
@@ -69,9 +68,6 @@ all:
 
 doc: $(PACKAGE_NAME).dtx
 	@$(TEX) $(TEXFLAGS) $<
-	@if grep -s "There were undefined references" $(basename $<).log; then \
-	  $(BIBTEX) $(BIBTEXFLAGS) $(basename $<).aux; \
-	fi
 	@if grep -s '$(basename $<).idx' $(basename $<).log; then \
 	  $(MAKEIDX) $(IDXFLAGS) $(basename $<).idx -o $(basename $<).ind;\
 	fi
@@ -100,12 +96,10 @@ install: doc class example.pdf
 	  rm -rf $(CLSDIR); \
 	fi
 	mkdir -vp $(CLSDIR)
-	cp -vp $(PACKAGE_NAME).cls coppe-logo.eps coppe-logo.pdf coppe.ist $(CLSDIR)/
-	if [ -d "$(BSTDIR)" ]; then \
-	  rm -rf $(BSTDIR); \
-	fi
-	mkdir -vp $(BSTDIR)
-	cp -vp $(PACKAGE_NAME)-*.bst $(BSTDIR)/
+	cp -vp $(PACKAGE_NAME).cls coppe-logo.eps coppe-logo.pdf ufrj-logo.pdf coppe.ist \
+		$(PACKAGE_NAME).bbx $(PACKAGE_NAME).cbx $(PACKAGE_NAME).dbx \
+		$(PACKAGE_NAME)-numeric.bbx $(PACKAGE_NAME)-numeric.cbx \
+		brazilian-$(PACKAGE_NAME).lbx english-$(PACKAGE_NAME).lbx $(CLSDIR)/
 	if [ -d "$(ISTDIR)" ]; then \
 	  rm -rf $(ISTDIR); \
 	fi
@@ -129,13 +123,23 @@ build: doc class example.pdf
 	  rm -rf $(BUILDDIR); \
 	fi
 	mkdir -vp $(BUILDDIR)
-	@${_printf} "Copying class files.\n"
-	cp -vp $(PACKAGE_NAME).cls $(PACKAGE_NAME)-*.bst $(PACKAGE_NAME).ist \
-		$(PACKAGE_NAME)-logo.*  $(PACKAGE_NAME).pdf $(BUILDDIR)
-	@${_printf} "Copying example files.\n"
-	cp -vp example.tex example.pdf example.bib $(BUILDDIR)
-	@${_printf} "Copying files from root directory.\n"
-	cp -vp ../README.md ../COPYING $(BUILDDIR)
+# A lista dos arquivos que vao para dist/ NAO fica aqui.
+#
+# Ela ficava, e era a terceira copia dela no projeto -- uma aqui, uma no
+# doall.bat, uma no harness --, e as tres divergiram. Uma delas copiava o
+# README.md da raiz por cima do guia de instalacao de dist/ (issue #75); esta
+# aqui esquecia os pacotes de idioma, o latexmkrc e o guia rapido, e ninguem
+# percebia porque quase todo mundo usa o harness no Windows.
+#
+# A lista agora existe em UM lugar, em tools/painel.py, e o painel roda em
+# qualquer sistema -- e so Python.
+#
+# O painel escreve em dist/, e nao em $(BUILDDIR). Os dois sao a mesma pasta na
+# configuracao padrao (BUILDDIR=../dist, la em cima); quem trocar o BUILDDIR tem
+# de copiar de dist/ para onde quiser depois.
+	@${_printf} "Copying the distributable set (list lives in tools/painel.py).\n"
+	cd .. && python3 tools/painel.py --dist
+	cp -vp ../COPYING $(BUILDDIR)
 
 help:
 	@${_printf} "Usage: make [TARGET]\n" "${PROGRAM_NAME}"
@@ -178,8 +182,8 @@ example.tex: $(PACKAGE_NAME).ins
 
 %.pdf: %.tex
 	@$(TEX) $(TEXFLAGS) $<
-	@if grep -s "There were undefined references" $(basename $<).log; then \
-	  $(BIBTEX) $(BIBTEXFLAGS) $(basename $<).aux; \
+	@if [ -f $(basename $<).bcf ]; then \
+	  $(BIBER) $(basename $<); \
 	fi
 	@if grep -s '$(basename $<).idx' $(basename $<).log; then \
 	  $(MAKEIDX) $(IDXFLAGS) $(basename $<).idx -o $(basename $<).ind;\

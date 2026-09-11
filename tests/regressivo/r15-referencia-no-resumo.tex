@@ -1,0 +1,28 @@
+%% Teste de regressao da CoppeTeX. NAO roda na suite normal.
+%% Rode com: python tests/regressivo/run-regressivo.py
+%% BUG: (desconformidade) a 3.1.2.1.4 sugere que o resumo venha antecedido pela
+%% referencia do trabalho, e os Anexos E e F mostram o resumo e o abstract
+%% comecando por ela. A classe nao imprimia nenhuma. A referencia e a mesma nas
+%% duas folhas e fica sempre em portugues, porque referencia nao se traduz.
+%% ESPERA-TEXTO: SOBRENOME, Nome. Titulo do trabalho: com subtitulo. Rio de Janeiro, 2026. Tese (Doutorado em Engenharia de Sistemas e Computacao)
+%% ESPERA-TEXTO-PAGINA: 5::SOBRENOME, Nome.
+\documentclass[dsc]{coppe}
+\title{Titulo do trabalho}
+\subtitle{com subtitulo}
+\foreigntitle{The work title}
+\author{Nome}{Sobrenome}
+\advisor{Primeiro}{Orientador}{D.Sc.}{UFRJ}
+\examiner{Primeiro Examinador}{D.Sc.}{UFRJ}
+\department{PESC}
+\date{09}{2026}
+\keyword{Regressao}
+\begin{document}
+  \maketitle
+  \frontmatter
+  \begin{abstract}Resumo.\end{abstract}
+  \begin{foreignabstract}Abstract.\end{foreignabstract}
+  \tableofcontents
+  \mainmatter
+  \chapter{Um capitulo}
+  Texto.
+\end{document}

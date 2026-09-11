@@ -1,0 +1,29 @@
+%% Teste de regressao da CoppeTeX. NAO roda na suite normal.
+%% Rode com: python tests/regressivo/run-regressivo.py
+%% BUG: para tirar o /PTEX.Fullbanner do documento, a classe zera os bits de
+%% supressao. No pdfTeX isso e \pdfsuppressptexinfo=-1, e -1 e seguro. O LuaTeX
+%% renomeou o parametro para suppressoptionalinfo e ampliou o alcance dele: -1
+%% suprimiria tambem o /ID do trailer, que o PDF/A EXIGE. Vale 15, que sao os
+%% quatro bits PTEX.* e nada mais.
+%% MOTOR: lualatex
+%% PASSADAS: 3
+%% ESPERA-BYTES: /ID
+\documentclass[dsc,pdfa]{coppe}
+\title{Identificador no LuaLaTeX}
+\foreigntitle{Trailer ID under LuaLaTeX}
+\author{Nome}{Sobrenome}
+\advisor{Primeiro}{Orientador}{D.Sc.}{UFRJ}
+\examiner{Primeiro Examinador}{D.Sc.}{UFRJ}
+\department{PESC}
+\date{09}{2026}
+\keyword{Regressao}
+\begin{document}
+  \maketitle
+  \frontmatter
+  \begin{abstract}Resumo.\end{abstract}
+  \begin{foreignabstract}Abstract.\end{foreignabstract}
+  \tableofcontents
+  \mainmatter
+  \chapter{Um capitulo}
+  Texto.
+\end{document}

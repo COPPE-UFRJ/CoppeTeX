@@ -1,0 +1,437 @@
+%% Documento da revisao adversativa -- GERADO por tools/mk-adversativa.py.
+%% tipo=dsc idioma=pt programa=PEE
+%% Opcoes: dsc, pdfa, coorientador
+\documentclass[dsc,pdfa,coorientador]{coppe}
+
+\usepackage[most]{tcolorbox}
+\usepackage{makeidx}\makeindex
+\usepackage{pdfpages}   % anexo com PDF externo
+\addbibresource{example.bib}
+\addbibresource{referencias-manual.bib}
+\makelosymbols
+\makeloabbreviations
+
+\begin{document}
+
+  \title{Um documento adversativo para a classe CoppeTeX}
+  \subtitle{tudo o que a classe oferece, ao mesmo tempo}
+  \foreigntitle{An adversarial document for the CoppeTeX class}
+  \foreignsubtitle{everything the class offers, all at once}
+  \volumes{2}\volume{1}
+  \author{Nome do}{Autor Adversativo}
+  \advisor[Prof.]{Orientador}{Numero 1}{D.Sc.}{UFRJ}
+  \advisor{Orientador}{Numero 2}{D.Sc.}{UFRJ}
+  \coadvisor{Coorientador}{Primeiro}{Ph.D.}{UFF}
+  \examiner{Examinador Numero 1}{D.Sc.}{UFRJ}
+  \examiner{Examinador Numero 2}{D.Sc.}{}
+  \examiner{Examinador Numero 3}{D.Sc.}{UFF}
+  \examiner{Examinador Numero 4}{D.Sc.}{UNIRIO}
+  \examiner{Examinador Numero 5}{D.Sc.}{USP}
+  \examiner{Examinador Numero 6}{D.Sc.}{UFRJ}
+  \department{PEE}
+  \date{09}{2026}
+  \dataaprovacao{15 de setembro de 2026}
+  \areaconcentracao{Engenharia de Sistemas e Computação}
+  \linhapesquisa{Engenharia de Dados e Conhecimento}
+  \tipoproducao{bibliografica}
+  \projetovinculado{sim}
+  \nomeprojeto{Projeto Adversativo}
+  \agenciafomento{Conselho Nacional de Desenvolvimento Científico e Tecnológico}{CNPq}
+  \agenciafomento{Fundação Carlos Chagas Filho de Amparo à Pesquisa do Estado do Rio de Janeiro}{FAPERJ}
+  \fichacatalografica{coppe-logo.pdf}
+  \keyword{Adversativo}\keyword{Conformidade}
+  \foreignkeyword{Adversarial}\foreignkeyword{Conformance}
+
+  \maketitle
+  \frontmatter
+  \dedication{A quem soube esperar.}
+
+  \chapter*{Agradecimentos}
+  Parágrafo de corpo, para conferir o recuo da primeira linha, o espaçamento de uma linha e meia e a mancha gráfica.
+
+  \begin{abstract}
+  Este documento existe para ser difícil. Ele aciona, de propósito e ao mesmo tempo, tudo o que a classe oferece: os cinco níveis de seção, os cinco tipos de ilustração, as três listas próprias da COPPE, a citação longa, as siglas, os símbolos, as abreviaturas, o índice remissivo, os apêndices e os anexos. Se alguma coisa quebra, quebra aqui.
+  \end{abstract}
+
+  \begin{foreignabstract}
+  This document exists to be difficult. It deliberately exercises everything the class offers at once: the five section levels, the five kinds of illustration, the three COPPE-specific lists, the long quotation, the acronyms, the symbols, the abbreviations, the index, the appendices and the annexes. If anything breaks, it breaks here.
+  \end{foreignabstract}
+
+  \listoffigures
+  \listoftables
+  \listofquadros
+  \listofprogramas
+  \listofalgorithms
+  \printloabbreviations
+  \printlosymbols
+  \tableofcontents
+
+  \mainmatter
+  \chapter{Introdução}\label{cap:intro}
+  Parágrafo de corpo, para conferir o recuo da primeira linha, o espaçamento de uma linha e meia e a mancha gráfica.\index{adversativo}
+
+  \chapter{Todos os níveis de seção}
+  Parágrafo de corpo, para conferir o recuo da primeira linha, o espaçamento de uma linha e meia e a mancha gráfica.
+  \section{Seção secundária}
+  Parágrafo de corpo, para conferir o recuo da primeira linha, o espaçamento de uma linha e meia e a mancha gráfica.
+  \subsection{Subseção terciária}
+  Parágrafo de corpo, para conferir o recuo da primeira linha, o espaçamento de uma linha e meia e a mancha gráfica.
+  \subsubsection{Subsubseção quaternária}
+  Parágrafo de corpo, para conferir o recuo da primeira linha, o espaçamento de uma linha e meia e a mancha gráfica.
+  \paragraph{Nível quinário}
+  Parágrafo de corpo, para conferir o recuo da primeira linha, o espaçamento de uma linha e meia e a mancha gráfica.
+
+  \chapter{Todas as ilustrações}
+  \begin{figure}[ht]
+    \centering\includegraphics[height=3cm]{coppe-logo}
+    \caption{Figura de teste}\label{fig:adv}
+    \source{Elaboração própria.}
+  \end{figure}
+  \begin{table}[ht]
+    \centering\caption{Tabela de teste}\label{tab:adv}
+    \begin{tabular}{lrr}\hline A & 1 & 2\\ B & 3 & 4\\ \hline\end{tabular}
+    \source{Elaboração própria.}
+  \end{table}
+  \begin{quadro}[ht]
+    \centering\caption{Quadro de teste}\label{qua:adv}
+    \begin{tabular}{|l|l|}\hline A & B\\ \hline C & D\\ \hline\end{tabular}
+    \source{Elaboração própria.}
+  \end{quadro}
+  \begin{python}[caption={Programa de teste},label=prog:adv]
+def adversativo(n):
+    # uma linha bastante longa, de proposito, para acionar a quebra do listings e o gancho vermelho do postbreak
+    return sum(i * i for i in range(n))
+  \end{python}
+  \source{Elaboração própria.}
+  \begin{algorithm}[H]
+    \caption{Algoritmo de teste}\label{alg:adv}
+    \KwIn{$n$}
+    \KwOut{$s$}
+    $s \leftarrow 0$\;
+    \For{$i \leftarrow 1$ \KwTo $n$}{$s \leftarrow s + i$\;}
+    \Return $s$\;
+  \end{algorithm}
+  \source{Elaboração própria.}
+
+  \section{Mais de um exemplo em cada lista}
+  Uma lista com uma entrada só não prova que a lista é uma lista.
+  \begin{figure}[ht]
+    \centering
+    \begin{subfigure}[b]{0.35\textwidth}
+      \centering\includegraphics[height=2cm]{ufrj-logo}
+      \caption{A marca da Universidade}\label{fig:sub-ufrj}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.35\textwidth}
+      \centering\includegraphics[height=2cm]{coppe-logo}
+      \caption{A marca do Instituto}\label{fig:sub-coppe}
+    \end{subfigure}
+    \caption{Duas subfiguras numa figura só}\label{fig:subs}
+    \source{Elaboração própria.}
+  \end{figure}
+  \begin{figure}[ht]
+    \centering\includegraphics[height=2.5cm]{ufrj-logo}
+    \caption{Uma terceira figura, com legenda deliberadamente longa para
+      que ela ocupe mais de uma linha e mostre o alinhamento das legendas
+      de várias linhas}\label{fig:adv3}
+    \source{Elaboração própria.}
+  \end{figure}
+  \begin{table}[ht]
+    \centering\caption{Segunda tabela, com \texttt{booktabs}}\label{tab:adv2}
+    \begin{tabular}{lrr}\toprule
+      Item & Medido & Esperado\\ \midrule
+      Fólio, topo & 2{,}019 cm & 2 cm\\
+      Fólio, direita & 2{,}019 cm & 2 cm\\
+      Margem esquerda & 3{,}000 cm & 3 cm\\ \bottomrule
+    \end{tabular}
+    \source{Medição no PDF composto.}
+  \end{table}
+  \begin{table}[ht]
+    \centering\caption{Terceira tabela, com \texttt{tabularx}}\label{tab:adv3}
+    \begin{tabularx}{\textwidth}{lX}\hline
+      Campo & Descrição\\ \hline
+      \texttt{evento} & Nome do evento, em caixa alta, antes do título dos anais, como pede a 4.2.4 do Manual.\\
+      \texttt{deposito} & Data de depósito da patente (4.2.5).\\ \hline
+    \end{tabularx}
+    \source{Elaboração própria.}
+  \end{table}
+  \begin{quadro}[ht]
+    \centering\caption{Segundo quadro}\label{qua:adv2}
+    \begin{tabular}{|l|l|}\hline Escolha & A COPPE fixa uma forma\\ \hline
+      Acréscimo & O Manual não prevê\\ \hline\end{tabular}
+    \source{NORMA\_COPPE\_2026.}
+  \end{quadro}
+  \begin{quadro}[ht]
+    \centering\caption{Terceiro quadro}\label{qua:adv3}
+    \begin{tabular}{|l|l|}\hline Dado próprio & O valor é da COPPE\\ \hline
+      Reafirmação & Repete-se por ser fonte de erro\\ \hline\end{tabular}
+    \source{NORMA\_COPPE\_2026.}
+  \end{quadro}
+  \begin{xml}[caption={Segundo programa, em XML},label=prog:adv2]
+<norma edicao="2026">
+  <secao tipo="Escolha">Logomarcas</secao>
+</norma>
+  \end{xml}
+  \source{Elaboração própria.}
+  \begin{java}[caption={Terceiro programa, em Java},label=prog:adv3]
+public static int adversativo(int n) {
+    return n * (n + 1) / 2;
+}
+  \end{java}
+  \source{Elaboração própria.}
+  \begin{algorithm}[H]
+    \caption{Segundo algoritmo}\label{alg:adv2}
+    \KwIn{Uma lista $L$}
+    \KwOut{O maior elemento}
+    $m \leftarrow -\infty$\;
+    \ForEach{$x \in L$}{\lIf{$x > m$}{$m \leftarrow x$}}
+    \Return $m$\;
+  \end{algorithm}
+  \source{Elaboração própria.}
+  \begin{algorithm}[H]
+    \caption{Terceiro algoritmo}\label{alg:adv3}
+    \KwIn{$a$, $b$}
+    \While{$b \neq 0$}{$(a,b) \leftarrow (b, a \bmod b)$\;}
+    \Return $a$\;
+  \end{algorithm}
+  \source{Elaboração própria.}
+
+  \chapter{Citações, símbolos e siglas}
+  Parágrafo de corpo, para conferir o recuo da primeira linha, o espaçamento de uma linha e meia e a mancha gráfica. \citep{book-example}
+  \begin{longquote}
+  Uma citação com mais de três linhas é recuada em quatro centímetros a partir da margem esquerda, composta em corpo menor e em espaço simples, e não leva aspas. É o que a norma pede e é o que este parágrafo verifica, ocupando linhas suficientes para que o recuo se veja.
+  \end{longquote}
+  Parágrafo de corpo, para conferir o recuo da primeira linha, o espaçamento de uma linha e meia e a mancha gráfica.\footnote{Parágrafo de corpo, para conferir o recuo da primeira linha, o espaçamento de uma linha e meia e a mancha gráfica.}
+  \begin{equation}
+    E = mc^{2} \label{eq:adv}
+  \end{equation}
+  \symbl{$\alpha$}{Parágrafo de corpo, para con}
+  \symbl{$\beta$}{Parágrafo de corpo, para con}
+  \abbrev{CoppeTeX}{Parágrafo de corpo, para con}
+  \abbrev[ABNT]{ABNT}{Associação Brasileira de Normas Técnicas}
+  \newsigla{ufrj}{UFRJ}{Universidade Federal do Rio de Janeiro}
+  \newsigla{cpgp}{CPGP}{Comissão de Programas de Pós-Graduação}
+  \sigla{ufrj} \sigla{cpgp} \sigla{ufrj}
+
+  \section{Um título de seção deliberadamente longo, para que ele quebre
+    em duas linhas no sumário e mostre onde a segunda linha começa}
+  Mais símbolos e mais abreviaturas, porque uma lista de um item só não
+  prova nada sobre a ordenação:
+  \symbl{$\gamma$}{Terceira letra, terceiro símbolo}
+  \symbl{$\Delta$}{Variação entre o medido e o esperado}
+  \symbl{$\sum$}{Somatório sobre as folhas conferidas}
+  \symbl{$\int$}{Integral, para exercitar um símbolo grande}
+  \abbrev{SiBI}{Sistema de Bibliotecas e Informação da UFRJ}
+  \abbrev{CAPES}{Coordenação de Aperfeiçoamento de Pessoal de Nível Superior}
+  \abbrev{PDF/A}{Formato de arquivamento de longo prazo}
+  \abbrev{CEPG}{Conselho de Ensino para Graduados e Pesquisa}
+  \newsigla{sibi}{SiBI}{Sistema de Bibliotecas e Informação}
+  \newsigla{capes}{CAPES}{Coordenação de Aperfeiçoamento de Pessoal de Nível Superior}
+  \sigla{sibi} \sigla{capes} \sigla{sibi} \sigla{capes}
+
+  \subsection{Todas as formas de citar}
+  Citação entre parênteses \citep{book-example}; citação textual, em que
+  \citet{article-example} é sujeito da frase; só o autor,
+  \citeauthor{book-example}; só o ano, \citeyear{book-example}; e a
+  citação direta com página, \citep[p.~37]{m-4234}. O \emph{apud}, que a
+  4.1.2.2.1 admite apenas quando o original é inacessível:
+  \citeauthor{m-4211} \emph{apud} \citet{book-example}.
+  \index{citação!autor-data}\index{citação!numérica}
+  \index{referência|see{citação}}
+
+  \subsection{Todas as formas de equação}
+  Uma equação numerada, a \autoref{eq:adv}, já apareceu. Um sistema:
+  \begin{align}
+    a &= b + c \label{eq:align1}\\
+    d &= e - f \label{eq:align2}
+  \end{align}
+  Uma definição por casos:
+  \begin{equation}\label{eq:cases}
+    \mathrm{conforme}(x) = \begin{cases}
+      1, & \text{se } x \text{ obedece à norma},\\
+      0, & \text{caso contrário.}
+    \end{cases}
+  \end{equation}
+  Uma matriz, e a referência cruzada à \eqref{eq:cases} na
+  folha~\pageref{eq:cases}:
+  \begin{equation}\label{eq:matriz}
+    M = \begin{pmatrix} 1 & 0\\ 0 & 1 \end{pmatrix}
+  \end{equation}
+
+  \subsection{Todas as formas de lista}
+  \begin{itemize}
+    \item Primeiro item, com aninhamento:
+    \begin{itemize}
+      \item item de segundo nível;
+      \item outro item de segundo nível.
+    \end{itemize}
+    \item Segundo item.
+  \end{itemize}
+  \begin{enumerate}
+    \item Primeiro, numerado;
+    \item segundo, também;
+    \begin{enumerate}
+      \item e um aninhado dentro dele.
+    \end{enumerate}
+  \end{enumerate}
+  \begin{description}
+    \item[Escolha] o Manual admite mais de uma forma e a COPPE fixa uma;
+    \item[Acréscimo] elemento que o Manual não prevê.
+  \end{description}
+
+  \subsection{Caixas, verbatim e notas}
+  \begin{tcolorbox}[title=Uma caixa com título]
+    O \texttt{tcolorbox} produz transparência, que é justamente o que o
+    PDF/A-1b proibiria e o a-2b admite.
+  \end{tcolorbox}
+  \begin{tcolorbox}[colback=white,colframe=black,title=Uma segunda caixa]
+    Duas caixas, porque uma só não mostra que o estilo se repete.
+  \end{tcolorbox}
+  \begin{Verbatim}[frame=single]
+  pdflatex coppe.ins   % gera todos os arquivos derivados
+  \end{Verbatim}
+  Uma nota de rodapé com citação dentro.\footnote{Como em
+  \citet{m-norma}, a nota sai em corpo menor, 2.2(b).}
+  \index{norma!ABNT}\index{norma!UFRJ}\index{PDF/A}
+
+  \chapter{Conclusões}
+  Parágrafo de corpo, para conferir o recuo da primeira linha, o espaçamento de uma linha e meia e a mancha gráfica.
+
+  \chapter{Prova de referências}
+  Um exemplo de cada categoria de referência da seção 4.2 do Manual
+  UFRJ/SiBI, 9.\textsuperscript{a} ed. rev. (2026), com os dados do
+  próprio Manual. A referência composta pela classe está na lista de
+  referências; o gabarito, como o Manual a imprime, está no comentário
+  de cada entrada de \texttt{referencias-manual.bib}.
+  \begin{itemize}
+    \item 4.2.1.1 monografia no todo \citep{m-4211}
+    \item 4.2.1.2 monografia em meio eletrônico \citep{m-4212}
+    \item 4.2.1.3 parte de monografia \citep{m-4213}
+    \item 4.2.2 correspondência \citep{m-422}
+    \item 4.2.2.1 correspondência em meio eletrônico \citep{m-4221}
+    \item 4.2.3.1 publicação periódica no todo \citep{m-4231}
+    \item 4.2.3.3 parte de revista \citep{m-4233}
+    \item 4.2.3.4 artigo de revista \citep{m-4234}
+    \item 4.2.3.5 artigo de revista em meio eletrônico \citep{m-4235}
+    \item 4.2.3.6 matéria de jornal \citep{m-4236}
+    \item 4.2.3.7 matéria de jornal assinada em meio eletrônico \citep{m-4237}
+    \item 4.2.3.8 matéria de jornal não assinada em meio eletrônico \citep{m-4238}
+    \item 4.2.4.1 evento no todo \citep{m-4241}
+    \item 4.2.4.3 evento no todo em meio eletrônico \citep{m-4243}
+    \item 4.2.4.5 trabalho apresentado em evento \citep{m-4245}
+    \item 4.2.4.6 trabalho em evento em meio eletrônico \citep{m-4246}
+    \item 4.2.5 patente \citep{m-425}
+    \item 4.2.5.1 patente em meio eletrônico \citep{m-4251}
+    \item 4.2.6.1 legislação \citep{m-4261}
+    \item 4.2.6.2 jurisprudência \citep{m-4262}
+    \item 4.2.6.3 ato administrativo normativo \citep{m-4263}
+    \item 4.2.7 documento jurídico em meio eletrônico \citep{m-427}
+    \item 4.2.8 documento civil e de cartório \citep{m-428}
+    \item 4.2.9 documento audiovisual \citep{m-429}
+    \item 4.2.10 partitura \citep{m-42101}
+    \item 4.2.10.1 partitura em meio eletrônico \citep{m-42102}
+    \item 4.2.11 documento iconográfico \citep{m-42111}
+    \item 4.2.11.1 documento iconográfico em meio eletrônico \citep{m-42112}
+    \item 4.2.12 documento cartográfico \citep{m-42121}
+    \item 4.2.12.1 documento cartográfico em meio eletrônico \citep{m-42122}
+    \item 4.2.13 documento tridimensional \citep{m-42131}
+    \item 4.2.14 documento de acesso exclusivo em meio eletrônico \citep{m-4214}
+    \item dissertação de mestrado \citep{m-diss}
+    \item norma técnica \citep{m-norma}
+  \end{itemize}
+
+  \backmatter
+  \nocite{article-example,manualbib}
+  \printbibliography
+
+  \begin{theglossary}
+    \item[Adversativo] documento escrito para acionar ao mesmo tempo
+      tudo o que a classe oferece, e assim revelar o que um exemplo
+      bem-comportado esconde.
+    \item[Fólio] o número da folha, impresso a 2\,cm da borda superior
+      e da direita, em corpo menor (2.2(b) e 2.7).
+    \item[Folha adicional] a folha que traz a ficha catalográfica e os
+      campos da Coleta CAPES; não é contada nem numerada (3.1.2.1.2).
+    \item[Gabarito] a referência como o Manual a imprime, contra a qual
+      se compara a que a classe compôs.
+    \item[Quadro] ilustração delimitada por linhas em todas as bordas,
+      ao contrário da tabela, fechada só no topo e na base.
+  \end{theglossary}
+
+  \appendix
+  \chapter{Um apêndice}
+  Apêndice é texto elaborado pelo próprio autor, para complementar a argumentação sem ser essencial à compreensão do texto principal.
+  \chapter{Outro apêndice}
+  Parágrafo de corpo, para conferir o recuo da primeira linha, o espaçamento de uma linha e meia e a mancha gráfica.
+  \chapter{Um apêndice com uma tabela que atravessa folhas}
+  A \texttt{longtable} quebra em várias folhas e repete o cabeçalho.
+  É o caso em que a legenda, a fonte e o fólio têm de continuar
+  obedecendo à norma folha após folha.
+  \begin{longtable}{rll}
+    \caption{Conferências do \texttt{conferir-norma.py}, uma a uma}
+    \label{tab:long}\\
+    \hline Nº & Item & Cláusula\\ \hline
+    \endfirsthead
+    \hline Nº & Item & Cláusula\\ \hline
+    \endhead
+    \hline \multicolumn{3}{r}{\footnotesize continua na folha seguinte}\\
+    \endfoot
+    \hline
+    \endlastfoot
+    1 & A4 retrato & 2.2(a)\\
+    2 & Fólio ao topo & 2.7\\
+    3 & Fólio à direita & 2.7\\
+    4 & Margem esquerda & 2.3\\
+    5 & Primeira folha numerada & 2.7\\
+    6 & Nenhuma pré-textual numerada & 2.7\\
+    7 & Abertura do sumário & 3.1.2.1.6\\
+    8 & Referências no sumário & 3.1.2.1.6\\
+    9 & Apêndice no sumário & 3.1.2.1.6\\
+    10 & Anexo no sumário & 3.1.2.1.6\\
+    11 & Apêndice centralizado & 2.6\\
+    12 & Anexo centralizado & 2.6\\
+    13 & Folha de aprovação numa folha & 3.1.2.1.3\\
+    14 & Resumo com orientador & 3.1.2.1.4\\
+    15 & Resumo com palavras-chave & 3.1.2.1.4\\
+    16 & A4 retrato & 2.2(a)\\
+    17 & Fólio ao topo & 2.7\\
+    18 & Fólio à direita & 2.7\\
+    19 & Margem esquerda & 2.3\\
+    20 & Primeira folha numerada & 2.7\\
+    21 & Nenhuma pré-textual numerada & 2.7\\
+    22 & Abertura do sumário & 3.1.2.1.6\\
+    23 & Referências no sumário & 3.1.2.1.6\\
+    24 & Apêndice no sumário & 3.1.2.1.6\\
+    25 & Anexo no sumário & 3.1.2.1.6\\
+    26 & Apêndice centralizado & 2.6\\
+    27 & Anexo centralizado & 2.6\\
+    28 & Folha de aprovação numa folha & 3.1.2.1.3\\
+    29 & Resumo com orientador & 3.1.2.1.4\\
+    30 & Resumo com palavras-chave & 3.1.2.1.4\\
+    31 & A4 retrato & 2.2(a)\\
+    32 & Fólio ao topo & 2.7\\
+    33 & Fólio à direita & 2.7\\
+    34 & Margem esquerda & 2.3\\
+    35 & Primeira folha numerada & 2.7\\
+    36 & Nenhuma pré-textual numerada & 2.7\\
+    37 & Abertura do sumário & 3.1.2.1.6\\
+    38 & Referências no sumário & 3.1.2.1.6\\
+    39 & Apêndice no sumário & 3.1.2.1.6\\
+    40 & Anexo no sumário & 3.1.2.1.6\\
+  \end{longtable}
+  \source{Elaboração própria, a partir do Manual UFRJ/SiBI 2026.}
+
+  \annex
+  \chapter{Um anexo}
+  Anexo é documento não elaborado pelo autor, que serve de fundamentação, comprovação ou ilustração.
+  \chapter{Outro anexo}
+  Parágrafo de corpo, para conferir o recuo da primeira linha, o espaçamento de uma linha e meia e a mancha gráfica.
+  \chapter{Um anexo que reproduz um PDF externo}
+  Anexo é documento de terceiro, e documento de terceiro costuma chegar
+  como PDF pronto. O \texttt{pdfpages} insere as folhas do arquivo
+  original; o \texttt{pagecommand} devolve o estilo da página, senão as
+  folhas inseridas sairiam sem fólio, contrariando a 2.7.
+  \includepdf[pages=-,scale=0.85,pagecommand={\thispagestyle{fancy}}]{coppe-logo.pdf}
+
+  \printindex
+  \coppetexfinalpage
+\end{document}

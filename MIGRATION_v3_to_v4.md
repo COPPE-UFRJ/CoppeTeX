@@ -1,0 +1,454 @@
+# Migration guide — CoppeTeX v3.x → v4.x
+
+Short guide for thesis authors currently using CoppeTeX v3.x who want to
+move to v4.0. Read once, do at most one of the three sections below
+depending on your situation, and you are done.
+
+---
+
+## TL;DR
+
+| Your situation                                                          | Action required                          |
+| ----------------------------------------------------------------------- | ---------------------------------------- |
+| Portuguese-main thesis (`\documentclass[dsc]{coppe}`)                   | **None.** Just replace `coppe.cls`.       |
+| English-main thesis (`\documentclass[english,dsc]{coppe}`)              | **None.** Just replace `coppe.cls`.       |
+| You want to write the thesis in Spanish, French or Italian              | See Section 3 below.                     |
+
+---
+
+## 1. Portuguese-main thesis: nothing to do
+
+If your `\documentclass` line is one of:
+
+```latex
+\documentclass[dsc]{coppe}
+\documentclass[msc]{coppe}
+\documentclass[brazilian,dsc]{coppe}
+\documentclass[dscexam]{coppe}
+\documentclass[mscexam]{coppe}
+```
+
+— or any combination of these with `numbers`, `doublespacing`,
+`numeraisromanos`, etc. — **your document compiles bit-for-bit
+identically under v4.0**. We have verified this with a
+page-by-page rendered-image diff against a v3.8 build.
+
+What to do:
+
+1. Replace `coppe.cls`, `coppe.bbx`, `coppe.cbx`, `coppe.dbx`,
+   `brazilian-coppe.lbx`, `english-coppe.lbx`, `coppe-numeric.bbx`,
+   `coppe-numeric.cbx` and `coppe.ist` in your project (or local TEXMF)
+   with the v4.0 versions from
+   <https://github.com/COPPE-UFRJ/CoppeTeX/tree/master/dist>.
+2. Recompile. Output should be visually identical.
+
+Nothing in your `.tex` source changes.
+
+---
+
+## 2. English-main thesis: nothing to do
+
+If your `\documentclass` line includes `english`:
+
+```latex
+\documentclass[english,dsc]{coppe}
+```
+
+— same story as Section 1. The `english` option keeps the exact same
+semantics, the cover keeps the same institutional Portuguese template
+with your English title on it, `\title{...}` and `\foreigntitle{...}`
+keep their historical meaning (`\title` = Portuguese version of the
+title, `\foreigntitle` = English version), and `\begin{foreignabstract}`
+still produces the Brazilian-Portuguese abstract page. We have verified
+byte-identical output.
+
+What to do: same as Section 1 — replace the class files, recompile.
+
+---
+
+## 3. Writing in Spanish, French or Italian: three small additions
+
+This is the new capability in v4.0. Suppose you want to write your
+thesis in Spanish. Then:
+
+### 3.1 Change the class option
+
+```latex
+\documentclass[spanish,dsc]{coppe}
+```
+
+Replace `spanish` with `french` or `italian` as appropriate.
+
+### 3.2 Install the language pack files
+
+Two files must sit next to `coppe.cls` (in your project directory, or in
+a `TEXMF` location), both shipped in `dist/`:
+
+- `coppe-lang-spanish.def` (class-level strings)
+- `spanish-coppe.lbx` (bibliography strings)
+
+(Use `french` or `italian` in the file names accordingly.)
+
+If you forget either, the class will tell you so with a clear error.
+
+### 3.3 Add a Spanish title via `\titlein`
+
+The historical `\title{...}` still expects the Portuguese title and
+`\foreigntitle{...}` still expects the English title. For a Spanish-main
+thesis, the title shown on the cover is read from a new slot — set with:
+
+```latex
+\title{Título em portugu\^es}                % traditional
+\foreigntitle{English title}                  % traditional
+\titlein{spanish}{T\'itulo en espa\~nol}      % NEW -- the cover prints this
+```
+
+For French use `\titlein{french}{...}`; for Italian, `\titlein{italian}{...}`.
+
+### 3.4 (Optional) Add a Portuguese abstract for the banca
+
+When your main language is not Portuguese and you want a Portuguese
+resumo for the Brazilian examiners (in addition to the abstract in the
+main language and the foreign English abstract), use the new
+`brazilianabstract` environment:
+
+```latex
+\begin{abstract}        ... main-language abstract ...    \end{abstract}
+\begin{foreignabstract} ... English abstract ...          \end{foreignabstract}
+\begin{brazilianabstract} ... Resumo em portugu\^es ...   \end{brazilianabstract}
+```
+
+This is the only place where the abstract layout is genuinely new.
+
+### 3.5 Done.
+
+The full layout, the cover, the folha de rosto, the ficha catalográfica,
+the running heads, the references list — everything else is automatic
+and respects the main language.
+
+---
+
+## 4. v4.1: alinhamento com o Manual UFRJ/SiBI 2026
+
+A 9.ª edição revista do manual do SiBI (2026) mudou exigências que a
+classe implementa. **Nenhum documento existente precisa ser alterado para
+continuar compilando** — as mudanças abaixo são de comportamento e de
+API compatível.
+
+### 4.1 O que muda sozinho, sem você tocar em nada
+
+| Antes | Agora |
+|---|---|
+| Margens espelhadas (`twoside` + `bindingoffset`) | Uma face: esquerda 3 cm, direita 2 cm em toda folha (2.3) |
+| Versos em branco do `\cleardoublepage` | Somem — o `example.pdf` caiu de 76 para 53 páginas |
+| Numeração reiniciando em 1 na Introdução | Contagem contínua desde a folha de rosto (2.7) |
+| Ficha catalográfica no verso da folha de rosto | Folha adicional própria, logo após a folha de rosto (3.1.2.1.2) |
+| Título antes do autor na folha de aprovação | Autor antes do título, sem caixa alta (3.1.2.1.3) |
+| Cidade e data no rodapé da folha de aprovação | Removidos; entra "Aprovada em:" |
+| `"Aprovada por:"` sempre em português | Acompanha o idioma principal |
+| Titulação passada a `\examiner` e nunca impressa | Impressa |
+| Sumário abrindo pelas listas pré-textuais | Abre em "1 INTRODUÇÃO"; as listas são pré-textuais e vêm antes dele (3.1.2.1.6) |
+| Fólio em corpo 12 | Corpo 10, junto das legendas, notas e citações longas (2.2b) |
+| "Apêndice A" e "Anexo A" à esquerda | Centralizados: letra não é indicativo numérico (2.6) |
+| Sem palavras-chave nos resumos | Cada resumo encerra com as suas, no próprio idioma (3.1.2.1.4) |
+| Resumo começando pelo texto | Começa pela referência do próprio trabalho, como nos Anexos E e F. A classe a compõe sozinha; `resumosemreferencia` a retira |
+| Fontes bitmap (Type 3 no PDF) | Latin Modern — sem isso não há PDF/A |
+| Sumário com recuo progressivo por nível | Indicativo na margem e título em coluna única, como o sumário do manual (3.1.2.1.6) |
+
+Quem for **imprimir** e quiser as margens espelhadas de volta usa a opção
+de classe `twoside`. Quem estiver nas últimas semanas de escrita e não
+quiser ver o sumário mudar debaixo do texto usa `listasnosumario`, que
+devolve as listas pré-textuais a ele — ciente de que isso contraria a
+3.1.2.1.6.
+
+### 4.2 A ficha catalográfica saiu da sua responsabilidade
+
+Desde agosto de 2026 a ficha vem do gerador do SiBI
+(<http://fichacatalografica.sibi.ufrj.br/>) ou da biblioteca do seu
+Programa, dentro de uma folha adicional que o **Programa** preenche.
+
+```latex
+\fichacatalografica{ficha.pdf}   % o PDF gerado pelo SiBI
+```
+
+Sem esse comando, a folha sai com uma moldura vazia indicando onde obter
+a ficha. Durante a redação, a opção de classe `rascunhoficha` põe no lugar
+a ficha composta pela própria classe — **nunca válida para depósito**.
+
+### 4.3 Campos novos do preâmbulo
+
+Nenhum é obrigatório; o que faltar sai como linha para preencher à mão.
+
+```latex
+\areaconcentracao{Engenharia de Sistemas e Computação}
+\linhapesquisa{Engenharia de Dados e Conhecimento}
+\dataaprovacao{15 de setembro de 2026}
+
+% folha adicional (Coleta CAPES)
+\tipoproducao{bibliografica}   % bibliografica | artistica | tecnologica | tecnica
+\projetovinculado{sim}         % sim | nao
+\nomeprojeto{Nome do projeto de pesquisa}
+\agenciafomento{Conselho Nacional de Desenvolvimento Científico e Tecnológico}{CNPq}
+```
+
+`\areaconcentracao` não serve só à folha adicional: 3.1.2.1.1(e) e
+3.1.2.1.3(c) exigem a área de concentração também no bloco de natureza da
+folha de rosto e da folha de aprovação.
+
+### 4.4 `\advisor` e `\examiner` mudaram de argumentos
+
+**Esta é a única mudança que quebra documento antigo.** Você precisa editar as
+linhas da banca antes de recompilar.
+
+O tratamento (`Prof.`, `Prof.ª`) era o primeiro argumento obrigatório e a
+instituição era opcional. Agora é o contrário: o tratamento é o argumento
+**opcional** e vem vazio por padrão, e a instituição é o **último argumento
+obrigatório**.
+
+```latex
+% antes -- não compila mais
+\advisor[UFRJ]{Prof.}{Nome}{Sobrenome}{D.Sc.}
+\examiner[UFF]{Prof.}{Nome Sobrenome}{D.Sc.}
+
+% agora
+\advisor{Nome}{Sobrenome}{D.Sc.}{UFRJ}
+\examiner{Nome Sobrenome}{D.Sc.}{UFF}
+```
+
+A regra para converter é mecânica: **tire o tratamento do começo, tire os
+colchetes da instituição, e ponha a instituição no fim.**
+
+O `\coadvisor` segue exatamente a mesma forma dos quatro argumentos do
+`\advisor`.
+
+Duas perguntas que aparecem sempre:
+
+- **E se eu quiser o "Prof." mesmo assim?** Ponha entre colchetes:
+  `\advisor[Prof.]{Nome}{Sobrenome}{D.Sc.}{UFRJ}`. A norma não pede tratamento
+  nenhum, e é por isso que ele deixou de ser o padrão.
+- **E se eu não souber a instituição?** Deixe vazia:
+  `\advisor{Nome}{Sobrenome}{D.Sc.}{}`. O argumento é obrigatório, mas aceita
+  ficar em branco e nada é impresso no lugar dela.
+
+Duas consequências para quem já usava `\examiner`:
+
+1. O terceiro argumento (a titulação) **era descartado silenciosamente** e
+   agora é impresso. Se você vinha passando algo que não é titulação
+   naquele lugar, isso agora aparece na folha de aprovação — confira.
+2. Orientadores e examinadores viraram **uma lista só**, com os
+   orientadores em primeiro lugar, por presidirem a banca
+   (3.1.2.1.3(e)). O bloco "Orientadores:" separado deixou de existir
+   nessa página. Se você listava o orientador também como `\examiner`,
+   ele agora aparece duas vezes — remova a duplicata.
+
+**Não há mais linhas de assinatura.** A opção de classe `assinaturas`, que
+punha uma régua acima de cada nome, deixou de fazer efeito: com a entrega só
+digital, desde a Resolução CEPG n. 246/2023, não há o que assinar à mão. Quem
+tiver a opção no `\documentclass` pode deixá-la; ela apenas escreve um aviso na
+compilação.
+
+**A folha lista só os examinadores.** Ela registra quem examinou o trabalho, e o
+orientador o conduziu. Os orientadores continuam na capa e na folha de rosto,
+onde têm de estar. Se no seu Programa o orientador integra a banca e assina a
+aprovação, ponha a opção de classe `orientadorexamina`:
+
+```latex
+\documentclass[dsc,orientadorexamina]{coppe}
+```
+
+Com ela, orientadores e coorientadores voltam para a lista, na frente dos
+examinadores. Antes não havia escolha: eles saíam sempre, e a única saída era
+não declará-los — o que os tirava também da capa e da folha de rosto.
+
+**Não há mais linha em branco para a data.** Sem `\dataaprovacao`, a folha
+escreve "a ser determinada", no idioma do trabalho, em vez de desenhar uma régua
+para preencher à mão. Ninguém escreve à mão num PDF. Com a data informada, ela
+sai no lugar:
+
+```latex
+\dataaprovacao{15 de setembro de 2026}
+```
+
+### 4.5 PDF/A no depósito
+
+2.2(d) exige a entrega em PDF/A, e o Anexo I do manual só ensina a
+conversão por Word, LibreOffice, Acrobat ou sites — nada que sirva a quem
+escreve em LaTeX. A classe passa a produzir o arquivo diretamente:
+
+```latex
+\documentclass[dsc,pdfa]{coppe}
+```
+
+A opção é **opcional por ora**, não o padrão: as restrições do PDF/A podem
+esbarrar em imagens ou pacotes que o seu texto use. Ligue-a ao preparar a
+versão de depósito e confira que o documento ainda compila.
+
+O nível é o **PDF/A-2b**. O Anexo I fala em "ISO 19005-1", que é o a-1b,
+mas esse nível proíbe transparência — que o `tcolorbox` e vários pacotes
+gráficos produzem — e reprovaria documentos sem defeito algum. O a-2b é a
+ISO 19005-2, também listada no Anexo I entre as opções do LibreOffice.
+
+Os metadados XMP (título, autor, palavras-chave, programa) são gerados a
+partir do que você já declarou no preâmbulo, num arquivo
+`<nome>.xmpdata`. Ele é lido na compilação **seguinte** à que o escreveu;
+como o build roda `pdflatex` três vezes, isso é transparente. O arquivo é
+gerado, não deve ser versionado nem editado à mão.
+
+Duas observações:
+
+- Se você já convertia o PDF por fora, pode parar. A conversão externa
+  costuma rasterizar ou reamostrar, e agora é desnecessária.
+- Nenhum validador PDF/A foi executado sobre a saída até aqui. O arquivo
+  declara conformidade e satisfaz as verificações estruturais feitas,
+  mas vale passá-lo por um validador (veraPDF, ou o pré-voo do Acrobat)
+  antes do depósito.
+
+### 4.6 Francês e italiano
+
+O art. 57 da Resolução CEPG n. 302/2024 admite teses e dissertações em
+**português, inglês ou espanhol**. Os pacotes de francês e italiano
+continuam distribuídos como demonstração do mecanismo de extensão, mas
+não têm respaldo normativo como idioma de redação de tese na UFRJ.
+
+### 4.7 Acabamento: fólio, banca grande e metadados
+
+Três correções que mudam o que sai na página, nenhuma delas exigindo
+alteração no seu documento.
+
+**O fólio desceu 0,13 cm.** A 2.7 mede o número da folha pelo algarismo,
+do mesmo jeito nos dois eixos: "a 2cm da borda superior, ficando o último
+algarismo a 2cm da borda direita". A borda direita já estava certa; o
+topo dos algarismos estava a 1,87 cm, alto demais. Agora os dois eixos
+batem. O topo do corpo do texto não se moveu: continua em 3 cm.
+
+**Banca grande cabe na folha.** Com sete membros a folha de aprovação
+transbordava para uma segunda página — e aquela página ainda imprimia um
+fólio na parte pré-textual, onde a 2.7 não admite. O espaço acima de cada
+linha de assinatura agora acompanha o tamanho da banca: 9 mm até cinco
+membros, 7 mm com seis, 5 mm com sete e 3,5 mm com oito, com folga
+elástica para títulos que quebrem uma linha a mais. **Banca de até cinco
+membros compõe exatamente como antes.**
+
+**O assunto do PDF virou legível.** Com a opção `pdfa`, o campo de
+assunto dos metadados trazia o código do programa porque os nomes na
+tabela de departamentos carregam escapes do TeX que o pdfx copiava
+literais. Agora sai o nome por extenso, com acentos: "Tese de Doutorado.
+Programa de Engenharia de Sistemas e Computação (PESC), COPPE/UFRJ". No
+mesmo movimento, o `/PTEX.Fullbanner` que o pdfTeX carimbava no PDF
+deixou de ser gravado — era uma entrada de metadados sem contrapartida no
+XMP, o achado mais comum de validador de PDF/A em arquivo feito com TeX.
+
+### 4.8 O que a revisão adversativa consertou
+
+Seis documentos completos — quatro em português, um por tipo de trabalho, mais
+um em inglês e um em espanhol de tipos diferentes, cada um acionando ao mesmo
+tempo tudo o que a classe oferece — acharam quatro defeitos que os exemplos não
+pegavam. Três deles você só
+notaria no dia do depósito:
+
+- **A capa não transborda mais sob `doublespacing`.** Capa e folha de rosto
+  são modelo institucional e agora saem em espaço simples qualquer que
+  seja o espaçamento do corpo. Antes, com espaçamento duplo, a capa ia
+  para uma segunda e uma terceira folha.
+- **Nada que transborde imprime fólio na parte pré-textual.** O
+  `\thispagestyle` valia por uma página só; a folha que sobrava herdava o
+  estilo corrente e saía numerada.
+- **Trabalho em espanhol: o sumário não põe mais ponto no indicativo.**
+  Saía "2.1. SECCIÓN SECUNDARIA" no sumário e "2.1 SECCIÓN SECUNDARIA" no
+  título da seção. Era o babel, e a 2.6 quer o espaço, não o ponto.
+
+### 4.9 O sumário passou a ser o do manual
+
+É a mudança que mais salta aos olhos, e nenhuma linha do seu documento precisa
+mudar por causa dela.
+
+O sumário vinha com o recuo do `book` do LaTeX: cada nível recuado mais que o
+anterior, o título quinário começando a 9,2 cm da borda — 6,2 dos 16 cm de
+mancha. A 3.1.2.1.6 manda alinhar os títulos "pela margem do título do
+indicativo mais extenso" e usar como exemplo o sumário do próprio manual, que
+põe **todo indicativo na margem** e **todo título numa coluna só**. É o que a
+classe faz agora, com a coluna medida pelo indicativo mais extenso do seu
+trabalho — por isso o sumário assenta na segunda passada, como as referências
+cruzadas.
+
+Junto vieram duas correções que você talvez nunca tivesse visto:
+
+- **A grafia de cada nível** agora reproduz o corpo, como a 2.6 exige: primária
+  em CAIXA ALTA negrito, secundária em CAIXA ALTA, terciária em negrito,
+  quaternária em negrito itálico, quinária em itálico. Da terciária em diante o
+  sumário saía tudo em redondo.
+- **O indicativo não cobre mais o título.** A caixa que o LaTeX reservava para
+  o número tinha largura fixa por nível; com dez capítulos, um indicativo como
+  `10.10.10.10` entrava quase meio centímetro por cima do título.
+
+### 4.10 Com ou sem serifa
+
+A norma **não manda em família de fonte**. A 2.2(b) fixa a cor, o corpo 12 e o
+corpo menor uniforme das citações longas, notas de rodapé, paginação e legendas
+— e mais nada. O manual do SiBI, que carrega essa regra, está ele próprio
+composto em Arial.
+
+**O padrão da classe passou a ser sem serifa.** Você não precisa fazer nada
+para ter isso; é o que sai. Para voltar à fonte serifada, a opção de classe:
+
+```latex
+\documentclass[dsc,comserifa]{coppe}
+```
+
+A opção antiga, `semserifa`, continua sendo aceita e agora não faz nada, porque
+o que ela pedia virou o padrão. Se estiver no seu `\documentclass`, pode
+deixar.
+
+**Não redefina `\familydefault` no seu preâmbulo** — o `example.tex` fazia
+isso e a linha vencia a opção; ela saiu de lá. Se quiser uma sem serifa
+diferente da Latin Modern, aí sim carregue o pacote da fonte e troque a
+família você mesmo:
+
+```latex
+\usepackage{helvet}\renewcommand{\familydefault}{\sfdefault}
+```
+
+Nesse caso, redefina também `\coppefinalfont`, senão o colofão anuncia uma
+fonte que não é a que você usou. E confira que a fonte escolhida é vetorial
+(Type 1 ou OpenType): fonte bitmap inviabiliza o PDF/A, que a 2.2(d) exige do
+depósito.
+
+### 4.11 "No room for a new \write"
+
+Um trabalho que pede todas as listas — figuras, tabelas, quadros,
+programas, algoritmos, abreviaturas e símbolos — precisa de dezessete dos
+dezesseis fluxos de saída do TeX, e o erro cai em cima da última lista
+pedida sem explicar nada. Sob pdfLaTeX a classe agora carrega o pacote
+`morewrites` sozinha, se ele estiver instalado, e o teto some. Nada a
+fazer da sua parte. `semmorewrites` desliga, se você topar com um
+conflito; sob LuaLaTeX, que tem 128 fluxos, nada disso é carregado.
+
+---
+
+## Frequently asked
+
+> **Will my v3.x tese-em-andamento break if I switch now?**
+>
+> No, as long as you are not using Spanish/French/Italian. pt/en
+> documents are byte-identical.
+
+> **Can I keep v3.x files in some directories and v4.0 in others?**
+>
+> Yes — each project picks up the `coppe.cls` (and friends) it finds
+> first on its TEXMF path. Most students will simply put the v4.0 files
+> in their project directory and forget about the global tree.
+
+> **What if I want to use a language not in the built-in five?**
+>
+> Write a `coppe-lang-<lang>.def` and a `<lang>-coppe.lbx` (use any of
+> the shipped Spanish/French/Italian as a template). See
+> [`CONTRIBUTING.md`](./CONTRIBUTING.md) for the step-by-step.
+
+> **Do I need to update my `latexmkrc` / Overleaf setup?**
+>
+> No. The build chain (pdflatex / biber / makeindex) is unchanged.
+
+> **Where is the full reference?**
+>
+> Section 5.2 "Multilingual support" of the manual
+> (`dist/coppe.pdf`).

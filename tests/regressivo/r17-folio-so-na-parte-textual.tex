@@ -1,0 +1,32 @@
+%% Teste de regressao da CoppeTeX. NAO roda na suite normal.
+%% Rode com: python tests/regressivo/run-regressivo.py
+%% BUG: (desconformidade) a contagem de folhas comecava na Introducao, que saia
+%% como folha 1. A 2.7 manda contar a partir da FOLHA DE ROSTO, sem numerar
+%% enquanto pre-textual, e NAO contar a folha adicional da ficha.
+%%
+%% Aqui a parte pre-textual tem capa (nao contada), folha de rosto (1), folha
+%% adicional (nao contada), aprovacao (2), resumo (3) e abstract (4). O primeiro
+%% capitulo e a setima folha do PDF e leva o folio 5 -- o primeiro impresso.
+%% ESPERA-TEXTO-PAGINA: 7::5
+%% ESPERA-TEXTO-PAGINA: 7::1 UM CAPITULO
+%% ESPERA-PAGINAS: 7
+\documentclass[dsc,rascunhoficha]{coppe}
+\title{Folio so na parte textual}
+\foreigntitle{Folio only in the body}
+\author{Nome}{Sobrenome}
+\advisor{Primeiro}{Orientador}{D.Sc.}{UFRJ}
+\examiner{Primeiro Examinador}{D.Sc.}{UFRJ}
+\department{PESC}
+\date{09}{2026}
+\dataaprovacao{15 de setembro de 2026}
+\tipoproducao{bibliografica}
+\keyword{Regressao}
+\begin{document}
+  \maketitle
+  \frontmatter
+  \begin{abstract}Resumo.\end{abstract}
+  \begin{foreignabstract}Abstract.\end{foreignabstract}
+  \mainmatter
+  \chapter{Um capitulo}
+  Texto.
+\end{document}

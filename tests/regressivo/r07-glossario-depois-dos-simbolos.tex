@@ -1,0 +1,39 @@
+%% Teste de regressao da CoppeTeX. NAO roda na suite normal.
+%% Rode com: python tests/regressivo/run-regressivo.py
+%% BUG: o \renewcommand\glossaryname do \printlosymbols ficava FORA do
+%% \begingroup, e depois da lista de simbolos todo uso posterior de
+%% \glossaryname valia "Lista de Simbolos" -- inclusive o Glossario pos-textual
+%% da 3.1.4.2 e a entrada dele no sumario. So um documento que tenha as duas
+%% coisas revela isso.
+%% MAKEINDEX: sim
+%% PASSADAS: 3
+%% ESPERA-TEXTO: GLOSSARIO
+%% NAO-ESPERA-TEXTO: LISTA DE SIMBOLOS Adversativo
+\documentclass[dsc]{coppe}
+\makelosymbols
+\makeloabbreviations
+\title{Glossario depois dos simbolos}
+\foreigntitle{Glossary after the symbols}
+\author{Nome}{Sobrenome}
+\advisor{Primeiro}{Orientador}{D.Sc.}{UFRJ}
+\examiner{Primeiro Examinador}{D.Sc.}{UFRJ}
+\department{PESC}
+\date{09}{2026}
+\keyword{Regressao}
+\begin{document}
+  \maketitle
+  \frontmatter
+  \begin{abstract}Resumo.\end{abstract}
+  \begin{foreignabstract}Abstract.\end{foreignabstract}
+  \printloabbreviations
+  \printlosymbols
+  \tableofcontents
+  \mainmatter
+  \chapter{Um capitulo}
+  Um simbolo \symbl{$\alpha$}{Primeira letra} e uma sigla
+  \abbrev{UFRJ}{Universidade Federal do Rio de Janeiro}.
+  \backmatter
+  \begin{theglossary}
+    \item[Adversativo] verbete de teste, para que o glossario exista.
+  \end{theglossary}
+\end{document}

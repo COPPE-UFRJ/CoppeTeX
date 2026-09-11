@@ -1,0 +1,49 @@
+%%
+%% Guards the |coorientador| class option: the coadvisors have to show up on all
+%% three abstract pages, under the label of the page's own language, and the
+%% advisors have to stay exactly where they were. Two coadvisors on purpose, so
+%% the plural form of the label is exercised as well.
+%%
+%% NAO e gerado pelo coppe.dtx e NAO e distribuido: a suite prova que a
+%% classe funciona, nao faz parte dela. Rode por tools\prova.ps1, ou por
+%% tests\run-tests.ps1 para so esta pasta.
+%%
+
+\documentclass[dsc,coorientador]{coppe}
+
+\usepackage[brazilian]{babel}
+
+\title{Título de Teste do Coorientador no Resumo}
+\foreigntitle{Coadvisor on the Abstract Page Test}
+\author{Nome}{de Teste}
+
+\advisor{Primeiro}{Orientador}{D.Sc.}{UFRJ}
+\coadvisor{Primeiro}{Coorientador}{D.Sc.}{UFF}
+\coadvisor{Segundo}{Coorientador}{Ph.D.}{UNIRIO}
+
+\examiner{Primeiro Examinador}{D.Sc.}{UFRJ}
+\examiner{Segundo Examinador}{Ph.D.}{UFRJ}
+
+\department{PESC}
+\date{09}{2026}
+
+\keyword{Primeira}
+\keyword{Segunda}
+
+\begin{document}
+  \maketitle
+  \frontmatter
+  \begin{abstract}
+    Resumo de teste.
+  \end{abstract}
+  \begin{foreignabstract}
+    Test abstract.
+  \end{foreignabstract}
+  \tableofcontents
+  \mainmatter
+  \chapter{Introdução}
+    Primeiro parágrafo.
+\end{document}
+%% 
+%%
+%% End of file `tests/test_coorientador.tex'.

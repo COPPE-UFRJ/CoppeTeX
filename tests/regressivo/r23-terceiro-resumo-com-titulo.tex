@@ -1,0 +1,36 @@
+%% Teste de regressao da CoppeTeX. NAO roda na suite normal.
+%% Rode com: python tests/regressivo/run-regressivo.py
+%% BUG: o terceiro resumo saia SEM TITULO. Ao fechar, o foreignabstract fazia
+%% uma faxina -- \global\let\local@title\relax e mais cinco -- de quando ele era
+%% a ultima folha pre-textual. Desde a v4.0 nao e: o brazilianabstract, que so
+%% aparece em trabalho escrito em espanhol, vem depois e compoe o titulo com
+%% \local@title, que acabara de ser apagado. Ia para o deposito assim.
+%%
+%% O resumo em portugues e a TERCEIRA folha de resumo: capa, rosto, adicional,
+%% aprovacao, resumo em espanhol, abstract, resumo em portugues.
+%% ESPERA-TEXTO-PAGINA: 7::TITULO DO TRABALHO EM PORTUGUES
+%% ESPERA-TEXTO-PAGINA: 6::THE WORK TITLE IN ENGLISH
+\documentclass[dsc,spanish]{coppe}
+\title{Titulo do trabalho em portugues}
+\foreigntitle{The work title in English}
+\titlein{spanish}{El titulo del trabajo en espanol}
+\author{Nombre del}{Autor}
+\advisor{Primer}{Director}{D.Sc.}{UFRJ}
+\examiner{Primer Examinador}{D.Sc.}{UFRJ}
+\department{PESC}
+\date{09}{2026}
+\dataaprovacao{15 de septiembre de 2026}
+\keyword{Regresion}
+\foreignkeyword{Regression}
+\braziliankeyword{Regressao}
+\begin{document}
+  \maketitle
+  \frontmatter
+  \begin{abstract}Resumen en espanol.\end{abstract}
+  \begin{foreignabstract}Abstract in English.\end{foreignabstract}
+  \begin{brazilianabstract}Resumo em portugues.\end{brazilianabstract}
+  \tableofcontents
+  \mainmatter
+  \chapter{Un capitulo}
+  Texto.
+\end{document}

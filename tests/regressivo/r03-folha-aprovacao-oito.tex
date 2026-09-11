@@ -1,0 +1,34 @@
+%% Teste de regressao da CoppeTeX. NAO roda na suite normal.
+%% Rode com: python tests/regressivo/run-regressivo.py
+%% BUG: a folha de aprovacao com sete ou mais membros transbordava para uma
+%% segunda folha, e o \thispagestyle valia so para uma, de modo que a folha de
+%% sobra saia numerada no meio da parte pre-textual. Oito e o teto que a folha
+%% tem de aguentar numa folha so.
+%% ESPERA-TEXTO: Examinador Numero 8
+%% ESPERA-PAGINAS: 8
+\documentclass[dsc,orientadorexamina]{coppe}
+\title{Banca de oito}
+\foreigntitle{A board of eight}
+\author{Nome}{Sobrenome}
+\advisor{Primeiro}{Orientador}{D.Sc.}{UFRJ}
+\advisor{Segundo}{Orientador}{Ph.D.}{UFF}
+\coadvisor{Primeiro}{Coorientador}{D.Sc.}{UNIRIO}
+\examiner{Examinador Numero 1}{D.Sc.}{UFRJ}
+\examiner{Examinador Numero 2}{D.Sc.}{UFF}
+\examiner{Examinador Numero 3}{Ph.D.}{USP}
+\examiner{Examinador Numero 4}{D.Sc.}{UNIRIO}
+\examiner{Examinador Numero 8}{D.Sc.}{UERJ}
+\department{PESC}
+\date{09}{2026}
+\dataaprovacao{15 de setembro de 2026}
+\keyword{Regressao}
+\begin{document}
+  \maketitle
+  \frontmatter
+  \begin{abstract}Resumo.\end{abstract}
+  \begin{foreignabstract}Abstract.\end{foreignabstract}
+  \tableofcontents
+  \mainmatter
+  \chapter{Um capitulo}
+  Texto.
+\end{document}

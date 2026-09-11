@@ -1,0 +1,35 @@
+%% Teste de regressao da CoppeTeX. NAO roda na suite normal.
+%% Rode com: python tests/regressivo/run-regressivo.py
+%% BUG: a lista de abreviaturas e a de simbolos saiam com o numero da folha e
+%% com o pontilhado que levava ate ele. A 4.1.1 descreve as duas como lista
+%% alfabetica do termo e do SIGNIFICADO, e nao pede localizacao nenhuma; o folio
+%% era heranca de terem sido construidas com a maquinaria do indice remissivo.
+%% O makeindex sempre escreve o numero, entao a classe o engole na composicao.
+%% MAKEINDEX: sim
+%% PASSADAS: 3
+%% ESPERA-TEXTO: UFRJ Universidade Federal do Rio de Janeiro
+%% NAO-ESPERA-ARQUIVO: lab::\dotfill
+\documentclass[dsc]{coppe}
+\makelosymbols
+\makeloabbreviations
+\title{Listas sem folio}
+\foreigntitle{Lists without a folio}
+\author{Nome}{Sobrenome}
+\advisor{Primeiro}{Orientador}{D.Sc.}{UFRJ}
+\examiner{Primeiro Examinador}{D.Sc.}{UFRJ}
+\department{PESC}
+\date{09}{2026}
+\keyword{Regressao}
+\begin{document}
+  \maketitle
+  \frontmatter
+  \begin{abstract}Resumo.\end{abstract}
+  \begin{foreignabstract}Abstract.\end{foreignabstract}
+  \printloabbreviations
+  \printlosymbols
+  \tableofcontents
+  \mainmatter
+  \chapter{Um capitulo}
+  Uma sigla \abbrev{UFRJ}{Universidade Federal do Rio de Janeiro} e um simbolo
+  \symbl{$\alpha$}{Primeira letra do alfabeto grego}.
+\end{document}

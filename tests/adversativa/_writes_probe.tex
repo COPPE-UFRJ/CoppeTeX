@@ -1,0 +1,39 @@
+%% Sonda de fluxos de escrita -- NAO faz parte da suite (nome fora do adv_*).
+%% Compila de proposito com `semmorewrites', para registrar quanto cada
+%% parte da classe consome dos 16 \write do pdfTeX. Estoura no fim; e o ponto.
+\documentclass[dsc,pdfa,assinaturas,coorientador,semmorewrites]{coppe}
+\newcommand\W[1]{\typeout{@@FLUXO count17=\the\count17 <- #1}}
+\W{a classe coppe sozinha (ja traz hyperref, biblatex, pdfx, listings...)}
+\usepackage[most]{tcolorbox}
+\W{mais tcolorbox}
+\usepackage{makeidx}\makeindex
+\W{mais makeidx + makeindex}
+\addbibresource{example.bib}
+\W{mais addbibresource}
+\makelosymbols
+\W{mais makelosymbols}
+\makeloabbreviations
+\W{mais makeloabbreviations (preambulo completo)}
+\begin{document}
+\W{begin document}
+  \title{Sonda}\foreigntitle{Probe}
+  \author{Nome}{Sonda}
+  \advisor{Prof.}{Orientador}{Um}{D.Sc.}
+  \examiner{Prof.}{Examinador Um}{D.Sc.}
+  \department{PESC}\date{09}{2026}
+  \keyword{sonda}
+  \maketitle
+  \frontmatter
+  \W{maketitle + frontmatter}
+  \listoffigures      \W{listoffigures (.lof)}
+  \listoftables       \W{listoftables (.lot)}
+  \listofquadros      \W{listofquadros (.loq)}
+  \listofprogramas    \W{listofprogramas (.lol)}
+  \listofalgorithms   \W{listofalgorithms (.loa)}
+  \printloabbreviations \W{printloabbreviations}
+  \printlosymbols     \W{printlosymbols}
+  \tableofcontents    \W{tableofcontents (.toc)}
+  \mainmatter
+  \chapter{Sonda}
+  Texto.
+\end{document}

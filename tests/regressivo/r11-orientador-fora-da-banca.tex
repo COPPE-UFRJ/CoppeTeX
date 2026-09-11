@@ -1,0 +1,34 @@
+%% Teste de regressao da CoppeTeX. NAO roda na suite normal.
+%% Rode com: python tests/regressivo/run-regressivo.py
+%% BUG: (desconformidade) a folha de aprovacao listava sempre os orientadores
+%% junto da banca, e nao havia como tirar -- a unica saida era nao declarar o
+%% orientador, o que tambem o tirava da capa e da folha de rosto. A folha
+%% registra quem EXAMINOU o trabalho; o orientador o conduziu. Por padrao ela
+%% lista so os examinadores.
+%%
+%% A folha de aprovacao e a QUARTA: capa, folha de rosto, folha adicional,
+%% aprovacao. O orientador continua na capa e na folha de rosto, e e por isso
+%% que a cobranca e por folha, e nao pelo documento inteiro.
+%% ESPERA-TEXTO-PAGINA: 4::Examinador Zacarias
+%% NAO-ESPERA-TEXTO-PAGINA: 4::Zebedeu
+%% ESPERA-TEXTO-PAGINA: 2::Zebedeu
+\documentclass[dsc]{coppe}
+\title{Quem assina e quem examina}
+\foreigntitle{Who signs and who examines}
+\author{Nome}{Sobrenome}
+\advisor{Zebedeu}{Orientatti}{D.Sc.}{UFRJ}
+\examiner{Examinador Zacarias}{D.Sc.}{UFRJ}
+\department{PESC}
+\date{09}{2026}
+\dataaprovacao{15 de setembro de 2026}
+\keyword{Regressao}
+\begin{document}
+  \maketitle
+  \frontmatter
+  \begin{abstract}Resumo.\end{abstract}
+  \begin{foreignabstract}Abstract.\end{foreignabstract}
+  \tableofcontents
+  \mainmatter
+  \chapter{Um capitulo}
+  Texto.
+\end{document}
