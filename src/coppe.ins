@@ -133,6 +133,7 @@ the .dtx source, not this file.
   \usepreamble\bibpreamble
   \file{example.bib}{\from{coppe.dtx}{examplebib}}%
   \file{coppe.bib}{\from{coppe.dtx}{coppebib}}%
+  \file{tipos.bib}{\from{coppe.dtx}{tiposbib}}%
   \usepreamble\classpreamble
   \file{coppe.cls}{\from{coppe.dtx}{class}}%
   \file{coppe.dbx}{\from{coppe.dtx}{dbx}}%
@@ -158,6 +159,11 @@ the .dtx source, not this file.
   \file{example_it.tex}{\from{coppe.dtx}{exampleit}}%
   \file{example_pdfa.tex}{\from{coppe.dtx}{examplepdfa}}%
   \file{covers_5languages.tex}{\from{coppe.dtx}{covers}}%
+% Referencia rapida em ingles: uma tabela com toda opcao, comando e ambiente.
+% O manual (coppe.pdf) e em portugues, porque o leitor dele e o aluno da COPPE;
+% isto e o que serve a quem escreve a tese em ingles ou espanhol, como o art. 57
+% da Resolucao CEPG n. 302/2024 permite.
+  \file{coppe-quickref.tex}{\from{coppe.dtx}{quickref}}%
 % O latexmkrc e Perl e nao pode levar o preambulo em %% que o docstrip
 % acrescenta por padrao, entao o aviso de arquivo gerado vai dentro do proprio
 % modulo, em comentario de Perl.

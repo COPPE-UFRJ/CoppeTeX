@@ -1821,6 +1821,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \@coppeannextrue
     \coppe@appendixheadings
 }
+
 %% 
 %%
 %% End of file `coppe.cls'.

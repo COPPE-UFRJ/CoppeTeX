@@ -1,9 +1,10 @@
+
 # latexmkrc -- GERADO a partir de coppe.dtx pelo coppe.ins.
 # Nao edite este arquivo: edite o modulo `latexmkrc' no coppe.dtx.
 #
 # latexmkrc -- CoppeTeX build configuration (works locally and on Overleaf).
 #
-# Run with:  latexmk example      (or latexmk futuremanual2026, your thesis...)
+# Run with:  latexmk example      (or latexmk manual, your thesis...)
 # latexmk reads this file automatically when it is in the build directory.
 # On Overleaf, place this file at the project root; Overleaf runs latexmk.
 #

@@ -75,14 +75,23 @@ def so_letras(s):
     return re.sub(r"[\s-]+", "", normaliza(s))
 
 
+def _saida(args):
+    """Roda e decodifica em UTF-8 com substituicao.
+
+    Sem isto, no Windows o Python tenta a codificacao do console e devolve None
+    no primeiro acento -- e o script morria com um TypeError que nao dizia nada
+    sobre o documento.
+    """
+    return subprocess.run(args, capture_output=True).stdout.decode("utf-8", "replace")
+
+
 def referencias_do_pdf(pdf):
     """As referencias compostas, na ordem, separadas pela marca [n]."""
-    info = subprocess.run(["pdfinfo", pdf], capture_output=True, text=True).stdout
+    info = _saida(["pdfinfo", pdf])
     n = int(re.search(r"^Pages:\s+(\d+)", info, re.M).group(1))
     todo = ""
     for p in range(1, n + 1):
-        todo += subprocess.run(["pdftotext", "-f", str(p), "-l", str(p), pdf, "-"],
-                               capture_output=True, text=True).stdout
+        todo += _saida(["pdftotext", "-f", str(p), "-l", str(p), pdf, "-"])
     m = re.search(r"^\s*REFER[ÊE]NCIAS\s*$", todo, re.M)
     if not m: return []
     corpo = re.sub(r"(?m)^\s*\d{1,3}\s*$", "", todo[m.end():])

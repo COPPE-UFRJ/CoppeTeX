@@ -31,14 +31,14 @@ for %%L in (pt en es fr it) do (
   pdflatex example_%%L.tex
 )
 
-:: --- Manual (futuremanual2026.pdf): the COPPE thesis norms written with the
+:: --- Manual (manual.pdf): the COPPE thesis norms written with the
 :: coppe class; same build chain as the example (biblatex + lists). ---
-pdflatex futuremanual2026.tex
-biber futuremanual2026
-makeindex -s coppe.ist -o futuremanual2026.lab futuremanual2026.abx
-makeindex -s coppe.ist -o futuremanual2026.los futuremanual2026.syx
-pdflatex futuremanual2026.tex
-pdflatex futuremanual2026.tex
+pdflatex manual.tex
+biber manual
+makeindex -s coppe.ist -o manual.lab manual.abx
+makeindex -s coppe.ist -o manual.los manual.syx
+pdflatex manual.tex
+pdflatex manual.tex
 
 :: --- Sync the minimal distributable set from src to ..\dist ---
 :: Only the files an end user needs: the class, the biblatex style files, the

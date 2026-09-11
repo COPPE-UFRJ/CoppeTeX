@@ -42,7 +42,7 @@ Fonte — **é aqui que se mexe**:
 | `coppe.ins` | A lista do que gerar e de onde. Só muda quando nasce um arquivo novo. |
 | `coppe-logo.pdf`, `coppe-logo.eps`, `ufrj-logo.pdf` | Logotipos da capa. Binários, não saem do `.dtx`. |
 | `NORMA_COPPE_2026.tex` | A norma da COPPE, documento próprio. |
-| `futuremanual2026.tex` | Documento de trabalho sobre a edição de 2026 do manual do SiBI. |
+| `manual.tex` | O manual da NORMA: como o trabalho tem de sair. Não confundir com `coppe.pdf`, que é o manual da classe. |
 
 ## Como o `coppe.dtx` é organizado
 

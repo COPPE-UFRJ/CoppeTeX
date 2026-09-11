@@ -35,6 +35,7 @@
 \DeclareMathOperator{\diag}{diag}
 
 \addbibresource{example.bib}% base de referências (biblatex/biber)
+\addbibresource{tipos.bib}% uma entrada por categoria da secao 4.2
 
 \makelosymbols
 \makeloabbreviations
@@ -749,6 +750,64 @@ Colocar a tabela ou imagem dentro de \verb|figure|/\verb|table| (um \emph{float}
 
   Os campos também aceitam sinônimos em português (sem acentos): \verb|autor|, \verb|titulo|, \verb|subtitulo|, \verb|editora|, \verb|local|, \verb|ano|, \verb|data|, \verb|paginas|, \verb|edicao|, \verb|numero|, \verb|periodico|/\verb|jornal|/\verb|revista|, \verb|caderno|, \verb|escala|, \verb|organizador|, \verb|tradutor|, entre outros. Sem autor nem organizador, a entrada é feita pelo título, com a 1ª palavra em CAIXA ALTA.
 
+  \section{Uma referência de cada categoria do Manual}\label{sec:todosostipos}
+
+  A seção 4.2 do Manual do SiBI enumera 34 categorias de documento, da monografia à partitura. O arquivo \verb|tipos.bib|, que acompanha a classe, traz \textbf{uma entrada de cada uma}, com os dados dos próprios exemplos do Manual, e todas são citadas aqui. Confira cada uma na lista de Referências: é assim que ela tem de sair.
+
+  Metade das entradas está escrita com os nomes de tipo e de campo em \textbf{inglês} e metade com os sinônimos em \textbf{português}, de propósito, para que as duas formas apareçam funcionando lado a lado. \textbf{Prefira a inglesa}: é a do \texttt{biblatex}, é a que os gerenciadores de referência exportam, e é a que outra pessoa vai reconhecer quatro anos depois. Os sinônimos em português existem para quem chega de uma base antiga e não quer reescrever tudo.
+
+  \begin{longtable}{@{}p{0.46\textwidth}p{0.17\textwidth}p{0.28\textwidth}@{}}
+    \caption{Uma referência de cada categoria da seção 4.2 do Manual}
+    \label{tab:todosostipos}\\
+    \toprule
+    \textbf{Categoria} & \textbf{Forma usada} & \textbf{Citação} \\
+    \midrule
+    \endfirsthead
+    \toprule
+    \textbf{Categoria} & \textbf{Forma usada} & \textbf{Citação} \\
+    \midrule
+    \endhead
+    \bottomrule
+    \endfoot
+    4.2.1.1 monografia no todo & inglesa & \cite{m-4211} \\
+    4.2.1.2 monografia em meio eletrônico & portuguesa & \cite{m-4212} \\
+    4.2.1.3 parte de monografia & inglesa & \cite{m-4213} \\
+    4.2.2 correspondência & portuguesa & \cite{m-422} \\
+    4.2.2.1 correspondência em meio eletrônico & inglesa & \cite{m-4221} \\
+    4.2.3.1 publicação periódica no todo & portuguesa & \cite{m-4231} \\
+    4.2.3.3 parte de revista & inglesa & \cite{m-4233} \\
+    4.2.3.4 artigo de revista & portuguesa & \cite{m-4234} \\
+    4.2.3.5 artigo de revista em meio eletrônico & inglesa & \cite{m-4235} \\
+    4.2.3.6 matéria de jornal & portuguesa & \cite{m-4236} \\
+    4.2.3.7 matéria de jornal assinada, em meio eletrônico & inglesa & \cite{m-4237} \\
+    4.2.3.8 matéria de jornal não assinada, em meio eletrônico & portuguesa & \cite{m-4238} \\
+    4.2.4.1 evento no todo & inglesa & \cite{m-4241} \\
+    4.2.4.3 evento no todo em meio eletrônico & portuguesa & \cite{m-4243} \\
+    4.2.4.5 trabalho apresentado em evento & inglesa & \cite{m-4245} \\
+    4.2.4.6 trabalho em evento, em meio eletrônico & portuguesa & \cite{m-4246} \\
+    4.2.5 patente & inglesa & \cite{m-425} \\
+    4.2.5.1 patente em meio eletrônico & portuguesa & \cite{m-4251} \\
+    4.2.6.1 legislação & inglesa & \cite{m-4261} \\
+    4.2.6.2 jurisprudência & portuguesa & \cite{m-4262} \\
+    4.2.6.3 ato administrativo normativo & inglesa & \cite{m-4263} \\
+    4.2.7 documento jurídico em meio eletrônico & portuguesa & \cite{m-427} \\
+    4.2.8 documento civil e de cartório & inglesa & \cite{m-428} \\
+    4.2.9 documento audiovisual & portuguesa & \cite{m-429} \\
+    4.2.10 partitura & inglesa & \cite{m-42101} \\
+    4.2.10.1 partitura em meio eletrônico & portuguesa & \cite{m-42102} \\
+    4.2.11 documento iconográfico & inglesa & \cite{m-42111} \\
+    4.2.11.1 documento iconográfico em meio eletrônico & portuguesa & \cite{m-42112} \\
+    4.2.12 documento cartográfico & inglesa & \cite{m-42121} \\
+    4.2.12.1 documento cartográfico em meio eletrônico & portuguesa & \cite{m-42122} \\
+    4.2.13 documento tridimensional & inglesa & \cite{m-42131} \\
+    4.2.14 documento de acesso exclusivo em meio eletrônico & portuguesa & \cite{m-4214} \\
+    dissertação de mestrado & inglesa & \cite{m-diss} \\
+    norma técnica & portuguesa & \cite{m-norma} \\
+  \end{longtable}
+  \fonte{Elaboração própria, a partir da seção 4.2 do Manual do SiBI.}
+
+  Se alguma dessas referências sair diferente do que o Manual imprime, é defeito da classe, e o lugar de relatar é o repositório do projeto. O gabarito de cada uma está no próprio \verb|tipos.bib|, em comentário acima da entrada.
+
 \chapter{Alguns outros exemplo úteis}
 
 \begin{tcolorbox}[title=Meu Textbox]
@@ -1026,6 +1085,7 @@ No modelo \CoppeTeX os anexos devem obrigtoriamente vir depois dos apêndices e 
 \coppetexfinalpage% colofão institucional (página par, face do contracapa)
 
 \end{document}
+
 
 %% 
 %%

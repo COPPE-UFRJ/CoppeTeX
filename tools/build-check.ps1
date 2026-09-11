@@ -18,7 +18,7 @@
     langs    - class + os cinco example_<lang>.tex
     tests    - class + a suíte tests/run-tests.ps1
     docs     - class + coppe.pdf (manual), NORMA_COPPE_2026.pdf,
-               futuremanual2026.pdf e covers_5languages.pdf
+               manual.pdf e covers_5languages.pdf
     pdfa     - class + example_pdfa.tex, tests/test_pdfa.tex e
                tests/test_comserifa.tex, e passa os tres
                pelo veraPDF no perfil 2b. Precisa do veraPDF instalado (o
@@ -107,7 +107,97 @@ function Build-Tex {
         Invoke-Step "$Stem-los" $Dir { & makeindex -s (Join-Path $script:src "coppe.ist") -o "$Stem.los" "$Stem.syx" }
     }
     Invoke-Step "$Stem-2" $Dir { & pdflatex -interaction=nonstopmode -halt-on-error "$Stem.tex" }
-    Invoke-Step "$Stem-3" $Dir { & pdflatex -interaction=nonstopmode -halt-on-error "$Stem.tex" }
+
+    # Tres passadas bastam para referencia cruzada, e NAO bastam quando o
+    # documento traz \nocite{*}: a lista de citacoes so fica completa depois da
+    # segunda passada, e o biblatex pede o biber de novo. Sem isso o documento
+    # sai com "There were undefined references" e ninguem ve, porque o pdflatex
+    # devolve zero assim mesmo.
+    #
+    # Em vez de fixar um numero de passadas, pergunta-se ao .log: enquanto ele
+    # pedir, roda mais um ciclo, ate tres vezes. Se depois disso ainda pedir, e
+    # defeito do documento e o passo falha.
+    # O .log as vezes guarda MAIS DE UMA passada, uma atras da outra. Ler o
+    # arquivo inteiro faz um aviso da primeira passada -- que a segunda ja
+    # resolveu -- parecer um problema atual. So a ultima passada conta, e ela
+    # comeca no ultimo banner do LaTeX.
+    function Ultima-Passada([string]$caminho) {
+        if (-not (Test-Path $caminho)) { return "" }
+        $t = Get-Content $caminho -Raw -ErrorAction SilentlyContinue
+        if (-not $t) { return "" }
+        $i = $t.LastIndexOf("LaTeX2e <")
+        if ($i -gt 0) { return $t.Substring($i) }
+        return $t
+    }
+
+    $log = Join-Path $Dir "$Stem.log"
+    for ($i = 1; $i -le 3; $i++) {
+        if (-not (Test-Path $log)) { break }
+        $txt = Ultima-Passada $log
+        $pedeBiber = $txt -match 'Please \(re\)run Biber'
+        $pedeLatex = $txt -match 'Rerun to get|There were undefined references'
+        if (-not ($pedeBiber -or $pedeLatex)) { break }
+        if ($WithBiber -and $pedeBiber) {
+            Invoke-Step "$Stem-biber$($i+1)" $Dir { & biber $Stem }
+        }
+        Invoke-Step "$Stem-$($i+2)" $Dir { & pdflatex -interaction=nonstopmode -halt-on-error "$Stem.tex" }
+    }
+    Invoke-Step "$Stem-final" $Dir { & pdflatex -interaction=nonstopmode -halt-on-error "$Stem.tex" }
+
+    # Veredito de referencia. Exige PROVA, e nao o resumo generico: o aviso
+    # "There were undefined references" e disparado pelo biblatex nos documentos
+    # em espanhol mesmo com tudo resolvido, porque o pacote de idioma registra o
+    # mapeamento em \AtBeginDocument e o contador de refsection so fecha na
+    # passada seguinte. Falhar por causa dele reprovaria documento correto.
+    #
+    # Prova e uma referencia ou citacao NOMEADA como indefinida -- que e o que
+    # produz o "??" na pagina.
+    $txt = Ultima-Passada $log
+    $m = [regex]::Matches($txt, "(?m)^.*(Reference|Citation) ``[^']+' on page .* undefined.*$")
+    if ($m.Count -gt 0) {
+        $script:failed++
+        Add-Line "FALHOU   $Stem-referencias  ($($m.Count) referencia(s) sem resolver)"
+        foreach ($x in ($m | Select-Object -First 3)) { Add-Line "         $($x.Value.Trim())" }
+    }
+}
+
+# Le so a ULTIMA passada de um .log: o arquivo as vezes guarda mais de uma, e um
+# aviso da primeira, que a segunda ja resolveu, nao e problema atual.
+function Get-UltimaPassada([string]$caminho) {
+    if (-not (Test-Path $caminho)) { return "" }
+    $t = Get-Content $caminho -Raw -ErrorAction SilentlyContinue
+    if (-not $t) { return "" }
+    $i = $t.LastIndexOf("LaTeX2e <")
+    if ($i -gt 0) { return $t.Substring($i) }
+    return $t
+}
+
+# Roda mais passadas enquanto o documento pedir, e cobra se ele continuar
+# pedindo. Serve aos documentos adversativos, que nao usam Build-Tex.
+function Estabilizar {
+    param([string]$Stem, [string]$Dir, [string]$Motor, [string]$Fonte, [string]$JobName)
+    $log = Join-Path $Dir "$Stem.log"
+    for ($i = 1; $i -le 3; $i++) {
+        $txt = Get-UltimaPassada $log
+        $pedeBiber = $txt -match 'Please \(re\)run Biber'
+        $pedeLatex = $txt -match 'Rerun to get|There were undefined references|Please rerun LaTeX'
+        if (-not ($pedeBiber -or $pedeLatex)) { break }
+        if ($pedeBiber) { Invoke-Step "$Stem-biber$($i+1)" $Dir { & biber $Stem } }
+        if ($JobName) {
+            Invoke-Step "$Stem-r$i" $Dir { & $Motor -interaction=nonstopmode -halt-on-error -jobname $JobName $Fonte }
+        } else {
+            Invoke-Step "$Stem-r$i" $Dir { & $Motor -interaction=nonstopmode -halt-on-error $Fonte }
+        }
+    }
+    # Mesma regra do Build-Tex: so falha com prova -- uma referencia ou citacao
+    # nomeada como indefinida. Ver o comentario la.
+    $txt = Get-UltimaPassada $log
+    $m = [regex]::Matches($txt, "(?m)^.*(Reference|Citation) ``[^']+' on page .* undefined.*$")
+    if ($m.Count -gt 0) {
+        $script:failed++
+        Add-Line "FALHOU   $Stem-referencias  ($($m.Count) referencia(s) sem resolver)"
+        foreach ($x in ($m | Select-Object -First 3)) { Add-Line "         $($x.Value.Trim())" }
+    }
 }
 
 Add-Line ("=== build-check  escopo=" + $(if ($prova) { "prova" } else { $Scope }) + "  $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss') ===")
@@ -180,7 +270,22 @@ if ($Scope -in @("docs", "all")) {
     Invoke-Step "coppe-2" $src { & pdflatex -interaction=nonstopmode coppe.dtx }
     Invoke-Step "coppe-3" $src { & pdflatex -interaction=nonstopmode coppe.dtx }
 
-    Build-Tex -Stem "futuremanual2026"     -Dir $src -WithBiber
+    # O manual envelhece em silencio: um comando novo entra na classe e ninguem o
+    # documenta, e nada quebra. Este passo cobra isso, e tambem confere se a
+    # tabela "onde ver cada coisa" ainda aponta para as linhas certas do
+    # example.tex. Sem python instalado o passo e PULADO, nao falha.
+    if (Get-Command python -ErrorAction SilentlyContinue) {
+        Invoke-Step "conferir-manual" $root { & python (Join-Path $root "tools\conferir-manual.py") }
+    } else {
+        Add-Line "pulado   conferir-manual (python nao encontrado)"
+    }
+
+    # A referencia rapida em ingles. Duas passadas, e nao uma: e uma longtable,
+    # que so acerta a largura das colunas depois de se ver por inteiro.
+    Invoke-Step "quickref-1" $src { & pdflatex -interaction=nonstopmode -halt-on-error coppe-quickref.tex }
+    Invoke-Step "quickref-2" $src { & pdflatex -interaction=nonstopmode -halt-on-error coppe-quickref.tex }
+
+    Build-Tex -Stem "manual"     -Dir $src -WithBiber
     Build-Tex -Stem "NORMA_COPPE_2026"     -Dir $src
 
     # covers_5languages monta uma montagem das cinco capas a partir de PNGs
@@ -241,6 +346,7 @@ if ($Scope -in @("adversativa", "all")) {
         Invoke-Step "$stem-idx" $advDir { & makeindex "$stem.idx" }
         Invoke-Step "$stem-2"    $advDir { & pdflatex -interaction=nonstopmode -halt-on-error "$stem.tex" }
         Invoke-Step "$stem-3"    $advDir { & pdflatex -interaction=nonstopmode -halt-on-error "$stem.tex" }
+        Estabilizar -Stem $stem -Dir $advDir -Motor "pdflatex" -Fonte "$stem.tex"
     }
 
     # Segunda passada, com LuaLaTeX. E a outra saida documentada para o teto de
@@ -257,6 +363,7 @@ if ($Scope -in @("adversativa", "all")) {
             Invoke-Step "$lj-idx"   $advDir { & makeindex "$lj.idx" }
             Invoke-Step "$lj-2"     $advDir { & lualatex -interaction=nonstopmode -halt-on-error -jobname $lj "$stem.tex" }
             Invoke-Step "$lj-3"     $advDir { & lualatex -interaction=nonstopmode -halt-on-error -jobname $lj "$stem.tex" }
+            Estabilizar -Stem $lj -Dir $advDir -Motor "lualatex" -Fonte "$stem.tex" -JobName $lj
         }
     } else {
         Add-Line "pulado   adversativa/lualatex (lualatex nao encontrado)"
