@@ -90,6 +90,22 @@ to the CPGP is [`PROPOSTA_CPGP.md`](./PROPOSTA_CPGP.md).
   not deposited. `resumosemreferencia` turns it off for an abstract already at
   the 500-word ceiling, which the three added lines could push onto a second
   sheet.
+- **`mscsem` — the Seminário de Mestrado**, a fifth work type. Some Programas
+  require it — Mechanical Engineering among them — and it is technically *not* a
+  qualifying exam: they are different moments of the course, with different
+  boards and different purposes. Until now, whoever needed one typeset it as an
+  `mscexam` and changed the title by hand, which comes out wrong on four sheets
+  at once: cover, title page, approval sheet and the top of the abstracts. Like
+  the two exams, it carries no CAPES sheet, no catalogue card and no reference
+  above the abstract — it is not deposited in the library.
+
+  The request came from outside, as [PR
+  #61](https://github.com/COPPE-UFRJ/CoppeTeX/pull/61). That implementation
+  edited the generated `src/coppe.cls`, which is overwritten at the next
+  generation, and left out the flag that marks a work as undeposited — so the
+  seminar would have come out with all three. Implemented here in
+  `src/coppe.dtx`, where it survives, and guarded by
+  `tests/regressivo/r24`, which exercises it in all five languages.
 - **Fifth heading level** numbered and formatted (2.6).
 - **`listasnosumario`** — restores the pre-textual lists to the sumário, which
   3.1.2.1.6 keeps out of it.

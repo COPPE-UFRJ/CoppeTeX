@@ -184,8 +184,9 @@ A referência segue o Anexo E e a NBR 6023:
 referência descreve um documento e não se traduz — é o que o Anexo F faz ao
 repeti-la na página do *abstract*. Só o título acompanha o idioma do trabalho.
 
-O **exame de qualificação** não a recebe: não é depositado na biblioteca nem
-entra no acervo, e portanto não é documento referenciável.
+O **exame de qualificação** não a recebe, nem o **seminário de mestrado** que
+alguns Programas exigem: nenhum dos dois é depositado na biblioteca nem entra no
+acervo, e portanto nenhum dos dois é documento referenciável.
 
 A implementação de referência compõe a referência sozinha, com os dados que a
 folha de rosto já exige, e oferece uma opção para retirá-la — útil ao resumo que

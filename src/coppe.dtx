@@ -155,6 +155,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \changes{v4.1}{2026/09/10}{The lists of abbreviations and of symbols no longer carry a page number, nor the dot leaders that led to it. 4.1.1 describes both as an alphabetical list of the term and its meaning and asks for no location; the folio was inherited from building them with the index machinery. makeindex always writes the number, so the class discards it at composition through the coppe@semfolio encapsulator, and every delimiter in coppe.ist is now empty.}
 % \changes{v4.1}{2026/09/10}{New option semlinks: hidelinks over everything else, so the links keep working and lose only the colour and the frame. For anyone printing.}
 % \changes{v4.1}{2026/09/10}{A missing cover logo now raises a class error naming the file and saying it ships with the class, instead of TeX's bare "File not found". No graphicspath is set: kpathsea finds a logo installed beside the class and does not report where it found anything, so the class cannot deduce its own directory.}
+% \changes{v4.1}{2026/09/11}{New work type mscsem, the Seminario de Mestrado that some Programas require and that is not a qualifying exam. It came as PR \#61, which edited the generated coppe.cls -- lost at the next generation -- and left out the exam flag, so the seminar would have come out with the CAPES sheet, the catalogue card and the reference above the abstract, three things that belong only to a work deposited in the library.}
 % \changes{v4.1}{2026/09/11}{The three abstracts open with the work's own bibliographic reference, composed by the class from the folha de rosto data. 3.1.2.1.4 suggests it and Annexes E and F show both the resumo and the abstract beginning with it; the class printed none. It is the same reference on the three pages and always in Portuguese, because a reference is not translated, and only the title follows the language of the work. An exame de qualificacao gets none, and resumosemreferencia turns it off for an abstract already at the 500-word limit.}
 % \changes{v4.0}{2026/05/30}{Catalog-label writers (coppe@mainBegin, coppe@bibBegin, coppe@bibEnd, coppe@hasLof) made language-agnostic: detokenize wrap on label names protects ':' and '.' from babel shorthand activation, and the raw etex primitives romannumeral/number replace LaTeX's roman/arabic to bypass spanish-babel's small-caps @roman redefinition that would otherwise crash pdftex with "Unbalanced write command" on every es-main document.}
 %
@@ -726,19 +727,31 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %
 % \subsection{Tipo do trabalho --- obrigat\'oria}
 %
-% Toda tese, disserta\c c\~ao ou exame precisa de exatamente uma destas. Ela
-% decide o t\'itulo que sai na capa, o grau, o texto da natureza do trabalho e se
-% h\'a folha da Coleta CAPES.
+% Todo trabalho precisa de exatamente uma destas. Ela decide o t\'itulo que sai na
+% capa, o grau, o texto da natureza do trabalho e se h\'a folha da Coleta CAPES.
 %
 % \begin{description}
 %   \item[\texttt{msc}] Disserta\c c\~ao de Mestrado. Grau M.Sc.
 %   \item[\texttt{dsc}] Tese de Doutorado. Grau D.Sc.
 %   \item[\texttt{mscexam}] Exame de Qualifica\c c\~ao de Mestrado.
 %   \item[\texttt{dscexam}] Exame de Qualifica\c c\~ao de Doutorado.
+%   \item[\texttt{mscsem}] Semin\'ario de Mestrado. \'E requisito obrigat\'orio de
+%     alguns Programas --- o de Engenharia Mec\^anica entre eles --- e
+%     \textbf{n\~ao \'e} um exame de qualifica\c c\~ao: s\~ao momentos diferentes
+%     do curso. Quem precisava dele compunha com |mscexam| e trocava o t\'itulo
+%     \`a m\~ao, o que sai errado em quatro folhas de uma vez.
 % \end{description}
 %
-% Os dois exames n\~ao levam folha adicional da Coleta CAPES nem ficha
-% catalogr\'afica: eles n\~ao s\~ao depositados na biblioteca.
+% \textbf{Os dois exames e o semin\'ario n\~ao levam folha adicional da Coleta
+% CAPES, nem ficha catalogr\'afica, nem a refer\^encia no alto dos resumos}: eles
+% n\~ao s\~ao depositados na biblioteca, e essas tr\^es coisas s\'o cabem a
+% trabalho que entra no acervo.
+%
+% Os cinco funcionam em qualquer um dos idiomas da se\c c\~ao seguinte. O nome do
+% tipo de trabalho na capa, na folha de rosto e na folha de aprova\c c\~ao sai
+% sempre em portugu\^es, qualquer que seja o idioma de reda\c c\~ao --- \'e a
+% identidade institucional, fixada na se\c c\~ao~4 da Norma COPPE --- e a
+% p\'agina do \emph{abstract} o traz em ingl\^es.
 %
 % \subsection{Idioma em que o trabalho \'e escrito}
 %
@@ -2287,8 +2300,9 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   type, one is required}\\[2pt]
 msc      & \textbackslash documentclass[msc]\{coppe\}     & \pre & M.Sc.\ dissertation. \\
 dsc      & \textbackslash documentclass[dsc]\{coppe\}     & \pre & D.Sc.\ thesis. \\
-mscexam  & \textbackslash documentclass[mscexam]\{coppe\} & \pre & M.Sc.\ qualifying exam. No CAPES sheet, no catalogue card. \\
+mscexam  & \textbackslash documentclass[mscexam]\{coppe\} & \pre & M.Sc.\ qualifying exam. No CAPES sheet, no catalogue card, no reference above the abstract. \\
 dscexam  & \textbackslash documentclass[dscexam]\{coppe\} & \pre & D.Sc.\ qualifying exam. Same. \\
+mscsem   & \textbackslash documentclass[mscsem]\{coppe\}  & \pre & M.Sc.\ seminar, a requirement of some Programas and \emph{not} a qualifying exam. Same three omissions: it is not deposited. \\
 \midrule
 
 \multicolumn{4}{@{}l@{}}{\normalfont\bfseries\small CLASS OPTIONS --- writing
@@ -2624,7 +2638,7 @@ Problems: \url{https://github.com/COPPE-UFRJ/CoppeTeX/issues}
 
 \chapter{Configurações Iniciais}
 
-   A primeira coisa a fazer é escolher o tipo de documento. Isso é feito como uma opção no comando inicial do arquivo, \verb|documentclass|. A classe \verb|coppe| suporta quatro formatos: tese de doutorado (\verb|dsc|), dissertação de mestrado (\verb|msc|), exame de qualificação de doutorado (\verb|dscexam|) e exame de qualificação de mestrado (\verb|mscexam|). Na verdade, o padrão da Coppe não cobre os exames de qualificação, mas é interessante seguir o padrão nesses casos também.
+   A primeira coisa a fazer é escolher o tipo de documento. Isso é feito como uma opção no comando inicial do arquivo, \verb|documentclass|. A classe \verb|coppe| suporta cinco formatos: tese de doutorado (\verb|dsc|), dissertação de mestrado (\verb|msc|), exame de qualificação de doutorado (\verb|dscexam|), exame de qualificação de mestrado (\verb|mscexam|) e seminário de mestrado (\verb|mscsem|), que é requisito obrigatório de alguns Programas e não se confunde com a qualificação. Na verdade, a norma da COPPE não cobre os exames nem o seminário, mas é interessante seguir o padrão nesses casos também: os três saem sem folha adicional da Coleta CAPES, sem ficha catalográfica e sem a referência no alto dos resumos, porque não são depositados na biblioteca.
 
    Como pode ser visto nesse documento, muita coisa pode ser configurada, o que gerará o tratamento correto segundo as normas da COPPE. Para isso, logo após o \verb|\begin{document}| várias variáveis devem receber valor. Isso é feito com os comandos descritos que aparecem nesse exemplo.
 
@@ -4289,6 +4303,36 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \setboolean{maledoc}{true}\@coppeexametrue
   \newcommand\local@doctype{Exame de Qualifica{\c c}{\~ a}o}
   \newcommand\foreign@doctype{Qualifying Exam}
+}
+% O Seminario de Mestrado e um requisito obrigatorio de alguns Programas -- o de
+% Engenharia Mecanica entre eles -- e tecnicamente NAO e um exame de
+% qualificacao: sao momentos diferentes do curso, com bancas e finalidades
+% diferentes. Ate aqui quem precisava dele compunha o documento com `mscexam' e
+% trocava o titulo na mao, o que sai errado em quatro lugares de uma vez -- capa,
+% folha de rosto, folha de aprovacao e o alto dos resumos.
+%
+% Entra como opcao propria, e nao como variacao de outra, porque e isso que ela
+% e. O pedido veio de fora, no PR #61; a implementacao daquele PR mexia no
+% coppe.cls, que e gerado e seria apagado na geracao seguinte, e esquecia o
+% \@coppeexametrue -- sem ele o seminario sairia com folha adicional da Coleta
+% CAPES, ficha catalografica e a referencia no alto do resumo, tres coisas que so
+% cabem a trabalho depositado na biblioteca.
+%
+% ACOPLAMENTO: \@coppeexametrue e o que diz "isto nao vai para a biblioteca".
+% Governa a folha adicional (\maketitle), a ficha e a referencia do resumo
+% (\coppe@refresumo). Todo tipo de trabalho novo que nao seja depositado precisa
+% dele.
+%
+% Nao ha `dscsem': ninguem pediu, e nenhum Programa da COPPE tem um seminario de
+% doutorado com esse nome. O molde esta aqui para o dia em que houver.
+\DeclareOption{mscsem}{%
+  \newcommand{\@degree}{M.Sc.}
+  \newcommand{\@degreename}{Mestrado}
+  \newcommand{\local@degname}{Mestre}
+  \newcommand{\foreign@degname}{Master}
+  \setboolean{maledoc}{true}\@coppeexametrue
+  \newcommand\local@doctype{Semin{\' a}rio}
+  \newcommand\foreign@doctype{Seminar}
 }
 \DeclareOption{dsc}{%
   \newcommand{\@degree}{D.Sc.}

@@ -295,6 +295,17 @@ if ($Scope -in @("docs", "all")) {
     # O manual sai do .dtx, nao de um .tex: o proprio coppe.dtx traz a secao
     # driver. Precisa de makeindex para o indice remissivo e para o glossario
     # de comandos, e de tres passadas para as referencias cruzadas.
+    #
+    # O .ind e o .gls sao APAGADOS antes da primeira passada, e a razao merece
+    # registro. A primeira passada LE o .gls da rodada anterior, e uma rodada
+    # que tenha falhado deixa la o que causou a falha -- uma vez foi um "#" sem
+    # escapar numa entrada de \changes. A partir dali o build morria na primeira
+    # passada, sempre, com um erro que aponta para uma linha de um arquivo que
+    # ninguem escreveu, e so saia depois de alguem apagar o arquivo na mao.
+    # Os dois sao regerados logo abaixo, nesta mesma sequencia: apagar nao custa
+    # nada e tira o modo de falha inteiro.
+    Remove-Item (Join-Path $src "coppe.gls"), (Join-Path $src "coppe.ind") `
+        -ErrorAction SilentlyContinue
     Invoke-Step "coppe-1" $src { & pdflatex -interaction=nonstopmode coppe.dtx }
     Invoke-Step "coppe-idx" $src { & makeindex -s gind.ist -o coppe.ind coppe.idx }
     Invoke-Step "coppe-glo" $src { & makeindex -s gglo.ist -o coppe.gls coppe.glo }

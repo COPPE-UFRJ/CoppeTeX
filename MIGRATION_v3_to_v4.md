@@ -340,9 +340,10 @@ XMP, o achado mais comum de validador de PDF/A em arquivo feito com TeX.
 
 ### 4.8 O que a revisão adversativa consertou
 
-Doze documentos completos — os quatro tipos de trabalho nos três idiomas
-admitidos, cada um acionando ao mesmo tempo tudo o que a classe oferece —
-acharam quatro defeitos que os exemplos não pegavam. Três deles você só
+Seis documentos completos — quatro em português, um por tipo de trabalho, mais
+um em inglês e um em espanhol de tipos diferentes, cada um acionando ao mesmo
+tempo tudo o que a classe oferece — acharam quatro defeitos que os exemplos não
+pegavam. Três deles você só
 notaria no dia do depósito:
 
 - **A capa não transborda mais sob `doublespacing`.** Capa e folha de rosto

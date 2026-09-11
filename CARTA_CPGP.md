@@ -49,7 +49,8 @@ Três observações que talvez ajudem a apreciação:
   lado, em `src/covers_5languages.pdf`, mostram isso em uma página.
 
 - **Evidência.** A conformidade não é afirmada, é medida: seis documentos
-  completos nos quatro tipos de trabalho e nos três idiomas admitidos,
+  completos — quatro em português, um por tipo de trabalho, mais um em inglês
+  e um em espanhol de tipos diferentes —,
   compilados nos dois motores, com o PDF pronto conferido contra a norma em
   centímetros e em ordem, e o PDF/A validado pelo veraPDF. A Seção 3.4 da
   proposta traz os números, e um único comando os reproduz.
