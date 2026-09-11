@@ -200,6 +200,41 @@ def acao_dist(saida):
     return True
 
 
+def acao_pacote(saida):
+    """Fecha dist/ num .zip com o numero da versao, pronto para o release.
+
+    O zip leva uma pasta dentro, CoppeTeX-<versao>, e nao os arquivos soltos:
+    quem descompacta na pasta do proprio trabalho nao quer trinta e dois
+    arquivos misturados com os dele.
+
+    Sai em _scratch/, que o git ignora. O pacote e produto de build -- o que
+    fica versionado e a pasta dist/, de onde ele sai.
+    """
+    import zipfile
+    versao = versao_atual()
+    destino = os.path.join(RAIZ, "_scratch", "CoppeTeX-%s.zip" % versao)
+    if not os.path.isdir(DIST):
+        saida("nao existe a pasta dist/")
+        return False
+    # Sem os arquivos que comecam por ponto: o .gitignore de dist/ e plumbing
+    # do repositorio e nao tem o que fazer na mao de quem baixa a entrega.
+    arquivos = sorted(f for f in os.listdir(DIST)
+                      if os.path.isfile(os.path.join(DIST, f))
+                      and not f.startswith("."))
+    if not arquivos:
+        saida("dist/ esta vazia -- rode --dist antes")
+        return False
+    if not os.path.isdir(os.path.dirname(destino)):
+        os.makedirs(os.path.dirname(destino))
+    with zipfile.ZipFile(destino, "w", zipfile.ZIP_DEFLATED) as z:
+        for nome in arquivos:
+            z.write(os.path.join(DIST, nome), "CoppeTeX-%s/%s" % (versao, nome))
+    tamanho = os.path.getsize(destino)
+    saida("%s" % destino)
+    saida("   %d arquivo(s), %.1f MB" % (len(arquivos), tamanho / 1048576.0))
+    return True
+
+
 def acao_limpar(saida):
     """Tira os restos de compilacao de src/ e de tests/. Nao toca em PDF."""
     n = 0
@@ -248,6 +283,8 @@ ACOES = [
      "a prova completa; e o que tem de sair limpo antes de marcar uma versao"),
     ("dist", "Copiar para dist/", acao_dist,
      "dist/ e copia do que esta em src/, e nada mais"),
+    ("pacote", "Fechar o zip da entrega", acao_pacote,
+     "empacota dist/ em _scratch/CoppeTeX-<versao>.zip, para anexar ao release"),
     ("limpar", "Limpar intermediarios", acao_limpar,
      "tira .aux, .log e companhia de src/ e de tests/; nao toca em PDF"),
 ]
@@ -268,7 +305,7 @@ ACOES = [
 #     compilacao acabou de escrever e a copia que o dist acabou de fazer;
 #   * `limpar' no fim de tudo, senao apaga o que ainda nao foi lido nem copiado.
 ORDEM = ["regerar", "tudo", "docs", "testes", "adversativo", "regressivo",
-         "pdfa", "dist", "conferir", "limpar"]
+         "pdfa", "dist", "conferir", "pacote", "limpar"]
 
 
 def executar(pedidas, versao, saida):

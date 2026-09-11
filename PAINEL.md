@@ -47,6 +47,7 @@ coppetex.bat --ajuda
 | `--conferir` | Os verificadores que não compilam nada: referências cruzadas em todos os `.log`, cobertura do manual (todo comando, ambiente e opção documentado) e versão sincronizada. |
 | `--tudo` | A prova completa, com veredito no fim. É o que tem de sair limpo antes de marcar uma versão. |
 | `--dist` | Copia para `dist/` os 31 arquivos que o aluno precisa: a classe, os estilos, os logotipos, os dois manuais, o guia rápido, um exemplo por idioma admitido e a licença. **Só copia; nunca compila.** A lista está em `PARA_DIST`, em `tools/painel.py`, e existe só lá. |
+| `--pacote` | Fecha `dist/` num `.zip` com o número da versão, em `_scratch/`, pronto para anexar ao *release*. O zip leva uma pasta dentro, `CoppeTeX-<versão>/`, e não os arquivos soltos. |
 | `--limpar` | Tira `.aux`, `.log` e companhia de `src/` e de `tests/`. Não toca em nenhum PDF. |
 
 Pode combinar quantas quiser. **A ordem em que você escreve não importa**: o
@@ -120,6 +121,16 @@ sair com `RESULTADO: tudo passou` e com zero divergências.
 ```bat
 coppetex.bat --dist
 ```
+
+**Vou publicar um *release*:**
+
+```bat
+coppetex.bat --dist --pacote
+```
+
+Sai `_scratch/CoppeTeX-<versão>.zip` com a entrega inteira, que é o único anexo
+que o *release* precisa ter. O resto do repositório o GitHub já publica sozinho,
+como o código-fonte da tag.
 
 ---
 
