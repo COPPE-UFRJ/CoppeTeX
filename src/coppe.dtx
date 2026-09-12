@@ -168,6 +168,16 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \changes{v4.1}{2026/09/11}{Everything the class writes on an abstract sheet -- the opening sentence, the title, the month, the advisor and department labels -- now follows the language of that sheet. It was pinned to Portuguese on the abstract page and to English on the foreignabstract page, whatever the languages of the work: an English-written thesis came out with its English text under a Portuguese heading and its Portuguese text under an English one, and a Spanish-written thesis had TWO Portuguese-headed sheets and no Spanish heading at all. Portuguese output is unchanged, character for character.}
 % \changes{v4.1}{2026/09/11}{New work type mscsem, the Seminario de Mestrado that some Programas require and that is not a qualifying exam. It came as PR \#61, which edited the generated coppe.cls -- lost at the next generation -- and left out the exam flag, so the seminar would have come out with the CAPES sheet, the catalogue card and the reference above the abstract, three things that belong only to a work deposited in the library.}
 % \changes{v4.1}{2026/09/11}{The three abstracts open with the work's own bibliographic reference, composed by the class from the folha de rosto data. 3.1.2.1.4 suggests it and Annexes E and F show both the resumo and the abstract beginning with it; the class printed none. It is the same reference on the three pages and always in Portuguese, because a reference is not translated, and only the title follows the language of the work. An exame de qualificacao gets none, and resumosemreferencia turns it off for an abstract already at the 500-word limit.}
+% \changes{v4.1}{2026/09/12}{The abstract sheet is now five named elements -- page identification, title and author, advising, the work's own reference, and the abstract itself -- and only the last is mandatory. The new configuraresumos takes four booleans and turns the other four off or on at once, for every abstract and every language in the document; all four are on by default, which is the sheet of Annexes E and F. A value that is neither true nor false is a class error, because a switch that silently keeps the previous state is discovered in the deposited PDF.}
+% \changes{v4.1}{2026/09/12}{The three abstract environments carried the whole leading block copied byte for byte, and that copy is what produced the two worst defects those sheets ever had: a fix would land in two of them and be missing from the third, and the third was always brazilianabstract, which only appears in a work written in Spanish. The three now call one macro, coppe@resumocabeca.}
+% \changes{v4.1}{2026/09/12}{The vertical spaces of the abstract sheet went from 44 mm to 30 mm and the sheet is composed from the top. A 500-word abstract, which is the limit of 3.1.2.1.4, did not fit on one sheet with the five elements on, and one sheet is what the same item requires. The Manual prescribes none of these measures.}
+% \changes{v4.1}{2026/09/12}{Nothing in the colophon is written by hand any more. It reports the engine and its version, the engine's own banner (which names the distribution), the LaTeX format date, the font family and encoding in force, the biblatex version, the date, the hour, and the operating system and machine -- every one of them asked of the engine at composition time. The last hard-coded item was the font, which said Latin Modern and went on saying it after the author changed fonts. Under LuaLaTeX the machine name comes from os.uname(); pdfLaTeX and XeLaTeX can only tell whether the system is Windows, and when even that is unknown the sentence omits the system rather than inventing one.}
+% \changes{v4.1}{2026/09/12}{The .bib files may live in a subfolder, and the documentation now recommends it: addbibresource{referencias/x.bib} works locally and on Overleaf, because biber opens the path relative to the document. It is also safer than the bare name, which goes through the kpathsea search and silently resolves to the .bib of the same name shipped with the TeX distribution when the file is absent from the work's folder. The empty-document generator writes the subfolder by default.}
+% \changes{v4.1}{2026/09/12}{The type of work is the only class option with no default, and nothing was demanding it. Without it the class loaded in silence and died later, inside maketitle, with `Undefined control sequence local@doctype' pointing at a line of the class itself. It now stops with a message naming the five options, and patches the six macros so the cascade of forty unreadable errors does not bury the one that matters.}
+% \changes{v4.1}{2026/09/12}{The implementation section was a single 60-page subsection with seven subsubsections, five of them in the first ten pages. It is now eleven subsections and twenty-four subsubsections, grouped by subject.}
+% \changes{v4.1}{2026/09/12}{Two macrocode guards in the .dtx were written with three spaces instead of four. doc.sty only closes a code block on a percent sign followed by exactly four spaces, so sixty lines of documentation were printed as verbatim code in coppe.pdf, and had been for several versions. A dead @wrlab block commented out with four percent signs had the same effect, for the opposite reason: doc.sty ignores every percent sign in the documentation part, so that line opened a real code block. Both are fixed, and tools/conferir-manual.py now checks every guard.}
+% \changes{v4.1}{2026/09/12}{The options section opens with a table of what is default, and every entry states its own default. Three were wrong or missing: resumosemreferencia was described as on by default when it is the reference that is on and the option that is off, and rascunhoficha and the morewrites loading stated no default at all.}
+% \changes{v4.1}{2026/09/12}{The files section described the delivery as it was before the folders: the logos in the root, no logos/, no manuais/, no language folders, and an instruction not to copy coppe.dtx and coppe.ins, which the delivery now ships on purpose. The developer sections still said twelve adversarial documents (there are six), still placed them outside tests/, and did not know tests/regressivo/ or the panel existed.}
 % \changes{v4.0}{2026/05/30}{Catalog-label writers (coppe@mainBegin, coppe@bibBegin, coppe@bibEnd, coppe@hasLof) made language-agnostic: detokenize wrap on label names protects ':' and '.' from babel shorthand activation, and the raw etex primitives romannumeral/number replace LaTeX's roman/arabic to bypass spanish-babel's small-caps @roman redefinition that would otherwise crash pdftex with "Unbalanced write command" on every es-main document.}
 %
 % \DoNotIndex{\!,\',\.,\>,\^,\`,\',\=,\\}
@@ -327,27 +337,57 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %
 % \subsection{O caminho curto: tudo na pasta do trabalho}
 %
-% O jeito mais simples de usar a classe \'e n\~ao instalar nada. Copie o conte\'udo
-% da pasta |dist/| para a pasta do seu trabalho, ao lado do seu |.tex|, e compile
+% O jeito mais simples de usar a classe \'e n\~ao instalar nada. Baixe a entrega
+% --- o |CoppeTeX-|\meta{vers\~ao}|.zip| do \emph{release}, que \'e a pasta
+% |dist/| do reposit\'orio ---, descompacte na pasta do seu trabalho e compile
 % ali. Funciona do mesmo jeito no Overleaf: suba os arquivos junto com o seu
 % |.tex|.
+%
+% \paragraph{A regra da arruma\c c\~ao, em uma frase.} \textbf{O que est\'a na
+% raiz da entrega funciona sem voc\^e mexer em nada, e quem vai escrever em
+% ingl\^es, espanhol ou outro idioma traz o conte\'udo da pasta daquele idioma
+% para a raiz.} O \LaTeX{} procura a classe e os estilos \emph{ao lado do
+% documento que est\'a compilando}, e n\~ao dentro de subpastas: um arquivo que
+% fique em |es/| \'e um arquivo que o \LaTeX{} n\~ao v\^e. As duas exce\c c\~oes
+% s\~ao os logotipos, que a classe sabe procurar em |logos/|, e os |.bib|, que
+% voc\^e mesmo aponta com um caminho --- veja a se\c c\~ao~\ref{sec:bibsubpasta}.
 %
 % Chamando de |raiz/| a pasta onde est\'a o seu |.tex|, o m\'inimo \'e este:
 %
 % \begin{verbatim}
 %   raiz/
 %     minha-tese.tex          <- o seu trabalho
-%     minha-tese.bib          <- as suas referencias
 %     coppe.cls               <- a classe
 %     coppe.dbx               <- tipos de entrada bibliografica
 %     coppe.bbx  coppe.cbx    <- estilo de bibliografia e de citacao
 %     coppe.ist               <- ordenacao das listas e do glossario
 %     brazilian-coppe.lbx     <- termos de bibliografia em portugues
 %     english-coppe.lbx       <- termos de bibliografia em ingles
-%     coppe-logo.pdf          <- logotipo da COPPE, na capa
-%     ufrj-logo.pdf           <- logotipo da UFRJ, na capa
 %     latexmkrc               <- receita de compilacao (se voce usa latexmk)
+%     logos/
+%       coppe-logo.pdf        <- logotipo da COPPE, na capa
+%       ufrj-logo.pdf         <- logotipo da UFRJ, na capa
+%     referencias/
+%       minha-tese.bib        <- as suas referencias
 % \end{verbatim}
+%
+% Os dois |.lbx| s\~ao necess\'arios em \textbf{qualquer} trabalho, inclusive num
+% escrito em portugu\^es: toda tese da COPPE tem um resumo em idioma
+% estrangeiro, que por conven\c c\~ao \'e o ingl\^es.
+%
+% \paragraph{Os logotipos.} A classe procura primeiro em |logos/| e depois ao
+% lado do documento, nesta ordem, de modo que as duas arruma\c c\~oes funcionam
+% --- a da entrega, com a subpasta, e a de quem prefere tudo solto. Faltando os
+% dois lugares, a compila\c c\~ao para com um recado que nomeia os dois
+% caminhos, e n\~ao com o ``File not found'' gen\'erico do \TeX.
+%
+% \paragraph{O resto da entrega.} A entrega traz mais do que este m\'inimo, e
+% nada do que sobra \'e necess\'ario para compilar: |manuais/| tem os PDF para
+% ler, |en/| e |es/| t\^em o exemplo naquele idioma, |outraslinguas/| tem
+% franc\^es e italiano, e a raiz traz o exemplo em portugu\^es, as bases
+% |example.bib|, |tipos.bib| e |coppe.bib|, e as fontes |coppe.dtx|, |coppe.ins|
+% e |manual.tex|, que est\~ao l\'a para que a entrega baste tamb\'em para
+% refazer a classe e os manuais.
 %
 % \subsection{Arquivos que s\'o algumas op\c c\~oes exigem}
 %
@@ -405,17 +445,23 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % interrompe a compila\c c\~ao com um recado dizendo exatamente isso --- e n\~ao
 % com o ``File not found'' gen\'erico do \TeX, que n\~ao d\'a pista nenhuma.
 %
-% \subsection{O que \textbf{n\~ao} p\^or na pasta}
+% \subsection{O que da entrega voc\^e pode deixar de fora}
 %
-% N\~ao copie o |coppe.dtx| nem o |coppe.ins| para a pasta do trabalho. Eles s\~ao
-% a fonte da classe, servem a quem a mant\'em, e n\~ao fazem nada por quem
-% escreve uma tese.
+% O |coppe.dtx| e o |coppe.ins| v\^em na entrega porque com eles ela basta para
+% refazer a classe e os manuais, e n\~ao porque o seu trabalho precise deles:
+% s\~ao a \emph{fonte} da classe. Apague-os da pasta do seu trabalho se
+% preferir; nada deixa de compilar.
+%
+% Vale o mesmo para o |manual.tex|, para os exemplos (|example.tex| e os das
+% pastas de idioma) e para as bases |example.bib|, |tipos.bib| e |coppe.bib|,
+% que servem aos exemplos e n\~ao a voc\^e. O que \textbf{n\~ao} d\'a para
+% apagar \'e o m\'inimo da se\c c\~ao anterior.
 %
 % \section{O menor trabalho que compila}\label{sec:esqueleto}
 %
 % \begin{verbatim}
 %   \documentclass[dsc]{coppe}
-%   \addbibresource{minha-tese.bib}
+%   \addbibresource{referencias/minha-tese.bib}
 %
 %   \begin{document}
 %     \title{Titulo da tese}
@@ -736,10 +782,46 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %   \documentclass[dsc,numbers,pdfa]{coppe}
 % \end{verbatim}
 %
+% \subsection{O que \'e padr\~ao, numa tabela}
+%
+% Vale a pena come\c car por aqui, porque a lista abaixo \'e longa e quase tudo
+% nela j\'a vem do jeito certo. \textbf{Uma \'unica op\c c\~ao \'e
+% obrigat\'oria} --- o tipo do trabalho --- e \textbf{uma \'unica voc\^e tem de
+% lembrar de ligar na hora de depositar}, a |pdfa|. Todo o resto tem padr\~ao, e
+% o padr\~ao \'e o que o Manual pede:
+%
+% \begin{center}\footnotesize
+% \begin{tabular}{@{}p{0.26\textwidth}p{0.28\textwidth}p{0.34\textwidth}@{}}
+% \textbf{Assunto} & \textbf{Como vem} & \textbf{Op\c c\~ao que muda} \\
+% \hline
+% Tipo do trabalho & \emph{sem padr\~ao: \'e obrigat\'oria} & \texttt{msc} \texttt{dsc} \texttt{mscexam} \texttt{dscexam} \texttt{mscsem} \\
+% Idioma & portugu\^es & \texttt{english} \texttt{spanish} \texttt{french} \texttt{italian} \\
+% Cita\c c\~ao & autor-data & \texttt{numbers} \\
+% Fam\'\i lia da fonte & sem serifa & \texttt{comserifa} \\
+% Entrelinha & 1,5 & \texttt{doublespacing} \\
+% Margens & uma face, 3\,cm \`a esquerda & \texttt{twoside} \\
+% \emph{Links} & coloridos & \texttt{semlinks} \\
+% Folhas pr\'e-textuais & contadas, n\~ao numeradas & \texttt{numeraisromanos} \\
+% Listas no sum\'ario & fora dele & \texttt{listasnosumario} \\
+% Orientador na banca & fora dela & \texttt{orientadorexamina} \\
+% Coorientador no resumo & fora dele & \texttt{coorientador} \\
+% Refer\^encia no resumo & \textbf{impressa} & \texttt{resumosemreferencia} \\
+% Ficha catalogr\'afica & a que voc\^e fornecer & \texttt{rascunhoficha} \\
+% PDF/A & \textbf{desligado} & \texttt{pdfa} \\
+% \texttt{morewrites} & \textbf{carregado}, se instalado & \texttt{semmorewrites} \texttt{morewrites} \\
+% \end{tabular}
+% \end{center}
+%
+% Duas op\c c\~oes continuam aceitas e n\~ao fazem mais nada, para que documento
+% escrito antes da v4.1 continue compilando: |semserifa| e |assinaturas|.
+%
 % \subsection{Tipo do trabalho --- obrigat\'oria}
 %
-% Todo trabalho precisa de exatamente uma destas. Ela decide o t\'itulo que sai na
-% capa, o grau, o texto da natureza do trabalho e se h\'a folha da Coleta CAPES.
+% Todo trabalho precisa de exatamente uma destas, e a classe \textbf{para com
+% erro} se nenhuma vier: n\~ao h\'a padr\~ao poss\'ivel, porque a escolha decide
+% o t\'itulo que sai na capa, o grau, o texto da natureza do trabalho e se h\'a
+% folha da Coleta CAPES --- quatro folhas erradas para quem apenas esqueceu de
+% dizer o que estava escrevendo.
 %
 % \begin{description}
 %   \item[\texttt{msc}] Disserta\c c\~ao de Mestrado. Grau M.Sc.
@@ -831,18 +913,22 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %     p\'aginas de resumo, abaixo dos orientadores. Desligada por padr\~ao: a
 %     3.1.2.1.4 descreve o resumo e n\~ao diz quem assina a orienta\c c\~ao, e
 %     listar s\'o o orientador \'e tradi\c c\~ao da COPPE.
-%   \item[\texttt{rascunhoficha}] Enquanto voc\^e escreve, preenche a folha
-%     adicional com uma ficha catalogr\'afica composta pela pr\'opria classe, para
-%     que a folha n\~ao seja uma moldura vazia. \textbf{Nunca vale para
-%     dep\'osito}: a ficha de verdade vem do gerador do SiBI.
-%   \item[\texttt{resumosemreferencia}] Tira a refer\^encia do trabalho que a
-%     classe imprime acima do texto dos tr\^es resumos. \textbf{Ligada por
-%     padr\~ao}, porque a 3.1.2.1.4 sugere a refer\^encia e os Anexos E e F
-%     mostram os dois resumos come\c cando por ela. Desligue-a se o seu resumo
-%     estiver no limite das 500 palavras e as tr\^es linhas da refer\^encia o
-%     empurrarem para uma segunda folha --- o resumo tem de caber em uma s\'o.
-%   \item[\texttt{listasnosumario}] Devolve as listas pr\'e-textuais ao sum\'ario.
-%     A 3.1.2.1.6 as mant\'em fora dele, e \'e o padr\~ao da classe.
+%   \item[\texttt{rascunhoficha}] \textbf{Desligada por padr\~ao.} Ligada,
+%     preenche a folha adicional, enquanto voc\^e escreve, com uma ficha
+%     catalogr\'afica composta pela pr\'opria classe, para que a folha n\~ao
+%     fique vazia. \textbf{Nunca vale para dep\'osito}: a ficha de verdade vem do
+%     gerador do SiBI.
+%   \item[\texttt{resumosemreferencia}] \textbf{Desligada por padr\~ao}, e por
+%     isso a refer\^encia do trabalho \emph{sai} acima do texto dos tr\^es
+%     resumos: a 3.1.2.1.4 a sugere e os Anexos E e F mostram os dois resumos
+%     come\c cando por ela. Ligue esta op\c c\~ao para tirar a refer\^encia ---
+%     por exemplo, quando o seu resumo estiver no limite das 500 palavras e as
+%     tr\^es linhas da refer\^encia o empurrarem para uma segunda folha, porque
+%     o resumo tem de caber em uma s\'o. |\configuraresumos| faz o mesmo, e
+%     mais: veja a se\c c\~ao~\ref{sec:resumos}.
+%   \item[\texttt{listasnosumario}] \textbf{Desligada por padr\~ao}: as listas
+%     pr\'e-textuais ficam \emph{fora} do sum\'ario, como na 3.1.2.1.6. Ligue-a
+%     para devolv\^e-las a ele.
 %   \item[\texttt{assinaturas}] Aceita e \textbf{sem efeito} desde a v4.1. Punha
 %     uma r\'egua de assinatura acima de cada membro da banca; com a entrega s\'o
 %     digital n\~ao h\'a o que assinar \`a m\~ao. A classe avisa quando ela \'e
@@ -871,6 +957,12 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \end{description}
 %
 % \subsection{Fluxos de escrita}
+%
+% A classe carrega o \texttt{morewrites} \textbf{por padr\~ao} quando ele est\'a
+% instalado, porque o pdf\TeX{} s\'o tem dezesseis fluxos de escrita e um
+% trabalho que pe\c ca todas as listas ao mesmo tempo precisa de dezessete. N\~ao
+% estando instalado, a classe \textbf{avisa e segue}; a compila\c c\~ao s\'o para
+% se os fluxos acabarem de verdade.
 %
 % \begin{description}
 %   \item[\texttt{semmorewrites}] Impede a classe de carregar o \texttt{morewrites}. Use
@@ -1043,7 +1135,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % Sem esse comando, a folha reserva um espa\c co emoldurado com a instru\c c\~ao
 % de como obter a ficha.
 %
-% \subsection{As folhas, uma a uma}
+% \subsection{As folhas, uma a uma}\label{sec:resumos}
 %
 % \DescribeMacro{\maketitle}
 % Comp\~oe a capa, a folha de rosto e a folha da Coleta CAPES, nessa ordem. Vem
@@ -1107,10 +1199,62 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % n\~ao \'e depositado na biblioteca. Para tir\'a-la, use a op\c c\~ao
 % |resumosemreferencia|.
 %
+% \DescribeMacro{\configuraresumos}
+% \paragraph{Os cinco elementos da folha, e como desligar quatro.} Uma folha de
+% resumo tem cinco partes, nesta ordem:
+% \begin{enumerate}
+%   \item a \textbf{identifica\c c\~ao da p\'agina}: a frase ``Resumo da
+%     Disserta\c c\~ao apresentada \`a COPPE/UFRJ como parte dos requisitos
+%     \ldots'', que diz que folha \'e aquela;
+%   \item a \textbf{identifica\c c\~ao de t\'itulo e autor}: o t\'itulo em
+%     versal, o seu nome e o m\^es e o ano, centralizados;
+%   \item a \textbf{identifica\c c\~ao de orienta\c c\~ao}: o orientador, os
+%     coorientadores quando pedidos, e o Programa;
+%   \item a \textbf{refer\^encia bibliogr\'afica} do pr\'oprio trabalho,
+%     explicada acima;
+%   \item o \textbf{resumo propriamente dito}, que \'e o que voc\^e escreve
+%     dentro do ambiente.
+%    \end{enumerate}
+% \textbf{S\'o o quinto \'e obrigat\'orio.} Os quatro primeiros vem ligados, que
+% \'e a folha completa dos Anexos E e F, e saem juntos com um comando no
+% pre\^ambulo:
+% \begin{verbatim}
+%   \configuraresumos{true}{true}{true}{true}   % o padrao: folha completa
+%   \configuraresumos{true}{true}{true}{false}  % sem a referencia
+%   \configuraresumos{false}{false}{false}{false} % so o texto do resumo
+% \end{verbatim}
+% Os quatro argumentos s\~ao l\'ogicos --- |true| ou |false|, e nada al\'em
+% disso, que a classe recusa com erro --- e est\~ao na ordem da lista acima.
+%
+% O comando vale para \textbf{todos} os resumos e para \textbf{todos} os
+% idiomas do documento, e \'e de prop\'osito: tr\^es folhas de resumo com
+% formatos diferentes no mesmo trabalho n\~ao s\~ao uma escolha, s\~ao um
+% descuido. O quarto argumento e a op\c c\~ao |resumosemreferencia| mexem na
+% mesma coisa, e vale o comando, que fala depois.
+%
+% \paragraph{O que a norma exige, e o que ela deixa a voc\^e.} A 3.1.2.1.4 exige
+% o resumo, o par\'agrafo \'unico, o limite de palavras, a folha \'unica e as
+% palavras-chave no fim. Os quatro elementos de cima s\~ao o modelo dos Anexos E
+% e F --- que o Manual apresenta como sugest\~ao, e \'e por isso que d\'a para
+% desligar. Antes de desligar, pergunte na secretaria do seu Programa.
+%
+% O uso pr\'atico \'e um: o resumo de 500 palavras que n\~ao cabe na folha com
+% os cinco elementos. Na v4.1 os espa\c cos entre os blocos encolheram de
+% 44\,mm para 30\,mm justamente por isso, e a folha \'e composta \textbf{a
+% partir do topo}; se ainda faltar espa\c co, desligue a refer\^encia primeiro,
+% que \'e o maior dos quatro.
+%
 % \DescribeMacro{\coppetexfinalpage}
 % A folha de col\'ofon, no fim de tudo: diz com que vers\~ao da classe, em que
-% motor, em que fonte e contra qual norma o documento foi composto. \'E opcional e
+% motor, em que fonte, em que m\'aquina, em que dia e a que hora o documento foi
+% composto, e contra qual norma. \textbf{Tudo \'e medido na hora de compilar}
+% --- nenhuma dessas informa\c c\~oes est\'a escrita na classe. \'E opcional e
 % n\~ao faz parte da norma.
+%
+% Com \hologo{LuaLaTeX} o col\'ofon sabe e publica o \emph{nome da sua
+% m\'aquina}; com \hologo{pdfLaTeX} ele sabe apenas se \'e Windows. Se n\~ao
+% quiser essa linha, apague-a com
+% |\renewcommand{\coppefinalsystem}{}|.
 %
 % \subsection{As listas pr\'e-textuais}
 %
@@ -1406,6 +1550,44 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %
 % N\~ao existe |\bibliographystyle| neste mundo. O estilo vem da classe, e a op\c
 % c\~ao |numbers| \'e que escolhe entre autor-data e num\'erico.
+%
+% \subsection{Onde por os \texttt{.bib}: use uma subpasta}
+% \label{sec:bibsubpasta}
+%
+% A raiz de um trabalho junta arquivo demais, e os |.bib| s\~ao os \'unicos que
+% d\'a para tirar de l\'a sem tocar em mais nada. \textbf{Ponha-os numa
+% subpasta e escreva o caminho}, com barra para frente mesmo no Windows:
+% \begin{verbatim}
+%   \addbibresource{referencias/minha-tese.bib}
+%   \addbibresource{referencias/tipos.bib}
+% \end{verbatim}
+% Funciona no computador local e funciona no Overleaf, e o nome da pasta \'e o
+% que voc\^e quiser --- |referencias|, |bib|, |fontes|. O gerador de documento
+% vazio j\'a escreve assim.
+%
+% Funciona porque quem l\^e o |.bib| \'e o \textbf{biber}, e o biber abre o
+% caminho relativo \`a pasta do documento. N\~ao vale para o bib\TeX, que
+% depende do |BIBINPUTS| e n\~ao \'e o programa desta classe.
+%
+% \paragraph{E \'e mais seguro, n\~ao menos.} A pergunta natural \'e se um
+% arquivo da distribui\c c\~ao do \TeX{} pode sobrepor-se ao seu. Pode --- mas
+% s\'o quando voc\^e escreve o \textbf{nome pelado}. A\'\i{} o nome passa pela
+% busca do kpathsea, que olha a pasta do documento \emph{e} as \'arvores
+% instaladas; se o arquivo n\~ao estiver na sua pasta, o biber acha o de mesmo
+% nome que vem na distribui\c c\~ao, \textbf{em sil\^encio}, e a sua tese sai
+% com a bibliografia de outra pessoa. H\'a dezenas de |.bib| instalados com
+% qualquer \TeX{} --- |xampl.bib|, |biblatex-examples.bib| e o resto ---, e um
+% deles pode ter o nome que voc\^e escolheu.
+%
+% Com a subpasta no caminho \textbf{n\~ao h\'a busca}: ou o arquivo est\'a
+% ali, ou o biber para com |Cannot find 'referencias/minha-tese.bib'|. Um erro
+% na sua cara \'e melhor que uma refer\^encia errada na sua tese. Guardado por
+% |tests/regressivo/r31|, que prova as duas metades disto, uma contra a outra.
+%
+% Uma ressalva: pasta sem acento e sem espa\c co no nome. O caminho vai para
+% dentro do |.bcf|, passa pelo biber e volta, e acento e espa\c co no caminho
+% ainda quebram em combina\c c\~oes de sistema e vers\~ao que n\~ao vale a pena
+% mapear.
 %
 % \subsection{O arquivo \texttt{.bib}}
 %
@@ -1897,8 +2079,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %   \item[\texttt{\textbackslash titlein}, \texttt{\textbackslash subtitlein}, \texttt{brazilianabstract}, \texttt{\textbackslash braziliankeyword}]
 %     em |example_es.tex|, que \'e o trabalho de demonstra\c c\~ao em espanhol ---
 %     o caso em que esses comandos t\^em sentido.
-%   \item[\texttt{\textbackslash subtitle}, \texttt{\textbackslash foreignsubtitle}, \texttt{\textbackslash volumes}, \texttt{\textbackslash volume}] nos doze
-%     documentos da pasta |adversativa/|, que acionam tudo ao mesmo tempo.
+%   \item[\texttt{\textbackslash subtitle}, \texttt{\textbackslash foreignsubtitle}, \texttt{\textbackslash volumes}, \texttt{\textbackslash volume}] nos seis
+%     documentos de |tests/adversativa/|, que acionam tudo ao mesmo tempo.
 %   \item[\texttt{\textbackslash freeconfig}, \texttt{\textbackslash usecoppelanguage}] em nenhum, de prop\'osito: s\~ao
 %     escapat\'orias, e o exemplo n\~ao deve ensinar a us\'a-las por h\'abito.
 % \end{description}
@@ -2061,8 +2243,9 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %
 % \paragraph{Fontes.} A classe carrega a Latin Modern, que \'e vetorial e serve ao
 % PDF/A. Para trocar de fonte, carregue o pacote dela no pre\^ambulo e refa\c ca
-% |\familydefault|. Nesse caso redefina tamb\'em |\coppefinalfont|, sen\~ao o
-% col\'ofon anuncia uma fonte que n\~ao \'e a do documento.
+% |\familydefault|. O col\'ofon acompanha sozinho desde a v4.1: ele l\^e
+% |\familydefault| e |\encodingdefault| na hora de compor, e n\~ao precisa mais
+% que voc\^e redefina |\coppefinalfont| junto.
 %
 % \paragraph{Matem\'atica sob \hologo{LuaLaTeX}.} A classe n\~ao carrega
 % |amssymb| nos motores Unicode, porque ele briga com o |unicode-math|. Se voc\^e
@@ -2086,9 +2269,13 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % fora de ordem. Ficam registrados para quem for ler o c\'odigo:
 % |\makecover|, |\makefrontpage|, |\makefolhaadicional|, |\makecatalog|.
 %
-% Do mesmo modo, |\coppefinalengine|, |\coppefinalfont| e |\coppefinalmanual|
-% comp\~oem o col\'ofon e existem para serem \emph{redefinidos}, n\~ao chamados,
-% quando voc\^e troca a fonte ou a norma de refer\^encia.
+% Do mesmo modo, |\coppefinalengine|, |\coppefinalfont|, |\coppefinalsystem|,
+% |\coppefinaltexsystem|, |\coppefinaltime| e |\coppefinalmanual| comp\~oem o
+% col\'ofon e existem para serem \emph{redefinidos}, n\~ao chamados. Os cinco
+% primeiros j\'a se descobrem sozinhos durante a compila\c c\~ao, e s\'o h\'a
+% duas raz\~oes de verdade para mexer neles: apontar outra edi\c c\~ao da norma
+% em |\coppefinalmanual|, e apagar o nome da m\'aquina com
+% |\renewcommand{\coppefinalsystem}{}|.
 %
 % \section{Para o desenvolvedor}\label{sec:desenvolvedor}
 %
@@ -2120,12 +2307,22 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %     gerado. Tem |README.md| pr\'oprio, com o guia de programa\c c\~ao.
 %   \item[\texttt{dist/}] a entrega: o m\'inimo para instalar a classe e escrever. \'E o
 %     que se copia para a pasta do trabalho ou para o Overleaf.
-%   \item[\texttt{tests/}] a su\'ite de regress\~ao. Um \texttt{.tex} por comportamento
-%     guardado, escritos \`a m\~ao, \textbf{n\~ao} gerados do |.dtx|.
-%   \item[\texttt{adversativa/}] doze documentos que acionam tudo ao mesmo tempo, para
-%     que qualquer intera\c c\~ao entre duas partes da classe apare\c ca. S\~ao
-%     gerados por |tools/mk-adversativa.py|; para mudar o que provam, muda-se o
-%     gerador.
+%   \item[\texttt{tests/}] as tr\^es camadas de prova, em subpastas. A de cima
+%     pergunta \emph{a classe compila?}, e \'e um |.tex| por comportamento,
+%     escritos \`a m\~ao e \textbf{n\~ao} gerados do |.dtx|. Nenhum PDF de
+%     dentro de |tests/| vai para o git.
+%   \item[\texttt{tests/adversativa/}] seis documentos que acionam tudo ao mesmo
+%     tempo, para que qualquer intera\c c\~ao entre duas partes da classe
+%     apare\c ca. S\~ao gerados por |tools/mk-adversativa.py|, de uma matriz
+%     expl\'\i cita de op\c c\~oes; para mudar o que provam, muda-se o gerador.
+%     Quatro s\~ao em portugu\^es e os outros dois em ingl\^es e em espanhol,
+%     cada um exercitando um conjunto diferente de op\c c\~oes --- eram doze, e
+%     a matriz permitiu cortar metade sem perder cobertura de nenhuma op\c c\~ao.
+%   \item[\texttt{tests/regressivo/}] um teste m\'inimo para cada defeito
+%     j\'a corrigido, com a cobran\c ca declarada no cabe\c calho do arquivo.
+%     \textbf{N\~ao roda junto com as outras camadas}, de prop\'osito: ela
+%     pergunta \emph{aquele defeito voltou?}, e quase todos os defeitos da lista
+%     compilavam com c\'odigo de sa\'ida zero.
 %   \item[\texttt{tools/}] o harness de compila\c c\~ao e verifica\c c\~ao. Tem
 %     |README.md| pr\'oprio.
 %   \item[\texttt{specs/}] os documentos normativos que a classe implementa: o Manual do
@@ -2149,41 +2346,82 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %
 % \subsection{O ciclo de trabalho}
 %
+% A porta \'unica \'e o painel, na raiz do reposit\'orio:
+%
+% \begin{verbatim}
+%   coppetex.bat                    abre a janela e pergunta o que fazer
+%   coppetex.bat --regerar --testes mexi na classe, quebrei algo?
+%   coppetex.bat --tudo --regressivo --conferir --dist
+% \end{verbatim}
+%
+% Tudo o que a janela faz tem op\c c\~ao equivalente de linha de comando, e
+% n\~ao por educa\c c\~ao: cada bot\~ao chama a mesma fun\c c\~ao que a op\c
+% c\~ao chama, para que n\~ao existam duas implementa\c c\~oes da mesma coisa,
+% uma delas sempre um pouco atrasada. O manual do painel \'e o |PAINEL.md|.
+%
+% O painel n\~ao compila nada por conta pr\'opria: quem compila \'e o
+% |tools/build-check.ps1|, que sabe o ciclo completo de cada documento ---
+% quantas passadas, quando chamar o |biber|, quando chamar o |makeindex| das
+% listas. Ele tamb\'em roda sozinho, para quem n\~ao tem Python:
+%
 % \begin{verbatim}
 %   .\tools\build-check.ps1 -Scope example
 % \end{verbatim}
 %
 % Os escopos v\~ao do mais r\'apido ao mais completo: |class| s\'o regera;
-% |example| compila o exemplo; |langs| os cinco idiomas; |tests| a su\'ite;
-% |docs| este manual e a norma; |pdfa| o que passa pelo veraPDF; |adversativa| os
-% doze documentos nos dois motores; |all| tudo; e |prova| tudo mais a
-% verifica\c c\~ao de fonte \'unica e um veredito.
+% |example| compila o exemplo; |langs| os cinco idiomas; |tests| a primeira
+% camada; |docs| este manual e a norma; |pdfa| o que passa pelo veraPDF;
+% |adversativa| os seis documentos nos dois motores; |all| tudo; e |prova| tudo
+% mais a verifica\c c\~ao de fonte \'unica e um veredito.
 %
 % Antes de marcar uma vers\~ao, uma vez s\'o:
 %
 % \begin{verbatim}
 %   .\tools\prova.ps1
+%   python tests\regressivo\run-regressivo.py
 % \end{verbatim}
 %
-% Ela tem de sair limpa. Um passo \textbf{pulado conta como reprova\c c\~ao} ---
-% se o veraPDF n\~ao estiver instalado, a verifica\c c\~ao n\~ao passa, e faz bem:
-% sem ele ningu\'em sabe se os PDF/A est\~ao conformes.
+% As duas t\^em de sair limpas. Um passo \textbf{pulado conta como reprova\c
+% c\~ao} --- se o veraPDF n\~ao estiver instalado, a verifica\c c\~ao n\~ao
+% passa, e faz bem: sem ele ningu\'em sabe se os PDF/A est\~ao conformes.
 %
 % \subsection{As ferramentas}
 %
 % \begin{description}
+%   \item[\texttt{painel.py}] o painel do desenvolvedor, janela e linha de
+%     comando na mesma lista de a\c c\~oes. Decide o que roda e em que ordem, e
+%     \'e dono da lista \'unica de arquivos da entrega (|PARA_DIST|).
 %   \item[\texttt{build-check.ps1}] o motor. Regera a distribui\c c\~ao e compila o que o
 %     escopo pedir.
 %   \item[\texttt{prova.ps1}] atalho para o escopo \texttt{prova}.
 %   \item[\texttt{watch-build.ps1}] fica observando um arquivo de pedido e compila
 %     sozinho. \'Util enquanto se trabalha.
-%   \item[\texttt{mk-adversativa.py}] gera os doze documentos adversativos.
+%   \item[\texttt{mk-adversativa.py}] gera os seis documentos adversativos, de
+%     uma matriz expl\'\i cita de op\c c\~oes, e apaga os que sa\'\i ram da
+%     matriz.
+%   \item[\texttt{run-regressivo.py}] roda a terceira camada, em
+%     |tests/regressivo/|. L\^e as cobran\c cas do cabe\c calho de cada teste e
+%     as confere no PDF, no |.log| e nos auxiliares.
+%   \item[\texttt{geradocvazio.py}] o gerador de documento vazio, que escreve o
+%     |.tex| e o |.bib| de um trabalho novo. \'E para quem vai \emph{escrever},
+%     e tem porta pr\'opria na raiz, o |coppetex-novo.bat|.
+%   \item[\texttt{versao.py}] sobe e confere o n\'umero de vers\~ao. A vers\~ao
+%     can\^onica \'e o |\fileversion| do |.dtx|, e ele a cobra em todos os
+%     arquivos gerados e nos lugares em prosa --- e compara |dist/| com |src/|
+%     byte a byte, porque o n\'umero \'e o mesmo nos dois mesmo quando a
+%     c\'opia ficou para tr\'as.
 %   \item[\texttt{conferir-norma.py}] l\^e um PDF pronto e mede, em cent\'imetros, o que
 %     a norma fixa: margens, corpo, recuos, ordem das folhas pr\'e-textuais e a
 %     numera\c c\~ao. Existe porque \textbf{uma tese compila perfeitamente com a
 %     margem errada}.
 %   \item[\texttt{conferir-referencias.py}] comp\~oe as refer\^encias e as compara, uma a
 %     uma, com o texto que o Manual imprime.
+%   \item[\texttt{conferir-referencias-cruzadas.py}] varre todos os |.log| \`a
+%     procura de |??| e de refer\^encia sem destino.
+%   \item[\texttt{conferir-manual.py}] cobra que todo comando, ambiente e op\c
+%     c\~ao p\'ublica apare\c ca neste manual, que a tabela ``onde ver cada
+%     coisa'' ainda aponte para as linhas certas do |example.tex|, e que os
+%     guardas de |macrocode| do |.dtx| estejam bem escritos.
 % \end{description}
 %
 % \subsection{Regras de conviv\^encia}
@@ -2206,8 +2444,11 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %     |.dtx|, no |CHANGELOG.md| e no |MIGRATION_v3_to_v4.md|, com a regra de
 %     convers\~ao. Quem escreve uma tese h\'a dois anos n\~ao l\^e commit.
 %   \item[Toda mudan\c ca de comportamento ganha um teste.] Em \texttt{tests/} se for
-%     ponto isolado; no gerador de |adversativa/| se for op\c c\~ao que interage
-%     com outras. O teste tem de falhar antes da corre\c c\~ao e passar depois.
+%     ponto isolado; na matriz de |tools/mk-adversativa.py| se for op\c c\~ao
+%     que interage com outras; em \texttt{tests/regressivo/}, \textbf{no mesmo
+%     commit da corre\c c\~ao}, se for defeito que j\'a saiu para o mundo. O
+%     teste tem de falhar antes da corre\c c\~ao e passar depois --- e isso se
+%     verifica rodando-o contra a classe antiga, e n\~ao se presume.
 % \end{description}
 %
 % \section{Sobre a constru\c c\~ao desta vers\~ao}
@@ -2228,10 +2469,11 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %     decis\~oes, os erros que restarem e a conformidade com a norma s\~ao dos
 %     autores humanos, que est\~ao nomeados na capa deste manual.
 %   \item \textbf{M\'etodo.} \'E justamente por a autoria ser assistida que o
-%     projeto tem a verifica\c c\~ao que tem: doze documentos adversativos nos
-%     dois motores, uma su\'ite de regress\~ao, medi\c c\~ao das margens no PDF
-%     pronto, confer\^encia das 34 categorias de refer\^encia contra os exemplos
-%     impressos no Manual, e valida\c c\~ao de PDF/A por veraPDF. Nada disso
+%     projeto tem a verifica\c c\~ao que tem: tr\^es camadas de prova --- a
+%     su\'ite, seis documentos adversativos nos dois motores e um teste
+%     m\'inimo para cada defeito j\'a corrigido ---, medi\c c\~ao das margens no
+%     PDF pronto, confer\^encia das 34 categorias de refer\^encia contra os
+%     exemplos impressos no Manual, e valida\c c\~ao de PDF/A por veraPDF. Nada disso
 %     substitui revis\~ao humana, mas nada disso existiria num projeto que
 %     confiasse no que a ferramenta diz.
 % \end{enumerate}
@@ -2415,10 +2657,11 @@ semmorewrites & [dsc,semmorewrites] & \pre & Do not load \texttt{morewrites} at 
 abstract & \textbackslash begin\{abstract\} ... & \doc & Abstract in the main language. One sheet, one paragraph, 250 words. \\
 foreignabstract & \textbackslash begin\{foreignabstract\} ... & \doc & Abstract in the foreign language. \\
 brazilianabstract & \textbackslash begin\{brazilianabstract\} ... & \doc & Third abstract, Portuguese, for a Spanish- or French-main work. \\
+\textbackslash configuraresumos & \textbackslash configuraresumos\{true\}\{true\}\{true\}\{true\} & \pre & Turns the four optional elements of every abstract sheet on or off, in every language: page identification, title and author, advising, reference. All on by default; only the abstract text itself cannot be turned off. \\
 \textbackslash appendix & \textbackslash appendix & \doc & Opens the appendices: text \emph{you} wrote. \\
 \textbackslash annex & \textbackslash annex & \doc & Opens the annexes: documents you did \emph{not} write. \\
 \textbackslash printbibliography & \textbackslash printbibliography & \doc & The reference list, titled ``Referências'' (3.1.4.1). \\
-\textbackslash coppetexfinalpage & \textbackslash coppetexfinalpage & \doc & Optional colophon: class version, engine, font. \\
+\textbackslash coppetexfinalpage & \textbackslash coppetexfinalpage & \doc & Optional colophon, every item measured at compile time: class version, engine and its version, TeX system, \LaTeX{} format, font family and encoding, biblatex version, date, hour, operating system and machine. \\
 \midrule
 
 \multicolumn{4}{@{}l@{}}{\normalfont\bfseries\small PRE-TEXTUAL LISTS ---
@@ -2591,7 +2834,7 @@ Problems: \url{https://github.com/COPPE-UFRJ/CoppeTeX/issues}
   dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
   ut labore et dolore magna aliqua.
 
-  \begin{abstract}
+  \begin{abstract}% 5 elementos; \configuraresumos, no preambulo, desliga 4
 
   Apresenta-se, nesta tese, um exemplo de resumo. Lorem ipsum dolor sit amet,
   consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
@@ -3612,7 +3855,7 @@ No modelo \CoppeTeX os anexos devem obrigtoriamente vir depois dos apêndices e 
 % mexer aqui obriga a mexer em outro arquivo. S\~ao os pontos em que um erro
 % n\~ao aparece na compila\c c\~ao: ela passa, e o defeito sai na folha.
 %
-% \subsection{O arquivo \texttt{coppe.cls}}
+% \subsection{O arquivo \texttt{coppe.cls}: identifica\c c\~ao, classe base e pacotes}
 %
 %    \begin{macrocode}
 %<*class>
@@ -3727,7 +3970,7 @@ No modelo \CoppeTeX os anexos devem obrigtoriamente vir depois dos apêndices e 
 % suggest LuaLaTeX, which handles Unicode/fonts better (at the cost of speed).
 %    \end{macrocode}
 %
-% \subsubsection{Motor, codificacao e fontes}
+% \subsubsection{Motor, codifica\c c\~ao e fontes}
 %
 % Aqui a classe descobre em que motor esta rodando e se comporta de acordo. E o
 % unico ponto do arquivo em que pdfTeX e LuaTeX seguem caminhos diferentes de
@@ -3830,7 +4073,14 @@ No modelo \CoppeTeX os anexos devem obrigtoriamente vir depois dos apêndices e 
 % shared 0.019cm is the ruler's own bias and not a residual error.
 %    \end{macrocode}
 %
-% \subsubsection{A mancha grafica}
+% \subsection{A p\'agina composta}
+%
+% A mancha, os t\'itulos de se\c c\~ao, as ilustra\c c\~oes e a pagina\c c\~ao:
+% tudo o que a norma mede com r\'egua. \'E a parte da classe que mais cita
+% se\c c\~ao do Manual, e a que menos se pode mexer sem reler a se\c c\~ao
+% citada.
+%
+% \subsubsection{A mancha gr\'afica}
 %
 % A 2.3 do Manual fixa A4 com 3 cm a esquerda e no topo, 2 cm a direita e
 % embaixo. Esta e a unica declaracao de geometria da classe, e e deliberado que
@@ -3863,7 +4113,7 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
 \setlength\emergencystretch{3em}
 %    \end{macrocode}
 %
-% \subsubsection{Titulos de secao e o destaque gradativo}
+% \subsubsection{T\'itulos de se\c c\~ao e o destaque gradativo}
 %
 % A 2.6 pede que os titulos sejam destacados GRADATIVAMENTE, do capitulo ao
 % quinto nivel, usando negrito, italico, caixa alta e versal. O manual do SiBI da
@@ -4087,7 +4337,7 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
 %     "Figura 1 -- titulo" travessao separator (sources handled by \source). ---
 %    \end{macrocode}
 %
-% \subsubsection{Ilustracoes: legenda em cima, fonte embaixo}
+% \subsubsection{Ilustra\c c\~oes: legenda em cima, fonte embaixo}
 %
 % A 2.10 poe a legenda ACIMA de toda ilustracao e torna a fonte obrigatoria
 % ABAIXO dela. Sao duas exigencias distintas e cada uma tem o seu mecanismo: a
@@ -4227,7 +4477,7 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
 \AtBeginDocument{\coppe@wrapstarttoc}
 %    \end{macrocode}
 %
-% \subsubsection{Paginacao}
+% \subsubsection{Pagina\c c\~ao}
 %
 % A 2.7 e literal e vale a pena reler antes de mexer aqui: todas as folhas, a
 % partir da FOLHA DE ROSTO, sao contadas sequencialmente mas nao numeradas; a
@@ -4336,7 +4586,13 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \def\coppe@foreignlang{english}
 %    \end{macrocode}
 %
-% \subsubsection{As opcoes de classe}
+% \subsection{As op\c c\~oes de classe}
+%
+% Em dois tempos, e a raz\~ao est\'a logo abaixo: primeiro cada op\c c\~ao liga um
+% sinalizador e mais nada; depois, com o conjunto inteiro do que foi pedido
+% j\'a conhecido, \'e que se decide o que fazer com ele.
+%
+% \subsubsection{Um sinalizador por op\c c\~ao}
 %
 % Daqui ate o |\ProcessOptions|, cada opcao apenas LIGA UM SINALIZADOR. Nada e
 % decidido neste ponto, porque o LaTeX le as opcoes na ordem em que o autor as
@@ -4505,6 +4761,27 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % opcao existe.
 \newif\if@copperefresumo \@copperefresumotrue
 \DeclareOption{resumosemreferencia}{\@copperefresumofalse}
+% A folha de resumo tem CINCO elementos, e quatro deles sao opcionais:
+%
+%   1. identificacao da pagina -- a frase "Resumo da Dissertacao apresentada a
+%      COPPE/UFRJ como parte dos requisitos...", que diz que folha e aquela;
+%   2. identificacao de titulo e autor -- o titulo em versal, o nome do autor e
+%      o mes/ano, centralizados;
+%   3. identificacao de orientacao -- os orientadores, os coorientadores quando
+%      pedidos, e o Programa;
+%   4. referencia bibliografica do proprio trabalho (3.1.2.1.4);
+%   5. o resumo propriamente dito.
+%
+% So o quinto e obrigatorio. Os quatro primeiros tem um \newif cada, todos
+% ligados por padrao, porque e assim que os Anexos E e F do Manual mostram a
+% folha -- e porque quem nao pedir nada tem de receber a folha completa.
+%
+% O Programa entra no bloco da orientacao, e nao num quinto interruptor: no
+% Anexo E ele e a ultima linha do mesmo bloco dos orientadores, colado nele, e
+% desligar um deixando o outro nao produz nenhuma folha que o Manual mostre.
+\newif\if@copperesidpag \@copperesidpagtrue
+\newif\if@copperestitulo \@copperestitulotrue
+\newif\if@copperesorient \@copperesorienttrue
 % 3.1.2.1.6 says the sumario enumerates the divisions "na mesma ordem e grafia
 % em que a materia nele se sucede" and adds "inclusive os elementos
 % pos-textuais" -- and then settles the question by pointing at its own sumario
@@ -4579,8 +4856,41 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \DeclareOption{comserifa}{\@coppesansseriffalse}
 %    \end{macrocode}
 %
+%
+% \subsubsection{Depois do \texttt{\textbackslash ProcessOptions}: o que cada op\c c\~ao decide}
+%
 %    \begin{macrocode}
 \ProcessOptions\relax
+% O tipo do trabalho e a UNICA opcao sem padrao, e agora ela e cobrada. Nao ha
+% padrao possivel: msc e dsc mudam a capa, o grau, a natureza do trabalho e
+% quantas folhas o trabalho tem, e escolher um dos dois por conta propria
+% produziria uma dissertacao de mestrado para quem esqueceu de dizer que
+% escrevia uma tese -- errada em quatro folhas, e compilando sem reclamar.
+%
+% Sem esta cobranca a classe seguia adiante e morria mais tarde, dentro do
+% \maketitle, com "Undefined control sequence \local@doctype" apontando para
+% uma linha da classe. O autor nao tinha como ligar aquilo a opcao que faltava
+% no proprio \documentclass.
+\@ifundefined{coppe@doctypekey}{%
+  \ClassError{coppe}{Falta dizer o tipo do trabalho}{%
+    A classe coppe precisa de exatamente uma opcao de tipo: msc, dsc,
+    mscexam,\MessageBreak
+    dscexam ou mscsem. Escreva, por exemplo,
+    \string\documentclass[dsc]\string{coppe\string}.}%
+% Em nonstopmode o LaTeX SEGUE depois de um \ClassError, e sem os remendos
+% abaixo ele seguiria por umas quarenta linhas de "Undefined control sequence"
+% dentro do \maketitle -- que e o que acontecia antes desta cobranca existir, e
+% que enterra a unica mensagem que importa. Com eles sai UMA mensagem legivel.
+% Nao e um padrao disfarcado: o documento sai com "??" em cada lugar em que o
+% tipo do trabalho apareceria, e o pdflatex sai com codigo diferente de zero.
+  \def\coppe@doctypekey{dsc}\def\coppe@degkey{dsc}
+  \newcommand{\@degree}{??}
+  \newcommand{\@degreename}{??}
+  \newcommand{\local@degname}{??}
+  \newcommand{\foreign@degname}{??}
+  \newcommand\local@doctype{??}
+  \newcommand\foreign@doctype{??}
+}{}
 % A troca da familia padrao vai aqui porque so agora se sabe se a opcao foi
 % pedida; o lmodern ja esta carregado la em cima e traz as duas familias, a
 % serifada e a sem serifa, ambas vetoriais -- que e o que o PDF/A exige.
@@ -4627,6 +4937,19 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \@twosidetrue
   \geometry{twoside}%
 \fi
+%    \end{macrocode}
+%
+% \subsection{Os idiomas}
+%
+% O babel, o despachante de textos fixos e a carga dos pacotes de idioma. A
+% regra que governa tudo aqui \'e a da se\c c\~ao~\ref{sec:multilingual}: nenhum
+% texto fixo em portugu\^es escrito \`a m\~ao no meio do c\'odigo, porque foi assim
+% que a classe chegou \`a v4.0 com folha de resumo em dois idiomas ao mesmo
+% tempo.
+%
+% \subsubsection{Babel e a ordem dos dois idiomas}
+%
+%    \begin{macrocode}
 % Built-in language names (used by the loader and the dispatcher below).
 \def\coppe@@brazilianstr{brazilian}
 \def\coppe@@englishstr{english}
@@ -4654,6 +4977,11 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \edef\coppe@babelload{\coppe@babelload\@nameuse{coppe@babelextra@\coppe@mainlang}}}
 \expandafter\RequirePackage\expandafter[\coppe@babelload]{babel}
 % --- Multilingual string dispatcher -----------------------------------------
+%    \end{macrocode}
+%
+% \subsubsection{O despachante de textos fixos}
+%
+%    \begin{macrocode}
 % \copperdefstring{<lang>}{<key>}{<value>} adds one entry to the table for
 % language <lang>. The three retrievers below look strings up either at the
 % current babel language (\coppestring -- follows \selectlanguage), or pinned
@@ -4839,6 +5167,11 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % Babel package name for the foreignabstract \begin{otherlanguage}{...}.
 \copperdefstring{brazilian}{babelname}{brazilian}
 \copperdefstring{english}  {babelname}{english}
+%    \end{macrocode}
+%
+% \subsubsection{Carga dos pacotes de idioma}
+%
+%    \begin{macrocode}
 % Auto-load language packs for any non-built-in language listed in babelopts.
 % Built-ins (brazilian, english) ship their string tables inside coppe.cls
 % (defined just above) and need no extra file; others (spanish/french/italian
@@ -4858,7 +5191,23 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % Portuguese alias for short, inline quotations (proposta P3).
 \RequirePackage{csquotes}
 \newcommand{\citacao}[1]{\enquote{#1}}
-% --- Code listings & algorithms (TODO3 "tratar listagens"): the listings
+%    \end{macrocode}
+%
+% \subsection{C\'odigo e algoritmos}
+%
+% As listagens de programa e os algoritmos, que a norma trata como ilustra\c c\~ao
+% --- legenda em cima, fonte embaixo --- e que por isso t\^em de sair com a
+% mesma tipografia das figuras e das tabelas.
+%
+% \subsubsection{Listagens de c\'odigo}
+%
+% O listings comp\~oe a listagem de programa, que a 2.10 e a NBR 6029 tratam
+% como ilustra\c c\~ao: legenda em cima, com a palavra Programa, e fonte
+% embaixo. O |\listofprograms| a lista. Os estilos por linguagem abaixo
+% s\~ao conveni\^encia, e n\~ao norma.
+%
+%    \begin{macrocode}
+% --- Code listings & algorithms: the listings
 %     package gives the "Programa" listing (caption on top, ABNT R46) with
 %     \listofprogramas; algorithm2e gives algorithms. Names are babel-aware and
 %     the language styles below are based on the user's listagens.tex. ---------
@@ -4958,6 +5307,11 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %   \end{Verbatim}
 % (or \DefineVerbatimEnvironment{...}{Verbatim}{...} in the manuscript preamble).
 \renewcommand{\theFancyVerbLine}{{\small\ttfamily\arabic{FancyVerbLine}}}
+%    \end{macrocode}
+%
+% \subsubsection{Algoritmos}
+%
+%    \begin{macrocode}
 % Algorithms: algorithm2e, language driven by the main-slot \coppemainstring
 % lookup (key "algorithm2eopt"). Empty means use algorithm2e's default
 % language (English) -- needed because algorithm2e errors on an empty option.
@@ -4991,6 +5345,16 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %    \end{macrocode}
 % \changes{v3.0}{2020/03/02}{Added support for monographs in English.}
 % \changes{v3.4.1}{2025/02/13}{Fix english option to consider brazilian a second language, describe it in document}
+%
+%
+% \subsection{As folhas do trabalho}
+%
+% Os dados que o autor informa, as tr\^es partes do documento e as folhas que a
+% classe comp\~oe com esses dados: capa, folha de rosto, folha da Coleta CAPES,
+% ficha catalogr\'afica, folha de aprova\c c\~ao, dedicat\'oria, os resumos e o
+% col\'ofon.
+%
+% \subsubsection{Identifica\c c\~ao do trabalho}
 %
 % \begin{macro}{\department}
 % This macro is used to set the author's affiliation. There are twelve options
@@ -5344,7 +5708,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %
 % \begin{macro}{\freeconfig}
 % This command allows easy changing of core class parameters.
-%   \begin{macrocode}
+%    \begin{macrocode}
 \newcommand\freeconfig[6]{%
 	\providecommand\@degree{}
 	\renewcommand\@degree{#1}
@@ -5359,8 +5723,11 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 	\providecommand\foreign@doctype{}
 	\renewcommand\foreign@doctype{#6}%
 }
-%   \end{macrocode}
+%    \end{macrocode}
 % \end{macro}
+%
+%
+% \subsubsection{As tr\^es partes do documento}
 %
 % \begin{macro}{\frontmatter}
 % The number of pages for both frontmatter and mainmatter printed
@@ -5444,6 +5811,9 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \changes{v1.0}{2008/08/11}{Moved mainmatter counter to |AtEndDocument|.}
 % \end{macro}
 %
+%
+% \subsubsection{O col\'ofon}
+%
 % \begin{macro}{\coppetexfinalpage}
 % \DescribeMacro{\coppetexfinalpage}
 % Optional colophon-style closing page intended to face the rear cover.
@@ -5453,26 +5823,130 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % and types it in Portuguese unconditionally (the colophon is institutional
 % metadata, not body content, so it is rendered in pt-BR regardless of the
 % thesis main language). Three slot macros are user-overridable:
-% |\coppefinalengine| (engine name; auto-detected via |iftex|),
-% |\coppefinalfont| (text body font; defaults to Computer Modern, the
-% \LaTeX{} default), and |\coppefinalmanual| (the reference manual title;
-% defaults to the current COPPE/UFRJ norm). Override them before
-% |\coppetexfinalpage| with |\renewcommand| if the document uses a
-% non-default font or follows an earlier edition of the norm.
+% |\coppefinalengine| (engine name), |\coppefinalfont| (text body font),
+% |\coppefinalsystem| (operating system and machine), |\coppefinaltexsystem|
+% (the engine's own banner), |\coppefinaltime| (the hour of compilation) and
+% |\coppefinalmanual| (the reference manual title). Override any of them
+% before |\coppetexfinalpage| with |\renewcommand|.
+%
+% \textbf{Nada no col\'ofon \'e escrito \`a m\~ao.} Um col\'ofon registra como
+% aquele exemplar foi produzido, e um dado desses escrito na fonte da classe
+% \'e um dado que descreve a m\'aquina de quem escreveu a classe, e n\~ao a de
+% quem comp\^os o documento. A v4.1 tirou o \'ultimo deles: a fonte, que era a
+% palavra ``Latin Modern'' fixa e continuava fixa depois de o autor trocar de
+% fonte. Cada pe\c ca abaixo vem de uma pergunta que o pr\'oprio motor
+% responde durante a compila\c c\~ao:
+% \begin{itemize}
+%   \item o motor e a vers\~ao, de |\pdftexversion|, |\luatexversion| ou
+%     |\XeTeXrevision|;
+%   \item o sistema TeX inteiro, do banner do motor -- que diz tamb\'em a
+%     distribui\c c\~ao (MiKTeX, \TeX{} Live) e n\~ao precisa de an\'alise
+%     nenhuma para estar certo;
+%   \item o formato \LaTeX, de |\fmtversion|;
+%   \item a fam\'\i lia e a codifica\c c\~ao em vigor, de |\familydefault| e
+%     |\encodingdefault|, com o nome humanizado s\'o quando a fam\'\i lia \'e
+%     uma das duas da classe;
+%   \item a vers\~ao da biblatex, do |\ProvidesPackage| dela;
+%   \item a data e a hora, de |\today|, |\time| e |\year|;
+%   \item o sistema operacional e a m\'aquina.
+%    \end{itemize}
+%
+% O \'ultimo item \'e o \'unico que depende do motor. \hologo{LuaTeX} responde
+% inteiro, por |os.uname()|: sistema, vers\~ao, nome da m\'aquina e
+% arquitetura. \hologo{pdfTeX} e \hologo{XeTeX} n\~ao t\^em como perguntar ao sistema sem
+% |\write18|, que est\'a desligado por padr\~ao e \'e restrito no Overleaf;
+% deles se obt\'em apenas se o sistema \'e Windows, por um teste que abre
+% |nul:| para leitura. Quando nem isso se sabe, a frase sai \textbf{sem} a
+% parte do sistema -- um col\'ofon que n\~ao sabe cala, e n\~ao inventa
+% ``sistema desconhecido''.
+%
+% Nota de privacidade: com \hologo{LuaTeX} o col\'ofon publica o \emph{nome da
+% m\'aquina}. Foi pedido, e \'e o que um col\'ofon de impress\~ao sempre fez,
+% mas quem n\~ao quiser o nome da sua m\'aquina numa tese depositada redefine
+% |\coppefinalsystem| como vazio.
 %    \begin{macrocode}
 \providecommand{\coppefinalengine}{%
-  \ifPDFTeX\hologo{pdfLaTeX}\fi
-  \ifLuaTeX\hologo{LuaLaTeX}\fi
-  \ifXeTeX\hologo{XeLaTeX}\fi}
-% A classe carrega lmodern (as bitmap da Computer Modern saiam em Type 3 e
-% inviabilizavam o PDF/A), entao o colofao diz Latin Modern -- quem trocar a
-% fonte redefine este comando.
+  \ifPDFTeX\hologo{pdfTeX}~\expandafter\coppe@dotversion\the\pdftexversion
+    \@nil.\pdftexrevision\fi
+  \ifLuaTeX\hologo{LuaTeX}~\expandafter\coppe@dotversion\the\luatexversion
+    \@nil.\luatexrevision\fi
+  \ifXeTeX\hologo{XeTeX}~\the\XeTeXversion\XeTeXrevision\fi}
+% 140 quer dizer 1.40, e 121 quer dizer 1.21: os dois motores guardam a versao
+% como inteiro de tres digitos e ha decadas. Um dia haverao de passar de 999, e
+% neste dia a saida vira "1.000" em vez de "10.00" -- erra o ponto, nao o
+% numero, e e o pior que acontece.
+\def\coppe@dotversion#1#2#3\@nil{#1.#2#3}
+% O banner e a identificacao mais completa que existe sem \write18: traz o
+% motor, a versao e a distribuicao, ja escritos por quem os construiu.
+\providecommand{\coppefinaltexsystem}{%
+  \ifPDFTeX\texttt{\detokenize\expandafter{\pdftexbanner}}\fi
+  \ifLuaTeX\texttt{\detokenize\expandafter{\luatexbanner}}\fi
+  \ifXeTeX\texttt{\hologo{XeTeX}\space\XeTeXrevision}\fi}
+% A fonte, como esta em vigor agora -- e nao como a classe supoe que esteja.
+% Quem trocou \familydefault a mao ve a familia nova no colofao, com o codigo
+% de tres ou quatro letras que e o nome verdadeiro dela.
+\def\coppe@lmrname{lmr}
+\def\coppe@lmssname{lmss}
 \providecommand{\coppefinalfont}{%
-  \if@coppesansserif
-    Latin Modern Sans (\texttt{lmodern})%
+  \edef\coppe@temp{\familydefault}%
+  \ifx\coppe@temp\coppe@lmrname
+    Latin Modern (\texttt{\coppe@temp}/\texttt{\encodingdefault})%
   \else
-    Latin Modern (\texttt{lmodern})%
+    \ifx\coppe@temp\coppe@lmssname
+      Latin Modern Sans (\texttt{\coppe@temp}/\texttt{\encodingdefault})%
+    \else
+      da fam\'\i lia \texttt{\coppe@temp}, codifica\c c\~ao
+      \texttt{\encodingdefault}%
+    \fi
   \fi}
+% O sistema e a maquina. Sob LuaTeX pergunta-se ao sistema; sob os outros
+% motores da-se para descobrir apenas se e Windows, porque o dispositivo nulo
+% do Windows abre para leitura e em sistema tipo Unix nao existe arquivo com
+% esse nome. Sem resposta, \coppe@sysname fica vazio e a frase do colofao
+% omite a parte do sistema.
+\let\coppe@sysname\@empty
+\let\coppe@sysnode\@empty
+\let\coppe@sysmach\@empty
+\ifLuaTeX
+  \edef\coppe@sysname{\directlua{%
+    local u = os.uname and os.uname() or {}
+    tex.sprint(-2, u.sysname or tostring(os.name) or "")}}
+  \edef\coppe@sysnode{\directlua{%
+    local u = os.uname and os.uname() or {}
+    tex.sprint(-2, u.nodename or "")}}
+  \edef\coppe@sysmach{\directlua{%
+    local u = os.uname and os.uname() or {}
+    tex.sprint(-2, u.machine or "")}}
+\else
+  \immediate\openin\@inputcheck=nul:\relax
+  \ifeof\@inputcheck\else\def\coppe@sysname{Windows}\fi
+  \immediate\closein\@inputcheck
+\fi
+\providecommand{\coppefinalsystem}{%
+  \ifx\coppe@sysname\@empty\else
+    , em \coppe@sysname
+    \ifx\coppe@sysnode\@empty\else, na m\'aquina \texttt{\coppe@sysnode}\fi
+    \ifx\coppe@sysmach\@empty\else\space(\texttt{\coppe@sysmach})\fi
+  \fi}
+% A hora da compilacao, de \time, que e o numero de minutos desde a
+% meia-noite. \divide trunca, que e o que se quer aqui.
+\newcount\coppe@finalhh
+\newcount\coppe@finalmm
+\providecommand{\coppefinaltime}{%
+  \coppe@finalhh=\time \divide\coppe@finalhh by 60
+  \coppe@finalmm=\coppe@finalhh \multiply\coppe@finalmm by -60
+  \advance\coppe@finalmm by \time
+  \ifnum\coppe@finalhh<10 0\fi\the\coppe@finalhh:%
+  \ifnum\coppe@finalmm<10 0\fi\the\coppe@finalmm}
+% A versao de um pacote carregado, tirada do \ProvidesPackage dele: o
+% \ver@<arquivo> guarda "data versao descricao", e daqui sai a versao. Os dois
+% \space no fim garantem os tres campos que o macro delimitado exige, mesmo
+% para um pacote que tenha declarado so a data.
+\def\coppe@grabversion#1 #2 #3\@nil{#2}
+\newcommand\coppe@pkgversion[1]{%
+  \@ifundefined{ver@#1}{}{%
+    \expandafter\expandafter\expandafter\coppe@grabversion
+      \csname ver@#1\endcsname\space\space\@nil}}
 \providecommand{\coppefinalmanual}{%
   \emph{Norma para a Elabora\c c\~ao Gr\'afica de Teses e Disserta\c c\~oes
   da COPPE/UFRJ}}
@@ -5493,12 +5967,16 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
       \textbf{Colof\~ao}\par
       \vspace{0.7em}
       \begin{minipage}{0.75\textwidth}\centering
-      Este documento foi composto em \LaTeX{} com \coppefinalengine{}
-      em \today, na fonte \coppefinalfont. A bibliografia foi processada
-      por Bib\LaTeX{} e Biber. Foi utilizada a classe \CoppeTeX,
+      Este documento foi composto em \LaTeX{} com \coppefinalengine{},
+      na fonte \coppefinalfont. \@ifpackageloaded{biblatex}{A bibliografia
+      foi processada por Bib\LaTeX~\coppe@pkgversion{biblatex.sty} e
+      Biber. }{}Foi utilizada a classe \CoppeTeX,
       vers\~ao~\coppe@version, dispon\'\i vel no reposit\'orio GitHub
       \mbox{\url{https://github.com/COPPE-UFRJ/CoppeTeX}}, em
       conformidade com a \coppefinalmanual.
+      \par\vspace{0.5em}
+      Gerado em \today, \`as \coppefinaltime\coppefinalsystem, por
+      \coppefinaltexsystem{} com o formato \LaTeX{} de \fmtversion.
       \end{minipage}\par}
     \end{center}
   \end{otherlanguage}%
@@ -5507,6 +5985,9 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %    \end{macrocode}
 % \changes{v4.0}{2026/05/30}{Initial coppetexfinalpage colophon page.}
 % \end{macro}
+%
+%
+% \subsubsection{As folhas de identifica\c c\~ao}
 %
 % \begin{macro}{\makecover}
 % The ABNT cover (capa, NBR 14724) suggested in the manual's Anexo A. It is
@@ -6049,6 +6530,9 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \end{macro}
 %
 
+%
+% \subsubsection{As folhas de resumo}
+%
 % \begin{macro}{\coppe@coadvisorrows}
 % The coadvisor block of the abstract pages, in the shape the folha de rosto
 % already uses. It prints nothing at all unless the |coorientador| class option
@@ -6129,9 +6613,125 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
           \local@doctype\ (\@degreename\ em \local@deptname) --
           \local@instname, \local@universityname,
           \local@cityname, \coppe@docyear.}\par}%
-      \vspace*{5mm}
+      \vspace*{4mm}
     \fi
   \fi}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\configuraresumos}
+% Liga e desliga os quatro elementos opcionais da folha de resumo, de uma vez,
+% para \emph{todos} os resumos do documento e em \emph{todos} os idiomas:
+% \begin{quote}
+% |\configuraresumos|\marg{identifica\c c\~ao da p\'agina}\marg{t\'itulo e
+% autor}\marg{orienta\c c\~ao}\marg{refer\^encia}
+% \end{quote}
+% Os quatro argumentos s\~ao l\'ogicos, |true| ou |false|, e o padr\~ao \'e
+% |\configuraresumos{true}{true}{true}{true}|, que \'e a folha completa dos
+% Anexos E e F. O quinto elemento, o resumo propriamente dito, \'e o \'unico
+% obrigat\'orio e n\~ao tem interruptor.
+%
+% \'E um comando \'unico, e n\~ao quatro op\c c\~oes de classe, por duas
+% raz\~oes. A primeira \'e que a decis\~ao \'e uma s\'o: quem tira a
+% identifica\c c\~ao da p\'agina de um resumo tira dos tr\^es, porque tr\^es
+% folhas de resumo com formatos diferentes no mesmo trabalho n\~ao s\~ao uma
+% escolha, s\~ao um descuido. A segunda \'e que as quatro chaves na mesma linha
+% se leem como o desenho da folha, e quatro nomes de op\c c\~ao espalhados na
+% |\documentclass| n\~ao.
+%
+% ACOPLAMENTO: o quarto argumento e a op\c c\~ao |resumosemreferencia| mexem no
+% mesmo |\if@copperefresumo|. Vale o \'ultimo a falar, e o comando fala depois
+% da op\c c\~ao, porque op\c c\~oes de classe s\~ao processadas antes do
+% pre\^ambulo.
+%    \begin{macrocode}
+\def\coppe@yes{true}
+\def\coppe@no{false}
+\newcommand\coppe@setresflag[2]{%
+  \def\coppe@temp{#2}%
+  \ifx\coppe@temp\coppe@yes
+    \csname @coppe#1true\endcsname
+  \else
+    \ifx\coppe@temp\coppe@no
+      \csname @coppe#1false\endcsname
+    \else
+      \ClassError{coppe}{%
+        \string\configuraresumos: argumento `#2' invalido}{%
+        Cada um dos quatro argumentos de \string\configuraresumos\space tem
+        de ser `true' ou `false'.}%
+    \fi
+  \fi}
+\newcommand\configuraresumos[4]{%
+  \coppe@setresflag{residpag}{#1}%
+  \coppe@setresflag{restitulo}{#2}%
+  \coppe@setresflag{resorient}{#3}%
+  \coppe@setresflag{refresumo}{#4}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\coppe@resumocabeca}
+% Os quatro elementos que antecedem o texto do resumo, cada um sob o seu
+% interruptor. Os tr\^es ambientes de resumo chamam este macro: at\'e a v4.1 os
+% tr\^es traziam o bloco inteiro copiado, byte a byte, e a c\'opia era o que
+% explicava os defeitos daquelas folhas -- uma corre\c c\~ao entrava em dois
+% lugares e faltava no terceiro, e o terceiro era sempre o
+% |brazilianabstract|, que s\'o aparece em trabalho escrito em espanhol.
+%
+% O idioma de tudo o que se comp\~oe aqui vem de |\coppe@reslang|, que cada
+% ambiente define antes de chamar: \emph{todo} texto de uma folha de resumo --
+% o t\'itulo, a palavra ``Orientadores'', o nome do Programa -- fica no idioma
+% daquele resumo. A refer\^encia \'e a exce\c c\~ao conhecida, e est\'a
+% explicada em |\coppe@refresumo|.
+%
+% Os espa\c cos verticais encolheram na v4.1. Eram 8,6\,mm, 13,2\,mm, 7\,mm,
+% 1,5\,cm, 2\,mm, 7\,mm e 5\,mm, que somam 44\,mm de branco antes do texto; um
+% resumo de 500 palavras, que \'e o limite da 3.1.2.1.4, n\~ao cabia na folha
+% com os cinco elementos ligados. Agora somam 30\,mm. O Manual n\~ao prescreve
+% nenhuma dessas medidas -- prescreve que o resumo caiba em UMA folha.
+%    \begin{macrocode}
+\newcommand\coppe@resumocabeca{%
+  \if@copperesidpag
+    \coppe@toptext{\coppe@reslang}\par
+    \vspace*{6mm}
+  \fi
+  \if@copperestitulo
+    \begin{center}
+      \sloppy\nohyphens{\MakeUppercase{\coppe@res@title{\coppe@reslang}}}\par
+      \vspace*{8mm}
+      \@authname\ \@authsurn \par
+      \vspace*{5mm}
+      \coppe@res@month{\coppe@reslang}/\coppe@docyear
+    \end{center}\par
+    \vspace*{9mm}
+  \fi
+  \if@copperesorient
+    \noindent%
+    \begin{tabularx}{\textwidth}[b]{@{}l@{ }>{\raggedright\arraybackslash}X@{}}
+      \coppe@res@advisor{\coppe@reslang}: &
+      \count1=0
+      \toks@={}
+      \@whilenum \count1<\@advisor \do{%
+      \ifcase\count1 % same as \ifnum0=\count1
+        \toks@=\expandafter{\csname CoppeAdvisorName:\the\count1%
+        \expandafter\endcsname\expandafter\space%
+        \csname CoppeAdvisorSurname:\the\count1\endcsname\\}
+      \else
+        \toks@=\expandafter\expandafter\expandafter{%
+          \expandafter\the\expandafter\toks@
+          \expandafter&\expandafter\space
+          \csname CoppeAdvisorName:\the\count1\expandafter\endcsname%
+          \expandafter\space\csname CoppeAdvisorSurname:\the\count1\endcsname\\
+        }%
+      \fi
+      \advance\count1 by 1}
+      \the\toks@
+    \end{tabularx}%
+    \coppe@coadvisorrows{\coppe@res@coadvisor{\coppe@reslang}}\par
+    \vspace*{2mm}
+    \noindent\coppe@res@deptlabel{\coppe@reslang}:
+      \coppe@res@deptname{\coppe@reslang}\par
+    \vspace*{5mm}%
+  \fi
+  \coppe@refresumo}
 %    \end{macrocode}
 % \end{macro}
 %
@@ -6142,43 +6742,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \cleardoublepage
   \thispagestyle{plain}
   \edef\coppe@reslang{\coppe@mainlang}%
-  \coppe@toptext{\coppe@reslang}\par
-  \vspace*{8.6mm}
-  \begin{center}
-    \sloppy\nohyphens{\MakeUppercase{\coppe@res@title{\coppe@reslang}}}\par
-    \vspace*{13.2mm}
-    \@authname\ \@authsurn \par
-    \vspace*{7mm}
-    \coppe@res@month{\coppe@reslang}/\coppe@docyear
-  \end{center}\par
-  \vspace*{1.5cm}
-  \noindent%
-  \begin{tabularx}{\textwidth}[b]{@{}l@{ }>{\raggedright\arraybackslash}X@{}}
-    \coppe@res@advisor{\coppe@reslang}: &
-    \count1=0
-    \toks@={}
-    \@whilenum \count1<\@advisor \do{%
-    \ifcase\count1 % same as \ifnum0=\count1
-      \toks@=\expandafter{\csname CoppeAdvisorName:\the\count1%
-      \expandafter\endcsname\expandafter\space%
-      \csname CoppeAdvisorSurname:\the\count1\endcsname\\}
-    \else
-      \toks@=\expandafter\expandafter\expandafter{%
-        \expandafter\the\expandafter\toks@
-        \expandafter&\expandafter\space
-        \csname CoppeAdvisorName:\the\count1\expandafter\endcsname%
-        \expandafter\space\csname CoppeAdvisorSurname:\the\count1\endcsname\\
-      }%
-    \fi
-    \advance\count1 by 1}
-    \the\toks@
-  \end{tabularx}%
-  \coppe@coadvisorrows{\coppe@res@coadvisor{\coppe@reslang}}\par
-  \vspace*{2mm}
-  \noindent\coppe@res@deptlabel{\coppe@reslang}:
-    \coppe@res@deptname{\coppe@reslang}\par
-  \vspace*{7mm}%
-  \coppe@refresumo}{%
+  \coppe@resumocabeca}{%
   \coppe@printkeywords{\coppemainstring{keywordsname}}%
     {CoppeKeyword:}{\value{keywords}}%
   \vspace*{\fill}}
@@ -6193,43 +6757,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \thispagestyle{plain}
   \edef\coppe@reslang{\coppe@foreignlang}%
   \begin{otherlanguage}{\coppe@foreignlang}
-  \coppe@toptext{\coppe@reslang}\par
-  \vspace*{8.6mm}
-  \begin{center}
-    \sloppy\nohyphens{\MakeUppercase{\coppe@res@title{\coppe@reslang}}}\par
-    \vspace*{13.2mm}
-    \@authname\ \@authsurn \par
-    \vspace*{7mm}
-    \coppe@res@month{\coppe@reslang}/\coppe@docyear
-  \end{center}\par
-  \vspace*{1.5cm}
-  \noindent%
-  \begin{tabularx}{\textwidth}[b]{@{}l@{ }>{\raggedright\arraybackslash}X@{}}
-    \coppe@res@advisor{\coppe@reslang}: &
-    \count1=0
-    \toks@={}
-    \@whilenum \count1<\@advisor \do{%
-    \ifcase\count1 % same as \ifnum0=\count1
-      \toks@=\expandafter{\csname CoppeAdvisorName:\the\count1%
-      \expandafter\endcsname\expandafter\space%
-      \csname CoppeAdvisorSurname:\the\count1\endcsname\\}
-    \else
-      \toks@=\expandafter\expandafter\expandafter{%
-        \expandafter\the\expandafter\toks@
-        \expandafter&\expandafter\space
-        \csname CoppeAdvisorName:\the\count1\expandafter\endcsname%
-        \expandafter\space\csname CoppeAdvisorSurname:\the\count1\endcsname\\
-      }%
-    \fi
-    \advance\count1 by 1}
-    \the\toks@
-  \end{tabularx}%
-  \coppe@coadvisorrows{\coppe@res@coadvisor{\coppe@reslang}}\par
-  \vspace*{2mm}
-  \noindent\coppe@res@deptlabel{\coppe@reslang}:
-    \coppe@res@deptname{\coppe@reslang}\par
-  \vspace*{7mm}%
-  \coppe@refresumo}{%
+  \coppe@resumocabeca}{%
   \ifnum\value{foreignkeywords}>0
     \coppe@printkeywords{\coppeforeignstring{keywordsname}}%
       {CoppeForeignKeyword:}{\value{foreignkeywords}}%
@@ -6271,43 +6799,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \thispagestyle{plain}
   \def\coppe@reslang{brazilian}%
   \begin{otherlanguage}{brazilian}
-  \coppe@toptext{\coppe@reslang}\par
-  \vspace*{8.6mm}
-  \begin{center}
-    \sloppy\nohyphens{\MakeUppercase{\coppe@res@title{\coppe@reslang}}}\par
-    \vspace*{13.2mm}
-    \@authname\ \@authsurn \par
-    \vspace*{7mm}
-    \coppe@res@month{\coppe@reslang}/\coppe@docyear
-  \end{center}\par
-  \vspace*{1.5cm}
-  \noindent%
-  \begin{tabularx}{\textwidth}[b]{@{}l@{ }>{\raggedright\arraybackslash}X@{}}
-    \coppe@res@advisor{\coppe@reslang}: &
-    \count1=0
-    \toks@={}
-    \@whilenum \count1<\@advisor \do{%
-    \ifcase\count1
-      \toks@=\expandafter{\csname CoppeAdvisorName:\the\count1%
-      \expandafter\endcsname\expandafter\space%
-      \csname CoppeAdvisorSurname:\the\count1\endcsname\\}
-    \else
-      \toks@=\expandafter\expandafter\expandafter{%
-        \expandafter\the\expandafter\toks@
-        \expandafter&\expandafter\space
-        \csname CoppeAdvisorName:\the\count1\expandafter\endcsname%
-        \expandafter\space\csname CoppeAdvisorSurname:\the\count1\endcsname\\
-      }%
-    \fi
-    \advance\count1 by 1}
-    \the\toks@
-  \end{tabularx}%
-  \coppe@coadvisorrows{\coppe@res@coadvisor{\coppe@reslang}}\par
-  \vspace*{2mm}
-  \noindent\coppe@res@deptlabel{\coppe@reslang}:
-    \coppe@res@deptname{\coppe@reslang}\par
-  \vspace*{7mm}%
-  \coppe@refresumo}{%
+  \coppe@resumocabeca}{%
 % \coppestring takes ONE argument and resolves against the current language;
 % this runs before \end{otherlanguage}, so \languagename is already brazilian.
   \ifnum\value{braziliankeywords}>0
@@ -6321,6 +6813,11 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \vspace*{\fill}}
 %    \end{macrocode}
 % \end{environment}
+%
+%
+% \subsection{Listas, siglas e transcri\c c\~oes}
+%
+% \subsubsection{As listas pr\'e-textuais}
 %
 % \begin{macro}{\listoffigures}
 %    \begin{macrocode}
@@ -6359,6 +6856,9 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     }
 %    \end{macrocode}
 % \end{macro}
+%
+%
+% \subsubsection{Siglas, s\'imbolos e abreviaturas}
 %
 % \begin{macro}{\printlosymbols}
 %    \begin{macrocode}
@@ -6475,20 +6975,12 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %    \end{macrocode}
 % \end{macro}
 % \end{macro}
-%%%%    \begin{macrocode}
-%%%% \AtBeginDocument{%
-%%%% \@ifpackageloaded{hyperref}{%
-%%%%   \def\@wrlab#1#2{%
-%%%% \protected@write\@labfile{}%
-%%%%       {\string\indexentry{[#1] #2|hyperpage}{\thepage}}%
-%%%%     \endgroup
-%%%%     \@esphack}}{%
-%%%%   \def\@wrlab#1#2{%
-%%%%     \protected@write\@labfile{}%
-%%%%       {\string\indexentry{[#1] #2}{\arabic{page}}}%
-%%%%     \endgroup
-%%%%     \@esphack}}}
-%    \end{macrocode}
+% Aqui havia um bloco comentado com quatro sinais de porcentagem, que
+% redefinia \@wrlab para o \hyperpage do hyperref. Estava morto desde antes da
+% v4.0, e comentar assim nao o escondia: o doc.sty ignora \emph{todos} os
+% sinais de porcentagem da parte de documentacao, e nao apenas o primeiro de
+% cada linha, de modo que aquela linha abria um bloco de codigo de verdade e o
+% manual imprimia as quinze linhas mortas em verbatim. Saiu inteiro na v4.1.
 %
 %    \begin{macrocode}
 % Catalog-label writers. Two language-related traps must be avoided here:
@@ -6549,6 +7041,9 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \AtEndBibliography via \coppe@bibBegin and \coppe@bibEnd, defined just above.
 %    \end{macrocode}
 %
+%
+% \subsubsection{Transcri\c c\~oes longas}
+%
 % \begin{environment}{longquote}
 %    \begin{macrocode}
 \newlength{\recuolongquote}
@@ -6576,6 +7071,9 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 }
 %    \end{macrocode}
 % \end{environment}
+%
+%
+% \subsubsection{Gloss\'ario e \'indice}
 %
 %    \begin{macrocode}
 \newenvironment{theglossary}{%
@@ -6622,6 +7120,11 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \newcommand\listsymbolname{\coppemainstring{listsymbol}}
 \newcommand\glossaryname{\coppemainstring{glossary}}
 %
+%    \end{macrocode}
+%
+% \subsection{Os textos fixos das folhas}
+%
+%    \begin{macrocode}
 \newcommand\local@advisorstring{Orientador}
 \newcommand\foreign@advisorstring{Advisor}
 % Fed by the string dispatcher instead of a hard-coded Portuguese literal.
@@ -6740,7 +7243,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %
 %    \end{macrocode}
 %
-% \subsection*{Late-load packages: setspace, hyperref, biblatex}
+% \subsection{Carga tardia: setspace, hyperref e biblatex}
 %
 % These three packages \emph{must} be the last things the class loads, and in
 % this exact order:
@@ -8124,7 +8627,7 @@ postamble
 %</numcbx>
 %    \end{macrocode}
 %
-% \subsection{The bibliographic databases}
+% \subsection{As bases de refer\^encias da pr\'opria classe}
 %
 % The two BibLaTeX/biber databases shipped with the class --- |example.bib|
 % (the sample database cited by the example monograph) and |coppe.bib| (the
@@ -8902,7 +9405,7 @@ postamble
 % \fi
 %
 %
-% \subsection{The generated companion files}
+% \subsection{Os arquivos que saem junto}
 %
 % Everything the distribution ships is extracted from this file: the class, the
 % BibLaTeX styles, the language packs, the databases, the |.ist|, the
@@ -8915,19 +9418,26 @@ postamble
 % works stays outside, as ordinary files under version control:
 %
 % \begin{description}
-%   \item[\texttt{tests/}] the regression suite. Nobody installing CoppeTeX
-%     needs it, and generating it from here would put proof and product in the
-%     same box.
-%   \item[\texttt{adversativa/}] twelve documents -- four kinds of work by
-%     three languages -- each firing everything the class offers at once.
-%   \item[\texttt{tools/*.ps1}] the build harness itself.
+%   \item[\texttt{tests/}] the first layer of proof, one |.tex| per behaviour.
+%     Nobody installing CoppeTeX needs it, and generating it from here would
+%     put proof and product in the same box.
+%   \item[\texttt{tests/adversativa/}] six documents, from an explicit option
+%     matrix, each firing everything the class offers at once. Four in
+%     Portuguese, one in English and one in Spanish, of different work types.
+%   \item[\texttt{tests/regressivo/}] one minimal test per defect already
+%     fixed. Opt-in, because it answers a different question.
+%   \item[\texttt{tools/}] the build harness, the verifiers, the developer
+%     panel and the empty-document generator.
 %   \item[\texttt{NORMA\_COPPE\_2026.tex}, \texttt{manual.tex}]
 %     documents about the norm that live in this repository with their own
-%     life cycle.
+%     life cycle. The |manual.tex| \emph{is} distributed, as the source of
+%     |manual.pdf|; it is written by hand and not generated from here.
 % \end{description}
 %
-% Both suites are run by one command, |tools\prova.ps1|, and that is what has
-% to come out clean before a version is tagged.
+% The first two layers are run by one command, |tools\prova.ps1| --- or by
+% |coppetex.bat --tudo|, which is the same thing through the panel --- and the
+% third by |python tests\regressivo\run-regressivo.py|. The three have to come
+% out clean before a version is tagged.
 %
 % \subsubsection{\texttt{example\_pt.tex --- pt-main demo}}
 %

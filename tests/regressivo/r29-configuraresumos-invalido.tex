@@ -1,0 +1,29 @@
+%% Teste de regressao da CoppeTeX. NAO roda na suite normal.
+%% Rode com: python tests/regressivo/run-regressivo.py
+%% BUG: os quatro argumentos de \configuraresumos sao logicos, e um argumento
+%% que nao seja `true' nem `false' tem de PARAR a compilacao. Um comando que
+%% aceitasse `sim', `1' ou uma palavra trocada em silencio deixaria o elemento
+%% no estado que estava, e o autor descobriria a folha errada no deposito -- que
+%% e exatamente o modo de falhar que esta suite existe para impedir.
+%% ESPERA-FALHA: sim
+%% ESPERA-LOG: argumento `sim' invalido
+\documentclass[dsc]{coppe}
+\configuraresumos{sim}{true}{true}{true}
+\title{Titulo do trabalho}
+\foreigntitle{The work title}
+\author{Nome}{Sobrenome}
+\advisor{Primeiro}{Orientador}{D.Sc.}{UFRJ}
+\examiner{Primeiro Examinador}{D.Sc.}{UFRJ}
+\department{PESC}
+\date{09}{2026}
+\keyword{Regressao}
+\begin{document}
+  \maketitle
+  \frontmatter
+  \begin{abstract}Resumo.\end{abstract}
+  \begin{foreignabstract}Abstract.\end{foreignabstract}
+  \tableofcontents
+  \mainmatter
+  \chapter{Um capitulo}
+  Texto.
+\end{document}

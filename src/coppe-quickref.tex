@@ -190,10 +190,11 @@ semmorewrites & [dsc,semmorewrites] & \pre & Do not load \texttt{morewrites} at 
 abstract & \textbackslash begin\{abstract\} ... & \doc & Abstract in the main language. One sheet, one paragraph, 250 words. \\
 foreignabstract & \textbackslash begin\{foreignabstract\} ... & \doc & Abstract in the foreign language. \\
 brazilianabstract & \textbackslash begin\{brazilianabstract\} ... & \doc & Third abstract, Portuguese, for a Spanish- or French-main work. \\
+\textbackslash configuraresumos & \textbackslash configuraresumos\{true\}\{true\}\{true\}\{true\} & \pre & Turns the four optional elements of every abstract sheet on or off, in every language: page identification, title and author, advising, reference. All on by default; only the abstract text itself cannot be turned off. \\
 \textbackslash appendix & \textbackslash appendix & \doc & Opens the appendices: text \emph{you} wrote. \\
 \textbackslash annex & \textbackslash annex & \doc & Opens the annexes: documents you did \emph{not} write. \\
 \textbackslash printbibliography & \textbackslash printbibliography & \doc & The reference list, titled ``Referências'' (3.1.4.1). \\
-\textbackslash coppetexfinalpage & \textbackslash coppetexfinalpage & \doc & Optional colophon: class version, engine, font. \\
+\textbackslash coppetexfinalpage & \textbackslash coppetexfinalpage & \doc & Optional colophon, every item measured at compile time: class version, engine and its version, TeX system, \LaTeX{} format, font family and encoding, biblatex version, date, hour, operating system and machine. \\
 \midrule
 
 \multicolumn{4}{@{}l@{}}{\normalfont\bfseries\small PRE-TEXTUAL LISTS ---

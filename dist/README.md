@@ -105,6 +105,30 @@ documento, então funciona com a pasta ou sem ela.
 | `coppe-quickref.pdf` | Uma referência rápida de uma tabela só, em inglês: comando, exemplo, onde se usa. |
 | `example.pdf` | O exemplo em português, já compilado, para você ver o resultado antes de compilar. |
 
+## Menos arquivos na sua raiz: os `.bib` podem ir para uma subpasta
+
+A classe, os estilos e os logotipos têm de ficar onde estão — essa é a regra da
+arrumação acima. Os **`.bib`, não**: eles podem morar numa subpasta, e é o que
+recomendamos. Escreva o caminho, com barra para frente mesmo no Windows:
+
+```latex
+\addbibresource{referencias/minha-tese.bib}
+```
+
+Funciona no seu computador e funciona no Overleaf, e o nome da pasta é o que
+você quiser. Quem lê o `.bib` é o **biber**, e ele abre o caminho relativo à
+pasta do documento.
+
+E é **mais** seguro que o nome sozinho, não menos. Um nome pelado passa pela
+busca do LaTeX, que olha a sua pasta e também as pastas da instalação do TeX:
+se o arquivo não estiver na sua pasta, o biber acha, **em silêncio**, o arquivo
+de mesmo nome que veio na distribuição — e a sua tese sai com a bibliografia de
+outra pessoa. Com a subpasta no caminho não há busca nenhuma: ou o arquivo está
+ali, ou o biber para com `Cannot find`. Erro na cara é melhor que referência
+errada na tese.
+
+Só evite acento e espaço no nome da pasta.
+
 ## Instalação
 
 O caminho mais curto é **não instalar nada**: copie os arquivos da raiz e a

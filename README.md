@@ -38,9 +38,16 @@ dois manuais e um exemplo completo em cada idioma que a UFRJ admite.
 A entrega tem uma **regra de arrumação** que vale saber antes de abrir: o que
 está na raiz dela funciona sem você mexer em nada, e quem vai escrever em
 **inglês, espanhol ou outro idioma** tem de trazer o conteúdo da pasta daquele
-idioma **para a raiz** — o LaTeX procura a classe e as bases de referências ao
-lado do documento, e não dentro de subpastas. O
+idioma **para a raiz** — o LaTeX procura a classe e os estilos ao lado do
+documento, e não dentro de subpastas. O
 [`dist/README.md`](./dist/README.md) explica isso e diz por onde começar.
+
+Há duas exceções a essa regra, e as duas existem para tirar arquivo da raiz do
+seu trabalho: os **logotipos**, que a classe sabe procurar em `logos/`, e os
+**`.bib`**, que podem morar numa subpasta desde que você escreva o caminho —
+`\addbibresource{referencias/minha-tese.bib}`. Funciona no seu computador e no
+Overleaf, e é mais seguro do que o nome sozinho, que pode se resolver, em
+silêncio, num `.bib` de mesmo nome vindo da distribuição do TeX.
 
 Se preferir começar de uma folha em branco em vez de apagar o exemplo, há um
 gerador: **`coppetex-novo.bat`**, na raiz. Ele abre uma janela, pergunta os dados
@@ -232,7 +239,7 @@ about to touch. Only one of them is meant for people writing a thesis.
 
 | Folder | For whom | What it is |
 |---|---|---|
-| **`dist/`** | **Anyone writing a thesis** | **The delivery — download this and nothing else.** The class, the bibliography styles, the logos, both manuals and one complete example per admitted language. 31 files plus its own README, which is the installation guide. → [dist/README.md](./dist/README.md) |
+| **`dist/`** | **Anyone writing a thesis** | **The delivery — download this and nothing else.** The class, the bibliography styles, the logos, both manuals and one complete example per admitted language. 35 files plus its own README, which is the installation guide, arranged in `logos/`, `manuais/`, `en/`, `es/` and `outraslinguas/` around a root that works as it is. → [dist/README.md](./dist/README.md) |
 | `src/` | Whoever changes the class | The source, and the **programming guide**. `coppe.dtx` is the single source: everything distributed is generated from it, and a hand edit to a generated file is lost at the next generation. Also holds the norm manual and the five per-language demos. → [src/README.md](./src/README.md) |
 | `tools/` | Whoever changes the class | The build and verification harness, and the developer panel behind `coppetex.bat`. → [tools/README.md](./tools/README.md) |
 | `tests/` | Whoever changes the class | Three layers of testing, each asking a different question. No PDF here is versioned. → [tests/README.md](./tests/README.md) |

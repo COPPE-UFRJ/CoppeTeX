@@ -1,0 +1,41 @@
+%% Teste de regressao da CoppeTeX. NAO roda na suite normal.
+%% Rode com: python tests/regressivo/run-regressivo.py
+%% BUG: dos cinco elementos da folha de resumo, so o resumo propriamente dito e
+%% obrigatorio. \configuraresumos desliga os quatro primeiros de uma vez, em
+%% TODOS os resumos e em TODOS os idiomas -- e o teste cobra os dois idiomas
+%% porque um comando que desligasse so o resumo do idioma principal passaria por
+%% uma cobranca de uma folha so.
+%% ESPERA-PAGINAS: 8
+%% ESPERA-TEXTO-PAGINA: 5::Este e o corpo do resumo em portugues
+%% ESPERA-TEXTO-PAGINA: 5::Palavras-chave: Regressao
+%% NAO-ESPERA-TEXTO-PAGINA: 5::Resumo da Tese apresentada
+%% NAO-ESPERA-TEXTO-PAGINA: 5::Palavra Que So Existe No Titulo
+%% NAO-ESPERA-TEXTO-PAGINA: 5::Orientador:
+%% NAO-ESPERA-TEXTO-PAGINA: 5::Programa:
+%% NAO-ESPERA-TEXTO-PAGINA: 5::Setembro/2026
+%% ESPERA-TEXTO-PAGINA: 6::This is the body of the foreign abstract
+%% ESPERA-TEXTO-PAGINA: 6::Keywords: Regressao
+%% NAO-ESPERA-TEXTO-PAGINA: 6::Abstract of Thesis presented
+%% NAO-ESPERA-TEXTO-PAGINA: 6::Palavra Que So Existe No Titulo
+%% NAO-ESPERA-TEXTO-PAGINA: 6::Advisor:
+%% NAO-ESPERA-TEXTO-PAGINA: 6::Department:
+\documentclass[dsc]{coppe}
+\configuraresumos{false}{false}{false}{false}
+\title{Palavra Que So Existe No Titulo}
+\foreigntitle{Palavra Que So Existe No Titulo}
+\author{Nome}{Sobrenome}
+\advisor{Primeiro}{Orientador}{D.Sc.}{UFRJ}
+\examiner{Primeiro Examinador}{D.Sc.}{UFRJ}
+\department{PESC}
+\date{09}{2026}
+\keyword{Regressao}
+\begin{document}
+  \maketitle
+  \frontmatter
+  \begin{abstract}Este e o corpo do resumo em portugues.\end{abstract}
+  \begin{foreignabstract}This is the body of the foreign abstract.\end{foreignabstract}
+  \tableofcontents
+  \mainmatter
+  \chapter{Um capitulo}
+  Texto.
+\end{document}

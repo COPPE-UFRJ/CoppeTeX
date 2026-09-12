@@ -110,6 +110,9 @@ CAMPOS = [
      "Vazio ou '.' e a pasta em que voce esta"),
     ("tex", "Arquivos", "Nome do arquivo .tex", "texto", "main.tex", None, ""),
     ("bib", "Arquivos", "Nome do arquivo .bib", "texto", "references.bib", None, ""),
+    ("pastabib", "Arquivos", "Pasta das referências", "texto",
+     "referencias", None,
+     "O .bib vai para esta subpasta; vazio deixa na raiz"),
     ("conteudo", "Arquivos", "Um arquivo por capitulo, na pasta conteudo/",
      "sim/nao", False, None,
      "Cria conteudo/ com os cinco capitulos e os traz com \\input"),
@@ -236,6 +239,19 @@ def campo(chave):
     raise KeyError(chave)
 
 
+def caminho_bib(v, nome_bib):
+    """O caminho do .bib como o \\addbibresource tem de escreve-lo.
+
+    Com a pasta preenchida sai "referencias/refs.bib", e e assim que se quer:
+    o biber abre o caminho relativo e NAO procura mais nada. Um nome pelado,
+    ao contrario, ele procura -- e acha, se nao existir na pasta do trabalho, o
+    arquivo de mesmo nome que vier na distribuicao do TeX. Barra para frente
+    tambem no Windows, que e o que o TeX entende em todo lugar.
+    """
+    sub = (v.get("pastabib") or "").strip().strip("/\\")
+    return "%s/%s" % (sub, nome_bib) if sub else nome_bib
+
+
 # ---------------------------------------------------------------------------
 # O documento
 # ---------------------------------------------------------------------------
@@ -260,7 +276,7 @@ def monta_tex(v, nome_bib):
     A("")
     A("\\documentclass[%s]{coppe}" % ",".join(opcoes))
     A("")
-    A("\\addbibresource{%s}%% a sua base de referencias" % nome_bib)
+    A("\\addbibresource{%s}%% a sua base de referencias" % caminho_bib(v, nome_bib))
     if v["abreviaturas"]:
         A("\\makeloabbreviations")
     if v["simbolos"]:
@@ -639,7 +655,14 @@ def gerar(v, aviso=print):
 
     aviso("escrevendo em %s" % pasta)
     escreve(os.path.join(pasta, nome_tex), monta_tex(v, nome_bib))
-    escreve(os.path.join(pasta, nome_bib), monta_bib(v))
+    subbib = (v.get("pastabib") or "").strip().strip("/\\")
+    if subbib:
+        alvo = os.path.join(pasta, subbib)
+        if not os.path.isdir(alvo):
+            os.makedirs(alvo)
+        escreve(os.path.join(alvo, nome_bib), monta_bib(v))
+    else:
+        escreve(os.path.join(pasta, nome_bib), monta_bib(v))
     if v["conteudo"]:
         sub = os.path.join(pasta, "conteudo")
         if not os.path.isdir(sub):

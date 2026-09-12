@@ -28,7 +28,8 @@ pdflatex <file>.tex && biber <file> && pdflatex <file>.tex && pdflatex <file>.te
 ```
 
 The test files depend on the class living in `../src/`, the bibliography
-fixture in `../src/example.bib`, and the cover logos in `../src/`. The runner
+fixture in `../src/example.bib`, and the cover logos in `../src/logos/`, where
+the class looks first. The runner
 script `run-tests.ps1` sets `TEXINPUTS` so pdflatex finds them all from this
 directory.
 

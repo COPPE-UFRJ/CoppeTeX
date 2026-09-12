@@ -30,12 +30,12 @@ compilar veio do `.dtx`, e não de um arquivo que ficou para trás.
 | `watch-build.ps1` | Fica observando `_scratch/BUILD_REQUEST` e roda o `build-check` quando o arquivo aparece. Deixe rodando numa janela enquanto trabalha. |
 | `mk-adversativa.py` | Gera os seis documentos de `../tests/adversativa/`. Eles não são escritos à mão: para mudar o que provam, mude a matriz no topo do gerador. |
 | `painel.py` | O painel do desenvolvedor, com janela e linha de comando. É o que o `coppetex.bat` da raiz chama. Manual em [`../PAINEL.md`](../PAINEL.md). |
-| `geradocvazio.py` | O gerador de documento vazio, com janela e linha de comando: escreve o `.tex` e o `.bib` de um trabalho novo, com os cinco capítulos e o texto de preenchimento. É o que o `coppetex-novo.bat` da raiz chama. É a única ferramenta daqui feita para o ALUNO, e não para quem mantém a classe. |
+| `geradocvazio.py` | O gerador de documento vazio, com janela e linha de comando: escreve o `.tex` e o `.bib` de um trabalho novo, com os cinco capítulos e o texto de preenchimento. O `.bib` vai para `referencias/` por padrão, que é a recomendação desde a 4.1; o campo **Pasta das referências** vazio o devolve à raiz. É o que o `coppetex-novo.bat` da raiz chama. É a única ferramenta daqui feita para o ALUNO, e não para quem mantém a classe. |
 | `versao.py` | Confere se a versão está sincronizada nos 28 arquivos gerados e nos 6 lugares em prosa, e sobe o segundo ou o terceiro nível. Nunca o primeiro. |
 | `conferir-norma.py` | Lê um PDF pronto e mede, em centímetros, o que a norma fixa: margens, corpo, recuos, ordem das páginas pré-textuais. |
 | `conferir-referencias.py` | Compõe as referências e as compara, uma a uma, com o texto que o Manual imprime. O gabarito está nos comentários `%%` de `../tests/adversativa/referencias-manual.bib`. |
 | `conferir-referencias-cruzadas.py` | Caça `\ref` e `\cite` sem resolver em todos os `.log`. Nada disso aparece no código de saída do `pdflatex`: sai `??` na página e o PDF é gerado assim mesmo. |
-| `conferir-manual.py` | Cobra que todo comando público, todo ambiente e toda opção da classe estejam documentados, e que a tabela "onde ver" do manual ainda bata com o `example.tex`. |
+| `conferir-manual.py` | Cobra que todo comando público, todo ambiente e toda opção da classe estejam documentados, que a tabela "onde ver" do manual ainda bata com o `example.tex`, e que os guardas de `macrocode` do `.dtx` estejam bem escritos — o `doc.sty` só fecha um bloco de código com `%` e **quatro** espaços, e um guarda de três espaços fez sessenta linhas de documentação saírem impressas como código no `coppe.pdf` por várias versões, sem quebrar nada. |
 | `atualizar-onde-ver.py` | Reescreve essa tabela a partir do `example.tex` atual, quando ela envelhece. |
 
 A suíte de regressão tem rodador próprio, em

@@ -222,6 +222,16 @@
   com \verb|\printbibliography|. O capítulo~\ref{cap:referencias} volta ao
   assunto.
 
+  A base pode morar numa subpasta, e é o que se recomenda para não acumular
+  arquivo na raiz do trabalho: escreva o caminho, como em
+  \verb|\addbibresource{referencias/arquivo.bib}|, com barra para frente mesmo
+  no Windows. Funciona no computador local e no Overleaf, porque quem lê o
+  \texttt{.bib} é o \texttt{biber}, que abre o caminho relativo à pasta do
+  documento. É também mais seguro do que o nome sozinho: um nome sozinho passa
+  pela busca do \LaTeX{} e, se o arquivo não estiver na pasta do trabalho,
+  resolve-se em silêncio no \texttt{.bib} de mesmo nome que vem na distribuição
+  do \TeX.
+
   O manual da classe, que descreve todos os comandos um a um, é o
   \texttt{coppe.pdf}, distribuído junto. Este aqui descreve a norma; aquele
   descreve a ferramenta.

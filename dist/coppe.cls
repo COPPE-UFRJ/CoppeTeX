@@ -422,6 +422,9 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \DeclareOption{coorientador}{\@coppecoadvresumotrue}
 \newif\if@copperefresumo \@copperefresumotrue
 \DeclareOption{resumosemreferencia}{\@copperefresumofalse}
+\newif\if@copperesidpag \@copperesidpagtrue
+\newif\if@copperestitulo \@copperestitulotrue
+\newif\if@copperesorient \@copperesorienttrue
 \newif\if@coppelistastoc \@coppelistastocfalse
 \DeclareOption{listasnosumario}{\@coppelistastoctrue}
 \newif\if@copperascunho \@copperascunhofalse
@@ -437,6 +440,20 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \DeclareOption{semserifa}{\@coppesansseriftrue}
 \DeclareOption{comserifa}{\@coppesansseriffalse}
 \ProcessOptions\relax
+\@ifundefined{coppe@doctypekey}{%
+  \ClassError{coppe}{Falta dizer o tipo do trabalho}{%
+    A classe coppe precisa de exatamente uma opcao de tipo: msc, dsc,
+    mscexam,\MessageBreak
+    dscexam ou mscsem. Escreva, por exemplo,
+    \string\documentclass[dsc]\string{coppe\string}.}%
+  \def\coppe@doctypekey{dsc}\def\coppe@degkey{dsc}
+  \newcommand{\@degree}{??}
+  \newcommand{\@degreename}{??}
+  \newcommand{\local@degname}{??}
+  \newcommand{\foreign@degname}{??}
+  \newcommand\local@doctype{??}
+  \newcommand\foreign@doctype{??}
+}{}
 \if@coppesansserif
   \renewcommand{\familydefault}{\sfdefault}%
 \fi
@@ -948,15 +965,67 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \clearpage
   \fi}
 \providecommand{\coppefinalengine}{%
-  \ifPDFTeX\hologo{pdfLaTeX}\fi
-  \ifLuaTeX\hologo{LuaLaTeX}\fi
-  \ifXeTeX\hologo{XeLaTeX}\fi}
+  \ifPDFTeX\hologo{pdfTeX}~\expandafter\coppe@dotversion\the\pdftexversion
+    \@nil.\pdftexrevision\fi
+  \ifLuaTeX\hologo{LuaTeX}~\expandafter\coppe@dotversion\the\luatexversion
+    \@nil.\luatexrevision\fi
+  \ifXeTeX\hologo{XeTeX}~\the\XeTeXversion\XeTeXrevision\fi}
+\def\coppe@dotversion#1#2#3\@nil{#1.#2#3}
+\providecommand{\coppefinaltexsystem}{%
+  \ifPDFTeX\texttt{\detokenize\expandafter{\pdftexbanner}}\fi
+  \ifLuaTeX\texttt{\detokenize\expandafter{\luatexbanner}}\fi
+  \ifXeTeX\texttt{\hologo{XeTeX}\space\XeTeXrevision}\fi}
+\def\coppe@lmrname{lmr}
+\def\coppe@lmssname{lmss}
 \providecommand{\coppefinalfont}{%
-  \if@coppesansserif
-    Latin Modern Sans (\texttt{lmodern})%
+  \edef\coppe@temp{\familydefault}%
+  \ifx\coppe@temp\coppe@lmrname
+    Latin Modern (\texttt{\coppe@temp}/\texttt{\encodingdefault})%
   \else
-    Latin Modern (\texttt{lmodern})%
+    \ifx\coppe@temp\coppe@lmssname
+      Latin Modern Sans (\texttt{\coppe@temp}/\texttt{\encodingdefault})%
+    \else
+      da fam\'\i lia \texttt{\coppe@temp}, codifica\c c\~ao
+      \texttt{\encodingdefault}%
+    \fi
   \fi}
+\let\coppe@sysname\@empty
+\let\coppe@sysnode\@empty
+\let\coppe@sysmach\@empty
+\ifLuaTeX
+  \edef\coppe@sysname{\directlua{%
+    local u = os.uname and os.uname() or {}
+    tex.sprint(-2, u.sysname or tostring(os.name) or "")}}
+  \edef\coppe@sysnode{\directlua{%
+    local u = os.uname and os.uname() or {}
+    tex.sprint(-2, u.nodename or "")}}
+  \edef\coppe@sysmach{\directlua{%
+    local u = os.uname and os.uname() or {}
+    tex.sprint(-2, u.machine or "")}}
+\else
+  \immediate\openin\@inputcheck=nul:\relax
+  \ifeof\@inputcheck\else\def\coppe@sysname{Windows}\fi
+  \immediate\closein\@inputcheck
+\fi
+\providecommand{\coppefinalsystem}{%
+  \ifx\coppe@sysname\@empty\else
+    , em \coppe@sysname
+    \ifx\coppe@sysnode\@empty\else, na m\'aquina \texttt{\coppe@sysnode}\fi
+    \ifx\coppe@sysmach\@empty\else\space(\texttt{\coppe@sysmach})\fi
+  \fi}
+\newcount\coppe@finalhh
+\newcount\coppe@finalmm
+\providecommand{\coppefinaltime}{%
+  \coppe@finalhh=\time \divide\coppe@finalhh by 60
+  \coppe@finalmm=\coppe@finalhh \multiply\coppe@finalmm by -60
+  \advance\coppe@finalmm by \time
+  \ifnum\coppe@finalhh<10 0\fi\the\coppe@finalhh:%
+  \ifnum\coppe@finalmm<10 0\fi\the\coppe@finalmm}
+\def\coppe@grabversion#1 #2 #3\@nil{#2}
+\newcommand\coppe@pkgversion[1]{%
+  \@ifundefined{ver@#1}{}{%
+    \expandafter\expandafter\expandafter\coppe@grabversion
+      \csname ver@#1\endcsname\space\space\@nil}}
 \providecommand{\coppefinalmanual}{%
   \emph{Norma para a Elabora\c c\~ao Gr\'afica de Teses e Disserta\c c\~oes
   da COPPE/UFRJ}}
@@ -977,12 +1046,16 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
       \textbf{Colof\~ao}\par
       \vspace{0.7em}
       \begin{minipage}{0.75\textwidth}\centering
-      Este documento foi composto em \LaTeX{} com \coppefinalengine{}
-      em \today, na fonte \coppefinalfont. A bibliografia foi processada
-      por Bib\LaTeX{} e Biber. Foi utilizada a classe \CoppeTeX,
+      Este documento foi composto em \LaTeX{} com \coppefinalengine{},
+      na fonte \coppefinalfont. \@ifpackageloaded{biblatex}{A bibliografia
+      foi processada por Bib\LaTeX~\coppe@pkgversion{biblatex.sty} e
+      Biber. }{}Foi utilizada a classe \CoppeTeX,
       vers\~ao~\coppe@version, dispon\'\i vel no reposit\'orio GitHub
       \mbox{\url{https://github.com/COPPE-UFRJ/CoppeTeX}}, em
       conformidade com a \coppefinalmanual.
+      \par\vspace{0.5em}
+      Gerado em \today, \`as \coppefinaltime\coppefinalsystem, por
+      \coppefinaltexsystem{} com o formato \LaTeX{} de \fmtversion.
       \end{minipage}\par}
     \end{center}
   \end{otherlanguage}%
@@ -1416,50 +1489,79 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
           \local@doctype\ (\@degreename\ em \local@deptname) --
           \local@instname, \local@universityname,
           \local@cityname, \coppe@docyear.}\par}%
-      \vspace*{5mm}
+      \vspace*{4mm}
     \fi
   \fi}
+\def\coppe@yes{true}
+\def\coppe@no{false}
+\newcommand\coppe@setresflag[2]{%
+  \def\coppe@temp{#2}%
+  \ifx\coppe@temp\coppe@yes
+    \csname @coppe#1true\endcsname
+  \else
+    \ifx\coppe@temp\coppe@no
+      \csname @coppe#1false\endcsname
+    \else
+      \ClassError{coppe}{%
+        \string\configuraresumos: argumento `#2' invalido}{%
+        Cada um dos quatro argumentos de \string\configuraresumos\space tem
+        de ser `true' ou `false'.}%
+    \fi
+  \fi}
+\newcommand\configuraresumos[4]{%
+  \coppe@setresflag{residpag}{#1}%
+  \coppe@setresflag{restitulo}{#2}%
+  \coppe@setresflag{resorient}{#3}%
+  \coppe@setresflag{refresumo}{#4}}
+\newcommand\coppe@resumocabeca{%
+  \if@copperesidpag
+    \coppe@toptext{\coppe@reslang}\par
+    \vspace*{6mm}
+  \fi
+  \if@copperestitulo
+    \begin{center}
+      \sloppy\nohyphens{\MakeUppercase{\coppe@res@title{\coppe@reslang}}}\par
+      \vspace*{8mm}
+      \@authname\ \@authsurn \par
+      \vspace*{5mm}
+      \coppe@res@month{\coppe@reslang}/\coppe@docyear
+    \end{center}\par
+    \vspace*{9mm}
+  \fi
+  \if@copperesorient
+    \noindent%
+    \begin{tabularx}{\textwidth}[b]{@{}l@{ }>{\raggedright\arraybackslash}X@{}}
+      \coppe@res@advisor{\coppe@reslang}: &
+      \count1=0
+      \toks@={}
+      \@whilenum \count1<\@advisor \do{%
+      \ifcase\count1 % same as \ifnum0=\count1
+        \toks@=\expandafter{\csname CoppeAdvisorName:\the\count1%
+        \expandafter\endcsname\expandafter\space%
+        \csname CoppeAdvisorSurname:\the\count1\endcsname\\}
+      \else
+        \toks@=\expandafter\expandafter\expandafter{%
+          \expandafter\the\expandafter\toks@
+          \expandafter&\expandafter\space
+          \csname CoppeAdvisorName:\the\count1\expandafter\endcsname%
+          \expandafter\space\csname CoppeAdvisorSurname:\the\count1\endcsname\\
+        }%
+      \fi
+      \advance\count1 by 1}
+      \the\toks@
+    \end{tabularx}%
+    \coppe@coadvisorrows{\coppe@res@coadvisor{\coppe@reslang}}\par
+    \vspace*{2mm}
+    \noindent\coppe@res@deptlabel{\coppe@reslang}:
+      \coppe@res@deptname{\coppe@reslang}\par
+    \vspace*{5mm}%
+  \fi
+  \coppe@refresumo}
 \newenvironment{abstract}{%
   \cleardoublepage
   \thispagestyle{plain}
   \edef\coppe@reslang{\coppe@mainlang}%
-  \coppe@toptext{\coppe@reslang}\par
-  \vspace*{8.6mm}
-  \begin{center}
-    \sloppy\nohyphens{\MakeUppercase{\coppe@res@title{\coppe@reslang}}}\par
-    \vspace*{13.2mm}
-    \@authname\ \@authsurn \par
-    \vspace*{7mm}
-    \coppe@res@month{\coppe@reslang}/\coppe@docyear
-  \end{center}\par
-  \vspace*{1.5cm}
-  \noindent%
-  \begin{tabularx}{\textwidth}[b]{@{}l@{ }>{\raggedright\arraybackslash}X@{}}
-    \coppe@res@advisor{\coppe@reslang}: &
-    \count1=0
-    \toks@={}
-    \@whilenum \count1<\@advisor \do{%
-    \ifcase\count1 % same as \ifnum0=\count1
-      \toks@=\expandafter{\csname CoppeAdvisorName:\the\count1%
-      \expandafter\endcsname\expandafter\space%
-      \csname CoppeAdvisorSurname:\the\count1\endcsname\\}
-    \else
-      \toks@=\expandafter\expandafter\expandafter{%
-        \expandafter\the\expandafter\toks@
-        \expandafter&\expandafter\space
-        \csname CoppeAdvisorName:\the\count1\expandafter\endcsname%
-        \expandafter\space\csname CoppeAdvisorSurname:\the\count1\endcsname\\
-      }%
-    \fi
-    \advance\count1 by 1}
-    \the\toks@
-  \end{tabularx}%
-  \coppe@coadvisorrows{\coppe@res@coadvisor{\coppe@reslang}}\par
-  \vspace*{2mm}
-  \noindent\coppe@res@deptlabel{\coppe@reslang}:
-    \coppe@res@deptname{\coppe@reslang}\par
-  \vspace*{7mm}%
-  \coppe@refresumo}{%
+  \coppe@resumocabeca}{%
   \coppe@printkeywords{\coppemainstring{keywordsname}}%
     {CoppeKeyword:}{\value{keywords}}%
   \vspace*{\fill}}
@@ -1468,43 +1570,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \thispagestyle{plain}
   \edef\coppe@reslang{\coppe@foreignlang}%
   \begin{otherlanguage}{\coppe@foreignlang}
-  \coppe@toptext{\coppe@reslang}\par
-  \vspace*{8.6mm}
-  \begin{center}
-    \sloppy\nohyphens{\MakeUppercase{\coppe@res@title{\coppe@reslang}}}\par
-    \vspace*{13.2mm}
-    \@authname\ \@authsurn \par
-    \vspace*{7mm}
-    \coppe@res@month{\coppe@reslang}/\coppe@docyear
-  \end{center}\par
-  \vspace*{1.5cm}
-  \noindent%
-  \begin{tabularx}{\textwidth}[b]{@{}l@{ }>{\raggedright\arraybackslash}X@{}}
-    \coppe@res@advisor{\coppe@reslang}: &
-    \count1=0
-    \toks@={}
-    \@whilenum \count1<\@advisor \do{%
-    \ifcase\count1 % same as \ifnum0=\count1
-      \toks@=\expandafter{\csname CoppeAdvisorName:\the\count1%
-      \expandafter\endcsname\expandafter\space%
-      \csname CoppeAdvisorSurname:\the\count1\endcsname\\}
-    \else
-      \toks@=\expandafter\expandafter\expandafter{%
-        \expandafter\the\expandafter\toks@
-        \expandafter&\expandafter\space
-        \csname CoppeAdvisorName:\the\count1\expandafter\endcsname%
-        \expandafter\space\csname CoppeAdvisorSurname:\the\count1\endcsname\\
-      }%
-    \fi
-    \advance\count1 by 1}
-    \the\toks@
-  \end{tabularx}%
-  \coppe@coadvisorrows{\coppe@res@coadvisor{\coppe@reslang}}\par
-  \vspace*{2mm}
-  \noindent\coppe@res@deptlabel{\coppe@reslang}:
-    \coppe@res@deptname{\coppe@reslang}\par
-  \vspace*{7mm}%
-  \coppe@refresumo}{%
+  \coppe@resumocabeca}{%
   \ifnum\value{foreignkeywords}>0
     \coppe@printkeywords{\coppeforeignstring{keywordsname}}%
       {CoppeForeignKeyword:}{\value{foreignkeywords}}%
@@ -1519,43 +1585,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \thispagestyle{plain}
   \def\coppe@reslang{brazilian}%
   \begin{otherlanguage}{brazilian}
-  \coppe@toptext{\coppe@reslang}\par
-  \vspace*{8.6mm}
-  \begin{center}
-    \sloppy\nohyphens{\MakeUppercase{\coppe@res@title{\coppe@reslang}}}\par
-    \vspace*{13.2mm}
-    \@authname\ \@authsurn \par
-    \vspace*{7mm}
-    \coppe@res@month{\coppe@reslang}/\coppe@docyear
-  \end{center}\par
-  \vspace*{1.5cm}
-  \noindent%
-  \begin{tabularx}{\textwidth}[b]{@{}l@{ }>{\raggedright\arraybackslash}X@{}}
-    \coppe@res@advisor{\coppe@reslang}: &
-    \count1=0
-    \toks@={}
-    \@whilenum \count1<\@advisor \do{%
-    \ifcase\count1
-      \toks@=\expandafter{\csname CoppeAdvisorName:\the\count1%
-      \expandafter\endcsname\expandafter\space%
-      \csname CoppeAdvisorSurname:\the\count1\endcsname\\}
-    \else
-      \toks@=\expandafter\expandafter\expandafter{%
-        \expandafter\the\expandafter\toks@
-        \expandafter&\expandafter\space
-        \csname CoppeAdvisorName:\the\count1\expandafter\endcsname%
-        \expandafter\space\csname CoppeAdvisorSurname:\the\count1\endcsname\\
-      }%
-    \fi
-    \advance\count1 by 1}
-    \the\toks@
-  \end{tabularx}%
-  \coppe@coadvisorrows{\coppe@res@coadvisor{\coppe@reslang}}\par
-  \vspace*{2mm}
-  \noindent\coppe@res@deptlabel{\coppe@reslang}:
-    \coppe@res@deptname{\coppe@reslang}\par
-  \vspace*{7mm}%
-  \coppe@refresumo}{%
+  \coppe@resumocabeca}{%
   \ifnum\value{braziliankeywords}>0
     \coppe@printkeywords{\coppestring{keywordsname}}%
       {CoppeBrazilianKeyword:}{\value{braziliankeywords}}%
@@ -1655,19 +1685,6 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \@ifundefined{coppe@sigla@s@#1}{\coppe@sigla@undef{#1}}%
     {\global\@namedef{coppe@sigla@done@#1}{}\coppe@sigla@full{#1}}}
 \newcommand\sigla{\@ifstar\coppe@sigla@star\coppe@sigla@norm}
-%%%%    \begin{macrocode}
-%%%% \AtBeginDocument{%
-%%%% \@ifpackageloaded{hyperref}{%
-%%%%   \def\@wrlab#1#2{%
-%%%% \protected@write\@labfile{}%
-%%%%       {\string\indexentry{[#1] #2|hyperpage}{\thepage}}%
-%%%%     \endgroup
-%%%%     \@esphack}}{%
-%%%%   \def\@wrlab#1#2{%
-%%%%     \protected@write\@labfile{}%
-%%%%       {\string\indexentry{[#1] #2}{\arabic{page}}}%
-%%%%     \endgroup
-%%%%     \@esphack}}}
 \AtBeginDocument{%
   \ltx@ifpackageloaded{hyperref}{%
     \def\coppe@bibEnd{%

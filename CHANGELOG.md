@@ -64,6 +64,44 @@ to the CPGP is [`PROPOSTA_CPGP.md`](./PROPOSTA_CPGP.md).
 
 ### Added
 
+- **`\configuraresumos{…}{…}{…}{…}` — the abstract sheet is five elements, and
+  four of them are optional.** The five are page identification (the "Resumo da
+  Tese apresentada à COPPE/UFRJ…" sentence), title and author, advising, the
+  work's own bibliographic reference, and the abstract itself. **Only the
+  abstract itself is mandatory.** The command takes four booleans, in that
+  order, and applies to **every abstract and every language** in the document —
+  three abstract sheets with different layouts in one work are not a choice,
+  they are an oversight. All four are on by default, which is the sheet of
+  Annexes E and F. A value that is neither `true` nor `false` is a class error:
+  a switch that silently keeps the previous state is discovered in the
+  deposited PDF.
+
+  ```latex
+  \configuraresumos{true}{true}{true}{false}   % sem a referência
+  \configuraresumos{false}{false}{false}{false} % só o texto do resumo
+  ```
+
+- **The colophon reports the engine and the machine, and nothing in it is
+  written by hand.** `\coppetexfinalpage` now prints the engine and its
+  version, the engine's own banner (which names MiKTeX or TeX Live), the LaTeX
+  format date, the font family and encoding **in force**, the biblatex version,
+  the date, the hour, and the operating system and machine. Every item is asked
+  of the engine at composition time. Under LuaLaTeX the machine name comes from
+  `os.uname()`; pdfLaTeX and XeLaTeX can only tell whether the system is
+  Windows, and when even that is unknown the sentence omits the system rather
+  than inventing one. If you would rather not publish the machine name,
+  `\renewcommand{\coppefinalsystem}{}` removes that clause.
+
+- **The `.bib` files may live in a subfolder.** `\addbibresource{referencias/
+  minha-tese.bib}` works on a local machine and on Overleaf, because biber
+  opens the path relative to the document. It is also **safer** than the bare
+  name: a bare name goes through the kpathsea search, and when the file is
+  absent from the work's folder biber silently resolves it to the `.bib` of the
+  same name shipped with the TeX distribution — and the thesis comes out with
+  someone else's bibliography. With a path there is no search: either the file
+  is there or biber stops. The empty-document generator writes the subfolder by
+  default, and `tests/regressivo/r31` proves both halves.
+
 - **`pdfa` class option** — PDF/A-2b output through `pdfx`, with the XMP
   metadata built from the document's own fields (Manual 2.2d). Validated by
   veraPDF 1.30.2, 144 rules.
@@ -178,6 +216,35 @@ to the CPGP is [`PROPOSTA_CPGP.md`](./PROPOSTA_CPGP.md).
 
 ### Changed
 
+- **The abstract sheet is composed from the top, and its vertical spaces went
+  from 44 mm to 30 mm.** A 500-word abstract — the limit of 3.1.2.1.4 — did not
+  fit on one sheet with the five elements on, and one sheet is what the same
+  item requires. The Manual prescribes none of those measures.
+- **The three abstract environments now share one macro.** Each of them carried
+  the whole leading block copied byte for byte, and that copy is what produced
+  the two worst defects those sheets ever had: a fix landed in two of them and
+  was missing from the third, and the third was always `brazilianabstract`,
+  which only appears in a work written in Spanish.
+- **The type of work is now demanded.** It is the only class option with no
+  default, and nothing was checking for it: without it the class loaded in
+  silence and died later, inside `\maketitle`, with `Undefined control sequence
+  \local@doctype` pointing at a line of the class itself. It now stops with a
+  message naming the five options.
+- **The implementation section of `coppe.pdf` is navigable.** It was a single
+  60-page subsection with seven subsubsections, five of them in the first ten
+  pages; it is now eleven subsections and twenty-four subsubsections, grouped
+  by subject.
+- **The options section of `coppe.pdf` opens with a table of what is default,**
+  and every entry states its own default. Three were wrong or missing:
+  `resumosemreferencia` was described as on by default when it is the
+  *reference* that is on and the option that is off, and `rascunhoficha` and
+  the `morewrites` loading stated no default at all.
+- **The files and developer sections of `coppe.pdf` describe the project as it
+  is.** They still showed the logos loose in the root, knew nothing of
+  `logos/`, `manuais/` or the language folders, told the reader not to copy
+  `coppe.dtx` and `coppe.ins` (which the delivery now ships on purpose), spoke
+  of twelve adversarial documents outside `tests/` (there are six, inside), and
+  had never heard of `tests/regressivo/` or of the panel.
 - **One-sided layout, 3 cm left margin** (2.3) — mirrored margins lost their
   normative basis when the 2026 edition dropped the verso margins.
 - **Continuous pagination from the folha de rosto**; the Introduction is no
@@ -211,6 +278,15 @@ to the CPGP is [`PROPOSTA_CPGP.md`](./PROPOSTA_CPGP.md).
 
 ### Fixed
 
+- **Sixty lines of documentation were printed as verbatim code in
+  `coppe.pdf`,** and had been for several versions. Two `macrocode` guards in
+  the `.dtx` were written with three spaces instead of four, and `doc.sty` only
+  closes a code block on a percent sign followed by **exactly** four spaces; a
+  dead `\@wrlab` block commented out with four percent signs had the same
+  effect for the opposite reason, because `doc.sty` ignores *every* percent
+  sign in the documentation part, so that line opened a real code block.
+  Neither broke the compilation, which is why neither was seen.
+  `tools/conferir-manual.py` now checks every guard.
 - **The `pdfa` option had never been compiled in a real document** and worked
   in none: it wrote the `.xmpdata` before `\title` and `\author` existed, it
   exhausted TeX's sixteen output streams in `example.tex`, a bad pass recorded
@@ -321,7 +397,7 @@ Testing is now **three layers**, each asking a different question:
   of the approval sheet — five names, six, seven or more — are still there,
   the ceiling of eight included.
 - `tests/regressivo/` — *did an old defect come back?* **New.** One minimal
-  test per defect already fixed, 24 of them, each declaring in its own header
+  test per defect already fixed, 36 of them, each declaring in its own header
   what must and must not appear in the PDF, in the log, in an auxiliary file or
   in the raw bytes. It is opt-in: it answers a different question and does not
   belong in every build. It exists because nearly every bug this class ever had

@@ -1,0 +1,36 @@
+%% Teste de regressao da CoppeTeX. NAO roda na suite normal.
+%% Rode com: python tests/regressivo/run-regressivo.py
+%% BUG: o colofao dizia "Latin Modern" mesmo depois de o autor trocar a fonte, e
+%% dizia so o nome do motor, sem versao, sem sistema TeX, sem formato e sem data
+%% e hora. Colofao e registro de como AQUELE exemplar foi produzido: cada dado
+%% tem de ser medido na compilacao. Este teste troca \familydefault para uma
+%% familia que a classe nao conhece e cobra que o colofao diga a familia nova --
+%% antes da v4.1 ele dizia a antiga -- e que traga a hora, o formato e o banner
+%% do motor, que nenhuma versao anterior imprimia.
+%% ESPERA-TEXTO: Gerado em
+%% ESPERA-TEXTO: com o formato LATEX de
+%% ESPERA-TEXTO: na fonte da familia lmtt, codificacao T1
+%% ESPERA-TEXTO: This is
+%% ESPERA-TEXTO: pdfTeX 1.
+%% NAO-ESPERA-TEXTO: na fonte Latin Modern
+\documentclass[dsc]{coppe}
+\renewcommand{\familydefault}{lmtt}
+\title{Titulo do trabalho}
+\foreigntitle{The work title}
+\author{Nome}{Sobrenome}
+\advisor{Primeiro}{Orientador}{D.Sc.}{UFRJ}
+\examiner{Primeiro Examinador}{D.Sc.}{UFRJ}
+\department{PESC}
+\date{09}{2026}
+\keyword{Regressao}
+\begin{document}
+  \maketitle
+  \frontmatter
+  \begin{abstract}Resumo.\end{abstract}
+  \begin{foreignabstract}Abstract.\end{foreignabstract}
+  \tableofcontents
+  \mainmatter
+  \chapter{Um capitulo}
+  Texto.
+  \coppetexfinalpage
+\end{document}

@@ -1,0 +1,32 @@
+%% Teste de regressao da CoppeTeX. NAO roda na suite normal.
+%% Rode com: python tests/regressivo/run-regressivo.py
+%% BUG: o tipo do trabalho e a unica opcao de classe sem padrao, e nao havia
+%% nada cobrando que ela viesse. Sem ela a classe carregava em silencio e
+%% morria mais tarde, dentro do \maketitle, com "Undefined control sequence
+%% \local@doctype" apontando para uma linha da propria classe -- e o autor nao
+%% tinha como ligar aquilo a opcao que faltava no seu \documentclass. Nao ha
+%% padrao possivel: msc e dsc mudam capa, grau, natureza do trabalho e quantas
+%% folhas o trabalho tem, e escolher um dos dois por conta propria produziria
+%% uma dissertacao de mestrado para quem estava escrevendo uma tese.
+%% ESPERA-FALHA: sim
+%% ESPERA-LOG: Falta dizer o tipo do trabalho
+%% NAO-ESPERA-LOG: Undefined control sequence
+\documentclass{coppe}
+\title{Titulo do trabalho}
+\foreigntitle{The work title}
+\author{Nome}{Sobrenome}
+\advisor{Primeiro}{Orientador}{D.Sc.}{UFRJ}
+\examiner{Primeiro Examinador}{D.Sc.}{UFRJ}
+\department{PESC}
+\date{09}{2026}
+\keyword{Regressao}
+\begin{document}
+  \maketitle
+  \frontmatter
+  \begin{abstract}Resumo.\end{abstract}
+  \begin{foreignabstract}Abstract.\end{foreignabstract}
+  \tableofcontents
+  \mainmatter
+  \chapter{Um capitulo}
+  Texto.
+\end{document}

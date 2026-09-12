@@ -7,12 +7,14 @@ ninguem o documenta; uma linha do example.tex se desloca e a tabela "onde ver
 cada coisa funcionando" passa a apontar para o lugar errado. Nenhuma das duas
 coisas quebra a compilacao, e por isso nenhuma das duas aparece sozinha.
 
-Este script olha tres coisas:
+Este script olha quatro coisas:
 
   1. Todo comando e ambiente PUBLICO que a classe define aparece no manual,
      marcado com \\DescribeMacro ou \\DescribeEnv?
   2. Toda opcao de classe aparece na secao de opcoes?
   3. Os numeros de linha da tabela "onde ver" ainda batem com o example.tex?
+  4. Os guardas de macrocode do .dtx estao bem escritos? Um guarda torto nao
+     quebra nada: so faz o manual imprimir documentacao como se fosse codigo.
 
 O que NAO e cobrado: comandos internos (os que levam @ no nome), os quatro
 comandos de montagem de folha que o manual lista de proposito na secao
@@ -101,6 +103,46 @@ def onde_ver(dtx, exemplo):
     return problemas
 
 
+GUARDA_BOA = re.compile(r"^%    \\(begin|end)\{macrocode\*?\}$")
+GUARDA_QUALQUER = re.compile(r"\\(begin|end)\{macrocode\*?\}")
+
+
+def guardas(dtx):
+    """Confere os guardas de macrocode do .dtx.
+
+    O doc.sty so fecha um bloco de codigo quando a linha e, EXATAMENTE, um '%'
+    seguido de QUATRO espacos e do \\end{macrocode}. Com tres espacos o bloco
+    nao fecha, e tudo o que vem depois -- documentacao inclusive -- sai
+    impresso como codigo, verbatim, no coppe.pdf. Nada quebra a compilacao, e
+    por isso ninguem ve: foi assim que sessenta linhas do manual passaram
+    quatro versoes impressas como se fossem codigo.
+
+    O sinal de porcentagem tambem merece cuidado na parte de documentacao: o
+    doc.sty ignora TODOS eles, e nao apenas o primeiro de cada linha, de modo
+    que uma linha comecada por '%%%%' abre um bloco de codigo de verdade.
+    """
+    problemas = []
+    aberto = False
+    for n, linha in enumerate(dtx.split("\n"), 1):
+        if not GUARDA_QUALQUER.search(linha):
+            continue
+        m = GUARDA_BOA.match(linha)
+        if not m:
+            problemas.append((n, "guarda fora do padrao: %s" % linha.strip()))
+            continue
+        if m.group(1) == "begin":
+            if aberto:
+                problemas.append((n, "abriu macrocode com bloco ja aberto"))
+            aberto = True
+        else:
+            if not aberto:
+                problemas.append((n, "fechou macrocode sem bloco aberto"))
+            aberto = False
+    if aberto:
+        problemas.append((0, "o .dtx termina com um bloco macrocode aberto"))
+    return problemas
+
+
 def main():
     cls, dtx, exemplo = ler(CLS), ler(DTX), ler(EXEMPLO)
     cmds, envs, opts = definidos(cls)
@@ -114,6 +156,7 @@ def main():
     faltam_env = sorted(e for e in envs if e not in docenv and e not in ENV_INTERNO)
     faltam_opt = sorted(o for o in opts if ("texttt{%s}" % o) not in dtx)
     desalinhadas = onde_ver(dtx, exemplo)
+    tortos = guardas(dtx)
 
     erros = 0
     print("=== conferir-manual: %d comandos publicos, %d ambientes, %d opcoes"
@@ -152,6 +195,15 @@ def main():
             print("        \\%-22s manual diz %-5d %s" % (cmd, n, obs))
     else:
         print("ok    a tabela 'onde ver' bate com o example.tex")
+
+    if tortos:
+        erros += len(tortos)
+        print("\nERRO  %d guarda(s) de macrocode mal escrito(s) no coppe.dtx:"
+              % len(tortos))
+        for n, obs in tortos:
+            print("        linha %-6s %s" % (n or "?", obs))
+    else:
+        print("ok    os guardas de macrocode estao bem escritos")
 
     print("\n=== %d problema(s) ===" % erros)
     return 1 if erros else 0

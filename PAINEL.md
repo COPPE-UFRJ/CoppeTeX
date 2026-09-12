@@ -162,6 +162,14 @@ Tudo o que é opcional tem um sim/não, e o padrão de tudo é o **padrão compl
 da COPPE**, como no exemplo: quem aperta Gerar sem mexer em nada recebe um
 trabalho com todas as folhas que a norma prevê. Tirar é escolha de quem gera.
 
+Há uma exceção a esse padrão, e é deliberada: o campo **Pasta das referências**
+vem preenchido com `referencias`, e o `.bib` gerado vai para lá em vez da raiz.
+O exemplo tem os `.bib` na raiz por história, não por norma, e a subpasta é a
+recomendação desde a 4.1 — ela tira arquivo da raiz do trabalho e, de quebra,
+impede que um `.bib` da distribuição do TeX se passe pelo seu. Apague o campo
+para voltar à raiz. A justificativa está no `src/coppe.pdf`, na seção *Onde por
+os `.bib`*, e o teste é o `tests/regressivo/r31`.
+
 ### Ele também busca a classe
 
 A opção **Baixar a classe do GitHub** (`--baixar=sim`) traz, para a mesma pasta,
