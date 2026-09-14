@@ -33,15 +33,15 @@
 \makelosymbols
 \makeloabbreviations
 
-\newsigla{coppe}{COPPE}{Instituto Alberto Luiz Coimbra de Pós-Graduação e
+\defineacronym{coppe}{COPPE}{Instituto Alberto Luiz Coimbra de Pós-Graduação e
   Pesquisa de Engenharia}
-\newsigla{ufrj}{UFRJ}{Universidade Federal do Rio de Janeiro}
-\newsigla{abnt}{ABNT}{Associação Brasileira de Normas Técnicas}
-\newsigla{sibi}{SiBI}{Sistema de Bibliotecas e Informação}
-\newsigla{capes}{CAPES}{Coordenação de Aperfeiçoamento de Pessoal de Nível
+\defineacronym{ufrj}{UFRJ}{Universidade Federal do Rio de Janeiro}
+\defineacronym{abnt}{ABNT}{Associação Brasileira de Normas Técnicas}
+\defineacronym{sibi}{SiBI}{Sistema de Bibliotecas e Informação}
+\defineacronym{capes}{CAPES}{Coordenação de Aperfeiçoamento de Pessoal de Nível
   Superior}
-\newsigla{cepg}{CEPG}{Conselho de Ensino para Graduados}
-\newsigla{cpgp}{CPGP}{Comissão de Programas de Pós-Graduação e Pesquisa de
+\defineacronym{cepg}{CEPG}{Conselho de Ensino para Graduados}
+\defineacronym{cpgp}{CPGP}{Comissão de Programas de Pós-Graduação e Pesquisa de
   Engenharia}
 
 \begin{document}
@@ -61,11 +61,11 @@
   \department{PESC}
   \date{09}{2026}
 
-  \areaconcentracao{Engenharia de Sistemas e Computação}
-  \linhapesquisa{Engenharia de Dados e Conhecimento}
-  \tipoproducao{bibliografica}
-  \projetovinculado{nao}
-  \agenciafomento{Conselho Nacional de Desenvolvimento Científico e
+  \concentrationarea{Engenharia de Sistemas e Computação}
+  \researchline{Engenharia de Dados e Conhecimento}
+  \productiontype{bibliographic}
+  \linkedproject{no}
+  \fundingagency{Conselho Nacional de Desenvolvimento Científico e
     Tecnológico}{CNPq}
 
   \keyword{Normalização}
@@ -83,18 +83,18 @@
 
   \chapter*{Agradecimentos}
 
-  Este manual é devedor do trabalho do \sigla{sibi} da \sigla{ufrj}, que mantém e
+  Este manual é devedor do trabalho do \useacronym{sibi} da \useacronym{ufrj}, que mantém e
   revisa o \emph{Manual para elaboração e normalização de trabalhos acadêmicos},
-  e dos alunos da \sigla{coppe} que, ao longo dos anos, relataram cada
+  e dos alunos da \useacronym{coppe} que, ao longo dos anos, relataram cada
   divergência entre a norma escrita e o que a classe produzia. Boa parte do que
   está correto aqui foi corrigido por causa de um relato de aluno.
 
   \begin{abstract}
     \label{norma:resumo}%
     Este manual reúne as regras de apresentação gráfica de teses, dissertações e
-    exames de qualificação defendidos na \sigla{coppe} da \sigla{ufrj}, na forma
+    exames de qualificação defendidos na \useacronym{coppe} da \useacronym{ufrj}, na forma
     em que elas valem depois da 9.ª edição revista (2026) do \emph{Manual para
-    elaboração e normalização de trabalhos acadêmicos} do \sigla{sibi}. Trata do
+    elaboração e normalização de trabalhos acadêmicos} do \useacronym{sibi}. Trata do
     formato da página, da estrutura do trabalho, das ilustrações, das citações,
     das referências, das siglas e dos elementos pré e pós-textuais. Cada regra é
     enunciada e, em seguida, demonstrada: este documento foi composto com a
@@ -123,8 +123,8 @@
 
   \listoffigures
   \listoftables
-  \listofquadros
-  \listofprogramas
+  \listofframes
+  \listofprograms
   \listofalgorithms
   \printloabbreviations
   \printlosymbols
@@ -135,12 +135,12 @@
   \chapter{Introdução}
 
   Este manual estabelece as regras de apresentação gráfica de teses,
-  dissertações e exames de qualificação defendidos na \sigla{coppe} da
-  \sigla{ufrj}, e as demonstra usando a classe \CoppeTeX.
+  dissertações e exames de qualificação defendidos na \useacronym{coppe} da
+  \useacronym{ufrj}, e as demonstra usando a classe \CoppeTeX.
 
   Ele está alinhado ao \emph{Manual para elaboração e normalização de trabalhos
-  acadêmicos} do \sigla{sibi}, 9.ª edição revista, de 2026, que é a norma
-  vigente na \sigla{ufrj}, e às normas da \sigla{abnt} que aquele manual aplica:
+  acadêmicos} do \useacronym{sibi}, 9.ª edição revista, de 2026, que é a norma
+  vigente na \useacronym{ufrj}, e às normas da \useacronym{abnt} que aquele manual aplica:
   \mbox{NBR~14724} (estrutura do trabalho), \mbox{NBR~6027} (sumário),
   \mbox{NBR~6024} (numeração progressiva), \mbox{NBR~10520:2023} (citações) e
   \mbox{NBR~6023} (referências).
@@ -157,18 +157,18 @@
 
   \section{O que mudou, e por quê}
 
-  A edição de 2026 do manual do \sigla{sibi} não foi uma revisão de redação.
+  A edição de 2026 do manual do \useacronym{sibi} não foi uma revisão de redação.
   Ela absorveu três decisões institucionais, e cada uma delas mudou a forma do
   trabalho:
 
   \begin{alineas}
-    \item a Resolução \sigla{cepg} n.º 246/2023 acabou com a via impressa: a
+    \item a Resolução \useacronym{cepg} n.º 246/2023 acabou com a via impressa: a
       entrega passou a ser exclusivamente digital. Daí decorrem o fim das
       margens espelhadas, o fim das linhas de assinatura na folha de aprovação e
       a exigência de arquivo em PDF/A;
-    \item o art.\ 57 da Resolução \sigla{cepg} n.º 302/2024 fixou os idiomas em
+    \item o art.\ 57 da Resolução \useacronym{cepg} n.º 302/2024 fixou os idiomas em
       que o trabalho pode ser redigido: português, inglês ou espanhol;
-    \item a coleta de dados da \sigla{capes} passou a exigir uma folha adicional,
+    \item a coleta de dados da \useacronym{capes} passou a exigir uma folha adicional,
       obrigatória desde agosto de 2026, logo após a folha de rosto.
   \end{alineas}
 
@@ -252,7 +252,7 @@
   A norma \textbf{não prescreve família de fonte}. A 2.2(b) fixa a cor, o corpo
   e o corpo menor de quatro itens, e cala sobre a família. A escolha é do autor.
   A classe compõe sem serifa por padrão, que é como o próprio manual do
-  \sigla{sibi} está composto, e a opção \verb|comserifa| volta à serifada.
+  \useacronym{sibi} está composto, e a opção \verb|comserifa| volta à serifada.
 
   \section{Margens}
 
@@ -317,7 +317,7 @@
   O manual dá um exemplo e não fecha uma tabela. A leitura de referência adotada
   pela \CoppeTeX\ está no \autoref{qua:titulos}, e é o que a classe implementa.
 
-  \begin{quadro}[ht]
+  \begin{framefloat}[ht]
     \centering
     \caption{Destaque gradativo dos títulos de seção}
     \label{qua:titulos}
@@ -337,7 +337,7 @@
       \hline
     \end{tabular}
     \source{Elaboração própria, a partir do §2.6 do manual do SiBI.}
-  \end{quadro}
+  \end{framefloat}
 
   Os títulos \textbf{sem} indicativo numérico --- agradecimentos, listas, resumo,
   sumário, referências, glossário, apêndices, anexos e índice --- são
@@ -350,7 +350,7 @@
 
   A estrutura segue a \mbox{NBR~14724}, na ordem do \autoref{qua:estrutura}.
 
-  \begin{quadro}[ht]
+  \begin{framefloat}[ht]
     \centering
     \caption{Ordem dos elementos do trabalho}
     \label{qua:estrutura}
@@ -390,21 +390,21 @@
       \hline
     \end{tabular}
     \source{Elaboração própria, a partir da NBR 14724 e do manual do SiBI.}
-  \end{quadro}
+  \end{framefloat}
 
   \section{A folha adicional}
 
   É o elemento novo, e o que mais surpreende quem escreveu a tese antes de 2026.
 
   Vem \textbf{logo depois da folha de rosto}, é preenchida pelo Programa, e traz
-  duas coisas: os campos da coleta de dados da \sigla{capes} --- tipo de produção
+  duas coisas: os campos da coleta de dados da \useacronym{capes} --- tipo de produção
   intelectual, projeto de pesquisa vinculado, nome do projeto, área de
   concentração e agências de fomento --- e, abaixo deles, a ficha catalográfica.
 
   Ela \textbf{não é contada nem numerada}, como diz a \autoref{sec:paginacao}.
 
   A ficha catalográfica não é composta pelo autor nem pela classe: vem do gerador
-  do \sigla{sibi} ou da biblioteca do Programa, e entra no trabalho como um PDF.
+  do \useacronym{sibi} ou da biblioteca do Programa, e entra no trabalho como um PDF.
 
   Os exames de qualificação e o seminário de mestrado não levam folha adicional,
   nem ficha, nem a referência no alto dos resumos: eles não são depositados na
@@ -456,7 +456,7 @@
   segunda folha.
 
   Num trabalho redigido em espanhol, são \textbf{três}: o espanhol, o inglês e um
-  em português, para a banca da \sigla{ufrj}.
+  em português, para a banca da \useacronym{ufrj}.
 
   \section{O formato do arquivo}
 
@@ -549,7 +549,7 @@
   também o \autoref{qua:titulos} e o \autoref{qua:estrutura}, usados nos
   capítulos anteriores.
 
-  \begin{quadro}[ht]
+  \begin{framefloat}[ht]
     \centering
     \caption{Exemplo de quadro, fechado em todas as bordas}
     \label{qua:exemplo}
@@ -563,7 +563,7 @@
       \hline
     \end{tabular}
     \source{Elaboração própria.}
-  \end{quadro}
+  \end{framefloat}
 
   \section{Tabelas que não cabem}
 
@@ -629,7 +629,7 @@
   \section{Citação de citação}
 
   Quando não se teve acesso ao original, mas apenas a uma obra que o cita, usa-se
-  a expressão \emph{apud}, em itálico. Pela \sigla{abnt}, entra na lista de
+  a expressão \emph{apud}, em itálico. Pela \useacronym{abnt}, entra na lista de
   referências \textbf{apenas a obra efetivamente consultada}; a obra original,
   que não foi lida, é informada no texto e não é referenciada.
 
@@ -680,7 +680,7 @@
   \texttt{biber}. Os tipos de entrada têm nomes em inglês, com sinônimos em
   português --- \verb|@livro| para \verb|@book|, \verb|titulo| para
   \verb|title| ---, e cobrem as 34 categorias que a seção 4.2 do manual do
-  \sigla{sibi} enumera: monografia e parte de monografia, correspondência,
+  \useacronym{sibi} enumera: monografia e parte de monografia, correspondência,
   publicação periódica, artigo de revista e de jornal, evento e trabalho
   apresentado em evento, patente, legislação, jurisprudência, ato normativo,
   documento civil, documento audiovisual, partitura, documento iconográfico,
@@ -688,7 +688,7 @@
   exclusivo em meio eletrônico.
 
   Cada uma dessas categorias foi conferida contra o exemplo impresso no próprio
-  manual do \sigla{sibi}.
+  manual do \useacronym{sibi}.
 
   \section{Documento em meio eletrônico}
 
@@ -717,13 +717,13 @@
   comando:
 
 \begin{verbatim}
-\newsigla{ufrj}{UFRJ}{Universidade Federal do Rio de Janeiro}
+\defineacronym{ufrj}{UFRJ}{Universidade Federal do Rio de Janeiro}
 ...
-A \sigla{ufrj} mantem ...     % primeira vez: forma completa (UFRJ)
-Na \sigla{ufrj}, o programa ...  % depois: so a sigla
+A \useacronym{ufrj} mantem ...     % primeira vez: forma completa (UFRJ)
+Na \useacronym{ufrj}, o programa ...  % depois: so a sigla
 \end{verbatim}
 
-  A forma \verb|\sigla*{chave}| força a forma completa mesmo depois da primeira
+  A forma \verb|\useacronym*{chave}| força a forma completa mesmo depois da primeira
   vez, o que é útil na abertura de um capítulo distante.
 
   Este manual usa o mecanismo: a primeira ocorrência de cada sigla dele saiu por
@@ -761,7 +761,7 @@ Na \sigla{ufrj}, o programa ...  % depois: so a sigla
   \section{Programas}
 
   Um trecho de programa é uma ilustração como as outras: legenda no topo, fonte
-  abaixo, e uma lista própria, obtida com \verb|\listofprogramas|. O
+  abaixo, e uma lista própria, obtida com \verb|\listofprograms|. O
   \autoref{prog:ex} mostra um exemplo em Python.
 
   \begin{python}[caption={Olá, COPPE, em Python},label=prog:ex]
@@ -796,13 +796,13 @@ public class Saudacao {
   \begin{algorithm}[H]
     \caption{Máximo de um vetor}
     \label{alg:ex}
-    \Dados{vetor $v$ com $n$ elementos}
-    \Resultado{maior elemento $m$}
+    \KwData{vetor $v$ com $n$ elementos}
+    \KwResult{maior elemento $m$}
     $m \leftarrow v[1]$\;
-    \Para{$i \leftarrow 2$ \Ate{} $n$}{
-      \Se{$v[i] > m$}{$m \leftarrow v[i]$\;}
+    \For{$i \leftarrow 2$ \KwTo{} $n$}{
+      \If{$v[i] > m$}{$m \leftarrow v[i]$\;}
     }
-    \Retorna $m$\;
+    \KwRet $m$\;
   \end{algorithm}
 
   O \autoref{alg:busca} usa a estrutura de repetição condicional, e existe para
@@ -812,14 +812,14 @@ public class Saudacao {
   \begin{algorithm}[H]
     \caption{Busca sequencial}
     \label{alg:busca}
-    \Dados{vetor $v$ com $n$ elementos e uma chave $k$}
-    \Resultado{posição de $k$ em $v$, ou zero se $k$ não estiver em $v$}
+    \KwData{vetor $v$ com $n$ elementos e uma chave $k$}
+    \KwResult{posição de $k$ em $v$, ou zero se $k$ não estiver em $v$}
     $i \leftarrow 1$\;
-    \Enquanto{$i \leq n$ \textbf{e} $v[i] \neq k$}{
+    \While{$i \leq n$ \textbf{e} $v[i] \neq k$}{
       $i \leftarrow i + 1$\;
     }
-    \Se{$i > n$}{\Retorna $0$\;}
-    \Retorna $i$\;
+    \If{$i > n$}{\KwRet $0$\;}
+    \KwRet $i$\;
   \end{algorithm}
 
   \section{Quando o código é longo demais}
@@ -830,8 +830,8 @@ public class Saudacao {
 
   \chapter{Conclusão}
 
-  Este manual enunciou as regras de apresentação gráfica da \sigla{coppe}, na
-  forma em que elas valem depois da edição de 2026 do manual do \sigla{sibi}, e
+  Este manual enunciou as regras de apresentação gráfica da \useacronym{coppe}, na
+  forma em que elas valem depois da edição de 2026 do manual do \useacronym{sibi}, e
   as demonstrou no próprio formato: cada regra sobre margem, paginação, legenda,
   citação e referência pode ser conferida olhando para a folha em que está
   escrita.
@@ -858,16 +858,16 @@ public class Saudacao {
     \item identificação: \verb|\title|, \verb|\foreigntitle|, \verb|\subtitle|,
       \verb|\author|, \verb|\advisor|, \verb|\coadvisor|, \verb|\examiner|,
       \verb|\department|, \verb|\date|, \verb|\keyword|;
-    \item folha adicional: \verb|\areaconcentracao|, \verb|\linhapesquisa|,
-      \verb|\tipoproducao|, \verb|\projetovinculado|, \verb|\nomeprojeto|,
-      \verb|\agenciafomento|, \verb|\fichacatalografica|;
+    \item folha adicional: \verb|\concentrationarea|, \verb|\researchline|,
+      \verb|\tipoproducao|, \verb|\projetovinculado|, \verb|\projectname|,
+      \verb|\fundingagency|, \verb|\catalogcard|;
     \item estrutura: \verb|\maketitle|, \verb|\frontmatter|, \verb|\mainmatter|,
       \verb|\backmatter|, \verb|\dedication|, \verb|\appendix|, \verb|\annex|;
     \item ilustrações: \verb|\source| e \verb|\fonte|, ambiente \verb|quadro|,
-      \verb|\listofquadros|, \verb|\newcoppefloat|;
-    \item siglas e símbolos: \verb|\newsigla|, \verb|\sigla|, \verb|\sigla*|,
+      \verb|\listofframes|, \verb|\newcoppefloat|;
+    \item siglas e símbolos: \verb|\defineacronym|, \verb|\useacronym|, \verb|\useacronym*|,
       \verb|\abbrev|, \verb|\symbl|;
-    \item listas: ambiente \verb|alineas|, \verb|\listofprogramas|,
+    \item listas: ambiente \verb|alineas|, \verb|\listofprograms|,
       \verb|\listofalgorithms|, \verb|\printloabbreviations|,
       \verb|\printlosymbols|;
     \item citações: \verb|\enquote|, ambiente \verb|longquote|, \verb|\citet|,

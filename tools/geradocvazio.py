@@ -230,11 +230,11 @@ OPCOES_CLASSE = ["pdfa", "numbers", "comserifa", "semlinks", "doublespacing",
 
 LISTAS = [("listoffigures", "\\listoffigures"),
           ("listoftables", "\\listoftables"),
-          ("listofquadros", "\\listofquadros"),
-          ("listofprogramas", "\\listofprogramas"),
+          ("listofquadros", "\\listofframes"),
+          ("listofprogramas", "\\listofprograms"),
           ("listofalgorithms", "\\listofalgorithms"),
           ("abreviaturas", "\\printloabbreviations"),
-          ("siglas", "\\printlosiglas"),
+          ("siglas", "\\printloacronyms"),
           ("simbolos", "\\printlosymbols")]
 
 
@@ -303,7 +303,7 @@ def monta_tex(v, nome_bib):
     if v["abreviaturas"]:
         A("\\makeloabbreviations")
     if v["siglas"]:
-        A("\\makelosiglas")
+        A("\\makeloacronyms")
     if v["simbolos"]:
         A("\\makelosymbols")
     if v["indice"]:
@@ -336,10 +336,10 @@ def monta_tex(v, nome_bib):
     A("  \\department{%s}" % v["programa"])
     A("  \\date{%s}{%s}" % (v["mes"], v["ano"]))
     if v["dataaprovacao"].strip():
-        A("  \\dataaprovacao{%s}" % v["dataaprovacao"])
+        A("  \\approvaldate{%s}" % v["dataaprovacao"])
     else:
-        A("  %% Sem \\dataaprovacao a folha escreve \"a ser determinada\".")
-        A("  %% \\dataaprovacao{15 de setembro de %s}" % v["ano"])
+        A("  %% Sem \\approvaldate a folha escreve \"a ser determinada\".")
+        A("  %% \\approvaldate{15 de setembro de %s}" % v["ano"])
     A("")
     A("  \\keyword{Primeira palavra-chave}")
     A("  \\keyword{Segunda palavra-chave}")
@@ -353,20 +353,23 @@ def monta_tex(v, nome_bib):
     A("")
     A("  %% Folha adicional da Coleta CAPES, obrigatoria desde agosto de 2026.")
     if v["areaconcentracao"].strip():
-        A("  \\areaconcentracao{%s}" % v["areaconcentracao"])
+        A("  \\concentrationarea{%s}" % v["areaconcentracao"])
     if v["linhapesquisa"].strip():
-        A("  \\linhapesquisa{%s}" % v["linhapesquisa"])
-    A("  \\tipoproducao{%s}" % v["tipoproducao"])
-    A("  \\projetovinculado{%s}" % v["projetovinculado"])
+        A("  \\researchline{%s}" % v["linhapesquisa"])
+    A("  \\productiontype{%s}" % {"bibliografica": "bibliographic", "artistica": "artistic",
+                                  "tecnologica": "technological", "tecnica": "technical"}
+      .get(v["tipoproducao"], v["tipoproducao"]))
+    A("  \\linkedproject{%s}" % {"sim": "yes", "nao": "no"}.get(v["projetovinculado"],
+                                                        v["projetovinculado"]))
     if v["nomeprojeto"].strip():
-        A("  \\nomeprojeto{%s}" % v["nomeprojeto"])
+        A("  \\projectname{%s}" % v["nomeprojeto"])
     for i in range(int(v["n_agencias"])):
-        A("  \\agenciafomento{Nome por extenso da agencia %d}{SIGLA}" % (i + 1))
+        A("  \\fundingagency{Nome por extenso da agencia %d}{SIGLA}" % (i + 1))
     if v["ficha"].strip():
-        A("  \\fichacatalografica{%s}" % v["ficha"])
+        A("  \\catalogcard{%s}" % v["ficha"])
     else:
         A("  %% A ficha vem de fichacatalografica.sibi.ufrj.br. Tendo o arquivo:")
-        A("  %% \\fichacatalografica{ficha.pdf}")
+        A("  %% \\catalogcard{ficha.pdf}")
     A("")
     A("  \\maketitle")
     A("")

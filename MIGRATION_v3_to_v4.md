@@ -469,7 +469,25 @@ makeindex -s coppe.ist -o minha-tese.lsg minha-tese.sgx
 
 O `latexmk` e o Overleaf já fazem isso com o `latexmkrc` da entrega.
 
-### 4.14 A licença é `COPYING.txt`
+### 4.14 Orientador na banca, e os nomes em inglês
+
+A folha de aprovação passou a abrir a banca com os orientadores, em primeiro
+lugar, como manda a 3.1.2.1.3(e) do Manual. Se o seu Programa quer só os
+examinadores, passe a opção `semorientadornabanca`. A opção
+`orientadorexamina` continua aceita e não faz mais nada.
+
+Todo comando da classe ganhou nome em inglês (`\defineacronym`,
+`\concentrationarea`, `\approvaldate`, `\productiontype{bibliographic}`...),
+e os exemplos passaram a usá-los. **Os nomes em português continuam valendo**:
+nada precisa mudar no seu trabalho. A tabela completa está no manual da
+classe, seção *Os nomes em inglês*.
+
+O `example.tex` virou dois: `min-exemplo.tex`, só com o obrigatório, e
+`max-exemplo.tex`, com tudo. As bases `example.bib` e `tipos.bib` viraram uma,
+`exemplo.bib`. Se o seu trabalho declara `\addbibresource{example.bib}` para
+aproveitar as entradas do exemplo, troque por `exemplo.bib`.
+
+### 4.15 A licença é `COPYING.txt`
 
 O arquivo da licença passou a se chamar `COPYING.txt`, porque o Overleaf não
 abre arquivo sem extensão. Se você mantém uma cópia da entrega, troque o nome

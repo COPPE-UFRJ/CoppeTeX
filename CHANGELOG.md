@@ -30,8 +30,38 @@ Still version 4.1: these are corrections to the release published on
 - **The licence file is `COPYING.txt`.** Overleaf does not open a file without
   an extension.
 
+- **The advisors head the board on the approval sheet by default.** 3.1.2.1.3(e)
+  of the UFRJ Manual says "o orientador deve aparecer em primeiro lugar, por ser o
+  presidente da banca", and the class used to leave the advisor out unless
+  `orientadorexamina` was given. The new option `semorientadornabanca` lists
+  the examiners only; `orientadorexamina` is still accepted and does nothing.
+
+- **`example.tex`, `example.bib` and `tipos.bib` are gone.** In their place:
+  `min-exemplo.tex` (only what the norm makes mandatory), `max-exemplo.tex`
+  (everything the class offers) and one database, `exemplo.bib`. `manual.tex`
+  has its own `manual.bib`, with the same entries it always printed (#102).
+
 ### Changed
 
+- **Every command has an English name**, and the shipped documents use them:
+  `\defineacronym`, `\useacronym`, `\makeloacronyms`, `\printloacronyms`,
+  `\approvaldate`, `\concentrationarea`, `\researchline`, `\productiontype`,
+  `\linkedproject`, `\projectname`, `\fundingagency`, `\catalogcard`,
+  `\setupabstracts`, `\epigraph`, `\listofframes`, `\listofprograms` and the
+  `framefloat` environment. Values too: `\productiontype{bibliographic}`,
+  `\linkedproject{no}`; and the bibliography field `newspapersection`. The
+  Portuguese names keep working. algorithm2e runs with `onelanguage`, so
+  `\For`, `\While`, `\KwData` print Portuguese words in a Portuguese work
+  (#102).
+- **The databases use biblatex names** for every entry type and field; the
+  reference lists come out identical (#102).
+- **The minimal and the maximal example** (#102). `max-exemplo.tex` adds to
+  the former example a subtitle, an epigraph (new command `\epigrafe`), XML,
+  HTML and Prolog listings, a glossary and an index.
+- **The class manual discusses** compile time on Overleaf and the
+  alternatives (paid plans, compiling on Windows, Linux and macOS), LaTeX
+  editors, and the reference managers JabRef, Zotero and Mendeley with their
+  Overleaf integration.
 - **The list of symbols follows the order of appearance** in the text, as
   3.1.2.2.7 of the UFRJ Manual asks: each symbol takes the position of the first
   time it is registered, and registering it again does not repeat it. The new
@@ -95,6 +125,11 @@ Still version 4.1: these are corrections to the release published on
     colour-model warning.
 - The TikZ example has its caption above the figure, as the class's own rule
   says (#91).
+- **The subtitle appears on the abstract sheets**, in the language of each
+  sheet. `\foreignsubtitle` was stored and never printed anywhere (#102).
+- **Column-one comments in the examples reached the student.** docstrip
+  removes lines starting with a single `%`, and the explanatory comments of
+  the examples' preambles never made it into the generated files.
 - `tools/versao.py` no longer reports line-ending differences between `dist/`
   and `src/` as divergences (#85).
 - `tools/conferir-referencias-cruzadas.py` no longer crashes when the log is on

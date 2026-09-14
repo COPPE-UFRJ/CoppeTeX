@@ -983,7 +983,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % Folhas pré-textuais & contadas, não numeradas & \texttt{numeraisromanos} \\
 % Listas no sumário & fora dele & \texttt{listasnosumario} \\
 % Lista de símbolos & ordem de aparição & \texttt{simbolosalfabeticos} \\
-% Orientador na banca & fora dela & \texttt{orientadorexamina} \\
+% Orientador na banca & em primeiro lugar & \texttt{semorientadornabanca} \\
 % Coorientador no resumo & fora dele & \texttt{coorientador} \\
 % Referência no resumo & \textbf{impressa} & \texttt{resumosemreferencia} \\
 % Ficha catalográfica & a que você fornecer & \texttt{rascunhoficha} \\
@@ -1084,11 +1084,13 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \subsection{Folhas pré-textuais}
 %
 % \begin{description}
-%   \item[\texttt{orientadorexamina}] Põe orientadores e coorientadores de volta
-%     na folha de aprovação, na frente dos examinadores, como presidência
-%     da banca (3.1.2.1.3(e)). \textbf{Desligada por padrão}: a folha registra
-%     quem \emph{examinou} o trabalho, e o orientador o conduziu. Ligue-a se no
-%     seu Programa o orientador integra a banca.
+%   \item[\texttt{semorientadornabanca}] \textbf{Desligada por padrão}: a
+%     folha de aprovação abre a banca com os orientadores e coorientadores, na
+%     frente dos examinadores, porque a 3.1.2.1.3(e) manda que ``o orientador
+%     deve aparecer em primeiro lugar, por ser o presidente da banca''. Ligue-a
+%     para listar só os examinadores.
+%   \item[\texttt{orientadorexamina}] Aceita e sem efeito desde a revisão da
+%     v4.1: pedia o orientador na banca, que agora é o padrão.
 %   \item[\texttt{coorientador}] Lista os coorientadores também nas três
 %     páginas de resumo, abaixo dos orientadores. Desligada por padrão: a
 %     3.1.2.1.4 descreve o resumo e não diz quem assina a orientação, e
@@ -1283,6 +1285,69 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % anuncia como \emph{experimental e sem suporte}, com um aviso em toda
 % compilação, e só resolve as listas, não os índices. A classe não o usa.
 %
+% \section{Os nomes em inglês}\label{sec:nomesingles}
+%
+% Todo comando da classe tem nome em inglês, e os documentos da entrega ---
+% |min-exemplo.tex|, |max-exemplo.tex|, |manual.tex| e o que o gerador de
+% documento vazio escreve --- usam esses nomes. Os comandos que nasceram em
+% português continuam valendo, com o mesmo efeito, para não quebrar trabalho
+% escrito antes. O texto que sai no PDF segue o idioma do trabalho, qualquer
+% que seja o nome do comando.
+%
+% \DescribeMacro{\defineacronym}
+% \DescribeMacro{\useacronym}
+% \DescribeMacro{\makeloacronyms}
+% \DescribeMacro{\printloacronyms}
+% \DescribeMacro{\approvaldate}
+% \DescribeMacro{\concentrationarea}
+% \DescribeMacro{\researchline}
+% \DescribeMacro{\productiontype}
+% \DescribeMacro{\linkedproject}
+% \DescribeMacro{\projectname}
+% \DescribeMacro{\fundingagency}
+% \DescribeMacro{\catalogcard}
+% \DescribeMacro{\setupabstracts}
+% \DescribeMacro{\epigraph}
+% \DescribeMacro{\listofframes}
+% \DescribeMacro{\listofprograms}
+% \DescribeEnv{framefloat}
+% \begin{center}\small
+% \begin{tabular}{@{}ll@{}}
+% \hline
+% \textbf{Em inglês} & \textbf{Em português} \\
+% \hline
+% |\defineacronym|, |\useacronym| & |\newsigla|, |\sigla| \\
+% |\makeloacronyms|, |\printloacronyms| & |\makelosiglas|, |\printlosiglas| \\
+% |\approvaldate| & |\dataaprovacao| \\
+% |\concentrationarea|, |\researchline| & |\areaconcentracao|, |\linhapesquisa| \\
+% |\productiontype|, |\linkedproject| & |\tipoproducao|, |\projetovinculado| \\
+% |\projectname|, |\fundingagency| & |\nomeprojeto|, |\agenciafomento| \\
+% |\catalogcard| & |\fichacatalografica| \\
+% |\setupabstracts| & |\configuraresumos| \\
+% |\epigraph| & |\epigrafe| \\
+% |\listofframes|, ambiente |framefloat| & |\listofquadros|, ambiente |quadro| \\
+% |\listofprograms| & |\listofprogramas| \\
+% |\source|, |\cpsource| & |\fonte|, |\cpfonte| \\
+% |\enquote| & |\citacao| \\
+% |\For|, |\While|, |\If|, |\KwData|, |\KwResult|, |\KwTo|, |\KwRet| &
+%   |\Para|, |\Enquanto|, |\Se|, |\Dados|, |\Resultado|, |\Ate|, |\Retorna| \\
+% \hline
+% \end{tabular}
+% \end{center}
+%
+% Os \textbf{valores} também: |\productiontype| aceita |bibliographic|,
+% |artistic|, |technological| e |technical| (ou |bibliografica|, |artistica|,
+% |tecnologica| e |tecnica|), e |\linkedproject| aceita |yes| e |no| (ou |sim| e
+% |nao|). Na bibliografia, o campo da seção do jornal chama-se
+% |newspapersection| (ou |caderno|).
+%
+% Dois cuidados. |\epigraph| só é definido se nenhum pacote o tiver definido
+% antes: quem carrega o pacote |epigraph| fica com o dele, que tem os mesmos dois
+% argumentos mas põe a epígrafe no alto do capítulo, e não numa folha própria;
+% nesse caso, use |\epigrafe|. E os comandos de algoritmo em inglês só imprimem as
+% palavras em português num trabalho em português --- é o |algorithm2e|, com a
+% opção |onelanguage| que a classe liga, que as traduz.
+%
 % \section{Comandos antes do \texttt{\textbackslash begin\{document\}}}
 %
 % São poucos, porque a classe foi feita para que quase tudo vá depois.
@@ -1380,8 +1445,9 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % tire os colchetes da instituição, e ponha a instituição no fim. Veja
 % |MIGRATION_v3_to_v4.md|.
 %
-% Quem aparece na folha de aprovação: só os examinadores, a não ser que
-% você passe a opção |orientadorexamina|.
+% Quem aparece na folha de aprovação: os orientadores e coorientadores, em
+% primeiro lugar, e depois os examinadores (3.1.2.1.3(e)). A opção
+% |semorientadornabanca| deixa só os examinadores.
 %
 % \DescribeMacro{\department}
 % A sigla do Programa: |\department{PESC}|. A classe conhece os treze Programas
@@ -1535,9 +1601,9 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % é a folha completa dos Anexos E e F, e saem juntos com um comando no
 % preâmbulo:
 % \begin{verbatim}
-%   \configuraresumos{true}{true}{true}{true}   % o padrao: folha completa
-%   \configuraresumos{true}{true}{true}{false}  % sem a referencia
-%   \configuraresumos{false}{false}{false}{false} % so o texto do resumo
+%   \setupabstracts{true}{true}{true}{true}   % o padrao: folha completa
+%   \setupabstracts{true}{true}{true}{false}  % sem a referencia
+%   \setupabstracts{false}{false}{false}{false} % so o texto do resumo
 % \end{verbatim}
 % Os quatro argumentos são lógicos --- |true| ou |false|, e nada além
 % disso, que a classe recusa com erro --- e estão na ordem da lista acima.
@@ -1748,10 +1814,10 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % garantir que uma vai escapar. Declare cada uma no preâmbulo e use |\sigla|:
 %
 % \begin{verbatim}
-%   \newsigla{ufrj}{UFRJ}{Universidade Federal do Rio de Janeiro}
+%   \defineacronym{ufrj}{UFRJ}{Universidade Federal do Rio de Janeiro}
 %   ...
-%   A \sigla{ufrj} mantem ...      % primeira vez: forma completa (SIGLA)
-%   Na \sigla{ufrj}, o programa ... % depois: so a sigla
+%   A \useacronym{ufrj} mantem ...      % primeira vez: forma completa (SIGLA)
+%   Na \useacronym{ufrj}, o programa ... % depois: so a sigla
 % \end{verbatim}
 %
 % |\sigla*{chave}| força a forma completa mesmo depois da primeira vez. Uma
@@ -2412,15 +2478,15 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % Banca                        & |\examiner|             & 105 \\
 % Programa                     & |\department|           & 112 \\
 % Data do depósito           & |\date|                 & 113 \\
-% Data da defesa               & |\dataaprovacao|        & 116 \\
+% Data da defesa               & |\approvaldate|        & 116 \\
 % Palavras-chave               & |\keyword|              & 122 \\
-% Área de concentração  & |\areaconcentracao|     & 132 \\
-% Linha de pesquisa            & |\linhapesquisa|        & 133 \\
-% Coleta CAPES                 & |\tipoproducao|         & 134 \\
-% Projeto vinculado            & |\projetovinculado|     & 135 \\
-% Nome do projeto              & |\nomeprojeto|          & 136 \\
-% Agência de fomento         & |\agenciafomento|       & 137 \\
-% Ficha catalográfica        & |\fichacatalografica|   & 143 \\
+% Área de concentração  & |\concentrationarea|     & 132 \\
+% Linha de pesquisa            & |\researchline|        & 133 \\
+% Coleta CAPES                 & |\productiontype|         & 134 \\
+% Projeto vinculado            & |\linkedproject|     & 135 \\
+% Nome do projeto              & |\projectname|          & 136 \\
+% Agência de fomento         & |\fundingagency|       & 137 \\
+% Ficha catalográfica        & |\catalogcard|   & 143 \\
 % Capa e folha de rosto        & |\maketitle|            & 145 \\
 % Parte pré-textual          & |\frontmatter|          & 147 \\
 % Dedicatória                & |\dedication|           & 148 \\
@@ -2436,8 +2502,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % Bibliografia                 & |\printbibliography|    & 870 \\
 % Código no texto            & |\pythoninline|         & 1018 \\
 % Código Java no texto       & |\javainline|           & 1055 \\
-% Sigla declarada              & |\newsigla|             & 1245 \\
-% Sigla usada                  & |\sigla|                & 1248 \\
+% Sigla declarada              & |\defineacronym|             & 1245 \\
+% Sigla usada                  & |\useacronym|                & 1248 \\
 % Abreviatura                  & |\abbrev|               & 1237 \\
 % Parte pós-textual          & |\backmatter|           & 1252 \\
 % Apêndices                  & |\appendix|             & 1272 \\
@@ -2973,7 +3039,8 @@ semlinks  & [dsc,semlinks]  & \pre & Links lose colour and frame; they stay clic
 doublespacing & [dsc,doublespacing] & \pre & Double spacing instead of one-and-a-half (2.2c). \\
 twoside   & [dsc,twoside]   & \pre & Mirrored margins, for printing and binding. \\
 oneside   & [dsc,oneside]   & \pre & One-sided, 3\,cm left margin on every sheet. The default. \\
-orientadorexamina & [dsc,orientadorexamina] & \pre & Put advisors back on the approval sheet. Off by default: the sheet records who examined. \\
+semorientadornabanca & [dsc,semorientadornabanca] & \pre & Approval sheet with the examiners only. By default the advisors head the board, as 3.1.2.1.3(e) requires. \\
+orientadorexamina & [dsc,orientadorexamina] & \pre & Accepted, no effect: the advisors are on the board by default. \\
 coorientador & [dsc,coorientador] & \pre & List coadvisors on the abstract pages too. \\
 rascunhoficha & [dsc,rascunhoficha] & \pre & Draft catalogue card while writing. \textbf{Never valid for deposit.} \\
 resumosemreferencia & [dsc,resumosemreferencia] & \pre & Drop the work's own reference from the top of the three abstracts. It is printed by default (3.1.2.1.4, Annexes E and F). \\
@@ -3129,7 +3196,7 @@ Problems: \url{https://github.com/COPPE-UFRJ/CoppeTeX/issues}
 %% várias: o tipo (msc, dsc, mscexam, dscexam, mscsem), o idioma (english,
 %% spanish, french, italian), numbers (citação numérica), comserifa,
 %% doublespacing, twoside, numeraisromanos, semlinks, listasnosumario,
-%% orientadorexamina, coorientador, resumosemreferencia, rascunhoficha,
+%% semorientadornabanca, coorientador, resumosemreferencia, rascunhoficha,
 %% simbolosalfabeticos, semmorewrites. O manual da classe descreve cada uma.
 %%
 %% Opções de classe que valem conhecer aqui:
@@ -3175,7 +3242,7 @@ Problems: \url{https://github.com/COPPE-UFRJ/CoppeTeX/issues}
 \makeloabbreviations
 %% Lista de siglas separada da de abreviaturas, como recomenda a 3.1.2.2.6 do
 %% Manual. Sem esta linha, as siglas entram na lista de abreviaturas.
-\makelosiglas
+\makeloacronyms
 %% Flutuante criado pelo autor: mesma regra dos demais (legenda acima, fonte
 %% abaixo) e uma lista propria, \listofmapas.
 \newcoppefloat{mapa}{Mapa}{Lista de Mapas}
@@ -3222,11 +3289,11 @@ Problems: \url{https://github.com/COPPE-UFRJ/CoppeTeX/issues}
   \date{06}{2026}
   % Data da defesa, na folha de aprovacao. Sem esta linha a folha sai com
   % "a ser determinada", que e o que se quer enquanto a data nao existe.
-  % \dataaprovacao{15 de setembro de 2026}
+  % \approvaldate{15 de setembro de 2026}
   %
-  % A folha de aprovacao lista so os EXAMINADORES. Se no seu Programa o
-  % orientador integra a banca, passe a opcao de classe `orientadorexamina'
-  % la em cima e ele volta para a lista, na frente dos examinadores.
+  % A folha de aprovacao abre a banca com os orientadores, na frente dos
+  % examinadores, como manda a 3.1.2.1.3(e). A opcao de classe
+  % `semorientadornabanca' deixa so os examinadores.
 
   \keyword{Primeira palavra-chave}
   \keyword{Segunda palavra-chave}
@@ -3238,18 +3305,18 @@ Problems: \url{https://github.com/COPPE-UFRJ/CoppeTeX/issues}
 
   % Dados da folha adicional (Coleta CAPES), obrigatoria desde agosto de 2026.
   % A folha e preenchida pelo Programa; estes campos apenas a compoem.
-  \areaconcentracao{Engenharia de Sistemas e Computação}
-  \linhapesquisa{Engenharia de Dados e Conhecimento}
-  \tipoproducao{bibliografica}   % bibliografica | artistica | tecnologica | tecnica
-  \projetovinculado{sim}         % sim | nao
-  \nomeprojeto{Nome do Projeto de Pesquisa ao qual o trabalho se vincula}
-  \agenciafomento{Conselho Nacional de Desenvolvimento Cientifico e
+  \concentrationarea{Engenharia de Sistemas e Computação}
+  \researchline{Engenharia de Dados e Conhecimento}
+  \productiontype{bibliographic}   % bibliografica | artistica | tecnologica | tecnica
+  \linkedproject{yes}         % sim | nao
+  \projectname{Nome do Projeto de Pesquisa ao qual o trabalho se vincula}
+  \fundingagency{Conselho Nacional de Desenvolvimento Cientifico e
                   Tecnologico}{CNPq}
-  \agenciafomento{Fundacao Carlos Chagas Filho de Amparo a Pesquisa do
+  \fundingagency{Fundacao Carlos Chagas Filho de Amparo a Pesquisa do
                   Estado do Rio de Janeiro}{FAPERJ}
   % A ficha oficial vem de fichacatalografica.sibi.ufrj.br; tendo o arquivo,
   % descomente a linha abaixo e a moldura vazia da folha adicional some.
-  % \fichacatalografica{ficha.pdf}
+  % \catalogcard{ficha.pdf}
 
   \maketitle
 
@@ -3264,9 +3331,9 @@ Problems: \url{https://github.com/COPPE-UFRJ/CoppeTeX/issues}
   ut labore et dolore magna aliqua.
 
   % Epígrafe (3.1.2.2.3), depois dos agradecimentos: citação e autoria.
-  \epigrafe{A imaginação é mais importante que o conhecimento.}{Albert Einstein}
+  \epigraph{A imaginação é mais importante que o conhecimento.}{Albert Einstein}
 
-  \begin{abstract}% 5 elementos; \configuraresumos, no preambulo, desliga 4
+  \begin{abstract}% 5 elementos; \setupabstracts, no preambulo, desliga 4
 
   Apresenta-se, nesta tese, um exemplo de resumo. Lorem ipsum dolor sit amet,
   consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
@@ -3305,25 +3372,25 @@ Problems: \url{https://github.com/COPPE-UFRJ/CoppeTeX/issues}
   %  - \tableofcontents ........ OBRIGATÓRIO (Manual 3.1.2.1.6);
   %  - \listoffigures .......... opcional (3.1.2.2.4, lista de ilustrações);
   %  - \listoftables ........... opcional (3.1.2.2.5);
-  %  - \listofquadros, \listofprogramas, \listofalgorithms: acréscimo da
+  %  - \listofframes, \listofprograms, \listofalgorithms: acréscimo da
   %    Norma COPPE (§10), presentes quando o trabalho tem ao menos um quadro,
   %    programa ou algoritmo;
   %  - \listofmapas ............ opcional; o Manual admite uma lista por tipo
   %    de ilustração (3.1.2.2.4), e \newcoppefloat cria o tipo;
   %  - \printloabbreviations ... opcional (3.1.2.2.6);
-  %  - \printlosiglas .......... opcional; a 3.1.2.2.6 recomenda separar as
-  %    siglas das abreviaturas (exige \makelosiglas no preâmbulo);
+  %  - \printloacronyms .......... opcional; a 3.1.2.2.6 recomenda separar as
+  %    siglas das abreviaturas (exige \makeloacronyms no preâmbulo);
   %  - \printlosymbols ......... opcional (3.1.2.2.7), na ordem de aparição.
   % Este exemplo imprime todas para mostrá-las. No seu trabalho, apague a linha
   % da lista que você não usa: deixada, ela sai como folha só com o título.
   \listoffigures
   \listoftables
-  \listofquadros
+  \listofframes
   \listofmapas
-  \listofprogramas
+  \listofprograms
   \listofalgorithms
   \printloabbreviations
-  \printlosiglas
+  \printloacronyms
   \printlosymbols
   \tableofcontents
 
@@ -3491,7 +3558,7 @@ A regra geral de posicionamento é que uma figura ou quadro só pode aparecer a 
 
 \textbf{Pela norma atual (manual2024), a legenda} \verb|\caption| \textbf{de toda ilustração --- figura, tabela ou quadro --- fica \emph{acima} dela}, com o número em algarismos arábicos, travessão e o título. \textbf{A fonte é obrigatória e fica \emph{abaixo}}, indicada com \verb|\source{...}| (sinônimo: \verb|\fonte{...}|), em letra menor; ela não numera nem avança nenhum contador. Se outro pacote já definir \verb|\source| ou \verb|\fonte|, use \verb|\cpsource| / \verb|\cpfonte|.
 
-Quadros são ilustrações cujos dados são delimitados por linhas em \emph{todas} as bordas (ao contrário das tabelas, com linhas só no topo e na base). O CoppeTeX oferece o float \verb|quadro| (sinônimo em inglês: \verb|frame|) e o comando \verb|\listofquadros| para a lista correspondente. Para criar outros floats com a mesma regra (legenda acima, \verb|\source| abaixo e uma \verb|\listof...|), use \verb|\newcoppefloat{nome}{Nome}{Título da Lista}|.
+Quadros são ilustrações cujos dados são delimitados por linhas em \emph{todas} as bordas (ao contrário das tabelas, com linhas só no topo e na base). O CoppeTeX oferece o float \verb|quadro| (sinônimo em inglês: \verb|frame|) e o comando \verb|\listofframes| para a lista correspondente. Para criar outros floats com a mesma regra (legenda acima, \verb|\source| abaixo e uma \verb|\listof...|), use \verb|\newcoppefloat{nome}{Nome}{Título da Lista}|.
 
 
 \section{Tabelas e Figuras Padrão}
@@ -3532,7 +3599,7 @@ Já a \autoref{fig:exemplo_figura} é uma figura padrão, com controle da largur
 
 Quadros têm a mesma regra (legenda acima, fonte abaixo), mas com linhas em todas as bordas. O \autoref{qua:exemplo} ilustra o float \verb|quadro|.
 
-\begin{quadro}[ht]
+\begin{framefloat}[ht]
 \centering
 \caption{Exemplo de Quadro}
 \label{qua:exemplo}
@@ -3546,11 +3613,11 @@ Quadro & Linhas em todas as bordas. \\
 \hline
 \end{tabular}
 \source{Elaboração própria.}
-\end{quadro}
+\end{framefloat}
 
 Um segundo quadro, no \autoref{qua:segundo}, prova que o contador anda e que a lista de quadros recebe as duas entradas.
 
-\begin{quadro}[ht]
+\begin{framefloat}[ht]
 \centering
 \caption{Segundo Quadro, para provar a numeração}
 \label{qua:segundo}
@@ -3564,7 +3631,7 @@ Fonte & Abaixo da ilustração. \\
 \hline
 \end{tabular}
 \source{Adaptado do manual do SiBI, 9.\textsuperscript{a} ed. rev., 2026.}
-\end{quadro}
+\end{framefloat}
 
 \section{Criando um float novo}
 
@@ -4124,7 +4191,7 @@ Este é o conteúdo do meu textbox sem título. Você pode adicionar qualquer te
 
 \section{Listagens de código e algoritmos}
 
-O CoppeTeX traz embutido o suporte a listagens de programas (pacote \verb|listings|) e a algoritmos (\verb|algorithm2e|). A legenda fica no topo (``Programa N''), como em qualquer ilustração, e a lista correspondente é gerada por \verb|\listofprogramas|. O \autoref{prog:exemplo} mostra um exemplo em Python.
+O CoppeTeX traz embutido o suporte a listagens de programas (pacote \verb|listings|) e a algoritmos (\verb|algorithm2e|). A legenda fica no topo (``Programa N''), como em qualquer ilustração, e a lista correspondente é gerada por \verb|\listofprograms|. O \autoref{prog:exemplo} mostra um exemplo em Python.
 
 \begin{python}[caption={Exemplo de programa em Python},label=prog:exemplo]
 def saudacao(nome):
@@ -4173,33 +4240,33 @@ banca(X) :- orienta(X, _).
 \source{Elaboração própria.}
 
 Há também \verb|\pythoninline| e \verb|\javainline| para código no meio do
-texto, como em \javainline{new Saudacao()}, e o ambiente \verb|Verbatim| (com as opções acima) para a saída de programas. Para algoritmos, use o ambiente \verb|algorithm| com as palavras-chave em português \verb|\Para| e \verb|\Enquanto|, como no \autoref{alg:soma}.
+texto, como em \javainline{new Saudacao()}, e o ambiente \verb|Verbatim| (com as opções acima) para a saída de programas. Para algoritmos, use o ambiente \verb|algorithm| com as palavras-chave em português \verb|\For| e \verb|\While|, como no \autoref{alg:soma}.
 
 \begin{algorithm}[H]
 \caption{Soma dos elementos de um vetor}
 \label{alg:soma}
-\Dados{vetor $v$ com $n$ elementos}
-\Resultado{soma $s$ dos elementos de $v$}
+\KwData{vetor $v$ com $n$ elementos}
+\KwResult{soma $s$ dos elementos de $v$}
 $s \leftarrow 0$\;
-\Para{$i \leftarrow 1$ \Ate{} $n$}{
+\For{$i \leftarrow 1$ \KwTo{} $n$}{
   $s \leftarrow s + v[i]$\;
 }
-\Retorna $s$\;
+\KwRet $s$\;
 \end{algorithm}
 
-O \autoref{alg:busca} é o segundo algoritmo, e usa \verb|\Enquanto|. Como no caso das listagens, ele existe para mostrar a numeração andando e a lista de algoritmos com duas entradas.
+O \autoref{alg:busca} é o segundo algoritmo, e usa \verb|\While|. Como no caso das listagens, ele existe para mostrar a numeração andando e a lista de algoritmos com duas entradas.
 
 \begin{algorithm}[H]
 \caption{Busca sequencial em um vetor}
 \label{alg:busca}
-\Dados{vetor $v$ com $n$ elementos e uma chave $k$}
-\Resultado{posição de $k$ em $v$, ou $0$ se $k$ não estiver em $v$}
+\KwData{vetor $v$ com $n$ elementos e uma chave $k$}
+\KwResult{posição de $k$ em $v$, ou $0$ se $k$ não estiver em $v$}
 $i \leftarrow 1$\;
-\Enquanto{$i \leq n$ \textbf{e} $v[i] \neq k$}{
+\While{$i \leq n$ \textbf{e} $v[i] \neq k$}{
   $i \leftarrow i + 1$\;
 }
-\Se{$i > n$}{\Retorna $0$\;}
-\Retorna $i$\;
+\If{$i > n$}{\KwRet $0$\;}
+\KwRet $i$\;
 \end{algorithm}
 
   \chapter{Escrevendo matemática}
@@ -4362,10 +4429,10 @@ use \verb|\href{https://exemplo.org}{texto}|. Evite digitar URLs como texto comu
   \abbrev{IoT}{IoT com ordenação default}
   \abbrev[ITU]{ITU}{ITU mesmo}
 
-  \newsigla{ufrj}{UFRJ}{Universidade Federal do Rio de Janeiro}
-  \newsigla{cpgp}{CPGP}{Comissão de Pós-Graduação e Pesquisa de Engenharia}
+  \defineacronym{ufrj}{UFRJ}{Universidade Federal do Rio de Janeiro}
+  \defineacronym{cpgp}{CPGP}{Comissão de Pós-Graduação e Pesquisa de Engenharia}
 
-  As siglas (Manual, seção 2.8) são expandidas na primeira ocorrência e registradas automaticamente na Lista de Siglas, que este exemplo mantém separada da de abreviaturas com \verb|\makelosiglas|. Uma sigla que não se usa com \verb|\sigla| entra na lista com \verb|\acron|, que não imprime nada no texto: é assim que a ABNT, citada neste capítulo sem \verb|\sigla|, está na lista.\acron{ABNT}{Associação Brasileira de Normas Técnicas} Declaradas com \verb|\newsigla|, basta usá-las: a \sigla{ufrj} oferece vários cursos de pós-graduação, e este programa segue as normas da \sigla{cpgp}. Em menções seguintes aparecem apenas as siglas, como \sigla{ufrj} e \sigla{cpgp}; use \verb|\sigla*| para forçar a forma extensa.
+  As siglas (Manual, seção 2.8) são expandidas na primeira ocorrência e registradas automaticamente na Lista de Siglas, que este exemplo mantém separada da de abreviaturas com \verb|\makeloacronyms|. Uma sigla que não se usa com \verb|\useacronym| entra na lista com \verb|\acron|, que não imprime nada no texto: é assim que a ABNT, citada neste capítulo sem \verb|\useacronym|, está na lista.\acron{ABNT}{Associação Brasileira de Normas Técnicas} Declaradas com \verb|\defineacronym|, basta usá-las: a \useacronym{ufrj} oferece vários cursos de pós-graduação, e este programa segue as normas da \useacronym{cpgp}. Em menções seguintes aparecem apenas as siglas, como \useacronym{ufrj} e \useacronym{cpgp}; use \verb|\useacronym*| para forçar a forma extensa.
 
 
 
@@ -4439,16 +4506,15 @@ No modelo \CoppeTeX os anexos devem obrigtoriamente vir depois dos apêndices e 
 % para quem prefere acrescentar a apagar.
 %    \begin{macrocode}
 %<*minexemplo>
-\documentclass[dsc,pdfa,orientadorexamina]{coppe}
+\documentclass[dsc,pdfa]{coppe}
 %% min-exemplo.tex -- tudo o que a norma exige, e nada além disso.
 %%
 %% O que está aqui e por quê (Manual UFRJ/SiBI, 9.ª ed. rev., 2026):
 %%  - pdfa ................ o depósito é em PDF/A (2.2d);
-%%  - orientadorexamina ... a 3.1.2.1.3(e) põe o orientador em primeiro lugar
-%%    na banca da folha de aprovação, como presidente;
 %%  - \maketitle .......... capa, folha de rosto (3.1.2.1.1) e folha adicional
 %%    com a Coleta CAPES e a ficha catalográfica (3.1.2.1.2);
-%%  - \frontmatter ........ folha de aprovação (3.1.2.1.3);
+%%  - \frontmatter ........ folha de aprovação (3.1.2.1.3), com o orientador
+%%    em primeiro lugar na banca, como presidente;
 %%  - abstract ............ resumo na língua do trabalho (3.1.2.1.4);
 %%  - foreignabstract ..... resumo em língua estrangeira (3.1.2.1.5);
 %%  - \tableofcontents .... sumário (3.1.2.1.6), o único obrigatório das listas;
@@ -4473,7 +4539,7 @@ No modelo \CoppeTeX os anexos devem obrigtoriamente vir depois dos apêndices e 
   \department{PESC}
   \date{09}{2026}
   % Data da aprovação: obrigatória na folha de aprovação (3.1.2.1.3d).
-  \dataaprovacao{15 de setembro de 2026}
+  \approvaldate{15 de setembro de 2026}
 
   % Palavras-chave, ao final de cada resumo (3.1.2.1.4 e 3.1.2.1.5).
   \keyword{Primeira palavra-chave}
@@ -4485,11 +4551,11 @@ No modelo \CoppeTeX os anexos devem obrigtoriamente vir depois dos apêndices e 
 
   % Folha de rosto e folha adicional: área de concentração (3.1.2.1.1e) e os
   % campos da Coleta CAPES (3.1.2.1.2). A ficha catalográfica vem do gerador do
-  % SiBI; com o arquivo em mãos, descomente a linha \fichacatalografica.
-  \areaconcentracao{Engenharia de Sistemas e Computação}
-  \tipoproducao{bibliografica}
-  \projetovinculado{nao}
-  % \fichacatalografica{ficha.pdf}
+  % SiBI; com o arquivo em mãos, descomente a linha \catalogcard.
+  \concentrationarea{Engenharia de Sistemas e Computação}
+  \productiontype{bibliographic}
+  \linkedproject{no}
+  % \catalogcard{ficha.pdf}
 
   \maketitle
 
@@ -5428,20 +5494,18 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % cada membro da banca. Com a entrega so digital (Resolucao CEPG n. 246/2023)
 % nao ha o que assinar a mao, e a v4.1 tirou as reguas. A opcao continua aceita,
 % sem efeito, para nao quebrar documento escrito antes disso.
-% Quem examina o trabalho e a BANCA EXAMINADORA, e a folha de aprovacao lista
-% quem examinou. O orientador nao e, por definicao, examinador: ele conduziu o
-% trabalho. Por isso a folha lista, por padrao, so os examinadores.
+% A 3.1.2.1.3(e) do Manual: na folha de aprovacao, "o orientador deve aparecer
+% em primeiro lugar, por ser o presidente da banca". E o padrao desde a revisao
+% da v4.1 (issue 102): orientadores e coorientadores abrem a lista, na frente
+% dos examinadores. Antes dela o padrao era o contrario -- so os examinadores --,
+% o que contrariava o texto do Manual.
 %
-% Ha Programas em que o orientador integra a banca e assina a aprovacao. Para
-% esses existe `orientadorexamina': com ela, orientadores e coorientadores
-% voltam para a lista, na frente dos examinadores, na ordem que a 3.1.2.1.3(e)
-% prescreve para o presidente da banca.
-%
-% Ate a v4.1 nao havia escolha: os orientadores saiam sempre, e um Programa que
-% nao os quisesse ali tinha de nao os declarar -- o que os tirava tambem da capa
-% e da folha de rosto, onde eles tem de estar.
-\newif\if@coppeorientexam \@coppeorientexamfalse
+% `semorientadornabanca' devolve a folha so com os examinadores, para o
+% Programa que a queira assim. `orientadorexamina', que era como se pedia o
+% orientador na banca, continua aceita e agora so confirma o padrao.
+\newif\if@coppeorientexam \@coppeorientexamtrue
 \DeclareOption{orientadorexamina}{\@coppeorientexamtrue}
+\DeclareOption{semorientadornabanca}{\@coppeorientexamfalse}
 % A classe carrega o hyperref e colore os links. Quem vai IMPRIMIR, ou quem
 % simplesmente prefere a pagina sobria, pedia isso a mao com \hypersetup no
 % preambulo -- que funciona, mas exige saber que a classe carrega o hyperref e
@@ -6051,7 +6115,10 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \ifx\coppe@@algolang\@empty
   \RequirePackage[linesnumbered,lined,algochapter,ruled]{algorithm2e}
 \else
-  \expandafter\RequirePackage\expandafter[\coppe@@algolang,linesnumbered,lined,algochapter,ruled]{algorithm2e}
+  % onelanguage: os comandos em ingles (\For, \While, \KwData...) passam a
+  % imprimir as palavras do idioma do trabalho, e o .tex pode usa-los sem que o
+  % PDF saia com "for" e "while" no meio do portugues.
+  \expandafter\RequirePackage\expandafter[\coppe@@algolang,onelanguage,linesnumbered,lined,algochapter,ruled]{algorithm2e}
 \fi
 % algorithm2e composes its own caption and therefore ignores the class-wide
 % \captionsetup{font=footnotesize,labelsep=endash}. Left alone it printed
@@ -6070,6 +6137,12 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \SetAlCapNameSty{textnormal}
 \SetKwFor{Para}{para}{faça}{fim do para}
 \SetKwFor{Enquanto}{enquanto}{faça}{fim do enquanto}
+% Os nomes em ingles saem com as mesmas palavras dos portugueses, inclusive o
+% "fim do para" que a classe usa, quando o trabalho e em portugues.
+\ifx\coppe@mainlang\coppe@@brazilianstr
+  \SetKwFor{For}{para}{faça}{fim do para}
+  \SetKwFor{While}{enquanto}{faça}{fim do enquanto}
+\fi
 % setspace + hyperref + biblatex are loaded at the very end of the class
 % (see the block just before %</class>), so their hooks see every macro the
 % class defines, and the load order setspace -> hyperref -> biblatex is
@@ -8290,6 +8363,43 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \renewcommand\printbibliography[1][]{%
   \coppe@orig@printbibliography[#1]%
   \coppe@bibEnd}
+% Os nomes em ingles (issue 102). Todo comando da classe que so tinha nome em
+% portugues ganha um em ingles, e os dois valem para sempre: o de portugues nao
+% sai, para nao quebrar trabalho escrito antes. Os documentos da entrega usam o
+% ingles. \newacronym e \acronym foram evitados de proposito: sao dos pacotes
+% glossaries e acronym, e colidiriam com quem os carrega.
+\let\defineacronym\newsigla
+\let\useacronym\sigla
+\let\makeloacronyms\makelosiglas
+\@onlypreamble\makeloacronyms
+\let\printloacronyms\printlosiglas
+\let\approvaldate\dataaprovacao
+\let\concentrationarea\areaconcentracao
+\let\researchline\linhapesquisa
+\let\projectname\nomeprojeto
+\let\fundingagency\agenciafomento
+\let\catalogcard\fichacatalografica
+\let\setupabstracts\configuraresumos
+\let\listofframes\listofquadros
+\let\listofprograms\listofprogramas
+% O ambiente em ingles do quadro nao pode se chamar `frame': \frame e
+% comando do proprio LaTeX (uma moldura no modo picture).
+\newenvironment{framefloat}[1][htbp]{\begin{quadro}[#1]}{\end{quadro}}
+% Os valores tambem em ingles: bibliographic, artistic, technological,
+% technical; yes, no.
+\newcommand\coppe@valorpt[3]{%
+  \def\coppe@ptval{#3}%
+  \@for\coppe@par:=#2\do{%
+    \expandafter\coppe@valorpar\coppe@par\@nil}%
+  \expandafter#1\expandafter{\coppe@ptval}}
+\def\coppe@valorpar#1/#2\@nil{%
+  \def\coppe@tmpv{#1}\ifx\coppe@tmpv\coppe@ptval\def\coppe@ptval{#2}\fi}
+\newcommand\productiontype[1]{\coppe@valorpt\tipoproducao
+  {bibliographic/bibliografica,artistic/artistica,technological/tecnologica,technical/tecnica}{#1}}
+\newcommand\linkedproject[1]{\coppe@valorpt\projetovinculado{yes/sim,no/nao}{#1}}
+% \epigraph so se ninguem o tiver definido: o pacote epigraph tem um comando com
+% o mesmo nome e os mesmos dois argumentos, e quem o carrega fica com o dele.
+\AtBeginDocument{\providecommand\epigraph{\epigrafe}}
 %    \end{macrocode}
 %
 %    \begin{macrocode}
@@ -9056,6 +9166,9 @@ postamble
     \map{\step[fieldsource=localevento,fieldtarget=venue]}
     \map{\step[fieldsource=deposito,fieldtarget=filingdate]}
     \map{\step[fieldsource=concessao,fieldtarget=grantdate]}
+    % caderno e campo da classe (a secao do jornal); newspapersection e o nome
+    % em ingles, e e o que as bases da entrega usam.
+    \map{\step[fieldsource=newspapersection,fieldtarget=caderno]}
   }%
 }
 
@@ -9707,7 +9820,7 @@ postamble
    journaltitle = "Gazeta Mercantil",
    location = "São Paulo",
    date = "1992-02-04",
-   caderno = "Administração e Serviços",
+   newspapersection = "Administração e Serviços",
    pages = "28",
   entrysubtype = {newspaper},
 }
@@ -9962,7 +10075,7 @@ postamble
   journaltitle  = "Gazeta Mercantil",
   location   = "São Paulo",
   date    = "1992-02-04",
-  caderno = "Administração e Serviços",
+  newspapersection = "Administração e Serviços",
   pages = "28",
   entrysubtype = {newspaper},
 }

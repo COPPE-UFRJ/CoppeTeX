@@ -388,8 +388,9 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \DeclareOption{doublespacing}{\@coppedoublespacetrue}
 \newif\if@coppepdfa \@coppepdfafalse
 \DeclareOption{pdfa}{\@coppepdfatrue}
-\newif\if@coppeorientexam \@coppeorientexamfalse
+\newif\if@coppeorientexam \@coppeorientexamtrue
 \DeclareOption{orientadorexamina}{\@coppeorientexamtrue}
+\DeclareOption{semorientadornabanca}{\@coppeorientexamfalse}
 \newif\if@coppesemlinks \@coppesemlinksfalse
 \DeclareOption{semlinks}{\@coppesemlinkstrue}
 \DeclareOption{assinaturas}{\ClassWarningNoLine{coppe}{A opcao `assinaturas'
@@ -699,7 +700,10 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \ifx\coppe@@algolang\@empty
   \RequirePackage[linesnumbered,lined,algochapter,ruled]{algorithm2e}
 \else
-  \expandafter\RequirePackage\expandafter[\coppe@@algolang,linesnumbered,lined,algochapter,ruled]{algorithm2e}
+  % onelanguage: os comandos em ingles (\For, \While, \KwData...) passam a
+  % imprimir as palavras do idioma do trabalho, e o .tex pode usa-los sem que o
+  % PDF saia com "for" e "while" no meio do portugues.
+  \expandafter\RequirePackage\expandafter[\coppe@@algolang,onelanguage,linesnumbered,lined,algochapter,ruled]{algorithm2e}
 \fi
 \SetAlgoCaptionSeparator{\ \textendash}
 \SetAlCapFnt{\footnotesize}
@@ -708,6 +712,10 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \SetAlCapNameSty{textnormal}
 \SetKwFor{Para}{para}{faça}{fim do para}
 \SetKwFor{Enquanto}{enquanto}{faça}{fim do enquanto}
+\ifx\coppe@mainlang\coppe@@brazilianstr
+  \SetKwFor{For}{para}{faça}{fim do para}
+  \SetKwFor{While}{enquanto}{faça}{fim do enquanto}
+\fi
 \newcommand\coppe@deptcode{}
 \newcommand\meta@deptname{}
 \newcommand\department[1]{%
@@ -1440,6 +1448,15 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
         \raggedleft \it \normalsize \@dedic
       \end{minipage}
     \end{flushright}}
+\newcommand\epigrafe[2]{%
+  \cleardoublepage
+  \vspace*{\fill}
+  \begin{flushright}
+    \begin{minipage}{0.5\textwidth}
+      \raggedleft\itshape\normalsize #1\par
+      \vspace{1ex}\normalfont\small #2
+    \end{minipage}
+  \end{flushright}}
 
 \newcommand\coppe@coadvisorrows[1]{%
   \if@coppecoadvresumo
@@ -1513,7 +1530,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \fi
   \if@copperestitulo
     \begin{center}
-      \sloppy\nohyphens{\MakeUppercase{\coppe@res@title{\coppe@reslang}}}\par
+      \sloppy\nohyphens{\MakeUppercase{\coppe@res@title{\coppe@reslang}}%
+        \coppe@res@subtitle{\coppe@reslang}}\par
       \vspace*{8mm}
       \@authname\ \@authsurn \par
       \vspace*{5mm}
@@ -1881,6 +1899,12 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \@ifundefined{coppe@title@#1}%
     {\@nameuse{coppe@title@brazilian}}%
     {\@nameuse{coppe@title@#1}}}
+\newcommand\coppe@res@subtitle[1]{%
+  \@ifundefined{coppe@title@#1}%
+    {\@ifundefined{coppe@subtitle@brazilian}{}%
+       {: \@nameuse{coppe@subtitle@brazilian}}}%
+    {\@ifundefined{coppe@subtitle@#1}{}%
+       {: \@nameuse{coppe@subtitle@#1}}}}
 \newcommand\coppe@res@month[1]{%
   \@nameuse{coppe@str@#1@monthname\number\coppe@docmonth}}
 \newcommand\coppe@res@advisor[1]{%
@@ -1968,6 +1992,32 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \renewcommand\printbibliography[1][]{%
   \coppe@orig@printbibliography[#1]%
   \coppe@bibEnd}
+\let\defineacronym\newsigla
+\let\useacronym\sigla
+\let\makeloacronyms\makelosiglas
+\@onlypreamble\makeloacronyms
+\let\printloacronyms\printlosiglas
+\let\approvaldate\dataaprovacao
+\let\concentrationarea\areaconcentracao
+\let\researchline\linhapesquisa
+\let\projectname\nomeprojeto
+\let\fundingagency\agenciafomento
+\let\catalogcard\fichacatalografica
+\let\setupabstracts\configuraresumos
+\let\listofframes\listofquadros
+\let\listofprograms\listofprogramas
+\newenvironment{framefloat}[1][htbp]{\begin{quadro}[#1]}{\end{quadro}}
+\newcommand\coppe@valorpt[3]{%
+  \def\coppe@ptval{#3}%
+  \@for\coppe@par:=#2\do{%
+    \expandafter\coppe@valorpar\coppe@par\@nil}%
+  \expandafter#1\expandafter{\coppe@ptval}}
+\def\coppe@valorpar#1/#2\@nil{%
+  \def\coppe@tmpv{#1}\ifx\coppe@tmpv\coppe@ptval\def\coppe@ptval{#2}\fi}
+\newcommand\productiontype[1]{\coppe@valorpt\tipoproducao
+  {bibliographic/bibliografica,artistic/artistica,technological/tecnologica,technical/tecnica}{#1}}
+\newcommand\linkedproject[1]{\coppe@valorpt\projetovinculado{yes/sim,no/nao}{#1}}
+\AtBeginDocument{\providecommand\epigraph{\epigrafe}}
 \newcommand{\annex}{
     \renewcommand{\appendixname}{\coppestring{annex}}%
     \appendix

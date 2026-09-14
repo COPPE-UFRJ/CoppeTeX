@@ -296,11 +296,11 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %
 % \subsection{Por onde começar}
 %
-% Se você nunca usou \LaTeX, comece pelo exemplo, não por este manual. O
-% arquivo |example.tex| que acompanha a classe é um trabalho completo, com oito
-% capítulos, comentado linha a linha. Abra-o, compile-o, troque o conteúdo
-% pelo seu e apague o que não usar. Volte aqui quando precisar de alguma coisa
-% que ele não mostre.
+% Se você nunca usou \LaTeX, comece por um dos dois exemplos, não por este
+% manual. O |min-exemplo.tex| traz só o que a norma exige: é o esqueleto, e
+% você escreve por cima. O |max-exemplo.tex| é um trabalho completo, com tudo
+% o que a classe oferece, comentado linha a linha: abra-o para ver como se faz
+% cada coisa. Volte aqui quando precisar de algo que eles não mostrem.
 %
 % Se você já usa \LaTeX, leia a seção~\ref{sec:arquivos} (quais arquivos
 % pôr na pasta), a seção~\ref{sec:esqueleto} (o esqueleto de um trabalho) e
@@ -373,8 +373,9 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \textbf{O resto da entrega.} A entrega traz mais do que este mínimo, e
 % nada do que sobra é necessário para compilar: |manuais/| tem os PDF para
 % ler, |en/| e |es/| têm o exemplo naquele idioma, |outraslinguas/| tem
-% francês e italiano, e a raiz traz o exemplo em português, as bases
-% |example.bib|, |tipos.bib| e |coppe.bib|, e as fontes |coppe.dtx|, |coppe.ins|
+% francês e italiano, e a raiz traz os exemplos em português
+% (|min-exemplo.tex| e |max-exemplo.tex|), as bases |exemplo.bib| e
+% |coppe.bib|, e as fontes |coppe.dtx|, |coppe.ins|
 % e |manual.tex|, que estão lá para que a entrega baste também para
 % refazer a classe e os manuais.
 %
@@ -441,8 +442,9 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % são a \emph{fonte} da classe. Apague-os da pasta do seu trabalho se
 % preferir; nada deixa de compilar.
 %
-% Vale o mesmo para o |manual.tex|, para os exemplos (|example.tex| e os das
-% pastas de idioma) e para as bases |example.bib|, |tipos.bib| e |coppe.bib|,
+% Vale o mesmo para o |manual.tex|, para os exemplos (|min-exemplo.tex|,
+% |max-exemplo.tex| e os das pastas de idioma) e para as bases |exemplo.bib| e
+% |coppe.bib|,
 % que servem aos exemplos e não a você. O que \textbf{não} dá para
 % apagar é o mínimo da seção anterior.
 %
@@ -659,6 +661,189 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % |\includegraphics{Figura1}| que funciona no seu Mac pode falhar no Overleaf se o
 % arquivo se chamar |figura1.pdf|. Escreva os nomes exatamente como estão.
 %
+% \subsection{Tempo de compilação no Overleaf, e as alternativas}\label{sec:tempo}
+%
+% O plano gratuito do Overleaf limita o tempo de \textbf{cada} compilação. O
+% limite é bem menor que o dos planos pagos, e o valor muda de tempos em tempos:
+% confira na página de planos do Overleaf. Quando a tese passa do limite, a
+% compilação para no meio e o PDF não sai.
+%
+% \textbf{O que consome o tempo.} Uma compilação completa não é uma passada:
+% o |latexmk|, que é o que o Overleaf roda, faz três ou quatro passadas de
+% \hologo{pdfLaTeX}, o |biber| uma ou duas vezes e o |makeindex| para cada lista
+% e para o índice. O |max-exemplo.tex|, com 67 folhas, leva perto de um minuto
+% num computador comum. O que mais pesa numa tese de verdade:
+%
+% \begin{itemize}
+%   \item o número de folhas, que cada passada compõe de novo;
+%   \item \textbf{figuras grandes}: fotografias em PNG de muitos megabytes, e
+%     PDFs com milhares de pontos de um gráfico;
+%   \item desenhos em TikZ e gráficos em |pgfplots|, que são recalculados a cada
+%     passada;
+%   \item o |biber|, sobretudo com bases de centenas de entradas;
+%   \item o \hologo{LuaLaTeX}, duas a três vezes mais lento que o \hologo{pdfLaTeX}.
+% \end{itemize}
+%
+% \textbf{Como reduzir, sem sair do Overleaf.}
+%
+% \begin{itemize}
+%   \item \textbf{Um arquivo por capítulo, e \texttt{\textbackslash includeonly}.} Escreva cada
+%     capítulo num arquivo e traga-os com |\include|; enquanto trabalha no
+%     terceiro, ponha |\includeonly{capitulo3}| no preâmbulo. Os outros não são
+%     compostos, e as referências cruzadas a eles continuam valendo. É, de
+%     longe, o que mais economiza. O gerador de documento vazio já cria os
+%     capítulos em arquivos separados.
+%   \item \textbf{Modo rascunho.} No menu de compilação do Overleaf, o modo
+%     \emph{Fast [draft]} não carrega as imagens e mostra só as molduras. Para
+%     o texto, basta.
+%   \item \textbf{Figuras mais leves.} Reduza fotografias à resolução em que
+%     serão vistas, e exporte gráficos de dados como PDF vetorial em vez de PNG
+%     enorme.
+%   \item \textbf{TikZ pronto.} Um desenho que não muda mais pode ser compilado
+%     uma vez, à parte, e incluído como PDF.
+%   \item \textbf{\texttt{semmorewrites}}, se o trabalho não tem índice remissivo nem
+%     glossário: meio segundo por passada (seção~\ref{sec:morewrites}).
+%   \item \textbf{\hologo{pdfLaTeX}}, e não \hologo{LuaLaTeX}, a não ser que você
+%     precise de fontes do sistema.
+%   \item \textbf{Compilação automática desligada.} Compile quando quiser ver o
+%     resultado, e não a cada tecla.
+% \end{itemize}
+%
+% \textbf{Pagar pelo Overleaf.} Os planos pagos têm limite de tempo muito maior e
+% trazem recursos que o gratuito não tem: histórico completo, controle de
+% alterações, sincronização com o Git e com o GitHub, e a ligação direta com o
+% Zotero e o Mendeley (seção~\ref{sec:gerenciadores}). Há desconto para
+% estudantes, e algumas universidades têm licença institucional: pergunte à
+% secretaria do seu Programa ou à biblioteca antes de pagar.
+%
+% \textbf{Compilar no seu computador.} Não há limite de tempo nenhum, a classe é
+% a mesma e o PDF sai igual. As instruções de cada sistema estão acima: Windows
+% com o \MiKTeX\ (ou o \TeX~Live), Linux com o \TeX~Live e macOS com o MacTeX.
+% Em qualquer um deles, instale também o |latexmk| --- no Windows ele pede o
+% Perl, e o Strawberry Perl resolve --- e compile com
+%
+% \begin{verbatim}
+%   latexmk -pdf minha-tese
+% \end{verbatim}
+%
+% que lê o |latexmkrc| da entrega e roda o |biber| e o |makeindex| sozinho. Dá
+% para ter os dois mundos: escrever localmente e manter o projeto também no
+% Overleaf, sincronizado pelo Git (nos planos pagos) ou subindo os arquivos de
+% tempos em tempos.
+%
+% \subsection{Editores}\label{sec:editores}
+%
+% Qualquer editor de texto serve para escrever um |.tex|. A diferença está no
+% que ele faz por você: completar comandos, compilar com um atalho, mostrar o PDF
+% ao lado e pular do PDF para a linha do código.
+%
+% \textbf{Editores dedicados ao \LaTeX.}
+%
+% \begin{description}
+%   \item[TeXstudio] Windows, Linux e macOS, gratuito. É o recomendado para quem
+%     começa: visualizador de PDF embutido, verificação ortográfica em português,
+%     completação dos comandos e sincronização entre código e PDF. Em
+%     \emph{Opções $\to$ Configurar $\to$ Produção}, escolha |Biber| como
+%     ferramenta de bibliografia, ou use o |latexmk| como compilação padrão.
+%   \item[TeXworks] Vem junto com o \MiKTeX\ e com o \TeX~Live. Simples, com
+%     menos recursos, e já instalado.
+%   \item[TeXShop] O editor do MacTeX, só para macOS.
+%   \item[Kile] Linux, do ambiente KDE, com recursos parecidos com os do
+%     TeXstudio.
+%   \item[Texmaker] Windows, Linux e macOS, gratuito; o antecessor do
+%     TeXstudio, mais enxuto.
+%   \item[WinEdt] Windows, pago, tradicional entre quem usa o \MiKTeX.
+% \end{description}
+%
+% \textbf{Editores de uso geral, com extensão para \LaTeX.} Servem a quem já
+% programa e prefere o editor de sempre.
+%
+% \begin{description}
+%   \item[Visual Studio Code] com a extensão \emph{LaTeX Workshop}. Compila com o
+%     |latexmk| --- e portanto lê o |latexmkrc| da entrega ---, mostra o PDF numa
+%     aba e sincroniza os dois. É a alternativa mais usada hoje.
+%   \item[Vim e Neovim] com o \emph{VimTeX}.
+%   \item[Emacs] com o \emph{AUCTeX}.
+%   \item[Sublime Text] com o \emph{LaTeXTools}.
+% \end{description}
+%
+% \textbf{Online.} O Overleaf (seção~\ref{sec:ambientes}) é editor e compilador
+% ao mesmo tempo, e é o único que permite escrever a várias mãos, com o
+% orientador vendo o texto em tempo real.
+%
+% Em qualquer editor, as linhas de comentário mágico no topo do arquivo dizem
+% como compilar, e o TeXstudio, o TeXShop e o Overleaf as respeitam:
+%
+% \begin{verbatim}
+%   % !TeX program = pdflatex
+%   % !TeX encoding = UTF-8
+%   % !TeX spellcheck = pt_BR
+%   % !BIB program = biber
+% \end{verbatim}
+%
+% O LyX, que mostra o texto já formatado enquanto se escreve, não é
+% recomendado com a \CoppeTeX: ele usa a classe só por meio de um arquivo de
+% configuração próprio, que o projeto não mantém.
+%
+% \subsection{Gerenciadores de bibliografia}\label{sec:gerenciadores}
+%
+% A classe lê as referências de um arquivo |.bib|. Escrever esse arquivo à mão
+% funciona para uma dúzia de obras; para uma tese, com centenas, um gerenciador
+% guarda as referências, os PDFs e as anotações, e exporta o |.bib|.
+%
+% \begin{description}
+%   \item[JabRef] Gratuito e de código aberto, em Windows, Linux e macOS. É o
+%     que trabalha \textbf{direto no \texttt{.bib}}: o arquivo que ele abre e salva é o
+%     mesmo que a classe lê, sem exportação no meio. Use-o em modo
+%     \emph{biblatex} (menu \emph{Arquivo}), que é o formato da classe e dá acesso
+%     aos tipos e campos que o BibTeX não tem, como |urldate|.
+%   \item[Zotero] Gratuito e de código aberto, com extensão para o navegador que
+%     captura a referência da página que você está lendo. Para exportar, instale
+%     o complemento \emph{Better BibTeX}: ele dá a cada obra uma chave estável ---
+%     sem ele a chave pode mudar e as citações quebram --- e mantém um |.bib|
+%     \textbf{exportado automaticamente}, atualizado a cada mudança. Escolha o
+%     formato \emph{Better BibLaTeX}.
+%   \item[Mendeley] Da Elsevier, gratuito com conta. O Mendeley Reference
+%     Manager, a versão atual, exporta para BibTeX pelo menu de exportação; a
+%     sincronização automática com um |.bib|, que o antigo Mendeley Desktop
+%     fazia, não está disponível nele. Confira o arquivo exportado: campos
+%     como |urldate| e os tipos específicos da ABNT costumam precisar de ajuste.
+% \end{description}
+%
+% \textbf{O que conferir em qualquer exportação.}
+%
+% \begin{itemize}
+%   \item o formato: \textbf{BibLaTeX}, não BibTeX, quando houver a escolha;
+%   \item a codificação: \textbf{UTF-8};
+%   \item a \textbf{data de acesso} (|urldate|) de todo documento on-line, que a
+%     ABNT exige na referência (``Acesso em:'');
+%   \item siglas e nomes próprios no título entre chaves, |{UFRJ}|, para que o
+%     estilo não os transforme em minúsculas;
+%   \item os tipos que os gerenciadores não conhecem --- patente, legislação,
+%     norma, mapa, partitura ---, que costumam sair como |@misc| e precisam ser
+%     trocados à mão. O |exemplo.bib| da entrega tem uma entrada de cada categoria
+%     da seção 4.2 do Manual, com os nomes do |biblatex|, para servir de molde.
+% \end{itemize}
+%
+% \textbf{A bibliografia no Overleaf.} Há três caminhos, conforme o plano:
+%
+% \begin{description}
+%   \item[Enviar o \texttt{.bib}.] Em qualquer plano: exporte do gerenciador e suba o
+%     arquivo no projeto, substituindo o anterior quando mudar. É o mais simples,
+%     e a atualização é manual.
+%   \item[Arquivo a partir de um endereço.] Em \emph{Novo arquivo $\to$ De um
+%     endereço externo}, o Overleaf baixa um |.bib| publicado na web e o
+%     atualiza quando você pede. Serve, por exemplo, a uma coleção pública do
+%     Zotero ou a um |.bib| mantido num repositório.
+%   \item[Ligação com o Zotero ou o Mendeley.] Nos planos pagos, \emph{Novo
+%     arquivo $\to$ Do Zotero} (ou \emph{Do Mendeley}) cria no projeto um |.bib|
+%     ligado à sua biblioteca, que se atualiza com um clique.
+% \end{description}
+%
+% Em todos os casos, o nome do arquivo no projeto tem de ser exatamente o que o
+% |\addbibresource| do seu |.tex| declara, com a subpasta, se houver
+% (seção~\ref{sec:bib}).
+%
 % \subsection{Qual motor: \hologo{pdfLaTeX} ou \hologo{LuaLaTeX}}
 %
 % A classe funciona nos dois, e os documentos de prova do projeto são compilados
@@ -701,8 +886,9 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %
 % \subsection{Tese em português}
 %
-% \textbf{O que ler.} As seções 1 a 5 deste manual, e o \texttt{example.tex},
-% que é um trabalho completo em português, comentado linha a linha.
+% \textbf{O que ler.} As seções 1 a 5 deste manual, o \texttt{min-exemplo.tex},
+% que é o esqueleto com só o obrigatório, e o \texttt{max-exemplo.tex}, que é
+% um trabalho completo em português, comentado linha a linha.
 %
 % \textbf{Opção de classe.} |\documentclass[dsc]{coppe}\texttt{ --- ou }msc|,
 % |mscexam|, |dscexam|. Português é o padrão e não se escreve.
@@ -797,7 +983,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % Folhas pré-textuais & contadas, não numeradas & \texttt{numeraisromanos} \\
 % Listas no sumário & fora dele & \texttt{listasnosumario} \\
 % Lista de símbolos & ordem de aparição & \texttt{simbolosalfabeticos} \\
-% Orientador na banca & fora dela & \texttt{orientadorexamina} \\
+% Orientador na banca & em primeiro lugar & \texttt{semorientadornabanca} \\
 % Coorientador no resumo & fora dele & \texttt{coorientador} \\
 % Referência no resumo & \textbf{impressa} & \texttt{resumosemreferencia} \\
 % Ficha catalográfica & a que você fornecer & \texttt{rascunhoficha} \\
@@ -898,11 +1084,13 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \subsection{Folhas pré-textuais}
 %
 % \begin{description}
-%   \item[\texttt{orientadorexamina}] Põe orientadores e coorientadores de volta
-%     na folha de aprovação, na frente dos examinadores, como presidência
-%     da banca (3.1.2.1.3(e)). \textbf{Desligada por padrão}: a folha registra
-%     quem \emph{examinou} o trabalho, e o orientador o conduziu. Ligue-a se no
-%     seu Programa o orientador integra a banca.
+%   \item[\texttt{semorientadornabanca}] \textbf{Desligada por padrão}: a
+%     folha de aprovação abre a banca com os orientadores e coorientadores, na
+%     frente dos examinadores, porque a 3.1.2.1.3(e) manda que ``o orientador
+%     deve aparecer em primeiro lugar, por ser o presidente da banca''. Ligue-a
+%     para listar só os examinadores.
+%   \item[\texttt{orientadorexamina}] Aceita e sem efeito desde a revisão da
+%     v4.1: pedia o orientador na banca, que agora é o padrão.
 %   \item[\texttt{coorientador}] Lista os coorientadores também nas três
 %     páginas de resumo, abaixo dos orientadores. Desligada por padrão: a
 %     3.1.2.1.4 descreve o resumo e não diz quem assina a orientação, e
@@ -950,7 +1138,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %
 %     \textbf{Ligue esta opção cedo.} Ela fica desligada por padrão porque as
 %     restrições do PDF/A podem tropeçar num documento que carregue imagens ou
-%     pacotes arbitrários. Mas o |example.tex| já a traz ligada, e é o que se
+%     pacotes arbitrários. Mas o |max-exemplo.tex| já a traz ligada, e é o que se
 %     recomenda: o problema aparece no dia em que a figura entra, e não na
 %     véspera do depósito. A seção~\ref{sec:pdfa} explica o porquê.
 % \end{description}
@@ -979,7 +1167,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %
 % \textbf{Por que 2b, e não 1b, 2u ou 2a.} A \emph{parte 1} (PDF/A-1) proíbe
 % transparência, que o |tcolorbox| e muitos pacotes de gráficos produzem; o
-% próprio |example.tex| seria rejeitado. A \emph{parte 2} a admite. O nível
+% próprio |max-exemplo.tex| seria rejeitado. A \emph{parte 2} a admite. O nível
 % \emph{b} garante a reprodução visual fiel, que é o que o depósito precisa; os
 % níveis \emph{u} (texto mapeado para Unicode) e \emph{a} (estrutura marcada, para
 % leitores de tela) pedem o que o \hologo{pdfLaTeX} não entrega de forma
@@ -1002,7 +1190,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % A fonte já é a Latin Modern, vetorial, com ou sem a opção: a Computer Modern
 % padrão saía em Type~3, que é bitmap, e bitmap não é PDF/A.
 %
-% \textbf{Quanto custa.} Medido no |example.tex|: o tempo de cada passada com
+% \textbf{Quanto custa.} Medido no |max-exemplo.tex|: o tempo de cada passada com
 % e sem |pdfa| fica dentro da variação normal de uma passada para outra.
 %
 % \textbf{O que pode dar errado.} Quase sempre o que vem de fora: um PDF
@@ -1052,7 +1240,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \end{tabular}
 % \end{center}
 %
-% O |example.tex| sozinho \textbf{passa dos dezesseis}: quatro listas próprias
+% O |max-exemplo.tex| sozinho \textbf{passa dos dezesseis}: quatro listas próprias
 % do exemplo (símbolos, abreviaturas, siglas e mapas) mais as seis de sempre.
 % Com a lista de siglas separada, ele deixou de compilar sem o |morewrites|. O documento de prova
 % |adv_dsc_pt|, que tem índice remissivo e glossário, para com o erro da classe
@@ -1063,7 +1251,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % (a classe entrega a ele todos os que estão livres); os que passam disso viram
 % fluxos virtuais, escritos através de um arquivo |.mw| que ele abre, lê e
 % esvazia. Além disso, a cada página que sai ele abre e lê esse arquivo duas
-% vezes. Medido num computador comum, com o |example.tex|: cerca de
+% vezes. Medido num computador comum, com o |max-exemplo.tex|: cerca de
 % \textbf{meio segundo a mais por passada} de |pdflatex|, algo como 7\%. Até a
 % v4.1 a classe não entregava os fluxos reais, tudo passava pelo |.mw| (772
 % aberturas por passada) e o custo era de 2 segundos por passada, um quarto do
@@ -1096,6 +1284,69 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % tão rápido quanto o |morewrites| com os fluxos reais, mas o próprio pacote se
 % anuncia como \emph{experimental e sem suporte}, com um aviso em toda
 % compilação, e só resolve as listas, não os índices. A classe não o usa.
+%
+% \section{Os nomes em inglês}\label{sec:nomesingles}
+%
+% Todo comando da classe tem nome em inglês, e os documentos da entrega ---
+% |min-exemplo.tex|, |max-exemplo.tex|, |manual.tex| e o que o gerador de
+% documento vazio escreve --- usam esses nomes. Os comandos que nasceram em
+% português continuam valendo, com o mesmo efeito, para não quebrar trabalho
+% escrito antes. O texto que sai no PDF segue o idioma do trabalho, qualquer
+% que seja o nome do comando.
+%
+% \DescribeMacro{\defineacronym}
+% \DescribeMacro{\useacronym}
+% \DescribeMacro{\makeloacronyms}
+% \DescribeMacro{\printloacronyms}
+% \DescribeMacro{\approvaldate}
+% \DescribeMacro{\concentrationarea}
+% \DescribeMacro{\researchline}
+% \DescribeMacro{\productiontype}
+% \DescribeMacro{\linkedproject}
+% \DescribeMacro{\projectname}
+% \DescribeMacro{\fundingagency}
+% \DescribeMacro{\catalogcard}
+% \DescribeMacro{\setupabstracts}
+% \DescribeMacro{\epigraph}
+% \DescribeMacro{\listofframes}
+% \DescribeMacro{\listofprograms}
+% \DescribeEnv{framefloat}
+% \begin{center}\small
+% \begin{tabular}{@{}ll@{}}
+% \hline
+% \textbf{Em inglês} & \textbf{Em português} \\
+% \hline
+% |\defineacronym|, |\useacronym| & |\newsigla|, |\sigla| \\
+% |\makeloacronyms|, |\printloacronyms| & |\makelosiglas|, |\printlosiglas| \\
+% |\approvaldate| & |\dataaprovacao| \\
+% |\concentrationarea|, |\researchline| & |\areaconcentracao|, |\linhapesquisa| \\
+% |\productiontype|, |\linkedproject| & |\tipoproducao|, |\projetovinculado| \\
+% |\projectname|, |\fundingagency| & |\nomeprojeto|, |\agenciafomento| \\
+% |\catalogcard| & |\fichacatalografica| \\
+% |\setupabstracts| & |\configuraresumos| \\
+% |\epigraph| & |\epigrafe| \\
+% |\listofframes|, ambiente |framefloat| & |\listofquadros|, ambiente |quadro| \\
+% |\listofprograms| & |\listofprogramas| \\
+% |\source|, |\cpsource| & |\fonte|, |\cpfonte| \\
+% |\enquote| & |\citacao| \\
+% |\For|, |\While|, |\If|, |\KwData|, |\KwResult|, |\KwTo|, |\KwRet| &
+%   |\Para|, |\Enquanto|, |\Se|, |\Dados|, |\Resultado|, |\Ate|, |\Retorna| \\
+% \hline
+% \end{tabular}
+% \end{center}
+%
+% Os \textbf{valores} também: |\productiontype| aceita |bibliographic|,
+% |artistic|, |technological| e |technical| (ou |bibliografica|, |artistica|,
+% |tecnologica| e |tecnica|), e |\linkedproject| aceita |yes| e |no| (ou |sim| e
+% |nao|). Na bibliografia, o campo da seção do jornal chama-se
+% |newspapersection| (ou |caderno|).
+%
+% Dois cuidados. |\epigraph| só é definido se nenhum pacote o tiver definido
+% antes: quem carrega o pacote |epigraph| fica com o dele, que tem os mesmos dois
+% argumentos mas põe a epígrafe no alto do capítulo, e não numa folha própria;
+% nesse caso, use |\epigrafe|. E os comandos de algoritmo em inglês só imprimem as
+% palavras em português num trabalho em português --- é o |algorithm2e|, com a
+% opção |onelanguage| que a classe liga, que as traduz.
 %
 % \section{Comandos antes do \texttt{\textbackslash begin\{document\}}}
 %
@@ -1194,8 +1445,9 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % tire os colchetes da instituição, e ponha a instituição no fim. Veja
 % |MIGRATION_v3_to_v4.md|.
 %
-% Quem aparece na folha de aprovação: só os examinadores, a não ser que
-% você passe a opção |orientadorexamina|.
+% Quem aparece na folha de aprovação: os orientadores e coorientadores, em
+% primeiro lugar, e depois os examinadores (3.1.2.1.3(e)). A opção
+% |semorientadornabanca| deixa só os examinadores.
 %
 % \DescribeMacro{\department}
 % A sigla do Programa: |\department{PESC}|. A classe conhece os treze Programas
@@ -1276,6 +1528,11 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \DescribeMacro{\dedication}
 % A dedicatória, numa folha só para ela, alinhada embaixo à direita.
 %
+% \DescribeMacro{\epigrafe}
+% |\epigrafe{citação}{autoria}| compõe a epígrafe (3.1.2.2.3), numa folha
+% própria, depois dos agradecimentos, embaixo e da metade da mancha à margem
+% direita. Opcional.
+%
 % \DescribeEnv{abstract}
 % \DescribeEnv{foreignabstract}
 % \DescribeEnv{brazilianabstract}
@@ -1344,9 +1601,9 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % é a folha completa dos Anexos E e F, e saem juntos com um comando no
 % preâmbulo:
 % \begin{verbatim}
-%   \configuraresumos{true}{true}{true}{true}   % o padrao: folha completa
-%   \configuraresumos{true}{true}{true}{false}  % sem a referencia
-%   \configuraresumos{false}{false}{false}{false} % so o texto do resumo
+%   \setupabstracts{true}{true}{true}{true}   % o padrao: folha completa
+%   \setupabstracts{true}{true}{true}{false}  % sem a referencia
+%   \setupabstracts{false}{false}{false}{false} % so o texto do resumo
 % \end{verbatim}
 % Os quatro argumentos são lógicos --- |true| ou |false|, e nada além
 % disso, que a classe recusa com erro --- e estão na ordem da lista acima.
@@ -1447,7 +1704,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %     \caption{O que a figura mostra}   % em cima
 %     \label{fig:algo}
 %     \includegraphics[width=0.5\textwidth]{arquivo}
-%     \fonte{Elaboracao propria.}       % embaixo
+%     \source{Elaboracao propria.}       % embaixo
 %   \end{figure}
 % \end{verbatim}
 %
@@ -1479,7 +1736,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %   def f(x):
 %       return x + 1
 %   \end{python}
-%   \fonte{Elaboracao propria.}
+%   \source{Elaboracao propria.}
 % \end{verbatim}
 %
 % \DescribeMacro{\pythoninline}
@@ -1557,10 +1814,10 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % garantir que uma vai escapar. Declare cada uma no preâmbulo e use |\sigla|:
 %
 % \begin{verbatim}
-%   \newsigla{ufrj}{UFRJ}{Universidade Federal do Rio de Janeiro}
+%   \defineacronym{ufrj}{UFRJ}{Universidade Federal do Rio de Janeiro}
 %   ...
-%   A \sigla{ufrj} mantem ...      % primeira vez: forma completa (SIGLA)
-%   Na \sigla{ufrj}, o programa ... % depois: so a sigla
+%   A \useacronym{ufrj} mantem ...      % primeira vez: forma completa (SIGLA)
+%   Na \useacronym{ufrj}, o programa ... % depois: so a sigla
 % \end{verbatim}
 %
 % |\sigla*{chave}| força a forma completa mesmo depois da primeira vez. Uma
@@ -1609,7 +1866,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %     não fonte.
 %   \item[Fontes matemáticas] \textbf{nenhuma}. Desde a v4.1 a fonte dos símbolos
 %     é escolha sua, e vai no preâmbulo: |amssymb| sob \hologo{pdfLaTeX},
-%     |unicode-math| com uma fonte OpenType sob \hologo{LuaLaTeX}. O |example.tex|
+%     |unicode-math| com uma fonte OpenType sob \hologo{LuaLaTeX}. O |max-exemplo.tex|
 %     e o gerador de documento vazio já trazem o bloco que escolhe pelo motor.
 %     Até a v4.1 a classe carregava o |amssymb| sozinha; documento que usava
 %     |\mathbb| sem carregá-lo precisa agora carregá-lo.
@@ -1739,7 +1996,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % subpasta e escreva o caminho}, com barra para frente mesmo no Windows:
 % \begin{verbatim}
 %   \addbibresource{referencias/minha-tese.bib}
-%   \addbibresource{referencias/tipos.bib}
+%   \addbibresource{referencias/outra-base.bib}
 % \end{verbatim}
 % Funciona no computador local e funciona no Overleaf, e o nome da pasta é o
 % que você quiser --- |referencias|, |bib|, |fontes|. O gerador de documento
@@ -1871,14 +2128,14 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \end{center}
 %
 % \textbf{Uma advertência.} Não misture as duas formas na MESMA entrada. Elas
-% funcionam juntas no mesmo arquivo --- o |tipos.bib| que acompanha a classe faz
+% funcionam juntas no mesmo arquivo --- o |exemplo.bib| que acompanha a classe faz
 % isso de propósito, metade em cada forma ---, mas dentro de uma entrada
 % escolha uma e fique nela, ou a leitura fica confusa para quem vier depois.
 %
 % Cada um desses tipos foi conferido, uma vez cada, contra o exemplo impresso no
 % próprio Manual. A base de conferência está em
 % |adversativa/referencias-manual.bib|, e a mesma base acompanha a classe como
-% |tipos.bib|, citada por inteiro no |example.tex|: cada entrada lá traz, em
+% segunda parte do |exemplo.bib|, citada por inteiro no |max-exemplo.tex|: cada entrada lá traz, em
 % comentário, a referência \textbf{como o Manual a imprime}.
 %
 % \subsection{Campos que as categorias da ABNT exigem}
@@ -1903,7 +2160,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % compatibilidade com o |natbib|, de modo que |\citet| e |\citep| continuam
 % valendo para quem vem de lá. A lista em si sai com |\printbibliography|,
 % depois do |\backmatter|; a citação curta, dentro do parágrafo, sai com
-% |\citacao|; e a de mais de três linhas sai no ambiente |longquote|, descrito
+% |\enquote| (ou |\citacao|, o mesmo comando em português); e a de mais de
+% três linhas sai no ambiente |longquote|, descrito
 % na seção~\ref{sec:citacoeslongas}.
 %
 % \begin{center}
@@ -1988,12 +2246,13 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % entre aspas:
 %
 % \begin{verbatim}
-%   Como lembra \citet{castro1978}, \citacao{a pesquisa comeca
+%   Como lembra \citet{castro1978}, \enquote{a pesquisa comeca
 %   com uma pergunta}, e nao com um metodo.
 % \end{verbatim}
 %
-% O |\citacao| usa o |csquotes|, então as aspas saem no formato do idioma do
-% trabalho, e não as do teclado.
+% O |\enquote| é do |csquotes|, que a classe carrega, então as aspas saem no
+% formato do idioma do trabalho, e não as do teclado. |\citacao| é o mesmo
+% comando, com nome em português.
 %
 % \textbf{Mais de três linhas}, a transcrição sai do parágrafo e vai
 % para o ambiente |longquote|:
@@ -2036,7 +2295,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %
 % \begin{verbatim}
 %   \documentclass[spanish,dsc]{coppe}
-%   \addbibresource{example.bib}
+%   \addbibresource{exemplo.bib}
 %   \begin{document}
 %     \title{Titulo em portugues}                 % posicao do resumo em pt
 %     \foreigntitle{English title}                % posicao do abstract
@@ -2194,66 +2453,66 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %
 % \section{Onde ver cada coisa funcionando}\label{sec:ondever}
 %
-% O arquivo |example.tex| que acompanha a classe é um trabalho completo, e
+% O arquivo |max-exemplo.tex| que acompanha a classe é um trabalho completo, e
 % quase tudo o que este manual descreve aparece lá. A tabela abaixo dá a
-% linha de |example.tex| em que cada coisa é usada pela primeira vez.
+% linha de |max-exemplo.tex| em que cada coisa é usada pela primeira vez.
 %
 % \textbf{Os números valem para a versão \fileversion\ do exemplo}, que é a
 % que acompanha este manual. A ferramenta |tools/conferir-manual.py| confere esta
-% tabela contra o |example.tex| atual e avisa quando ela envelhece.
+% tabela contra o |max-exemplo.tex| atual e avisa quando ela envelhece.
 %
 % \begin{center}
 % \begin{tabular}{@{}lll@{}}
 % \textbf{Recurso} & \textbf{Comando} & \textbf{Linha} \\
 % \hline
 % Opções de classe        & |\documentclass|        & 16 \\
-% Base de referências        & |\addbibresource|       & 31 \\
-% Coleta da lista de símbolos& |\makelosymbols|        & 34 \\
-% Coleta das abreviaturas      & |\makeloabbreviations|  & 35 \\
-% Flutuante criado pelo autor  & |\newcoppefloat|        & 37 \\
-% Título                     & |\title|                & 40 \\
-% Título no estrangeiro      & |\foreigntitle|         & 41 \\
-% Autor                        & |\author|               & 42 \\
-% Orientação              & |\advisor|              & 46 \\
-% Coorientação            & |\coadvisor|            & 54 \\
-% Banca                        & |\examiner|             & 60 \\
-% Programa                     & |\department|           & 67 \\
-% Data do depósito           & |\date|                 & 68 \\
-% Data da defesa               & |\dataaprovacao|        & 71 \\
-% Palavras-chave               & |\keyword|              & 77 \\
-% Área de concentração  & |\areaconcentracao|     & 83 \\
-% Linha de pesquisa            & |\linhapesquisa|        & 84 \\
-% Coleta CAPES                 & |\tipoproducao|         & 85 \\
-% Projeto vinculado            & |\projetovinculado|     & 86 \\
-% Nome do projeto              & |\nomeprojeto|          & 87 \\
-% Agência de fomento         & |\agenciafomento|       & 88 \\
-% Ficha catalográfica        & |\fichacatalografica|   & 94 \\
-% Capa e folha de rosto        & |\maketitle|            & 96 \\
-% Parte pré-textual          & |\frontmatter|          & 98 \\
-% Dedicatória                & |\dedication|           & 99 \\
+% Base de referências        & |\addbibresource|       & 63 \\
+% Coleta da lista de símbolos& |\makelosymbols|        & 66 \\
+% Coleta das abreviaturas      & |\makeloabbreviations|  & 67 \\
+% Flutuante criado pelo autor  & |\newcoppefloat|        & 73 \\
+% Título                     & |\title|                & 82 \\
+% Título no estrangeiro      & |\foreigntitle|         & 83 \\
+% Autor                        & |\author|               & 87 \\
+% Orientação              & |\advisor|              & 91 \\
+% Coorientação            & |\coadvisor|            & 99 \\
+% Banca                        & |\examiner|             & 105 \\
+% Programa                     & |\department|           & 112 \\
+% Data do depósito           & |\date|                 & 113 \\
+% Data da defesa               & |\approvaldate|        & 116 \\
+% Palavras-chave               & |\keyword|              & 122 \\
+% Área de concentração  & |\concentrationarea|     & 132 \\
+% Linha de pesquisa            & |\researchline|        & 133 \\
+% Coleta CAPES                 & |\productiontype|         & 134 \\
+% Projeto vinculado            & |\linkedproject|     & 135 \\
+% Nome do projeto              & |\projectname|          & 136 \\
+% Agência de fomento         & |\fundingagency|       & 137 \\
+% Ficha catalográfica        & |\catalogcard|   & 143 \\
+% Capa e folha de rosto        & |\maketitle|            & 145 \\
+% Parte pré-textual          & |\frontmatter|          & 147 \\
+% Dedicatória                & |\dedication|           & 148 \\
 % Resumo                       & |abstract|              & 112 \\
 % Abstract                     & |foreignabstract|       & 128 \\
 % Listas pré-textuais        & |\listoffigures| \dots  & 146 \\
-% Sumário                    & |\tableofcontents|      & 144 \\
-% Parte textual                & |\mainmatter|           & 169 \\
-% Símbolo                    & |\symbl|                & 237 \\
+% Sumário                    & |\tableofcontents|      & 196 \\
+% Parte textual                & |\mainmatter|           & 221 \\
+% Símbolo                    & |\symbl|                & 289 \\
 % Citação longa           & |longquote|             & 236 \\
-% Fonte da ilustração     & |\fonte|                & 325 \\
+% Fonte da ilustração     & |\source|               & 379 \\
 % Quadro                       & |quadro|                & 300 \\
-% Bibliografia                 & |\printbibliography|    & 809 \\
-% Código no texto            & |\pythoninline|         & 957 \\
-% Código Java no texto       & |\javainline|           & 974 \\
-% Sigla declarada              & |\newsigla|             & 1163 \\
-% Sigla usada                  & |\sigla|                & 1166 \\
-% Abreviatura                  & |\abbrev|               & 1155 \\
-% Parte pós-textual          & |\backmatter|           & 1170 \\
-% Apêndices                  & |\appendix|             & 1180 \\
-% Anexos                       & |\annex|                & 1190 \\
-% Colófon                    & |\coppetexfinalpage|    & 1201 \\
+% Bibliografia                 & |\printbibliography|    & 870 \\
+% Código no texto            & |\pythoninline|         & 1018 \\
+% Código Java no texto       & |\javainline|           & 1055 \\
+% Sigla declarada              & |\defineacronym|             & 1245 \\
+% Sigla usada                  & |\useacronym|                & 1248 \\
+% Abreviatura                  & |\abbrev|               & 1237 \\
+% Parte pós-textual          & |\backmatter|           & 1252 \\
+% Apêndices                  & |\appendix|             & 1272 \\
+% Anexos                       & |\annex|                & 1282 \\
+% Colófon                    & |\coppetexfinalpage|    & 1297 \\
 % \end{tabular}
 % \end{center}
 %
-% O que não aparece no |example.tex| aparece em outro documento do projeto:
+% O que não aparece no |max-exemplo.tex| aparece em outro documento do projeto:
 %
 % \begin{description}
 %   \item[\texttt{\textbackslash titlein}, \texttt{\textbackslash subtitlein}, \texttt{brazilianabstract}, \texttt{\textbackslash braziliankeyword}]
@@ -2432,7 +2691,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \textbf{Fontes matemáticas.} São escolha sua, e a classe não carrega
 % nenhuma. Se o trabalho usa símbolos como |\mathbb|, |\hbar| ou |\varnothing|,
 % ponha no preâmbulo o bloco que escolhe pelo motor --- é o mesmo do
-% |example.tex|:
+% |max-exemplo.tex|:
 % \begin{verbatim}
 %   \ifPDFTeX
 %     \usepackage{amssymb}
@@ -2528,7 +2787,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %     gerado.
 %   \item \textbf{\texttt{%<*nome>} e \texttt{%</nome>} delimitam um módulo.} O |coppe.ins|
 %     diz qual módulo vai para qual arquivo: |class| vira |coppe.cls|, |bbx|
-%     vira |coppe.bbx|, |example| vira |example.tex|, e assim por diante.
+%     vira |coppe.bbx|, |maxexemplo| vira |max-exemplo.tex|, e assim por diante.
 % \end{enumerate}
 %
 % \subsection{O ciclo de trabalho}
@@ -2607,7 +2866,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %     procura de |??| e de referência sem destino.
 %   \item[\texttt{conferir-manual.py}] cobra que todo comando, ambiente e opção
 %     pública apareça neste manual, que a tabela ``onde ver cada
-%     coisa'' ainda aponte para as linhas certas do |example.tex|, e que os
+%     coisa'' ainda aponte para as linhas certas do |max-exemplo.tex|, e que os
 %     guardas de |macrocode| do |.dtx| estejam bem escritos.
 % \end{description}
 %
@@ -2773,14 +3032,15 @@ italian   & [italian,dsc]   & \pre & Italian. Same. \\
 \multicolumn{4}{@{}l@{}}{\normalfont\bfseries\small CLASS OPTIONS --- the
   rest}\\[2pt]
 numbers   & [dsc,numbers]   & \pre & Numeric citations \texttt{[1]} instead of author-date; list in citation order. \\
-pdfa      & [dsc,pdfa]      & \pre & PDF/A-2b output, required for deposit (2.2d): the deposit is digital only, and PDF/A (ISO 19005) keeps the file self-contained --- embedded fonts, sRGB colour, XMP metadata, nothing external. Off by default; \texttt{example.tex} turns it on, and turning it on early is recommended. Check with veraPDF. \\
+pdfa      & [dsc,pdfa]      & \pre & PDF/A-2b output, required for deposit (2.2d): the deposit is digital only, and PDF/A (ISO 19005) keeps the file self-contained --- embedded fonts, sRGB colour, XMP metadata, nothing external. Off by default; \texttt{max-exemplo.tex} turns it on, and turning it on early is recommended. Check with veraPDF. \\
 comserifa & [dsc,comserifa] & \pre & Serif family. Sans is the default since v4.1. \\
 semserifa & ---             & \pre & Accepted, does nothing. What it asked for became the default. \\
 semlinks  & [dsc,semlinks]  & \pre & Links lose colour and frame; they stay clickable. For printing. \\
 doublespacing & [dsc,doublespacing] & \pre & Double spacing instead of one-and-a-half (2.2c). \\
 twoside   & [dsc,twoside]   & \pre & Mirrored margins, for printing and binding. \\
 oneside   & [dsc,oneside]   & \pre & One-sided, 3\,cm left margin on every sheet. The default. \\
-orientadorexamina & [dsc,orientadorexamina] & \pre & Put advisors back on the approval sheet. Off by default: the sheet records who examined. \\
+semorientadornabanca & [dsc,semorientadornabanca] & \pre & Approval sheet with the examiners only. By default the advisors head the board, as 3.1.2.1.3(e) requires. \\
+orientadorexamina & [dsc,orientadorexamina] & \pre & Accepted, no effect: the advisors are on the board by default. \\
 coorientador & [dsc,coorientador] & \pre & List coadvisors on the abstract pages too. \\
 rascunhoficha & [dsc,rascunhoficha] & \pre & Draft catalogue card while writing. \textbf{Never valid for deposit.} \\
 resumosemreferencia & [dsc,resumosemreferencia] & \pre & Drop the work's own reference from the top of the three abstracts. It is printed by default (3.1.2.1.4, Annexes E and F). \\
@@ -2843,6 +3103,7 @@ semmorewrites & [dsc,semmorewrites] & \pre & Do not load \texttt{morewrites}. Sa
 \textbackslash mainmatter & \textbackslash mainmatter & \doc & Opens the textual part. This is what starts printing the folio. \\
 \textbackslash backmatter & \textbackslash backmatter & \doc & Opens the post-textual part. \\
 \textbackslash dedication & \textbackslash dedication\{To those who waited.\} & \doc & Dedication, on a sheet of its own. \\
+\textbackslash epigrafe & \textbackslash epigrafe\{quotation\}\{author\} & \doc & Epigraph (3.1.2.2.3), on a sheet of its own, after the acknowledgements. \\
 abstract & \textbackslash begin\{abstract\} ... & \doc & Abstract in the main language. One sheet, one paragraph, 250 words. \\
 foreignabstract & \textbackslash begin\{foreignabstract\} ... & \doc & Abstract in the foreign language. \\
 brazilianabstract & \textbackslash begin\{brazilianabstract\} ... & \doc & Third abstract, Portuguese, for a Spanish- or French-main work. \\
@@ -2912,41 +3173,55 @@ longquote & \textbackslash begin\{longquote\} ... & \doc & Quotation over three 
 \vfill
 \begin{center}\small
 Full manual: \texttt{coppe.pdf}, in Portuguese.\quad
-Complete worked example: \texttt{example.tex}.\quad
+Worked examples: \texttt{min-exemplo.tex} (only what is mandatory) and \texttt{max-exemplo.tex} (everything).\quad
 Problems: \url{https://github.com/COPPE-UFRJ/CoppeTeX/issues}
 \end{center}
 
 \end{document}
 %</quickref>
 % \fi
-% \section{Um exemplo completo}
+% \section{O exemplo máximo}
 %
 % \label{COPPE:SAMPLE}
+% O |max-exemplo.tex| mostra tudo o que a classe oferece e o Manual prevê,
+% inclusive o opcional. O |min-exemplo.tex|, na seção seguinte, é o contrário:
+% só o que é obrigatório.
 %    \begin{macrocode}
-%<*example>
+%<*maxexemplo>
 \documentclass[dsc,pdfa]{coppe}
-% Opções de classe que valem conhecer aqui:
-%  - pdfa: gera o arquivo em PDF/A-2b, o formato que o depósito exige (Manual
-%    2.2d). Este exemplo o liga desde a primeira linha; a razão está na seção
-%    "O arquivo de depósito: PDF/A", no capítulo de regras da COPPE.
-%  - semmorewrites: não carrega o pacote morewrites. Compila meio segundo mais
-%    rápido por passada, mas só serve a trabalho SEM índice remissivo, sem
-%    vários índices e sem glossário, e com menos listas que este exemplo, que
-%    passa dos 16 fluxos de escrita do pdfLaTeX e precisa do pacote. Ver o
-%    capítulo "Truques de LaTeX".
+%% max-exemplo.tex -- tudo o que a classe oferece e o Manual prevê, inclusive o
+%% opcional. Para só o obrigatório, veja o min-exemplo.tex.
+%%
+%% Opções de classe que não cabem num documento só, porque escolhem uma entre
+%% várias: o tipo (msc, dsc, mscexam, dscexam, mscsem), o idioma (english,
+%% spanish, french, italian), numbers (citação numérica), comserifa,
+%% doublespacing, twoside, numeraisromanos, semlinks, listasnosumario,
+%% semorientadornabanca, coorientador, resumosemreferencia, rascunhoficha,
+%% simbolosalfabeticos, semmorewrites. O manual da classe descreve cada uma.
+%%
+%% Opções de classe que valem conhecer aqui:
+%%  - pdfa: gera o arquivo em PDF/A-2b, o formato que o depósito exige (Manual
+%%    2.2d). Este exemplo o liga desde a primeira linha; a razão está na seção
+%%    "O arquivo de depósito: PDF/A", no capítulo de regras da COPPE.
+%%  - semmorewrites: não carrega o pacote morewrites. Compila meio segundo mais
+%%    rápido por passada, mas só serve a trabalho SEM índice remissivo, sem
+%%    vários índices e sem glossário, e com menos listas que este exemplo, que
+%%    passa dos 16 fluxos de escrita do pdfLaTeX e precisa do pacote. Ver o
+%%    capítulo "Truques de LaTeX".
 
 \usepackage{rotating}        % rodando coisas, como tabelas
 \usepackage[most]{tcolorbox} % caixas de texto
 \usepackage{tikz}            % gráficos vetoriais (o tcolorbox já o traz)
+\usepackage{makeidx}\makeindex % índice remissivo (3.1.4.5), no fim do trabalho
 
-% Fontes matemáticas: a escolha é SUA, não da classe. A classe carrega só o
-% amsmath (ambientes e comandos), e nenhuma fonte de símbolos. O bloco abaixo
-% escolhe a do motor em uso:
-%  - pdfLaTeX: amssymb, as fontes AMS de 8 bits (\mathbb, \hbar, \varnothing...);
-%  - LuaLaTeX/XeLaTeX: unicode-math com uma fonte OpenType. Nunca carregue
-%    amssymb junto com unicode-math: os dois brigam pelos mesmos símbolos.
-% Troque Latin Modern Math por STIX Two Math, TeX Gyre Termes Math etc., se
-% quiser outra aparência. Sem matemática no trabalho, apague o bloco.
+%% Fontes matemáticas: a escolha é SUA, não da classe. A classe carrega só o
+%% amsmath (ambientes e comandos), e nenhuma fonte de símbolos. O bloco abaixo
+%% escolhe a do motor em uso:
+%%  - pdfLaTeX: amssymb, as fontes AMS de 8 bits (\mathbb, \hbar, \varnothing...);
+%%  - LuaLaTeX/XeLaTeX: unicode-math com uma fonte OpenType. Nunca carregue
+%%    amssymb junto com unicode-math: os dois brigam pelos mesmos símbolos.
+%% Troque Latin Modern Math por STIX Two Math, TeX Gyre Termes Math etc., se
+%% quiser outra aparência. Sem matemática no trabalho, apague o bloco.
 \ifPDFTeX
   \usepackage{amssymb}
 \else
@@ -2955,33 +3230,36 @@ Problems: \url{https://github.com/COPPE-UFRJ/CoppeTeX/issues}
 \fi
 \DeclareMathOperator{\RMSE}{RMSE}   % operadores próprios (cap. de matemática)
 \DeclareMathOperator{\diag}{diag}
-% A classe coppe já carrega: amsmath, booktabs, longtable, subcaption,
-% hyperref, biblatex, listings, fancyvrb, algorithm2e -- não recarregue esses
-% pacotes aqui (em particular, hyperref deve ficar a cargo da classe para que
-% a ordem com setspace e biblatex permaneça correta).
+%% A classe coppe já carrega: amsmath, booktabs, longtable, subcaption,
+%% hyperref, biblatex, listings, fancyvrb, algorithm2e -- não recarregue esses
+%% pacotes aqui (em particular, hyperref deve ficar a cargo da classe para que
+%% a ordem com setspace e biblatex permaneça correta).
 
-\addbibresource{example.bib}% base de referências (biblatex/biber)
-\addbibresource{tipos.bib}% uma entrada por categoria da secao 4.2
+\addbibresource{exemplo.bib}% base de referências (biblatex/biber), com uma
+                            % entrada de cada categoria da seção 4.2
 
 \makelosymbols
 \makeloabbreviations
-% Lista de siglas separada da de abreviaturas, como recomenda a 3.1.2.2.6 do
-% Manual. Sem esta linha, as siglas entram na lista de abreviaturas.
-\makelosiglas
-% Flutuante criado pelo autor: mesma regra dos demais (legenda acima, fonte
-% abaixo) e uma lista propria, \listofmapas.
+%% Lista de siglas separada da de abreviaturas, como recomenda a 3.1.2.2.6 do
+%% Manual. Sem esta linha, as siglas entram na lista de abreviaturas.
+\makeloacronyms
+%% Flutuante criado pelo autor: mesma regra dos demais (legenda acima, fonte
+%% abaixo) e uma lista propria, \listofmapas.
 \newcoppefloat{mapa}{Mapa}{Lista de Mapas}
-% Fonte: a norma fixa o corpo 12, e não a família. A classe compõe sem serifa
-% por padrão; para compor com serifa, passe a opção de classe `comserifa' lá
-% em cima -- NÃO redefina \familydefault aqui, porque isso venceria a opção.
-% Para uma sem serifa diferente da Latin Modern, carregue o pacote da fonte e
-% troque a família:
-%\usepackage{helvet}\renewcommand{\familydefault}{\sfdefault}
+%% Fonte: a norma fixa o corpo 12, e não a família. A classe compõe sem serifa
+%% por padrão; para compor com serifa, passe a opção de classe `comserifa' lá
+%% em cima -- NÃO redefina \familydefault aqui, porque isso venceria a opção.
+%% Para uma sem serifa diferente da Latin Modern, carregue o pacote da fonte e
+%% troque a família:
+%%\usepackage{helvet}\renewcommand{\familydefault}{\sfdefault}
 
 
 \begin{document}
   \title{Título da Tese}
   \foreigntitle{Thesis Title}
+  % Subtítulo, se houver (3.1.2.1.1c): sai depois do título, com dois-pontos.
+  \subtitle{Subtítulo, se Houver}
+  \foreignsubtitle{Subtitle, if Any}
   \author{Nome do Autor}{Sobrenome}
   % Orientador: nome, sobrenome, titulacao e instituicao. O tratamento
   % ("Prof.") e o argumento OPCIONAL entre colchetes e vem vazio por padrao --
@@ -3011,30 +3289,34 @@ Problems: \url{https://github.com/COPPE-UFRJ/CoppeTeX/issues}
   \date{06}{2026}
   % Data da defesa, na folha de aprovacao. Sem esta linha a folha sai com
   % "a ser determinada", que e o que se quer enquanto a data nao existe.
-  % \dataaprovacao{15 de setembro de 2026}
+  % \approvaldate{15 de setembro de 2026}
   %
-  % A folha de aprovacao lista so os EXAMINADORES. Se no seu Programa o
-  % orientador integra a banca, passe a opcao de classe `orientadorexamina'
-  % la em cima e ele volta para a lista, na frente dos examinadores.
+  % A folha de aprovacao abre a banca com os orientadores, na frente dos
+  % examinadores, como manda a 3.1.2.1.3(e). A opcao de classe
+  % `semorientadornabanca' deixa so os examinadores.
 
   \keyword{Primeira palavra-chave}
   \keyword{Segunda palavra-chave}
   \keyword{Terceira palavra-chave}
+  % Palavras-chave do resumo em língua estrangeira (3.1.2.1.5).
+  \foreignkeyword{First keyword}
+  \foreignkeyword{Second keyword}
+  \foreignkeyword{Third keyword}
 
   % Dados da folha adicional (Coleta CAPES), obrigatoria desde agosto de 2026.
   % A folha e preenchida pelo Programa; estes campos apenas a compoem.
-  \areaconcentracao{Engenharia de Sistemas e Computação}
-  \linhapesquisa{Engenharia de Dados e Conhecimento}
-  \tipoproducao{bibliografica}   % bibliografica | artistica | tecnologica | tecnica
-  \projetovinculado{sim}         % sim | nao
-  \nomeprojeto{Nome do Projeto de Pesquisa ao qual o trabalho se vincula}
-  \agenciafomento{Conselho Nacional de Desenvolvimento Cientifico e
+  \concentrationarea{Engenharia de Sistemas e Computação}
+  \researchline{Engenharia de Dados e Conhecimento}
+  \productiontype{bibliographic}   % bibliografica | artistica | tecnologica | tecnica
+  \linkedproject{yes}         % sim | nao
+  \projectname{Nome do Projeto de Pesquisa ao qual o trabalho se vincula}
+  \fundingagency{Conselho Nacional de Desenvolvimento Cientifico e
                   Tecnologico}{CNPq}
-  \agenciafomento{Fundacao Carlos Chagas Filho de Amparo a Pesquisa do
+  \fundingagency{Fundacao Carlos Chagas Filho de Amparo a Pesquisa do
                   Estado do Rio de Janeiro}{FAPERJ}
   % A ficha oficial vem de fichacatalografica.sibi.ufrj.br; tendo o arquivo,
   % descomente a linha abaixo e a moldura vazia da folha adicional some.
-  % \fichacatalografica{ficha.pdf}
+  % \catalogcard{ficha.pdf}
 
   \maketitle
 
@@ -3048,7 +3330,10 @@ Problems: \url{https://github.com/COPPE-UFRJ/CoppeTeX/issues}
   dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
   ut labore et dolore magna aliqua.
 
-  \begin{abstract}% 5 elementos; \configuraresumos, no preambulo, desliga 4
+  % Epígrafe (3.1.2.2.3), depois dos agradecimentos: citação e autoria.
+  \epigraph{A imaginação é mais importante que o conhecimento.}{Albert Einstein}
+
+  \begin{abstract}% 5 elementos; \setupabstracts, no preambulo, desliga 4
 
   Apresenta-se, nesta tese, um exemplo de resumo. Lorem ipsum dolor sit amet,
   consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
@@ -3087,25 +3372,25 @@ Problems: \url{https://github.com/COPPE-UFRJ/CoppeTeX/issues}
   %  - \tableofcontents ........ OBRIGATÓRIO (Manual 3.1.2.1.6);
   %  - \listoffigures .......... opcional (3.1.2.2.4, lista de ilustrações);
   %  - \listoftables ........... opcional (3.1.2.2.5);
-  %  - \listofquadros, \listofprogramas, \listofalgorithms: acréscimo da
+  %  - \listofframes, \listofprograms, \listofalgorithms: acréscimo da
   %    Norma COPPE (§10), presentes quando o trabalho tem ao menos um quadro,
   %    programa ou algoritmo;
   %  - \listofmapas ............ opcional; o Manual admite uma lista por tipo
   %    de ilustração (3.1.2.2.4), e \newcoppefloat cria o tipo;
   %  - \printloabbreviations ... opcional (3.1.2.2.6);
-  %  - \printlosiglas .......... opcional; a 3.1.2.2.6 recomenda separar as
-  %    siglas das abreviaturas (exige \makelosiglas no preâmbulo);
+  %  - \printloacronyms .......... opcional; a 3.1.2.2.6 recomenda separar as
+  %    siglas das abreviaturas (exige \makeloacronyms no preâmbulo);
   %  - \printlosymbols ......... opcional (3.1.2.2.7), na ordem de aparição.
   % Este exemplo imprime todas para mostrá-las. No seu trabalho, apague a linha
   % da lista que você não usa: deixada, ela sai como folha só com o título.
   \listoffigures
   \listoftables
-  \listofquadros
+  \listofframes
   \listofmapas
-  \listofprogramas
+  \listofprograms
   \listofalgorithms
   \printloabbreviations
-  \printlosiglas
+  \printloacronyms
   \printlosymbols
   \tableofcontents
 
@@ -3224,7 +3509,9 @@ Texto da seção quinária, escrita com \verb|\paragraph|. Este é o único \ver
 
   Citações devem apontar as referências. Para isso, está disponível o ótimo pacote \verb*|natbib| que permite criar citações em dois formatos, o totalmente dentro de parênteses (\verb*|\citep|), como em \citep{article-example} como o de citação pertencente ao texto, como em \citet{article-example}. Veja o capítulo sobre referências bibliográficas.
 
-  Em todo caso, \textbf{deve se tomar enorme atenção com as citações, para evitar ocorrer em plágio não intencional}.
+  Em todo caso, \textbf{deve se tomar enorme atenção com as citações, para evitar ocorrer em plágio não intencional}.\index{citação}\index{plágio}
+
+  Para uma citação curta no meio do parágrafo, \verb|\enquote| põe as aspas do idioma do trabalho: \enquote{a imaginação é mais importante que o conhecimento}. O mesmo comando existe em português, \verb|\citacao|.\index{citação!curta}
 
   Quando se cita uma obra por meio de outra (\textit{apud}), pela ABNT entra na lista de referências \emph{apenas a obra efetivamente consultada}. A obra original (não consultada) é informada como texto e \emph{não} é referenciada. Use \verb*|\citetapud{autor}{ano}{chave}|, como em \citetapud{Drumond}{1953}{article-example}, ou a forma entre parênteses \verb*|\citepapud|, como em \citepapud[145]{Drumond}{1953}{article-example}. Note que, nas Referências, aparece somente a obra consultada.
 
@@ -3271,7 +3558,7 @@ A regra geral de posicionamento é que uma figura ou quadro só pode aparecer a 
 
 \textbf{Pela norma atual (manual2024), a legenda} \verb|\caption| \textbf{de toda ilustração --- figura, tabela ou quadro --- fica \emph{acima} dela}, com o número em algarismos arábicos, travessão e o título. \textbf{A fonte é obrigatória e fica \emph{abaixo}}, indicada com \verb|\source{...}| (sinônimo: \verb|\fonte{...}|), em letra menor; ela não numera nem avança nenhum contador. Se outro pacote já definir \verb|\source| ou \verb|\fonte|, use \verb|\cpsource| / \verb|\cpfonte|.
 
-Quadros são ilustrações cujos dados são delimitados por linhas em \emph{todas} as bordas (ao contrário das tabelas, com linhas só no topo e na base). O CoppeTeX oferece o float \verb|quadro| (sinônimo em inglês: \verb|frame|) e o comando \verb|\listofquadros| para a lista correspondente. Para criar outros floats com a mesma regra (legenda acima, \verb|\source| abaixo e uma \verb|\listof...|), use \verb|\newcoppefloat{nome}{Nome}{Título da Lista}|.
+Quadros são ilustrações cujos dados são delimitados por linhas em \emph{todas} as bordas (ao contrário das tabelas, com linhas só no topo e na base). O CoppeTeX oferece o float \verb|quadro| (sinônimo em inglês: \verb|frame|) e o comando \verb|\listofframes| para a lista correspondente. Para criar outros floats com a mesma regra (legenda acima, \verb|\source| abaixo e uma \verb|\listof...|), use \verb|\newcoppefloat{nome}{Nome}{Título da Lista}|.
 
 
 \section{Tabelas e Figuras Padrão}
@@ -3295,7 +3582,7 @@ Vamos ver uma tabela padrão, como a \autoref{tab:exemplo_numeros}.
 10 & 11 & 12 \\ % Quarta linha de dados
 \hline % Linha inferior
 \end{tabular}
-\fonte{Elaboração própria.} % fonte obrigatoria, abaixo do float
+\source{Elaboração própria.} % fonte obrigatoria, abaixo do float
 \end{table}
 
 
@@ -3312,7 +3599,7 @@ Já a \autoref{fig:exemplo_figura} é uma figura padrão, com controle da largur
 
 Quadros têm a mesma regra (legenda acima, fonte abaixo), mas com linhas em todas as bordas. O \autoref{qua:exemplo} ilustra o float \verb|quadro|.
 
-\begin{quadro}[ht]
+\begin{framefloat}[ht]
 \centering
 \caption{Exemplo de Quadro}
 \label{qua:exemplo}
@@ -3325,12 +3612,12 @@ Tabela & Linhas apenas no topo e na base. \\
 Quadro & Linhas em todas as bordas. \\
 \hline
 \end{tabular}
-\fonte{Elaboração própria.}
-\end{quadro}
+\source{Elaboração própria.}
+\end{framefloat}
 
 Um segundo quadro, no \autoref{qua:segundo}, prova que o contador anda e que a lista de quadros recebe as duas entradas.
 
-\begin{quadro}[ht]
+\begin{framefloat}[ht]
 \centering
 \caption{Segundo Quadro, para provar a numeração}
 \label{qua:segundo}
@@ -3343,8 +3630,8 @@ Legenda & Acima da ilustração. \\
 Fonte & Abaixo da ilustração. \\
 \hline
 \end{tabular}
-\fonte{Adaptado do manual do SiBI, 9.\textsuperscript{a} ed. rev., 2026.}
-\end{quadro}
+\source{Adaptado do manual do SiBI, 9.\textsuperscript{a} ed. rev., 2026.}
+\end{framefloat}
 
 \section{Criando um float novo}
 
@@ -3360,7 +3647,7 @@ Fonte & Abaixo da ilustração. \\
   \draw[fill=gray!40] (2.2,0.4) rectangle (3.6,1.2);
   \node at (2,-0.4) {\footnotesize esquema de ocupação};
 \end{tikzpicture}
-\fonte{Elaboração própria.}
+\source{Elaboração própria.}
 \end{mapa}
 
 \begin{mapa}[ht]
@@ -3373,7 +3660,7 @@ Fonte & Abaixo da ilustração. \\
   \draw[->] (0,-1.6) -- (0,1.6);
   \node at (0,-2) {\footnotesize esquema de alcance};
 \end{tikzpicture}
-\fonte{Elaboração própria.}
+\source{Elaboração própria.}
 \end{mapa}
 
 
@@ -3395,7 +3682,7 @@ Atualmente a tendência é usar tabelas mais leves, como \autoref{tab:exemplo_nu
 10 & 11 & 12 \\ % Quarta linha de dados
 \bottomrule % Linha inferior
 \end{tabular}
-\fonte{Elaboração própria.}
+\source{Elaboração própria.}
 \end{table}
 
 \section{Tabelas Longas ou Largas}
@@ -3429,7 +3716,7 @@ Dado 2.1 & Dado 2.2 & Dado 2.3 & Dado 2.4 & Dado 2.5 & Dado 2.6 & Dado 2.7 & Dad
 Dado 3.1 & Dado 3.2 & Dado 3.3 & Dado 3.4 & Dado 3.5 & Dado 3.6 & Dado 3.7 & Dado 3.8 \\
 \bottomrule
 \end{tabular}
-\fonte{Elaboração própria.}
+\source{Elaboração própria.}
 \end{table}
 
 O comando \verb|\resizebox{width}{height}{content}| permite ajustar o tamanho de qualquer coisa, inclusive uma tabela, como na \autoref{tab:examplerb}. No caso, estou fazendo a tabela ficar maior, para ocupar o espaço, mas funciona para qualquer tamanho.
@@ -3448,7 +3735,7 @@ Dados 5 & Dados 6 & Dados 7 & Dados 8 \\
 \bottomrule
 \end{tabular}%
 }
-\fonte{Elaboração própria.}
+\source{Elaboração própria.}
 \end{table}
 
 
@@ -3468,32 +3755,32 @@ Item 1 & Item 2 & Item 3 \\
 Item 4 & Item 5 & Item 6 \\
 \bottomrule
 \end{tabular}
-\fonte{Elaboração própria.}
+\source{Elaboração própria.}
 \end{sidewaystable}
 
 Se a tabela for muito longa, o ambiente \verb|longtable| é o ideal. Ele fornece comandos para \textit{headers}, cabeçalhos, e \textit{footers} tanto no ínicio e no fim da tabela, como em todas as páginas. A \autoref{tab:longa} fornece um exemplo de 3 páginas.
 
-% Exemplo de tabela longa que se estende por várias páginas
+%% Exemplo de tabela longa que se estende por várias páginas
 \begin{longtable}{|c|c|c|}
-% primeiro cabeçalho (é o caption)
+%% primeiro cabeçalho (é o caption)
 \caption{Exemplo de Tabela Longa}\label{tab:longa} \\
 \hline \textbf{Col. 1} & \textbf{Col. 2} & \textbf{Col. 3} \\ \hline
 \endfirsthead
-% cabeçalho normal
+%% cabeçalho normal
 \multicolumn{3}{c}%
 {{\tablename\ \thetable{} -- continuação da página anterior}} \\
 \hline \textbf{Col. 1} & \textbf{Col. 2} & \textbf{Col. 3} \\ \hline
 \endhead
-% pé normal
+%% pé normal
 \hline \multicolumn{3}{|r|}{{Continua na próxima página}} \\ \hline
 \endfoot
 \hline
-% último pé
+%% último pé
 \multicolumn{3}{|r|}{{Continua na próxima página}}\\
 \hline \hline
 \endlastfoot
 
-% Conteúdo da tabela
+%% Conteúdo da tabela
 1 & 2 & 3 \\
 4 & 5 & 6 \\
 1 & 2 & 3 \\
@@ -3602,9 +3889,9 @@ Se a tabela for muito longa, o ambiente \verb|longtable| é o ideal. Ele fornece
 1 & 2 & 3 \\
 4 & 5 & 6 \\
 
-% Repetir linhas semelhantes conforme necessário para estender a tabela por 3 páginas
+%% Repetir linhas semelhantes conforme necessário para estender a tabela por 3 páginas
 \end{longtable}
-\fonte{Elaboração própria.}% a longtable não é float: a fonte vem após o ambiente
+\source{Elaboração própria.}% a longtable não é float: a fonte vem após o ambiente
 
 \section{Subfiguras (subcaption)}
 
@@ -3623,7 +3910,7 @@ Para colocar várias imagens (ou tabelas) lado a lado, cada uma com sua própria
   \end{subfigure}
   \caption{Figura com duas subfiguras}
   \label{fig:subs}
-  \fonte{Elaboração própria.}
+  \source{Elaboração própria.}
 \end{figure}
 
 Referencie a figura inteira com \verb|\autoref{fig:subs}|. Cada parte tem
@@ -3663,7 +3950,7 @@ O \verb|tikz| (disponível também via \verb|tcolorbox|) desenha gráficos vetor
     \draw[seta, dashed] (relato.south) to[bend left=25]
       node[midway, below] {revisão} (coleta.south);
   \end{tikzpicture}
-  \fonte{Elaboração própria.}
+  \source{Elaboração própria.}
 \end{figure}
 
 \begin{verbatim}
@@ -3721,7 +4008,7 @@ Colocar a tabela ou imagem dentro de \verb|figure|/\verb|table| (um \emph{float}
     Tese de doutorado & \cite{phdthesis-example} & \citep{phdthesis-example}\\
     \hline
   \end{tabular}}
-  \fonte{Elaboração própria.}
+  \source{Elaboração própria.}
   \end{table}
 
  \begin{table}[htb]
@@ -3749,7 +4036,7 @@ Colocar a tabela ou imagem dentro de \verb|figure|/\verb|table| (um \emph{float}
     Tese de doutorado & \cite{phdthesis-example} & \citet{phdthesis-example}\\
     \bottomrule
   \end{tabular}}
-  \fonte{Elaboração própria.}
+  \source{Elaboração própria.}
   \end{table}
 
   \section{Comandos de citação}
@@ -3770,7 +4057,7 @@ Colocar a tabela ou imagem dentro de \verb|figure|/\verb|table| (um \emph{float}
 
   \section{Tipos de entrada bibliográfica}
 
-  Cada tipo de documento da ABNT corresponde a um tipo de entrada do BibLaTeX, com um sinônimo em português (sem acentos) que você pode usar no \texttt{.bib}. Todos os tipos abaixo estão demonstrados nas Referências deste documento (veja \texttt{example.bib}). Entre parênteses, os sinônimos em português.
+  Cada tipo de documento da ABNT corresponde a um tipo de entrada do BibLaTeX, com um sinônimo em português (sem acentos) que você pode usar no \texttt{.bib}. Todos os tipos abaixo estão demonstrados nas Referências deste documento (veja \texttt{exemplo.bib}). Entre parênteses, os sinônimos em português.
 
   % Nomes de tipo em fonte de máquina não hifenizam: justificados, abriam
   % buracos nas linhas (Underfull \hbox). Alinhado à esquerda, não.
@@ -3806,62 +4093,62 @@ Colocar a tabela ou imagem dentro de \verb|figure|/\verb|table| (um \emph{float}
 
   \section{Uma referência de cada categoria do Manual}\label{sec:todosostipos}
 
-  A seção 4.2 do Manual do SiBI enumera 34 categorias de documento, da monografia à partitura. O arquivo \verb|tipos.bib|, que acompanha a classe, traz \textbf{uma entrada de cada uma}, com os dados dos próprios exemplos do Manual, e todas são citadas aqui. Confira cada uma na lista de Referências: é assim que ela tem de sair.
+  A seção 4.2 do Manual do SiBI enumera 34 categorias de documento, da monografia à partitura. O arquivo \verb|exemplo.bib|, que acompanha a classe, traz \textbf{uma entrada de cada uma}, com os dados dos próprios exemplos do Manual, e todas são citadas aqui. Confira cada uma na lista de Referências: é assim que ela tem de sair.
 
-  Metade das entradas está escrita com os nomes de tipo e de campo em \textbf{inglês} e metade com os sinônimos em \textbf{português}, de propósito, para que as duas formas apareçam funcionando lado a lado. \textbf{Prefira a inglesa}: é a do \texttt{biblatex}, é a que os gerenciadores de referência exportam, e é a que outra pessoa vai reconhecer quatro anos depois. Os sinônimos em português existem para quem chega de uma base antiga e não quer reescrever tudo.
+  Todas as entradas usam os nomes de tipo e de campo em \textbf{inglês}, os do \texttt{biblatex}: são os que os gerenciadores de referência (JabRef, Zotero, Mendeley) exportam, e os que outra pessoa vai reconhecer quatro anos depois. A tabela mostra o tipo de cada uma. A classe ainda aceita sinônimos em português para tipos e campos (\verb|@livro|, \verb|autor|, \verb|titulo|\dots), para quem chega de uma base antiga, mas o recomendado é a forma inglesa.
 
   % Colunas estreitas alinhadas à esquerda: justificadas, abriam buracos.
-  \begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.46\textwidth}>{\raggedright\arraybackslash}p{0.17\textwidth}>{\raggedright\arraybackslash}p{0.28\textwidth}@{}}
+  \begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.43\textwidth}>{\raggedright\arraybackslash}p{0.22\textwidth}>{\raggedright\arraybackslash}p{0.27\textwidth}@{}}
     \caption{Uma referência de cada categoria da seção 4.2 do Manual}
     \label{tab:todosostipos}\\
     \toprule
-    \textbf{Categoria} & \textbf{Forma usada} & \textbf{Citação} \\
+    \textbf{Categoria} & \textbf{Tipo no .bib} & \textbf{Citação} \\
     \midrule
     \endfirsthead
     \toprule
-    \textbf{Categoria} & \textbf{Forma usada} & \textbf{Citação} \\
+    \textbf{Categoria} & \textbf{Tipo no .bib} & \textbf{Citação} \\
     \midrule
     \endhead
     \bottomrule
     \endfoot
-    4.2.1.1 monografia no todo & inglesa & \cite{m-4211} \\
-    4.2.1.2 monografia em meio eletrônico & portuguesa & \cite{m-4212} \\
-    4.2.1.3 parte de monografia & inglesa & \cite{m-4213} \\
-    4.2.2 correspondência & portuguesa & \cite{m-422} \\
-    4.2.2.1 correspondência em meio eletrônico & inglesa & \cite{m-4221} \\
-    4.2.3.1 publicação periódica no todo & portuguesa & \cite{m-4231} \\
-    4.2.3.3 parte de revista & inglesa & \cite{m-4233} \\
-    4.2.3.4 artigo de revista & portuguesa & \cite{m-4234} \\
-    4.2.3.5 artigo de revista em meio eletrônico & inglesa & \cite{m-4235} \\
-    4.2.3.6 matéria de jornal & portuguesa & \cite{m-4236} \\
-    4.2.3.7 matéria de jornal assinada, em meio eletrônico & inglesa & \cite{m-4237} \\
-    4.2.3.8 matéria de jornal não assinada, em meio eletrônico & portuguesa & \cite{m-4238} \\
-    4.2.4.1 evento no todo & inglesa & \cite{m-4241} \\
-    4.2.4.3 evento no todo em meio eletrônico & portuguesa & \cite{m-4243} \\
-    4.2.4.5 trabalho apresentado em evento & inglesa & \cite{m-4245} \\
-    4.2.4.6 trabalho em evento, em meio eletrônico & portuguesa & \cite{m-4246} \\
-    4.2.5 patente & inglesa & \cite{m-425} \\
-    4.2.5.1 patente em meio eletrônico & portuguesa & \cite{m-4251} \\
-    4.2.6.1 legislação & inglesa & \cite{m-4261} \\
-    4.2.6.2 jurisprudência & portuguesa & \cite{m-4262} \\
-    4.2.6.3 ato administrativo normativo & inglesa & \cite{m-4263} \\
-    4.2.7 documento jurídico em meio eletrônico & portuguesa & \cite{m-427} \\
-    4.2.8 documento civil e de cartório & inglesa & \cite{m-428} \\
-    4.2.9 documento audiovisual & portuguesa & \cite{m-429} \\
-    4.2.10 partitura & inglesa & \cite{m-42101} \\
-    4.2.10.1 partitura em meio eletrônico & portuguesa & \cite{m-42102} \\
-    4.2.11 documento iconográfico & inglesa & \cite{m-42111} \\
-    4.2.11.1 documento iconográfico em meio eletrônico & portuguesa & \cite{m-42112} \\
-    4.2.12 documento cartográfico & inglesa & \cite{m-42121} \\
-    4.2.12.1 documento cartográfico em meio eletrônico & portuguesa & \cite{m-42122} \\
-    4.2.13 documento tridimensional & inglesa & \cite{m-42131} \\
-    4.2.14 documento de acesso exclusivo em meio eletrônico & portuguesa & \cite{m-4214} \\
-    dissertação de mestrado & inglesa & \cite{m-diss} \\
-    norma técnica & portuguesa & \cite{m-norma} \\
+    4.2.1.1 monografia no todo & \texttt{@book} & \cite{m-4211} \\
+    4.2.1.2 monografia em meio eletrônico & \texttt{@book} & \cite{m-4212} \\
+    4.2.1.3 parte de monografia & \texttt{@incollection} & \cite{m-4213} \\
+    4.2.2 correspondência & \texttt{@letter} & \cite{m-422} \\
+    4.2.2.1 correspondência em meio eletrônico & \texttt{@letter} & \cite{m-4221} \\
+    4.2.3.1 publicação periódica no todo & \texttt{@periodical} & \cite{m-4231} \\
+    4.2.3.3 parte de revista & \texttt{@periodical} & \cite{m-4233} \\
+    4.2.3.4 artigo de revista & \texttt{@article} & \cite{m-4234} \\
+    4.2.3.5 artigo de revista em meio eletrônico & \texttt{@article} & \cite{m-4235} \\
+    4.2.3.6 matéria de jornal & \texttt{@article} & \cite{m-4236} \\
+    4.2.3.7 matéria de jornal assinada, em meio eletrônico & \texttt{@article} & \cite{m-4237} \\
+    4.2.3.8 matéria de jornal não assinada, em meio eletrônico & \texttt{@article} & \cite{m-4238} \\
+    4.2.4.1 evento no todo & \texttt{@proceedings} & \cite{m-4241} \\
+    4.2.4.3 evento no todo em meio eletrônico & \texttt{@proceedings} & \cite{m-4243} \\
+    4.2.4.5 trabalho apresentado em evento & \texttt{@inproceedings} & \cite{m-4245} \\
+    4.2.4.6 trabalho em evento, em meio eletrônico & \texttt{@inproceedings} & \cite{m-4246} \\
+    4.2.5 patente & \texttt{@patent} & \cite{m-425} \\
+    4.2.5.1 patente em meio eletrônico & \texttt{@patent} & \cite{m-4251} \\
+    4.2.6.1 legislação & \texttt{@legislation} & \cite{m-4261} \\
+    4.2.6.2 jurisprudência & \texttt{@jurisdiction} & \cite{m-4262} \\
+    4.2.6.3 ato administrativo normativo & \texttt{@legislation} & \cite{m-4263} \\
+    4.2.7 documento jurídico em meio eletrônico & \texttt{@legal} & \cite{m-427} \\
+    4.2.8 documento civil e de cartório & \texttt{@legal} & \cite{m-428} \\
+    4.2.9 documento audiovisual & \texttt{@video} & \cite{m-429} \\
+    4.2.10 partitura & \texttt{@music} & \cite{m-42101} \\
+    4.2.10.1 partitura em meio eletrônico & \texttt{@music} & \cite{m-42102} \\
+    4.2.11 documento iconográfico & \texttt{@image} & \cite{m-42111} \\
+    4.2.11.1 documento iconográfico em meio eletrônico & \texttt{@image} & \cite{m-42112} \\
+    4.2.12 documento cartográfico & \texttt{@map} & \cite{m-42121} \\
+    4.2.12.1 documento cartográfico em meio eletrônico & \texttt{@map} & \cite{m-42122} \\
+    4.2.13 documento tridimensional & \texttt{@artwork} & \cite{m-42131} \\
+    4.2.14 documento de acesso exclusivo em meio eletrônico & \texttt{@online} & \cite{m-4214} \\
+    dissertação de mestrado & \texttt{@thesis} & \cite{m-diss} \\
+    norma técnica & \texttt{@standard} & \cite{m-norma} \\
   \end{longtable}
-  \fonte{Elaboração própria, a partir da seção 4.2 do Manual do SiBI.}
+  \source{Elaboração própria, a partir da seção 4.2 do Manual do SiBI.}
 
-  Se alguma dessas referências sair diferente do que o Manual imprime, é defeito da classe, e o lugar de relatar é o repositório do projeto. O gabarito de cada uma está no próprio \verb|tipos.bib|, em comentário acima da entrada.
+  Se alguma dessas referências sair diferente do que o Manual imprime, é defeito da classe, e o lugar de relatar é o repositório do projeto. O gabarito de cada uma está no próprio \verb|exemplo.bib|, em comentário acima da entrada.
 
 \chapter{Alguns outros exemplo úteis}
 
@@ -3888,7 +4175,7 @@ Este é o conteúdo do meu textbox sem título. Você pode adicionar qualquer te
     \end{tikzpicture}
     \caption{Figura com Textbox}
     \label{fig:figura_com_textbox1}
-    \fonte{Elaboração própria.}
+    \source{Elaboração própria.}
 \end{figure}
 
 
@@ -3899,12 +4186,12 @@ Este é o conteúdo do meu textbox sem título. Você pode adicionar qualquer te
 \end{tcolorbox}
     \caption{Figura com Textbox simples}
     \label{fig:figura_com_textbox}
-    \fonte{Elaboração própria.}
+    \source{Elaboração própria.}
 \end{figure}
 
 \section{Listagens de código e algoritmos}
 
-O CoppeTeX traz embutido o suporte a listagens de programas (pacote \verb|listings|) e a algoritmos (\verb|algorithm2e|). A legenda fica no topo (``Programa N''), como em qualquer ilustração, e a lista correspondente é gerada por \verb|\listofprogramas|. O \autoref{prog:exemplo} mostra um exemplo em Python.
+O CoppeTeX traz embutido o suporte a listagens de programas (pacote \verb|listings|) e a algoritmos (\verb|algorithm2e|). A legenda fica no topo (``Programa N''), como em qualquer ilustração, e a lista correspondente é gerada por \verb|\listofprograms|. O \autoref{prog:exemplo} mostra um exemplo em Python.
 
 \begin{python}[caption={Exemplo de programa em Python},label=prog:exemplo]
 def saudacao(nome):
@@ -3930,36 +4217,56 @@ public class Saudacao {
     }
 }
 \end{java}
-\fonte{Elaboração própria.}
+\source{Elaboração própria.}
+
+A classe traz ambientes prontos também para XML, HTML e Prolog, com a mesma legenda acima e fonte abaixo:
+
+\begin{xml}[caption={Exemplo de documento XML},label=prog:xml]
+<tese tipo="dsc">
+  <titulo>Título da Tese</titulo>
+</tese>
+\end{xml}
+\source{Elaboração própria.}
+
+\begin{html}[caption={Exemplo de página HTML},label=prog:html]
+<p>Olá, <strong>COPPE</strong>!</p>
+\end{html}
+\source{Elaboração própria.}
+
+\begin{prolog}[caption={Exemplo de programa em Prolog},label=prog:prolog]
+orienta(ana, bia).
+banca(X) :- orienta(X, _).
+\end{prolog}
+\source{Elaboração própria.}
 
 Há também \verb|\pythoninline| e \verb|\javainline| para código no meio do
-texto, como em \javainline{new Saudacao()}, e o ambiente \verb|Verbatim| (com as opções acima) para a saída de programas. Para algoritmos, use o ambiente \verb|algorithm| com as palavras-chave em português \verb|\Para| e \verb|\Enquanto|, como no \autoref{alg:soma}.
+texto, como em \javainline{new Saudacao()}, e o ambiente \verb|Verbatim| (com as opções acima) para a saída de programas. Para algoritmos, use o ambiente \verb|algorithm| com as palavras-chave em português \verb|\For| e \verb|\While|, como no \autoref{alg:soma}.
 
 \begin{algorithm}[H]
 \caption{Soma dos elementos de um vetor}
 \label{alg:soma}
-\Dados{vetor $v$ com $n$ elementos}
-\Resultado{soma $s$ dos elementos de $v$}
+\KwData{vetor $v$ com $n$ elementos}
+\KwResult{soma $s$ dos elementos de $v$}
 $s \leftarrow 0$\;
-\Para{$i \leftarrow 1$ \Ate{} $n$}{
+\For{$i \leftarrow 1$ \KwTo{} $n$}{
   $s \leftarrow s + v[i]$\;
 }
-\Retorna $s$\;
+\KwRet $s$\;
 \end{algorithm}
 
-O \autoref{alg:busca} é o segundo algoritmo, e usa \verb|\Enquanto|. Como no caso das listagens, ele existe para mostrar a numeração andando e a lista de algoritmos com duas entradas.
+O \autoref{alg:busca} é o segundo algoritmo, e usa \verb|\While|. Como no caso das listagens, ele existe para mostrar a numeração andando e a lista de algoritmos com duas entradas.
 
 \begin{algorithm}[H]
 \caption{Busca sequencial em um vetor}
 \label{alg:busca}
-\Dados{vetor $v$ com $n$ elementos e uma chave $k$}
-\Resultado{posição de $k$ em $v$, ou $0$ se $k$ não estiver em $v$}
+\KwData{vetor $v$ com $n$ elementos e uma chave $k$}
+\KwResult{posição de $k$ em $v$, ou $0$ se $k$ não estiver em $v$}
 $i \leftarrow 1$\;
-\Enquanto{$i \leq n$ \textbf{e} $v[i] \neq k$}{
+\While{$i \leq n$ \textbf{e} $v[i] \neq k$}{
   $i \leftarrow i + 1$\;
 }
-\Se{$i > n$}{\Retorna $0$\;}
-\Retorna $i$\;
+\If{$i > n$}{\KwRet $0$\;}
+\KwRet $i$\;
 \end{algorithm}
 
   \chapter{Escrevendo matemática}
@@ -4049,6 +4356,7 @@ $i \leftarrow 1$\;
 use \verb|\href{https://exemplo.org}{texto}|. Evite digitar URLs como texto comum --- elas não quebram e estouram a margem.
 
   \section{Índice remissivo}
+  \index{índice remissivo}
 
   Marque os termos com \verb|\index{termo}| e imprima o índice com \verb|\printindex| (carregue \verb|makeidx| e use \verb|\makeindex| no preâmbulo). O índice é montado pelo programa \verb|makeindex|. Como as listas de abreviaturas e símbolos também usam \verb|makeindex| (com o estilo \verb|coppe.ist|), o mais prático é deixar o \verb|latexmk| rodar tudo (veja o \texttt{latexmkrc}). Atenção: o \verb|latexmk| é um script \emph{Perl} --- no Windows, instale o \emph{Strawberry Perl}; no Linux e no macOS o Perl já costuma vir instalado. Para vários índices, use \verb|imakeidx| ou \verb|index|.
 
@@ -4121,10 +4429,10 @@ use \verb|\href{https://exemplo.org}{texto}|. Evite digitar URLs como texto comu
   \abbrev{IoT}{IoT com ordenação default}
   \abbrev[ITU]{ITU}{ITU mesmo}
 
-  \newsigla{ufrj}{UFRJ}{Universidade Federal do Rio de Janeiro}
-  \newsigla{cpgp}{CPGP}{Comissão de Pós-Graduação e Pesquisa de Engenharia}
+  \defineacronym{ufrj}{UFRJ}{Universidade Federal do Rio de Janeiro}
+  \defineacronym{cpgp}{CPGP}{Comissão de Pós-Graduação e Pesquisa de Engenharia}
 
-  As siglas (Manual, seção 2.8) são expandidas na primeira ocorrência e registradas automaticamente na Lista de Siglas, que este exemplo mantém separada da de abreviaturas com \verb|\makelosiglas|. Uma sigla que não se usa com \verb|\sigla| entra na lista com \verb|\acron|, que não imprime nada no texto: é assim que a ABNT, citada neste capítulo sem \verb|\sigla|, está na lista.\acron{ABNT}{Associação Brasileira de Normas Técnicas} Declaradas com \verb|\newsigla|, basta usá-las: a \sigla{ufrj} oferece vários cursos de pós-graduação, e este programa segue as normas da \sigla{cpgp}. Em menções seguintes aparecem apenas as siglas, como \sigla{ufrj} e \sigla{cpgp}; use \verb|\sigla*| para forçar a forma extensa.
+  As siglas (Manual, seção 2.8) são expandidas na primeira ocorrência e registradas automaticamente na Lista de Siglas, que este exemplo mantém separada da de abreviaturas com \verb|\makeloacronyms|. Uma sigla que não se usa com \verb|\useacronym| entra na lista com \verb|\acron|, que não imprime nada no texto: é assim que a ABNT, citada neste capítulo sem \verb|\useacronym|, está na lista.\acron{ABNT}{Associação Brasileira de Normas Técnicas} Declaradas com \verb|\defineacronym|, basta usá-las: a \useacronym{ufrj} oferece vários cursos de pós-graduação, e este programa segue as normas da \useacronym{cpgp}. Em menções seguintes aparecem apenas as siglas, como \useacronym{ufrj} e \useacronym{cpgp}; use \verb|\useacronym*| para forçar a forma extensa.
 
 
 
@@ -4134,14 +4442,22 @@ use \verb|\href{https://exemplo.org}{texto}|. Evite digitar URLs como texto comu
   \backmatter
 
   % Tipos exóticos da ABNT (NBR 6023): patente, legislação, norma, mapa,
-  % partitura --- declarados via sinônimos em português em example.bib.
+  % partitura --- declarados via sinônimos em português em exemplo.bib.
   \nocite{patente-example,legislacao-example,norma-example,mapa-example,partitura-example}
   \nocite{jurisprudencia-example}
   \nocite{videogame-example,filme-example,semautor-example,semautorart-example}
   \nocite{jornalcaderno-example,jornal-example}
   \printbibliography
 
-
+  % Glossário (3.1.4.2), depois das referências: termos técnicos e seus
+  % significados, em ordem alfabética.
+  \begin{theglossary}
+    \item[Fólio] o número da folha, impresso no canto superior direito.
+    \item[Mancha gráfica] a área da folha ocupada pelo texto, dentro das
+      margens.
+    \item[PDF/A] o formato de PDF para preservação de longo prazo, exigido no
+      depósito (2.2d).
+  \end{theglossary}
 
 \appendix
 
@@ -4169,12 +4485,119 @@ No modelo \CoppeTeX os anexos devem obrigtoriamente vir depois dos apêndices e 
 
 \chapter{Outro Anexo}
 
+%% Índice remissivo (3.1.4.5), o último elemento pós-textual. Os termos são
+%% marcados no texto com \index; o makeindex monta o índice entre as passadas.
+\printindex
 
 \coppetexfinalpage% colofão institucional (página par, face do contracapa)
 
 \end{document}
 
-%</example>
+%</maxexemplo>
+%    \end{macrocode}
+%
+% \section{O exemplo mínimo}
+%
+% \label{COPPE:MIN}
+% O |min-exemplo.tex| traz \textbf{tudo o que é obrigatório e apenas isso}:
+% as folhas que o Manual UFRJ/SiBI chama de elementos essenciais (3.1.2.1), a
+% parte textual com introdução, desenvolvimento e conclusão (3.1.3) e as
+% referências, único pós-textual obrigatório (3.1.4). É o ponto de partida
+% para quem prefere acrescentar a apagar.
+%    \begin{macrocode}
+%<*minexemplo>
+\documentclass[dsc,pdfa]{coppe}
+%% min-exemplo.tex -- tudo o que a norma exige, e nada além disso.
+%%
+%% O que está aqui e por quê (Manual UFRJ/SiBI, 9.ª ed. rev., 2026):
+%%  - pdfa ................ o depósito é em PDF/A (2.2d);
+%%  - \maketitle .......... capa, folha de rosto (3.1.2.1.1) e folha adicional
+%%    com a Coleta CAPES e a ficha catalográfica (3.1.2.1.2);
+%%  - \frontmatter ........ folha de aprovação (3.1.2.1.3), com o orientador
+%%    em primeiro lugar na banca, como presidente;
+%%  - abstract ............ resumo na língua do trabalho (3.1.2.1.4);
+%%  - foreignabstract ..... resumo em língua estrangeira (3.1.2.1.5);
+%%  - \tableofcontents .... sumário (3.1.2.1.6), o único obrigatório das listas;
+%%  - introdução, desenvolvimento e conclusão (3.1.3);
+%%  - \printbibliography .. referências, o único pós-textual obrigatório (3.1.4).
+%%
+%% O que NÃO está, por ser opcional: dedicatória, agradecimentos, epígrafe,
+%% todas as listas além do sumário, subtítulo, coorientador, linha de pesquisa,
+%% glossário, apêndices, anexos e índice. Tudo isso está no max-exemplo.tex.
+
+\addbibresource{exemplo.bib}% a base de referências
+
+\begin{document}
+  \title{Título do Trabalho}
+  \foreigntitle{Title of the Work}
+  \author{Nome do Autor}{Sobrenome}
+  \advisor{Nome do Orientador}{Sobrenome}{D.Sc.}{UFRJ}
+  % A composição da banca é regra do Programa, não da formatação.
+  \examiner{Nome do Primeiro Examinador Sobrenome}{D.Sc.}{UFRJ}
+  \examiner{Nome do Segundo Examinador Sobrenome}{D.Sc.}{UFRJ}
+  \examiner{Nome do Terceiro Examinador Sobrenome}{D.Sc.}{UFF}
+  \department{PESC}
+  \date{09}{2026}
+  % Data da aprovação: obrigatória na folha de aprovação (3.1.2.1.3d).
+  \approvaldate{15 de setembro de 2026}
+
+  % Palavras-chave, ao final de cada resumo (3.1.2.1.4 e 3.1.2.1.5).
+  \keyword{Primeira palavra-chave}
+  \keyword{Segunda palavra-chave}
+  \keyword{Terceira palavra-chave}
+  \foreignkeyword{First keyword}
+  \foreignkeyword{Second keyword}
+  \foreignkeyword{Third keyword}
+
+  % Folha de rosto e folha adicional: área de concentração (3.1.2.1.1e) e os
+  % campos da Coleta CAPES (3.1.2.1.2). A ficha catalográfica vem do gerador do
+  % SiBI; com o arquivo em mãos, descomente a linha \catalogcard.
+  \concentrationarea{Engenharia de Sistemas e Computação}
+  \productiontype{bibliographic}
+  \linkedproject{no}
+  % \catalogcard{ficha.pdf}
+
+  \maketitle
+
+  \frontmatter
+
+  \begin{abstract}
+  Resumo do trabalho, de 150 a 500 palavras, num só parágrafo (3.1.2.1.4).
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+  tempor incididunt ut labore et dolore magna aliqua.
+  \end{abstract}
+
+  \begin{foreignabstract}
+  Abstract of the work, in English (3.1.2.1.5). Lorem ipsum dolor sit amet,
+  consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+  dolore magna aliqua.
+  \end{foreignabstract}
+
+  \tableofcontents
+
+  \mainmatter
+
+  \chapter{Introdução}
+
+  A introdução apresenta o tema, o problema e os objetivos do trabalho, e
+  anuncia como o texto está organizado. Toda afirmação que venha de outro
+  trabalho é citada, como em \citet{book-example}.
+
+  \chapter{Desenvolvimento}
+
+  O desenvolvimento pode ocupar quantos capítulos o trabalho pedir: revisão
+  da literatura, métodos, resultados e discussão \citep{article-example}.
+
+  \chapter{Conclusão}
+
+  A conclusão responde aos objetivos postos na introdução.
+
+  \backmatter
+
+  \printbibliography
+
+\end{document}
+%</minexemplo>
 %    \end{macrocode}
 %
 % \StopEventually{\PrintIndex}
@@ -4377,7 +4800,7 @@ No modelo \CoppeTeX os anexos devem obrigtoriamente vir depois dos apêndices e 
 % nor unicode-math was present. Both were the class deciding a typographic
 % question: amssymb is one set of 8-bit symbol fonts among several, and on a
 % Unicode engine the right route is unicode-math with an OpenType math font
-% that only the author can pick. example.tex and the empty-document generator
+% that only the author can pick. The examples and the empty-document generator
 % load them per engine, in the preamble, where the author sees and changes it.
 % A document that relied on the class's amssymb must now load it itself.
 \RequirePackage{amsmath}
@@ -5071,20 +5494,18 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % cada membro da banca. Com a entrega so digital (Resolucao CEPG n. 246/2023)
 % nao ha o que assinar a mao, e a v4.1 tirou as reguas. A opcao continua aceita,
 % sem efeito, para nao quebrar documento escrito antes disso.
-% Quem examina o trabalho e a BANCA EXAMINADORA, e a folha de aprovacao lista
-% quem examinou. O orientador nao e, por definicao, examinador: ele conduziu o
-% trabalho. Por isso a folha lista, por padrao, so os examinadores.
+% A 3.1.2.1.3(e) do Manual: na folha de aprovacao, "o orientador deve aparecer
+% em primeiro lugar, por ser o presidente da banca". E o padrao desde a revisao
+% da v4.1 (issue 102): orientadores e coorientadores abrem a lista, na frente
+% dos examinadores. Antes dela o padrao era o contrario -- so os examinadores --,
+% o que contrariava o texto do Manual.
 %
-% Ha Programas em que o orientador integra a banca e assina a aprovacao. Para
-% esses existe `orientadorexamina': com ela, orientadores e coorientadores
-% voltam para a lista, na frente dos examinadores, na ordem que a 3.1.2.1.3(e)
-% prescreve para o presidente da banca.
-%
-% Ate a v4.1 nao havia escolha: os orientadores saiam sempre, e um Programa que
-% nao os quisesse ali tinha de nao os declarar -- o que os tirava tambem da capa
-% e da folha de rosto, onde eles tem de estar.
-\newif\if@coppeorientexam \@coppeorientexamfalse
+% `semorientadornabanca' devolve a folha so com os examinadores, para o
+% Programa que a queira assim. `orientadorexamina', que era como se pedia o
+% orientador na banca, continua aceita e agora so confirma o padrao.
+\newif\if@coppeorientexam \@coppeorientexamtrue
 \DeclareOption{orientadorexamina}{\@coppeorientexamtrue}
+\DeclareOption{semorientadornabanca}{\@coppeorientexamfalse}
 % A classe carrega o hyperref e colore os links. Quem vai IMPRIMIR, ou quem
 % simplesmente prefere a pagina sobria, pedia isso a mao com \hypersetup no
 % preambulo -- que funciona, mas exige saber que a classe carrega o hyperref e
@@ -5694,7 +6115,10 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \ifx\coppe@@algolang\@empty
   \RequirePackage[linesnumbered,lined,algochapter,ruled]{algorithm2e}
 \else
-  \expandafter\RequirePackage\expandafter[\coppe@@algolang,linesnumbered,lined,algochapter,ruled]{algorithm2e}
+  % onelanguage: os comandos em ingles (\For, \While, \KwData...) passam a
+  % imprimir as palavras do idioma do trabalho, e o .tex pode usa-los sem que o
+  % PDF saia com "for" e "while" no meio do portugues.
+  \expandafter\RequirePackage\expandafter[\coppe@@algolang,onelanguage,linesnumbered,lined,algochapter,ruled]{algorithm2e}
 \fi
 % algorithm2e composes its own caption and therefore ignores the class-wide
 % \captionsetup{font=footnotesize,labelsep=endash}. Left alone it printed
@@ -5713,6 +6137,12 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \SetAlCapNameSty{textnormal}
 \SetKwFor{Para}{para}{faça}{fim do para}
 \SetKwFor{Enquanto}{enquanto}{faça}{fim do enquanto}
+% Os nomes em ingles saem com as mesmas palavras dos portugueses, inclusive o
+% "fim do para" que a classe usa, quando o trabalho e em portugues.
+\ifx\coppe@mainlang\coppe@@brazilianstr
+  \SetKwFor{For}{para}{faça}{fim do para}
+  \SetKwFor{While}{enquanto}{faça}{fim do enquanto}
+\fi
 % setspace + hyperref + biblatex are loaded at the very end of the class
 % (see the block just before %</class>), so their hooks see every macro the
 % class defines, and the load order setspace -> hyperref -> biblatex is
@@ -6924,6 +7354,25 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %    \end{macrocode}
 % \end{macro}
 %
+% \begin{macro}{\epigrafe}
+% A epigrafe da 3.1.2.2.3: uma citacao com a autoria, numa folha propria,
+% depois dos agradecimentos, "com alinhamento no meio da pagina ou folha ate a
+% margem direita, na parte inferior" -- o mesmo lugar da dedicatoria. Na parte
+% pre-textual "nao e necessario seguir a norma de citacao", entao a autoria vai
+% so abaixo do texto, alinhada a direita.
+%    \begin{macrocode}
+\newcommand\epigrafe[2]{%
+  \cleardoublepage
+  \vspace*{\fill}
+  \begin{flushright}
+    \begin{minipage}{0.5\textwidth}
+      \raggedleft\itshape\normalsize #1\par
+      \vspace{1ex}\normalfont\small #2
+    \end{minipage}
+  \end{flushright}}
+%    \end{macrocode}
+% \end{macro}
+%
 
 %
 % \subsubsection{As folhas de resumo}
@@ -7090,7 +7539,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \fi
   \if@copperestitulo
     \begin{center}
-      \sloppy\nohyphens{\MakeUppercase{\coppe@res@title{\coppe@reslang}}}\par
+      \sloppy\nohyphens{\MakeUppercase{\coppe@res@title{\coppe@reslang}}%
+        \coppe@res@subtitle{\coppe@reslang}}\par
       \vspace*{8mm}
       \@authname\ \@authsurn \par
       \vspace*{5mm}
@@ -7683,6 +8133,17 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \@ifundefined{coppe@title@#1}%
     {\@nameuse{coppe@title@brazilian}}%
     {\@nameuse{coppe@title@#1}}}
+% O subtitulo da folha de resumo, no idioma da folha, com dois-pontos e sem caixa
+% alta -- a mesma forma da capa e da folha de rosto (3.1.2.1.1c). Ate a revisao
+% da v4.1 ele nao saia em folha de resumo nenhuma: \foreignsubtitle guardava o
+% subtitulo em ingles e nada o imprimia (issue 102). Quando a folha usa o titulo
+% em portugues por falta de um no seu idioma, usa o subtitulo em portugues.
+\newcommand\coppe@res@subtitle[1]{%
+  \@ifundefined{coppe@title@#1}%
+    {\@ifundefined{coppe@subtitle@brazilian}{}%
+       {: \@nameuse{coppe@subtitle@brazilian}}}%
+    {\@ifundefined{coppe@subtitle@#1}{}%
+       {: \@nameuse{coppe@subtitle@#1}}}}
 % O MES pelo numero. \number tira o zero a esquerda de \date{09}{2026}, que de
 % outro modo procuraria a chave monthname09.
 \newcommand\coppe@res@month[1]{%
@@ -7902,6 +8363,43 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \renewcommand\printbibliography[1][]{%
   \coppe@orig@printbibliography[#1]%
   \coppe@bibEnd}
+% Os nomes em ingles (issue 102). Todo comando da classe que so tinha nome em
+% portugues ganha um em ingles, e os dois valem para sempre: o de portugues nao
+% sai, para nao quebrar trabalho escrito antes. Os documentos da entrega usam o
+% ingles. \newacronym e \acronym foram evitados de proposito: sao dos pacotes
+% glossaries e acronym, e colidiriam com quem os carrega.
+\let\defineacronym\newsigla
+\let\useacronym\sigla
+\let\makeloacronyms\makelosiglas
+\@onlypreamble\makeloacronyms
+\let\printloacronyms\printlosiglas
+\let\approvaldate\dataaprovacao
+\let\concentrationarea\areaconcentracao
+\let\researchline\linhapesquisa
+\let\projectname\nomeprojeto
+\let\fundingagency\agenciafomento
+\let\catalogcard\fichacatalografica
+\let\setupabstracts\configuraresumos
+\let\listofframes\listofquadros
+\let\listofprograms\listofprogramas
+% O ambiente em ingles do quadro nao pode se chamar `frame': \frame e
+% comando do proprio LaTeX (uma moldura no modo picture).
+\newenvironment{framefloat}[1][htbp]{\begin{quadro}[#1]}{\end{quadro}}
+% Os valores tambem em ingles: bibliographic, artistic, technological,
+% technical; yes, no.
+\newcommand\coppe@valorpt[3]{%
+  \def\coppe@ptval{#3}%
+  \@for\coppe@par:=#2\do{%
+    \expandafter\coppe@valorpar\coppe@par\@nil}%
+  \expandafter#1\expandafter{\coppe@ptval}}
+\def\coppe@valorpar#1/#2\@nil{%
+  \def\coppe@tmpv{#1}\ifx\coppe@tmpv\coppe@ptval\def\coppe@ptval{#2}\fi}
+\newcommand\productiontype[1]{\coppe@valorpt\tipoproducao
+  {bibliographic/bibliografica,artistic/artistica,technological/tecnologica,technical/tecnica}{#1}}
+\newcommand\linkedproject[1]{\coppe@valorpt\projetovinculado{yes/sim,no/nao}{#1}}
+% \epigraph so se ninguem o tiver definido: o pacote epigraph tem um comando com
+% o mesmo nome e os mesmos dois argumentos, e quem o carrega fica com o dele.
+\AtBeginDocument{\providecommand\epigraph{\epigrafe}}
 %    \end{macrocode}
 %
 %    \begin{macrocode}
@@ -7968,7 +8466,7 @@ postamble
 %
 % Generated from this .dtx by coppe.ins (one docstrip module each).
 %
-% \subsection{\texttt{tipos.bib} --- um exemplo de cada categoria}
+% \subsection{\texttt{exemplo.bib}, segunda parte --- um exemplo de cada categoria}
 %
 % As 34 categorias de referência da seção 4.2 do Manual, uma entrada
 % cada, com os dados dos próprios exemplos do Manual. O comentário
@@ -8668,6 +9166,9 @@ postamble
     \map{\step[fieldsource=localevento,fieldtarget=venue]}
     \map{\step[fieldsource=deposito,fieldtarget=filingdate]}
     \map{\step[fieldsource=concessao,fieldtarget=grantdate]}
+    % caderno e campo da classe (a secao do jornal); newspapersection e o nome
+    % em ingles, e e o que as bases da entrega usam.
+    \map{\step[fieldsource=newspapersection,fieldtarget=caderno]}
   }%
 }
 
@@ -9130,19 +9631,24 @@ postamble
 %
 % \subsection{As bases de referências da própria classe}
 %
-% The two BibLaTeX/biber databases shipped with the class --- |example.bib|
-% (the sample database cited by the example monograph) and |coppe.bib| (the
+% The two BibLaTeX/biber databases shipped with the class --- |exemplo.bib|
+% (the sample database cited by the examples) and |coppe.bib| (the
 % references of this manual) --- are generated from this source too, so the
 % whole distribution still has a single editable origin. They live inside an
 % |\iffalse| block below: the documentation driver never typesets them, and
-% only |coppe.ins| extracts them, through the |examplebib| and |coppebib|
-% docstrip targets. Edit the entries here, never the generated |.bib| files.
+% only |coppe.ins| extracts them. |exemplo.bib| is ONE file made of two blocks,
+% the |examplebib| and |tiposbib| docstrip targets, which |coppe.ins| joins;
+% |coppe.bib| comes from |coppebib|. The first block alone is also written out
+% as |manual.bib|, the database of |manual.tex|, which is kept apart from the
+% examples' on purpose. Edit the entries here, never the generated |.bib| files.
 %
 % \iffalse
 %<*examplebib>
-@Comment{ example.bib -- one entry per ABNT document type, exercised in the
-  Referencias of this manual. Many entries use the Portuguese field/type
-  synonyms (autor, titulo, editora, local, ano, organizador, ...). }
+@Comment{ exemplo.bib -- a base dos exemplos (min-exemplo.tex, max-exemplo.tex e
+  os exemplos por idioma). Primeira parte: entradas de demonstracao, muitas com
+  os sinonimos em portugues dos campos e tipos (autor, titulo, editora, local,
+  ano, organizador, ...). Segunda parte, mais abaixo: uma entrada de cada
+  categoria da secao 4.2 do Manual. }
 
 @BOOK{book-example,
    author = "R. Abraham and J. E. Marsden and T. Ratiu",
@@ -9225,126 +9731,128 @@ postamble
    year = 1990,
 }
 
-@PHDTHESIS{phdthesis-example,
+@thesis{phdthesis-example,
    author = "Paes~Junior, H. R.",
    title = "Influência da Espessura da Camada Intrínseca e Energia do Foton na Degradação de Células Solares de Silício Amorfo Hidrogenado",
    school = "COPPE/UFRJ",
    address = "Rio de Janeiro, RJ, Brasil",
    type = "Tese de {D.Sc.}",
-   curso = "Engenharia Metalúrgica e de Materiais",
+   course = "Engenharia Metalúrgica e de Materiais",
    year = 1994,
 }
 
 @videogame{videogame-example,
    author = "Meier, Sid",
    title = "Sid Meier's Civilization VI",
-   artista = "Firaxis Games",
-   plataforma = "PC",
-   editora = "2K Games",
-   versao = "1.0",
-   ano = 2016,
+   artist = "Firaxis Games",
+   platform = "PC",
+   publisher = "2K Games",
+   version = "1.0",
+   year = 2016,
 }
 
-@filme{filme-example,
+@movie{filme-example,
    title = "Cidade de Deus",
-   diretor = "Meirelles, Fernando and Lúnd, Kátia",
-   produtor = "O2 Filmes",
-   editora = "Globo Filmes",
-   local = "Rio de Janeiro",
-   ano = 2002,
+   director = "Meirelles, Fernando and Lúnd, Kátia",
+   producer = "O2 Filmes",
+   publisher = "Globo Filmes",
+   location = "Rio de Janeiro",
+   year = 2002,
 }
 
 @Comment{ Exotic ABNT types (NBR 6023 4.2.5-4.2.12), via the Portuguese synonyms. }
 
-@patente{patente-example,
-   autor = "Silva, J. A.",
+@patent{patente-example,
+   author = "Silva, J. A.",
    title = "Dispositivo de medição de fluxo térmico",
    number = "BR 10 2020 012345 6",
    type = "Patente de Invento",
    holder = "{Universidade Federal do Rio de Janeiro}",
-   ano = 2021,
+   year = 2021,
 }
 
-@legislacao{legislacao-example,
+@legislation{legislacao-example,
    author = "{Brasil}",
    title = "Lei n. 9.610, de 19 de fevereiro de 1998: altera, atualiza e consolida a legislação sobre direitos autorais",
    type = "Lei Federal",
-   local = "Brasília, DF",
-   ano = 1998,
+   location = "Brasília, DF",
+   year = 1998,
 }
 
-@norma{norma-example,
+@standard{norma-example,
    author = "{Associação Brasileira de Normas Técnicas}",
    title = "{NBR} 6023: informação e documentação: referências: elaboração",
-   local = "Rio de Janeiro",
-   ano = 2018,
+   location = "Rio de Janeiro",
+   year = 2018,
 }
 
-@mapa{mapa-example,
-   autor = "{Instituto Brasileiro de Geografia e Estatística}",
+@map{mapa-example,
+   author = "{Instituto Brasileiro de Geografia e Estatística}",
    title = "Mapa político do Brasil",
-   escala = "1:5.000.000",
-   local = "Rio de Janeiro",
-   editora = "IBGE",
-   ano = 2016,
+   scale = "1:5.000.000",
+   location = "Rio de Janeiro",
+   publisher = "IBGE",
+   year = 2016,
 }
 
-@partitura{partitura-example,
+@music{partitura-example,
    author = "Villa-Lobos, Heitor",
    title = "Bachianas Brasileiras n. 5",
-   local = "Rio de Janeiro",
+   location = "Rio de Janeiro",
    publisher = "Academia Brasileira de Música",
-   ano = 1945,
+   year = 1945,
    addendum = "1 partitura",
 }
 
 @Comment{ Obra sem autor: entra pelo titulo (1a palavra em CAIXA ALTA, ABNT 4.2). }
 @book{semautor-example,
    title = "Diagnóstico do setor editorial brasileiro",
-   local = "São Paulo",
-   editora = "Câmara Brasileira do Livro",
-   ano = 2019,
+   location = "São Paulo",
+   publisher = "Câmara Brasileira do Livro",
+   year = 2019,
 }
 
 @Comment{ Artigo/materia de jornal (NBR 6023 4.2.3.6). Com caderno/secao: a
   data precede o caderno e a pagina vem por ultimo. }
-@artigodejornal{jornalcaderno-example,
-   autor = "J. Byrne",
-   titulo = "A explosão de cursos para executivos nos EUA",
-   jornal = "Gazeta Mercantil",
-   local = "São Paulo",
-   data = "1992-02-04",
-   caderno = "Administração e Serviços",
-   paginas = "28",
+@article{jornalcaderno-example,
+   author = "J. Byrne",
+   title = "A explosão de cursos para executivos nos EUA",
+   journaltitle = "Gazeta Mercantil",
+   location = "São Paulo",
+   date = "1992-02-04",
+   newspapersection = "Administração e Serviços",
+   pages = "28",
+  entrysubtype = {newspaper},
 }
 
 @Comment{ Artigo de jornal sem caderno/secao: a paginacao precede a data. }
-@artigodejornal{jornal-example,
-   autor = "L. N. P. Leal",
-   titulo = "MP fiscaliza com autonomia total",
-   jornal = "Jornal do Brasil",
-   local = "Rio de Janeiro",
-   paginas = "3",
-   data = "1999-04-25",
+@article{jornal-example,
+   author = "L. N. P. Leal",
+   title = "MP fiscaliza com autonomia total",
+   journaltitle = "Jornal do Brasil",
+   location = "Rio de Janeiro",
+   pages = "3",
+   date = "1999-04-25",
+  entrysubtype = {newspaper},
 }
 
 @Comment{ Jurisprudencia / decisao judicial (NBR 6023 4.2.6.2): jurisdicao +
   orgao (autor, CAIXA ALTA), titulo da decisao, Relator, local e data. }
-@jurisprudencia{jurisprudencia-example,
+@jurisdiction{jurisprudencia-example,
    author = "{Brasil. Supremo Tribunal Federal}",
    title = "Habeas Corpus 12.345",
    relator = "Min. Fulano de Tal",
-   local = "Brasília, DF",
-   data = "2020-03-10",
+   location = "Brasília, DF",
+   date = "2020-03-10",
 }
 
 @Comment{ Obra sem autor iniciada por artigo: o artigo e a 1a palavra
   significativa ficam em CAIXA ALTA (ABNT 4.2) -- AS NORMAS de... }
 @book{semautorart-example,
    title = "As normas de documentação acadêmica",
-   local = "Rio de Janeiro",
-   editora = "ABNT",
-   ano = 2021,
+   location = "Rio de Janeiro",
+   publisher = "ABNT",
+   year = 2021,
 }
 
 @manual{manualbib,
@@ -9431,7 +9939,7 @@ postamble
 %</coppebib>
 
 %<*tiposbib>
-@Comment{ tipos.bib -- um exemplo de CADA categoria de referencia da secao 4.2
+@Comment{ Segunda parte: um exemplo de CADA categoria de referencia da secao 4.2
   do Manual UFRJ/SiBI, 9.a ed. rev. (2026), com os dados dos exemplos do
   proprio Manual. O comentario %% acima de cada entrada e a referencia COMO O
   MANUAL A IMPRIME.
@@ -9443,7 +9951,6 @@ postamble
   base antiga. }
 
 @book{m-4211,
-%% forma INGLESA (preferida): tipo e campos com os nomes do biblatex
 %% CASTRO, C. M. A prática da pesquisa. São Paulo: Mc Graw-Hill do Brasil, 1978. 156 p.
   author      = "Castro, C. M.",
   title       = "A prática da pesquisa",
@@ -9453,23 +9960,21 @@ postamble
   pagetotal   = "156",
 }
 
-@livro{m-4212,
-%% forma PORTUGUESA: sinonimos que a classe declara para os mesmos campos
+@book{m-4212,
 %% BAUMAN, Zygmunt. Vida líquida. 2. ed. rev. Rio de Janeiro: Zahar, 2009.
 %% Disponível em: https://lectio.proxy.ufrj.br/dashboard/midia/detalhe/1571.
 %% Acesso em: 28 ago. 2023.
-  autor      = "Bauman, Zygmunt",
-  titulo     = "Vida líquida",
-  edicao     = "2. ed. rev.",
-  local      = "Rio de Janeiro",
-  editora    = "Zahar",
-  ano        = 2009,
+  author      = "Bauman, Zygmunt",
+  title     = "Vida líquida",
+  edition     = "2. ed. rev.",
+  location      = "Rio de Janeiro",
+  publisher    = "Zahar",
+  year        = 2009,
   url        = "https://lectio.proxy.ufrj.br/dashboard/midia/detalhe/1571",
-  dataacesso = "2023-08-28",
+  urldate = "2023-08-28",
 }
 
 @incollection{m-4213,
-%% forma INGLESA (preferida): tipo e campos com os nomes do biblatex
 %% ROMANO, Giovanni. Imagens da juventude na era moderna. In: LEVI, G;
 %% SCHIMIDT, J. (org.). História dos jovens 2. São Paulo: Companhia das
 %% Letras, 1996. p. 7-16.
@@ -9485,20 +9990,18 @@ postamble
   pages       = "7--16",
 }
 
-@correspondencia{m-422,
-%% forma PORTUGUESA: sinonimos que a classe declara para os mesmos campos
+@letter{m-422,
 %% PILLA, Luiz. [Correspondência]. Destinatário: Moysés Valinho. Porto
 %% Alegre, 6 jun. 1979. 1 cartão pessoal.
-  autor    = "Pilla, Luiz",
-  titulo   = "[Correspondência]",
-  nota     = "Destinatário: Moysés Valinho",
-  local    = "Porto Alegre",
-  data     = "1979-06-06",
+  author    = "Pilla, Luiz",
+  title   = "[Correspondência]",
+  note     = "Destinatário: Moysés Valinho",
+  location    = "Porto Alegre",
+  date     = "1979-06-06",
   addendum = "1 cartão pessoal",
 }
 
 @letter{m-4221,
-%% forma INGLESA (preferida): tipo e campos com os nomes do biblatex
 %% LISPECTOR, Clarice. [Carta enviada para sua irmã]. Destinatário: Tânia
 %% Lispector. Belém, 8 jul. 1944. 1 carta. Disponível em: https://site.claricelispector.ims.com.br/acervo/cartas/067388-2/. Acesso em: 4 ago. 2023.
   author      = "Lispector, Clarice",
@@ -9511,20 +10014,18 @@ postamble
   urldate     = "2023-08-04",
 }
 
-@periodico{m-4231,
-%% forma PORTUGUESA: sinonimos que a classe declara para os mesmos campos
+@periodical{m-4231,
 %% SÃO PAULO MEDICAL JOURNAL. São Paulo: Associação Paulista de Medicina, 1941- .
 %%! intervalo aberto: a classe fecha com "1941/" porque a 4.3 separa por barra
 %%! o intervalo de MESES ("jan./jun."), e o biblatex usa o mesmo separador
 %%! para os dois. Escolheu-se acertar o caso frequente, o do artigo.
-  titulo  = "São Paulo Medical Journal",
-  local   = "São Paulo",
-  editora = "Associação Paulista de Medicina",
-  data    = "1941/",
+  title  = "São Paulo Medical Journal",
+  location   = "São Paulo",
+  publisher = "Associação Paulista de Medicina",
+  date    = "1941/",
 }
 
 @periodical{m-4233,
-%% forma INGLESA (preferida): tipo e campos com os nomes do biblatex
 %% REVISTA BRASILEIRA DE NEUROLOGIA. Rio de Janeiro: Universidade Federal do
 %% Rio de Janeiro, Instituto de Neurologia Deolindo Couto, v. 39, n. 2, abr./jun. 2003.
   title       = "Revista Brasileira de Neurologia",
@@ -9535,23 +10036,21 @@ postamble
   date        = "2003-04/2003-06",
 }
 
-@artigo{m-4234,
-%% forma PORTUGUESA: sinonimos que a classe declara para os mesmos campos
+@article{m-4234,
 %% ARAÚJO, Vânia Maria Rodrigues Hermes de. Informação: instrumento de
 %% dominação e de submissão. Ciência da Informação, Brasília, DF, v. 20,
 %% n. 1, p. 37-44, jan./jun. 1991.
-  autor     = "Araújo, Vânia Maria Rodrigues Hermes de",
-  titulo    = "Informação: instrumento de dominação e de submissão",
-  periodico = "Ciência da Informação",
-  local     = "Brasília, DF",
+  author     = "Araújo, Vânia Maria Rodrigues Hermes de",
+  title    = "Informação: instrumento de dominação e de submissão",
+  journaltitle = "Ciência da Informação",
+  location     = "Brasília, DF",
   volume    = "20",
-  numero    = "1",
-  paginas   = "37--44",
-  data      = "1991-01/1991-06",
+  number    = "1",
+  pages   = "37--44",
+  date      = "1991-01/1991-06",
 }
 
 @article{m-4235,
-%% forma INGLESA (preferida): tipo e campos com os nomes do biblatex
 %% LIEVENS, A.; MOENAERT, R. K. Project team communication in financial
 %% service innovation. J. Manag. Stud., Oxford, v. 37, n. 5, Jul. 2000.
 %%! o Manual grafa o mes em maiuscula por ser periodico de lingua inglesa;
@@ -9568,21 +10067,20 @@ postamble
   urldate     = "2023-08-25",
 }
 
-@artigodejornal{m-4236,
-%% forma PORTUGUESA: sinonimos que a classe declara para os mesmos campos
+@article{m-4236,
 %% BYRNE, J. A explosão de cursos para executivos nos EUA. Gazeta Mercantil,
 %% São Paulo, 4 fev. 1992. Administração e Serviços, p. 28.
-  autor   = "Byrne, J.",
-  titulo  = "A explosão de cursos para executivos nos EUA",
-  jornal  = "Gazeta Mercantil",
-  local   = "São Paulo",
-  data    = "1992-02-04",
-  caderno = "Administração e Serviços",
-  paginas = "28",
+  author   = "Byrne, J.",
+  title  = "A explosão de cursos para executivos nos EUA",
+  journaltitle  = "Gazeta Mercantil",
+  location   = "São Paulo",
+  date    = "1992-02-04",
+  newspapersection = "Administração e Serviços",
+  pages = "28",
+  entrysubtype = {newspaper},
 }
 
 @article{m-4237,
-%% forma INGLESA (preferida): tipo e campos com os nomes do biblatex
 %% LEITÃO, M. Supremo pode formar maioria hoje contra o marco temporal.
 %% O Globo, Rio de Janeiro, 30 ago. 2023. Disponível em: https://oglobo.globo.com/blogs/miriam-leitao/post/2023/08/supremo-pode-formar-maioria-hoje-contra-o-marco-temporal.ghtml. Acesso em: 30 ago. 2023.
   author      = "Leitão, M.",
@@ -9594,22 +10092,21 @@ postamble
   urldate     = "2023-08-30",
 }
 
-@artigodejornal{m-4238,
-%% forma PORTUGUESA: sinonimos que a classe declara para os mesmos campos
+@article{m-4238,
 %% FOTO de raios no Cristo é finalista em concurso de imagens de fenômenos
 %% meteorológicos. G1, Rio de Janeiro, 24 out. 2023. Disponível em:
 %% https://g1.globo.com/meio-ambiente/noticia/2023/08/24/concurso-elege-a-melhor-foto-de-fenomenos-meteorologicos.ghtml.
 %% Acesso em: 26 ago. 2023.
-  titulo     = "Foto de raios no Cristo é finalista em concurso de imagens de fenômenos meteorológicos",
-  jornal     = "G1",
-  local      = "Rio de Janeiro",
-  data       = "2023-10-24",
+  title     = "Foto de raios no Cristo é finalista em concurso de imagens de fenômenos meteorológicos",
+  journaltitle     = "G1",
+  location      = "Rio de Janeiro",
+  date       = "2023-10-24",
   url        = "https://g1.globo.com/meio-ambiente/noticia/2023/08/24/concurso-elege-a-melhor-foto-de-fenomenos-meteorologicos.ghtml",
-  dataacesso = "2023-08-26",
+  urldate = "2023-08-26",
+  entrysubtype = {newspaper},
 }
 
 @proceedings{m-4241,
-%% forma INGLESA (preferida): tipo e campos com os nomes do biblatex
 %% ENCONTRO ANUAL DA ANPAD, 14., 1982, Florianópolis. Anais [...]. Belo
 %% Horizonte: ANPAD, 1990. 9 v.
   eventtitle  = "Encontro Anual da ANPAD",
@@ -9623,23 +10120,21 @@ postamble
   addendum    = "9 v.",
 }
 
-@anais{m-4243,
-%% forma PORTUGUESA: sinonimos que a classe declara para os mesmos campos
+@proceedings{m-4243,
 %% CONGRESSO BRASILEIRO DE BIBLIOTECONOMIA E DOCUMENTAÇÃO, 19., 2000, Porto
 %% Alegre. Anais eletrônicos [...]. Porto Alegre: PUCRS, 2000. 1 CD.
-  evento       = "Congresso Brasileiro de Biblioteconomia e Documentação",
-  numero       = "19",
-  dataevento   = "2000",
-  localevento  = "Porto Alegre",
-  titulo       = "Anais eletrônicos [...]",
-  local    = "Porto Alegre",
-  editora  = "PUCRS",
-  ano      = 2000,
+  eventtitle       = "Congresso Brasileiro de Biblioteconomia e Documentação",
+  number       = "19",
+  eventdate   = "2000",
+  venue  = "Porto Alegre",
+  title       = "Anais eletrônicos [...]",
+  location    = "Porto Alegre",
+  publisher  = "PUCRS",
+  year      = 2000,
   addendum = "1 CD",
 }
 
 @inproceedings{m-4245,
-%% forma INGLESA (preferida): tipo e campos com os nomes do biblatex
 %% CORDEIRO, Rosa Inês de N. Descrição e representação de fotografias de cenas
 %% e fotogramas de filmes: um esquema de indexação. In: CONGRESSO BRASILEIRO DE
 %% BIBLIOTECONOMIA E DOCUMENTAÇÃO, 16., 1991, Salvador. Anais [...]. Salvador:
@@ -9658,27 +10153,25 @@ postamble
   pages       = "1008--1022",
 }
 
-@trabalhodeevento{m-4246,
-%% forma PORTUGUESA: sinonimos que a classe declara para os mesmos campos
+@inproceedings{m-4246,
 %% MACIEL, A. M. D.; SALES JÚNIOR, Ronaldo L.; SIQUEIRA, A. J. O indivíduo e a
 %% pós-modernidade. In: CONGRESSO DE INICIAÇÃO DA UFPE, 4., 1996, Recife.
 %% Anais eletrônicos [...]. Recife: UFPe, 1996. Disponível em: http://www.propesq.ufpe.br/anais/cfch/cfchtrab/htm. Acesso em: 16 jan. 2001.
-  autor      = "Maciel, A. M. D. and Sales Júnior, Ronaldo L. and Siqueira, A. J.",
-  titulo     = "O indivíduo e a pós-modernidade",
-  evento      = "Congresso de Iniciação da UFPE",
-  numero      = "4",
-  dataevento  = "1996",
-  localevento = "Recife",
+  author      = "Maciel, A. M. D. and Sales Júnior, Ronaldo L. and Siqueira, A. J.",
+  title     = "O indivíduo e a pós-modernidade",
+  eventtitle      = "Congresso de Iniciação da UFPE",
+  number      = "4",
+  eventdate  = "1996",
+  venue = "Recife",
   booktitle   = "Anais eletrônicos [...]",
-  local      = "Recife",
-  editora    = "UFPe",
-  ano        = 1996,
+  location      = "Recife",
+  publisher    = "UFPe",
+  year        = 1996,
   url        = "http://www.propesq.ufpe.br/anais/cfch/cfchtrab/htm",
-  dataacesso = "2001-01-16",
+  urldate = "2001-01-16",
 }
 
 @patent{m-425,
-%% forma INGLESA (preferida): tipo e campos com os nomes do biblatex
 %%! o Manual usa "et al."; a classe lista todos os autores (maxbibnames=99),
 %%! que a 4.3.1.3 admite igualmente e é o que a COPPE pratica.
 %% BERTAZZOLI, Rodnei et al. Eletrodos de difusão gasosa modificados com
@@ -9693,26 +10186,24 @@ postamble
   grantdate   = "25 mar. 2008",
 }
 
-@patente{m-4251,
-%% forma PORTUGUESA: sinonimos que a classe declara para os mesmos campos
+@patent{m-4251,
 %% GALEMBECK, Fernando; SOUZA, Maria de Fátima Brito. Process to obtain an
 %% intercalated or exfoliated polyester with clay hybrid nanocomposite
 %% material. Depositante: Universidade Estadual de Campinas; Rhodia Ster S/A.
 %% WO2005/030850 A1. Depósito: 1 Oct. 2003. Concessão: 7 Apr. 2005.
 %% Disponível em: http://www.iprvillage.info/portal/servlet/DIIDirect.
 %% Acesso em: 30 ago. 2023.
-  autor      = "Galembeck, Fernando and Souza, Maria de Fátima Brito",
-  titulo     = "Process to obtain an intercalated or exfoliated polyester with clay hybrid nanocomposite material",
+  author      = "Galembeck, Fernando and Souza, Maria de Fátima Brito",
+  title     = "Process to obtain an intercalated or exfoliated polyester with clay hybrid nanocomposite material",
   holder     = "{Universidade Estadual de Campinas; Rhodia Ster S/A}",
-  numero     = "WO2005/030850 A1",
-  deposito   = "1 Oct. 2003",
-  concessao  = "7 Apr. 2005",
+  number     = "WO2005/030850 A1",
+  filingdate   = "1 Oct. 2003",
+  grantdate  = "7 Apr. 2005",
   url        = "http://www.iprvillage.info/portal/servlet/DIIDirect",
-  dataacesso = "2023-08-30",
+  urldate = "2023-08-30",
 }
 
 @legislation{m-4261,
-%% forma INGLESA (preferida): tipo e campos com os nomes do biblatex
 %% SÃO PAULO (Estado). Decreto nº 42.822, de 20 de janeiro de 1998. Lex:
 %% coletânea de legislação e jurisprudência. São Paulo, v. 62, n. 3, p. 217-220, 1998.
   author      = "{SÃO PAULO (Estado)}",
@@ -9725,20 +10216,18 @@ postamble
   year        = 1998,
 }
 
-@jurisprudencia{m-4262,
-%% forma PORTUGUESA: sinonimos que a classe declara para os mesmos campos
+@jurisdiction{m-4262,
 %% BRASIL. Supremo Tribunal Federal. Extradição nº 10. Relator: Ministro
 %% Rafael Mayer. Brasília, DF, 26 de fevereiro de 1986. Revista Trimestral de
 %% Jurisprudência, [Brasília], v. 109, p. 870-879, set. 1986.
-  autor   = "{BRASIL. Supremo Tribunal Federal}",
-  titulo  = "Extradição n\textordmasculine{} 10",
+  author   = "{BRASIL. Supremo Tribunal Federal}",
+  title  = "Extradição n\textordmasculine{} 10",
   relator = "Ministro Rafael Mayer",
-  local   = "Brasília, DF, 26 de fevereiro de 1986",
-  nota    = "Revista Trimestral de Jurisprudência, [Brasília], v. 109, p. 870-879, set. 1986",
+  location   = "Brasília, DF, 26 de fevereiro de 1986",
+  note    = "Revista Trimestral de Jurisprudência, [Brasília], v. 109, p. 870-879, set. 1986",
 }
 
 @legislation{m-4263,
-%% forma INGLESA (preferida): tipo e campos com os nomes do biblatex
 %% VARGINHA (MG). Edital de licitação nº 189/2007. Pregão nº 151/2007.
 %% [Aquisição de leite pasteurizado]. Varginha: órgão oficial do município,
 %% Varginha, ano 7, n. 494, p. 15, 31 maio 2007.
@@ -9752,20 +10241,18 @@ postamble
   date        = "2007-05-31",
 }
 
-@documentojuridico{m-427,
-%% forma PORTUGUESA: sinonimos que a classe declara para os mesmos campos
+@legal{m-427,
 %% LEGISLAÇÃO brasileira: normas jurídicas, federais, bibliografia brasileira
 %% de Direito. 7. ed. Brasília, DF: Senado Federal, 1999. 1 CD-ROM.
-  titulo   = "Legislação brasileira: normas jurídicas, federais, bibliografia brasileira de Direito",
-  edicao   = "7. ed.",
-  local    = "Brasília, DF",
-  editora  = "Senado Federal",
-  ano      = 1999,
+  title   = "Legislação brasileira: normas jurídicas, federais, bibliografia brasileira de Direito",
+  edition   = "7. ed.",
+  location    = "Brasília, DF",
+  publisher  = "Senado Federal",
+  year      = 1999,
   addendum = "1 CD-ROM",
 }
 
 @legal{m-428,
-%% forma INGLESA (preferida): tipo e campos com os nomes do biblatex
 %% SÃO CARLOS (SP). Cartório de Registro Civil das Pessoas Naturais do 1º
 %% Subdistrito de São Carlos. Certidão de nascimento [de] Maria da Silva.
 %% Registro em: 9 ago. 1979.
@@ -9774,20 +10261,18 @@ postamble
   note        = "Registro em: 9 ago. 1979",
 }
 
-@audiovisual{m-429,
-%% forma PORTUGUESA: sinonimos que a classe declara para os mesmos campos
+@video{m-429,
 %% OS PERIGOS do uso de tóxicos. Produção de Jorge Ramos de Andrade. São
 %% Paulo: CERAVI, 1983. 1 videocassete.
-  titulo   = "Os perigos do uso de tóxicos",
-  produtor = "Jorge Ramos de Andrade",
-  local    = "São Paulo",
-  editora  = "CERAVI",
-  ano      = 1983,
+  title   = "Os perigos do uso de tóxicos",
+  producer = "Jorge Ramos de Andrade",
+  location    = "São Paulo",
+  publisher  = "CERAVI",
+  year      = 1983,
   addendum = "1 videocassete",
 }
 
 @music{m-42101,
-%% forma INGLESA (preferida): tipo e campos com os nomes do biblatex
 %% CANHOTO. Abismo de rosas. São Paulo: CEMBRA. 1 partitura (3 p.)
   author      = "{Canhoto}",
   title       = "Abismo de rosas",
@@ -9796,21 +10281,19 @@ postamble
   addendum    = "1 partitura (3 p.)",
 }
 
-@partitura{m-42102,
-%% forma PORTUGUESA: sinonimos que a classe declara para os mesmos campos
+@music{m-42102,
 %% OLIVA, Marcos; MOCOTÓ, Tiago. Fervilhar: frevo. 1990. 1 partitura. Piano.
 %% Disponível em: http://openlink.br.inter.net/picolino/partitur.htm.
 %% Acesso em: 5 jan. 2022.
-  autor      = "Oliva, Marcos and Mocotó, Tiago",
-  titulo     = "Fervilhar: frevo",
-  ano        = 1990,
+  author      = "Oliva, Marcos and Mocotó, Tiago",
+  title     = "Fervilhar: frevo",
+  year        = 1990,
   addendum   = "1 partitura. Piano",
   url        = "http://openlink.br.inter.net/picolino/partitur.htm",
-  dataacesso = "2022-01-05",
+  urldate = "2022-01-05",
 }
 
 @image{m-42111,
-%% forma INGLESA (preferida): tipo e campos com os nomes do biblatex
 %% CARDOSO, Cláudio. Pedra de Itapuça. 1989. 3 fotografias.
   author      = "Cardoso, Cláudio",
   title       = "Pedra de Itapuça",
@@ -9818,21 +10301,19 @@ postamble
   addendum    = "3 fotografias",
 }
 
-@iconografico{m-42112,
-%% forma PORTUGUESA: sinonimos que a classe declara para os mesmos campos
+@image{m-42112,
 %% HOUTE, Jef Van den. Black hole. 1 jun. 2010. 1 fotografia.
 %% Disponível em: http://photo.net/photodb/photo?photo_id=11724012.
 %% Acesso em: 26 maio 2011.
-  autor      = "Houte, Jef Van den",
-  titulo     = "Black hole",
-  data       = "2010-06-01",
+  author      = "Houte, Jef Van den",
+  title     = "Black hole",
+  date       = "2010-06-01",
   addendum   = "1 fotografia",
   url        = "http://photo.net/photodb/photo?photo_id=11724012",
-  dataacesso = "2011-05-26",
+  urldate = "2011-05-26",
 }
 
 @map{m-42121,
-%% forma INGLESA (preferida): tipo e campos com os nomes do biblatex
 %% BRASIL. Ministério da Aeronáutica. Comando Costeiro. Base Aérea do Recife.
 %% Saquarema. Recife, 1976. 71 fotografias. Escala 1: 20.000.
   author      = "{BRASIL. Ministério da Aeronáutica. Comando Costeiro. Base Aérea do Recife}",
@@ -9843,21 +10324,19 @@ postamble
   addendum    = "71 fotografias",
 }
 
-@mapa{m-42122,
-%% forma PORTUGUESA: sinonimos que a classe declara para os mesmos campos
+@map{m-42122,
 %% IBGE. República Federativa do Brasil. [Rio de Janeiro?], 1996. 1 mapa
 %% color., 31 cm x 34 cm. Escala 1: 15.000.000. 1 CD-ROM.
-  autor      = "{IBGE}",
-  titulo     = "República Federativa do Brasil",
-  local      = "[Rio de Janeiro?]",
-  ano        = 1996,
-  escala     = "1:15.000.000",
+  author      = "{IBGE}",
+  title     = "República Federativa do Brasil",
+  location      = "[Rio de Janeiro?]",
+  year        = 1996,
+  scale     = "1:15.000.000",
   addendum   = "1 mapa color., 31 cm x 34 cm",
-  nota       = "1 CD-ROM",
+  note       = "1 CD-ROM",
 }
 
 @artwork{m-42131,
-%% forma INGLESA (preferida): tipo e campos com os nomes do biblatex
 %% DUCHAMP, Marcel. Escultura para viajar. 1918. 1 escultura variável,
 %% borracha colorida e cordel.
   author      = "Duchamp, Marcel",
@@ -9867,20 +10346,18 @@ postamble
 }
 
 @online{m-4214,
-%% forma PORTUGUESA: sinonimos que a classe declara para os mesmos campos
 %% UNIVERSIDADE FEDERAL DO RIO DE JANEIRO. Sistema de Bibliotecas e
 %% Informação. Minerva: Sistema de Documentação da UFRJ. Rio de Janeiro, 1998.
 %% Disponível em: http://www.minerva.ufrj.br. Acesso em: 30 mar. 2022.
-  autor      = "{UNIVERSIDADE FEDERAL DO RIO DE JANEIRO. Sistema de Bibliotecas e Informação}",
-  titulo     = "Minerva: Sistema de Documentação da UFRJ",
-  local      = "Rio de Janeiro",
-  ano        = 1998,
+  author      = "{UNIVERSIDADE FEDERAL DO RIO DE JANEIRO. Sistema de Bibliotecas e Informação}",
+  title     = "Minerva: Sistema de Documentação da UFRJ",
+  location      = "Rio de Janeiro",
+  year        = 1998,
   url        = "http://www.minerva.ufrj.br",
-  dataacesso = "2022-03-30",
+  urldate = "2022-03-30",
 }
 
 @thesis{m-diss,
-%% forma INGLESA (preferida): tipo e campos com os nomes do biblatex
 %% LEITE, Sonia. Memória da comunidade da Serrinha. 1997. 203 f. Dissertação
 %% (Mestrado em Memória Social e Documento) -- Centro de Ciências Humanas,
 %% Universidade do Rio de Janeiro, Rio de Janeiro, 1997.
@@ -9893,14 +10370,13 @@ postamble
   pagetotal   = "203",
 }
 
-@norma{m-norma,
-%% forma PORTUGUESA: sinonimos que a classe declara para os mesmos campos
+@standard{m-norma,
 %% ASSOCIAÇÃO BRASILEIRA DE NORMAS TÉCNICAS. NBR 6023: informação e
 %% documentação: referências: elaboração. Rio de Janeiro, 2018.
-  autor  = "{Associação Brasileira de Normas Técnicas}",
-  titulo = "{NBR} 6023: informação e documentação: referências: elaboração",
-  local  = "Rio de Janeiro",
-  ano    = 2018,
+  author  = "{Associação Brasileira de Normas Técnicas}",
+  title = "{NBR} 6023: informação e documentação: referências: elaboração",
+  location  = "Rio de Janeiro",
+  year    = 2018,
 }
 %</tiposbib>
 % \fi
@@ -9945,12 +10421,12 @@ postamble
 % example\_pt.tex -- CoppeTeX 4.1 multilingual demo, main language: brazilian.
 % Short demonstration document (cover + folha + abstracts + 1 chapter) used
 % by the CPGP submission package. The full pt-main example with bibliography
-% and lists is the historical example.tex.
+% and lists is max-exemplo.tex.
 %
 % \iffalse
 %<*examplept>
 \documentclass[dsc]{coppe}
-\addbibresource{example.bib}
+\addbibresource{exemplo.bib}
 \begin{document}
   \title{Demonstração da classe CoppeTeX 4.1 em português}
   \foreigntitle{CoppeTeX 4.1 class demonstration in English}
@@ -10002,7 +10478,7 @@ postamble
   \emph{b} garante a reprodução visual fiel. Basta a opção \texttt{pdfa} em
   \verb|\documentclass[dsc,pdfa]{coppe}|: a classe carrega o \texttt{pdfx},
   monta os metadados a partir do título, do autor e das palavras-chave, e
-  embute o perfil de cor. Ligue-a cedo, como faz o \texttt{example.tex}: um PDF
+  embute o perfil de cor. Ligue-a cedo, como faz o \texttt{max-exemplo.tex}: um PDF
   ou uma imagem incluídos fora da norma aparecem no dia em que entram, e não na
   véspera do depósito. Para conferir, use o validador veraPDF, perfil PDF/A-2b.
 
@@ -10023,7 +10499,7 @@ postamble
 % \iffalse
 %<*exampleen>
 \documentclass[english,dsc]{coppe}
-\addbibresource{example.bib}
+\addbibresource{exemplo.bib}
 \begin{document}
   \title{Demonstração da classe CoppeTeX 4.1 em português}
   \foreigntitle{CoppeTeX 4.1 class demonstration in English}
@@ -10074,7 +10550,7 @@ postamble
   \emph{b} guarantees faithful visual reproduction. The \texttt{pdfa} option in
   \verb|\documentclass[english,dsc,pdfa]{coppe}| is all it takes: the class
   loads \texttt{pdfx}, builds the metadata from the title, author and keywords,
-  and embeds the colour profile. Turn it on early, as \texttt{example.tex}
+  and embeds the colour profile. Turn it on early, as \texttt{max-exemplo.tex}
   does: a non-conforming PDF or image shows up the day it is added, not the day
   before the deposit. To check, use the veraPDF validator, PDF/A-2b profile.
 
@@ -10097,7 +10573,7 @@ postamble
 % \iffalse
 %<*examplees>
 \documentclass[spanish,dsc]{coppe}
-\addbibresource{example.bib}
+\addbibresource{exemplo.bib}
 \begin{document}
   \title{Demonstração da classe CoppeTeX 4.1 em português}
   \foreigntitle{CoppeTeX 4.1 class demonstration in English}
@@ -10160,7 +10636,7 @@ postamble
   \texttt{pdfa} en \verb|\documentclass[spanish,dsc,pdfa]{coppe}|: la clase carga
   \texttt{pdfx}, arma los metadatos a partir del título, el autor y las palabras
   clave, e incrusta el perfil de color. Actívela temprano, como hace
-  \texttt{example.tex}: un PDF o una imagen fuera de la norma aparecen el día en
+  \texttt{max-exemplo.tex}: un PDF o una imagen fuera de la norma aparecen el día en
   que entran, y no la víspera del depósito. Para verificar, use el validador
   veraPDF, perfil PDF/A-2b.
 
@@ -10183,7 +10659,7 @@ postamble
 % \iffalse
 %<*examplefr>
 \documentclass[french,dsc]{coppe}
-\addbibresource{example.bib}
+\addbibresource{exemplo.bib}
 \begin{document}
   \title{Demonstração da classe CoppeTeX 4.1 em português}
   \foreigntitle{CoppeTeX 4.1 class demonstration in English}
@@ -10247,7 +10723,7 @@ postamble
   graphiques, et le niveau \emph{b} garantit une reproduction visuelle fidèle.
   L'option \texttt{pdfa} suffit : la classe charge \texttt{pdfx}, construit les
   métadonnées à partir du titre, de l'auteur et des mots-clés, et incorpore le
-  profil de couleur. Activez-la tôt, comme le fait \texttt{example.tex}. Pour
+  profil de couleur. Activez-la tôt, comme le fait \texttt{max-exemplo.tex}. Pour
   vérifier, utilisez le validateur veraPDF, profil PDF/A-2b. Le français n'est
   pas une langue de rédaction admise pour une thèse de la COPPE (résolution
   CEPG n.~302/2024, art.~57) : ce document ne fait que démontrer le mécanisme.
@@ -10271,7 +10747,7 @@ postamble
 % \iffalse
 %<*exampleit>
 \documentclass[italian,dsc]{coppe}
-\addbibresource{example.bib}
+\addbibresource{exemplo.bib}
 \begin{document}
   \title{Demonstração da classe CoppeTeX 4.1 em português}
   \foreigntitle{CoppeTeX 4.1 class demonstration in English}
@@ -10334,7 +10810,7 @@ postamble
   \emph{b} garantisce una riproduzione visiva fedele. Basta l'opzione
   \texttt{pdfa}: la classe carica \texttt{pdfx}, costruisce i metadati da
   titolo, autore e parole chiave, e incorpora il profilo colore. Attivatela
-  presto, come fa \texttt{example.tex}. Per verificare, usate il validatore
+  presto, come fa \texttt{max-exemplo.tex}. Per verificare, usate il validatore
   veraPDF, profilo PDF/A-2b. L'italiano non è una lingua ammessa per una tesi
   della COPPE (risoluzione CEPG n.~302/2024, art.~57): questo documento
   dimostra soltanto il meccanismo.
@@ -10442,7 +10918,7 @@ da classe;
 #
 # latexmkrc -- CoppeTeX build configuration (works locally and on Overleaf).
 #
-# Run with:  latexmk example      (or latexmk manual, your thesis...)
+# Run with:  latexmk max-exemplo  (or latexmk min-exemplo, your thesis...)
 # latexmk reads this file automatically when it is in the build directory.
 # On Overleaf, place this file at the project root; Overleaf runs latexmk.
 #
