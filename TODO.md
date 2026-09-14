@@ -26,15 +26,14 @@ a classe; não falta documento normativo.
   que bastam para reconstruir a distribuição. Issue #14.
 - **Overleaf** — modelo público com o conteúdo de `dist/` e botão "Open in
   Overleaf" no `README.md`. O `latexmkrc` já configura biber e makeindex.
-- **Versão 4.1.1** — marcar e publicar o *release* com o que entrou depois da
-  tag `v4.1`: `morewrites` com fluxos reais, fontes matemáticas fora da classe,
-  UTF-8, exemplo em PDF/A, log do `example.tex` sem aviso.
 
 ## 3. Classe e documentação
 
-- **Tempo de compilação do `example.tex` no Overleaf gratuito.** A primeira
-  correção (fluxos reais para o `morewrites`) já entrou; a análise do restante
-  e as propostas estão no issue #95.
+- **Tempo de compilação no Overleaf gratuito.** Os dois defeitos que pesavam
+  entraram (`morewrites` sem fluxos reais; `.aux` que nunca estabilizava, #98):
+  o `latexmk` do `example.tex` foi de 75 s com erro para 58 s limpo. Faltam as
+  decisões das propostas do issue #95 — sobretudo documentar para o aluno
+  `\includeonly` e o modo *draft* do Overleaf.
 - **Tornar `pdfa` o padrão da classe?** O `example.tex` já compila com ela, é
   PDF/A-2b conforme pelo veraPDF e o custo de tempo é desprezível. Falta decidir
   se a classe liga por padrão, com uma opção `sempdfa` para desligar.

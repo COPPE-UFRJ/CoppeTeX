@@ -4,7 +4,10 @@ Project changes worth noting, newest first. Follows
 [Keep a Changelog](https://keepachangelog.com/) loosely; dates are
 ISO-8601.
 
-## [Unreleased]
+## [4.1] — 2026-09-14 — Revision of the 4.1 release
+
+Still version 4.1: these are corrections to the release published on
+2026-09-10, and the release archive was rebuilt from `dist/`.
 
 ### Breaking changes
 
@@ -57,6 +60,14 @@ ISO-8601.
 
 ### Fixed
 
+- **latexmk (and so Overleaf) ran pdfLaTeX five times and then failed** with
+  "pdflatex needed too many passes", on every document made with the class. The
+  measured width of the table-of-contents number column alternated between
+  42.4 pt and 13.2 pt on each run, so the `.aux` never settled: the measuring
+  macro was not protected, and chapter entries go through `\MakeUppercase`,
+  which expanded it. With `\protected` the build of `example.tex` stops at four
+  passes and finishes cleanly — 75 s to 58 s together with the `morewrites`
+  change (#98, #95).
 - **`example.tex` compiles with no warning at all**: 0 LaTeX/package warnings,
   0 Underfull/Overfull boxes, 0 font substitutions (#94). On the way:
   - no more "Although slower, you should try compiling with LuaLaTeX" (#89);

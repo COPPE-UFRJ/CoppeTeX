@@ -174,7 +174,7 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
 \setlength\coppe@tocnumsep{0.5em}
 \setlength\coppe@tocnumwidth{1.75cm}
 \setlength\coppe@tocnummax{\z@}
-\newcommand\coppe@tocnumberline[1]{%
+\protected\def\coppe@tocnumberline#1{%
   \settowidth\@tempdima{#1}%
   \ifdim\@tempdima>\coppe@tocnummax \global\coppe@tocnummax\@tempdima \fi
   \hb@xt@\coppe@tocnumwidth{#1\hfil}}

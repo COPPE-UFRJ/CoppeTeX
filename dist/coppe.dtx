@@ -4571,7 +4571,14 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
 % extenso mais o espaco -- o piso so a impede de ficar estreita demais.
 \setlength\coppe@tocnumwidth{1.75cm}
 \setlength\coppe@tocnummax{\z@}
-\newcommand\coppe@tocnumberline[1]{%
+% \protected, e nao \newcommand: as entradas de capitulo do sumario passam por
+% \MakeUppercase, e o \MakeUppercase atual EXPANDE o que recebe. Expandido la
+% dentro, o \settowidth nao atribui nada na hora certa e a medida sai errada --
+% e errada de um jeito diferente conforme o valor da passada anterior. O valor
+% salvo alternava entre 42,4 pt e 13,2 pt a cada compilacao, o .aux nunca
+% estabilizava, e o latexmk (o Overleaf) rodava o pdflatex ate o limite de cinco
+% vezes e terminava com "pdflatex needed too many passes".
+\protected\def\coppe@tocnumberline#1{%
   \settowidth\@tempdima{#1}%
   \ifdim\@tempdima>\coppe@tocnummax \global\coppe@tocnummax\@tempdima \fi
   \hb@xt@\coppe@tocnumwidth{#1\hfil}}
