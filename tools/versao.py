@@ -160,7 +160,12 @@ def conferir(detalhe=False):
         emdist = os.path.join(RAIZ, rel.replace("/", os.sep))
         emsrc = os.path.join(RAIZ, "src", os.path.basename(rel))
         if os.path.exists(emdist) and os.path.exists(emsrc):
-            if io.open(emdist, "rb").read() != io.open(emsrc, "rb").read():
+            # Fim de linha nao conta: com core.autocrlf=true o git entrega CRLF
+            # no checkout, e o docstrip escreve LF ao regerar. O conteudo
+            # guardado no git e o mesmo, e acusar isso seria alarme falso.
+            def bytes_lf(caminho):
+                return io.open(caminho, "rb").read().replace(b"\r\n", b"\n")
+            if bytes_lf(emdist) != bytes_lf(emsrc):
                 problemas.append("%s  difere de src/%s -- falta copiar para dist"
                                  % (rel, os.path.basename(rel)))
 
