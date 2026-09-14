@@ -331,7 +331,7 @@ Texto da seção quinária, escrita com \verb|\paragraph|. Este é o único \ver
 
   Em todo caso, \textbf{deve se tomar enorme atenção com as citações, para evitar ocorrer em plágio não intencional}.\index{citação}\index{plágio}
 
-  Para uma citação curta no meio do parágrafo, \verb|\citacao| põe as aspas do idioma do trabalho: \citacao{a imaginação é mais importante que o conhecimento}.\index{citação!curta}
+  Para uma citação curta no meio do parágrafo, \verb|\enquote| põe as aspas do idioma do trabalho: \enquote{a imaginação é mais importante que o conhecimento}. O mesmo comando existe em português, \verb|\citacao|.\index{citação!curta}
 
   Quando se cita uma obra por meio de outra (\textit{apud}), pela ABNT entra na lista de referências \emph{apenas a obra efetivamente consultada}. A obra original (não consultada) é informada como texto e \emph{não} é referenciada. Use \verb*|\citetapud{autor}{ano}{chave}|, como em \citetapud{Drumond}{1953}{article-example}, ou a forma entre parênteses \verb*|\citepapud|, como em \citepapud[145]{Drumond}{1953}{article-example}. Note que, nas Referências, aparece somente a obra consultada.
 
@@ -401,7 +401,7 @@ Vamos ver uma tabela padrão, como a \autoref{tab:exemplo_numeros}.
 10 & 11 & 12 \\ % Quarta linha de dados
 \hline % Linha inferior
 \end{tabular}
-\fonte{Elaboração própria.} % fonte obrigatoria, abaixo do float
+\source{Elaboração própria.} % fonte obrigatoria, abaixo do float
 \end{table}
 
 Já a \autoref{fig:exemplo_figura} é uma figura padrão, com controle da largura.
@@ -429,7 +429,7 @@ Tabela & Linhas apenas no topo e na base. \\
 Quadro & Linhas em todas as bordas. \\
 \hline
 \end{tabular}
-\fonte{Elaboração própria.}
+\source{Elaboração própria.}
 \end{quadro}
 
 Um segundo quadro, no \autoref{qua:segundo}, prova que o contador anda e que a lista de quadros recebe as duas entradas.
@@ -447,7 +447,7 @@ Legenda & Acima da ilustração. \\
 Fonte & Abaixo da ilustração. \\
 \hline
 \end{tabular}
-\fonte{Adaptado do manual do SiBI, 9.\textsuperscript{a} ed. rev., 2026.}
+\source{Adaptado do manual do SiBI, 9.\textsuperscript{a} ed. rev., 2026.}
 \end{quadro}
 
 \section{Criando um float novo}
@@ -464,7 +464,7 @@ Fonte & Abaixo da ilustração. \\
   \draw[fill=gray!40] (2.2,0.4) rectangle (3.6,1.2);
   \node at (2,-0.4) {\footnotesize esquema de ocupação};
 \end{tikzpicture}
-\fonte{Elaboração própria.}
+\source{Elaboração própria.}
 \end{mapa}
 
 \begin{mapa}[ht]
@@ -477,7 +477,7 @@ Fonte & Abaixo da ilustração. \\
   \draw[->] (0,-1.6) -- (0,1.6);
   \node at (0,-2) {\footnotesize esquema de alcance};
 \end{tikzpicture}
-\fonte{Elaboração própria.}
+\source{Elaboração própria.}
 \end{mapa}
 
 \section{Tabelas mais elegantes}
@@ -498,7 +498,7 @@ Atualmente a tendência é usar tabelas mais leves, como \autoref{tab:exemplo_nu
 10 & 11 & 12 \\ % Quarta linha de dados
 \bottomrule % Linha inferior
 \end{tabular}
-\fonte{Elaboração própria.}
+\source{Elaboração própria.}
 \end{table}
 
 \section{Tabelas Longas ou Largas}
@@ -531,7 +531,7 @@ Dado 2.1 & Dado 2.2 & Dado 2.3 & Dado 2.4 & Dado 2.5 & Dado 2.6 & Dado 2.7 & Dad
 Dado 3.1 & Dado 3.2 & Dado 3.3 & Dado 3.4 & Dado 3.5 & Dado 3.6 & Dado 3.7 & Dado 3.8 \\
 \bottomrule
 \end{tabular}
-\fonte{Elaboração própria.}
+\source{Elaboração própria.}
 \end{table}
 
 O comando \verb|\resizebox{width}{height}{content}| permite ajustar o tamanho de qualquer coisa, inclusive uma tabela, como na \autoref{tab:examplerb}. No caso, estou fazendo a tabela ficar maior, para ocupar o espaço, mas funciona para qualquer tamanho.
@@ -550,7 +550,7 @@ Dados 5 & Dados 6 & Dados 7 & Dados 8 \\
 \bottomrule
 \end{tabular}%
 }
-\fonte{Elaboração própria.}
+\source{Elaboração própria.}
 \end{table}
 
 Para rodar uma tabela muito larga em 90 graus no LaTeX, você pode usar o pacote \verb*|rotating|. Este pacote fornece o ambiente \verb*|sidewaystable|, que automaticamente gira a tabela, incluindo sua legenda, em 90 graus. Isso é especialmente útil para acomodar tabelas largas em documentos, garantindo que elas caibam na página sem comprometer a legibilidade.
@@ -569,7 +569,7 @@ Item 1 & Item 2 & Item 3 \\
 Item 4 & Item 5 & Item 6 \\
 \bottomrule
 \end{tabular}
-\fonte{Elaboração própria.}
+\source{Elaboração própria.}
 \end{sidewaystable}
 
 Se a tabela for muito longa, o ambiente \verb|longtable| é o ideal. Ele fornece comandos para \textit{headers}, cabeçalhos, e \textit{footers} tanto no ínicio e no fim da tabela, como em todas as páginas. A \autoref{tab:longa} fornece um exemplo de 3 páginas.
@@ -705,7 +705,7 @@ Se a tabela for muito longa, o ambiente \verb|longtable| é o ideal. Ele fornece
 
 %% Repetir linhas semelhantes conforme necessário para estender a tabela por 3 páginas
 \end{longtable}
-\fonte{Elaboração própria.}% a longtable não é float: a fonte vem após o ambiente
+\source{Elaboração própria.}% a longtable não é float: a fonte vem após o ambiente
 
 \section{Subfiguras (subcaption)}
 
@@ -724,7 +724,7 @@ Para colocar várias imagens (ou tabelas) lado a lado, cada uma com sua própria
   \end{subfigure}
   \caption{Figura com duas subfiguras}
   \label{fig:subs}
-  \fonte{Elaboração própria.}
+  \source{Elaboração própria.}
 \end{figure}
 
 Referencie a figura inteira com \verb|\autoref{fig:subs}|. Cada parte tem
@@ -764,7 +764,7 @@ O \verb|tikz| (disponível também via \verb|tcolorbox|) desenha gráficos vetor
     \draw[seta, dashed] (relato.south) to[bend left=25]
       node[midway, below] {revisão} (coleta.south);
   \end{tikzpicture}
-  \fonte{Elaboração própria.}
+  \source{Elaboração própria.}
 \end{figure}
 
 \begin{verbatim}
@@ -822,7 +822,7 @@ Colocar a tabela ou imagem dentro de \verb|figure|/\verb|table| (um \emph{float}
     Tese de doutorado & \cite{phdthesis-example} & \citep{phdthesis-example}\\
     \hline
   \end{tabular}}
-  \fonte{Elaboração própria.}
+  \source{Elaboração própria.}
   \end{table}
 
  \begin{table}[htb]
@@ -850,7 +850,7 @@ Colocar a tabela ou imagem dentro de \verb|figure|/\verb|table| (um \emph{float}
     Tese de doutorado & \cite{phdthesis-example} & \citet{phdthesis-example}\\
     \bottomrule
   \end{tabular}}
-  \fonte{Elaboração própria.}
+  \source{Elaboração própria.}
   \end{table}
 
   \section{Comandos de citação}
@@ -909,58 +909,58 @@ Colocar a tabela ou imagem dentro de \verb|figure|/\verb|table| (um \emph{float}
 
   A seção 4.2 do Manual do SiBI enumera 34 categorias de documento, da monografia à partitura. O arquivo \verb|exemplo.bib|, que acompanha a classe, traz \textbf{uma entrada de cada uma}, com os dados dos próprios exemplos do Manual, e todas são citadas aqui. Confira cada uma na lista de Referências: é assim que ela tem de sair.
 
-  Metade das entradas está escrita com os nomes de tipo e de campo em \textbf{inglês} e metade com os sinônimos em \textbf{português}, de propósito, para que as duas formas apareçam funcionando lado a lado. \textbf{Prefira a inglesa}: é a do \texttt{biblatex}, é a que os gerenciadores de referência exportam, e é a que outra pessoa vai reconhecer quatro anos depois. Os sinônimos em português existem para quem chega de uma base antiga e não quer reescrever tudo.
+  Todas as entradas usam os nomes de tipo e de campo em \textbf{inglês}, os do \texttt{biblatex}: são os que os gerenciadores de referência (JabRef, Zotero, Mendeley) exportam, e os que outra pessoa vai reconhecer quatro anos depois. A tabela mostra o tipo de cada uma. A classe ainda aceita sinônimos em português para tipos e campos (\verb|@livro|, \verb|autor|, \verb|titulo|\dots), para quem chega de uma base antiga, mas o recomendado é a forma inglesa.
 
   % Colunas estreitas alinhadas à esquerda: justificadas, abriam buracos.
-  \begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.46\textwidth}>{\raggedright\arraybackslash}p{0.17\textwidth}>{\raggedright\arraybackslash}p{0.28\textwidth}@{}}
+  \begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.43\textwidth}>{\raggedright\arraybackslash}p{0.22\textwidth}>{\raggedright\arraybackslash}p{0.27\textwidth}@{}}
     \caption{Uma referência de cada categoria da seção 4.2 do Manual}
     \label{tab:todosostipos}\\
     \toprule
-    \textbf{Categoria} & \textbf{Forma usada} & \textbf{Citação} \\
+    \textbf{Categoria} & \textbf{Tipo no .bib} & \textbf{Citação} \\
     \midrule
     \endfirsthead
     \toprule
-    \textbf{Categoria} & \textbf{Forma usada} & \textbf{Citação} \\
+    \textbf{Categoria} & \textbf{Tipo no .bib} & \textbf{Citação} \\
     \midrule
     \endhead
     \bottomrule
     \endfoot
-    4.2.1.1 monografia no todo & inglesa & \cite{m-4211} \\
-    4.2.1.2 monografia em meio eletrônico & portuguesa & \cite{m-4212} \\
-    4.2.1.3 parte de monografia & inglesa & \cite{m-4213} \\
-    4.2.2 correspondência & portuguesa & \cite{m-422} \\
-    4.2.2.1 correspondência em meio eletrônico & inglesa & \cite{m-4221} \\
-    4.2.3.1 publicação periódica no todo & portuguesa & \cite{m-4231} \\
-    4.2.3.3 parte de revista & inglesa & \cite{m-4233} \\
-    4.2.3.4 artigo de revista & portuguesa & \cite{m-4234} \\
-    4.2.3.5 artigo de revista em meio eletrônico & inglesa & \cite{m-4235} \\
-    4.2.3.6 matéria de jornal & portuguesa & \cite{m-4236} \\
-    4.2.3.7 matéria de jornal assinada, em meio eletrônico & inglesa & \cite{m-4237} \\
-    4.2.3.8 matéria de jornal não assinada, em meio eletrônico & portuguesa & \cite{m-4238} \\
-    4.2.4.1 evento no todo & inglesa & \cite{m-4241} \\
-    4.2.4.3 evento no todo em meio eletrônico & portuguesa & \cite{m-4243} \\
-    4.2.4.5 trabalho apresentado em evento & inglesa & \cite{m-4245} \\
-    4.2.4.6 trabalho em evento, em meio eletrônico & portuguesa & \cite{m-4246} \\
-    4.2.5 patente & inglesa & \cite{m-425} \\
-    4.2.5.1 patente em meio eletrônico & portuguesa & \cite{m-4251} \\
-    4.2.6.1 legislação & inglesa & \cite{m-4261} \\
-    4.2.6.2 jurisprudência & portuguesa & \cite{m-4262} \\
-    4.2.6.3 ato administrativo normativo & inglesa & \cite{m-4263} \\
-    4.2.7 documento jurídico em meio eletrônico & portuguesa & \cite{m-427} \\
-    4.2.8 documento civil e de cartório & inglesa & \cite{m-428} \\
-    4.2.9 documento audiovisual & portuguesa & \cite{m-429} \\
-    4.2.10 partitura & inglesa & \cite{m-42101} \\
-    4.2.10.1 partitura em meio eletrônico & portuguesa & \cite{m-42102} \\
-    4.2.11 documento iconográfico & inglesa & \cite{m-42111} \\
-    4.2.11.1 documento iconográfico em meio eletrônico & portuguesa & \cite{m-42112} \\
-    4.2.12 documento cartográfico & inglesa & \cite{m-42121} \\
-    4.2.12.1 documento cartográfico em meio eletrônico & portuguesa & \cite{m-42122} \\
-    4.2.13 documento tridimensional & inglesa & \cite{m-42131} \\
-    4.2.14 documento de acesso exclusivo em meio eletrônico & portuguesa & \cite{m-4214} \\
-    dissertação de mestrado & inglesa & \cite{m-diss} \\
-    norma técnica & portuguesa & \cite{m-norma} \\
+    4.2.1.1 monografia no todo & \texttt{@book} & \cite{m-4211} \\
+    4.2.1.2 monografia em meio eletrônico & \texttt{@book} & \cite{m-4212} \\
+    4.2.1.3 parte de monografia & \texttt{@incollection} & \cite{m-4213} \\
+    4.2.2 correspondência & \texttt{@letter} & \cite{m-422} \\
+    4.2.2.1 correspondência em meio eletrônico & \texttt{@letter} & \cite{m-4221} \\
+    4.2.3.1 publicação periódica no todo & \texttt{@periodical} & \cite{m-4231} \\
+    4.2.3.3 parte de revista & \texttt{@periodical} & \cite{m-4233} \\
+    4.2.3.4 artigo de revista & \texttt{@article} & \cite{m-4234} \\
+    4.2.3.5 artigo de revista em meio eletrônico & \texttt{@article} & \cite{m-4235} \\
+    4.2.3.6 matéria de jornal & \texttt{@article} & \cite{m-4236} \\
+    4.2.3.7 matéria de jornal assinada, em meio eletrônico & \texttt{@article} & \cite{m-4237} \\
+    4.2.3.8 matéria de jornal não assinada, em meio eletrônico & \texttt{@article} & \cite{m-4238} \\
+    4.2.4.1 evento no todo & \texttt{@proceedings} & \cite{m-4241} \\
+    4.2.4.3 evento no todo em meio eletrônico & \texttt{@proceedings} & \cite{m-4243} \\
+    4.2.4.5 trabalho apresentado em evento & \texttt{@inproceedings} & \cite{m-4245} \\
+    4.2.4.6 trabalho em evento, em meio eletrônico & \texttt{@inproceedings} & \cite{m-4246} \\
+    4.2.5 patente & \texttt{@patent} & \cite{m-425} \\
+    4.2.5.1 patente em meio eletrônico & \texttt{@patent} & \cite{m-4251} \\
+    4.2.6.1 legislação & \texttt{@legislation} & \cite{m-4261} \\
+    4.2.6.2 jurisprudência & \texttt{@jurisdiction} & \cite{m-4262} \\
+    4.2.6.3 ato administrativo normativo & \texttt{@legislation} & \cite{m-4263} \\
+    4.2.7 documento jurídico em meio eletrônico & \texttt{@legal} & \cite{m-427} \\
+    4.2.8 documento civil e de cartório & \texttt{@legal} & \cite{m-428} \\
+    4.2.9 documento audiovisual & \texttt{@video} & \cite{m-429} \\
+    4.2.10 partitura & \texttt{@music} & \cite{m-42101} \\
+    4.2.10.1 partitura em meio eletrônico & \texttt{@music} & \cite{m-42102} \\
+    4.2.11 documento iconográfico & \texttt{@image} & \cite{m-42111} \\
+    4.2.11.1 documento iconográfico em meio eletrônico & \texttt{@image} & \cite{m-42112} \\
+    4.2.12 documento cartográfico & \texttt{@map} & \cite{m-42121} \\
+    4.2.12.1 documento cartográfico em meio eletrônico & \texttt{@map} & \cite{m-42122} \\
+    4.2.13 documento tridimensional & \texttt{@artwork} & \cite{m-42131} \\
+    4.2.14 documento de acesso exclusivo em meio eletrônico & \texttt{@online} & \cite{m-4214} \\
+    dissertação de mestrado & \texttt{@thesis} & \cite{m-diss} \\
+    norma técnica & \texttt{@standard} & \cite{m-norma} \\
   \end{longtable}
-  \fonte{Elaboração própria, a partir da seção 4.2 do Manual do SiBI.}
+  \source{Elaboração própria, a partir da seção 4.2 do Manual do SiBI.}
 
   Se alguma dessas referências sair diferente do que o Manual imprime, é defeito da classe, e o lugar de relatar é o repositório do projeto. O gabarito de cada uma está no próprio \verb|exemplo.bib|, em comentário acima da entrada.
 
@@ -989,7 +989,7 @@ Este é o conteúdo do meu textbox sem título. Você pode adicionar qualquer te
     \end{tikzpicture}
     \caption{Figura com Textbox}
     \label{fig:figura_com_textbox1}
-    \fonte{Elaboração própria.}
+    \source{Elaboração própria.}
 \end{figure}
 
 \begin{figure}[ht]
@@ -999,7 +999,7 @@ Este é o conteúdo do meu textbox sem título. Você pode adicionar qualquer te
 \end{tcolorbox}
     \caption{Figura com Textbox simples}
     \label{fig:figura_com_textbox}
-    \fonte{Elaboração própria.}
+    \source{Elaboração própria.}
 \end{figure}
 
 \section{Listagens de código e algoritmos}
@@ -1030,7 +1030,7 @@ public class Saudacao {
     }
 }
 \end{java}
-\fonte{Elaboração própria.}
+\source{Elaboração própria.}
 
 A classe traz ambientes prontos também para XML, HTML e Prolog, com a mesma legenda acima e fonte abaixo:
 
@@ -1039,18 +1039,18 @@ A classe traz ambientes prontos também para XML, HTML e Prolog, com a mesma leg
   <titulo>Título da Tese</titulo>
 </tese>
 \end{xml}
-\fonte{Elaboração própria.}
+\source{Elaboração própria.}
 
 \begin{html}[caption={Exemplo de página HTML},label=prog:html]
 <p>Olá, <strong>COPPE</strong>!</p>
 \end{html}
-\fonte{Elaboração própria.}
+\source{Elaboração própria.}
 
 \begin{prolog}[caption={Exemplo de programa em Prolog},label=prog:prolog]
 orienta(ana, bia).
 banca(X) :- orienta(X, _).
 \end{prolog}
-\fonte{Elaboração própria.}
+\source{Elaboração própria.}
 
 Há também \verb|\pythoninline| e \verb|\javainline| para código no meio do
 texto, como em \javainline{new Saudacao()}, e o ambiente \verb|Verbatim| (com as opções acima) para a saída de programas. Para algoritmos, use o ambiente \verb|algorithm| com as palavras-chave em português \verb|\Para| e \verb|\Enquanto|, como no \autoref{alg:soma}.

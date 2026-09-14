@@ -336,7 +336,7 @@
       Quinto nível & itálico, só a primeira palavra em maiúscula \\
       \hline
     \end{tabular}
-    \fonte{Elaboração própria, a partir do §2.6 do manual do SiBI.}
+    \source{Elaboração própria, a partir do §2.6 do manual do SiBI.}
   \end{quadro}
 
   Os títulos \textbf{sem} indicativo numérico --- agradecimentos, listas, resumo,
@@ -389,7 +389,7 @@
       Pós-textual & Glossário, apêndices, anexos, índice & não \\
       \hline
     \end{tabular}
-    \fonte{Elaboração própria, a partir da NBR 14724 e do manual do SiBI.}
+    \source{Elaboração própria, a partir da NBR 14724 e do manual do SiBI.}
   \end{quadro}
 
   \section{A folha adicional}
@@ -510,7 +510,7 @@
     \caption{Exemplo de figura com legenda no topo e fonte abaixo}
     \label{fig:exemplo}
     \includegraphics[width=0.35\textwidth]{coppe-logo}
-    \fonte{COPPE/UFRJ.}
+    \source{COPPE/UFRJ.}
   \end{figure}
 
   Prefira formato vetorial --- PDF --- para desenho, gráfico e diagrama: ele não
@@ -541,7 +541,7 @@
       Algoritmo & topo & abaixo \\
       \bottomrule
     \end{tabular}
-    \fonte{Elaboração própria.}
+    \source{Elaboração própria.}
   \end{table}
 
   O \textbf{quadro} é fechado por linhas em todas as bordas, e costuma trazer
@@ -562,7 +562,7 @@
       Quadro & Linhas em todas as bordas. \\
       \hline
     \end{tabular}
-    \fonte{Elaboração própria.}
+    \source{Elaboração própria.}
   \end{quadro}
 
   \section{Tabelas que não cabem}
@@ -606,8 +606,9 @@
   \section{Transcrição curta}
 
   Até três linhas, a transcrição fica dentro do parágrafo, entre aspas. O comando
-  \verb|\citacao| dá as aspas no formato do idioma do trabalho, e não as do
-  teclado: \citacao{a forma segue a função}.
+  \verb|\enquote| (ou \verb|\citacao|, o mesmo em português) dá as aspas no
+  formato do idioma do trabalho, e não as do teclado: \enquote{a forma segue a
+  função}.
 
   \section{Transcrição longa}
 
@@ -769,7 +770,7 @@ def saudacao(nome):
 
 saudacao("COPPE")
   \end{python}
-  \fonte{Elaboração própria.}
+  \source{Elaboração própria.}
 
   Há estilos prontos para Python, Java, XML, HTML e Prolog. O \autoref{prog:java}
   usa o de Java.
@@ -781,7 +782,7 @@ public class Saudacao {
     }
 }
   \end{java}
-  \fonte{Elaboração própria.}
+  \source{Elaboração própria.}
 
   Para uma expressão curta no meio do texto, sem quebrar o parágrafo, use
   \verb|\pythoninline|, como em \pythoninline{saudacao(nome)}.
@@ -869,7 +870,7 @@ public class Saudacao {
     \item listas: ambiente \verb|alineas|, \verb|\listofprogramas|,
       \verb|\listofalgorithms|, \verb|\printloabbreviations|,
       \verb|\printlosymbols|;
-    \item citações: \verb|\citacao|, ambiente \verb|longquote|, \verb|\citet|,
+    \item citações: \verb|\enquote|, ambiente \verb|longquote|, \verb|\citet|,
       \verb|\citep|, \verb|\citetapud|, \verb|\citepapud|,
       \verb|\printbibliography|.
   \end{alineas}

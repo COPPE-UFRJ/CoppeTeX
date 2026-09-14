@@ -100,126 +100,128 @@
    year = 1990,
 }
 
-@PHDTHESIS{phdthesis-example,
+@thesis{phdthesis-example,
    author = "Paes~Junior, H. R.",
    title = "Influência da Espessura da Camada Intrínseca e Energia do Foton na Degradação de Células Solares de Silício Amorfo Hidrogenado",
    school = "COPPE/UFRJ",
    address = "Rio de Janeiro, RJ, Brasil",
    type = "Tese de {D.Sc.}",
-   curso = "Engenharia Metalúrgica e de Materiais",
+   course = "Engenharia Metalúrgica e de Materiais",
    year = 1994,
 }
 
 @videogame{videogame-example,
    author = "Meier, Sid",
    title = "Sid Meier's Civilization VI",
-   artista = "Firaxis Games",
-   plataforma = "PC",
-   editora = "2K Games",
-   versao = "1.0",
-   ano = 2016,
+   artist = "Firaxis Games",
+   platform = "PC",
+   publisher = "2K Games",
+   version = "1.0",
+   year = 2016,
 }
 
-@filme{filme-example,
+@movie{filme-example,
    title = "Cidade de Deus",
-   diretor = "Meirelles, Fernando and Lúnd, Kátia",
-   produtor = "O2 Filmes",
-   editora = "Globo Filmes",
-   local = "Rio de Janeiro",
-   ano = 2002,
+   director = "Meirelles, Fernando and Lúnd, Kátia",
+   producer = "O2 Filmes",
+   publisher = "Globo Filmes",
+   location = "Rio de Janeiro",
+   year = 2002,
 }
 
 @Comment{ Exotic ABNT types (NBR 6023 4.2.5-4.2.12), via the Portuguese synonyms. }
 
-@patente{patente-example,
-   autor = "Silva, J. A.",
+@patent{patente-example,
+   author = "Silva, J. A.",
    title = "Dispositivo de medição de fluxo térmico",
    number = "BR 10 2020 012345 6",
    type = "Patente de Invento",
    holder = "{Universidade Federal do Rio de Janeiro}",
-   ano = 2021,
+   year = 2021,
 }
 
-@legislacao{legislacao-example,
+@legislation{legislacao-example,
    author = "{Brasil}",
    title = "Lei n. 9.610, de 19 de fevereiro de 1998: altera, atualiza e consolida a legislação sobre direitos autorais",
    type = "Lei Federal",
-   local = "Brasília, DF",
-   ano = 1998,
+   location = "Brasília, DF",
+   year = 1998,
 }
 
-@norma{norma-example,
+@standard{norma-example,
    author = "{Associação Brasileira de Normas Técnicas}",
    title = "{NBR} 6023: informação e documentação: referências: elaboração",
-   local = "Rio de Janeiro",
-   ano = 2018,
+   location = "Rio de Janeiro",
+   year = 2018,
 }
 
-@mapa{mapa-example,
-   autor = "{Instituto Brasileiro de Geografia e Estatística}",
+@map{mapa-example,
+   author = "{Instituto Brasileiro de Geografia e Estatística}",
    title = "Mapa político do Brasil",
-   escala = "1:5.000.000",
-   local = "Rio de Janeiro",
-   editora = "IBGE",
-   ano = 2016,
+   scale = "1:5.000.000",
+   location = "Rio de Janeiro",
+   publisher = "IBGE",
+   year = 2016,
 }
 
-@partitura{partitura-example,
+@music{partitura-example,
    author = "Villa-Lobos, Heitor",
    title = "Bachianas Brasileiras n. 5",
-   local = "Rio de Janeiro",
+   location = "Rio de Janeiro",
    publisher = "Academia Brasileira de Música",
-   ano = 1945,
+   year = 1945,
    addendum = "1 partitura",
 }
 
 @Comment{ Obra sem autor: entra pelo titulo (1a palavra em CAIXA ALTA, ABNT 4.2). }
 @book{semautor-example,
    title = "Diagnóstico do setor editorial brasileiro",
-   local = "São Paulo",
-   editora = "Câmara Brasileira do Livro",
-   ano = 2019,
+   location = "São Paulo",
+   publisher = "Câmara Brasileira do Livro",
+   year = 2019,
 }
 
 @Comment{ Artigo/materia de jornal (NBR 6023 4.2.3.6). Com caderno/secao: a
   data precede o caderno e a pagina vem por ultimo. }
-@artigodejornal{jornalcaderno-example,
-   autor = "J. Byrne",
-   titulo = "A explosão de cursos para executivos nos EUA",
-   jornal = "Gazeta Mercantil",
-   local = "São Paulo",
-   data = "1992-02-04",
+@article{jornalcaderno-example,
+   author = "J. Byrne",
+   title = "A explosão de cursos para executivos nos EUA",
+   journaltitle = "Gazeta Mercantil",
+   location = "São Paulo",
+   date = "1992-02-04",
    caderno = "Administração e Serviços",
-   paginas = "28",
+   pages = "28",
+  entrysubtype = {newspaper},
 }
 
 @Comment{ Artigo de jornal sem caderno/secao: a paginacao precede a data. }
-@artigodejornal{jornal-example,
-   autor = "L. N. P. Leal",
-   titulo = "MP fiscaliza com autonomia total",
-   jornal = "Jornal do Brasil",
-   local = "Rio de Janeiro",
-   paginas = "3",
-   data = "1999-04-25",
+@article{jornal-example,
+   author = "L. N. P. Leal",
+   title = "MP fiscaliza com autonomia total",
+   journaltitle = "Jornal do Brasil",
+   location = "Rio de Janeiro",
+   pages = "3",
+   date = "1999-04-25",
+  entrysubtype = {newspaper},
 }
 
 @Comment{ Jurisprudencia / decisao judicial (NBR 6023 4.2.6.2): jurisdicao +
   orgao (autor, CAIXA ALTA), titulo da decisao, Relator, local e data. }
-@jurisprudencia{jurisprudencia-example,
+@jurisdiction{jurisprudencia-example,
    author = "{Brasil. Supremo Tribunal Federal}",
    title = "Habeas Corpus 12.345",
    relator = "Min. Fulano de Tal",
-   local = "Brasília, DF",
-   data = "2020-03-10",
+   location = "Brasília, DF",
+   date = "2020-03-10",
 }
 
 @Comment{ Obra sem autor iniciada por artigo: o artigo e a 1a palavra
   significativa ficam em CAIXA ALTA (ABNT 4.2) -- AS NORMAS de... }
 @book{semautorart-example,
    title = "As normas de documentação acadêmica",
-   local = "Rio de Janeiro",
-   editora = "ABNT",
-   ano = 2021,
+   location = "Rio de Janeiro",
+   publisher = "ABNT",
+   year = 2021,
 }
 
 @manual{manualbib,
@@ -246,7 +248,6 @@
   base antiga. }
 
 @book{m-4211,
-%% forma INGLESA (preferida): tipo e campos com os nomes do biblatex
 %% CASTRO, C. M. A prática da pesquisa. São Paulo: Mc Graw-Hill do Brasil, 1978. 156 p.
   author      = "Castro, C. M.",
   title       = "A prática da pesquisa",
@@ -256,23 +257,21 @@
   pagetotal   = "156",
 }
 
-@livro{m-4212,
-%% forma PORTUGUESA: sinonimos que a classe declara para os mesmos campos
+@book{m-4212,
 %% BAUMAN, Zygmunt. Vida líquida. 2. ed. rev. Rio de Janeiro: Zahar, 2009.
 %% Disponível em: https://lectio.proxy.ufrj.br/dashboard/midia/detalhe/1571.
 %% Acesso em: 28 ago. 2023.
-  autor      = "Bauman, Zygmunt",
-  titulo     = "Vida líquida",
-  edicao     = "2. ed. rev.",
-  local      = "Rio de Janeiro",
-  editora    = "Zahar",
-  ano        = 2009,
+  author      = "Bauman, Zygmunt",
+  title     = "Vida líquida",
+  edition     = "2. ed. rev.",
+  location      = "Rio de Janeiro",
+  publisher    = "Zahar",
+  year        = 2009,
   url        = "https://lectio.proxy.ufrj.br/dashboard/midia/detalhe/1571",
-  dataacesso = "2023-08-28",
+  urldate = "2023-08-28",
 }
 
 @incollection{m-4213,
-%% forma INGLESA (preferida): tipo e campos com os nomes do biblatex
 %% ROMANO, Giovanni. Imagens da juventude na era moderna. In: LEVI, G;
 %% SCHIMIDT, J. (org.). História dos jovens 2. São Paulo: Companhia das
 %% Letras, 1996. p. 7-16.
@@ -288,20 +287,18 @@
   pages       = "7--16",
 }
 
-@correspondencia{m-422,
-%% forma PORTUGUESA: sinonimos que a classe declara para os mesmos campos
+@letter{m-422,
 %% PILLA, Luiz. [Correspondência]. Destinatário: Moysés Valinho. Porto
 %% Alegre, 6 jun. 1979. 1 cartão pessoal.
-  autor    = "Pilla, Luiz",
-  titulo   = "[Correspondência]",
-  nota     = "Destinatário: Moysés Valinho",
-  local    = "Porto Alegre",
-  data     = "1979-06-06",
+  author    = "Pilla, Luiz",
+  title   = "[Correspondência]",
+  note     = "Destinatário: Moysés Valinho",
+  location    = "Porto Alegre",
+  date     = "1979-06-06",
   addendum = "1 cartão pessoal",
 }
 
 @letter{m-4221,
-%% forma INGLESA (preferida): tipo e campos com os nomes do biblatex
 %% LISPECTOR, Clarice. [Carta enviada para sua irmã]. Destinatário: Tânia
 %% Lispector. Belém, 8 jul. 1944. 1 carta. Disponível em: https://site.claricelispector.ims.com.br/acervo/cartas/067388-2/. Acesso em: 4 ago. 2023.
   author      = "Lispector, Clarice",
@@ -314,20 +311,18 @@
   urldate     = "2023-08-04",
 }
 
-@periodico{m-4231,
-%% forma PORTUGUESA: sinonimos que a classe declara para os mesmos campos
+@periodical{m-4231,
 %% SÃO PAULO MEDICAL JOURNAL. São Paulo: Associação Paulista de Medicina, 1941- .
 %%! intervalo aberto: a classe fecha com "1941/" porque a 4.3 separa por barra
 %%! o intervalo de MESES ("jan./jun."), e o biblatex usa o mesmo separador
 %%! para os dois. Escolheu-se acertar o caso frequente, o do artigo.
-  titulo  = "São Paulo Medical Journal",
-  local   = "São Paulo",
-  editora = "Associação Paulista de Medicina",
-  data    = "1941/",
+  title  = "São Paulo Medical Journal",
+  location   = "São Paulo",
+  publisher = "Associação Paulista de Medicina",
+  date    = "1941/",
 }
 
 @periodical{m-4233,
-%% forma INGLESA (preferida): tipo e campos com os nomes do biblatex
 %% REVISTA BRASILEIRA DE NEUROLOGIA. Rio de Janeiro: Universidade Federal do
 %% Rio de Janeiro, Instituto de Neurologia Deolindo Couto, v. 39, n. 2, abr./jun. 2003.
   title       = "Revista Brasileira de Neurologia",
@@ -338,23 +333,21 @@
   date        = "2003-04/2003-06",
 }
 
-@artigo{m-4234,
-%% forma PORTUGUESA: sinonimos que a classe declara para os mesmos campos
+@article{m-4234,
 %% ARAÚJO, Vânia Maria Rodrigues Hermes de. Informação: instrumento de
 %% dominação e de submissão. Ciência da Informação, Brasília, DF, v. 20,
 %% n. 1, p. 37-44, jan./jun. 1991.
-  autor     = "Araújo, Vânia Maria Rodrigues Hermes de",
-  titulo    = "Informação: instrumento de dominação e de submissão",
-  periodico = "Ciência da Informação",
-  local     = "Brasília, DF",
+  author     = "Araújo, Vânia Maria Rodrigues Hermes de",
+  title    = "Informação: instrumento de dominação e de submissão",
+  journaltitle = "Ciência da Informação",
+  location     = "Brasília, DF",
   volume    = "20",
-  numero    = "1",
-  paginas   = "37--44",
-  data      = "1991-01/1991-06",
+  number    = "1",
+  pages   = "37--44",
+  date      = "1991-01/1991-06",
 }
 
 @article{m-4235,
-%% forma INGLESA (preferida): tipo e campos com os nomes do biblatex
 %% LIEVENS, A.; MOENAERT, R. K. Project team communication in financial
 %% service innovation. J. Manag. Stud., Oxford, v. 37, n. 5, Jul. 2000.
 %%! o Manual grafa o mes em maiuscula por ser periodico de lingua inglesa;
@@ -371,21 +364,20 @@
   urldate     = "2023-08-25",
 }
 
-@artigodejornal{m-4236,
-%% forma PORTUGUESA: sinonimos que a classe declara para os mesmos campos
+@article{m-4236,
 %% BYRNE, J. A explosão de cursos para executivos nos EUA. Gazeta Mercantil,
 %% São Paulo, 4 fev. 1992. Administração e Serviços, p. 28.
-  autor   = "Byrne, J.",
-  titulo  = "A explosão de cursos para executivos nos EUA",
-  jornal  = "Gazeta Mercantil",
-  local   = "São Paulo",
-  data    = "1992-02-04",
+  author   = "Byrne, J.",
+  title  = "A explosão de cursos para executivos nos EUA",
+  journaltitle  = "Gazeta Mercantil",
+  location   = "São Paulo",
+  date    = "1992-02-04",
   caderno = "Administração e Serviços",
-  paginas = "28",
+  pages = "28",
+  entrysubtype = {newspaper},
 }
 
 @article{m-4237,
-%% forma INGLESA (preferida): tipo e campos com os nomes do biblatex
 %% LEITÃO, M. Supremo pode formar maioria hoje contra o marco temporal.
 %% O Globo, Rio de Janeiro, 30 ago. 2023. Disponível em: https://oglobo.globo.com/blogs/miriam-leitao/post/2023/08/supremo-pode-formar-maioria-hoje-contra-o-marco-temporal.ghtml. Acesso em: 30 ago. 2023.
   author      = "Leitão, M.",
@@ -397,22 +389,21 @@
   urldate     = "2023-08-30",
 }
 
-@artigodejornal{m-4238,
-%% forma PORTUGUESA: sinonimos que a classe declara para os mesmos campos
+@article{m-4238,
 %% FOTO de raios no Cristo é finalista em concurso de imagens de fenômenos
 %% meteorológicos. G1, Rio de Janeiro, 24 out. 2023. Disponível em:
 %% https://g1.globo.com/meio-ambiente/noticia/2023/08/24/concurso-elege-a-melhor-foto-de-fenomenos-meteorologicos.ghtml.
 %% Acesso em: 26 ago. 2023.
-  titulo     = "Foto de raios no Cristo é finalista em concurso de imagens de fenômenos meteorológicos",
-  jornal     = "G1",
-  local      = "Rio de Janeiro",
-  data       = "2023-10-24",
+  title     = "Foto de raios no Cristo é finalista em concurso de imagens de fenômenos meteorológicos",
+  journaltitle     = "G1",
+  location      = "Rio de Janeiro",
+  date       = "2023-10-24",
   url        = "https://g1.globo.com/meio-ambiente/noticia/2023/08/24/concurso-elege-a-melhor-foto-de-fenomenos-meteorologicos.ghtml",
-  dataacesso = "2023-08-26",
+  urldate = "2023-08-26",
+  entrysubtype = {newspaper},
 }
 
 @proceedings{m-4241,
-%% forma INGLESA (preferida): tipo e campos com os nomes do biblatex
 %% ENCONTRO ANUAL DA ANPAD, 14., 1982, Florianópolis. Anais [...]. Belo
 %% Horizonte: ANPAD, 1990. 9 v.
   eventtitle  = "Encontro Anual da ANPAD",
@@ -426,23 +417,21 @@
   addendum    = "9 v.",
 }
 
-@anais{m-4243,
-%% forma PORTUGUESA: sinonimos que a classe declara para os mesmos campos
+@proceedings{m-4243,
 %% CONGRESSO BRASILEIRO DE BIBLIOTECONOMIA E DOCUMENTAÇÃO, 19., 2000, Porto
 %% Alegre. Anais eletrônicos [...]. Porto Alegre: PUCRS, 2000. 1 CD.
-  evento       = "Congresso Brasileiro de Biblioteconomia e Documentação",
-  numero       = "19",
-  dataevento   = "2000",
-  localevento  = "Porto Alegre",
-  titulo       = "Anais eletrônicos [...]",
-  local    = "Porto Alegre",
-  editora  = "PUCRS",
-  ano      = 2000,
+  eventtitle       = "Congresso Brasileiro de Biblioteconomia e Documentação",
+  number       = "19",
+  eventdate   = "2000",
+  venue  = "Porto Alegre",
+  title       = "Anais eletrônicos [...]",
+  location    = "Porto Alegre",
+  publisher  = "PUCRS",
+  year      = 2000,
   addendum = "1 CD",
 }
 
 @inproceedings{m-4245,
-%% forma INGLESA (preferida): tipo e campos com os nomes do biblatex
 %% CORDEIRO, Rosa Inês de N. Descrição e representação de fotografias de cenas
 %% e fotogramas de filmes: um esquema de indexação. In: CONGRESSO BRASILEIRO DE
 %% BIBLIOTECONOMIA E DOCUMENTAÇÃO, 16., 1991, Salvador. Anais [...]. Salvador:
@@ -461,27 +450,25 @@
   pages       = "1008--1022",
 }
 
-@trabalhodeevento{m-4246,
-%% forma PORTUGUESA: sinonimos que a classe declara para os mesmos campos
+@inproceedings{m-4246,
 %% MACIEL, A. M. D.; SALES JÚNIOR, Ronaldo L.; SIQUEIRA, A. J. O indivíduo e a
 %% pós-modernidade. In: CONGRESSO DE INICIAÇÃO DA UFPE, 4., 1996, Recife.
 %% Anais eletrônicos [...]. Recife: UFPe, 1996. Disponível em: http://www.propesq.ufpe.br/anais/cfch/cfchtrab/htm. Acesso em: 16 jan. 2001.
-  autor      = "Maciel, A. M. D. and Sales Júnior, Ronaldo L. and Siqueira, A. J.",
-  titulo     = "O indivíduo e a pós-modernidade",
-  evento      = "Congresso de Iniciação da UFPE",
-  numero      = "4",
-  dataevento  = "1996",
-  localevento = "Recife",
+  author      = "Maciel, A. M. D. and Sales Júnior, Ronaldo L. and Siqueira, A. J.",
+  title     = "O indivíduo e a pós-modernidade",
+  eventtitle      = "Congresso de Iniciação da UFPE",
+  number      = "4",
+  eventdate  = "1996",
+  venue = "Recife",
   booktitle   = "Anais eletrônicos [...]",
-  local      = "Recife",
-  editora    = "UFPe",
-  ano        = 1996,
+  location      = "Recife",
+  publisher    = "UFPe",
+  year        = 1996,
   url        = "http://www.propesq.ufpe.br/anais/cfch/cfchtrab/htm",
-  dataacesso = "2001-01-16",
+  urldate = "2001-01-16",
 }
 
 @patent{m-425,
-%% forma INGLESA (preferida): tipo e campos com os nomes do biblatex
 %%! o Manual usa "et al."; a classe lista todos os autores (maxbibnames=99),
 %%! que a 4.3.1.3 admite igualmente e é o que a COPPE pratica.
 %% BERTAZZOLI, Rodnei et al. Eletrodos de difusão gasosa modificados com
@@ -496,26 +483,24 @@
   grantdate   = "25 mar. 2008",
 }
 
-@patente{m-4251,
-%% forma PORTUGUESA: sinonimos que a classe declara para os mesmos campos
+@patent{m-4251,
 %% GALEMBECK, Fernando; SOUZA, Maria de Fátima Brito. Process to obtain an
 %% intercalated or exfoliated polyester with clay hybrid nanocomposite
 %% material. Depositante: Universidade Estadual de Campinas; Rhodia Ster S/A.
 %% WO2005/030850 A1. Depósito: 1 Oct. 2003. Concessão: 7 Apr. 2005.
 %% Disponível em: http://www.iprvillage.info/portal/servlet/DIIDirect.
 %% Acesso em: 30 ago. 2023.
-  autor      = "Galembeck, Fernando and Souza, Maria de Fátima Brito",
-  titulo     = "Process to obtain an intercalated or exfoliated polyester with clay hybrid nanocomposite material",
+  author      = "Galembeck, Fernando and Souza, Maria de Fátima Brito",
+  title     = "Process to obtain an intercalated or exfoliated polyester with clay hybrid nanocomposite material",
   holder     = "{Universidade Estadual de Campinas; Rhodia Ster S/A}",
-  numero     = "WO2005/030850 A1",
-  deposito   = "1 Oct. 2003",
-  concessao  = "7 Apr. 2005",
+  number     = "WO2005/030850 A1",
+  filingdate   = "1 Oct. 2003",
+  grantdate  = "7 Apr. 2005",
   url        = "http://www.iprvillage.info/portal/servlet/DIIDirect",
-  dataacesso = "2023-08-30",
+  urldate = "2023-08-30",
 }
 
 @legislation{m-4261,
-%% forma INGLESA (preferida): tipo e campos com os nomes do biblatex
 %% SÃO PAULO (Estado). Decreto nº 42.822, de 20 de janeiro de 1998. Lex:
 %% coletânea de legislação e jurisprudência. São Paulo, v. 62, n. 3, p. 217-220, 1998.
   author      = "{SÃO PAULO (Estado)}",
@@ -528,20 +513,18 @@
   year        = 1998,
 }
 
-@jurisprudencia{m-4262,
-%% forma PORTUGUESA: sinonimos que a classe declara para os mesmos campos
+@jurisdiction{m-4262,
 %% BRASIL. Supremo Tribunal Federal. Extradição nº 10. Relator: Ministro
 %% Rafael Mayer. Brasília, DF, 26 de fevereiro de 1986. Revista Trimestral de
 %% Jurisprudência, [Brasília], v. 109, p. 870-879, set. 1986.
-  autor   = "{BRASIL. Supremo Tribunal Federal}",
-  titulo  = "Extradição n\textordmasculine{} 10",
+  author   = "{BRASIL. Supremo Tribunal Federal}",
+  title  = "Extradição n\textordmasculine{} 10",
   relator = "Ministro Rafael Mayer",
-  local   = "Brasília, DF, 26 de fevereiro de 1986",
-  nota    = "Revista Trimestral de Jurisprudência, [Brasília], v. 109, p. 870-879, set. 1986",
+  location   = "Brasília, DF, 26 de fevereiro de 1986",
+  note    = "Revista Trimestral de Jurisprudência, [Brasília], v. 109, p. 870-879, set. 1986",
 }
 
 @legislation{m-4263,
-%% forma INGLESA (preferida): tipo e campos com os nomes do biblatex
 %% VARGINHA (MG). Edital de licitação nº 189/2007. Pregão nº 151/2007.
 %% [Aquisição de leite pasteurizado]. Varginha: órgão oficial do município,
 %% Varginha, ano 7, n. 494, p. 15, 31 maio 2007.
@@ -555,20 +538,18 @@
   date        = "2007-05-31",
 }
 
-@documentojuridico{m-427,
-%% forma PORTUGUESA: sinonimos que a classe declara para os mesmos campos
+@legal{m-427,
 %% LEGISLAÇÃO brasileira: normas jurídicas, federais, bibliografia brasileira
 %% de Direito. 7. ed. Brasília, DF: Senado Federal, 1999. 1 CD-ROM.
-  titulo   = "Legislação brasileira: normas jurídicas, federais, bibliografia brasileira de Direito",
-  edicao   = "7. ed.",
-  local    = "Brasília, DF",
-  editora  = "Senado Federal",
-  ano      = 1999,
+  title   = "Legislação brasileira: normas jurídicas, federais, bibliografia brasileira de Direito",
+  edition   = "7. ed.",
+  location    = "Brasília, DF",
+  publisher  = "Senado Federal",
+  year      = 1999,
   addendum = "1 CD-ROM",
 }
 
 @legal{m-428,
-%% forma INGLESA (preferida): tipo e campos com os nomes do biblatex
 %% SÃO CARLOS (SP). Cartório de Registro Civil das Pessoas Naturais do 1º
 %% Subdistrito de São Carlos. Certidão de nascimento [de] Maria da Silva.
 %% Registro em: 9 ago. 1979.
@@ -577,20 +558,18 @@
   note        = "Registro em: 9 ago. 1979",
 }
 
-@audiovisual{m-429,
-%% forma PORTUGUESA: sinonimos que a classe declara para os mesmos campos
+@video{m-429,
 %% OS PERIGOS do uso de tóxicos. Produção de Jorge Ramos de Andrade. São
 %% Paulo: CERAVI, 1983. 1 videocassete.
-  titulo   = "Os perigos do uso de tóxicos",
-  produtor = "Jorge Ramos de Andrade",
-  local    = "São Paulo",
-  editora  = "CERAVI",
-  ano      = 1983,
+  title   = "Os perigos do uso de tóxicos",
+  producer = "Jorge Ramos de Andrade",
+  location    = "São Paulo",
+  publisher  = "CERAVI",
+  year      = 1983,
   addendum = "1 videocassete",
 }
 
 @music{m-42101,
-%% forma INGLESA (preferida): tipo e campos com os nomes do biblatex
 %% CANHOTO. Abismo de rosas. São Paulo: CEMBRA. 1 partitura (3 p.)
   author      = "{Canhoto}",
   title       = "Abismo de rosas",
@@ -599,21 +578,19 @@
   addendum    = "1 partitura (3 p.)",
 }
 
-@partitura{m-42102,
-%% forma PORTUGUESA: sinonimos que a classe declara para os mesmos campos
+@music{m-42102,
 %% OLIVA, Marcos; MOCOTÓ, Tiago. Fervilhar: frevo. 1990. 1 partitura. Piano.
 %% Disponível em: http://openlink.br.inter.net/picolino/partitur.htm.
 %% Acesso em: 5 jan. 2022.
-  autor      = "Oliva, Marcos and Mocotó, Tiago",
-  titulo     = "Fervilhar: frevo",
-  ano        = 1990,
+  author      = "Oliva, Marcos and Mocotó, Tiago",
+  title     = "Fervilhar: frevo",
+  year        = 1990,
   addendum   = "1 partitura. Piano",
   url        = "http://openlink.br.inter.net/picolino/partitur.htm",
-  dataacesso = "2022-01-05",
+  urldate = "2022-01-05",
 }
 
 @image{m-42111,
-%% forma INGLESA (preferida): tipo e campos com os nomes do biblatex
 %% CARDOSO, Cláudio. Pedra de Itapuça. 1989. 3 fotografias.
   author      = "Cardoso, Cláudio",
   title       = "Pedra de Itapuça",
@@ -621,21 +598,19 @@
   addendum    = "3 fotografias",
 }
 
-@iconografico{m-42112,
-%% forma PORTUGUESA: sinonimos que a classe declara para os mesmos campos
+@image{m-42112,
 %% HOUTE, Jef Van den. Black hole. 1 jun. 2010. 1 fotografia.
 %% Disponível em: http://photo.net/photodb/photo?photo_id=11724012.
 %% Acesso em: 26 maio 2011.
-  autor      = "Houte, Jef Van den",
-  titulo     = "Black hole",
-  data       = "2010-06-01",
+  author      = "Houte, Jef Van den",
+  title     = "Black hole",
+  date       = "2010-06-01",
   addendum   = "1 fotografia",
   url        = "http://photo.net/photodb/photo?photo_id=11724012",
-  dataacesso = "2011-05-26",
+  urldate = "2011-05-26",
 }
 
 @map{m-42121,
-%% forma INGLESA (preferida): tipo e campos com os nomes do biblatex
 %% BRASIL. Ministério da Aeronáutica. Comando Costeiro. Base Aérea do Recife.
 %% Saquarema. Recife, 1976. 71 fotografias. Escala 1: 20.000.
   author      = "{BRASIL. Ministério da Aeronáutica. Comando Costeiro. Base Aérea do Recife}",
@@ -646,21 +621,19 @@
   addendum    = "71 fotografias",
 }
 
-@mapa{m-42122,
-%% forma PORTUGUESA: sinonimos que a classe declara para os mesmos campos
+@map{m-42122,
 %% IBGE. República Federativa do Brasil. [Rio de Janeiro?], 1996. 1 mapa
 %% color., 31 cm x 34 cm. Escala 1: 15.000.000. 1 CD-ROM.
-  autor      = "{IBGE}",
-  titulo     = "República Federativa do Brasil",
-  local      = "[Rio de Janeiro?]",
-  ano        = 1996,
-  escala     = "1:15.000.000",
+  author      = "{IBGE}",
+  title     = "República Federativa do Brasil",
+  location      = "[Rio de Janeiro?]",
+  year        = 1996,
+  scale     = "1:15.000.000",
   addendum   = "1 mapa color., 31 cm x 34 cm",
-  nota       = "1 CD-ROM",
+  note       = "1 CD-ROM",
 }
 
 @artwork{m-42131,
-%% forma INGLESA (preferida): tipo e campos com os nomes do biblatex
 %% DUCHAMP, Marcel. Escultura para viajar. 1918. 1 escultura variável,
 %% borracha colorida e cordel.
   author      = "Duchamp, Marcel",
@@ -670,20 +643,18 @@
 }
 
 @online{m-4214,
-%% forma PORTUGUESA: sinonimos que a classe declara para os mesmos campos
 %% UNIVERSIDADE FEDERAL DO RIO DE JANEIRO. Sistema de Bibliotecas e
 %% Informação. Minerva: Sistema de Documentação da UFRJ. Rio de Janeiro, 1998.
 %% Disponível em: http://www.minerva.ufrj.br. Acesso em: 30 mar. 2022.
-  autor      = "{UNIVERSIDADE FEDERAL DO RIO DE JANEIRO. Sistema de Bibliotecas e Informação}",
-  titulo     = "Minerva: Sistema de Documentação da UFRJ",
-  local      = "Rio de Janeiro",
-  ano        = 1998,
+  author      = "{UNIVERSIDADE FEDERAL DO RIO DE JANEIRO. Sistema de Bibliotecas e Informação}",
+  title     = "Minerva: Sistema de Documentação da UFRJ",
+  location      = "Rio de Janeiro",
+  year        = 1998,
   url        = "http://www.minerva.ufrj.br",
-  dataacesso = "2022-03-30",
+  urldate = "2022-03-30",
 }
 
 @thesis{m-diss,
-%% forma INGLESA (preferida): tipo e campos com os nomes do biblatex
 %% LEITE, Sonia. Memória da comunidade da Serrinha. 1997. 203 f. Dissertação
 %% (Mestrado em Memória Social e Documento) -- Centro de Ciências Humanas,
 %% Universidade do Rio de Janeiro, Rio de Janeiro, 1997.
@@ -696,14 +667,13 @@
   pagetotal   = "203",
 }
 
-@norma{m-norma,
-%% forma PORTUGUESA: sinonimos que a classe declara para os mesmos campos
+@standard{m-norma,
 %% ASSOCIAÇÃO BRASILEIRA DE NORMAS TÉCNICAS. NBR 6023: informação e
 %% documentação: referências: elaboração. Rio de Janeiro, 2018.
-  autor  = "{Associação Brasileira de Normas Técnicas}",
-  titulo = "{NBR} 6023: informação e documentação: referências: elaboração",
-  local  = "Rio de Janeiro",
-  ano    = 2018,
+  author  = "{Associação Brasileira de Normas Técnicas}",
+  title = "{NBR} 6023: informação e documentação: referências: elaboração",
+  location  = "Rio de Janeiro",
+  year    = 2018,
 }
 %% 
 %%

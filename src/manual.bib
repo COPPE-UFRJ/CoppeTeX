@@ -100,126 +100,128 @@
    year = 1990,
 }
 
-@PHDTHESIS{phdthesis-example,
+@thesis{phdthesis-example,
    author = "Paes~Junior, H. R.",
    title = "Influência da Espessura da Camada Intrínseca e Energia do Foton na Degradação de Células Solares de Silício Amorfo Hidrogenado",
    school = "COPPE/UFRJ",
    address = "Rio de Janeiro, RJ, Brasil",
    type = "Tese de {D.Sc.}",
-   curso = "Engenharia Metalúrgica e de Materiais",
+   course = "Engenharia Metalúrgica e de Materiais",
    year = 1994,
 }
 
 @videogame{videogame-example,
    author = "Meier, Sid",
    title = "Sid Meier's Civilization VI",
-   artista = "Firaxis Games",
-   plataforma = "PC",
-   editora = "2K Games",
-   versao = "1.0",
-   ano = 2016,
+   artist = "Firaxis Games",
+   platform = "PC",
+   publisher = "2K Games",
+   version = "1.0",
+   year = 2016,
 }
 
-@filme{filme-example,
+@movie{filme-example,
    title = "Cidade de Deus",
-   diretor = "Meirelles, Fernando and Lúnd, Kátia",
-   produtor = "O2 Filmes",
-   editora = "Globo Filmes",
-   local = "Rio de Janeiro",
-   ano = 2002,
+   director = "Meirelles, Fernando and Lúnd, Kátia",
+   producer = "O2 Filmes",
+   publisher = "Globo Filmes",
+   location = "Rio de Janeiro",
+   year = 2002,
 }
 
 @Comment{ Exotic ABNT types (NBR 6023 4.2.5-4.2.12), via the Portuguese synonyms. }
 
-@patente{patente-example,
-   autor = "Silva, J. A.",
+@patent{patente-example,
+   author = "Silva, J. A.",
    title = "Dispositivo de medição de fluxo térmico",
    number = "BR 10 2020 012345 6",
    type = "Patente de Invento",
    holder = "{Universidade Federal do Rio de Janeiro}",
-   ano = 2021,
+   year = 2021,
 }
 
-@legislacao{legislacao-example,
+@legislation{legislacao-example,
    author = "{Brasil}",
    title = "Lei n. 9.610, de 19 de fevereiro de 1998: altera, atualiza e consolida a legislação sobre direitos autorais",
    type = "Lei Federal",
-   local = "Brasília, DF",
-   ano = 1998,
+   location = "Brasília, DF",
+   year = 1998,
 }
 
-@norma{norma-example,
+@standard{norma-example,
    author = "{Associação Brasileira de Normas Técnicas}",
    title = "{NBR} 6023: informação e documentação: referências: elaboração",
-   local = "Rio de Janeiro",
-   ano = 2018,
+   location = "Rio de Janeiro",
+   year = 2018,
 }
 
-@mapa{mapa-example,
-   autor = "{Instituto Brasileiro de Geografia e Estatística}",
+@map{mapa-example,
+   author = "{Instituto Brasileiro de Geografia e Estatística}",
    title = "Mapa político do Brasil",
-   escala = "1:5.000.000",
-   local = "Rio de Janeiro",
-   editora = "IBGE",
-   ano = 2016,
+   scale = "1:5.000.000",
+   location = "Rio de Janeiro",
+   publisher = "IBGE",
+   year = 2016,
 }
 
-@partitura{partitura-example,
+@music{partitura-example,
    author = "Villa-Lobos, Heitor",
    title = "Bachianas Brasileiras n. 5",
-   local = "Rio de Janeiro",
+   location = "Rio de Janeiro",
    publisher = "Academia Brasileira de Música",
-   ano = 1945,
+   year = 1945,
    addendum = "1 partitura",
 }
 
 @Comment{ Obra sem autor: entra pelo titulo (1a palavra em CAIXA ALTA, ABNT 4.2). }
 @book{semautor-example,
    title = "Diagnóstico do setor editorial brasileiro",
-   local = "São Paulo",
-   editora = "Câmara Brasileira do Livro",
-   ano = 2019,
+   location = "São Paulo",
+   publisher = "Câmara Brasileira do Livro",
+   year = 2019,
 }
 
 @Comment{ Artigo/materia de jornal (NBR 6023 4.2.3.6). Com caderno/secao: a
   data precede o caderno e a pagina vem por ultimo. }
-@artigodejornal{jornalcaderno-example,
-   autor = "J. Byrne",
-   titulo = "A explosão de cursos para executivos nos EUA",
-   jornal = "Gazeta Mercantil",
-   local = "São Paulo",
-   data = "1992-02-04",
+@article{jornalcaderno-example,
+   author = "J. Byrne",
+   title = "A explosão de cursos para executivos nos EUA",
+   journaltitle = "Gazeta Mercantil",
+   location = "São Paulo",
+   date = "1992-02-04",
    caderno = "Administração e Serviços",
-   paginas = "28",
+   pages = "28",
+  entrysubtype = {newspaper},
 }
 
 @Comment{ Artigo de jornal sem caderno/secao: a paginacao precede a data. }
-@artigodejornal{jornal-example,
-   autor = "L. N. P. Leal",
-   titulo = "MP fiscaliza com autonomia total",
-   jornal = "Jornal do Brasil",
-   local = "Rio de Janeiro",
-   paginas = "3",
-   data = "1999-04-25",
+@article{jornal-example,
+   author = "L. N. P. Leal",
+   title = "MP fiscaliza com autonomia total",
+   journaltitle = "Jornal do Brasil",
+   location = "Rio de Janeiro",
+   pages = "3",
+   date = "1999-04-25",
+  entrysubtype = {newspaper},
 }
 
 @Comment{ Jurisprudencia / decisao judicial (NBR 6023 4.2.6.2): jurisdicao +
   orgao (autor, CAIXA ALTA), titulo da decisao, Relator, local e data. }
-@jurisprudencia{jurisprudencia-example,
+@jurisdiction{jurisprudencia-example,
    author = "{Brasil. Supremo Tribunal Federal}",
    title = "Habeas Corpus 12.345",
    relator = "Min. Fulano de Tal",
-   local = "Brasília, DF",
-   data = "2020-03-10",
+   location = "Brasília, DF",
+   date = "2020-03-10",
 }
 
 @Comment{ Obra sem autor iniciada por artigo: o artigo e a 1a palavra
   significativa ficam em CAIXA ALTA (ABNT 4.2) -- AS NORMAS de... }
 @book{semautorart-example,
    title = "As normas de documentação acadêmica",
-   local = "Rio de Janeiro",
-   editora = "ABNT",
-   ano = 2021,
+   location = "Rio de Janeiro",
+   publisher = "ABNT",
+   year = 2021,
 }
 
 @manual{manualbib,
