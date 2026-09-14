@@ -771,8 +771,9 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % ao mesmo tempo, e é o único que permite escrever a várias mãos, com o
 % orientador vendo o texto em tempo real.
 %
-% Em qualquer editor, as linhas de comentário mágico no topo do arquivo dizem
-% como compilar, e o TeXstudio, o TeXShop e o Overleaf as respeitam:
+% As linhas de comentário mágico no topo do arquivo dizem ao editor como
+% compilar. O TeXstudio e o TeXShop as respeitam; o Overleaf não, e usa o que
+% está no menu dele:
 %
 % \begin{verbatim}
 %   % !TeX program = pdflatex
@@ -780,6 +781,31 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %   % !TeX spellcheck = pt_BR
 %   % !BIB program = biber
 % \end{verbatim}
+%
+% \textbf{As listas e o índice em qualquer editor.}\label{sec:makeindexauto}
+% As listas de abreviaturas, de siglas e de símbolos e o índice remissivo só
+% aparecem depois do |makeindex|, que roda entre uma compilação e a seguinte. O
+% comando padrão do TeXstudio e do TeXworks roda só o \hologo{pdfLaTeX}, e por
+% isso a classe \textbf{roda o |makeindex| sozinha}, no fim de cada compilação.
+% Basta o \emph{shell escape} restrito, que o \MiKTeX\ e o \TeX~Live ligam por
+% padrão --- o log mostra ``restricted \string\write18 enabled''. As listas e o
+% índice aparecem a partir da \textbf{segunda} compilação. A opção
+% |semmakeindex| desliga isso.
+%
+% \textbf{Compilar com o |latexmk| pelo editor.} Quem tem o |latexmk|
+% funcionando --- no Windows ele precisa do Perl --- pode mandar o TeXstudio
+% usá-lo, e aí o |biber|, o |makeindex| e as passadas saem de um só clique,
+% lidos do |latexmkrc| da pasta. Ou em \emph{Opções $\to$ Configurar $\to$
+% Produção}, escolhendo |Latexmk| como compilador padrão, ou com o comentário
+% mágico:
+%
+% \begin{verbatim}
+%   % !TeX program = latexmk -pdf -synctex=1
+% \end{verbatim}
+%
+% Os exemplos da entrega trazem essa linha comentada, e não ligada: sem o Perl,
+% ela faria a compilação falhar logo na primeira tentativa. Não é preciso
+% passar |-r latexmkrc|: o |latexmk| lê sozinho o |latexmkrc| da pasta.
 %
 % O LyX, que mostra o texto já formatado enquanto se escreve, não é
 % recomendado com a \CoppeTeX: ele usa a classe só por meio de um arquivo de
@@ -979,9 +1005,10 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % Família da fonte & sem serifa & \texttt{comserifa} \\
 % Entrelinha & 1,5 & \texttt{doublespacing} \\
 % Margens & uma face, 3\,cm à esquerda & \texttt{twoside} \\
-% \emph{Links} & coloridos & \texttt{semlinks} \\
+% \emph{Links} & clicáveis, sem cor nem moldura & \texttt{linkscommoldura} \texttt{linkscoloridos} \\
 % Folhas pré-textuais & contadas, não numeradas & \texttt{numeraisromanos} \\
 % Listas no sumário & fora dele & \texttt{listasnosumario} \\
+% Seta da linha quebrada nas listagens & preta & \texttt{setavermelha} \\
 % Lista de símbolos & ordem de aparição & \texttt{simbolosalfabeticos} \\
 % Orientador na banca & em primeiro lugar & \texttt{semorientadornabanca} \\
 % Coorientador no resumo & fora dele & \texttt{coorientador} \\
@@ -989,6 +1016,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % Ficha catalográfica & a que você fornecer & \texttt{rascunhoficha} \\
 % PDF/A & \textbf{desligado} & \texttt{pdfa} \\
 % \texttt{morewrites} & \textbf{carregado}, se instalado & \texttt{semmorewrites} \texttt{morewrites} \\
+% |makeindex| das listas e do índice & \textbf{rodado pela classe} & \texttt{semmakeindex} \\
 % \end{tabular}
 % \end{center}
 %
@@ -1072,9 +1100,20 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %     porque a Resolução CEPG n.~246/2023 acabou com a via impressa.
 %   \item[\texttt{oneside}] Uma folha só, com 3\,cm de margem esquerda em todas.
 %     É o padrão; existe para quem quiser ser explícito.
-%   \item[\texttt{semlinks}] Tira a cor e a moldura de todos os \emph{links}. Eles
-%     continuam clicáveis e os \emph{bookmarks} continuam no painel do leitor.
-%     Útil para quem vai imprimir.
+%   \item[\texttt{linkscommoldura}] Desenha a moldura do \texttt{hyperref} em
+%     volta de cada \emph{link}: vermelha nas referências internas, verde nas
+%     citações, ciano nas URLs. Ela aparece só na tela e não sai impressa. Por
+%     padrão os \emph{links} não têm destaque nenhum (seção~\ref{sec:links}).
+%   \item[\texttt{linkscoloridos}] Pinta o texto dos \emph{links} em cores
+%     escuras. \textbf{Contraria a 2.1(b)} do Manual, que quer o texto na cor
+%     preta, com exceção só das ilustrações: serve para a versão de leitura na
+%     tela, não para o depósito.
+%   \item[\texttt{semlinks}] Aceita, e hoje só confirma o padrão: nenhum
+%     destaque. Se vier junto com uma das duas acima, vence.
+%   \item[\texttt{setavermelha}] Nas listagens de programa, a linha longa demais
+%     quebra sozinha e continua embaixo depois de uma seta curva,
+%     $\hookrightarrow$. \textbf{Preta por padrão}; esta opção a deixa
+%     vermelha.
 %   \item[\texttt{numeraisromanos}] Numera as folhas pré-textuais em algarismos
 %     romanos. \textbf{Contraria a 2.7} do Manual vigente, que manda contá-las
 %     sem numerá-las. Existe só para que trabalhos escritos sob a norma antiga
@@ -1110,7 +1149,12 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %     mais: veja a seção~\ref{sec:resumos}.
 %   \item[\texttt{listasnosumario}] \textbf{Desligada por padrão}: as listas
 %     pré-textuais ficam \emph{fora} do sumário, como na 3.1.2.1.6. Ligue-a
-%     para devolvê-las a ele.
+%     para pô-las nele. \textbf{Aviso: ligar esta opção contraria a norma.} A
+%     \mbox{NBR~6027} diz que os elementos pré-textuais não constam do
+%     sumário, e o sumário que o Manual UFRJ/SiBI dá como modelo (3.1.2.1.6)
+%     começa em ``1~INTRODUÇÃO''. Use-a só se o seu Programa exigir, por
+%     escrito, o contrário. Os pós-textuais --- referências, glossário,
+%     apêndices, anexos e índice --- entram no sumário com ou sem ela.
 %   \item[\texttt{simbolosalfabeticos}] \textbf{Desligada por padrão}: a lista
 %     de símbolos sai na \textbf{ordem em que cada símbolo aparece pela
 %     primeira vez no texto}, como pede a 3.1.2.2.7. Ligue-a para ordenar em
@@ -1210,6 +1254,9 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %
 % \begin{description}
 %   \item[\texttt{semmorewrites}] Impede a classe de carregar o \texttt{morewrites}.
+%   \item[\texttt{semmakeindex}] Impede a classe de rodar o |makeindex| sozinha
+%     no fim da compilação (seção~\ref{sec:makeindexauto}). Deixe ligado a não
+%     ser que você prefira rodá-lo à mão ou pelo |latexmk|.
 %   \item[\texttt{morewrites}] Significa ``eu insisto'': o pacote faltando vira
 %     erro, em vez de aviso.
 % \end{description}
@@ -1651,7 +1698,9 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \DescribeMacro{\printlosymbols}
 % A ordem que a 3.1.2.1.6 pede é esta: as listas primeiro, o sumário por
 % último. As listas \textbf{não} entram no sumário, a não ser com a opção
-% |listasnosumario|.
+% |listasnosumario| --- que \textbf{contraria a norma}: a \mbox{NBR~6027} tira
+% os elementos pré-textuais do sumário, e o sumário modelo do Manual começa na
+% introdução. Ela existe para o Programa que exija o contrário.
 %
 % \textbf{Quais são obrigatórias.} Só o \textbf{sumário}. O Manual põe o
 % sumário entre os elementos essenciais (3.1.2.1.6) e todas as listas entre os
@@ -1680,7 +1729,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % Dois detalhes do Manual. Na 3.1.2.2.4, quando for necessário, faz-se ``uma lista
 % para cada tipo de ilustração'' --- desenhos, gráficos, mapas, quadros ---, que é
 % o que |\newcoppefloat| oferece. Na 3.1.2.2.6, ``recomenda-se a elaboração de
-% listas separadas'' de abreviaturas e de siglas; a classe as reúne numa só.
+% listas separadas'' de abreviaturas e de siglas, que é o que |\makeloacronyms|
+% faz; sem ele, a classe as reúne numa só.
 % Na parte pós-textual, só as \textbf{referências} são obrigatórias; glossário,
 % apêndice, anexo e índice são opcionais (3.1.4).
 %
@@ -1837,6 +1887,56 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % Depois de cada um, os |\chapter| passam a ser numerados por letra e o título
 % sai centralizado. A numeração das folhas continua a do texto principal, sem
 % interrupção, como a 2.7 exige.
+%
+% \section{Glossário e índice}\label{sec:glossarioindice}
+%
+% Os dois são opcionais (3.1.4). O \textbf{glossário} vem logo depois das
+% referências; o \textbf{índice} é o último elemento do trabalho, depois dos
+% anexos. Esta seção dá o caso mais comum: os dois montados pela classe a
+% partir de marcas no texto. As outras formas --- escritos à mão, vários
+% índices, títulos pela \mbox{NBR~6034} --- estão no capítulo ``Referências
+% cruzadas, notas, glossário e índice'' do |max-exemplo.tex|, com o código, e
+% no capítulo ``Glossário e índice'' do |manual.pdf|.
+%
+% \DescribeMacro{\makeglossarylist}
+% \DescribeMacro{\glossaryterm}
+% \DescribeMacro{\printglossarylist}
+% \textbf{Glossário.} |\makeglossarylist| no preâmbulo;
+% |\glossaryterm{termo}{definição}| onde o termo aparece, sem imprimir nada;
+% |\printglossarylist| depois de |\printbibliography|. Os termos saem em ordem
+% alfabética, com os acentos no lugar certo, sob o título ``Glossário'' e com
+% entrada no sumário. O argumento opcional é a chave de ordenação:
+% |\glossaryterm[PDFA]{PDF/A}{...}|. Para escrever o glossário à mão, dispense os
+% três comandos e use o ambiente |theglossary|, com um |\item[termo]| por
+% entrada.
+%
+% \begin{verbatim}
+%   \makeglossarylist
+%   ...
+%   A mancha gráfica\glossaryterm{Mancha gráfica}{a área ocupada pelo texto.}
+%   ...
+%   \printbibliography
+%   \printglossarylist
+% \end{verbatim}
+%
+% \DescribeMacro{\index}
+% \DescribeMacro{\printindex}
+% \textbf{Índice.} |\usepackage{makeidx}\makeindex| no preâmbulo, |\index{termo}|
+% no texto e |\printindex| no fim. Subentrada é |\index{termo!sub}|; as
+% remissivas ``ver'' e ``ver também'' são \verb!\index{a|see{b}}! e
+% \verb!\index{a|seealso{b}}!. A classe dá a cada entrada acentuada uma chave sem
+% acento, e ``ação'' fica antes de ``acaso'' --- o |makeindex|, sozinho, poria
+% toda palavra acentuada depois do ``z''. Uma chave escrita pelo autor,
+% |\index{LaTeX@\LaTeX}|, sempre vence. Vale também com o |imakeidx|, que dá mais
+% de um índice. A \mbox{NBR~6034} pede que o título diga a função do índice: troque
+% o padrão com |\renewcommand{\indexname}{Índice de Assuntos}| antes de
+% |\printindex|.
+%
+% \textbf{Quem monta.} O glossário, o índice e as listas de abreviaturas, siglas
+% e símbolos passam pelo |makeindex|. A classe o roda sozinha no fim de cada
+% compilação (seção~\ref{sec:makeindexauto}), e por isso eles aparecem a partir
+% da segunda compilação em qualquer editor; o |latexmk| e o Overleaf também o
+% rodam. A opção |semmakeindex| desliga isso.
 %
 % \section{Os pacotes que a classe carrega}\label{sec:pacotes}
 %
@@ -2465,50 +2565,55 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \begin{tabular}{@{}lll@{}}
 % \textbf{Recurso} & \textbf{Comando} & \textbf{Linha} \\
 % \hline
-% Opções de classe        & |\documentclass|        & 16 \\
-% Base de referências        & |\addbibresource|       & 63 \\
-% Coleta da lista de símbolos& |\makelosymbols|        & 66 \\
-% Coleta das abreviaturas      & |\makeloabbreviations|  & 67 \\
-% Flutuante criado pelo autor  & |\newcoppefloat|        & 73 \\
-% Título                     & |\title|                & 82 \\
-% Título no estrangeiro      & |\foreigntitle|         & 83 \\
-% Autor                        & |\author|               & 87 \\
-% Orientação              & |\advisor|              & 91 \\
-% Coorientação            & |\coadvisor|            & 99 \\
-% Banca                        & |\examiner|             & 105 \\
-% Programa                     & |\department|           & 112 \\
-% Data do depósito           & |\date|                 & 113 \\
-% Data da defesa               & |\approvaldate|        & 116 \\
-% Palavras-chave               & |\keyword|              & 122 \\
-% Área de concentração  & |\concentrationarea|     & 132 \\
-% Linha de pesquisa            & |\researchline|        & 133 \\
-% Coleta CAPES                 & |\productiontype|         & 134 \\
-% Projeto vinculado            & |\linkedproject|     & 135 \\
-% Nome do projeto              & |\projectname|          & 136 \\
-% Agência de fomento         & |\fundingagency|       & 137 \\
-% Ficha catalográfica        & |\catalogcard|   & 143 \\
-% Capa e folha de rosto        & |\maketitle|            & 145 \\
-% Parte pré-textual          & |\frontmatter|          & 147 \\
-% Dedicatória                & |\dedication|           & 148 \\
+% Opções de classe        & |\documentclass|        & 22 \\
+% Base de referências        & |\addbibresource|       & 94 \\
+% Coleta da lista de símbolos& |\makelosymbols|        & 97 \\
+% Coleta das abreviaturas      & |\makeloabbreviations|  & 98 \\
+% Flutuante criado pelo autor  & |\newcoppefloat|        & 104 \\
+% Título                     & |\title|                & 113 \\
+% Título no estrangeiro      & |\foreigntitle|         & 114 \\
+% Autor                        & |\author|               & 118 \\
+% Orientação              & |\advisor|              & 122 \\
+% Coorientação            & |\coadvisor|            & 130 \\
+% Banca                        & |\examiner|             & 136 \\
+% Programa                     & |\department|           & 143 \\
+% Data do depósito           & |\date|                 & 144 \\
+% Data da defesa               & |\approvaldate|        & 147 \\
+% Palavras-chave               & |\keyword|              & 153 \\
+% Área de concentração  & |\concentrationarea|     & 163 \\
+% Linha de pesquisa            & |\researchline|        & 164 \\
+% Coleta CAPES                 & |\productiontype|         & 165 \\
+% Projeto vinculado            & |\linkedproject|     & 166 \\
+% Nome do projeto              & |\projectname|          & 167 \\
+% Agência de fomento         & |\fundingagency|       & 168 \\
+% Ficha catalográfica        & |\catalogcard|   & 174 \\
+% Capa e folha de rosto        & |\maketitle|            & 176 \\
+% Parte pré-textual          & |\frontmatter|          & 178 \\
+% Dedicatória                & |\dedication|           & 179 \\
 % Resumo                       & |abstract|              & 112 \\
 % Abstract                     & |foreignabstract|       & 128 \\
 % Listas pré-textuais        & |\listoffigures| \dots  & 146 \\
-% Sumário                    & |\tableofcontents|      & 196 \\
-% Parte textual                & |\mainmatter|           & 221 \\
-% Símbolo                    & |\symbl|                & 289 \\
+% Sumário                    & |\tableofcontents|      & 233 \\
+% Parte textual                & |\mainmatter|           & 258 \\
+% Símbolo                    & |\symbl|                & 326 \\
 % Citação longa           & |longquote|             & 236 \\
-% Fonte da ilustração     & |\source|               & 379 \\
+% Fonte da ilustração     & |\source|               & 416 \\
 % Quadro                       & |quadro|                & 300 \\
-% Bibliografia                 & |\printbibliography|    & 870 \\
-% Código no texto            & |\pythoninline|         & 1018 \\
-% Código Java no texto       & |\javainline|           & 1055 \\
-% Sigla declarada              & |\defineacronym|             & 1245 \\
-% Sigla usada                  & |\useacronym|                & 1248 \\
-% Abreviatura                  & |\abbrev|               & 1237 \\
-% Parte pós-textual          & |\backmatter|           & 1252 \\
-% Apêndices                  & |\appendix|             & 1272 \\
-% Anexos                       & |\annex|                & 1282 \\
-% Colófon                    & |\coppetexfinalpage|    & 1297 \\
+% Bibliografia                 & |\printbibliography|    & 906 \\
+% Código no texto            & |\pythoninline|         & 1054 \\
+% Código Java no texto       & |\javainline|           & 1091 \\
+% Sigla declarada              & |\defineacronym|             & 1429 \\
+% Sigla usada                  & |\useacronym|                & 1432 \\
+% Abreviatura                  & |\abbrev|               & 1421 \\
+% Parte pós-textual          & |\backmatter|           & 1438 \\
+% Apêndices                  & |\appendix|             & 1454 \\
+% Anexos                       & |\annex|                & 1466 \\
+% Glossário automático        & |\makeglossarylist|     & 56 \\
+% Termo do glossário          & |\glossaryterm|         & 52 \\
+% Glossário                    & |\printglossarylist|    & 53 \\
+% Entrada do índice            & |\index|                & 369 \\
+% Índice                       & |\printindex|           & 1328 \\
+% Colófon                    & |\coppetexfinalpage|    & 1485 \\
 % \end{tabular}
 % \end{center}
 %
@@ -2703,6 +2808,20 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % O |\ifPDFTeX| vem do |iftex|, que a classe já carrega.
 % \textbf{Nunca carregue \texttt{amssymb} junto com \texttt{unicode-math}}: os símbolos
 % ficariam repartidos entre duas codificações incompatíveis.
+%
+% \textbf{Os \emph{links}.}\label{sec:links} A classe carrega o
+% \texttt{hyperref}: o sumário, as referências cruzadas, as citações e as URLs
+% são clicáveis, e o leitor de PDF mostra os capítulos no painel de
+% marcadores. Por padrão os \emph{links} \textbf{não têm destaque nenhum}: o
+% Manual quer o texto na cor preta (2.1b), e a moldura que o \texttt{hyperref}
+% desenha sozinho --- e que o \hologo{TeX}studio e o Foxit mostram --- só
+% atrapalha a leitura. Para vê-los:
+%
+% \begin{tabular}{@{}ll@{}}
+% |linkscommoldura| & moldura só na tela, que não sai impressa; \\
+% |linkscoloridos| & texto do \emph{link} em cor --- \textbf{contraria a 2.1(b)}; \\
+% |\hypersetup{...}| & no preâmbulo, para escolher cor ou moldura à mão. \\
+% \end{tabular}
 %
 % \textbf{Metadados do PDF.} Autor, título, assunto e palavras-chave são
 % preenchidos pelo |\maketitle|, a partir dos dados que você já informou. Você
@@ -3035,7 +3154,10 @@ numbers   & [dsc,numbers]   & \pre & Numeric citations \texttt{[1]} instead of a
 pdfa      & [dsc,pdfa]      & \pre & PDF/A-2b output, required for deposit (2.2d): the deposit is digital only, and PDF/A (ISO 19005) keeps the file self-contained --- embedded fonts, sRGB colour, XMP metadata, nothing external. Off by default; \texttt{max-exemplo.tex} turns it on, and turning it on early is recommended. Check with veraPDF. \\
 comserifa & [dsc,comserifa] & \pre & Serif family. Sans is the default since v4.1. \\
 semserifa & ---             & \pre & Accepted, does nothing. What it asked for became the default. \\
-semlinks  & [dsc,semlinks]  & \pre & Links lose colour and frame; they stay clickable. For printing. \\
+semlinks  & [dsc,semlinks]  & \pre & Accepted; confirms the default (links with no colour and no frame, still clickable). Wins over the two below. \\
+linkscommoldura & [dsc,linkscommoldura] & \pre & Framed links, on screen only (the frame is not printed). \\
+setavermelha & [dsc,setavermelha] & \pre & Red curved arrow at the start of a wrapped listing line. Black by default. \\
+linkscoloridos & [dsc,linkscoloridos] & \pre & Coloured link text. Against 2.1(b) of the UFRJ manual (black text): for on-screen reading copies, not for deposit. \\
 doublespacing & [dsc,doublespacing] & \pre & Double spacing instead of one-and-a-half (2.2c). \\
 twoside   & [dsc,twoside]   & \pre & Mirrored margins, for printing and binding. \\
 oneside   & [dsc,oneside]   & \pre & One-sided, 3\,cm left margin on every sheet. The default. \\
@@ -3044,11 +3166,12 @@ orientadorexamina & [dsc,orientadorexamina] & \pre & Accepted, no effect: the ad
 coorientador & [dsc,coorientador] & \pre & List coadvisors on the abstract pages too. \\
 rascunhoficha & [dsc,rascunhoficha] & \pre & Draft catalogue card while writing. \textbf{Never valid for deposit.} \\
 resumosemreferencia & [dsc,resumosemreferencia] & \pre & Drop the work's own reference from the top of the three abstracts. It is printed by default (3.1.2.1.4, Annexes E and F). \\
-listasnosumario & [dsc,listasnosumario] & \pre & Put the pre-textual lists back in the table of contents. \\
+listasnosumario & [dsc,listasnosumario] & \pre & Put the pre-textual lists in the table of contents. Against NBR 6027 and the UFRJ manual (3.1.2.1.6): use only if your Programa requires it. \\
 simbolosalfabeticos & [dsc,simbolosalfabeticos] & \pre & List of symbols in alphabetical order instead of order of appearance. \\
 assinaturas & ---           & \pre & Accepted, does nothing. Signature rules are gone: deposit is digital. \\
 numeraisromanos & [dsc,numeraisromanos] & \pre & Roman numerals on pre-textual sheets. \textbf{Against 2.7}; legacy only. \\
 morewrites & [dsc,morewrites] & \pre & A missing \texttt{morewrites} package becomes an error, not a warning. \\
+semmakeindex & [dsc,semmakeindex] & \pre & Do not run makeindex from the class. By default the class runs it at the end of each compilation (restricted shell escape is enough), so the lists and the index appear in any editor. \\
 semmorewrites & [dsc,semmorewrites] & \pre & Do not load \texttt{morewrites}. Saves about half a second per pdflatex pass (Overleaf free plan). Safe only without an index, several indexes, a glossary or nomenclature: the class stops with a clear error if the 16 streams run out. \\
 \midrule
 
@@ -3125,6 +3248,10 @@ brazilianabstract & \textbackslash begin\{brazilianabstract\} ... & \doc & Third
 \textbackslash printloabbreviations & \textbackslash printloabbreviations & \doc & List of abbreviations and acronyms. No page numbers (4.1.1). \\
 \textbackslash printlosiglas & \textbackslash printlosiglas & \doc & List of acronyms, when \texttt{\textbackslash makelosiglas} is on. \\
 \textbackslash printlosymbols & \textbackslash printlosymbols & \doc & List of symbols, in order of first appearance (3.1.2.2.7). \\
+\textbackslash makeglossarylist & \textbackslash makeglossarylist & \pre & The automatic glossary (3.1.4.2). Without it, write \texttt{theglossary} by hand. \\
+\textbackslash glossaryterm & \textbackslash glossaryterm[key]\{term\}\{definition\} & \doc & Registers a glossary term where it appears; prints nothing. Alphabetical, accents included. \\
+\textbackslash printglossarylist & \textbackslash printglossarylist & \doc & The glossary, right after \texttt{\textbackslash printbibliography}. \\
+\textbackslash index & \textbackslash index\{term!sub\textbar see\{other\}\} & \doc & Index entry (with \texttt{makeidx}). Accented entries get an unaccented sort key; \texttt{key@term} wins. \\
 \textbackslash acron & \textbackslash acron[key]\{UFRJ\}\{meaning\} & \doc & Registers an acronym; \texttt{\textbackslash sigla} uses it. \\
 \textbackslash tableofcontents & \textbackslash tableofcontents & \doc & The table of contents. Comes last of all the lists. \\
 \midrule
@@ -3188,14 +3315,22 @@ Problems: \url{https://github.com/COPPE-UFRJ/CoppeTeX/issues}
 % só o que é obrigatório.
 %    \begin{macrocode}
 %<*maxexemplo>
-\documentclass[dsc,pdfa]{coppe}
+%% !TeX program = pdflatex
+%% !TeX encoding = UTF-8
+%% !TeX spellcheck = pt_BR
+%% !BIB program = biber
+%% Com o latexmk funcionando (no Windows ele pede o Perl), troque a primeira
+%% linha por: % !TeX program = latexmk -pdf -synctex=1
+\documentclass[dsc,pdfa,setavermelha]{coppe}
 %% max-exemplo.tex -- tudo o que a classe oferece e o Manual prevê, inclusive o
 %% opcional. Para só o obrigatório, veja o min-exemplo.tex.
 %%
 %% Opções de classe que não cabem num documento só, porque escolhem uma entre
 %% várias: o tipo (msc, dsc, mscexam, dscexam, mscsem), o idioma (english,
 %% spanish, french, italian), numbers (citação numérica), comserifa,
-%% doublespacing, twoside, numeraisromanos, semlinks, listasnosumario,
+%% doublespacing, twoside, numeraisromanos, linkscommoldura, linkscoloridos
+%% (contra a 2.1b), listasnosumario (contra
+%% a norma: veja o comentário antes das listas),
 %% semorientadornabanca, coorientador, resumosemreferencia, rascunhoficha,
 %% simbolosalfabeticos, semmorewrites. O manual da classe descreve cada uma.
 %%
@@ -3203,6 +3338,9 @@ Problems: \url{https://github.com/COPPE-UFRJ/CoppeTeX/issues}
 %%  - pdfa: gera o arquivo em PDF/A-2b, o formato que o depósito exige (Manual
 %%    2.2d). Este exemplo o liga desde a primeira linha; a razão está na seção
 %%    "O arquivo de depósito: PDF/A", no capítulo de regras da COPPE.
+%%  - setavermelha: nas listagens de programa, a linha longa demais quebra
+%%    sozinha e continua embaixo depois de uma seta curva; por padrão ela é
+%%    preta, e esta opção a deixa vermelha.
 %%  - semmorewrites: não carrega o pacote morewrites. Compila meio segundo mais
 %%    rápido por passada, mas só serve a trabalho SEM índice remissivo, sem
 %%    vários índices e sem glossário, e com menos listas que este exemplo, que
@@ -3212,7 +3350,27 @@ Problems: \url{https://github.com/COPPE-UFRJ/CoppeTeX/issues}
 \usepackage{rotating}        % rodando coisas, como tabelas
 \usepackage[most]{tcolorbox} % caixas de texto
 \usepackage{tikz}            % gráficos vetoriais (o tcolorbox já o traz)
-\usepackage{makeidx}\makeindex % índice remissivo (3.1.4.5), no fim do trabalho
+\usepackage{makeidx}\makeindex % índice (3.1.4.5), no fim do trabalho
+%% Glossário automático (3.1.4.2): os termos marcados com \glossaryterm no texto
+%% saem em ordem alfabética onde estiver \printglossarylist. Para escrevê-lo à
+%% mão, apague esta linha e use o ambiente theglossary. Ver o capítulo
+%% "Referências cruzadas, notas, glossário e índice".
+\makeglossarylist
+%% Teoremas, definições, lemas e corolários (capítulo de matemática). O amsthm
+%% dá os ambientes e a demonstração (proof), que sai como "Demonstração" em
+%% português e termina com o quadradinho. Os três estilos: plain (enunciado em
+%% itálico), definition e remark (em texto normal).
+\usepackage{amsthm}
+\theoremstyle{plain}
+\newtheorem{theorem}{Teorema}[chapter]
+\newtheorem{lemma}[theorem]{Lema}
+\newtheorem{corollary}[theorem]{Corolário}
+\newtheorem{proposition}[theorem]{Proposição}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definição}
+\newtheorem{example}[theorem]{Exemplo}
+\theoremstyle{remark}
+\newtheorem*{remark}{Observação}
 
 %% Fontes matemáticas: a escolha é SUA, não da classe. A classe carrega só o
 %% amsmath (ambientes e comandos), e nenhuma fonte de símbolos. O bloco abaixo
@@ -3255,11 +3413,11 @@ Problems: \url{https://github.com/COPPE-UFRJ/CoppeTeX/issues}
 
 
 \begin{document}
-  \title{Título da Tese}
-  \foreigntitle{Thesis Title}
+  \title{Título do Trabalho}
+  \foreigntitle{Title of the Work}
   % Subtítulo, se houver (3.1.2.1.1c): sai depois do título, com dois-pontos.
-  \subtitle{Subtítulo, se Houver}
-  \foreignsubtitle{Subtitle, if Any}
+  \subtitle{um exemplo máximo de uso do CoppeTeX}
+  \foreignsubtitle{a maximal example of use of CoppeTeX}
   \author{Nome do Autor}{Sobrenome}
   % Orientador: nome, sobrenome, titulacao e instituicao. O tratamento
   % ("Prof.") e o argumento OPCIONAL entre colchetes e vem vazio por padrao --
@@ -3367,6 +3525,12 @@ Problems: \url{https://github.com/COPPE-UFRJ/CoppeTeX/issues}
 
   % Ordem pré-textual (Manual 3.1.2.1.6): as listas ANTES do sumário, e o
   % sumário por último.
+  %
+  % As listas NÃO entram no sumário: a NBR 6027 tira dele os elementos
+  % pré-textuais, e o sumário modelo do Manual começa em "1 INTRODUÇÃO". A
+  % opção de classe listasnosumario as põe lá, mas CONTRARIA A NORMA; use-a só
+  % se o seu Programa exigir. Referências, glossário, apêndices, anexos e
+  % índice, que são pós-textuais, entram no sumário de qualquer forma.
   %
   % O que é obrigatório e o que é opcional:
   %  - \tableofcontents ........ OBRIGATÓRIO (Manual 3.1.2.1.6);
@@ -3511,7 +3675,7 @@ Texto da seção quinária, escrita com \verb|\paragraph|. Este é o único \ver
 
   Em todo caso, \textbf{deve se tomar enorme atenção com as citações, para evitar ocorrer em plágio não intencional}.\index{citação}\index{plágio}
 
-  Para uma citação curta no meio do parágrafo, \verb|\enquote| põe as aspas do idioma do trabalho: \enquote{a imaginação é mais importante que o conhecimento}. O mesmo comando existe em português, \verb|\citacao|.\index{citação!curta}
+  Para uma citação curta no meio do parágrafo, \verb|\enquote| põe as aspas do idioma do trabalho: \enquote{a imaginação é mais importante que o conhecimento}. O mesmo comando existe em português, \verb|\citacao|.\index{citação!curta}\index{LaTeX@\LaTeX!citação}
 
   Quando se cita uma obra por meio de outra (\textit{apud}), pela ABNT entra na lista de referências \emph{apenas a obra efetivamente consultada}. A obra original (não consultada) é informada como texto e \emph{não} é referenciada. Use \verb*|\citetapud{autor}{ano}{chave}|, como em \citetapud{Drumond}{1953}{article-example}, ou a forma entre parênteses \verb*|\citepapud|, como em \citepapud[145]{Drumond}{1953}{article-example}. Note que, nas Referências, aparece somente a obra consultada.
 
@@ -3520,7 +3684,7 @@ Texto da seção quinária, escrita com \verb|\paragraph|. Este é o único \ver
 
 Este exemplo é compilado com a opção \verb|pdfa| da classe, logo na primeira linha:
 \begin{verbatim}
-\documentclass[dsc,pdfa]{coppe}
+\documentclass[dsc,pdfa,setavermelha]{coppe}
 \end{verbatim}
 Com ela, o arquivo sai em \textbf{PDF/A-2b}. Esta seção explica o que isso é, por que a COPPE exige, o que a classe faz e o que pode dar errado.
 
@@ -3766,18 +3930,17 @@ Se a tabela for muito longa, o ambiente \verb|longtable| é o ideal. Ele fornece
 \caption{Exemplo de Tabela Longa}\label{tab:longa} \\
 \hline \textbf{Col. 1} & \textbf{Col. 2} & \textbf{Col. 3} \\ \hline
 \endfirsthead
-%% cabeçalho normal
-\multicolumn{3}{c}%
-{{\tablename\ \thetable{} -- continuação da página anterior}} \\
+%% cabeçalho das folhas seguintes: repete o número e diz que a tabela continua
+%% de antes. Os termos (continua), (continuação) e (conclusão) são os das
+%% Normas de Apresentação Tabular do IBGE, que o Manual segue para as tabelas.
+\multicolumn{3}{r}{{\tablename\ \thetable{} (continuação)}} \\
 \hline \textbf{Col. 1} & \textbf{Col. 2} & \textbf{Col. 3} \\ \hline
 \endhead
-%% pé normal
-\hline \multicolumn{3}{|r|}{{Continua na próxima página}} \\ \hline
+%% pé das folhas em que a tabela não acaba
+\hline \multicolumn{3}{r}{{(continua)}} \\
 \endfoot
-\hline
-%% último pé
-\multicolumn{3}{|r|}{{Continua na próxima página}}\\
-\hline \hline
+%% pé da última folha: o fim da tabela
+\hline \multicolumn{3}{r}{{(conclusão)}} \\
 \endlastfoot
 
 %% Conteúdo da tabela
@@ -4320,6 +4483,76 @@ $i \leftarrow 1$\;
           $\diag(\lambda_1,\lambda_2)$.
   \end{itemize}
 
+  \section{Teoremas, definições e demonstrações (amsthm)}
+  \label{sec:teoremas}
+  \index{teorema}\index{demonstração}\index{lema}\index{corolário}\index{definição}
+
+  O pacote \texttt{amsthm} cria os ambientes de enunciado. Cada tipo é declarado uma vez no preâmbulo, com \verb|\newtheorem|, e usado como qualquer ambiente; os que dividem o contador (\verb|[theorem]|) seguem uma numeração só por capítulo, que é o que facilita achar ``o Lema~7.2''. O exemplo abaixo é a desigualdade de Cauchy--Schwarz, com a desigualdade triangular como consequência.
+
+  \begin{definition}[Produto interno e norma]\label{def:norma}
+    Para $\mathbf{x} = (x_1, \ldots, x_n)$ e $\mathbf{y} = (y_1, \ldots, y_n)$ em $\mathbb{R}^n$, o \emph{produto interno} e a \emph{norma euclidiana} são
+    \begin{equation}\label{eq:norma}
+      \langle \mathbf{x}, \mathbf{y} \rangle = \sum_{i=1}^{n} x_i y_i
+      \qquad\text{e}\qquad
+      \lVert \mathbf{x} \rVert = \sqrt{\langle \mathbf{x}, \mathbf{x} \rangle}.
+    \end{equation}
+  \end{definition}
+
+  \begin{lemma}\label{lem:expansao}
+    Para quaisquer $\mathbf{x}, \mathbf{y} \in \mathbb{R}^n$ e $t \in \mathbb{R}$,
+    \begin{equation}\label{eq:expansao}
+      \lVert \mathbf{x} + t\mathbf{y} \rVert^2
+      = \lVert \mathbf{x} \rVert^2 + 2t \langle \mathbf{x}, \mathbf{y} \rangle + t^2 \lVert \mathbf{y} \rVert^2 .
+    \end{equation}
+  \end{lemma}
+
+  \begin{proof}
+    Pela Definição~\ref{def:norma}, o produto interno é simétrico e linear em cada argumento. Então
+    $\langle \mathbf{x} + t\mathbf{y}, \mathbf{x} + t\mathbf{y} \rangle
+    = \langle \mathbf{x}, \mathbf{x} \rangle + 2t \langle \mathbf{x}, \mathbf{y} \rangle + t^2 \langle \mathbf{y}, \mathbf{y} \rangle$.
+  \end{proof}
+
+  \begin{theorem}[Cauchy--Schwarz]\label{teo:cauchy}
+    Para quaisquer $\mathbf{x}, \mathbf{y} \in \mathbb{R}^n$,
+    \begin{equation}\label{eq:cauchy}
+      \lvert \langle \mathbf{x}, \mathbf{y} \rangle \rvert \le \lVert \mathbf{x} \rVert \, \lVert \mathbf{y} \rVert .
+    \end{equation}
+  \end{theorem}
+
+  \begin{proof}
+    Se $\mathbf{y} = \mathbf{0}$, os dois lados de \eqref{eq:cauchy} valem zero. Se $\mathbf{y} \ne \mathbf{0}$, o lado direito de \eqref{eq:expansao} é um polinômio de segundo grau em $t$ que nunca é negativo, porque é o quadrado de uma norma. Logo o seu discriminante não é positivo:
+    \[
+      \bigl(2 \langle \mathbf{x}, \mathbf{y} \rangle\bigr)^2 - 4 \lVert \mathbf{y} \rVert^2 \lVert \mathbf{x} \rVert^2 \le 0,
+      \quad\text{isto é,}\quad
+      \langle \mathbf{x}, \mathbf{y} \rangle^2 \le \lVert \mathbf{x} \rVert^2 \lVert \mathbf{y} \rVert^2 ,
+    \]
+    e basta tirar a raiz quadrada dos dois lados.
+  \end{proof}
+
+  \begin{corollary}[Desigualdade triangular]\label{cor:triangular}
+    Para quaisquer $\mathbf{x}, \mathbf{y} \in \mathbb{R}^n$, vale
+    $\lVert \mathbf{x} + \mathbf{y} \rVert \le \lVert \mathbf{x} \rVert + \lVert \mathbf{y} \rVert$.
+  \end{corollary}
+
+  \begin{proof}
+    Pelo Lema~\ref{lem:expansao} com $t = 1$ e pelo Teorema~\ref{teo:cauchy},
+    \[
+      \lVert \mathbf{x} + \mathbf{y} \rVert^2
+      = \lVert \mathbf{x} \rVert^2 + 2 \langle \mathbf{x}, \mathbf{y} \rangle + \lVert \mathbf{y} \rVert^2
+      \le \lVert \mathbf{x} \rVert^2 + 2 \lVert \mathbf{x} \rVert \lVert \mathbf{y} \rVert + \lVert \mathbf{y} \rVert^2
+      = \bigl(\lVert \mathbf{x} \rVert + \lVert \mathbf{y} \rVert\bigr)^2 ,
+    \]
+    e os dois lados são não negativos, então a desigualdade vale também para as raízes.
+  \end{proof}
+
+  \begin{example}
+    Com $\mathbf{x} = (1, 2)$ e $\mathbf{y} = (3, 4)$: $\langle \mathbf{x}, \mathbf{y} \rangle = 1 \cdot 3 + 2 \cdot 4 = 11$, $\lVert \mathbf{x} \rVert = \sqrt{5}$ e $\lVert \mathbf{y} \rVert = 5$. O Teorema~\ref{teo:cauchy} dá $11 \le 5\sqrt{5} \approx 11{,}18$. Como $\mathbf{x} + \mathbf{y} = (4, 6)$, o Corolário~\ref{cor:triangular} dá $\sqrt{52} \approx 7{,}21 \le \sqrt{5} + 5 \approx 7{,}24$.
+  \end{example}
+
+  \begin{remark}
+    A igualdade em \eqref{eq:cauchy} vale se, e somente se, um dos vetores é múltiplo do outro. Nas referências a estes ambientes, escreva o nome à mão, com \verb|\ref|: \verb|Lema~\ref{lem:expansao}|. O \verb|\autoref| tira o nome do \emph{contador}, e aqui todos dividem o do teorema --- um lema sairia ``Teorema''.
+  \end{remark}
+
   \section{Unicode e LuaLaTeX (unicode-math)}
   \label{sec:unicode-math}
   Ao migrar para \hologo{LuaLaTeX} (ou \hologo{XeLaTeX}), \textbf{não carregue} \texttt{amssymb}: ele é o pacote AMS legado, escrito para as fontes Type~1 de 8~bits (\texttt{msam}/\texttt{msbm}), e colide com \texttt{unicode-math} -- o pacote moderno que controla a fonte matemática OpenType. Por isso o preâmbulo deste exemplo escolhe um ou outro pelo motor, com \verb|\ifPDFTeX| (do pacote \texttt{iftex}, que a classe já carrega):
@@ -4333,32 +4566,106 @@ $i \leftarrow 1$\;
   \end{verbatim}
   O código clássico continua valendo ($\mathbb{R}$, $\int_a^b f(x)\,dx$, $\alpha$) e você ainda pode digitar os próprios símbolos Unicode no editor. A vantagem é que o PDF passa a indexar os símbolos em Unicode real: ao copiar uma fórmula do PDF, o significado dos símbolos é preservado.
 
-  \chapter{Referências cruzadas, notas e índices}
+  \chapter{Referências cruzadas, notas, glossário e índice}
   \label{cap:refs}
 
-  Este capítulo reúne os recursos para \emph{apontar} para coisas: rótulos, notas de rodapé, hyperlinks, URLs e índices. (Para a bibliografia, veja o Capítulo~\ref{cap:biblatex}.)
+  Este capítulo reúne os recursos para \emph{apontar} para coisas: rótulos, notas de rodapé, hyperlinks, URLs, o glossário e o índice. (Para a bibliografia, veja o Capítulo~\ref{cap:biblatex}.)
 
   \section{Rótulos e referências cruzadas}
+  \index{referência cruzada}
 
   Marque um elemento com \verb|\label{tipo:nome}| e aponte para ele com \verb|\ref| (só o número), \verb|\autoref| (tipo + número, p.\,ex.\ ``Figura 4.1'') ou \verb|\pageref| (a página). O número vem do contador do elemento \emph{no momento} do \verb|\label|; por isso o \verb|\label| deve vir logo após o \verb|\caption| (em floats) ou o título da seção. Adote prefixos por tipo: \verb|cap:|, \verb|sec:|, \verb|fig:|, \verb|tab:|, \verb|eq:|. Por exemplo, este é o \autoref{cap:refs} e a \autoref{fig:tikz} está no capítulo de floats.
 
   \section{Notas de rodapé}
+  \index{nota de rodapé}
 
   Use \verb|\footnote{texto}|\footnote{Como esta nota, que a classe imprime em espaçamento simples.}. Para repetir a marca sem renumerar, use \verb|\footnotemark| e \verb|\footnotetext|.
 
   \section{hyperref e marcadores}
+  \index{hyperref}\index{link|see{hyperref}}
 
-  A classe carrega o \verb|hyperref|: o sumário, as citações e os \verb|\ref|/\verb|\autoref| viram \emph{links} clicáveis e o leitor de PDF ganha um painel de \emph{bookmarks} (navegação por capítulos). Não é preciso configurar nada; para mudar a cor dos links, use \verb|\hypersetup{...}| no preâmbulo. Para tirar a cor e a moldura de todos eles de uma vez --- útil para quem vai imprimir --- passe a opção de classe \verb|semlinks|; os links continuam clicáveis e os \emph{bookmarks} continuam no painel.
+  A classe carrega o \verb|hyperref|: o sumário, as citações e os \verb|\ref|/\verb|\autoref| viram \emph{links} clicáveis e o leitor de PDF ganha um painel de \emph{bookmarks} (navegação por capítulos). Não é preciso configurar nada. Por padrão os links \textbf{não têm destaque}: nem cor, nem moldura, porque o Manual quer o texto na cor preta (2.1b). Para vê-los, há duas opções de classe: \verb|linkscommoldura| desenha uma moldura que aparece só na tela e não sai impressa; \verb|linkscoloridos| pinta o texto dos links, o que \textbf{contraria a 2.1(b)} e serve só para a versão de leitura, não para o depósito. Para escolher as cores à mão, use \verb|\hypersetup{...}| no preâmbulo, que vence as opções.
 
   \section{URLs}
+  \index{URL|see{endereço eletrônico}}\index{endereço eletrônico}
 
   Para endereços, use \verb|\url{https://exemplo.org}|: o \verb|hyperref| cria o link e quebra a URL no fim da linha. Para um texto-âncora,
 use \verb|\href{https://exemplo.org}{texto}|. Evite digitar URLs como texto comum --- elas não quebram e estouram a margem.
 
-  \section{Índice remissivo}
-  \index{índice remissivo}
+  \section{Glossário}
+  \label{sec:glossario}
+  \index{glossário|(}
 
-  Marque os termos com \verb|\index{termo}| e imprima o índice com \verb|\printindex| (carregue \verb|makeidx| e use \verb|\makeindex| no preâmbulo). O índice é montado pelo programa \verb|makeindex|. Como as listas de abreviaturas e símbolos também usam \verb|makeindex| (com o estilo \verb|coppe.ist|), o mais prático é deixar o \verb|latexmk| rodar tudo (veja o \texttt{latexmkrc}). Atenção: o \verb|latexmk| é um script \emph{Perl} --- no Windows, instale o \emph{Strawberry Perl}; no Linux e no macOS o Perl já costuma vir instalado. Para vários índices, use \verb|imakeidx| ou \verb|index|.
+  O glossário é a ``relação de palavras ou expressões técnicas de uso restrito ou de sentido obscuro, utilizadas no texto, acompanhadas das respectivas definições'' (Manual, 3.1.4.2). É \textbf{opcional}, vem \textbf{depois das referências} e sai em ordem alfabética. A classe oferece duas formas de fazê-lo; este exemplo usa a automática.
+
+  \textbf{Forma automática (recomendada).} Três comandos:
+  \begin{verbatim}
+  \makeglossarylist                  % no preâmbulo
+  ...
+  A \emph{mancha gráfica}\glossaryterm{Mancha gráfica}{a área da folha
+    ocupada pelo texto, dentro das margens.} é ...
+  ...
+  \printbibliography
+  \printglossarylist                 % logo depois das referências
+  \end{verbatim}
+  Cada \verb|\glossaryterm{termo}{definição}| registra o termo onde ele aparece, sem imprimir nada no texto. A classe junta os termos, põe em ordem alfabética --- acentos incluídos: ``Árvore'' vem antes de ``Bola'' --- e a lista sai com o título ``Glossário'' e entrada no sumário. Um termo registrado duas vezes com a mesma definição sai uma vez só. Para mudar a posição de um termo na ordem, dê uma chave entre colchetes: \verb|\glossaryterm[PDFA]{PDF/A}{...}|. Os termos deste exemplo estão registrados aqui mesmo: o \emph{fólio}\glossaryterm{Fólio}{o número da folha, impresso no canto superior direito.}, a \emph{mancha gráfica}\glossaryterm{Mancha gráfica}{a área da folha ocupada pelo texto, dentro das margens.} e o \emph{PDF/A}\glossaryterm[PDFA]{PDF/A}{o formato de PDF para preservação de longo prazo, exigido no depósito (2.2d).}.
+
+  \textbf{Forma manual.} Sem \verb|\makeglossarylist|, escreva a lista você mesmo, no mesmo lugar, com o ambiente \verb|theglossary|. A aparência é a mesma; a ordem alfabética fica por sua conta:
+  \begin{verbatim}
+  \begin{theglossary}
+    \item[Fólio] o número da folha, impresso no canto superior direito.
+    \item[Mancha gráfica] a área da folha ocupada pelo texto.
+  \end{theglossary}
+  \end{verbatim}
+  A manual serve para um glossário curto, escrito de uma vez no fim; a automática, para o que cresce junto com o texto, em que é fácil esquecer um termo ou errar a ordem.
+  \index{glossário|)}
+
+  \section{Índice}
+  \label{sec:indice}
+  \index{índice|(}
+
+  O índice é a ``lista de palavras ou frases, ordenadas segundo um determinado critério, que localiza e remete para as informações contidas no texto'' (Manual, 3.1.4.5). É \textbf{opcional} e é o \textbf{último} elemento do trabalho, depois dos apêndices e dos anexos. Não confunda com o sumário, que vem antes do texto e lista as seções. A \mbox{NBR~6034}, que trata do índice, pede que ele seja ordenado por um critério declarado --- em geral o alfabético --- e que o \textbf{título diga a função}: ``Índice de Assuntos'', ``Índice Onomástico'' (de nomes), ``Índice Geográfico''. Por isso este exemplo troca o título padrão, ``Índice Remissivo'', por ``Índice de Assuntos''. Como no glossário, há duas formas.
+
+  \textbf{Forma automática (recomendada).} Carregue o \verb|makeidx| no preâmbulo, marque os termos no texto e imprima o índice no fim:
+  \begin{verbatim}
+  \usepackage{makeidx}\makeindex     % no preâmbulo
+  ...
+  \index{citação}                   % entrada simples
+  \index{citação!curta}             % subentrada, recuada sob "citação"
+  \index{URL|see{endereço eletrônico}}   % remissiva "ver"
+  \index{moral|seealso{ética}}      % remissiva "ver também"
+  \index{glossário|(} ... \index{glossário|)}   % intervalo: 31-33
+  \index{PDF/A|textbf}              % número da página em negrito
+  \index{LaTeX@\LaTeX}              % chave de ordenação própria
+  ...
+  \renewcommand{\indexname}{Índice de Assuntos}  % título pela função
+  \printindex                       % o último elemento
+  \end{verbatim}
+  O \verb|\index| não imprime nada no texto: registra a página em que está. Ponha-o colado à palavra, sem espaço antes, para que a página seja a da palavra e não a da linha seguinte. As remissivas ``ver'' e ``ver também'' são as que a \mbox{NBR~6034} prevê, e saem com as palavras do idioma do trabalho. A \textbf{ordem alfabética respeita os acentos}: a classe dá a cada entrada acentuada uma chave sem acento, e ``ação'' fica antes de ``acaso'', ``índice'' entre ``hyperref'' e ``lema''. Sem isso, o programa que monta o índice poria toda palavra acentuada depois do ``z''. Uma chave escrita por você, com \verb|@|, sempre vence: é o jeito de mandar ``\LaTeX'' para a letra L.
+
+  \textbf{Como o índice é montado.} Quem ordena as entradas é o programa \verb|makeindex|, que roda entre uma compilação e a seguinte. A classe o roda sozinha no fim de cada compilação, e por isso o índice aparece a partir da \textbf{segunda} compilação em qualquer editor --- \hologo{TeX}studio, \hologo{TeX}works, Overleaf. O \verb|latexmk| também o roda, pelo \texttt{latexmkrc}. Para rodá-lo à mão, é \verb|makeindex max-exemplo| e compilar de novo; a opção de classe \verb|semmakeindex| impede a classe de rodá-lo.
+
+  \textbf{Mais de um índice.} Um trabalho pode ter índice de assuntos e índice onomástico. O pacote \verb|imakeidx|, no lugar do \verb|makeidx|, dá um arquivo para cada um:
+  \begin{verbatim}
+  \usepackage{imakeidx}
+  \makeindex[title=Índice de Assuntos]
+  \makeindex[name=nomes, title=Índice Onomástico]
+  ...
+  \index{citação}  \index[nomes]{Vieira, Antônio}
+  ...
+  \printindex  \printindex[nomes]
+  \end{verbatim}
+  Cada índice a mais ocupa um fluxo de escrita; não use a opção \verb|semmorewrites| (\autoref{sec:morewrites}).
+
+  \textbf{Forma manual.} Um índice pequeno pode ser escrito à mão, com o ambiente \verb|theindex|, sem \verb|makeidx|. As páginas também ficam por sua conta, e mudam a cada revisão do texto --- por isso só vale para um índice de poucas entradas, fechado no fim:
+  \begin{verbatim}
+  \begin{theindex}
+    \item citação, 23
+      \subitem curta, 23
+    \item plágio, 23
+  \end{theindex}
+  \end{verbatim}
+  \index{índice|)}
 
   \section{Traduções (NBR 10520)}
 
@@ -4367,16 +4674,17 @@ use \verb|\href{https://exemplo.org}{texto}|. Evite digitar URLs como texto comu
   \chapter{Truques de \LaTeX}
 
   \section{Comentários mágicos (\texttt{\% !TeX})}
-  Linhas \verb|% !TeX| no topo do arquivo dizem ao editor (\hologo{TeX}studio, Overleaf, \hologo{TeX}works) como compilar. O padrão recomendado nesta classe:
+  Linhas \verb|% !TeX| no topo do arquivo dizem ao editor (\hologo{TeX}studio, \hologo{TeX}Shop) como compilar; o Overleaf não as lê e usa o compilador escolhido no menu. O padrão recomendado nesta classe:
   \begin{verbatim}
-  % !TeX program = lualatex
+  % !TeX program = pdflatex
   % !TeX encoding = UTF-8
   % !TeX spellcheck = pt_BR
   % !BIB program = biber
   \end{verbatim}
-  Com isso o documento compila igual em qualquer ambiente. O \texttt{latexmkrc} cumpre papel parecido para o \verb|latexmk|.
+  Quem tem o \verb|latexmk| funcionando (no Windows ele precisa do Perl) pode trocar a primeira linha por \verb|% !TeX program = latexmk -pdf -synctex=1|: o editor passa a rodar o \verb|biber|, o \verb|makeindex| e as passadas de uma vez, lendo o \texttt{latexmkrc} da pasta. Sem o \verb|latexmk|, não se preocupe: a classe roda o \verb|makeindex| sozinha no fim de cada compilação, e as listas e o índice aparecem a partir da segunda.
 
   \section{Espaço engolido}
+  \index{LaTeX@\LaTeX!espaço engolido}
   Um comando sem argumento engole o espaço seguinte: \verb|\LaTeX é bom| sai como ``\LaTeX é bom'' (coladinho). Para preservar o espaço use \verb|\LaTeX\ é| (barra-espaço), \verb|\LaTeX{} é| (chaves vazias) ou o pacote \verb|xspace| ao definir o comando (\verb|\newcommand\foo{...\xspace}|).
 
   \section{Escopo (grupos)}
@@ -4407,6 +4715,9 @@ use \verb|\href{https://exemplo.org}{texto}|. Evite digitar URLs como texto comu
   Se você desligar e os fluxos acabarem, a compilação para com a mensagem ``Acabaram os 16 fluxos de escrita do \TeX'', que diz o que fazer: tirar o \verb|semmorewrites| ou compilar com \hologo{LuaLaTeX}, que tem cento e vinte e oito fluxos e dispensa o pacote. O manual da classe discute o assunto em detalhe, com o custo de cada lista.
 
   \chapter{Método Proposto}
+
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
   \chapter{Resultados e Discussões}
 
   \section{Algumas Demonstrações}
@@ -4439,6 +4750,8 @@ use \verb|\href{https://exemplo.org}{texto}|. Evite digitar URLs como texto comu
 
   \chapter{Conclusões}
 
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
   \backmatter
 
   % Tipos exóticos da ABNT (NBR 6023): patente, legislação, norma, mapa,
@@ -4449,15 +4762,11 @@ use \verb|\href{https://exemplo.org}{texto}|. Evite digitar URLs como texto comu
   \nocite{jornalcaderno-example,jornal-example}
   \printbibliography
 
-  % Glossário (3.1.4.2), depois das referências: termos técnicos e seus
-  % significados, em ordem alfabética.
-  \begin{theglossary}
-    \item[Fólio] o número da folha, impresso no canto superior direito.
-    \item[Mancha gráfica] a área da folha ocupada pelo texto, dentro das
-      margens.
-    \item[PDF/A] o formato de PDF para preservação de longo prazo, exigido no
-      depósito (2.2d).
-  \end{theglossary}
+  % Glossário (3.1.4.2), depois das referências: os termos de \glossaryterm,
+  % em ordem alfabética. Para escrevê-lo à mão, tire \makeglossarylist do
+  % preâmbulo e troque esta linha pelo ambiente theglossary (veja a seção
+  % "Glossário" no capítulo de referências cruzadas).
+  \printglossarylist
 
 \appendix
 
@@ -4469,6 +4778,8 @@ Apêndice: O apêndice é um texto ou documento elaborado pelo autor do trabalho
 
 
 \chapter{Outro apêndice}
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
 \annex
 
@@ -4485,8 +4796,12 @@ No modelo \CoppeTeX os anexos devem obrigtoriamente vir depois dos apêndices e 
 
 \chapter{Outro Anexo}
 
-%% Índice remissivo (3.1.4.5), o último elemento pós-textual. Os termos são
-%% marcados no texto com \index; o makeindex monta o índice entre as passadas.
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+%% Índice (3.1.4.5), o último elemento do trabalho. Os termos são marcados no
+%% texto com \index; a classe roda o makeindex no fim de cada compilação. O
+%% título diz a função do índice, como pede a NBR 6034.
+\renewcommand{\indexname}{Índice de Assuntos}
 \printindex
 
 \coppetexfinalpage% colofão institucional (página par, face do contracapa)
@@ -4506,6 +4821,12 @@ No modelo \CoppeTeX os anexos devem obrigtoriamente vir depois dos apêndices e 
 % para quem prefere acrescentar a apagar.
 %    \begin{macrocode}
 %<*minexemplo>
+%% !TeX program = pdflatex
+%% !TeX encoding = UTF-8
+%% !TeX spellcheck = pt_BR
+%% !BIB program = biber
+%% Com o latexmk funcionando (no Windows ele pede o Perl), troque a primeira
+%% linha por: % !TeX program = latexmk -pdf -synctex=1
 \documentclass[dsc,pdfa]{coppe}
 %% min-exemplo.tex -- tudo o que a norma exige, e nada além disso.
 %%
@@ -4522,7 +4843,7 @@ No modelo \CoppeTeX os anexos devem obrigtoriamente vir depois dos apêndices e 
 %%  - \printbibliography .. referências, o único pós-textual obrigatório (3.1.4).
 %%
 %% O que NÃO está, por ser opcional: dedicatória, agradecimentos, epígrafe,
-%% todas as listas além do sumário, subtítulo, coorientador, linha de pesquisa,
+%% todas as listas além do sumário, coorientador, linha de pesquisa,
 %% glossário, apêndices, anexos e índice. Tudo isso está no max-exemplo.tex.
 
 \addbibresource{exemplo.bib}% a base de referências
@@ -4530,6 +4851,10 @@ No modelo \CoppeTeX os anexos devem obrigtoriamente vir depois dos apêndices e 
 \begin{document}
   \title{Título do Trabalho}
   \foreigntitle{Title of the Work}
+  % O subtítulo é opcional (3.1.2.1.1c); está aqui só para dar nome ao exemplo.
+  % Sai depois do título, com dois-pontos, e sem as maiúsculas do título.
+  \subtitle{um exemplo mínimo de uso do CoppeTeX}
+  \foreignsubtitle{a minimal example of use of CoppeTeX}
   \author{Nome do Autor}{Sobrenome}
   \advisor{Nome do Orientador}{Sobrenome}{D.Sc.}{UFRJ}
   % A composição da banca é regra do Programa, não da formatação.
@@ -5506,13 +5831,28 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \newif\if@coppeorientexam \@coppeorientexamtrue
 \DeclareOption{orientadorexamina}{\@coppeorientexamtrue}
 \DeclareOption{semorientadornabanca}{\@coppeorientexamfalse}
-% A classe carrega o hyperref e colore os links. Quem vai IMPRIMIR, ou quem
-% simplesmente prefere a pagina sobria, pedia isso a mao com \hypersetup no
-% preambulo -- que funciona, mas exige saber que a classe carrega o hyperref e
-% em que ordem. `semlinks' faz o mesmo sem exigir nada disso. Os links continuam
-% existindo e clicaveis; some so a cor e a moldura.
+% Os links. A classe carrega o hyperref, que sem opcao nenhuma desenha uma
+% MOLDURA em volta de cada link -- vermelha nas referencias internas, verde nas
+% citacoes, ciano nas URLs --, e o TeXstudio, o Foxit e o Acrobat a mostram.
+% O Manual (2.1b) quer o texto "digitado na cor preta, excecao para
+% ilustracoes": link colorido contraria a norma, e a moldura, que nao se
+% imprime, e ruido na tela. Por padrao, entao, nenhum destaque: os links
+% continuam clicaveis e os bookmarks continuam no painel.
+%   linkscommoldura -- a moldura do hyperref, so na tela (nao sai impressa);
+%   linkscoloridos  -- o texto do link em cor; contraria a 2.1(b);
+%   semlinks        -- era como se pedia o que agora e o padrao; aceita, e
+%                      vence as outras duas, como antes.
+% Um \hypersetup no preambulo continua vencendo tudo isto.
 \newif\if@coppesemlinks \@coppesemlinksfalse
 \DeclareOption{semlinks}{\@coppesemlinkstrue}
+\newif\if@coppelinksmoldura \@coppelinksmoldurafalse
+\DeclareOption{linkscommoldura}{\@coppelinksmolduratrue}
+\newif\if@coppelinkscor \@coppelinkscorfalse
+\DeclareOption{linkscoloridos}{\@coppelinkscortrue}
+% A seta curva que abre a continuacao de uma linha quebrada numa listagem:
+% preta por padrao, vermelha com `setavermelha'.
+\newif\if@coppesetavermelha \@coppesetavermelhafalse
+\DeclareOption{setavermelha}{\@coppesetavermelhatrue}
 \DeclareOption{assinaturas}{\ClassWarningNoLine{coppe}{A opcao `assinaturas'
   nao faz mais nada: a folha de aprovacao nao tem mais linhas de assinatura,
   porque a entrega e digital desde a Resolucao CEPG n. 246/2023}}
@@ -5626,6 +5966,10 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \newif\if@coppemwforced   \@coppemwforcedfalse
 \DeclareOption{morewrites}{\@coppemorewritestrue\@coppemwforcedtrue}
 \DeclareOption{semmorewrites}{\@coppemorewritesfalse}
+% O makeindex das listas e do indice, rodado pela propria classe no fim da
+% compilacao (ver \coppe@makeindexauto). `semmakeindex' desliga.
+\newif\if@coppemakeindex \@coppemakeindextrue
+\DeclareOption{semmakeindex}{\@coppemakeindexfalse}
 % A 2.2(b) fixa a cor, o corpo 12 e o corpo menor uniforme dos quatro itens
 % listados nela, e nao diz uma palavra sobre familia de fonte -- nem a Norma da
 % COPPE. A escolha e do autor. Desde a v4.1 o padrao da classe e a SEM SERIFA,
@@ -5768,6 +6112,12 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \@ifundefined{coppe@babelextra@\coppe@mainlang}{}{%
   \edef\coppe@babelload{\coppe@babelload\@nameuse{coppe@babelextra@\coppe@mainlang}}}
 \expandafter\RequirePackage\expandafter[\coppe@babelload]{babel}
+% As remissivas do indice. O babel-portuges da ao portugues do Brasil "veja" e
+% "veja tambem", e "ver"/"ver tambem" so ao de Portugal; a NBR 6034 usa "ver" e
+% "ver tambem". \addto, e nao \def: o babel refaz as legendas a cada troca de
+% idioma, e so o que esta dentro de \captionsbrazilian sobrevive.
+\@ifundefined{captionsbrazilian}{}{%
+  \addto\captionsbrazilian{\def\seename{ver}\def\alsoname{ver também}}}
 % --- Multilingual string dispatcher -----------------------------------------
 %    \end{macrocode}
 %
@@ -6012,7 +6362,13 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \RequirePackage{fancyvrb}
 \DeclareFixedFont{\ttb}{T1}{txtt}{bx}{n}{10}
 \DeclareFixedFont{\ttm}{T1}{txtt}{m}{n}{10}
+% breaklines vale para TODA listagem, e nao so para as dos estilos de
+% linguagem abaixo: um lstlisting sem estilo, com uma linha mais larga que a
+% mancha, estourava a margem. A linha quebrada continua embaixo, depois da
+% seta curva (\coppe@lstarrow, montada mais adiante; preta, ou vermelha com
+% `setavermelha').
 \lstset{captionpos=t,extendedchars=true,basicstyle=\ttfamily,inputencoding=utf8,%
+  breaklines=true,postbreak=\usebox\coppe@lstarrow,%
   literate=%
   {ã}{{\~{a}}}1 {á}{{\'{a}}}1 {â}{{\^{a}}}1 {à}{{\`{a}}}1 {é}{{\'{e}}}1%
   {è}{{\`{e}}}1 {ê}{{\^{e}}}1 {î}{{\^{i}}}1 {í}{{\'{i}}}1 {ô}{{\^{o}}}1%
@@ -6032,7 +6388,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \@mkboth{\MakeUppercase\lstlistlistingname}{\MakeUppercase\lstlistlistingname}%
   \@starttoc{lol}}
 % Per-language styles + environments (python, java, xml, html, prolog).
-% The red hook that marks a wrapped line is built ONCE, into a box, and the
+% The hook that marks a wrapped line is built ONCE, into a box, and the
 % styles below insert the box. Writing the colour inline -- postbreak=\mbox{%
 % \textcolor{red}{$\hookrightarrow$}\space} -- worked for years and broke the
 % moment the pdfa option was switched on: pdfx puts xcolor into a converting
@@ -6046,7 +6402,11 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % The \sbox waits for \begin{document} because xcolor's colours are not
 % defined while the class is still loading.
 \newsavebox\coppe@lstarrow
-\AtBeginDocument{\sbox\coppe@lstarrow{\textcolor{red}{$\hookrightarrow$}\space}}
+% Black by default; red with the `setavermelha' option -- the same
+% \textcolor{red}{$\hookrightarrow$}\space as before, inside the box.
+\AtBeginDocument{\sbox\coppe@lstarrow{%
+  \if@coppesetavermelha\textcolor{red}{$\hookrightarrow$}\else$\hookrightarrow$\fi
+  \space}}
 \newcommand\pythonstyle{\lstset{language=Python,basicstyle=\ttm,numbers=left,%
   numberstyle=\small\ttfamily,numbersep=0.5em,commentstyle=\color{purple},%
   morekeywords={self,as},keywordstyle=\ttb\color[rgb]{0,0,0.5},%
@@ -7164,11 +7524,9 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   raiselinks={true},
   pageanchor={true},
 }%
-% `semlinks' vai por ultimo, para vencer o que vier antes, e usa hidelinks em
-% vez de colorlinks=false: hidelinks tira a cor E a moldura, que sao os dois
-% jeitos de o hyperref marcar um link, e nao mexe em mais nada. Os links
-% continuam existindo, clicaveis, e os bookmarks continuam no painel.
-  \if@coppesemlinks\hypersetup{hidelinks}\fi}
+% O destaque dos links e decidido logo depois de carregar o hyperref, e nao
+% aqui: um \hypersetup no preambulo tem de poder venceu-lo.
+}
 %    \end{macrocode}
 %
 % \begin{macro}{\makecatalog}
@@ -7855,6 +8213,180 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \begingroup\@coppeglosspretrue
 \renewcommand\glossaryname{\listsiglaname}%
 \@input@{\jobname.lsg}\endgroup}
+% O glossario da 3.1.4.2, em duas formas. A MANUAL e o ambiente theglossary,
+% com um \item[termo] por entrada, na ordem em que o autor os escrever. A
+% AUTOMATICA e esta: \makeglossarylist no preambulo, \glossaryterm onde o termo
+% aparece no texto, \printglossarylist depois das referencias. Os termos vao
+% para \jobname.gsx, o makeindex os ordena em ordem alfabetica com o coppe.ist
+% (\jobname.lgs), e a lista sai no mesmo theglossary, com titulo "Glossario" e
+% entrada no sumario -- e o que a forma manual produz, sem o autor ordenar nada.
+% Os nomes evitam os do pacote glossaries (\makeglossaries, \printglossary) e
+% os do proprio LaTeX (\makeglossary, \glossary).
+\def\makeglossarylist{%
+  \newwrite\@gsxfile
+  \immediate\openout\@gsxfile=\jobname.gsx
+  \typeout{Writing glossary file \jobname.gsx}%
+  \let\makeglossarylist\@empty}
+\@onlypreamble\makeglossarylist
+\newcommand\@wrgsx[3]{%
+  \protected@write\@gsxfile{}%
+    {\string\indexentry{#1[#2] #3|coppe@semfolio}{\thepage}}%
+  \endgroup
+  \@esphack}
+% Sem chave, a chave e o proprio termo SEM ACENTO (\coppe@glosskey, junto da
+% chave do indice): com o acento, "Arvore" caia depois de "Zebra".
+\newcommand\glossaryterm[3][]{%
+  \ifdefined\@gsxfile
+    \@bsphack\begingroup
+    \ifstrempty{#1}{\coppe@glosskey{#2}}{\def\@tempsymbl{#1=}}%
+    \@sanitize
+    \@wrgsx{\@tempsymbl}{#2}{#3}%
+  \else
+    \ClassWarning{coppe}{\string\glossaryterm\space sem
+      \string\makeglossarylist\space no preambulo: o termo `#2' nao entra
+      no glossario}%
+  \fi}
+\newcommand\printglossarylist{%
+  \begingroup
+  \renewcommand\glossaryname{\coppestring{glossary}}%
+  \@input@{\jobname.lgs}%
+  \endgroup}
+% O makeindex rodado pela classe. As listas de abreviaturas, siglas e simbolos
+% e o indice remissivo so aparecem depois do makeindex, entre uma passada e a
+% seguinte. O latexmk (e o Overleaf) fazem isso pelo latexmkrc, mas o comando
+% padrao do TeXstudio, do TeXworks e de quase todo editor roda so o pdflatex:
+% as listas e o indice saiam VAZIOS, sem aviso nenhum.
+%
+% Agora a propria classe roda o makeindex, depois que a ultima pagina sai --
+% antes disso as entradas da ultima pagina ainda nao foram escritas --, como o
+% pacote imakeidx faz. Basta o shell escape RESTRITO, que o MiKTeX e o TeX Live
+% ligam por padrao: o makeindex esta na lista de programas que ele permite.
+% Sem shell escape nenhum, nada acontece e vale o latexmk. As listas usam o
+% coppe.ist; o indice, o estilo padrao. Com imakeidx, o indice fica com ele.
+% Rodar de novo o que o latexmk ja rodou nao muda nada: a saida e a mesma.
+\RequirePackage{shellesc}
+\newcommand\coppe@makeindex[3]{% #1 arquivo de escrita, #2 entrada, #3 estilo
+  \ifdefined#1%
+    \immediate\closeout#1%
+    \ShellEscape{makeindex -q #3 -o \jobname.#2 \jobname.\csname coppe@ext@#2\endcsname}%
+  \fi}
+\def\coppe@ext@lab{abx}
+\def\coppe@ext@los{syx}
+\def\coppe@ext@lsg{sgx}
+\def\coppe@ext@lgs{gsx}
+\def\coppe@ext@ind{idx}
+\newcommand\coppe@makeindexauto{%
+  \if@coppemakeindex
+    \ifdefined\pdf@shellescape
+      \ifnum\pdf@shellescape>\z@
+        \coppe@makeindex\@labfile{lab}{-s coppe.ist}%
+        \coppe@makeindex\@losfile{los}{-s coppe.ist}%
+        \coppe@makeindex\@lsgfile{lsg}{-s coppe.ist}%
+        \coppe@makeindex\@gsxfile{lgs}{-s coppe.ist}%
+        \@ifpackageloaded{imakeidx}{}{%
+          \coppe@makeindex\@indexfile{ind}{}}%
+      \fi
+    \fi
+  \fi}
+\AddToHook{enddocument/afterlastpage}{\coppe@makeindexauto}
+% A chave de ordenacao das entradas do indice. O makeindex ordena pelos BYTES,
+% e em UTF-8 toda letra acentuada vem depois do z: "Árvore", "ética" e "índice"
+% saiam no fim do indice, depois de "Zebra". A NBR 6034 pede ordem alfabetica.
+% A solucao de sempre e escrever a chave a mao, \index{indice@índice}; a classe
+% agora faz isso sozinha: cada nivel da entrada (separado por !) que tem letra
+% acentuada e nao tem chave propria (@) ganha uma, a mesma palavra sem acento.
+% Entrada com aspas (o escape do makeindex) passa como esta. A parte depois de
+% | (see, seealso, textbf, os intervalos) nao e tocada. Chave escrita pelo autor
+% sempre vence. Vale para o makeidx e para o imakeidx, no pdfLaTeX e no
+% LuaLaTeX. As listas de simbolos e abreviaturas nao passam por aqui: tem
+% chave propria, o argumento opcional de \symbl e \abbrev (issue 52).
+\ExplSyntaxOn
+\str_new:N \l__coppe_idx_str
+\str_new:N \l__coppe_idx_enc_str
+\str_new:N \l__coppe_idx_lvl_str
+\str_new:N \l__coppe_idx_key_str
+\str_new:N \l__coppe_idx_out_str
+\seq_new:N \l__coppe_idx_seq
+\seq_new:N \l__coppe_idx_out_seq
+\cs_new:Npn \__coppe_idx_enc:w #1 | #2 \q_stop
+  {
+    \str_set:Nn \l__coppe_idx_str {#1}
+    \str_set:Nn \l__coppe_idx_enc_str { | #2 }
+  }
+\cs_new_protected:Npn \__coppe_idx_strip:N #1
+  {
+    \clist_map_inline:nn
+      {
+        {á}{a}, {à}{a}, {â}{a}, {ã}{a}, {ä}{a},
+        {é}{e}, {è}{e}, {ê}{e}, {ë}{e},
+        {í}{i}, {ì}{i}, {î}{i}, {ï}{i},
+        {ó}{o}, {ò}{o}, {ô}{o}, {õ}{o}, {ö}{o},
+        {ú}{u}, {ù}{u}, {û}{u}, {ü}{u},
+        {ç}{c}, {ñ}{n},
+        {Á}{A}, {À}{A}, {Â}{A}, {Ã}{A}, {Ä}{A},
+        {É}{E}, {È}{E}, {Ê}{E}, {Ë}{E},
+        {Í}{I}, {Ì}{I}, {Î}{I}, {Ï}{I},
+        {Ó}{O}, {Ò}{O}, {Ô}{O}, {Õ}{O}, {Ö}{O},
+        {Ú}{U}, {Ù}{U}, {Û}{U}, {Ü}{U},
+        {Ç}{C}, {Ñ}{N}
+      }
+      { \str_replace_all:Nnn #1 ##1 }
+  }
+\cs_new_protected:Npn \coppe@idxkey #1
+  {
+    \str_set:Nn \l__coppe_idx_str {#1}
+    \str_if_in:NnTF \l__coppe_idx_str { " }
+      { \str_set_eq:NN \l__coppe_idx_out_str \l__coppe_idx_str }
+      {
+        \str_clear:N \l__coppe_idx_enc_str
+        \str_if_in:NnT \l__coppe_idx_str { | }
+          { \exp_after:wN \__coppe_idx_enc:w \l__coppe_idx_str \q_stop }
+        \seq_set_split_keep_spaces:NnV \l__coppe_idx_seq { ! } \l__coppe_idx_str
+        \seq_clear:N \l__coppe_idx_out_seq
+        \seq_map_inline:Nn \l__coppe_idx_seq
+          {
+            \str_set:Nn \l__coppe_idx_lvl_str {##1}
+            \str_set_eq:NN \l__coppe_idx_key_str \l__coppe_idx_lvl_str
+            \str_if_in:NnF \l__coppe_idx_lvl_str { @ }
+              { \__coppe_idx_strip:N \l__coppe_idx_key_str }
+            \str_if_eq:NNTF \l__coppe_idx_key_str \l__coppe_idx_lvl_str
+              { \seq_put_right:NV \l__coppe_idx_out_seq \l__coppe_idx_lvl_str }
+              {
+                \seq_put_right:Nx \l__coppe_idx_out_seq
+                  { \l__coppe_idx_key_str @ \l__coppe_idx_lvl_str }
+              }
+          }
+        \str_set:Nx \l__coppe_idx_out_str
+          { \seq_use:Nn \l__coppe_idx_out_seq { ! } \l__coppe_idx_enc_str }
+      }
+  }
+\cs_new_protected:Npn \coppe@glosskey #1
+  {
+    \str_set:Nn \l__coppe_idx_key_str {#1}
+    \__coppe_idx_strip:N \l__coppe_idx_key_str
+    \tl_set:Nx \@tempsymbl { \l__coppe_idx_key_str = }
+  }
+\cs_new_protected:Npn \__coppe_idx_one:n #1
+  {
+    \coppe@idxkey {#1}
+    \exp_args:NV \coppe@orig@wrindex \l__coppe_idx_out_str
+  }
+\cs_new_protected:Npn \__coppe_idx_two:nn #1#2
+  {
+    \coppe@idxkey {#2}
+    \exp_args:NnV \coppe@orig@wrindex {#1} \l__coppe_idx_out_str
+  }
+\AddToHook{begindocument/end}
+  {
+    \cs_if_exist:NT \@wrindex
+      {
+        \cs_set_eq:NN \coppe@orig@wrindex \@wrindex
+        \ltx@ifpackageloaded{imakeidx}
+          { \cs_set_eq:NN \@wrindex \__coppe_idx_two:nn }
+          { \cs_set_eq:NN \@wrindex \__coppe_idx_one:n }
+      }
+  }
+\ExplSyntaxOff
 %    \end{macrocode}
 % \end{macro}
 % \end{macro}
@@ -8337,6 +8869,25 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \immediate\closeout\coppe@xmpout}%
 \fi
 \RequirePackage{hyperref}
+% O destaque dos links (ver a declaracao de `linkscommoldura'). Aqui, e nao no
+% \maketitle: o \hypersetup que o autor puser no preambulo vem depois deste e
+% vence. As cores sao escuras, para o link ainda se ler como texto.
+\if@coppesemlinks
+  \hypersetup{hidelinks}
+\else
+  \if@coppelinkscor
+    \hypersetup{colorlinks=true,
+      linkcolor={blue!65!black}, citecolor={green!40!black},
+      urlcolor={blue!65!black}, filecolor={blue!65!black},
+      menucolor={blue!65!black}, runcolor={blue!65!black}}
+  \else
+    \if@coppelinksmoldura
+      \hypersetup{colorlinks=false, pdfborder={0 0 1}}
+    \else
+      \hypersetup{hidelinks}
+    \fi
+  \fi
+\fi
 % Bibliography engine: the full coppe BibLaTeX/biber ABNT style, replacing the
 % former natbib+bibtex setup. The numbers class option selects the numeric
 % citation style; otherwise the author-date default is used. natbib=true keeps
@@ -10432,8 +10983,10 @@ postamble
 \documentclass[dsc]{coppe}
 \addbibresource{exemplo.bib}
 \begin{document}
-  \title{Demonstração da classe CoppeTeX 4.1 em português}
-  \foreigntitle{CoppeTeX 4.1 class demonstration in English}
+  \title{Título do Trabalho}
+  \subtitle{um exemplo de uso do CoppeTeX em português}
+  \foreigntitle{Title of the Work}
+  \foreignsubtitle{an example of use of CoppeTeX in Portuguese}
   \author{Nome do}{Autor}
   \advisor{Primeiro}{Orientador}{D.Sc.}{UFRJ}
   \examiner{Primeiro Examinador}{D.Sc.}{UFRJ}
@@ -10505,8 +11058,10 @@ postamble
 \documentclass[english,dsc]{coppe}
 \addbibresource{exemplo.bib}
 \begin{document}
-  \title{Demonstração da classe CoppeTeX 4.1 em português}
-  \foreigntitle{CoppeTeX 4.1 class demonstration in English}
+  \title{Título do Trabalho}
+  \subtitle{um exemplo de uso do CoppeTeX em inglês}
+  \foreigntitle{Title of the Work}
+  \foreignsubtitle{an example of use of CoppeTeX in English}
   \author{Author's}{Name}
   \advisor{First}{Advisor}{D.Sc.}{UFRJ}
   \examiner{First Examiner}{D.Sc.}{UFRJ}
@@ -10526,8 +11081,9 @@ postamble
     consectetur adipiscing elit.
   \end{abstract}
   \begin{foreignabstract}
-    Este é o resumo em língua estrangeira (português), produzido pelo
-    ambiente \texttt{foreignabstract} quando o idioma principal é o inglês.
+    Este é o resumo em língua estrangeira, que aqui é o português. Quem o
+    produz é o ambiente \texttt{foreignabstract}, quando o idioma principal
+    do trabalho é o inglês.
   \end{foreignabstract}
   % Front-matter lists: only the table of contents is mandatory (UFRJ
   % Manual 3.1.2.1.6). The lists of figures, tables, abbreviations and
@@ -10579,9 +11135,12 @@ postamble
 \documentclass[spanish,dsc]{coppe}
 \addbibresource{exemplo.bib}
 \begin{document}
-  \title{Demonstração da classe CoppeTeX 4.1 em português}
-  \foreigntitle{CoppeTeX 4.1 class demonstration in English}
-  \titlein{spanish}{Demostración de la clase CoppeTeX 4.1 en español}
+  \title{Título do Trabalho}
+  \subtitle{um exemplo de uso do CoppeTeX em espanhol}
+  \foreigntitle{Title of the Work}
+  \foreignsubtitle{an example of use of CoppeTeX in Spanish}
+  \titlein{spanish}{Título del Trabajo}
+  \subtitlein{spanish}{un ejemplo de uso de CoppeTeX en español}
   \author{Nombre del}{Autor}
   \advisor{Primer}{Director}{D.Sc.}{UFRJ}
   \examiner{Primer Examinador}{D.Sc.}{UFRJ}
@@ -10665,9 +11224,12 @@ postamble
 \documentclass[french,dsc]{coppe}
 \addbibresource{exemplo.bib}
 \begin{document}
-  \title{Demonstração da classe CoppeTeX 4.1 em português}
-  \foreigntitle{CoppeTeX 4.1 class demonstration in English}
-  \titlein{french}{Démonstration de la classe CoppeTeX 4.1 en français}
+  \title{Título do Trabalho}
+  \subtitle{um exemplo de uso do CoppeTeX em francês}
+  \foreigntitle{Title of the Work}
+  \foreignsubtitle{an example of use of CoppeTeX in French}
+  \titlein{french}{Titre du Travail}
+  \subtitlein{french}{un exemple d'utilisation de CoppeTeX en français}
   \author{Prénom de}{l'Auteur}
   \advisor{Premier}{Directeur}{D.Sc.}{UFRJ}
   \examiner{Premier Examinateur}{D.Sc.}{UFRJ}
@@ -10753,9 +11315,12 @@ postamble
 \documentclass[italian,dsc]{coppe}
 \addbibresource{exemplo.bib}
 \begin{document}
-  \title{Demonstração da classe CoppeTeX 4.1 em português}
-  \foreigntitle{CoppeTeX 4.1 class demonstration in English}
-  \titlein{italian}{Dimostrazione della classe CoppeTeX 4.1 in italiano}
+  \title{Título do Trabalho}
+  \subtitle{um exemplo de uso do CoppeTeX em italiano}
+  \foreigntitle{Title of the Work}
+  \foreignsubtitle{an example of use of CoppeTeX in Italian}
+  \titlein{italian}{Titolo del Lavoro}
+  \subtitlein{italian}{un esempio d'uso di CoppeTeX in italiano}
   \author{Nome dell'}{Autore}
   \advisor{Primo}{Relatore}{D.Sc.}{UFRJ}
   \examiner{Primo Esaminatore}{D.Sc.}{UFRJ}
@@ -10945,12 +11510,16 @@ sub coppe_make_lab { return system "makeindex -s coppe.ist -o \"$_[0].lab\" \"$_
 add_cus_dep('syx', 'los', 0, 'coppe_make_los');
 sub coppe_make_los { return system "makeindex -s coppe.ist -o \"$_[0].los\" \"$_[0].syx\""; }
 
+# The automatic glossary (\makeglossarylist): .gsx -> .lgs, same style.
+add_cus_dep('gsx', 'lgs', 0, 'coppe_make_lgs');
+sub coppe_make_lgs { return system "makeindex -s coppe.ist -o \"$_[0].lgs\" \"$_[0].gsx\""; }
+
 # The separate list of acronyms (\makelosiglas): .sgx -> .lsg, same style.
 add_cus_dep('sgx', 'lsg', 0, 'coppe_make_lsg');
 sub coppe_make_lsg { return system "makeindex -s coppe.ist -o \"$_[0].lsg\" \"$_[0].sgx\""; }
 
 # Make "latexmk -c" clean the generated list files too.
-push @generated_exts, qw(abx lab syx los sgx lsg);
+push @generated_exts, qw(abx lab syx los sgx lsg gsx lgs);
 
 # The index (makeidx, \printindex): plain makeindex, with NO style file.
 # coppe.ist is for the lists above only -- it opens `theglossary', has no

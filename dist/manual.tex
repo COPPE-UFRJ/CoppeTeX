@@ -223,9 +223,14 @@
   assunto.
 
   A base pode morar numa subpasta, e é o que se recomenda para não acumular
-  arquivo na raiz do trabalho: escreva o caminho, como em
-  \verb|\addbibresource{referencias/arquivo.bib}|, com barra para frente mesmo
-  no Windows. Funciona no computador local e no Overleaf, porque quem lê o
+  arquivo na raiz do trabalho. Escreva o caminho com barra para frente, mesmo
+  no Windows:
+
+\begin{verbatim}
+\addbibresource{referencias/arquivo.bib}
+\end{verbatim}
+
+  \noindent Funciona no computador local e no Overleaf, porque quem lê o
   \texttt{.bib} é o \texttt{biber}, que abre o caminho relativo à pasta do
   documento. É também mais seguro do que o nome sozinho: um nome sozinho passa
   pela busca do \LaTeX{} e, se o arquivo não estiver na pasta do trabalho,
@@ -391,6 +396,17 @@
     \end{tabular}
     \source{Elaboração própria, a partir da NBR 14724 e do manual do SiBI.}
   \end{framefloat}
+
+  O sumário é o último elemento pré-textual e enumera o que vem \emph{depois}
+  dele: os capítulos e os elementos pós-textuais --- referências, glossário,
+  apêndices, anexos e índice. As listas, que vêm antes, \textbf{não} entram
+  nele: a \mbox{NBR~6027} tira os elementos pré-textuais do sumário, e o sumário
+  que o manual do SiBI dá como modelo começa em ``1~INTRODUÇÃO''. É assim que a
+  classe faz por padrão, e o sumário deste manual é o exemplo.
+
+  A classe tem a opção \texttt{listasnosumario}, que põe as listas no sumário.
+  \textbf{Ela contraria a norma.} Existe para o Programa que exija o
+  contrário por escrito; sem essa exigência, não a ligue.
 
   \section{A folha adicional}
 
@@ -756,6 +772,130 @@ Na \useacronym{ufrj}, o programa ...  % depois: so a sigla
 \abbrev[IOT]{IoT}{Internet das Coisas}
 \end{verbatim}
 
+  \chapter{Glossário e índice}\label{cap:glossarioindice}
+
+  Os dois são \textbf{opcionais} e ficam na parte pós-textual, mas não no mesmo
+  lugar: o glossário vem logo \textbf{depois das referências}, e o índice é o
+  \textbf{último} elemento do trabalho, depois dos apêndices e dos anexos
+  (3.1.4). A classe monta os dois sozinha a partir de marcas no texto, e aceita
+  também que você os escreva à mão. O \texttt{max-exemplo.tex} usa as formas
+  automáticas e explica as outras, com o código de cada uma.
+
+  \section{Glossário}
+
+  É a ``relação de palavras ou expressões técnicas de uso restrito ou de
+  sentido obscuro, utilizadas no texto, acompanhadas das respectivas
+  definições'', em \textbf{ordem alfabética} (3.1.4.2). Não confunda com a
+  lista de abreviaturas e siglas, que é pré-textual e só desdobra a forma
+  abreviada.
+
+  \textbf{Forma automática.} Declare no preâmbulo que o trabalho tem glossário,
+  marque cada termo onde ele aparece e imprima a lista depois das referências:
+
+\begin{verbatim}
+\makeglossarylist                          % no preambulo
+...
+O folio\glossaryterm{Fólio}{o número da folha.}
+...
+\printbibliography
+\printglossarylist                         % logo depois das referencias
+\end{verbatim}
+
+  O \verb|\glossaryterm| não imprime nada no texto. A classe põe os termos em
+  ordem alfabética, com os acentos no lugar certo, e a lista sai com o título
+  ``Glossário'' e entrada no sumário. Para mudar a posição de um termo, dê a
+  chave entre colchetes: \verb|\glossaryterm[PDFA]{PDF/A}{...}|. Um
+  \verb|\glossaryterm| sem \verb|\makeglossarylist| no preâmbulo não quebra a
+  compilação: a classe avisa no log que o termo ficou de fora.
+
+  \textbf{Forma manual.} Sem \verb|\makeglossarylist|, escreva a lista no mesmo
+  lugar. A aparência é a mesma, e a ordem fica por sua conta:
+
+\begin{verbatim}
+\begin{theglossary}
+  \item[Fólio] o número da folha.
+  \item[Mancha gráfica] a área da folha ocupada pelo texto.
+\end{theglossary}
+\end{verbatim}
+
+  \textbf{Qual escolher.} A manual basta para um glossário curto, escrito de uma
+  vez no fim. A automática é para o glossário que cresce com o texto: nenhum
+  termo fica esquecido e a ordem nunca sai errada.
+
+  \section{Índice}
+
+  É a ``lista de palavras ou frases, ordenadas segundo um determinado critério,
+  que localiza e remete para as informações contidas no texto'' (3.1.4.5). Não
+  é o sumário: o sumário vem antes do texto e lista as seções; o índice vem no
+  fim e remete a páginas. A \mbox{NBR~6034} rege a sua apresentação:
+  \begin{alineas}
+    \item o critério de ordenação é declarado --- em geral o
+      \textbf{alfabético}, que é o que a classe produz;
+    \item o \textbf{título diz a função}: ``Índice de Assuntos'', ``Índice
+      Onomástico'' (de nomes de pessoas), ``Índice Geográfico''. Um índice
+      que mistura tudo pode se chamar só ``Índice'';
+    \item cada entrada remete à página, e uma entrada pode ter
+      \textbf{subentradas}, recuadas;
+    \item as \textbf{remissivas} ``ver'' e ``ver também'' mandam o leitor de
+      um termo a outro.
+  \end{alineas}
+
+  \textbf{Forma automática.} Carregue o \texttt{makeidx}, marque os termos e
+  imprima o índice no fim:
+
+\begin{verbatim}
+\usepackage{makeidx}\makeindex          % no preambulo
+...
+\index{citação}                         % entrada simples
+\index{citação!curta}                   % subentrada
+\index{URL|see{endereço eletrônico}}    % "ver"
+\index{moral|seealso{ética}}            % "ver também"
+\index{método|(} ... \index{método|)}   % intervalo de páginas: 31-35
+\index{LaTeX@\LaTeX}                    % chave de ordenação própria
+...
+\renewcommand{\indexname}{Índice de Assuntos}   % título pela função
+\printindex                             % o último elemento
+\end{verbatim}
+
+  O \verb|\index| registra a página em que está: ponha-o colado à palavra. O
+  programa que ordena as entradas, o \texttt{makeindex}, ordena pelos códigos
+  dos caracteres, e sozinho poria toda palavra acentuada depois do ``z''. A
+  classe evita isso: dá a cada entrada acentuada uma chave sem acento, e
+  ``ação'' fica antes de ``acaso''. Uma chave escrita por você, depois de
+  \verb|@|, sempre vence.
+
+  \textbf{Quando o índice aparece.} O \texttt{makeindex} roda entre uma
+  compilação e a seguinte. A classe o roda sozinha no fim de cada compilação,
+  em qualquer editor, e o índice aparece a partir da segunda. O
+  \texttt{latexmk} e o Overleaf também o rodam. A opção de classe
+  \texttt{semmakeindex} deixa essa tarefa com você.
+
+  \textbf{Mais de um índice.} Para índice de assuntos e índice onomástico no
+  mesmo trabalho, use o \texttt{imakeidx} no lugar do \texttt{makeidx}:
+
+\begin{verbatim}
+\usepackage{imakeidx}
+\makeindex[title=Índice de Assuntos]
+\makeindex[name=nomes, title=Índice Onomástico]
+...
+\index{citação}   \index[nomes]{Vieira, Antônio}
+...
+\printindex   \printindex[nomes]
+\end{verbatim}
+
+  \textbf{Forma manual.} Um índice de poucas entradas pode ser escrito à mão,
+  com o ambiente \verb|theindex| e sem \texttt{makeidx}. As páginas ficam por
+  sua conta e mudam a cada revisão, então só vale para um índice fechado no
+  fim:
+
+\begin{verbatim}
+\begin{theindex}
+  \item citação, 23
+    \subitem curta, 23
+  \item plágio, 23
+\end{theindex}
+\end{verbatim}
+
   \chapter{Listagens de código e algoritmos}
 
   \section{Programas}
@@ -854,22 +994,26 @@ public class Saudacao {
   Os comandos da classe \CoppeTeX\ que este manual usou, por assunto. A descrição
   completa de cada um está no \texttt{coppe.pdf}.
 
-  \begin{alineas}
+  % Alinhadas à esquerda: justificadas, as linhas cheias de nomes de comando,
+  % que não se hifenizam, estouravam a margem.
+  \begin{alineas}\raggedright
     \item identificação: \verb|\title|, \verb|\foreigntitle|, \verb|\subtitle|,
       \verb|\author|, \verb|\advisor|, \verb|\coadvisor|, \verb|\examiner|,
       \verb|\department|, \verb|\date|, \verb|\keyword|;
     \item folha adicional: \verb|\concentrationarea|, \verb|\researchline|,
-      \verb|\tipoproducao|, \verb|\projetovinculado|, \verb|\projectname|,
+      \verb|\productiontype|, \verb|\linkedproject|, \verb|\projectname|,
       \verb|\fundingagency|, \verb|\catalogcard|;
     \item estrutura: \verb|\maketitle|, \verb|\frontmatter|, \verb|\mainmatter|,
       \verb|\backmatter|, \verb|\dedication|, \verb|\appendix|, \verb|\annex|;
-    \item ilustrações: \verb|\source| e \verb|\fonte|, ambiente \verb|quadro|,
+    \item ilustrações: \verb|\source|, ambiente \verb|framefloat|,
       \verb|\listofframes|, \verb|\newcoppefloat|;
     \item siglas e símbolos: \verb|\defineacronym|, \verb|\useacronym|, \verb|\useacronym*|,
       \verb|\abbrev|, \verb|\symbl|;
     \item listas: ambiente \verb|alineas|, \verb|\listofprograms|,
       \verb|\listofalgorithms|, \verb|\printloabbreviations|,
-      \verb|\printlosymbols|;
+      \verb|\printloacronyms|, \verb|\printlosymbols|;
+    \item glossário e índice: \verb|\makeglossarylist|, \verb|\glossaryterm|,
+      \verb|\printglossarylist|, \verb|\index|, \verb|\printindex|;
     \item citações: \verb|\enquote|, ambiente \verb|longquote|, \verb|\citet|,
       \verb|\citep|, \verb|\citetapud|, \verb|\citepapud|,
       \verb|\printbibliography|.

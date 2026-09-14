@@ -168,20 +168,24 @@ CAMPOS = [
      "Sem isto, autor-data"),
     ("comserifa", "Op\u00e7\u00f5es", "Com serifa", "sim/nao", False, None,
      "O padr\u00e3o \u00e9 sem serifa desde a 4.1"),
-    ("semlinks", "Op\u00e7\u00f5es", "Links sem cor nem moldura", "sim/nao", False,
-     None, "Para quem vai imprimir"),
+    ("linkscommoldura", "Op\u00e7\u00f5es", "Links com moldura (s\u00f3 na tela)", "sim/nao",
+     False, None, "Por padr\u00e3o os links n\u00e3o t\u00eam destaque"),
+    ("linkscoloridos", "Op\u00e7\u00f5es", "Links coloridos", "sim/nao", False,
+     None, "Contraria a 2.1(b): texto na cor preta"),
+    ("setavermelha", "Op\u00e7\u00f5es", "Seta vermelha nas listagens", "sim/nao", False,
+     None, "A seta que abre a linha quebrada; preta por padr\u00e3o"),
     ("doublespacing", "Op\u00e7\u00f5es", "Espa\u00e7o duplo", "sim/nao", False, None,
      "S\u00f3 se o seu Programa pedir"),
     ("twoside", "Op\u00e7\u00f5es", "Margens espelhadas (frente e verso)", "sim/nao",
      False, None, "S\u00f3 para quem vai imprimir e encadernar"),
     ("coorientador", "Op\u00e7\u00f5es", "Coorientadores nas folhas de resumo",
      "sim/nao", False, None, ""),
-    ("orientadorexamina", "Op\u00e7\u00f5es", "Orientador na folha de aprova\u00e7\u00e3o",
-     "sim/nao", False, None, "Ligue se no seu Programa ele integra a banca"),
+    ("semorientadornabanca", "Op\u00e7\u00f5es", "Banca sem o orientador na folha de aprova\u00e7\u00e3o",
+     "sim/nao", False, None, "A 3.1.2.1.3(e) o p\u00f5e em primeiro, como presidente"),
     ("rascunhoficha", "Op\u00e7\u00f5es", "Ficha de rascunho enquanto escreve",
      "sim/nao", False, None, "Nunca vale para dep\u00f3sito"),
     ("listasnosumario", "Op\u00e7\u00f5es", "Listas pr\u00e9-textuais no sum\u00e1rio", "sim/nao",
-     False, None, "A 3.1.2.1.6 as mant\u00e9m fora dele"),
+     False, None, "Contraria a NBR 6027 e a 3.1.2.1.6: s\u00f3 se o Programa exigir"),
     ("resumosemreferencia", "Op\u00e7\u00f5es", "Resumo sem a refer\u00eancia no alto",
      "sim/nao", False, None, "S\u00f3 se o resumo n\u00e3o couber numa folha com ela"),
     ("semmorewrites", "Op\u00e7\u00f5es", "Sem o morewrites (compila mais r\u00e1pido)",
@@ -214,7 +218,10 @@ CAMPOS = [
      "Texto seu, que complementa a argumenta\u00e7\u00e3o"),
     ("n_anexos", "Estrutura", "Quantos anexos", "inteiro", 0, (0, 6),
      "Documento de terceiro, que fundamenta ou comprova"),
-    ("glossario", "Estrutura", "Gloss\u00e1rio p\u00f3s-textual", "sim/nao", False, None, ""),
+    ("glossario", "Estrutura", "Gloss\u00e1rio p\u00f3s-textual", "sim/nao", False, None,
+     "Autom\u00e1tico: \\glossaryterm no texto, em ordem alfab\u00e9tica"),
+    ("glossario_manual", "Estrutura", "Gloss\u00e1rio escrito \u00e0 m\u00e3o", "sim/nao", False,
+     None, "Ambiente theglossary, na ordem em que voc\u00ea escrever"),
     ("indice", "Estrutura", "\u00cdndice remissivo", "sim/nao", False, None, ""),
     ("colofao", "Estrutura", "Colof\u00e3o no fim", "sim/nao", True, None,
      "Diz com que vers\u00e3o da classe o documento foi composto"),
@@ -223,8 +230,8 @@ CAMPOS = [
 ABAS = ["Arquivos", "Trabalho", "Banca", "Folha adicional", "Op\u00e7\u00f5es",
         "Estrutura"]
 
-OPCOES_CLASSE = ["pdfa", "numbers", "comserifa", "semlinks", "doublespacing",
-                 "twoside", "coorientador", "orientadorexamina",
+OPCOES_CLASSE = ["pdfa", "numbers", "comserifa", "linkscommoldura", "linkscoloridos", "setavermelha", "doublespacing",
+                 "twoside", "coorientador", "semorientadornabanca",
                  "rascunhoficha", "listasnosumario", "resumosemreferencia",
                  "semmorewrites"]
 
@@ -306,6 +313,8 @@ def monta_tex(v, nome_bib):
         A("\\makeloacronyms")
     if v["simbolos"]:
         A("\\makelosymbols")
+    if v["glossario"] and not v["glossario_manual"]:
+        A("\\makeglossarylist% glossario automatico: \\glossaryterm no texto")
     if v["indice"]:
         A("\\usepackage{makeidx}\\makeindex")
     A("")
@@ -422,16 +431,31 @@ def monta_tex(v, nome_bib):
             if chave == "introducao":
                 A("  " + EXEMPLO_CITACAO)
                 A("")
+    if v["glossario"] or v["indice"]:
+        A("  %% Um termo do glossario e uma entrada do indice, para ver os dois")
+        A("  %% funcionando. Marque os seus onde cada termo aparece no texto.")
+        if v["glossario"] and not v["glossario_manual"]:
+            A("  \\glossaryterm{Termo}{a defini\u00e7\u00e3o do termo, em uma linha.}%")
+        if v["indice"]:
+            A("  \\index{termo}\\index{termo!subentrada}%")
+        A("")
     if v["glossario"] or v["indice"] or int(v["n_apendices"]) or \
             int(v["n_anexos"]):
         A("  \\backmatter")
         A("")
     A("  \\printbibliography")
     A("")
-    if v["glossario"]:
+    if v["glossario"] and v["glossario_manual"]:
+        A("  %% Glossario escrito a mao (3.1.4.2): os termos na ordem em que")
+        A("  %% voce os escrever -- ponha-os em ordem alfabetica.")
         A("  \\begin{theglossary}")
-        A("    \\item[Termo] a definicao do termo, em uma linha.")
+        A("    \\item[Termo] a defini\u00e7\u00e3o do termo, em uma linha.")
         A("  \\end{theglossary}")
+        A("")
+    elif v["glossario"]:
+        A("  %% Glossario automatico (3.1.4.2): os termos de \\glossaryterm, em")
+        A("  %% ordem alfabetica.")
+        A("  \\printglossarylist")
         A("")
     if int(v["n_apendices"]):
         A("  %% Apendice: texto SEU, que complementa a argumentacao.")

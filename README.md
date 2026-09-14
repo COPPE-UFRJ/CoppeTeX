@@ -449,9 +449,12 @@ section above.
 
 ### Compiling a thesis
 
-`latexmkrc` ships with the bundle and already knows about biber and the two
-makeindex runs, so `latexmk -pdf yourthesis` is enough. By hand it is
-pdflatex, biber, pdflatex, pdflatex.
+`latexmkrc` ships with the bundle and already knows about biber and the
+makeindex runs, so `latexmk -pdf yourthesis` is enough. By hand, or from an
+editor such as TeXstudio, it is pdflatex, biber, pdflatex, pdflatex: the class
+runs makeindex itself at the end of each compilation (restricted shell escape
+is enough), so the lists, the glossary and the index appear from the second
+run on. Option `semmakeindex` turns that off.
 
 ## Help & Support
 

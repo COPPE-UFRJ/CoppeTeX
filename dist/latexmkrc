@@ -27,12 +27,16 @@ sub coppe_make_lab { return system "makeindex -s coppe.ist -o \"$_[0].lab\" \"$_
 add_cus_dep('syx', 'los', 0, 'coppe_make_los');
 sub coppe_make_los { return system "makeindex -s coppe.ist -o \"$_[0].los\" \"$_[0].syx\""; }
 
+# The automatic glossary (\makeglossarylist): .gsx -> .lgs, same style.
+add_cus_dep('gsx', 'lgs', 0, 'coppe_make_lgs');
+sub coppe_make_lgs { return system "makeindex -s coppe.ist -o \"$_[0].lgs\" \"$_[0].gsx\""; }
+
 # The separate list of acronyms (\makelosiglas): .sgx -> .lsg, same style.
 add_cus_dep('sgx', 'lsg', 0, 'coppe_make_lsg');
 sub coppe_make_lsg { return system "makeindex -s coppe.ist -o \"$_[0].lsg\" \"$_[0].sgx\""; }
 
 # Make "latexmk -c" clean the generated list files too.
-push @generated_exts, qw(abx lab syx los sgx lsg);
+push @generated_exts, qw(abx lab syx los sgx lsg gsx lgs);
 
 # The index (makeidx, \printindex): plain makeindex, with NO style file.
 # coppe.ist is for the lists above only -- it opens `theglossary', has no

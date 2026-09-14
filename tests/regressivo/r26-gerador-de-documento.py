@@ -46,6 +46,7 @@ CASOS = [
                   "--glossario=sim", "--indice=sim",
                   "--listofquadros=sim", "--listofprogramas=sim",
                   "--listofalgorithms=sim"]),
+    ("glossariomanual", ["--glossario=sim", "--glossario_manual=sim"]),
 ]
 
 problemas = []
@@ -87,7 +88,7 @@ for nome, extras in CASOS:
         if b.returncode != 0:
             problemas.append("%s: o biber falhou (exit %d)" % (nome, b.returncode))
         ist = os.path.join(pasta, "coppe.ist")
-        for ext, saida in (("abx", "lab"), ("syx", "los"), ("sgx", "lsg")):
+        for ext, saida in (("abx", "lab"), ("syx", "los"), ("sgx", "lsg"), ("gsx", "lgs")):
             if os.path.exists(os.path.join(pasta, "main." + ext)):
                 roda("makeindex", "-s", ist, "-o", "main." + saida,
                      "main." + ext)

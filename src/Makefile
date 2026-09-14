@@ -197,6 +197,9 @@ max-exemplo.tex min-exemplo.tex: $(PACKAGE_NAME).ins
 	@if grep -s '$(basename $<).sgx' $(basename $<).log; then \
 	  $(MAKEIDX) $(LSTFLAGS) $(basename $<).sgx -o $(basename $<).lsg;\
 	fi
+	@if grep -s '$(basename $<).gsx' $(basename $<).log; then \
+	  $(MAKEIDX) $(LSTFLAGS) $(basename $<).gsx -o $(basename $<).lgs;\
+	fi
 	@$(TEX) $(TEXFLAGS) $<
 	@i=6 ; \
 	while grep "Rerun to get cross-references right" $(basename $<).log && \
@@ -211,6 +214,6 @@ max-exemplo.tex min-exemplo.tex: $(PACKAGE_NAME).ins
 
 clean:
 	@$(_rm) -f *.log *.aux *.ist *.idx *.blg *.bbl *.glo *.bz2 \
-		         *.toc *.lof *.lot *.syx *.abx *.sgx *.lab *.lsg *.ilg *.los *.ind \
+		         *.toc *.lof *.lot *.syx *.abx *.sgx *.gsx *.lab *.lsg *.lgs *.ilg *.los *.ind \
 						 *.gls *.out *~ coppe.pdf coppe.cls max-exemplo.pdf max-exemplo.tex min-exemplo.pdf min-exemplo.tex
 

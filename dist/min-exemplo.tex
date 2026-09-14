@@ -13,6 +13,12 @@
 %% Geraldo Xexéo and Eduardo Mangeli. Released under the GNU General Public
 %% License version 3 (see the COPYING.txt file).
 %% 
+%% !TeX program = pdflatex
+%% !TeX encoding = UTF-8
+%% !TeX spellcheck = pt_BR
+%% !BIB program = biber
+%% Com o latexmk funcionando (no Windows ele pede o Perl), troque a primeira
+%% linha por: % !TeX program = latexmk -pdf -synctex=1
 \documentclass[dsc,pdfa]{coppe}
 %% min-exemplo.tex -- tudo o que a norma exige, e nada além disso.
 %%
@@ -29,7 +35,7 @@
 %%  - \printbibliography .. referências, o único pós-textual obrigatório (3.1.4).
 %%
 %% O que NÃO está, por ser opcional: dedicatória, agradecimentos, epígrafe,
-%% todas as listas além do sumário, subtítulo, coorientador, linha de pesquisa,
+%% todas as listas além do sumário, coorientador, linha de pesquisa,
 %% glossário, apêndices, anexos e índice. Tudo isso está no max-exemplo.tex.
 
 \addbibresource{exemplo.bib}% a base de referências
@@ -37,6 +43,10 @@
 \begin{document}
   \title{Título do Trabalho}
   \foreigntitle{Title of the Work}
+  % O subtítulo é opcional (3.1.2.1.1c); está aqui só para dar nome ao exemplo.
+  % Sai depois do título, com dois-pontos, e sem as maiúsculas do título.
+  \subtitle{um exemplo mínimo de uso do CoppeTeX}
+  \foreignsubtitle{a minimal example of use of CoppeTeX}
   \author{Nome do Autor}{Sobrenome}
   \advisor{Nome do Orientador}{Sobrenome}{D.Sc.}{UFRJ}
   % A composição da banca é regra do Programa, não da formatação.

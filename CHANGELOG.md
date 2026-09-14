@@ -36,13 +36,65 @@ Still version 4.1: these are corrections to the release published on
   `orientadorexamina` was given. The new option `semorientadornabanca` lists
   the examiners only; `orientadorexamina` is still accepted and does nothing.
 
+- **Links have no highlight by default.** hyperref's own default drew a frame
+  around every link (red, green, cyan), which TeXstudio and Foxit show, and
+  2.1(b) of the UFRJ Manual wants the text in black. Links stay clickable. New
+  options: `linkscommoldura` (on-screen frame, not printed) and
+  `linkscoloridos` (coloured link text, against 2.1(b)). `semlinks` is still
+  accepted and now confirms the default. A `\hypersetup` in the preamble wins
+  over all of them.
+
+- **`listasnosumario` is documented as against the norm.** NBR 6027 keeps the
+  pre-textual elements out of the sumário, and the UFRJ Manual's model
+  sumário (3.1.2.1.6) opens at "1 INTRODUÇÃO". The option stays, off by
+  default, for a Programa that requires the opposite; `coppe.pdf`,
+  `manual.tex`, `max-exemplo.tex` and the document generator now say so. The
+  generator also offers `semorientadornabanca` instead of the no-op
+  `orientadorexamina`.
+
 - **`example.tex`, `example.bib` and `tipos.bib` are gone.** In their place:
   `min-exemplo.tex` (only what the norm makes mandatory), `max-exemplo.tex`
   (everything the class offers) and one database, `exemplo.bib`. `manual.tex`
   has its own `manual.bib`, with the same entries it always printed (#102).
 
+### Added
+
+- **Automatic glossary** (3.1.4.2): `\makeglossarylist` in the preamble,
+  `\glossaryterm[key]{term}{definition}` where the term appears,
+  `\printglossarylist` after the references. Alphabetical, accents included,
+  same look as the hand-written `theglossary`, which keeps working. The
+  document generator offers both forms.
+- **The class runs makeindex by itself** at the end of every compilation
+  (restricted shell escape, on by default in MiKTeX and TeX Live), so the lists
+  of abbreviations, acronyms and symbols, the glossary and the index appear in
+  TeXstudio, TeXworks or any editor that runs only pdflatex. Before, they came
+  out empty without `latexmk`. Option `semmakeindex` turns it off.
+- **Index entries sort alphabetically with accents.** makeindex sorts by byte,
+  and every accented word landed after "z". The class gives each accented
+  level of an entry an unaccented sort key; an author's own `key@entry` always
+  wins. Works with `makeidx` and `imakeidx`, pdfLaTeX and LuaLaTeX. The index
+  cross-references read "ver" / "ver também" (NBR 6034) instead of babel's
+  "veja".
+- **`max-exemplo.tex`** explains the glossary and the index in both forms
+  (automatic and manual), several indexes with `imakeidx`, and titles the
+  index by its function as NBR 6034 asks ("Índice de Assuntos"). It gains a
+  section with a definition, a lemma, a theorem, a corollary, an example and a
+  remark (`amsthm`, Cauchy–Schwarz), and text in the chapters, appendices and
+  annexes that were empty. `manual.tex` has a new chapter, "Glossário e
+  índice"; `coppe.pdf`, a new section.
+
 ### Changed
 
+- **The examples are titled by what they are**: "TÍTULO DO TRABALHO: um
+  exemplo mínimo de uso do CoppeTeX", "…máximo…", "…em inglês", "…en
+  español", with the second half as the subtitle.
+- **Every listing breaks long lines**, not only the language styles: a plain
+  `lstlisting` wraps too, and the continuation starts after a curved arrow
+  (↪). The arrow is black by default; the new option `setavermelha` makes it
+  red, as it always was before.
+- **The long table's last page says "(conclusão)"**, not "Continua na próxima
+  página"; intermediate pages say "(continua)" and "(continuação)", the IBGE
+  tabular terms the Manual follows.
 - **Every command has an English name**, and the shipped documents use them:
   `\defineacronym`, `\useacronym`, `\makeloacronyms`, `\printloacronyms`,
   `\approvaldate`, `\concentrationarea`, `\researchline`, `\productiontype`,

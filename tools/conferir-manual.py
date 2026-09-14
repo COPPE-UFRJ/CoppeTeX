@@ -54,6 +54,8 @@ PADRAO_LATEX = {
     # redefinidos localmente: \PackageWarning so durante o carregamento do
     # pdfx, \thepage so na folha adicional, \theHchapter so nos anexos
     "PackageWarning", "thepage", "theHchapter",
+    # nomes do babel: "ver"/"ver tambem" nas remissivas do indice (NBR 6034)
+    "seename", "alsoname",
 }
 
 # Ambientes internos do mecanismo de listas, nunca escritos a mao.

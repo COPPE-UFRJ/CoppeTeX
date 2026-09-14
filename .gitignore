@@ -25,6 +25,8 @@ src/coppe.aux
 *.abx
 *.sgx
 *.lsg
+*.gsx
+*.lgs
 *.hd
 *.hd
 src/*.synctex.gz
@@ -93,3 +95,4 @@ tests/adversativa/*
 *.idx
 *.ind
 *.ilg
+/teste_local

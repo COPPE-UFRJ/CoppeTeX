@@ -72,6 +72,9 @@ foreach ($t in $tests) {
         if ($ok -and (Test-Path (Join-Path $here "$stem.sgx"))) {
             & makeindex -s $ist -o "$stem.lsg" "$stem.sgx" | Out-Null
         }
+        if ($ok -and (Test-Path (Join-Path $here "$stem.gsx"))) {
+            & makeindex -s $ist -o "$stem.lgs" "$stem.gsx" | Out-Null
+        }
         if ($ok) {
             & pdflatex -interaction=nonstopmode -halt-on-error $t.Name | Out-Null
             if ($LASTEXITCODE -ne 0) { $ok = $false }

@@ -393,6 +393,12 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \DeclareOption{semorientadornabanca}{\@coppeorientexamfalse}
 \newif\if@coppesemlinks \@coppesemlinksfalse
 \DeclareOption{semlinks}{\@coppesemlinkstrue}
+\newif\if@coppelinksmoldura \@coppelinksmoldurafalse
+\DeclareOption{linkscommoldura}{\@coppelinksmolduratrue}
+\newif\if@coppelinkscor \@coppelinkscorfalse
+\DeclareOption{linkscoloridos}{\@coppelinkscortrue}
+\newif\if@coppesetavermelha \@coppesetavermelhafalse
+\DeclareOption{setavermelha}{\@coppesetavermelhatrue}
 \DeclareOption{assinaturas}{\ClassWarningNoLine{coppe}{A opcao `assinaturas'
   nao faz mais nada: a folha de aprovacao nao tem mais linhas de assinatura,
   porque a entrega e digital desde a Resolucao CEPG n. 246/2023}}
@@ -416,6 +422,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \newif\if@coppemwforced   \@coppemwforcedfalse
 \DeclareOption{morewrites}{\@coppemorewritestrue\@coppemwforcedtrue}
 \DeclareOption{semmorewrites}{\@coppemorewritesfalse}
+\newif\if@coppemakeindex \@coppemakeindextrue
+\DeclareOption{semmakeindex}{\@coppemakeindexfalse}
 \newif\if@coppesansserif \@coppesansseriftrue
 \DeclareOption{semserifa}{\@coppesansseriftrue}
 \DeclareOption{comserifa}{\@coppesansseriffalse}
@@ -470,6 +478,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \@ifundefined{coppe@babelextra@\coppe@mainlang}{}{%
   \edef\coppe@babelload{\coppe@babelload\@nameuse{coppe@babelextra@\coppe@mainlang}}}
 \expandafter\RequirePackage\expandafter[\coppe@babelload]{babel}
+\@ifundefined{captionsbrazilian}{}{%
+  \addto\captionsbrazilian{\def\seename{ver}\def\alsoname{ver também}}}
 \providecommand{\copperdefstring}[3]{%
   \expandafter\gdef\csname coppe@str@#1@#2\endcsname{#3}}
 \providecommand{\coppestring}[1]{\@nameuse{coppe@str@\languagename @#1}}
@@ -630,6 +640,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \DeclareFixedFont{\ttb}{T1}{txtt}{bx}{n}{10}
 \DeclareFixedFont{\ttm}{T1}{txtt}{m}{n}{10}
 \lstset{captionpos=t,extendedchars=true,basicstyle=\ttfamily,inputencoding=utf8,%
+  breaklines=true,postbreak=\usebox\coppe@lstarrow,%
   literate=%
   {ã}{{\~{a}}}1 {á}{{\'{a}}}1 {â}{{\^{a}}}1 {à}{{\`{a}}}1 {é}{{\'{e}}}1%
   {è}{{\`{e}}}1 {ê}{{\^{e}}}1 {î}{{\^{i}}}1 {í}{{\'{i}}}1 {ô}{{\^{o}}}1%
@@ -647,7 +658,9 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \@mkboth{\MakeUppercase\lstlistlistingname}{\MakeUppercase\lstlistlistingname}%
   \@starttoc{lol}}
 \newsavebox\coppe@lstarrow
-\AtBeginDocument{\sbox\coppe@lstarrow{\textcolor{red}{$\hookrightarrow$}\space}}
+\AtBeginDocument{\sbox\coppe@lstarrow{%
+  \if@coppesetavermelha\textcolor{red}{$\hookrightarrow$}\else$\hookrightarrow$\fi
+  \space}}
 \newcommand\pythonstyle{\lstset{language=Python,basicstyle=\ttm,numbers=left,%
   numberstyle=\small\ttfamily,numbersep=0.5em,commentstyle=\color{purple},%
   morekeywords={self,as},keywordstyle=\ttb\color[rgb]{0,0,0.5},%
@@ -1302,7 +1315,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   raiselinks={true},
   pageanchor={true},
 }%
-  \if@coppesemlinks\hypersetup{hidelinks}\fi}
+}
 \newcommand\makecatalog{%
   \vspace*{\fill}
   \begin{center}
@@ -1716,6 +1729,145 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \begingroup\@coppeglosspretrue
 \renewcommand\glossaryname{\listsiglaname}%
 \@input@{\jobname.lsg}\endgroup}
+\def\makeglossarylist{%
+  \newwrite\@gsxfile
+  \immediate\openout\@gsxfile=\jobname.gsx
+  \typeout{Writing glossary file \jobname.gsx}%
+  \let\makeglossarylist\@empty}
+\@onlypreamble\makeglossarylist
+\newcommand\@wrgsx[3]{%
+  \protected@write\@gsxfile{}%
+    {\string\indexentry{#1[#2] #3|coppe@semfolio}{\thepage}}%
+  \endgroup
+  \@esphack}
+\newcommand\glossaryterm[3][]{%
+  \ifdefined\@gsxfile
+    \@bsphack\begingroup
+    \ifstrempty{#1}{\coppe@glosskey{#2}}{\def\@tempsymbl{#1=}}%
+    \@sanitize
+    \@wrgsx{\@tempsymbl}{#2}{#3}%
+  \else
+    \ClassWarning{coppe}{\string\glossaryterm\space sem
+      \string\makeglossarylist\space no preambulo: o termo `#2' nao entra
+      no glossario}%
+  \fi}
+\newcommand\printglossarylist{%
+  \begingroup
+  \renewcommand\glossaryname{\coppestring{glossary}}%
+  \@input@{\jobname.lgs}%
+  \endgroup}
+\RequirePackage{shellesc}
+\newcommand\coppe@makeindex[3]{% #1 arquivo de escrita, #2 entrada, #3 estilo
+  \ifdefined#1%
+    \immediate\closeout#1%
+    \ShellEscape{makeindex -q #3 -o \jobname.#2 \jobname.\csname coppe@ext@#2\endcsname}%
+  \fi}
+\def\coppe@ext@lab{abx}
+\def\coppe@ext@los{syx}
+\def\coppe@ext@lsg{sgx}
+\def\coppe@ext@lgs{gsx}
+\def\coppe@ext@ind{idx}
+\newcommand\coppe@makeindexauto{%
+  \if@coppemakeindex
+    \ifdefined\pdf@shellescape
+      \ifnum\pdf@shellescape>\z@
+        \coppe@makeindex\@labfile{lab}{-s coppe.ist}%
+        \coppe@makeindex\@losfile{los}{-s coppe.ist}%
+        \coppe@makeindex\@lsgfile{lsg}{-s coppe.ist}%
+        \coppe@makeindex\@gsxfile{lgs}{-s coppe.ist}%
+        \@ifpackageloaded{imakeidx}{}{%
+          \coppe@makeindex\@indexfile{ind}{}}%
+      \fi
+    \fi
+  \fi}
+\AddToHook{enddocument/afterlastpage}{\coppe@makeindexauto}
+\ExplSyntaxOn
+\str_new:N \l__coppe_idx_str
+\str_new:N \l__coppe_idx_enc_str
+\str_new:N \l__coppe_idx_lvl_str
+\str_new:N \l__coppe_idx_key_str
+\str_new:N \l__coppe_idx_out_str
+\seq_new:N \l__coppe_idx_seq
+\seq_new:N \l__coppe_idx_out_seq
+\cs_new:Npn \__coppe_idx_enc:w #1 | #2 \q_stop
+  {
+    \str_set:Nn \l__coppe_idx_str {#1}
+    \str_set:Nn \l__coppe_idx_enc_str { | #2 }
+  }
+\cs_new_protected:Npn \__coppe_idx_strip:N #1
+  {
+    \clist_map_inline:nn
+      {
+        {á}{a}, {à}{a}, {â}{a}, {ã}{a}, {ä}{a},
+        {é}{e}, {è}{e}, {ê}{e}, {ë}{e},
+        {í}{i}, {ì}{i}, {î}{i}, {ï}{i},
+        {ó}{o}, {ò}{o}, {ô}{o}, {õ}{o}, {ö}{o},
+        {ú}{u}, {ù}{u}, {û}{u}, {ü}{u},
+        {ç}{c}, {ñ}{n},
+        {Á}{A}, {À}{A}, {Â}{A}, {Ã}{A}, {Ä}{A},
+        {É}{E}, {È}{E}, {Ê}{E}, {Ë}{E},
+        {Í}{I}, {Ì}{I}, {Î}{I}, {Ï}{I},
+        {Ó}{O}, {Ò}{O}, {Ô}{O}, {Õ}{O}, {Ö}{O},
+        {Ú}{U}, {Ù}{U}, {Û}{U}, {Ü}{U},
+        {Ç}{C}, {Ñ}{N}
+      }
+      { \str_replace_all:Nnn #1 ##1 }
+  }
+\cs_new_protected:Npn \coppe@idxkey #1
+  {
+    \str_set:Nn \l__coppe_idx_str {#1}
+    \str_if_in:NnTF \l__coppe_idx_str { " }
+      { \str_set_eq:NN \l__coppe_idx_out_str \l__coppe_idx_str }
+      {
+        \str_clear:N \l__coppe_idx_enc_str
+        \str_if_in:NnT \l__coppe_idx_str { | }
+          { \exp_after:wN \__coppe_idx_enc:w \l__coppe_idx_str \q_stop }
+        \seq_set_split_keep_spaces:NnV \l__coppe_idx_seq { ! } \l__coppe_idx_str
+        \seq_clear:N \l__coppe_idx_out_seq
+        \seq_map_inline:Nn \l__coppe_idx_seq
+          {
+            \str_set:Nn \l__coppe_idx_lvl_str {##1}
+            \str_set_eq:NN \l__coppe_idx_key_str \l__coppe_idx_lvl_str
+            \str_if_in:NnF \l__coppe_idx_lvl_str { @ }
+              { \__coppe_idx_strip:N \l__coppe_idx_key_str }
+            \str_if_eq:NNTF \l__coppe_idx_key_str \l__coppe_idx_lvl_str
+              { \seq_put_right:NV \l__coppe_idx_out_seq \l__coppe_idx_lvl_str }
+              {
+                \seq_put_right:Nx \l__coppe_idx_out_seq
+                  { \l__coppe_idx_key_str @ \l__coppe_idx_lvl_str }
+              }
+          }
+        \str_set:Nx \l__coppe_idx_out_str
+          { \seq_use:Nn \l__coppe_idx_out_seq { ! } \l__coppe_idx_enc_str }
+      }
+  }
+\cs_new_protected:Npn \coppe@glosskey #1
+  {
+    \str_set:Nn \l__coppe_idx_key_str {#1}
+    \__coppe_idx_strip:N \l__coppe_idx_key_str
+    \tl_set:Nx \@tempsymbl { \l__coppe_idx_key_str = }
+  }
+\cs_new_protected:Npn \__coppe_idx_one:n #1
+  {
+    \coppe@idxkey {#1}
+    \exp_args:NV \coppe@orig@wrindex \l__coppe_idx_out_str
+  }
+\cs_new_protected:Npn \__coppe_idx_two:nn #1#2
+  {
+    \coppe@idxkey {#2}
+    \exp_args:NnV \coppe@orig@wrindex {#1} \l__coppe_idx_out_str
+  }
+\AddToHook{begindocument/end}
+  {
+    \cs_if_exist:NT \@wrindex
+      {
+        \cs_set_eq:NN \coppe@orig@wrindex \@wrindex
+        \ltx@ifpackageloaded{imakeidx}
+          { \cs_set_eq:NN \@wrindex \__coppe_idx_two:nn }
+          { \cs_set_eq:NN \@wrindex \__coppe_idx_one:n }
+      }
+  }
+\ExplSyntaxOff
 \newcommand\newsigla[3]{%
   \@namedef{coppe@sigla@s@#1}{#2}%
   \@namedef{coppe@sigla@l@#1}{#3}}
@@ -1978,6 +2130,22 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \immediate\closeout\coppe@xmpout}%
 \fi
 \RequirePackage{hyperref}
+\if@coppesemlinks
+  \hypersetup{hidelinks}
+\else
+  \if@coppelinkscor
+    \hypersetup{colorlinks=true,
+      linkcolor={blue!65!black}, citecolor={green!40!black},
+      urlcolor={blue!65!black}, filecolor={blue!65!black},
+      menucolor={blue!65!black}, runcolor={blue!65!black}}
+  \else
+    \if@coppelinksmoldura
+      \hypersetup{colorlinks=false, pdfborder={0 0 1}}
+    \else
+      \hypersetup{hidelinks}
+    \fi
+  \fi
+\fi
 \if@coppenumeric
   \RequirePackage[backend=biber,datamodel=coppe,%
     bibstyle=coppe-numeric,citestyle=coppe-numeric,natbib=true]{biblatex}

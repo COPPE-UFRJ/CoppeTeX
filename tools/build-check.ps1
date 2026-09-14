@@ -168,6 +168,9 @@ function Build-Tex {
     if (Test-Path (Join-Path $Dir "$Stem.sgx")) {
         Invoke-Step "$Stem-lsg" $Dir { & makeindex -s (Join-Path $script:src "coppe.ist") -o "$Stem.lsg" "$Stem.sgx" }
     }
+    if (Test-Path (Join-Path $Dir "$Stem.gsx")) {
+        Invoke-Step "$Stem-lgs" $Dir { & makeindex -s (Join-Path $script:src "coppe.ist") -o "$Stem.lgs" "$Stem.gsx" }
+    }
     Invoke-Step "$Stem-2" $Dir { & pdflatex -interaction=nonstopmode -halt-on-error "$Stem.tex" }
 
     # Tres passadas bastam para referencia cruzada, e NAO bastam quando o

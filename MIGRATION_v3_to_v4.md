@@ -158,8 +158,10 @@ API compatível.
 Quem for **imprimir** e quiser as margens espelhadas de volta usa a opção
 de classe `twoside`. Quem estiver nas últimas semanas de escrita e não
 quiser ver o sumário mudar debaixo do texto usa `listasnosumario`, que
-devolve as listas pré-textuais a ele — ciente de que isso contraria a
-3.1.2.1.6.
+devolve as listas pré-textuais a ele — ciente de que isso **contraria a
+norma**: a NBR 6027 tira os elementos pré-textuais do sumário, e o sumário
+modelo do Manual (3.1.2.1.6) começa em "1 INTRODUÇÃO". Só com exigência
+escrita do Programa.
 
 ### 4.2 A ficha catalográfica saiu da sua responsabilidade
 
@@ -486,6 +488,25 @@ O `example.tex` virou dois: `min-exemplo.tex`, só com o obrigatório, e
 `max-exemplo.tex`, com tudo. As bases `example.bib` e `tipos.bib` viraram uma,
 `exemplo.bib`. Se o seu trabalho declara `\addbibresource{example.bib}` para
 aproveitar as entradas do exemplo, troque por `exemplo.bib`.
+
+### 4.16 Glossário automático, índice em ordem e links sem moldura
+
+Nada disso exige mudança no seu trabalho; tudo é novo e opcional, ou corrige
+algo que saía errado.
+
+- **Glossário automático.** O `theglossary` escrito à mão continua valendo.
+  Para a classe montá-lo em ordem alfabética, ponha `\makeglossarylist` no
+  preâmbulo, marque os termos com `\glossaryterm{termo}{definição}` e troque o
+  ambiente por `\printglossarylist`.
+- **As listas e o índice aparecem no TeXstudio.** A classe roda o `makeindex`
+  sozinha no fim de cada compilação; eles surgem a partir da segunda. Quem
+  prefere rodá-lo à mão usa a opção `semmakeindex`.
+- **Índice em ordem alfabética com acentos.** Se você escrevia
+  `\index{indice@índice}` para corrigir a ordem, pode continuar: a sua chave
+  vence. Sem ela, a classe agora dá a chave sozinha.
+- **Links sem cor e sem moldura por padrão** (2.1b: texto na cor preta). Para
+  vê-los, `linkscommoldura` (moldura só na tela) ou `linkscoloridos` (contraria
+  a 2.1b). `semlinks` continua aceita.
 
 ### 4.15 A licença é `COPYING.txt`
 

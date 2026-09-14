@@ -109,7 +109,10 @@ numbers   & [dsc,numbers]   & \pre & Numeric citations \texttt{[1]} instead of a
 pdfa      & [dsc,pdfa]      & \pre & PDF/A-2b output, required for deposit (2.2d): the deposit is digital only, and PDF/A (ISO 19005) keeps the file self-contained --- embedded fonts, sRGB colour, XMP metadata, nothing external. Off by default; \texttt{max-exemplo.tex} turns it on, and turning it on early is recommended. Check with veraPDF. \\
 comserifa & [dsc,comserifa] & \pre & Serif family. Sans is the default since v4.1. \\
 semserifa & ---             & \pre & Accepted, does nothing. What it asked for became the default. \\
-semlinks  & [dsc,semlinks]  & \pre & Links lose colour and frame; they stay clickable. For printing. \\
+semlinks  & [dsc,semlinks]  & \pre & Accepted; confirms the default (links with no colour and no frame, still clickable). Wins over the two below. \\
+linkscommoldura & [dsc,linkscommoldura] & \pre & Framed links, on screen only (the frame is not printed). \\
+setavermelha & [dsc,setavermelha] & \pre & Red curved arrow at the start of a wrapped listing line. Black by default. \\
+linkscoloridos & [dsc,linkscoloridos] & \pre & Coloured link text. Against 2.1(b) of the UFRJ manual (black text): for on-screen reading copies, not for deposit. \\
 doublespacing & [dsc,doublespacing] & \pre & Double spacing instead of one-and-a-half (2.2c). \\
 twoside   & [dsc,twoside]   & \pre & Mirrored margins, for printing and binding. \\
 oneside   & [dsc,oneside]   & \pre & One-sided, 3\,cm left margin on every sheet. The default. \\
@@ -118,11 +121,12 @@ orientadorexamina & [dsc,orientadorexamina] & \pre & Accepted, no effect: the ad
 coorientador & [dsc,coorientador] & \pre & List coadvisors on the abstract pages too. \\
 rascunhoficha & [dsc,rascunhoficha] & \pre & Draft catalogue card while writing. \textbf{Never valid for deposit.} \\
 resumosemreferencia & [dsc,resumosemreferencia] & \pre & Drop the work's own reference from the top of the three abstracts. It is printed by default (3.1.2.1.4, Annexes E and F). \\
-listasnosumario & [dsc,listasnosumario] & \pre & Put the pre-textual lists back in the table of contents. \\
+listasnosumario & [dsc,listasnosumario] & \pre & Put the pre-textual lists in the table of contents. Against NBR 6027 and the UFRJ manual (3.1.2.1.6): use only if your Programa requires it. \\
 simbolosalfabeticos & [dsc,simbolosalfabeticos] & \pre & List of symbols in alphabetical order instead of order of appearance. \\
 assinaturas & ---           & \pre & Accepted, does nothing. Signature rules are gone: deposit is digital. \\
 numeraisromanos & [dsc,numeraisromanos] & \pre & Roman numerals on pre-textual sheets. \textbf{Against 2.7}; legacy only. \\
 morewrites & [dsc,morewrites] & \pre & A missing \texttt{morewrites} package becomes an error, not a warning. \\
+semmakeindex & [dsc,semmakeindex] & \pre & Do not run makeindex from the class. By default the class runs it at the end of each compilation (restricted shell escape is enough), so the lists and the index appear in any editor. \\
 semmorewrites & [dsc,semmorewrites] & \pre & Do not load \texttt{morewrites}. Saves about half a second per pdflatex pass (Overleaf free plan). Safe only without an index, several indexes, a glossary or nomenclature: the class stops with a clear error if the 16 streams run out. \\
 \midrule
 
@@ -199,6 +203,10 @@ brazilianabstract & \textbackslash begin\{brazilianabstract\} ... & \doc & Third
 \textbackslash printloabbreviations & \textbackslash printloabbreviations & \doc & List of abbreviations and acronyms. No page numbers (4.1.1). \\
 \textbackslash printlosiglas & \textbackslash printlosiglas & \doc & List of acronyms, when \texttt{\textbackslash makelosiglas} is on. \\
 \textbackslash printlosymbols & \textbackslash printlosymbols & \doc & List of symbols, in order of first appearance (3.1.2.2.7). \\
+\textbackslash makeglossarylist & \textbackslash makeglossarylist & \pre & The automatic glossary (3.1.4.2). Without it, write \texttt{theglossary} by hand. \\
+\textbackslash glossaryterm & \textbackslash glossaryterm[key]\{term\}\{definition\} & \doc & Registers a glossary term where it appears; prints nothing. Alphabetical, accents included. \\
+\textbackslash printglossarylist & \textbackslash printglossarylist & \doc & The glossary, right after \texttt{\textbackslash printbibliography}. \\
+\textbackslash index & \textbackslash index\{term!sub\textbar see\{other\}\} & \doc & Index entry (with \texttt{makeidx}). Accented entries get an unaccented sort key; \texttt{key@term} wins. \\
 \textbackslash acron & \textbackslash acron[key]\{UFRJ\}\{meaning\} & \doc & Registers an acronym; \texttt{\textbackslash sigla} uses it. \\
 \textbackslash tableofcontents & \textbackslash tableofcontents & \doc & The table of contents. Comes last of all the lists. \\
 \midrule

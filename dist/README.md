@@ -85,7 +85,7 @@ isso que não há exemplo pronto para eles.
 | `coppe.dbx`, `coppe.bbx`, `coppe.cbx` | O estilo de bibliografia e de citação, em autor-data. |
 | `coppe-numeric.bbx`, `coppe-numeric.cbx` | O mesmo, no sistema numérico, usado pela opção `numbers`. |
 | `brazilian-coppe.lbx`, `english-coppe.lbx` | Os termos de bibliografia em português e em inglês. **Os dois são necessários em qualquer trabalho**, por causa do resumo em idioma estrangeiro. |
-| `coppe.ist` | O estilo de ordenação da lista de abreviaturas, da lista de símbolos e do índice. |
+| `coppe.ist` | O estilo de ordenação das listas de abreviaturas, de siglas e de símbolos e do glossário automático. |
 | `latexmkrc` | A receita de compilação, para quem usa `latexmk` ou o Overleaf. |
 | `min-exemplo.tex` | **O exemplo mínimo, em português**: tudo o que a norma exige e nada além disso. É o ponto de partida. |
 | `max-exemplo.tex` | **O exemplo máximo, em português**: tudo o que a classe oferece e o Manual prevê, inclusive o opcional, comentado linha a linha. |
@@ -156,9 +156,11 @@ pdflatex min-exemplo
 pdflatex min-exemplo
 ```
 
-O `max-exemplo.tex` tem ainda as listas de abreviaturas, siglas e símbolos e o
-índice remissivo, que pedem o `makeindex` entre a primeira passada e as outras;
-por isso, para ele, prefira o `latexmk`.
+O `max-exemplo.tex` tem ainda as listas de abreviaturas, siglas e símbolos, o
+glossário e o índice, que passam pelo `makeindex`. **A classe o roda sozinha**
+no fim de cada compilação, e eles aparecem a partir da segunda: a mesma
+sequência acima funciona, e o botão de compilar do TeXstudio também. O
+`latexmk` faz tudo de uma vez.
 
 Com `latexmk` e o `latexmkrc` desta pasta, uma linha basta:
 
