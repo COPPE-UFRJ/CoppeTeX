@@ -23,6 +23,8 @@ src/coppe.aux
 *.syx
 *.toc
 *.abx
+*.sgx
+*.lsg
 *.hd
 *.hd
 src/example.synctex.gz
