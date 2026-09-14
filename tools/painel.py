@@ -112,9 +112,33 @@ PARA_DIST = [
     ("outraslinguas", "coppe-lang-italian.def"),
 ]
 
+# O que dist/ tem alem da lista: o README.md dela, a licenca, e o .gitignore,
+# que e do repositorio e nao vai no zip.
+DIST_EXTRAS = ["README.md", "COPYING.txt", ".gitignore"]
+
+
+def dist_esperado():
+    """Os caminhos, relativos a dist/ e com '/', que a entrega deve ter."""
+    return set([(sub + "/" + nome) if sub else nome for sub, nome in PARA_DIST]
+               + DIST_EXTRAS)
+
+
+def dist_sobras():
+    """Tudo o que esta em dist/ e nao devia: restos de alguem compilar ali
+    dentro, um PDF que mudou de pasta, um arquivo que saiu da lista."""
+    esperado = dist_esperado()
+    sobras = []
+    for raiz, pastas, nomes in os.walk(DIST):
+        for nome in nomes:
+            rel = os.path.relpath(os.path.join(raiz, nome), DIST).replace(os.sep, "/")
+            if rel not in esperado:
+                sobras.append(rel)
+    return sorted(sobras)
+
+
 # Restos de compilacao. O .pdf nunca entra nesta lista: e o produto.
 RESTOS = """aux bbl bcf blg fdb_latexmk fls glo gls idx ilg ind lab loa lof
-lol lomapa loq los lot lsg mw out run.xml sgx syx toc xmpdata xmpi synctex.gz""".split()
+lgs lol lomapa loq los lot lsg gsx mw out run.xml sgx syx toc xmpdata xmpi synctex.gz""".split()
 
 
 # --------------------------------------------------------------------------
@@ -241,6 +265,16 @@ def acao_dist(saida):
         for nome in faltando:
             saida("   FALTOU  %s -- compile antes" % nome)
         return False
+    # Copiar nao basta: o que ja estava la e nao esta na lista ficava para
+    # sempre, e ia para o zip. Foi assim que o release levou o .aux, o .log e o
+    # .synctex.gz de quem compilou o max-exemplo dentro de dist/, e um
+    # max-exemplo.pdf na raiz, repetido do de manuais/.
+    for rel in dist_sobras():
+        os.remove(os.path.join(DIST, *rel.split("/")))
+        saida("   REMOVIDO  %s" % rel)
+    for raiz, pastas, nomes in os.walk(DIST, topdown=False):
+        if raiz != DIST and not os.listdir(raiz):
+            os.rmdir(raiz)
     saida("   %d arquivo(s) copiado(s)" % (len(PARA_DIST) + 1))
     saida("   (dist/ fica com esses mais o README.md dela, que nao e copiado)")
     return True
@@ -268,6 +302,13 @@ def acao_pacote(saida):
     #
     # Sem os arquivos que comecam por ponto: o .gitignore de dist/ e plumbing do
     # repositorio e nao tem o que fazer na mao de quem baixa a entrega.
+    # So o que esta na lista: uma sobra em dist/ nao pode ir para o release.
+    sobras = dist_sobras()
+    if sobras:
+        for rel in sobras:
+            saida("   SOBRA  %s" % rel)
+        saida("dist/ tem arquivo fora da lista -- rode --dist, que limpa")
+        return False
     arquivos = []
     for raiz, pastas, nomes in os.walk(DIST):
         pastas[:] = [p for p in pastas if not p.startswith(".")]

@@ -99,6 +99,15 @@ if re.search(r'ErrorActionPreference\s*=\s*"Stop"', runtests):
     problemas.append('tests/run-tests.ps1 voltou a "Stop": o banner do '
                      "makeindex derruba a suite")
 
+# 4. dist/ nao pode ter nada fora da lista: o que estiver la vai para o zip do
+#    release. Ja foram o .aux, o .log e o .synctex.gz de quem compilou o
+#    max-exemplo dentro de dist/, e um max-exemplo.pdf repetido na raiz.
+sys.path.insert(0, os.path.join(RAIZ, "tools"))
+import painel  # noqa: E402
+for rel in painel.dist_sobras():
+    problemas.append("dist/ tem %s, que nao esta na lista -- rode o painel "
+                     "com --dist, que limpa" % rel)
+
 for x in problemas:
     print(x)
 sys.exit(1 if problemas else 0)
