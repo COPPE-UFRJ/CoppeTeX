@@ -22,9 +22,8 @@
 %%     \symbl, \abbrev, \citet, \citep, \autoref cross-references
 %%   * back matter: \printbibliography, \appendix (x2), \annex
 %%
-%% Compile under pdfLaTeX. Under LuaLaTeX/XeLaTeX, the class skips amssymb
-%% and the end-of-document ClassWarning will fire (test it by adding
-%% \usepackage{unicode-math} + \setmathfont{Latin Modern Math} below).
+%% Compiles under pdfLaTeX and LuaLaTeX. The class loads no math font; the
+%% block below picks amssymb or unicode-math by engine.
 %%
 %% NAO e gerado pelo coppe.dtx e NAO e distribuido: a suite prova que a
 %% classe funciona, nao faz parte dela. Rode por tools\prova.ps1, ou por
@@ -34,17 +33,21 @@
 \documentclass[dsc]{coppe}
 
  % Only packages NOT brought in by the class belong here. The coppe class (v4.0)
- % already loads: amsmath, amssymb (pdfLaTeX only), booktabs, longtable,
+ % already loads: amsmath, booktabs, longtable,
  % subcaption, hyperref, biblatex, listings, fancyvrb, algorithm2e, setspace,
  % csquotes, xcolor, geometry, fontenc, inputenc (pdfLaTeX), hyphenat,
  % lastpage, graphicx, tabularx, etoolbox, ltxcmds, hologo, caption,
  % float, enumitem, fancyhdr, titlesec, iftex.
 \usepackage{tikz}
 
- % Sob LuaLaTeX/XeLaTeX, descomente para suprimir o ClassWarning do fim de
- % documento e obter os simbolos AMS via unicode-math:
- %\usepackage{unicode-math}
- %\setmathfont{Latin Modern Math}
+ % Fontes matematicas: desde a v4.1 a classe nao carrega nenhuma (#90). Este
+ % teste usa \mathbb, \hbar e \varnothing, entao escolhe a fonte pelo motor.
+\ifPDFTeX
+  \usepackage{amssymb}
+\else
+  \usepackage{unicode-math}
+  \setmathfont{Latin Modern Math}
+\fi
 
  % Operadores matematicos personalizados (cap. de matematica).
 \DeclareMathOperator{\RMSE}{RMSE}
@@ -186,11 +189,8 @@
   \chapter{Matem\'atica (amsmath + amssymb)}
   \label{cap:math}
 
-  Estes s\'imbolos v\^em do \texttt{amssymb}: $\mathbb{R}$, $\hbar$,
-  $\varnothing$. Sob \hologo{LuaLaTeX}/\hologo{XeLaTeX}, sem
-  \texttt{unicode-math}, eles ficam indefinidos --- e a classe emite um
-  \emph{ClassWarning} no fim da compila\c{c}\~ao apontando para o que
-  fazer.
+  Estes s\'imbolos v\^em da fonte matem\'atica que o pre\^ambulo escolhe:
+  $\mathbb{R}$, $\hbar$, $\varnothing$. A classe n\~ao carrega nenhuma.
 
   Operador personalizado (declarado no pre\^ambulo):
   $\RMSE(y,\hat{y})$.

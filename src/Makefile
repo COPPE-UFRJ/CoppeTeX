@@ -4,7 +4,7 @@
 #
 # It should be used to strip the CoppeTeX class and its documentation.
 #
-# Copyright (C) 2011 CoppeTeX Project and any individual authors listed
+# Copyright (C) 2008-2026 CoppeTeX Project and any individual authors listed
 # elsewhere in this file.
 #
 # This program is free software; you can redistribute it and/or modify
@@ -31,7 +31,7 @@ PACKAGE_NAME=coppe
 DOC_SOURCE=coppe.dtx
 VERSION="3.2"
 AUTHORS=Vicente H. F. Batista and George O. Ainsworth Jr. and Geraldo Xexéo and Eduardo Mangeli
-COPYRIGHT_YEAR=2023
+COPYRIGHT_YEAR=2026
 PACKAGE_BUGREPORT="https://github.com/COPPE-UFRJ/CoppeTeX/issues"
 
 DESTDIR=

@@ -35,8 +35,9 @@ RAIZ = os.path.dirname(os.path.dirname(AQUI))
 DIST = os.path.join(RAIZ, "dist")
 GERADOR = os.path.join(RAIZ, "tools", "geradocvazio.py")
 
-# O unico aviso que a classe emite de proposito em toda compilacao no pdfTeX.
-ESPERADOS = ["you should try compiling with LuaLaTeX"]
+# Avisos que a classe emitiria de proposito. Desde que saiu o "you should try
+# compiling with LuaLaTeX" (#89), nenhum: o documento gerado sai sem aviso.
+ESPERADOS = []
 
 CASOS = [
     ("padrao", []),

@@ -5,8 +5,9 @@
 % It uses the doc utility to generate documentation for the 'coppe'
 % document class and its biblatex/biber bibliography style.
 %
-% Copyright (C) 2024 CoppeTeX Project and any individual authors listed
-% elsewhere in this file.
+% Copyright (C) 2008-2026 Vicente Helano F. Batista, George O. Ainsworth Jr.,
+%                         Geraldo Xexéo and Eduardo Mangeli.
+% CoppeTeX 4.1.
 %
 % This program is free software; you can redistribute it and/or modify
 % it under the terms of the GNU General Public License version 3 as
@@ -21,13 +22,15 @@
 % version 3 along with this package (see COPYING file).
 % If not, see <http://www.gnu.org/licenses/>.
 %
-% Author(s): Geraldo Xexéo
-%            Vicente Helano
+% Author(s): Vicente Helano F. Batista
 %            George O. Ainsworth Jr.
+%            Geraldo Xexéo
 %            Eduardo Mangeli
 %
-% This style was done with full support of Claude Opus 4.7 and Opus 4.8 Max
-% The AI was used to analyse and create code, discuss better solutions and generate tet
+% Version 4.1 (September 2026) was developed with the support of Claude Opus 5
+% (Anthropic). Version 4.0 (May 2026) had used Claude Opus 4.7 and Opus 4.8.
+% The AI was used to analyse and write code, to discuss better solutions and
+% to generate text; every change was reviewed by the maintainer.
 %
 %
 % \fi
@@ -550,8 +553,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % tempo precisa de dezessete. A classe resolve isso sozinha, carregando o pacote
 % |morewrites| quando ele est\'a instalado. Se n\~ao estiver, instale-o, ou
 % compile com \hologo{LuaLaTeX}, que tem cento e vinte e oito fluxos e n\~ao
-% conhece o problema. Veja as op\c c\~oes |morewrites| e |semmorewrites| na
-% se\c c\~ao~\ref{sec:opcoes}.
+% conhece o problema. Quando vale desligá-lo, e quando não, está na
+% seção~\ref{sec:morewrites}.
 %
 %
 % \section{Onde voc\^e vai rodar isto}\label{sec:ambientes}
@@ -588,7 +591,10 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %     recompilar do zero. Isso \'e bom, e resolve quase todo erro estranho de
 %     refer\^encia cruzada.
 %   \item \textbf{O \texttt{morewrites} est\'a instalado l\'a}, ent\~ao o limite de
-%     dezesseis fluxos de escrita n\~ao aparece.
+%     dezesseis fluxos de escrita n\~ao aparece. No plano gratuito, em que o
+%     tempo de compilação é limitado, um trabalho \textbf{sem índice remissivo e
+%     sem glossário} pode ganhar meio segundo por passada com a opção
+%     |semmorewrites|; veja a seção~\ref{sec:morewrites}.
 % \end{itemize}
 %
 % \subsection{Windows com \MiKTeX}
@@ -677,7 +683,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \hline
 % Velocidade & R\'apido. & Duas a tr\^es vezes mais lento. \\
 % Fontes do sistema & N\~ao usa. & Usa OpenType e TrueType, pelo |fontspec|. \\
-% Matem\'atica & |amssymb|, carregado pela classe. & |unicode-math|, que voc\^e
+% Matemática & |amssymb|, que você carrega. & |unicode-math|, que você
 %   carrega. \\
 % Acento no c\'odigo & Precisa do |inputenc|, que a classe carrega. & Nativo. \\
 % Fluxos de escrita & Dezesseis. A classe carrega o |morewrites| para passar
@@ -956,24 +962,88 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %     isso quando quiser do que ter a compila\c c\~ao quebrada o tempo todo.
 % \end{description}
 %
-% \subsection{Fluxos de escrita}
+% \subsection{Fluxos de escrita: quando desligar o \texttt{morewrites}}\label{sec:morewrites}
 %
-% A classe carrega o \texttt{morewrites} \textbf{por padr\~ao} quando ele est\'a
-% instalado, porque o pdf\TeX{} s\'o tem dezesseis fluxos de escrita e um
-% trabalho que pe\c ca todas as listas ao mesmo tempo precisa de dezessete. N\~ao
-% estando instalado, a classe \textbf{avisa e segue}; a compila\c c\~ao s\'o para
+% A classe carrega o \texttt{morewrites} \textbf{por padrão} quando ele está
+% instalado. Não estando, a classe \textbf{avisa e segue}; a compilação só para
 % se os fluxos acabarem de verdade.
 %
 % \begin{description}
-%   \item[\texttt{semmorewrites}] Impede a classe de carregar o \texttt{morewrites}. Use
-%     no caso raro em que o pacote brigue com outra coisa do seu documento: ele
-%     guarda o que \'e escrito at\'e o fim da p\'agina, e um pacote que escreva um
-%     arquivo e o leia de volta na mesma passada pode se perder.
+%   \item[\texttt{semmorewrites}] Impede a classe de carregar o \texttt{morewrites}.
 %   \item[\texttt{morewrites}] Significa ``eu insisto'': o pacote faltando vira
 %     erro, em vez de aviso.
 % \end{description}
 %
-% Sob \hologo{LuaLaTeX} nada disso \'e carregado nem \'e preciso.
+% \paragraph{O problema.} O \hologo{pdfTeX} tem \textbf{dezesseis} fluxos de
+% escrita, e cada arquivo que o documento mantém aberto durante a compilação
+% ocupa um até o fim. Não é a classe que gasta: é o que o trabalho pede. O
+% custo, medido com \texttt{\textbackslash count17} num documento que aciona tudo,
+% é este:
+%
+% \begin{center}
+% \begin{tabular}{@{}lr@{}}
+% \hline
+% O que ocupa & fluxos \\
+% \hline
+% Núcleo do \LaTeX\ (|.aux| e dois internos) & 3 \\
+% A classe e os pacotes que ela carrega (|biblatex|, |hyperref|\dots) & 3 \\
+% |tcolorbox|, se você o carrega & 1 \\
+% Lista de símbolos e lista de abreviaturas, uma cada & 2 \\
+% |.out| do |hyperref| (os marcadores do PDF) & 1 \\
+% Sumário e cada lista impressa (figuras, tabelas, quadros, programas,
+%   algoritmos) & 1 cada \\
+% Cada flutuante criado com |\newcoppefloat| que tenha lista & 1 \\
+% \textbf{Índice remissivo} (|\makeindex|) & 1 \\
+% \textbf{Cada índice a mais} (|imakeidx|, |splitidx|, |multind|), glossário
+%   (|glossaries|), nomenclatura (|nomencl|) & 1 cada \\
+% \hline
+% \end{tabular}
+% \end{center}
+%
+% O |example.tex| sozinho usa \textbf{os dezesseis}: três listas próprias do
+% exemplo (símbolos, abreviaturas e mapas) mais as seis de sempre. Um índice
+% remissivo a mais, e ele não compilaria sem o |morewrites|. O documento de prova
+% |adv_dsc_pt|, que tem índice remissivo e glossário, para com o erro da classe
+% ``Acabaram os 16 fluxos de escrita do \TeX''.
+%
+% \paragraph{O que o \texttt{morewrites} faz, e quanto custa.} Ele passa a
+% gerenciar todos os fluxos. Os que cabem nos dezesseis continuam fluxos reais
+% (a classe entrega a ele todos os que estão livres); os que passam disso viram
+% fluxos virtuais, escritos através de um arquivo |.mw| que ele abre, lê e
+% esvazia. Além disso, a cada página que sai ele abre e lê esse arquivo duas
+% vezes. Medido num computador comum, com o |example.tex|: cerca de
+% \textbf{meio segundo a mais por passada} de |pdflatex|, algo como 7\%. Até a
+% v4.1 a classe não entregava os fluxos reais, tudo passava pelo |.mw| (772
+% aberturas por passada) e o custo era de 2 segundos por passada, um quarto do
+% tempo.
+%
+% \paragraph{Pode desligar} (|semmorewrites|) quando o trabalho cabe nos
+% dezesseis fluxos, ou seja, quando \textbf{não tem índice remissivo, nem mais de
+% um índice, nem glossário, nem nomenclatura}, e não soma listas além das do
+% exemplo. O ganho é o meio segundo por passada, que conta no plano gratuito do
+% Overleaf, onde o tempo de compilação é limitado. Se passar do limite, a classe
+% não deixa o erro chegar calado: para com a mensagem ``Acabaram os 16 fluxos de
+% escrita do \TeX'', que diz o que fazer. Aí é só tirar o |semmorewrites|.
+%
+% \paragraph{Deve desligar} quando o |morewrites| brigar com outro pacote do seu
+% documento. Ele guarda o que é escrito até a página sair, e um pacote que escreva
+% um arquivo e o leia de volta \emph{na mesma passada} pode se perder. É raro, e
+% o sintoma é um arquivo auxiliar desse pacote vazio ou incompleto. Se o seu
+% trabalho também precisar de mais de dezesseis fluxos, compile com
+% \hologo{LuaLaTeX}.
+%
+% \paragraph{Não desligue} se o trabalho tem \textbf{índice remissivo mais
+% glossário, vários índices, ou todas as listas mais listas próprias}: são
+% exatamente os casos para os quais o pacote está ali.
+%
+% \paragraph{Sob \hologo{LuaLaTeX}} nada disso existe: são cento e vinte e oito
+% fluxos, o |morewrites| não é carregado e as duas opções não têm efeito.
+%
+% \paragraph{E o \texttt{scrwfile}?} É a outra solução conhecida: junta as
+% listas num único arquivo e só as separa no fim do documento. Na medição ficou
+% tão rápido quanto o |morewrites| com os fluxos reais, mas o próprio pacote se
+% anuncia como \emph{experimental e sem suporte}, com um aviso em toda
+% compilação, e só resolve as listas, não os índices. A classe não o usa.
 %
 % \section{Comandos antes do \texttt{\textbackslash begin\{document\}}}
 %
@@ -1270,6 +1340,39 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \'ultimo. As listas \textbf{n\~ao} entram no sum\'ario, a n\~ao ser com a op\c
 % c\~ao |listasnosumario|.
 %
+% \paragraph{Quais são obrigatórias.} Só o \textbf{sumário}. O Manual põe o
+% sumário entre os elementos essenciais (3.1.2.1.6) e todas as listas entre os
+% \emph{opcionais} (3.1.2.2). A Norma COPPE acrescenta três listas próprias, que
+% aparecem quando o trabalho tem pelo menos um item daquele tipo (§10):
+%
+% \begin{center}
+% \begin{tabular}{@{}lll@{}}
+% \hline
+% Elemento & Comando & Situação \
+% \hline
+% Sumário & |\tableofcontents| & \textbf{obrigatório} (3.1.2.1.6) \
+% Lista de ilustrações (figuras) & |\listoffigures| & opcional (3.1.2.2.4) \
+% Lista de tabelas & |\listoftables| & opcional (3.1.2.2.5) \
+% Lista de quadros & |\listofquadros| & COPPE: se houver quadro (§10) \
+% Lista de programas & |\listofprogramas| & COPPE: se houver programa (§10) \
+% Lista de algoritmos & |\listofalgorithms| & COPPE: se houver algoritmo (§10) \
+% Lista de outro tipo de ilustração & |\listof...| (|\newcoppefloat|) & opcional (3.1.2.2.4) \
+% Lista de abreviaturas e siglas & |\printloabbreviations| & opcional (3.1.2.2.6) \
+% Lista de símbolos & |\printlosymbols| & opcional (3.1.2.2.7) \
+% \hline
+% \end{tabular}
+% \end{center}
+%
+% Dois detalhes do Manual. Na 3.1.2.2.4, quando for necessário, faz-se ``uma lista
+% para cada tipo de ilustração'' --- desenhos, gráficos, mapas, quadros ---, que é
+% o que |\newcoppefloat| oferece. Na 3.1.2.2.6, ``recomenda-se a elaboração de
+% listas separadas'' de abreviaturas e de siglas; a classe as reúne numa só.
+% Na parte pós-textual, só as \textbf{referências} são obrigatórias; glossário,
+% apêndice, anexo e índice são opcionais (3.1.4).
+%
+% Uma lista opcional que o trabalho não usa sai do documento apagando-se a linha
+% do comando. Deixá-la sai uma folha com o título e nada embaixo.
+%
 % Cada |\listof...| corresponde a um tipo de flutuante; um flutuante criado por
 % voc\^e com |\newcoppefloat{mapa}{...}{...}| ganha o seu, |\listofmapas|.
 %
@@ -1427,12 +1530,14 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %
 % \subsection{Matem\'atica}
 % \begin{description}
-%   \item[\texttt{amsmath}] ambientes de equa\c c\~ao, sempre carregado.
-%   \item[\texttt{amssymb}] s\'imbolos cl\'assicos (o R de conjunto dos reais, o h cortado,
-%     o conjunto vazio). Carregado \textbf{s\'o sob \hologo{pdfLaTeX}}: ele \'e um
-%     pacote de 8 bits e briga com o |unicode-math|. Sob \hologo{LuaLaTeX} ou
-%     \hologo{XeLaTeX} a classe o pula e avisa, no fim da compila\c c\~ao, se
-%     voc\^e n\~ao carregou nem |unicode-math| nem |amssymb|.
+%   \item[\texttt{amsmath}] ambientes de equação, sempre carregado. É estrutura,
+%     não fonte.
+%   \item[Fontes matemáticas] \textbf{nenhuma}. Desde a v4.1 a fonte dos símbolos
+%     é escolha sua, e vai no preâmbulo: |amssymb| sob \hologo{pdfLaTeX},
+%     |unicode-math| com uma fonte OpenType sob \hologo{LuaLaTeX}. O |example.tex|
+%     e o gerador de documento vazio já trazem o bloco que escolhe pelo motor.
+%     Até a v4.1 a classe carregava o |amssymb| sozinha; documento que usava
+%     |\mathbb| sem carregá-lo precisa agora carregá-lo.
 % \end{description}
 %
 % \subsection{P\'agina e espa\c camento}
@@ -2180,7 +2285,9 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %   \item[``File \texttt{coppe-logo} not found''.] Os logotipos n\~ao est\~ao na
 %     pasta. Copie |coppe-logo.pdf| e |ufrj-logo.pdf| da |dist/|.
 %   \item[``No room for a new \texttt{write}''.] O \hologo{pdfTeX} ficou sem
-%     fluxos de escrita. Instale o |morewrites| ou compile com \hologo{LuaLaTeX}.
+%     fluxos de escrita. Tire a opção |semmorewrites|, se você a passou; instale
+%     o |morewrites|; ou compile com \hologo{LuaLaTeX}. Ver a
+%     seção~\ref{sec:morewrites}.
 %   \item[``I can't write on file''.] No Windows, o PDF est\'a aberto num leitor
 %     que trava o arquivo. Feche-o.
 %   \item[``Biber error: Cannot find control file''.] \texttt{biber} e \texttt{biblatex} de
@@ -2247,16 +2354,21 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % |\familydefault| e |\encodingdefault| na hora de compor, e n\~ao precisa mais
 % que voc\^e redefina |\coppefinalfont| junto.
 %
-% \paragraph{Matem\'atica sob \hologo{LuaLaTeX}.} A classe n\~ao carrega
-% |amssymb| nos motores Unicode, porque ele briga com o |unicode-math|. Se voc\^e
-% usa s\'imbolos AMS, ponha no pre\^ambulo:
+% \paragraph{Fontes matemáticas.} São escolha sua, e a classe não carrega
+% nenhuma. Se o trabalho usa símbolos como |\mathbb|, |\hbar| ou |\varnothing|,
+% ponha no preâmbulo o bloco que escolhe pelo motor --- é o mesmo do
+% |example.tex|:
 % \begin{verbatim}
-%   \usepackage{unicode-math}
-%   \setmathfont{Latin Modern Math}   % ou STIX Two Math, ...
+%   \ifPDFTeX
+%     \usepackage{amssymb}
+%   \else
+%     \usepackage{unicode-math}
+%     \setmathfont{Latin Modern Math}   % ou STIX Two Math, ...
+%   \fi
 % \end{verbatim}
-% \textbf{Nunca carregue \texttt{amssymb} junto com \texttt{unicode-math}}: os s\'imbolos
-% ficariam repartidos entre duas codifica\c c\~oes incompat\'iveis. A classe avisa
-% no fim da compila\c c\~ao se voc\^e n\~ao carregou nenhum dos dois.
+% O |\ifPDFTeX| vem do |iftex|, que a classe já carrega.
+% \textbf{Nunca carregue \texttt{amssymb} junto com \texttt{unicode-math}}: os símbolos
+% ficariam repartidos entre duas codificações incompatíveis.
 %
 % \paragraph{Metadados do PDF.} Autor, t\'itulo, assunto e palavras-chave s\~ao
 % preenchidos pelo |\maketitle|, a partir dos dados que voc\^e j\'a informou. Voc\^e
@@ -2601,7 +2713,7 @@ listasnosumario & [dsc,listasnosumario] & \pre & Put the pre-textual lists back 
 assinaturas & ---           & \pre & Accepted, does nothing. Signature rules are gone: deposit is digital. \\
 numeraisromanos & [dsc,numeraisromanos] & \pre & Roman numerals on pre-textual sheets. \textbf{Against 2.7}; legacy only. \\
 morewrites & [dsc,morewrites] & \pre & A missing \texttt{morewrites} package becomes an error, not a warning. \\
-semmorewrites & [dsc,semmorewrites] & \pre & Do not load \texttt{morewrites} at all. \\
+semmorewrites & [dsc,semmorewrites] & \pre & Do not load \texttt{morewrites}. Saves about half a second per pdflatex pass (Overleaf free plan). Safe only without an index, several indexes, a glossary or nomenclature: the class stops with a clear error if the 16 streams run out. \\
 \midrule
 
 \multicolumn{4}{@{}l@{}}{\normalfont\bfseries\small PREAMBLE}\\[2pt]
@@ -2664,6 +2776,7 @@ brazilianabstract & \textbackslash begin\{brazilianabstract\} ... & \doc & Third
 \textbackslash coppetexfinalpage & \textbackslash coppetexfinalpage & \doc & Optional colophon, every item measured at compile time: class version, engine and its version, TeX system, \LaTeX{} format, font family and encoding, biblatex version, date, hour, operating system and machine. \\
 \midrule
 
+\multicolumn{4}{@{}p{\linewidth}@{}}{\normalfont\small Only the table of contents is mandatory (3.1.2.1.6). Every list is optional (3.1.2.2); the COPPE norm (\S10) adds the lists of \emph{quadros}, programs and algorithms whenever the work has one of them.}\[2pt]
 \multicolumn{4}{@{}l@{}}{\normalfont\bfseries\small PRE-TEXTUAL LISTS ---
   lists first, table of contents last (3.1.2.1.6)}\\[2pt]
 \textbackslash listoffigures & \textbackslash listoffigures & \doc & List of figures. \\
@@ -2733,15 +2846,30 @@ Problems: \url{https://github.com/COPPE-UFRJ/CoppeTeX/issues}
 %    \begin{macrocode}
 %<*example>
 \documentclass[dsc]{coppe}
+% Opções de classe que valem conhecer aqui:
+%  - semmorewrites: não carrega o pacote morewrites. Compila meio segundo mais
+%    rápido por passada, mas só serve a trabalho SEM índice remissivo, sem
+%    vários índices e sem glossário -- este exemplo já usa os 16 fluxos de
+%    escrita do pdfLaTeX. Ver o capítulo "Truques de LaTeX".
 
 \usepackage{rotating}        % rodando coisas, como tabelas
 \usepackage[most]{tcolorbox} % caixas de texto
 \usepackage{tikz}            % gráficos vetoriais (o tcolorbox já o traz)
-% Sob LuaLaTeX/XeLaTeX, descomente as duas linhas a seguir para obter os
-% símbolos AMS (\mathbb, \hbar, \varnothing, ...) via unicode-math. Sob
-% pdfLaTeX, a classe já carrega amssymb automaticamente; deixe comentado.
-%\usepackage{unicode-math}
-%\setmathfont{Latin Modern Math}    % ou STIX Two Math, TeX Gyre Termes Math...
+
+% Fontes matemáticas: a escolha é SUA, não da classe. A classe carrega só o
+% amsmath (ambientes e comandos), e nenhuma fonte de símbolos. O bloco abaixo
+% escolhe a do motor em uso:
+%  - pdfLaTeX: amssymb, as fontes AMS de 8 bits (\mathbb, \hbar, \varnothing...);
+%  - LuaLaTeX/XeLaTeX: unicode-math com uma fonte OpenType. Nunca carregue
+%    amssymb junto com unicode-math: os dois brigam pelos mesmos símbolos.
+% Troque Latin Modern Math por STIX Two Math, TeX Gyre Termes Math etc., se
+% quiser outra aparência. Sem matemática no trabalho, apague o bloco.
+\ifPDFTeX
+  \usepackage{amssymb}
+\else
+  \usepackage{unicode-math}
+  \setmathfont{Latin Modern Math}
+\fi
 \DeclareMathOperator{\RMSE}{RMSE}   % operadores próprios (cap. de matemática)
 \DeclareMathOperator{\diag}{diag}
 % A classe coppe já carrega: amsmath, booktabs, longtable, subcaption,
@@ -2866,8 +2994,22 @@ Problems: \url{https://github.com/COPPE-UFRJ/CoppeTeX/issues}
 
   \end{foreignabstract}
 
-  % Ordem pre-textual (NBR 14724/6027, R55): listas (ilustracoes, tabelas,
-  % abreviaturas e siglas, simbolos) ANTES do sumario; sumario por ultimo.
+  % Ordem pré-textual (Manual 3.1.2.1.6): as listas ANTES do sumário, e o
+  % sumário por último.
+  %
+  % O que é obrigatório e o que é opcional:
+  %  - \tableofcontents ........ OBRIGATÓRIO (Manual 3.1.2.1.6);
+  %  - \listoffigures .......... opcional (3.1.2.2.4, lista de ilustrações);
+  %  - \listoftables ........... opcional (3.1.2.2.5);
+  %  - \listofquadros, \listofprogramas, \listofalgorithms: acréscimo da
+  %    Norma COPPE (§10), presentes quando o trabalho tem ao menos um quadro,
+  %    programa ou algoritmo;
+  %  - \listofmapas ............ opcional; o Manual admite uma lista por tipo
+  %    de ilustração (3.1.2.2.4), e \newcoppefloat cria o tipo;
+  %  - \printloabbreviations ... opcional (3.1.2.2.6);
+  %  - \printlosymbols ......... opcional (3.1.2.2.7).
+  % Este exemplo imprime todas para mostrá-las. No seu trabalho, apague a linha
+  % da lista que você não usa: deixada, ela sai como folha só com o título.
   \listoffigures
   \listoftables
   \listofquadros
@@ -2884,7 +3026,7 @@ Problems: \url{https://github.com/COPPE-UFRJ/CoppeTeX/issues}
   Este é um documento exemplo para o uso da classe CoppeTeX, destinado a ajudar os alunos do Instituto Alberto Luiz Coimbra de Pós-graduação e Pesquisa de Engenharia (COPPE), da Universidade Federal do Rio de Janeiro.
 
   A classe \verb|coppe| foi criada originalmente por Vicente Helano e George Ainsworth, porém, em 2024, passou a ser mantida por Geraldo Xexéo e Eduardo Mangeli.
-  Em 2026, Geraldo Xexéo, com forte ajuda das ferramentas Claude 4.7 Opus e Max e 4.8 Opus Max, fez modificações de alta monta para suportar o novo \citetitle{manualbib}, que implementava normas recentes da ABNT.
+  Em 2026, Geraldo Xexéo fez modificações de alta monta para suportar o novo \citetitle{manualbib}, que implementa normas recentes da ABNT: a versão 4.0, em maio, com apoio do Claude Opus 4.7 e do Claude Opus 4.8, e a versão 4.1, em setembro, com apoio do Claude Opus 5, ambos da Anthropic.
   
    Provavelmente Geraldo Xexéo, professor do Programa de Engenharia de Sistemas e Computação, deve continuar mantendo ou apoiando a manutenção por alguns anos. Se você quiser particiar do grupo de manutenção, é só entrar em contato via github.
 
@@ -2935,7 +3077,7 @@ Problems: \url{https://github.com/COPPE-UFRJ/CoppeTeX/issues}
 
 \section{Como e onde usar o \LaTeX}
 
-  Existem muitos tutoriais de \LaTeX, mas basicamente, em 2024, ele é usado em dois ambientes:
+  Existem muitos tutoriais de \LaTeX, mas basicamente, em 2026, ele é usado em dois ambientes:
   \begin{enumerate}
   \item Na sua máquina, instalando uma versão completa como o \hologo{MiKTeX}, típico do Windows, ou simplesmente os pacotes padrão do Linux\footnote{Também existem versões para Mac, das quais eu não estou informado}.
   \item Usar um ambiente na rede, como o Overleaf.
@@ -3358,21 +3500,47 @@ Formatos aceitos com \hologo{pdfLaTeX}/\hologo{LuaLaTeX}: \texttt{pdf}, \texttt{
 
 \section{Introdução ao tikz}
 
-O \verb|tikz| (disponível também via \verb|tcolorbox|) desenha gráficos vetoriais no próprio \LaTeX. Um exemplo simples:
+O \verb|tikz| (disponível também via \verb|tcolorbox|) desenha gráficos vetoriais no próprio \LaTeX: o desenho sai com a mesma fonte do texto, escala sem perder qualidade e não depende de arquivo externo. A \autoref{fig:tikz} é um fluxograma de três etapas, e o código dela está logo abaixo, comentado. Como toda ilustração, a legenda vai \textbf{acima} e a fonte \textbf{abaixo}.
 
 \begin{figure}[ht]
   \centering
-  \begin{tikzpicture}
-    \node[draw, rounded corners] (a) at (0,0) {Início};
-    \node[draw, rounded corners] (b) at (4,0) {Fim};
-    \draw[->, thick] (a) -- (b) node[midway, above] {processo};
-  \end{tikzpicture}
   \caption{Diagrama simples em tikz}
   \label{fig:tikz}
-  \fonte{Elabora\c{c}\~ao pr\'opria.}
+  \begin{tikzpicture}[
+      % um estilo com nome, para não repetir as mesmas opções em cada nó
+      etapa/.style={draw, rounded corners, minimum width=2.4cm,
+                    minimum height=0.9cm, fill=gray!10},
+      seta/.style={->, thick}]
+    % os nós: estilo, nome entre parênteses, posição (x,y) em cm, texto
+    \node[etapa] (coleta)  at (0,0) {Coleta};
+    \node[etapa] (analise) at (4,0) {Análise};
+    \node[etapa] (relato)  at (8,0) {Relatório};
+    % as setas ligam os nós pelo nome; o rótulo vai no meio, por cima
+    \draw[seta] (coleta)  -- (analise) node[midway, above] {dados};
+    \draw[seta] (analise) -- (relato)  node[midway, above] {resultados};
+    % uma seta de volta, curvada por baixo
+    \draw[seta, dashed] (relato.south) to[bend left=25]
+      node[midway, below] {revisão} (coleta.south);
+  \end{tikzpicture}
+  \fonte{Elaboração própria.}
 \end{figure}
 
-Para gráficos de dados (curvas, barras), veja o \verb|pgfplots|, construído sobre o \verb|tikz|.
+\begin{verbatim}
+\begin{tikzpicture}[
+    etapa/.style={draw, rounded corners, minimum width=2.4cm,
+                  minimum height=0.9cm, fill=gray!10},
+    seta/.style={->, thick}]
+  \node[etapa] (coleta)  at (0,0) {Coleta};
+  \node[etapa] (analise) at (4,0) {Análise};
+  \node[etapa] (relato)  at (8,0) {Relatório};
+  \draw[seta] (coleta)  -- (analise) node[midway, above] {dados};
+  \draw[seta] (analise) -- (relato)  node[midway, above] {resultados};
+  \draw[seta, dashed] (relato.south) to[bend left=25]
+    node[midway, below] {revisão} (coleta.south);
+\end{tikzpicture}
+\end{verbatim}
+
+Três ideias bastam para começar: \textbf{nós} (\verb|\node|) são caixas de texto com nome e posição; \textbf{caminhos} (\verb|\draw|) ligam coordenadas ou nós; e \textbf{estilos} (\verb|nome/.style|) guardam opções para reaproveitar. Para gráficos de dados (curvas, barras), veja o \verb|pgfplots|, construído sobre o \verb|tikz|. A documentação do \verb|tikz| (\texttt{texdoc tikz}) começa com tutoriais.
 
 \section{Float ou direto no texto?}
 
@@ -3650,7 +3818,7 @@ $i \leftarrow 1$\;
 
   \chapter{Escrevendo matemática}
 
-  A classe carrega \texttt{amsmath} em qualquer motor. Sob \hologo{pdfLaTeX} ela também carrega \texttt{amssymb} (símbolos clássicos $\mathbb{R}$, $\hbar$, $\varnothing$, \ldots). Sob \hologo{LuaLaTeX}/\hologo{XeLaTeX}, \textbf{a classe NÃO carrega \texttt{amssymb}} (ele é incompatível com o \texttt{unicode-math}); se você terminar o documento sem ter carregado nem \texttt{unicode-math} nem \texttt{amssymb}, a classe emite um \emph{ClassWarning} no fim da compilação pedindo que você adicione \verb|\usepackage{unicode-math}| ao preâmbulo (veja a~\autoref{sec:unicode-math}). Fórmulas no texto vão entre \verb|$...$|; fórmulas destacadas e numeradas usam o ambiente \verb|equation|.
+  A classe carrega \texttt{amsmath} em qualquer motor: são os ambientes e comandos, não a fonte. \textbf{A fonte matemática é escolha sua}, e a classe não carrega nenhuma. Este exemplo a escolhe no preâmbulo, pelo motor: \texttt{amssymb} sob \hologo{pdfLaTeX} (símbolos clássicos $\mathbb{R}$, $\hbar$, $\varnothing$, \ldots) e \texttt{unicode-math} com a Latin Modern Math sob \hologo{LuaLaTeX}/\hologo{XeLaTeX} (veja a~\autoref{sec:unicode-math}). Copie o bloco para o seu trabalho, troque a fonte se quiser, ou apague-o se o trabalho não tem matemática. Fórmulas no texto vão entre \verb|$...$|; fórmulas destacadas e numeradas usam o ambiente \verb|equation|.
 
   \section{Alinhamento (align)}
   O ambiente \verb|align| alinha equações pelo \verb|&| e numera cada linha (\verb|\\| quebra a linha; \verb|align*| não numera):
@@ -3701,11 +3869,14 @@ $i \leftarrow 1$\;
 
   \section{Unicode e LuaLaTeX (unicode-math)}
   \label{sec:unicode-math}
-  Ao migrar para \hologo{LuaLaTeX} (ou \hologo{XeLaTeX}), \textbf{não carregue} \texttt{amssymb}: ele é o pacote AMS legado, escrito para as fontes Type~1 de 8~bits (\texttt{msam}/\texttt{msbm}), e colide com \texttt{unicode-math} -- o pacote moderno que controla a fonte matemática OpenType. Por isso a classe \texttt{coppe} já \emph{omite} \texttt{amssymb} sob motores Unicode e emite um aviso na compilação (procure por \texttt{Class coppe Warning} no log) lembrando que cabe a você completar o preâmbulo:
+  Ao migrar para \hologo{LuaLaTeX} (ou \hologo{XeLaTeX}), \textbf{não carregue} \texttt{amssymb}: ele é o pacote AMS legado, escrito para as fontes Type~1 de 8~bits (\texttt{msam}/\texttt{msbm}), e colide com \texttt{unicode-math} -- o pacote moderno que controla a fonte matemática OpenType. Por isso o preâmbulo deste exemplo escolhe um ou outro pelo motor, com \verb|\ifPDFTeX| (do pacote \texttt{iftex}, que a classe já carrega):
   \begin{verbatim}
-  \usepackage{amsmath}      % a classe já carrega
-  \usepackage{unicode-math} % NÃO use \usepackage{amssymb} junto
-  \setmathfont{Latin Modern Math}  % ou STIX Two Math
+  \ifPDFTeX
+    \usepackage{amssymb}
+  \else
+    \usepackage{unicode-math} % NÃO use \usepackage{amssymb} junto
+    \setmathfont{Latin Modern Math}  % ou STIX Two Math
+  \fi
   \end{verbatim}
   O código clássico continua valendo ($\mathbb{R}$, $\int_a^b f(x)\,dx$, $\alpha$) e você ainda pode digitar os próprios símbolos Unicode no editor. A vantagem é que o PDF passa a indexar os símbolos em Unicode real: ao copiar uma fórmula do PDF, o significado dos símbolos é preservado.
 
@@ -3762,6 +3933,24 @@ use \verb|\href{https://exemplo.org}{texto}|. Evite digitar URLs como texto comu
 
   \section{\texttt{latexmkrc}, perl e Overleaf}
   O \verb|latexmk| automatiza a compilação (roda \LaTeX, \verb|biber| e \verb|makeindex| quantas vezes for preciso) e lê o \texttt{latexmkrc} do diretório. Como o \verb|latexmk| é um script \emph{Perl}, no Windows instale o \emph{Strawberry Perl}; no Linux e no macOS o Perl já vem instalado. No Overleaf, o \verb|latexmk| roda sozinho e lê o \texttt{latexmkrc} do projeto.
+
+  \section{Fluxos de escrita e o \texttt{morewrites}}
+  \label{sec:morewrites}
+
+  O \hologo{pdfLaTeX} só consegue manter \textbf{dezesseis} arquivos abertos para escrita ao mesmo tempo, e cada lista que o trabalho imprime ocupa um deles até o fim da compilação: o sumário, a lista de figuras, a de tabelas, a de quadros, a de programas, a de algoritmos, cada flutuante novo criado com \verb|\newcoppefloat|, a lista de símbolos, a de abreviaturas, o índice remissivo, cada índice a mais e o glossário. Este exemplo, sozinho, usa os dezesseis.
+
+  Por isso a classe carrega o pacote \verb|morewrites|, que tira esse teto. Ele custa cerca de meio segundo por passada do \hologo{pdfLaTeX}. Quando o tempo de compilação importa --- no plano gratuito do Overleaf, por exemplo ---, a opção \verb|semmorewrites| o desliga:
+  \begin{verbatim}
+  \documentclass[dsc,semmorewrites]{coppe}
+  \end{verbatim}
+
+  \begin{itemize}
+    \item \textbf{Pode desligar} se o trabalho \emph{não} tem índice remissivo, nem vários índices (\verb|imakeidx|, \verb|splitidx|), nem glossário, nem nomenclatura, e não soma listas além das deste exemplo.
+    \item \textbf{Deve desligar} se o \verb|morewrites| brigar com outro pacote, o que é raro: ele guarda o que é escrito até a página sair, e um pacote que escreve um arquivo e o lê de volta na mesma passada pode se perder.
+    \item \textbf{Não desligue} se o trabalho tem índice remissivo e glossário, ou vários índices: é para isso que o pacote está ali.
+  \end{itemize}
+
+  Se você desligar e os fluxos acabarem, a compilação para com a mensagem ``Acabaram os 16 fluxos de escrita do \TeX'', que diz o que fazer: tirar o \verb|semmorewrites| ou compilar com \hologo{LuaLaTeX}, que tem cento e vinte e oito fluxos e dispensa o pacote. O manual da classe discute o assunto em detalhe, com o custo de cada lista.
 
   \chapter{Método Proposto}
   \chapter{Resultados e Discuss\~oes}
@@ -3966,8 +4155,7 @@ No modelo \CoppeTeX os anexos devem obrigtoriamente vir depois dos apêndices e 
 \def\MiKTeX{\hologo{MiKTeX}}
 % Engine-aware UTF-8 input: pdfLaTeX needs inputenc(utf8); LuaLaTeX (and XeTeX)
 % are UTF-8 native, so inputenc must NOT be loaded there (it would clash). Source
-% files may use accented Latin characters (áéíóú) directly. Under pdfLaTeX we also
-% suggest LuaLaTeX, which handles Unicode/fonts better (at the cost of speed).
+% files may use accented Latin characters (áéíóú) directly.
 %    \end{macrocode}
 %
 % \subsubsection{Motor, codifica\c c\~ao e fontes}
@@ -3982,10 +4170,13 @@ No modelo \CoppeTeX os anexos devem obrigtoriamente vir depois dos apêndices e 
 %
 %    \begin{macrocode}
 \RequirePackage{iftex}
+% pdfLaTeX e um motor admitido, e nao ha nada de errado num documento que o
+% usa. Ate a v4.1 a classe emitia aqui "Although slower, you should try
+% compiling with LuaLaTeX" a cada compilacao: um aviso que nao aponta defeito
+% nenhum ensina o autor a ignorar avisos, inclusive os que apontam. A escolha
+% do motor esta discutida no manual; o log nao e o lugar dela.
 \ifPDFTeX
   \RequirePackage[utf8]{inputenc}
-  \AtEndOfClass{\ClassWarningNoLine{coppe}{%
-    Although slower, you should try compiling with LuaLaTeX}}
 \fi
 % lmodern MUST come with the T1 encoding. Without it, T1 falls back to the EC
 % fonts, which exist only as METAFONT bitmaps in most installations, and the
@@ -4003,37 +4194,47 @@ No modelo \CoppeTeX os anexos devem obrigtoriamente vir depois dos apêndices e 
 % page layout does not move.
 \RequirePackage{lmodern}
 \RequirePackage[T1]{fontenc}
-% Math support. amsmath is universal and works on every engine, so the class
-% brings it in unconditionally (it must precede hyperref, which is loaded at
-% the end of the class). amssymb is the legacy AMS symbol package, built
-% around the 8-bit Type 1 fonts msam/msbm; on a Unicode engine (LuaLaTeX or
-% XeLaTeX) it clashes with unicode-math, which already provides all of its
-% symbols through Unicode math codes. So amssymb is loaded ONLY under
-% pdfLaTeX; Unicode-engine users get a ClassWarning pointing them at
-% unicode-math (the class does not auto-load unicode-math because choosing
-% an OpenType math font is a typographic decision that belongs to the author).
+% A Latin Modern Sans nao tem italico, so obliquo, e o t1lmss.fd declara o
+% italico como substituicao (ssub) do obliquo. O resultado impresso e o mesmo,
+% mas cada uso -- a dedicatoria, qualquer \emph -- deixava no log "Font shape
+% T1/lmss/m/it in size <12> not available, T1/lmss/m/sl tried instead". Como a
+% sem serifa e o padrao desde a v4.1, isso saia em todo documento. O mesmo vale
+% para o negrito da maquina de escrever (lmtt/bx/n, que e o lmtt/b/n).
+%
+% A saida e declarar essas formas apontando DIRETO para os arquivos que a
+% substituicao ja escolhia: mesma fonte, mesmo PDF, sem substituicao e sem
+% mensagem. O .fd e lido primeiro -- ele e carregado sob demanda, e se viesse
+% depois desfaria estas declaracoes.
+\begingroup
+  \fontencoding{T1}\fontfamily{lmss}\selectfont
+  \fontfamily{lmtt}\selectfont
+\endgroup
+\DeclareFontShape{T1}{lmss}{m}{it}
+  {<-8.5> ec-lmsso8 <8.5-9.5> ec-lmsso9 <9.5-11> ec-lmsso10
+   <11-15.5> ec-lmsso12 <15.5-> ec-lmsso17}{}
+\DeclareFontShape{T1}{lmss}{bx}{it}{<-> ec-lmssbo10}{}
+\DeclareFontShape{T1}{lmss}{b}{n}{<-> ec-lmssbx10}{}
+\DeclareFontShape{T1}{lmss}{b}{sl}{<-> ec-lmssbo10}{}
+\DeclareFontShape{T1}{lmss}{b}{it}{<-> ec-lmssbo10}{}
+\DeclareFontShape{T1}{lmss}{sbc}{it}{<-> ec-lmssdo10}{}
+\DeclareFontShape{T1}{lmtt}{bx}{n}{<-> ec-lmtk10}{}
+\DeclareFontShape{T1}{lmtt}{bx}{sl}{<-> ec-lmtko10}{}
+\DeclareFontShape{T1}{lmtt}{bx}{it}{<-> ec-lmtko10}{}
+\DeclareFontShape{T1}{lmtt}{b}{it}{<-> ec-lmtko10}{}
+% Math support. amsmath is structure, not typeface -- environments (align,
+% gather, cases) and commands (\text, \DeclareMathOperator) that work on every
+% engine -- so the class loads it (it must precede hyperref, loaded at the end
+% of the class).
+%
+% Math FONTS are the author's choice, and the class loads none. Up to v4.1 it
+% loaded amssymb under pdfLaTeX and warned under LuaLaTeX when neither amssymb
+% nor unicode-math was present. Both were the class deciding a typographic
+% question: amssymb is one set of 8-bit symbol fonts among several, and on a
+% Unicode engine the right route is unicode-math with an OpenType math font
+% that only the author can pick. example.tex and the empty-document generator
+% load them per engine, in the preamble, where the author sees and changes it.
+% A document that relied on the class's amssymb must now load it itself.
 \RequirePackage{amsmath}
-\ifPDFTeX
-  \RequirePackage{amssymb}
-\else
-  % Unicode engine: defer the check to end of document. Only warn if the
-  % user did NOT add either unicode-math (the modern OpenType-math route)
-  % or amssymb (the legacy route, which they would have loaded manually).
-  % This avoids nagging authors who already followed the documented
-  % \usepackage{unicode-math} workflow.
-  \AtEndDocument{%
-    \@ifpackageloaded{unicode-math}{}{%
-      \@ifpackageloaded{amssymb}{}{%
-        \ClassWarningNoLine{coppe}{%
-          You are compiling with a Unicode engine (LuaLaTeX or XeLaTeX) and\MessageBreak
-          neither unicode-math nor amssymb is loaded. AMS-style symbols\MessageBreak
-          (\string\mathbb, \string\hbar, \string\varnothing, ...) will be undefined.\MessageBreak
-          Add to your preamble:\MessageBreak
-          \space\space\string\usepackage{unicode-math}\MessageBreak
-          \space\space\string\setmathfont{Latin Modern Math}\MessageBreak
-          Do NOT load amssymb together with unicode-math -- it would clash\MessageBreak
-          with the OpenType math font setup}}}}
-\fi
 % Margins per the SiBI manual, 9th rev. ed. (2026), 2.3: left 3cm, top 3cm,
 % right 2cm, bottom 2cm -- ONE-SIDED. The 2025 edition also specified verso
 % margins (right 3cm / left 2cm) and recommended printing the body on both
@@ -4450,7 +4651,8 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
             abertas ao mesmo tempo.\MessageBreak
             Tres saidas, nesta ordem de preferencia:\MessageBreak
             (1) compile com lualatex, que tem 128 fluxos;\MessageBreak
-            (2) passe a opcao `morewrites' a classe coppe;\MessageBreak
+            (2) tire a opcao `semmorewrites', se a passou (ou passe
+            `morewrites');\MessageBreak
             (3) remova uma lista que o trabalho nao usa.\MessageBreak
             A lista que faltou agora foi a de extensao `#1', mas o problema
             nao e dela: e a soma de todas.}%
@@ -8194,7 +8396,7 @@ postamble
 %</bbx>
 %<*cbx>
 \ProvidesFile{coppe.cbx}[2026/09/09 v4.1 CoppeTeX ABNT author-date citations]
-% Author-date is the CoppeTeX 4.0 default. authoryear-comp gives compressed
+% Author-date is the CoppeTeX 4.1 default. authoryear-comp gives compressed
 % author-year cites with normal-caps names (post-2020 rule) out of the box.
 \RequireCitationStyle{authoryear-comp}
 
@@ -9452,7 +9654,7 @@ postamble
 %
 % \subsubsection{\texttt{example\_pt.tex --- pt-main demo}}
 %
-% example\_pt.tex -- CoppeTeX 4.0 multilingual demo, main language: brazilian.
+% example\_pt.tex -- CoppeTeX 4.1 multilingual demo, main language: brazilian.
 % Short demonstration document (cover + folha + abstracts + 1 chapter) used
 % by the CPGP submission package. The full pt-main example with bibliography
 % and lists is the historical example.tex.
@@ -9462,8 +9664,8 @@ postamble
 \documentclass[dsc]{coppe}
 \addbibresource{example.bib}
 \begin{document}
-  \title{Demonstração da classe CoppeTeX 4.0 em português}
-  \foreigntitle{CoppeTeX 4.0 class demonstration in English}
+  \title{Demonstração da classe CoppeTeX 4.1 em português}
+  \foreigntitle{CoppeTeX 4.1 class demonstration in English}
   \author{Nome do}{Autor}
   \advisor{Primeiro}{Orientador}{D.Sc.}{UFRJ}
   \examiner{Primeiro Examinador}{D.Sc.}{UFRJ}
@@ -9498,15 +9700,15 @@ postamble
 %
 % \subsubsection{\texttt{example\_en.tex --- en-main demo}}
 %
-% example\_en.tex -- CoppeTeX 4.0 multilingual demo, main language: english.
+% example\_en.tex -- CoppeTeX 4.1 multilingual demo, main language: english.
 %
 % \iffalse
 %<*exampleen>
 \documentclass[english,dsc]{coppe}
 \addbibresource{example.bib}
 \begin{document}
-  \title{Demonstração da classe CoppeTeX 4.0 em português}
-  \foreigntitle{CoppeTeX 4.0 class demonstration in English}
+  \title{Demonstração da classe CoppeTeX 4.1 em português}
+  \foreigntitle{CoppeTeX 4.1 class demonstration in English}
   \author{Author's}{Name}
   \advisor{First}{Advisor}{D.Sc.}{UFRJ}
   \examiner{First Examiner}{D.Sc.}{UFRJ}
@@ -9541,7 +9743,7 @@ postamble
 %
 % \subsubsection{\texttt{example\_es.tex --- es-main demo}}
 %
-% example\_es.tex -- CoppeTeX 4.0 multilingual demo, main language: spanish.
+% example\_es.tex -- CoppeTeX 4.1 multilingual demo, main language: spanish.
 % Requires the language pack files coppe-lang-spanish.def and
 % spanish-coppe.lbx to be installed alongside coppe.cls.
 %
@@ -9550,9 +9752,9 @@ postamble
 \documentclass[spanish,dsc]{coppe}
 \addbibresource{example.bib}
 \begin{document}
-  \title{Demonstração da classe CoppeTeX 4.0 em português}
-  \foreigntitle{CoppeTeX 4.0 class demonstration in English}
-  \titlein{spanish}{Demostración de la clase CoppeTeX 4.0 en espa\~nol}
+  \title{Demonstração da classe CoppeTeX 4.1 em português}
+  \foreigntitle{CoppeTeX 4.1 class demonstration in English}
+  \titlein{spanish}{Demostración de la clase CoppeTeX 4.1 en espa\~nol}
   \author{Nombre del}{Autor}
   \advisor{Primer}{Director}{D.Sc.}{UFRJ}
   \examiner{Primer Examinador}{D.Sc.}{UFRJ}
@@ -9596,7 +9798,7 @@ postamble
 %
 % \subsubsection{\texttt{example\_fr.tex --- fr-main demo}}
 %
-% example\_fr.tex -- CoppeTeX 4.0 multilingual demo, main language: french.
+% example\_fr.tex -- CoppeTeX 4.1 multilingual demo, main language: french.
 % Requires the language pack files coppe-lang-french.def and
 % french-coppe.lbx to be installed alongside coppe.cls.
 %
@@ -9605,9 +9807,9 @@ postamble
 \documentclass[french,dsc]{coppe}
 \addbibresource{example.bib}
 \begin{document}
-  \title{Demonstração da classe CoppeTeX 4.0 em português}
-  \foreigntitle{CoppeTeX 4.0 class demonstration in English}
-  \titlein{french}{D\'emonstration de la classe CoppeTeX 4.0 en fran\c{c}ais}
+  \title{Demonstração da classe CoppeTeX 4.1 em português}
+  \foreigntitle{CoppeTeX 4.1 class demonstration in English}
+  \titlein{french}{D\'emonstration de la classe CoppeTeX 4.1 en fran\c{c}ais}
   \author{Pr\'enom de}{l'Auteur}
   \advisor{Premier}{Directeur}{D.Sc.}{UFRJ}
   \examiner{Premier Examinateur}{D.Sc.}{UFRJ}
@@ -9652,7 +9854,7 @@ postamble
 %
 % \subsubsection{\texttt{example\_it.tex --- it-main demo}}
 %
-% example\_it.tex -- CoppeTeX 4.0 multilingual demo, main language: italian.
+% example\_it.tex -- CoppeTeX 4.1 multilingual demo, main language: italian.
 % Requires the language pack files coppe-lang-italian.def and
 % italian-coppe.lbx to be installed alongside coppe.cls.
 %
@@ -9661,9 +9863,9 @@ postamble
 \documentclass[italian,dsc]{coppe}
 \addbibresource{example.bib}
 \begin{document}
-  \title{Demonstração da classe CoppeTeX 4.0 em português}
-  \foreigntitle{CoppeTeX 4.0 class demonstration in English}
-  \titlein{italian}{Dimostrazione della classe CoppeTeX 4.0 in italiano}
+  \title{Demonstração da classe CoppeTeX 4.1 em português}
+  \foreigntitle{CoppeTeX 4.1 class demonstration in English}
+  \titlein{italian}{Dimostrazione della classe CoppeTeX 4.1 in italiano}
   \author{Nome dell'}{Autore}
   \advisor{Primo}{Relatore}{D.Sc.}{UFRJ}
   \examiner{Primo Esaminatore}{D.Sc.}{UFRJ}
@@ -9729,7 +9931,7 @@ postamble
 %
 % \subsubsection{\texttt{covers\_5languages.tex --- the five covers side by side}}
 %
-% covers\_5languages.tex -- One-page visual demonstration of the CoppeTeX 4.0
+% covers\_5languages.tex -- One-page visual demonstration of the CoppeTeX 4.1
 % multilingual model: the five built-in main languages side by side, all
 % sharing the same Portuguese institutional template, differing only in
 % the title (and the body language, not visible on the cover).
@@ -9752,7 +9954,7 @@ postamble
 \pagestyle{empty}
 \begin{document}
 \begin{center}
-  {\Large\bfseries CoppeTeX 4.0 -- modelo multilíngue\par}
+  {\Large\bfseries CoppeTeX 4.1 -- modelo multilíngue\par}
   \vspace{1mm}
   {\small As cinco línguas principais embutidas, com a mesma identidade institucional UFRJ/COPPE.\par}
 \end{center}

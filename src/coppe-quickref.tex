@@ -11,6 +11,10 @@
 %% side-by-side cover sheet.  It is generated from coppe.dtx by docstrip; edit
 %% the .dtx source, not this file.
 %% 
+%% Copyright (C) 2008-2026 Vicente Helano F. Batista, George O. Ainsworth Jr.,
+%% Geraldo Xexéo and Eduardo Mangeli. Released under the GNU General Public
+%% License version 3 (see the COPYING file).
+%% 
 %% \CheckSum{0}
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -134,7 +138,7 @@ listasnosumario & [dsc,listasnosumario] & \pre & Put the pre-textual lists back 
 assinaturas & ---           & \pre & Accepted, does nothing. Signature rules are gone: deposit is digital. \\
 numeraisromanos & [dsc,numeraisromanos] & \pre & Roman numerals on pre-textual sheets. \textbf{Against 2.7}; legacy only. \\
 morewrites & [dsc,morewrites] & \pre & A missing \texttt{morewrites} package becomes an error, not a warning. \\
-semmorewrites & [dsc,semmorewrites] & \pre & Do not load \texttt{morewrites} at all. \\
+semmorewrites & [dsc,semmorewrites] & \pre & Do not load \texttt{morewrites}. Saves about half a second per pdflatex pass (Overleaf free plan). Safe only without an index, several indexes, a glossary or nomenclature: the class stops with a clear error if the 16 streams run out. \\
 \midrule
 
 \multicolumn{4}{@{}l@{}}{\normalfont\bfseries\small PREAMBLE}\\[2pt]
@@ -197,6 +201,7 @@ brazilianabstract & \textbackslash begin\{brazilianabstract\} ... & \doc & Third
 \textbackslash coppetexfinalpage & \textbackslash coppetexfinalpage & \doc & Optional colophon, every item measured at compile time: class version, engine and its version, TeX system, \LaTeX{} format, font family and encoding, biblatex version, date, hour, operating system and machine. \\
 \midrule
 
+\multicolumn{4}{@{}p{\linewidth}@{}}{\normalfont\small Only the table of contents is mandatory (3.1.2.1.6). Every list is optional (3.1.2.2); the COPPE norm (\S10) adds the lists of \emph{quadros}, programs and algorithms whenever the work has one of them.}\[2pt]
 \multicolumn{4}{@{}l@{}}{\normalfont\bfseries\small PRE-TEXTUAL LISTS ---
   lists first, table of contents last (3.1.2.1.6)}\\[2pt]
 \textbackslash listoffigures & \textbackslash listoffigures & \doc & List of figures. \\

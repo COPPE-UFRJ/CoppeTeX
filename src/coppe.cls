@@ -12,8 +12,8 @@
 %% Graduate Courses in Engineering at the Federal University of
 %% Rio de Janeiro.
 %% 
-%% Copyright (C) 2008 Vicente Helano and George Ainsworth Jr.
-%% Copyright (C) 2024 Vicente Helano and George Ainsworth Jr. and Geraldo Xexéo and Eduardo Mangeli
+%% Copyright (C) 2008-2026 Vicente Helano F. Batista, George O. Ainsworth Jr.,
+%% Geraldo Xexéo and Eduardo Mangeli.
 %% 
 %% This program is free software; you can redistribute it and/or modify
 %% it under the terms of the GNU General Public License version 3 as
@@ -28,8 +28,8 @@
 %% version 3 along with this package (see COPYING file).
 %% If not, see <http://www.gnu.org/licenses/>.
 %% 
-%% Author(s): Vicente Helano,
-%%            George Ainsworth
+%% Author(s): Vicente Helano F. Batista
+%%            George O. Ainsworth Jr.
 %%            Geraldo Xexéo
 %%            Eduardo Mangeli
 %% 
@@ -95,33 +95,26 @@
 \RequirePackage{iftex}
 \ifPDFTeX
   \RequirePackage[utf8]{inputenc}
-  \AtEndOfClass{\ClassWarningNoLine{coppe}{%
-    Although slower, you should try compiling with LuaLaTeX}}
 \fi
 \RequirePackage{lmodern}
 \RequirePackage[T1]{fontenc}
+\begingroup
+  \fontencoding{T1}\fontfamily{lmss}\selectfont
+  \fontfamily{lmtt}\selectfont
+\endgroup
+\DeclareFontShape{T1}{lmss}{m}{it}
+  {<-8.5> ec-lmsso8 <8.5-9.5> ec-lmsso9 <9.5-11> ec-lmsso10
+   <11-15.5> ec-lmsso12 <15.5-> ec-lmsso17}{}
+\DeclareFontShape{T1}{lmss}{bx}{it}{<-> ec-lmssbo10}{}
+\DeclareFontShape{T1}{lmss}{b}{n}{<-> ec-lmssbx10}{}
+\DeclareFontShape{T1}{lmss}{b}{sl}{<-> ec-lmssbo10}{}
+\DeclareFontShape{T1}{lmss}{b}{it}{<-> ec-lmssbo10}{}
+\DeclareFontShape{T1}{lmss}{sbc}{it}{<-> ec-lmssdo10}{}
+\DeclareFontShape{T1}{lmtt}{bx}{n}{<-> ec-lmtk10}{}
+\DeclareFontShape{T1}{lmtt}{bx}{sl}{<-> ec-lmtko10}{}
+\DeclareFontShape{T1}{lmtt}{bx}{it}{<-> ec-lmtko10}{}
+\DeclareFontShape{T1}{lmtt}{b}{it}{<-> ec-lmtko10}{}
 \RequirePackage{amsmath}
-\ifPDFTeX
-  \RequirePackage{amssymb}
-\else
-  % Unicode engine: defer the check to end of document. Only warn if the
-  % user did NOT add either unicode-math (the modern OpenType-math route)
-  % or amssymb (the legacy route, which they would have loaded manually).
-  % This avoids nagging authors who already followed the documented
-  % \usepackage{unicode-math} workflow.
-  \AtEndDocument{%
-    \@ifpackageloaded{unicode-math}{}{%
-      \@ifpackageloaded{amssymb}{}{%
-        \ClassWarningNoLine{coppe}{%
-          You are compiling with a Unicode engine (LuaLaTeX or XeLaTeX) and\MessageBreak
-          neither unicode-math nor amssymb is loaded. AMS-style symbols\MessageBreak
-          (\string\mathbb, \string\hbar, \string\varnothing, ...) will be undefined.\MessageBreak
-          Add to your preamble:\MessageBreak
-          \space\space\string\usepackage{unicode-math}\MessageBreak
-          \space\space\string\setmathfont{Latin Modern Math}\MessageBreak
-          Do NOT load amssymb together with unicode-math -- it would clash\MessageBreak
-          with the OpenType math font setup}}}}
-\fi
 \RequirePackage[a4paper,headheight=15pt,headsep=16.87pt,%
 top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
 \setlength\emergencystretch{3em}
@@ -299,7 +292,8 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
             abertas ao mesmo tempo.\MessageBreak
             Tres saidas, nesta ordem de preferencia:\MessageBreak
             (1) compile com lualatex, que tem 128 fluxos;\MessageBreak
-            (2) passe a opcao `morewrites' a classe coppe;\MessageBreak
+            (2) tire a opcao `semmorewrites', se a passou (ou passe
+            `morewrites');\MessageBreak
             (3) remova uma lista que o trabalho nao usa.\MessageBreak
             A lista que faltou agora foi a de extensao `#1', mas o problema
             nao e dela: e a soma de todas.}%

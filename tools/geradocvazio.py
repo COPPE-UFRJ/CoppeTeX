@@ -184,6 +184,12 @@ CAMPOS = [
      False, None, "A 3.1.2.1.6 as mant\u00e9m fora dele"),
     ("resumosemreferencia", "Op\u00e7\u00f5es", "Resumo sem a refer\u00eancia no alto",
      "sim/nao", False, None, "S\u00f3 se o resumo n\u00e3o couber numa folha com ela"),
+    ("semmorewrites", "Op\u00e7\u00f5es", "Sem o morewrites (compila mais r\u00e1pido)",
+     "sim/nao", False, None,
+     "S\u00f3 sem \u00edndice remissivo, sem v\u00e1rios \u00edndices e sem gloss\u00e1rio"),
+    ("matematica", "Op\u00e7\u00f5es", "Fontes matem\u00e1ticas (amssymb / unicode-math)",
+     "sim/nao", True, None,
+     "A classe n\u00e3o carrega fonte matem\u00e1tica; a escolha \u00e9 do autor"),
     # --- Estrutura ----------------------------------------------------------
     ("dedicatoria", "Estrutura", "Dedicat\u00f3ria", "sim/nao", True, None, ""),
     ("agradecimentos", "Estrutura", "Agradecimentos", "sim/nao", True, None, ""),
@@ -217,7 +223,8 @@ ABAS = ["Arquivos", "Trabalho", "Banca", "Folha adicional", "Op\u00e7\u00f5es",
 
 OPCOES_CLASSE = ["pdfa", "numbers", "comserifa", "semlinks", "doublespacing",
                  "twoside", "coorientador", "orientadorexamina",
-                 "rascunhoficha", "listasnosumario", "resumosemreferencia"]
+                 "rascunhoficha", "listasnosumario", "resumosemreferencia",
+                 "semmorewrites"]
 
 LISTAS = [("listoffigures", "\\listoffigures"),
           ("listoftables", "\\listoftables"),
@@ -276,6 +283,19 @@ def monta_tex(v, nome_bib):
     A("")
     A("\\documentclass[%s]{coppe}" % ",".join(opcoes))
     A("")
+    if v["matematica"]:
+        # A fonte matematica e escolha do autor, e a classe nao carrega
+        # nenhuma. Sai o mesmo bloco do example.tex, que escolhe pelo motor.
+        A("%% Fontes matematicas: escolha sua, a classe nao carrega nenhuma.")
+        A("%% pdfLaTeX usa amssymb; LuaLaTeX/XeLaTeX, unicode-math com uma fonte")
+        A("%% OpenType. Nunca os dois juntos. Sem matematica, apague o bloco.")
+        A("\\ifPDFTeX")
+        A("  \\usepackage{amssymb}")
+        A("\\else")
+        A("  \\usepackage{unicode-math}")
+        A("  \\setmathfont{Latin Modern Math}")
+        A("\\fi")
+        A("")
     A("\\addbibresource{%s}%% a sua base de referencias" % caminho_bib(v, nome_bib))
     if v["abreviaturas"]:
         A("\\makeloabbreviations")

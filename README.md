@@ -310,9 +310,10 @@ these in your thesis). Bracketed text is the options the class passes.
 **Math & symbols**
 
 - `amsmath` — AMS math environments.
-- `amssymb` — AMS symbol fonts; loaded **only under pdfTeX** (under a
-  Unicode engine load `unicode-math` yourself — the class warns if neither
-  is present).
+- **No math fonts.** Since 4.1 the math font is the author's choice: load
+  `amssymb` under pdfTeX, or `unicode-math` with an OpenType math font under
+  LuaTeX, in your preamble. `example.tex` and the empty-document generator
+  carry a block that picks by engine.
 
 **Page layout & spacing**
 
@@ -365,7 +366,7 @@ these in your thesis). Bracketed text is the options the class passes.
 - `hologo` — TeX-family logos (`\hologo{LaTeX}`, …).
 - `xcolor` — colour support (used by `listings` and `hyperref`).
 
-Everything is loaded unconditionally except `inputenc` / `amssymb` (pdfTeX
+Everything is loaded unconditionally except `inputenc` (pdfTeX
 only) and the option-driven `biblatex` style choice (`numbers` selects the
 numeric `coppe-numeric` style). The language packs add no packages — only
 the string files described above.
