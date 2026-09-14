@@ -27,8 +27,8 @@ Gerado — **não edite**:
 | `brazilian-`, `english-`, `spanish-`, `french-`, `italian-coppe.lbx` | Termos de bibliografia por idioma. |
 | `coppe-lang-spanish.def`, `-french.def`, `-italian.def` | Textos fixos da classe nesses idiomas. Português e inglês vivem dentro da classe. |
 | `coppe.ist` | Estilo de ordenação do glossário e das listas de siglas e símbolos. |
-| `coppe.bib`, `example.bib` | Bases de referências. |
-| `example.tex` | O exemplo completo, em português. |
+| `coppe.bib`, `exemplo.bib` | Bases de referências: a do manual da classe e a dos exemplos. |
+| `min-exemplo.tex`, `max-exemplo.tex` | Os exemplos em português: só o obrigatório, e tudo. |
 | `example_pt`, `_en`, `_es`, `_fr`, `_it`, `_pdfa` `.tex` | Os demos de idioma e a versão PDF/A. |
 | `covers_5languages.tex` | A montagem das capas lado a lado. |
 | `latexmkrc.tex` | A receita de compilação (veja a nota sobre o nome, abaixo). |
@@ -53,7 +53,7 @@ regras bastam para ler e escrever nele:
    Linha que não começa com `%` é código, e vai para o arquivo gerado.
 2. **`%<*nome>` e `%</nome>` delimitam um módulo.** O `coppe.ins` diz qual
    módulo vai para qual arquivo. O módulo `class` vira `coppe.cls`, o módulo
-   `bbx` vira `coppe.bbx`, o módulo `example` vira `example.tex`, e assim por
+   `bbx` vira `coppe.bbx`, o módulo `maxexemplo` vira `max-exemplo.tex`, e assim por
    diante.
 
 Um trecho típico, dentro do módulo `class`:
@@ -81,7 +81,7 @@ módulos de código, cada um com sua documentação intercalada.
 ```
 
 Os escopos do `build-check.ps1` vão do mais rápido ao mais completo: `class` só
-regenera; `example` compila o exemplo; `langs`, os cinco idiomas; `tests`, a
+regenera; `example` compila os dois exemplos; `langs`, os cinco idiomas; `tests`, a
 suíte de regressão; `docs`, o manual e a norma; `pdfa`, o que passa pelo
 veraPDF; `adversativa`, os seis documentos de prova nos dois motores; `all`,
 tudo; `prova`, tudo mais a verificação de fonte única e um veredito.

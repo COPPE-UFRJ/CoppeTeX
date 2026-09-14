@@ -44,7 +44,9 @@ subpastas. Um arquivo que fique em `es/` é um arquivo que o LaTeX não vê.
 
 É o caso de quase todo trabalho da COPPE, e não há nada a fazer. Copie **todos
 os arquivos da raiz, mais a pasta `logos/`**, para a pasta do seu trabalho, abra
-o `example.tex` e comece a trocar o conteúdo.
+o `min-exemplo.tex` e comece a trocar o conteúdo. Ele traz só o que a norma
+exige; o `max-exemplo.tex` mostra tudo o que a classe oferece, para você copiar
+o que precisar.
 
 ## Vou escrever em inglês
 
@@ -85,9 +87,11 @@ isso que não há exemplo pronto para eles.
 | `brazilian-coppe.lbx`, `english-coppe.lbx` | Os termos de bibliografia em português e em inglês. **Os dois são necessários em qualquer trabalho**, por causa do resumo em idioma estrangeiro. |
 | `coppe.ist` | O estilo de ordenação da lista de abreviaturas, da lista de símbolos e do índice. |
 | `latexmkrc` | A receita de compilação, para quem usa `latexmk` ou o Overleaf. |
-| `example.tex`, `example.bib`, `tipos.bib` | **O exemplo completo, em português**, comentado linha a linha, e as duas bases que ele cita. A `tipos.bib` traz uma entrada de **cada tipo** de referência da seção 4.2 do Manual. |
+| `min-exemplo.tex` | **O exemplo mínimo, em português**: tudo o que a norma exige e nada além disso. É o ponto de partida. |
+| `max-exemplo.tex` | **O exemplo máximo, em português**: tudo o que a classe oferece e o Manual prevê, inclusive o opcional, comentado linha a linha. |
+| `exemplo.bib` | A base de referências dos exemplos, com uma entrada de **cada tipo** de referência da seção 4.2 do Manual. |
 | `coppe.bib` | A base com as referências da própria classe e da norma. |
-| `coppe.dtx`, `coppe.ins`, `manual.tex` | As **fontes** dos manuais. Não são necessárias para escrever; estão aqui para que a entrega baste também para refazer o manual e a classe. Não existe `coppe.tex`: o manual da classe é o próprio `coppe.dtx`, e quem o compõe é o `coppe.ins`. |
+| `coppe.dtx`, `coppe.ins`, `manual.tex`, `manual.bib` | As **fontes** dos manuais. Não são necessárias para escrever; estão aqui para que a entrega baste também para refazer o manual e a classe. Não existe `coppe.tex`: o manual da classe é o próprio `coppe.dtx`, e quem o compõe é o `coppe.ins`. |
 | `COPYING.txt` | A licença, GNU GPL versão 3. |
 
 ### `logos/`
@@ -103,7 +107,7 @@ documento, então funciona com a pasta ou sem ela.
 | `coppe.pdf` | **O manual da classe.** Todos os comandos, todas as opções, com exemplos. Comece por ele. |
 | `manual.pdf` | **O manual da norma.** O que o trabalho tem de ser — margens, estrutura, ilustrações, citações, referências. Ele é, ele mesmo, a demonstração: foi composto com a classe e obedece a tudo o que enuncia. |
 | `coppe-quickref.pdf` | Uma referência rápida de uma tabela só, em inglês: comando, exemplo, onde se usa. |
-| `example.pdf` | O exemplo em português, já compilado, para você ver o resultado antes de compilar. |
+| `min-exemplo.pdf`, `max-exemplo.pdf` | Os dois exemplos em português, já compilados, para você ver o resultado antes de compilar. |
 
 ## Menos arquivos na sua raiz: os `.bib` podem ir para uma subpasta
 
@@ -146,16 +150,20 @@ São três passadas mais o `biber`, porque as referências cruzadas e a
 bibliografia só se acomodam na terceira:
 
 ```
-pdflatex example
-biber example
-pdflatex example
-pdflatex example
+pdflatex min-exemplo
+biber min-exemplo
+pdflatex min-exemplo
+pdflatex min-exemplo
 ```
+
+O `max-exemplo.tex` tem ainda as listas de abreviaturas, siglas e símbolos e o
+índice remissivo, que pedem o `makeindex` entre a primeira passada e as outras;
+por isso, para ele, prefira o `latexmk`.
 
 Com `latexmk` e o `latexmkrc` desta pasta, uma linha basta:
 
 ```
-latexmk -pdf example
+latexmk -pdf max-exemplo
 ```
 
 Um trabalho que pede todas as listas ao mesmo tempo pode esbarrar no limite de
@@ -207,7 +215,7 @@ O capítulo de solução de problemas do `manuais/coppe.pdf` cobre os casos comu
 
 **O erro mais comum desta versão** é compilar um exemplo sem ter trazido a pasta
 do idioma para a raiz. O sintoma é `File 'coppe-lang-spanish.def' not found` ou
-`Cannot find 'example.bib'`. Volte à regra da arrumação, no começo deste
+`Cannot find 'exemplo.bib'`. Volte à regra da arrumação, no começo deste
 arquivo.
 
 ## Licença

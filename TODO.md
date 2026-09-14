@@ -31,10 +31,10 @@ a classe; não falta documento normativo.
 
 - **Tempo de compilação no Overleaf gratuito.** Os dois defeitos que pesavam
   entraram (`morewrites` sem fluxos reais; `.aux` que nunca estabilizava, #98):
-  o `latexmk` do `example.tex` foi de 75 s com erro para 58 s limpo. Faltam as
+  o `latexmk` do exemplo completo foi de 75 s com erro para 58 s limpo. Faltam as
   decisões das propostas do issue #95 — sobretudo documentar para o aluno
   `\includeonly` e o modo *draft* do Overleaf.
-- **Tornar `pdfa` o padrão da classe?** O `example.tex` já compila com ela, é
+- **Tornar `pdfa` o padrão da classe?** Os dois exemplos já compilam com ela, é
   PDF/A-2b conforme pelo veraPDF e o custo de tempo é desprezível. Falta decidir
   se a classe liga por padrão, com uma opção `sempdfa` para desligar.
 - **Palavras-chave no dicionário de informação do PDF sob `pdfa`.** Com a opção,

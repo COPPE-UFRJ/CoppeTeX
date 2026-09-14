@@ -14,12 +14,12 @@
 
 .PARAMETER Scope
     class    - só regenera coppe.cls e companhia a partir de coppe.ins (rápido)
-    example  - class + example.tex
+    example  - class + max-exemplo.tex e min-exemplo.tex
     langs    - class + os cinco example_<lang>.tex
     tests    - class + a suíte tests/run-tests.ps1
     docs     - class + coppe.pdf (manual), NORMA_COPPE_2026.pdf,
                manual.pdf e covers_5languages.pdf
-    pdfa     - class + example.tex (que ja usa pdfa), tests/test_pdfa.tex e
+    pdfa     - class + max-exemplo.tex e min-exemplo.tex (que usam pdfa), tests/test_pdfa.tex e
                tests/test_comserifa.tex, e passa os tres
                pelo veraPDF no perfil 2b. Precisa do veraPDF instalado (o
                script procura em %USERPROFILE%\verapdf e no PATH); sem ele o
@@ -147,7 +147,7 @@ function Get-LogTexto([string]$caminho) {
 # a primeira passada escreve .abx e .syx, o makeindex os ordena com o estilo
 # coppe.ist em .lab e .los, e so a passada seguinte os imprime. Sem esse passo
 # as listas saem do que estivesse em disco -- ou seja, do build anterior, ou de
-# uma versao da classe que ja mudou. Era o caso do example.pdf ate aqui: o
+# uma versao da classe que ja mudou. Era o caso do exemplo ate aqui: o
 # escopo `adversativa' rodava o makeindex e os demais nao, e a lista de
 # abreviaturas do exemplo, que e o documento que todo mundo abre, vinha de um
 # .lab velho.
@@ -160,6 +160,10 @@ function Build-Tex {
     }
     if (Test-Path (Join-Path $Dir "$Stem.syx")) {
         Invoke-Step "$Stem-los" $Dir { & makeindex -s (Join-Path $script:src "coppe.ist") -o "$Stem.los" "$Stem.syx" }
+    }
+    # O indice remissivo (makeidx) passa pelo makeindex com o estilo padrao.
+    if (Test-Path (Join-Path $Dir "$Stem.idx")) {
+        Invoke-Step "$Stem-ind" $Dir { & makeindex "$Stem.idx" }
     }
     if (Test-Path (Join-Path $Dir "$Stem.sgx")) {
         Invoke-Step "$Stem-lsg" $Dir { & makeindex -s (Join-Path $script:src "coppe.ist") -o "$Stem.lsg" "$Stem.sgx" }
@@ -286,7 +290,10 @@ if (Test-Path $mkrcGen) {
     Add-Line "ok       latexmkrc (de latexmkrc.tex)"
 }
 
-if ($Scope -in @("example", "all")) { Build-Tex -Stem "example" -Dir $src -WithBiber }
+if ($Scope -in @("example", "all")) {
+    Build-Tex -Stem "max-exemplo" -Dir $src -WithBiber
+    Build-Tex -Stem "min-exemplo" -Dir $src -WithBiber
+}
 
 if ($Scope -in @("langs", "all")) {
     foreach ($l in @("pt", "en", "es", "fr", "it")) {
@@ -318,7 +325,7 @@ if ($Scope -in @("docs", "all")) {
     # O manual envelhece em silencio: um comando novo entra na classe e ninguem o
     # documenta, e nada quebra. Este passo cobra isso, e tambem confere se a
     # tabela "onde ver cada coisa" ainda aponta para as linhas certas do
-    # example.tex. Sem python instalado o passo e PULADO, nao falha.
+    # max-exemplo.tex. Sem python instalado o passo e PULADO, nao falha.
     if (Get-Command python -ErrorAction SilentlyContinue) {
         Invoke-Step "conferir-manual" $root { & python (Join-Path $root "tools\conferir-manual.py") }
     } else {
@@ -429,9 +436,12 @@ if ($Scope -in @("pdfa", "all")) {
     # (bibliografia, listas, figuras, tcolorbox -- transparencia) e o teste
     # curto das paginas pre-textuais. Validar so o curto nao diria nada sobre o
     # que vai para o deposito.
-    # O example.tex ja compila com a opcao pdfa (#99); no escopo all ele ja
-    # saiu no passo "example", e compila-lo de novo so gastaria tempo.
-    if ($Scope -eq "pdfa") { Build-Tex -Stem "example" -Dir $src -WithBiber }
+    # Os dois exemplos ja compilam com a opcao pdfa (#99, #102); no escopo all
+    # eles ja sairam no passo "example", e compila-los de novo so gastaria tempo.
+    if ($Scope -eq "pdfa") {
+        Build-Tex -Stem "max-exemplo" -Dir $src -WithBiber
+        Build-Tex -Stem "min-exemplo" -Dir $src -WithBiber
+    }
     Build-Tex -Stem "test_pdfa"    -Dir $testDir -WithBiber
     # A opcao `comserifa' volta o documento para a familia serifada. A pergunta que
     # interessa nao e se compila -- e se o documento com serifa continua sendo
@@ -459,7 +469,8 @@ if ($Scope -in @("pdfa", "all")) {
         Add-Line ""
         Add-Line "veraPDF: $vera"
         $veraTargets = @(
-            @{ Stem = "example";        Dir = $src },
+            @{ Stem = "max-exemplo";    Dir = $src },
+            @{ Stem = "min-exemplo";    Dir = $src },
             @{ Stem = "test_pdfa";      Dir = $testDir },
             @{ Stem = "test_comserifa"; Dir = $testDir })
         # todo documento adversativo e compilado com a opcao pdfa: se algum

@@ -10,7 +10,7 @@ Precisa de python3, poppler (pdftotext, pdftoppm, pdfinfo) e pypdf. Roda em
 qualquer sistema; no Windows, instale poppler e `pip install pypdf'.
 
     python3 tools/conferir-norma.py tests/adversativa/adv_*.pdf
-    python3 tools/conferir-norma.py src/example.pdf
+    python3 tools/conferir-norma.py src/max-exemplo.pdf
 """
 import sys, re, subprocess, os, tempfile, io
 

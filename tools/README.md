@@ -35,8 +35,8 @@ compilar veio do `.dtx`, e não de um arquivo que ficou para trás.
 | `conferir-norma.py` | Lê um PDF pronto e mede, em centímetros, o que a norma fixa: margens, corpo, recuos, ordem das páginas pré-textuais. |
 | `conferir-referencias.py` | Compõe as referências e as compara, uma a uma, com o texto que o Manual imprime. O gabarito está nos comentários `%%` de `../tests/adversativa/referencias-manual.bib`. |
 | `conferir-referencias-cruzadas.py` | Caça `\ref` e `\cite` sem resolver em todos os `.log`. Nada disso aparece no código de saída do `pdflatex`: sai `??` na página e o PDF é gerado assim mesmo. |
-| `conferir-manual.py` | Cobra que todo comando público, todo ambiente e toda opção da classe estejam documentados, que a tabela "onde ver" do manual ainda bata com o `example.tex`, e que os guardas de `macrocode` do `.dtx` estejam bem escritos — o `doc.sty` só fecha um bloco de código com `%` e **quatro** espaços, e um guarda de três espaços fez sessenta linhas de documentação saírem impressas como código no `coppe.pdf` por várias versões, sem quebrar nada. |
-| `atualizar-onde-ver.py` | Reescreve essa tabela a partir do `example.tex` atual, quando ela envelhece. |
+| `conferir-manual.py` | Cobra que todo comando público, todo ambiente e toda opção da classe estejam documentados, que a tabela "onde ver" do manual ainda bata com o `max-exemplo.tex`, e que os guardas de `macrocode` do `.dtx` estejam bem escritos — o `doc.sty` só fecha um bloco de código com `%` e **quatro** espaços, e um guarda de três espaços fez sessenta linhas de documentação saírem impressas como código no `coppe.pdf` por várias versões, sem quebrar nada. |
+| `atualizar-onde-ver.py` | Reescreve essa tabela a partir do `max-exemplo.tex` atual, quando ela envelhece. |
 
 A suíte de regressão tem rodador próprio, em
 [`../tests/regressivo/run-regressivo.py`](../tests/regressivo/README.md). Ele
@@ -49,7 +49,7 @@ Do mais rápido ao mais completo. Todos começam regenerando a distribuição.
 | Escopo | O que compila |
 |---|---|
 | `class` | Nada. Só regenera a partir do `.dtx`. Segundos. |
-| `example` | O exemplo completo em português. |
+| `example` | Os dois exemplos em português, `min-exemplo` e `max-exemplo`. |
 | `langs` | Os cinco exemplos de idioma. |
 | `tests` | A suíte de regressão de `tests/`. |
 | `docs` | O manual de uso, a norma da COPPE, o manual futuro e a montagem de capas. |

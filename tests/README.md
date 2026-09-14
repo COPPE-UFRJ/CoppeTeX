@@ -28,7 +28,7 @@ pdflatex <file>.tex && biber <file> && pdflatex <file>.tex && pdflatex <file>.te
 ```
 
 The test files depend on the class living in `../src/`, the bibliography
-fixture in `../src/example.bib`, and the cover logos in `../src/logos/`, where
+fixture in `../src/exemplo.bib`, and the cover logos in `../src/logos/`, where
 the class looks first. The runner
 script `run-tests.ps1` sets `TEXINPUTS` so pdflatex finds them all from this
 directory.
@@ -66,7 +66,7 @@ that test and is reported in the summary at the end.
 ## Adding new tests
 
 Drop a new `.tex` file in this directory. Keep it self-contained (use
-`example.bib` for citations, use `coppe-logo.pdf` / `ufrj-logo.pdf` as
+`exemplo.bib` for citations, use `coppe-logo.pdf` / `ufrj-logo.pdf` as
 figure stand-ins). Reuse the brazilian-main scaffold from the existing
 tests as a starting point. Then re-run `run-tests.ps1` — it auto-discovers
 every `test_*.tex` in the folder.

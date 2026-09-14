@@ -1,10 +1,10 @@
 %%
-%% This is file `example.tex',
+%% This is file `max-exemplo.tex',
 %% generated with the docstrip utility.
 %%
 %% The original source files were:
 %%
-%% coppe.dtx  (with options: `example')
+%% coppe.dtx  (with options: `maxexemplo')
 %% 
 %% This is a sample monograph which illustrates the use of the `coppe' document
 %% class and its biblatex/biber bibliography style.
@@ -14,11 +14,39 @@
 %% License version 3 (see the COPYING.txt file).
 %% 
 \documentclass[dsc,pdfa]{coppe}
+%% max-exemplo.tex -- tudo o que a classe oferece e o Manual prevê, inclusive o
+%% opcional. Para só o obrigatório, veja o min-exemplo.tex.
+%%
+%% Opções de classe que não cabem num documento só, porque escolhem uma entre
+%% várias: o tipo (msc, dsc, mscexam, dscexam, mscsem), o idioma (english,
+%% spanish, french, italian), numbers (citação numérica), comserifa,
+%% doublespacing, twoside, numeraisromanos, semlinks, listasnosumario,
+%% orientadorexamina, coorientador, resumosemreferencia, rascunhoficha,
+%% simbolosalfabeticos, semmorewrites. O manual da classe descreve cada uma.
+%%
+%% Opções de classe que valem conhecer aqui:
+%%  - pdfa: gera o arquivo em PDF/A-2b, o formato que o depósito exige (Manual
+%%    2.2d). Este exemplo o liga desde a primeira linha; a razão está na seção
+%%    "O arquivo de depósito: PDF/A", no capítulo de regras da COPPE.
+%%  - semmorewrites: não carrega o pacote morewrites. Compila meio segundo mais
+%%    rápido por passada, mas só serve a trabalho SEM índice remissivo, sem
+%%    vários índices e sem glossário, e com menos listas que este exemplo, que
+%%    passa dos 16 fluxos de escrita do pdfLaTeX e precisa do pacote. Ver o
+%%    capítulo "Truques de LaTeX".
 
 \usepackage{rotating}        % rodando coisas, como tabelas
 \usepackage[most]{tcolorbox} % caixas de texto
 \usepackage{tikz}            % gráficos vetoriais (o tcolorbox já o traz)
+\usepackage{makeidx}\makeindex % índice remissivo (3.1.4.5), no fim do trabalho
 
+%% Fontes matemáticas: a escolha é SUA, não da classe. A classe carrega só o
+%% amsmath (ambientes e comandos), e nenhuma fonte de símbolos. O bloco abaixo
+%% escolhe a do motor em uso:
+%%  - pdfLaTeX: amssymb, as fontes AMS de 8 bits (\mathbb, \hbar, \varnothing...);
+%%  - LuaLaTeX/XeLaTeX: unicode-math com uma fonte OpenType. Nunca carregue
+%%    amssymb junto com unicode-math: os dois brigam pelos mesmos símbolos.
+%% Troque Latin Modern Math por STIX Two Math, TeX Gyre Termes Math etc., se
+%% quiser outra aparência. Sem matemática no trabalho, apague o bloco.
 \ifPDFTeX
   \usepackage{amssymb}
 \else
@@ -27,18 +55,35 @@
 \fi
 \DeclareMathOperator{\RMSE}{RMSE}   % operadores próprios (cap. de matemática)
 \DeclareMathOperator{\diag}{diag}
+%% A classe coppe já carrega: amsmath, booktabs, longtable, subcaption,
+%% hyperref, biblatex, listings, fancyvrb, algorithm2e -- não recarregue esses
+%% pacotes aqui (em particular, hyperref deve ficar a cargo da classe para que
+%% a ordem com setspace e biblatex permaneça correta).
 
-\addbibresource{example.bib}% base de referências (biblatex/biber)
-\addbibresource{tipos.bib}% uma entrada por categoria da secao 4.2
+\addbibresource{exemplo.bib}% base de referências (biblatex/biber), com uma
+                            % entrada de cada categoria da seção 4.2
 
 \makelosymbols
 \makeloabbreviations
+%% Lista de siglas separada da de abreviaturas, como recomenda a 3.1.2.2.6 do
+%% Manual. Sem esta linha, as siglas entram na lista de abreviaturas.
 \makelosiglas
+%% Flutuante criado pelo autor: mesma regra dos demais (legenda acima, fonte
+%% abaixo) e uma lista propria, \listofmapas.
 \newcoppefloat{mapa}{Mapa}{Lista de Mapas}
+%% Fonte: a norma fixa o corpo 12, e não a família. A classe compõe sem serifa
+%% por padrão; para compor com serifa, passe a opção de classe `comserifa' lá
+%% em cima -- NÃO redefina \familydefault aqui, porque isso venceria a opção.
+%% Para uma sem serifa diferente da Latin Modern, carregue o pacote da fonte e
+%% troque a família:
+%%\usepackage{helvet}\renewcommand{\familydefault}{\sfdefault}
 
 \begin{document}
   \title{Título da Tese}
   \foreigntitle{Thesis Title}
+  % Subtítulo, se houver (3.1.2.1.1c): sai depois do título, com dois-pontos.
+  \subtitle{Subtítulo, se Houver}
+  \foreignsubtitle{Subtitle, if Any}
   \author{Nome do Autor}{Sobrenome}
   % Orientador: nome, sobrenome, titulacao e instituicao. O tratamento
   % ("Prof.") e o argumento OPCIONAL entre colchetes e vem vazio por padrao --
@@ -77,6 +122,10 @@
   \keyword{Primeira palavra-chave}
   \keyword{Segunda palavra-chave}
   \keyword{Terceira palavra-chave}
+  % Palavras-chave do resumo em língua estrangeira (3.1.2.1.5).
+  \foreignkeyword{First keyword}
+  \foreignkeyword{Second keyword}
+  \foreignkeyword{Third keyword}
 
   % Dados da folha adicional (Coleta CAPES), obrigatoria desde agosto de 2026.
   % A folha e preenchida pelo Programa; estes campos apenas a compoem.
@@ -104,6 +153,9 @@
   orientadores, colegas, familiares e às agências de fomento. Lorem ipsum
   dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
   ut labore et dolore magna aliqua.
+
+  % Epígrafe (3.1.2.2.3), depois dos agradecimentos: citação e autoria.
+  \epigrafe{A imaginação é mais importante que o conhecimento.}{Albert Einstein}
 
   \begin{abstract}% 5 elementos; \configuraresumos, no preambulo, desliga 4
 
@@ -277,7 +329,9 @@ Texto da seção quinária, escrita com \verb|\paragraph|. Este é o único \ver
 
   Citações devem apontar as referências. Para isso, está disponível o ótimo pacote \verb*|natbib| que permite criar citações em dois formatos, o totalmente dentro de parênteses (\verb*|\citep|), como em \citep{article-example} como o de citação pertencente ao texto, como em \citet{article-example}. Veja o capítulo sobre referências bibliográficas.
 
-  Em todo caso, \textbf{deve se tomar enorme atenção com as citações, para evitar ocorrer em plágio não intencional}.
+  Em todo caso, \textbf{deve se tomar enorme atenção com as citações, para evitar ocorrer em plágio não intencional}.\index{citação}\index{plágio}
+
+  Para uma citação curta no meio do parágrafo, \verb|\citacao| põe as aspas do idioma do trabalho: \citacao{a imaginação é mais importante que o conhecimento}.\index{citação!curta}
 
   Quando se cita uma obra por meio de outra (\textit{apud}), pela ABNT entra na lista de referências \emph{apenas a obra efetivamente consultada}. A obra original (não consultada) é informada como texto e \emph{não} é referenciada. Use \verb*|\citetapud{autor}{ano}{chave}|, como em \citetapud{Drumond}{1953}{article-example}, ou a forma entre parênteses \verb*|\citepapud|, como em \citepapud[145]{Drumond}{1953}{article-example}. Note que, nas Referências, aparece somente a obra consultada.
 
@@ -520,21 +574,27 @@ Item 4 & Item 5 & Item 6 \\
 
 Se a tabela for muito longa, o ambiente \verb|longtable| é o ideal. Ele fornece comandos para \textit{headers}, cabeçalhos, e \textit{footers} tanto no ínicio e no fim da tabela, como em todas as páginas. A \autoref{tab:longa} fornece um exemplo de 3 páginas.
 
+%% Exemplo de tabela longa que se estende por várias páginas
 \begin{longtable}{|c|c|c|}
+%% primeiro cabeçalho (é o caption)
 \caption{Exemplo de Tabela Longa}\label{tab:longa} \\
 \hline \textbf{Col. 1} & \textbf{Col. 2} & \textbf{Col. 3} \\ \hline
 \endfirsthead
+%% cabeçalho normal
 \multicolumn{3}{c}%
 {{\tablename\ \thetable{} -- continuação da página anterior}} \\
 \hline \textbf{Col. 1} & \textbf{Col. 2} & \textbf{Col. 3} \\ \hline
 \endhead
+%% pé normal
 \hline \multicolumn{3}{|r|}{{Continua na próxima página}} \\ \hline
 \endfoot
 \hline
+%% último pé
 \multicolumn{3}{|r|}{{Continua na próxima página}}\\
 \hline \hline
 \endlastfoot
 
+%% Conteúdo da tabela
 1 & 2 & 3 \\
 4 & 5 & 6 \\
 1 & 2 & 3 \\
@@ -643,6 +703,7 @@ Se a tabela for muito longa, o ambiente \verb|longtable| é o ideal. Ele fornece
 1 & 2 & 3 \\
 4 & 5 & 6 \\
 
+%% Repetir linhas semelhantes conforme necessário para estender a tabela por 3 páginas
 \end{longtable}
 \fonte{Elaboração própria.}% a longtable não é float: a fonte vem após o ambiente
 
@@ -810,7 +871,7 @@ Colocar a tabela ou imagem dentro de \verb|figure|/\verb|table| (um \emph{float}
 
   \section{Tipos de entrada bibliográfica}
 
-  Cada tipo de documento da ABNT corresponde a um tipo de entrada do BibLaTeX, com um sinônimo em português (sem acentos) que você pode usar no \texttt{.bib}. Todos os tipos abaixo estão demonstrados nas Referências deste documento (veja \texttt{example.bib}). Entre parênteses, os sinônimos em português.
+  Cada tipo de documento da ABNT corresponde a um tipo de entrada do BibLaTeX, com um sinônimo em português (sem acentos) que você pode usar no \texttt{.bib}. Todos os tipos abaixo estão demonstrados nas Referências deste documento (veja \texttt{exemplo.bib}). Entre parênteses, os sinônimos em português.
 
   % Nomes de tipo em fonte de máquina não hifenizam: justificados, abriam
   % buracos nas linhas (Underfull \hbox). Alinhado à esquerda, não.
@@ -846,7 +907,7 @@ Colocar a tabela ou imagem dentro de \verb|figure|/\verb|table| (um \emph{float}
 
   \section{Uma referência de cada categoria do Manual}\label{sec:todosostipos}
 
-  A seção 4.2 do Manual do SiBI enumera 34 categorias de documento, da monografia à partitura. O arquivo \verb|tipos.bib|, que acompanha a classe, traz \textbf{uma entrada de cada uma}, com os dados dos próprios exemplos do Manual, e todas são citadas aqui. Confira cada uma na lista de Referências: é assim que ela tem de sair.
+  A seção 4.2 do Manual do SiBI enumera 34 categorias de documento, da monografia à partitura. O arquivo \verb|exemplo.bib|, que acompanha a classe, traz \textbf{uma entrada de cada uma}, com os dados dos próprios exemplos do Manual, e todas são citadas aqui. Confira cada uma na lista de Referências: é assim que ela tem de sair.
 
   Metade das entradas está escrita com os nomes de tipo e de campo em \textbf{inglês} e metade com os sinônimos em \textbf{português}, de propósito, para que as duas formas apareçam funcionando lado a lado. \textbf{Prefira a inglesa}: é a do \texttt{biblatex}, é a que os gerenciadores de referência exportam, e é a que outra pessoa vai reconhecer quatro anos depois. Os sinônimos em português existem para quem chega de uma base antiga e não quer reescrever tudo.
 
@@ -901,7 +962,7 @@ Colocar a tabela ou imagem dentro de \verb|figure|/\verb|table| (um \emph{float}
   \end{longtable}
   \fonte{Elaboração própria, a partir da seção 4.2 do Manual do SiBI.}
 
-  Se alguma dessas referências sair diferente do que o Manual imprime, é defeito da classe, e o lugar de relatar é o repositório do projeto. O gabarito de cada uma está no próprio \verb|tipos.bib|, em comentário acima da entrada.
+  Se alguma dessas referências sair diferente do que o Manual imprime, é defeito da classe, e o lugar de relatar é o repositório do projeto. O gabarito de cada uma está no próprio \verb|exemplo.bib|, em comentário acima da entrada.
 
 \chapter{Alguns outros exemplo úteis}
 
@@ -969,6 +1030,26 @@ public class Saudacao {
     }
 }
 \end{java}
+\fonte{Elaboração própria.}
+
+A classe traz ambientes prontos também para XML, HTML e Prolog, com a mesma legenda acima e fonte abaixo:
+
+\begin{xml}[caption={Exemplo de documento XML},label=prog:xml]
+<tese tipo="dsc">
+  <titulo>Título da Tese</titulo>
+</tese>
+\end{xml}
+\fonte{Elaboração própria.}
+
+\begin{html}[caption={Exemplo de página HTML},label=prog:html]
+<p>Olá, <strong>COPPE</strong>!</p>
+\end{html}
+\fonte{Elaboração própria.}
+
+\begin{prolog}[caption={Exemplo de programa em Prolog},label=prog:prolog]
+orienta(ana, bia).
+banca(X) :- orienta(X, _).
+\end{prolog}
 \fonte{Elaboração própria.}
 
 Há também \verb|\pythoninline| e \verb|\javainline| para código no meio do
@@ -1088,6 +1169,7 @@ $i \leftarrow 1$\;
 use \verb|\href{https://exemplo.org}{texto}|. Evite digitar URLs como texto comum --- elas não quebram e estouram a margem.
 
   \section{Índice remissivo}
+  \index{índice remissivo}
 
   Marque os termos com \verb|\index{termo}| e imprima o índice com \verb|\printindex| (carregue \verb|makeidx| e use \verb|\makeindex| no preâmbulo). O índice é montado pelo programa \verb|makeindex|. Como as listas de abreviaturas e símbolos também usam \verb|makeindex| (com o estilo \verb|coppe.ist|), o mais prático é deixar o \verb|latexmk| rodar tudo (veja o \texttt{latexmkrc}). Atenção: o \verb|latexmk| é um script \emph{Perl} --- no Windows, instale o \emph{Strawberry Perl}; no Linux e no macOS o Perl já costuma vir instalado. Para vários índices, use \verb|imakeidx| ou \verb|index|.
 
@@ -1170,12 +1252,22 @@ use \verb|\href{https://exemplo.org}{texto}|. Evite digitar URLs como texto comu
   \backmatter
 
   % Tipos exóticos da ABNT (NBR 6023): patente, legislação, norma, mapa,
-  % partitura --- declarados via sinônimos em português em example.bib.
+  % partitura --- declarados via sinônimos em português em exemplo.bib.
   \nocite{patente-example,legislacao-example,norma-example,mapa-example,partitura-example}
   \nocite{jurisprudencia-example}
   \nocite{videogame-example,filme-example,semautor-example,semautorart-example}
   \nocite{jornalcaderno-example,jornal-example}
   \printbibliography
+
+  % Glossário (3.1.4.2), depois das referências: termos técnicos e seus
+  % significados, em ordem alfabética.
+  \begin{theglossary}
+    \item[Fólio] o número da folha, impresso no canto superior direito.
+    \item[Mancha gráfica] a área da folha ocupada pelo texto, dentro das
+      margens.
+    \item[PDF/A] o formato de PDF para preservação de longo prazo, exigido no
+      depósito (2.2d).
+  \end{theglossary}
 
 \appendix
 
@@ -1198,6 +1290,10 @@ No modelo \CoppeTeX os anexos devem obrigtoriamente vir depois dos apêndices e 
 
 \chapter{Outro Anexo}
 
+%% Índice remissivo (3.1.4.5), o último elemento pós-textual. Os termos são
+%% marcados no texto com \index; o makeindex monta o índice entre as passadas.
+\printindex
+
 \coppetexfinalpage% colofão institucional (página par, face do contracapa)
 
 \end{document}
@@ -1205,4 +1301,4 @@ No modelo \CoppeTeX os anexos devem obrigtoriamente vir depois dos apêndices e 
 
 %% 
 %%
-%% End of file `example.tex'.
+%% End of file `max-exemplo.tex'.

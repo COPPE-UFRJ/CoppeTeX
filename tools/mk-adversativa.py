@@ -200,7 +200,7 @@ def doc(i, linha, tiponome):
     A("\\usepackage{makeidx}\\makeindex")
     if ext:
         A("\\usepackage{pdfpages}   % anexo com PDF externo")
-    A("\\addbibresource{example.bib}")
+    A("\\addbibresource{exemplo.bib}")
     # Prova de referencias: so nos documentos em portugues, porque os dados sao
     # os exemplos do proprio Manual UFRJ/SiBI e sao em portugues. Os quatro
     # documentos pt cobrem os dois sistemas de chamada -- autor-data e, com a

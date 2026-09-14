@@ -106,7 +106,7 @@ italian   & [italian,dsc]   & \pre & Italian. Same. \\
 \multicolumn{4}{@{}l@{}}{\normalfont\bfseries\small CLASS OPTIONS --- the
   rest}\\[2pt]
 numbers   & [dsc,numbers]   & \pre & Numeric citations \texttt{[1]} instead of author-date; list in citation order. \\
-pdfa      & [dsc,pdfa]      & \pre & PDF/A-2b output, required for deposit (2.2d): the deposit is digital only, and PDF/A (ISO 19005) keeps the file self-contained --- embedded fonts, sRGB colour, XMP metadata, nothing external. Off by default; \texttt{example.tex} turns it on, and turning it on early is recommended. Check with veraPDF. \\
+pdfa      & [dsc,pdfa]      & \pre & PDF/A-2b output, required for deposit (2.2d): the deposit is digital only, and PDF/A (ISO 19005) keeps the file self-contained --- embedded fonts, sRGB colour, XMP metadata, nothing external. Off by default; \texttt{max-exemplo.tex} turns it on, and turning it on early is recommended. Check with veraPDF. \\
 comserifa & [dsc,comserifa] & \pre & Serif family. Sans is the default since v4.1. \\
 semserifa & ---             & \pre & Accepted, does nothing. What it asked for became the default. \\
 semlinks  & [dsc,semlinks]  & \pre & Links lose colour and frame; they stay clickable. For printing. \\
@@ -176,6 +176,7 @@ semmorewrites & [dsc,semmorewrites] & \pre & Do not load \texttt{morewrites}. Sa
 \textbackslash mainmatter & \textbackslash mainmatter & \doc & Opens the textual part. This is what starts printing the folio. \\
 \textbackslash backmatter & \textbackslash backmatter & \doc & Opens the post-textual part. \\
 \textbackslash dedication & \textbackslash dedication\{To those who waited.\} & \doc & Dedication, on a sheet of its own. \\
+\textbackslash epigrafe & \textbackslash epigrafe\{quotation\}\{author\} & \doc & Epigraph (3.1.2.2.3), on a sheet of its own, after the acknowledgements. \\
 abstract & \textbackslash begin\{abstract\} ... & \doc & Abstract in the main language. One sheet, one paragraph, 250 words. \\
 foreignabstract & \textbackslash begin\{foreignabstract\} ... & \doc & Abstract in the foreign language. \\
 brazilianabstract & \textbackslash begin\{brazilianabstract\} ... & \doc & Third abstract, Portuguese, for a Spanish- or French-main work. \\
@@ -245,7 +246,7 @@ longquote & \textbackslash begin\{longquote\} ... & \doc & Quotation over three 
 \vfill
 \begin{center}\small
 Full manual: \texttt{coppe.pdf}, in Portuguese.\quad
-Complete worked example: \texttt{example.tex}.\quad
+Worked examples: \texttt{min-exemplo.tex} (only what is mandatory) and \texttt{max-exemplo.tex} (everything).\quad
 Problems: \url{https://github.com/COPPE-UFRJ/CoppeTeX/issues}
 \end{center}
 

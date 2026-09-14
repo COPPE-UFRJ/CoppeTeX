@@ -86,7 +86,7 @@ doc: $(PACKAGE_NAME).dtx
 class: $(PACKAGE_NAME).cls
 
 
-install: doc class example.pdf
+install: doc class max-exemplo.pdf min-exemplo.pdf
 	@if [ "$(DESTDIR)" == "" ]; then \
 	  $(_printf) "error: empty detination directory.\n"; \
 	  make help; \
@@ -111,9 +111,9 @@ install: doc class example.pdf
 	mkdir -vp $(DOCDIR)
 	@${_printf} "Copying files from root directory.\n"
 	cp -vp ../README.md ../COPYING.txt $(PACKAGE_NAME).pdf \
-		example.tex example.pdf example.bib $(DOCDIR)
+		max-exemplo.tex max-exemplo.pdf min-exemplo.tex min-exemplo.pdf exemplo.bib $(DOCDIR)
 
-build: doc class example.pdf
+build: doc class max-exemplo.pdf min-exemplo.pdf
 	@if [ "$(BUILDDIR)" == "" ]; then \
 	  $(_printf) "error: empty build directory.\n"; \
 	  make help; \
@@ -147,11 +147,11 @@ help:
 	@${_printf} "\n"
 	@${_printf} "  doc          generate the \`%s' documentation\n" \
 	            ${PACKAGE_NAME}
-	@${_printf} "  class        strip the \`%s' class and \`example.tex' " \
+	@${_printf} "  class        strip the \`%s' class and the examples " \
 		          ${PACKAGE_NAME} 
 	@${_printf} "from \`%s'\n" ${DOC_SOURCE}
 	@${_printf} "%s\n" \
-           "  example.pdf  generate a PDF file from \`example.tex'" \
+           "  max-exemplo.pdf  generate a PDF file from \`max-exemplo.tex'" \
            "  build        build class files in BUILDDIR [../dist]"\
            "  clean        remove auxiliary archives" \
 	       "  install      install class in DESTDIR" \
@@ -174,7 +174,7 @@ $(PACKAGE_NAME).cls: $(PACKAGE_NAME).ins
 	mkdir -vp "${BUILDDIR}"
 	cp $(basename $<).cls "${BUILDDIR}/" 
 
-example.tex: $(PACKAGE_NAME).ins
+max-exemplo.tex min-exemplo.tex: $(PACKAGE_NAME).ins
 	@$(TEX) $(TEXFLAGS) $<
 	
 %.ist: $(PACKAGE_NAME).ins
@@ -212,5 +212,5 @@ example.tex: $(PACKAGE_NAME).ins
 clean:
 	@$(_rm) -f *.log *.aux *.ist *.idx *.blg *.bbl *.glo *.bz2 \
 		         *.toc *.lof *.lot *.syx *.abx *.sgx *.lab *.lsg *.ilg *.los *.ind \
-						 *.gls *.out *~ coppe.pdf coppe.cls example.pdf example.tex
+						 *.gls *.out *~ coppe.pdf coppe.cls max-exemplo.pdf max-exemplo.tex min-exemplo.pdf min-exemplo.tex
 

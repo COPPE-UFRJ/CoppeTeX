@@ -15,7 +15,7 @@ E cobra tambem a ARRUMACAO, que tem uma regra so: o que esta na raiz de dist/
 funciona sem voce mexer em nada, e quem vai escrever em outro idioma tem de
 TRAZER PARA A RAIZ o conteudo da pasta daquele idioma -- o LaTeX procura os
 arquivos ao lado do documento, e nao dentro de subpastas. O teste faz
-exatamente isso: compila o exemplo em portugues onde ele esta, e os outros dois
+exatamente isso: compila os dois exemplos em portugues onde eles estao, e os outros dois
 depois de mover a pasta deles para a raiz, que e o que a documentacao manda
 fazer. Se a instrucao estiver errada, falha aqui.
 
@@ -40,7 +40,8 @@ RAIZ = os.path.dirname(os.path.dirname(AQUI))
 DIST = os.path.join(RAIZ, "dist")
 
 # (documento, pasta cujo conteudo tem de vir para a raiz antes de compilar)
-EXEMPLOS = [("example", None), ("example_en", "en"), ("example_es", "es")]
+EXEMPLOS = [("min-exemplo", None), ("max-exemplo", None), ("example_en", "en"),
+            ("example_es", "es")]
 
 problemas = []
 

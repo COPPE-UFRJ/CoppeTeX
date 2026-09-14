@@ -58,7 +58,8 @@ else:
     # querer nao quebra nada no ato -- a distribuicao simplesmente fica sem ele,
     # e quem descobre e o aluno, depois.
     for preciso in ("coppe.cls", "coppe.pdf", "manual.pdf", "coppe-quickref.pdf",
-                    "example.tex", "example.pdf",
+                    "min-exemplo.tex", "min-exemplo.pdf",
+                    "max-exemplo.tex", "max-exemplo.pdf", "exemplo.bib",
                     "example_en.tex", "example_en.pdf",
                     "example_es.tex", "example_es.pdf",
                     "latexmkrc", "coppe.ist", "ufrj-logo.pdf"):
@@ -70,7 +71,7 @@ else:
     # example.tex a declara -- quem baixava a entrega recebia um PDF com as
     # citacoes em branco. Perguntar ao proprio .tex e melhor que manter uma
     # segunda lista aqui, que envelheceria do mesmo jeito.
-    for exemplo in ("example", "example_en", "example_es"):
+    for exemplo in ("min-exemplo", "max-exemplo", "example_en", "example_es"):
         fonte = ler("src/%s.tex" % exemplo)
         for base in re.findall(r"\\addbibresource\{([^}]+)\}", fonte):
             if '"%s"' % base not in lista:

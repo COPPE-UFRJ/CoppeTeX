@@ -433,7 +433,7 @@ escrita: quando desligar o morewrites*.
 Até a v4.1 a classe carregava o `amssymb` sob pdfLaTeX. Não carrega mais: a
 fonte matemática é escolha do autor. Se o seu trabalho usa `\mathbb`, `\hbar`,
 `\varnothing` ou outro símbolo AMS e passou a dar "Undefined control
-sequence", ponha no preâmbulo o bloco que o `example.tex` usa:
+sequence", ponha no preâmbulo o bloco que o `max-exemplo.tex` usa:
 
 ```latex
 \ifPDFTeX

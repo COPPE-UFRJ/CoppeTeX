@@ -43,7 +43,7 @@ TOOLS = os.path.join(RAIZ, "tools")
 #
 # A ARRUMACAO tem uma regra so, e ela e a chave para entender a lista: o que
 # esta na RAIZ de dist/ e o que funciona sem voce mexer em nada -- a classe, os
-# estilos, e o exemplo em PORTUGUES, que e o caso de quase todo trabalho da
+# estilos, e os exemplos em PORTUGUES, que e o caso de quase todo trabalho da
 # COPPE. Quem vai escrever em outro idioma tem de TRAZER PARA A RAIZ o conteudo
 # da pasta daquele idioma; o LaTeX procura os arquivos ao lado do documento, e
 # nao dentro de subpastas.
@@ -81,24 +81,26 @@ PARA_DIST = [
     # 'english-coppe.lbx' not found".
     ("", "brazilian-coppe.lbx"), ("", "english-coppe.lbx"),
     ("", "coppe.ist"), ("", "latexmkrc"),
-    # A tipos.bib nao estava aqui, e o example.tex a declara: quem baixava a
-    # entrega compilava, recebia um PDF com as citacoes em branco e o biber
-    # dizendo "Cannot find 'tipos.bib'". Toda base que um exemplo declarar tem
+    # A tipos.bib ja ficou fora desta lista, e o exemplo a declarava: quem
+    # baixava a entrega recebia um PDF com as citacoes em branco e o biber
+    # dizendo "Cannot find 'tipos.bib'". Hoje ha uma base so, a exemplo.bib
+    # (#102). Toda base que um exemplo declarar tem
     # de estar nesta lista -- tests/regressivo/r92 cobra isso lendo os proprios
     # \addbibresource dos exemplos, e r93 cobra compilando.
-    ("", "example.tex"), ("", "example.bib"), ("", "tipos.bib"),
+    ("", "min-exemplo.tex"), ("", "max-exemplo.tex"), ("", "exemplo.bib"),
     ("", "coppe.bib"),
     # Nao ha `coppe.tex': o manual da classe e o proprio coppe.dtx, e quem o
     # compoe e o coppe.ins. Os dois vao para que a entrega baste tambem para
     # REFAZER o manual e a classe, e nao so para usa-los -- e porque o
     # coppe.dtx e o unico lugar onde o codigo esta comentado.
-    ("", "coppe.dtx"), ("", "coppe.ins"), ("", "manual.tex"),
+    ("", "coppe.dtx"), ("", "coppe.ins"), ("", "manual.tex"), ("", "manual.bib"),
     # --- logos/ -------------------------------------------------------------
     ("logos", "coppe-logo.eps"), ("logos", "coppe-logo.pdf"),
     ("logos", "ufrj-logo.pdf"),
     # --- manuais/ -----------------------------------------------------------
     ("manuais", "coppe.pdf"), ("manuais", "coppe-quickref.pdf"),
-    ("manuais", "manual.pdf"), ("manuais", "example.pdf"),
+    ("manuais", "manual.pdf"), ("manuais", "min-exemplo.pdf"),
+    ("manuais", "max-exemplo.pdf"),
     # --- en/ e es/: traga para a raiz para usar -----------------------------
     ("en", "example_en.tex"), ("en", "example_en.pdf"),
     ("es", "example_es.tex"), ("es", "example_es.pdf"),

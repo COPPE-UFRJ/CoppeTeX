@@ -1440,6 +1440,15 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
         \raggedleft \it \normalsize \@dedic
       \end{minipage}
     \end{flushright}}
+\newcommand\epigrafe[2]{%
+  \cleardoublepage
+  \vspace*{\fill}
+  \begin{flushright}
+    \begin{minipage}{0.5\textwidth}
+      \raggedleft\itshape\normalsize #1\par
+      \vspace{1ex}\normalfont\small #2
+    \end{minipage}
+  \end{flushright}}
 
 \newcommand\coppe@coadvisorrows[1]{%
   \if@coppecoadvresumo
@@ -1513,7 +1522,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \fi
   \if@copperestitulo
     \begin{center}
-      \sloppy\nohyphens{\MakeUppercase{\coppe@res@title{\coppe@reslang}}}\par
+      \sloppy\nohyphens{\MakeUppercase{\coppe@res@title{\coppe@reslang}}%
+        \coppe@res@subtitle{\coppe@reslang}}\par
       \vspace*{8mm}
       \@authname\ \@authsurn \par
       \vspace*{5mm}
@@ -1881,6 +1891,12 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \@ifundefined{coppe@title@#1}%
     {\@nameuse{coppe@title@brazilian}}%
     {\@nameuse{coppe@title@#1}}}
+\newcommand\coppe@res@subtitle[1]{%
+  \@ifundefined{coppe@title@#1}%
+    {\@ifundefined{coppe@subtitle@brazilian}{}%
+       {: \@nameuse{coppe@subtitle@brazilian}}}%
+    {\@ifundefined{coppe@subtitle@#1}{}%
+       {: \@nameuse{coppe@subtitle@#1}}}}
 \newcommand\coppe@res@month[1]{%
   \@nameuse{coppe@str@#1@monthname\number\coppe@docmonth}}
 \newcommand\coppe@res@advisor[1]{%

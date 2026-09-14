@@ -155,7 +155,7 @@ a third language.
 API (`\if@english`, `\iflanguage{brazilian}{...}{...}`, `\local@*`,
 `\foreign@*`, `\title`, `\foreigntitle`, `\begin{foreignabstract}`,
 `\selectlanguage`, …) continue to behave exactly as before. The pt-main
-`example.pdf` and an en-main smoke document rebuild **byte-identical** to
+the example PDF and an en-main smoke document rebuild **byte-identical** to
 the previous release at every step of the refactor.
 
 ### Institutional template stays Portuguese
@@ -312,7 +312,7 @@ these in your thesis). Bracketed text is the options the class passes.
 - `amsmath` — AMS math environments.
 - **No math fonts.** Since 4.1 the math font is the author's choice: load
   `amssymb` under pdfTeX, or `unicode-math` with an OpenType math font under
-  LuaTeX, in your preamble. `example.tex` and the empty-document generator
+  LuaTeX, in your preamble. The examples and the empty-document generator
   carry a block that picks by engine.
 
 **Page layout & spacing**
@@ -401,8 +401,9 @@ writes every file that is distributed:
 | `brazilian-coppe.lbx`, `english-coppe.lbx`, `spanish-coppe.lbx`, `french-coppe.lbx`, `italian-coppe.lbx` | biblatex localization strings |
 | `coppe-lang-spanish.def`, `coppe-lang-french.def`, `coppe-lang-italian.def` | class-level string packs |
 | `coppe.ist` | makeindex style for the lists of symbols and abbreviations |
-| `coppe.bib`, `example.bib` | the bibliography of the manual and the example's sample database |
-| `example.tex` | the full sample thesis |
+| `coppe.bib`, `manual.bib`, `exemplo.bib` | the bibliographies of the class manual, of `manual.tex`, and of the examples |
+| `min-exemplo.tex` | the minimal sample thesis: only what the norm makes mandatory |
+| `max-exemplo.tex` | the maximal sample thesis: everything the class offers |
 | `example_pt.tex`, `example_en.tex`, `example_es.tex`, `example_fr.tex`, `example_it.tex` | one short demonstration per main language |
 | `covers_5languages.tex` | the side-by-side cover sheet |
 | `latexmkrc` | latexmk configuration (biber + the makeindex runs) |

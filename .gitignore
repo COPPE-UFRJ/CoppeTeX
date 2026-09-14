@@ -27,9 +27,9 @@ src/coppe.aux
 *.lsg
 *.hd
 *.hd
-src/example.synctex.gz
-src/example.fdb_latexmk
-src/example.fls
+src/*.synctex.gz
+src/*.fdb_latexmk
+src/*.fls
 
 # CoppeTeX 4.0 working artifacts
 _scratch/
@@ -90,3 +90,6 @@ tests/adversativa/*
 # arquivo temporario do morewrites: zero byte, produto de build, e um deles
 # rastreado no git ja bloqueou a compilacao por conflito de escrita
 *.mw
+*.idx
+*.ind
+*.ilg

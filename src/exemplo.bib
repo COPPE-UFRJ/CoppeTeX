@@ -1,10 +1,10 @@
 %%
-%% This is file `tipos.bib',
+%% This is file `exemplo.bib',
 %% generated with the docstrip utility.
 %%
 %% The original source files were:
 %%
-%% coppe.dtx  (with options: `tiposbib')
+%% coppe.dtx  (with options: `examplebib,tiposbib')
 %% 
 %% This is a BibLaTeX/biber bibliographic database for the `coppe' document
 %% class.  It is generated from coppe.dtx by docstrip; edit the .dtx source,
@@ -14,8 +14,227 @@
 %% Geraldo Xexéo and Eduardo Mangeli. Released under the GNU General Public
 %% License version 3 (see the COPYING.txt file).
 %% 
+@Comment{ exemplo.bib -- a base dos exemplos (min-exemplo.tex, max-exemplo.tex e
+  os exemplos por idioma). Primeira parte: entradas de demonstracao, muitas com
+  os sinonimos em portugues dos campos e tipos (autor, titulo, editora, local,
+  ano, organizador, ...). Segunda parte, mais abaixo: uma entrada de cada
+  categoria da secao 4.2 do Manual. }
 
-@Comment{ tipos.bib -- um exemplo de CADA categoria de referencia da secao 4.2
+@BOOK{book-example,
+   author = "R. Abraham and J. E. Marsden and T. Ratiu",
+   title = "Manifolds, Tensor Analysis, and Applications",
+   edition = "2",
+   address = "New York",
+   publisher = "Springer-Verlag",
+   year = "1988",
+}
+
+@ARTICLE{article-example,
+   author = "D. Iesan",
+   title = {Existence Theorems in the Theory of Mixtures},
+   journal = {Journal of Elasticity},
+   volume = {42},
+   number = {2},
+   pages = {145--163},
+   month = feb,
+   year = 1996,
+}
+
+@TECHREPORT{techreport-exampleIn,
+  author = "D. A. Garret",
+  title = "The Microscopic Detection of Corrosion in Aluminum Aircraft Structures with Thermal Neutron Beams and Film Imaging Methods",
+  type = "In: Report",
+  number = "NBSIR 78-1434",
+  institution = "National Bureau of Standards",
+  address = "Washington, D.C.",
+  year = "1977",
+}
+
+@TECHREPORT{techreport-example,
+   author = "L. Maestrello",
+   title = "Two-Point Correlations of Sound Pressure in the Far Field of a Jet: Experiment",
+   type = "{NASA}",
+   number = "{TM}~{X}-72835",
+   year = 1976,
+}
+
+@INPROCEEDINGS{inproceedings-example,
+   author = "M. E. Gurtin",
+   title = "On the nonlinear theory of elasticity",
+   booktitle = "Proceedings of the International Symposium on Continuum Mechanics and Partial Differential Equations: Contemporary Developments in Continuum Mechanics and Partial Differential Equations",
+   pages = "237-253",
+   address = "Rio de Janeiro",
+   month = aug,
+   year = 1977,
+}
+
+@INCOLLECTION{incollection-example,
+   author = "S. C. Cowin",
+   title = "Adaptive Anisotropy: An Example in Living Bone",
+   booktitle = "Non-Classical Continuum Mechanics",
+   series = "London Mathematical Society Lecture Note Series",
+   volume = "122",
+   publisher = "Cambridge University Press",
+   pages = "174--186",
+   year = 1987,
+}
+
+@INBOOK{inbook-example,
+   author = "D. K. Edwards",
+   title = "Thermal Radiation Measurements",
+   address = "New York, USA",
+   booktitle = "Measurements in Heat Transfer",
+   publisher = "Hemisphere Publishing Corporation",
+   editor = "E. R. G. Eckert and R. J. Goldstein",
+   edition = 2,
+   year = "1976",
+   chapter = "10",
+}
+
+@MASTERSTHESIS{mastersthesis-example,
+   author = "A. Tuntomo",
+   title = "Transport Phenomena in a Small Particle with Internal Radiant Absorption",
+   school = "University of California at Berkeley",
+   type = "{Ph.D.} dissertation",
+   address = "Berkeley, California, USA",
+   year = 1990,
+}
+
+@PHDTHESIS{phdthesis-example,
+   author = "Paes~Junior, H. R.",
+   title = "Influência da Espessura da Camada Intrínseca e Energia do Foton na Degradação de Células Solares de Silício Amorfo Hidrogenado",
+   school = "COPPE/UFRJ",
+   address = "Rio de Janeiro, RJ, Brasil",
+   type = "Tese de {D.Sc.}",
+   curso = "Engenharia Metalúrgica e de Materiais",
+   year = 1994,
+}
+
+@videogame{videogame-example,
+   author = "Meier, Sid",
+   title = "Sid Meier's Civilization VI",
+   artista = "Firaxis Games",
+   plataforma = "PC",
+   editora = "2K Games",
+   versao = "1.0",
+   ano = 2016,
+}
+
+@filme{filme-example,
+   title = "Cidade de Deus",
+   diretor = "Meirelles, Fernando and Lúnd, Kátia",
+   produtor = "O2 Filmes",
+   editora = "Globo Filmes",
+   local = "Rio de Janeiro",
+   ano = 2002,
+}
+
+@Comment{ Exotic ABNT types (NBR 6023 4.2.5-4.2.12), via the Portuguese synonyms. }
+
+@patente{patente-example,
+   autor = "Silva, J. A.",
+   title = "Dispositivo de medição de fluxo térmico",
+   number = "BR 10 2020 012345 6",
+   type = "Patente de Invento",
+   holder = "{Universidade Federal do Rio de Janeiro}",
+   ano = 2021,
+}
+
+@legislacao{legislacao-example,
+   author = "{Brasil}",
+   title = "Lei n. 9.610, de 19 de fevereiro de 1998: altera, atualiza e consolida a legislação sobre direitos autorais",
+   type = "Lei Federal",
+   local = "Brasília, DF",
+   ano = 1998,
+}
+
+@norma{norma-example,
+   author = "{Associação Brasileira de Normas Técnicas}",
+   title = "{NBR} 6023: informação e documentação: referências: elaboração",
+   local = "Rio de Janeiro",
+   ano = 2018,
+}
+
+@mapa{mapa-example,
+   autor = "{Instituto Brasileiro de Geografia e Estatística}",
+   title = "Mapa político do Brasil",
+   escala = "1:5.000.000",
+   local = "Rio de Janeiro",
+   editora = "IBGE",
+   ano = 2016,
+}
+
+@partitura{partitura-example,
+   author = "Villa-Lobos, Heitor",
+   title = "Bachianas Brasileiras n. 5",
+   local = "Rio de Janeiro",
+   publisher = "Academia Brasileira de Música",
+   ano = 1945,
+   addendum = "1 partitura",
+}
+
+@Comment{ Obra sem autor: entra pelo titulo (1a palavra em CAIXA ALTA, ABNT 4.2). }
+@book{semautor-example,
+   title = "Diagnóstico do setor editorial brasileiro",
+   local = "São Paulo",
+   editora = "Câmara Brasileira do Livro",
+   ano = 2019,
+}
+
+@Comment{ Artigo/materia de jornal (NBR 6023 4.2.3.6). Com caderno/secao: a
+  data precede o caderno e a pagina vem por ultimo. }
+@artigodejornal{jornalcaderno-example,
+   autor = "J. Byrne",
+   titulo = "A explosão de cursos para executivos nos EUA",
+   jornal = "Gazeta Mercantil",
+   local = "São Paulo",
+   data = "1992-02-04",
+   caderno = "Administração e Serviços",
+   paginas = "28",
+}
+
+@Comment{ Artigo de jornal sem caderno/secao: a paginacao precede a data. }
+@artigodejornal{jornal-example,
+   autor = "L. N. P. Leal",
+   titulo = "MP fiscaliza com autonomia total",
+   jornal = "Jornal do Brasil",
+   local = "Rio de Janeiro",
+   paginas = "3",
+   data = "1999-04-25",
+}
+
+@Comment{ Jurisprudencia / decisao judicial (NBR 6023 4.2.6.2): jurisdicao +
+  orgao (autor, CAIXA ALTA), titulo da decisao, Relator, local e data. }
+@jurisprudencia{jurisprudencia-example,
+   author = "{Brasil. Supremo Tribunal Federal}",
+   title = "Habeas Corpus 12.345",
+   relator = "Min. Fulano de Tal",
+   local = "Brasília, DF",
+   data = "2020-03-10",
+}
+
+@Comment{ Obra sem autor iniciada por artigo: o artigo e a 1a palavra
+  significativa ficam em CAIXA ALTA (ABNT 4.2) -- AS NORMAS de... }
+@book{semautorart-example,
+   title = "As normas de documentação acadêmica",
+   local = "Rio de Janeiro",
+   editora = "ABNT",
+   ano = 2021,
+}
+
+@manual{manualbib,
+   editor = "Sousa, Amanda Moura de and Oliveira, Lidia da Costa and Arias, Luiza Coutinho",
+   title = "Manual para elaboração e normalização de trabalhos acadêmicos",
+   edition = 9,
+   publisher = "UFRJ/SiBI",
+   location = "Rio de Janeiro",
+   date = 2025,
+   pagetotal = 121,
+   url = "https://drive.google.com/file/d/1IfNy51_qMf8cXEabOlm1U6zMXcH10FWL/view",
+   urldate = "2026-05-30",
+}
+
+@Comment{ Segunda parte: um exemplo de CADA categoria de referencia da secao 4.2
   do Manual UFRJ/SiBI, 9.a ed. rev. (2026), com os dados dos exemplos do
   proprio Manual. O comentario %% acima de cada entrada e a referencia COMO O
   MANUAL A IMPRIME.
@@ -488,4 +707,4 @@
 }
 %% 
 %%
-%% End of file `tipos.bib'.
+%% End of file `exemplo.bib'.

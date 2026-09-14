@@ -10,7 +10,7 @@ ja preenchidos com a estrutura que a norma pede e com os cinco capitulos de
 sempre: Introducao, Fundamentacao Teorica, Materiais e Metodos, Resultados e
 Conclusoes.
 
-Existe porque comecar do example.tex significa APAGAR: ele e um documento de
+Existe porque comecar do max-exemplo.tex significa APAGAR: ele e um documento de
 demonstracao, cheio de figuras, tabelas, quadros e comentarios que ensinam, e
 quem vai escrever a tese passa a primeira hora limpando o que nao vai usar.
 Aqui e o contrario -- o documento sai com o esqueleto e com o texto de
@@ -101,7 +101,7 @@ MESES = [("%02d" % i, n) for i, n in enumerate(
 #
 # tipo: "texto", "escolha", "sim/nao", "inteiro", "multilinha"
 #
-# O padrao de tudo e o padrao COMPLETO da COPPE, como no example.tex: quem
+# O padrao de tudo e o padrao COMPLETO da COPPE, como no max-exemplo.tex: quem
 # aperta Gerar sem mexer em nada recebe um trabalho com todas as folhas que a
 # norma preve. Tirar e escolha de quem gera, e nao o contrario.
 CAMPOS = [
@@ -288,7 +288,7 @@ def monta_tex(v, nome_bib):
     A("")
     if v["matematica"]:
         # A fonte matematica e escolha do autor, e a classe nao carrega
-        # nenhuma. Sai o mesmo bloco do example.tex, que escolhe pelo motor.
+        # nenhuma. Sai o mesmo bloco do max-exemplo.tex, que escolhe pelo motor.
         A("%% Fontes matematicas: escolha sua, a classe nao carrega nenhuma.")
         A("%% pdfLaTeX usa amssymb; LuaLaTeX/XeLaTeX, unicode-math com uma fonte")
         A("%% OpenType. Nunca os dois juntos. Sem matematica, apague o bloco.")
@@ -466,7 +466,7 @@ def monta_bib(v):
     return """%% Base de referencias gerada por tools/geradocvazio.py.
 %%
 %% Uma entrada de cada tipo mais comum, para copiar e trocar. A entrega traz,
-%% em tipos.bib, um exemplo de CADA categoria da secao 4.2 do Manual -- olhe la
+%% em exemplo.bib, um exemplo de CADA categoria da secao 4.2 do Manual -- olhe la
 %% quando precisar de um tipo que nao esteja aqui.
 %%
 %% Os nomes de campo podem ser os do biblatex (author, title, year) ou os
@@ -536,8 +536,9 @@ REPO = "COPPE-UFRJ/CoppeTeX"
 # na pagina do repositorio.
 def _serve_para_compilar(relativo):
     nome = relativo.replace("\\", "/").split("/")[-1]
-    if nome.startswith("example") or nome in ("tipos.bib", "coppe.bib",
-                                              "README.md"):
+    if (nome.startswith("example") or nome.endswith("-exemplo.tex")
+            or nome.endswith("-exemplo.pdf")
+            or nome in ("exemplo.bib", "coppe.bib", "README.md")):
         return False
     if nome in ("coppe.dtx", "coppe.ins", "manual.tex"):
         return False   # sao FONTES dos manuais, nao servem para compilar a tese

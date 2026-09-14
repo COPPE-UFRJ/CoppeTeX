@@ -106,13 +106,13 @@ If you would like the pack to ship with the official CoppeTeX:
 The class lives in `src/coppe.dtx` — a documented `.dtx` file. Run
 `pdflatex coppe.ins` (or `coppetex.bat --regerar` on Windows) to regenerate
 `coppe.cls`, the `.bbx/.cbx/.dbx`, the `.lbx` files, the `.def` files
-and `example.tex` from it. The manual `coppe.pdf` is also rebuilt from
+and the examples (`min-exemplo.tex`, `max-exemplo.tex`) from it. The manual `coppe.pdf` is also rebuilt from
 the same `.dtx` by running `pdflatex coppe.dtx` three times with
 `makeindex` in between.
 
 When you edit `coppe.dtx`:
 
-- **Behavior changes for pt or en?** Compare a rebuilt `dist/example.pdf`
+- **Behavior changes for pt or en?** Compare a rebuilt `dist/manuais/max-exemplo.pdf`
   against the previous version page-by-page (`pdftoppm` + `md5sum`).
   Unless you intend a visible change, the diff should be empty.
 - **New macros?** Add a `\changes{vX.Y}{date}{description}` entry near

@@ -29,6 +29,6 @@ echo.
 echo   Nao achei o python no PATH, e o gerador e escrito em Python.
 echo.
 echo   Instale o Python 3 (python.org) e rode de novo. Sem ele, comece
-echo   copiando o example.tex da entrega e apagando o que nao for usar.
+echo   copiando o max-exemplo.tex da entrega e apagando o que nao for usar.
 echo.
 exit /b 1

@@ -2,12 +2,12 @@
 # -*- coding: utf-8 -*-
 """Atualiza os numeros de linha da tabela "onde ver cada coisa" do manual.
 
-A tabela do manual aponta, para cada comando, a linha do example.tex em que ele
+A tabela do manual aponta, para cada comando, a linha do max-exemplo.tex em que ele
 aparece pela primeira vez. Esses numeros se deslocam a cada edicao do exemplo, e
 nada quebra quando isso acontece: a tabela simplesmente passa a mentir.
 
 tools/conferir-manual.py acusa o desalinhamento; este script o conserta, lendo o
-example.tex atual e reescrevendo a coluna de linhas no coppe.dtx.
+max-exemplo.tex atual e reescrevendo a coluna de linhas no coppe.dtx.
 
     python3 tools/atualizar-onde-ver.py
 
@@ -20,7 +20,7 @@ import sys
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DTX = os.path.join(RAIZ, "src", "coppe.dtx")
-EXEMPLO = os.path.join(RAIZ, "src", "example.tex")
+EXEMPLO = os.path.join(RAIZ, "src", "max-exemplo.tex")
 
 
 def main():

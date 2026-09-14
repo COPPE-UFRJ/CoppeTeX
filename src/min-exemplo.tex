@@ -1,0 +1,111 @@
+%%
+%% This is file `min-exemplo.tex',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% coppe.dtx  (with options: `minexemplo')
+%% 
+%% This is a sample monograph which illustrates the use of the `coppe' document
+%% class and its biblatex/biber bibliography style.
+%% 
+%% Copyright (C) 2008-2026 Vicente Helano F. Batista, George O. Ainsworth Jr.,
+%% Geraldo Xexéo and Eduardo Mangeli. Released under the GNU General Public
+%% License version 3 (see the COPYING.txt file).
+%% 
+\documentclass[dsc,pdfa,orientadorexamina]{coppe}
+%% min-exemplo.tex -- tudo o que a norma exige, e nada além disso.
+%%
+%% O que está aqui e por quê (Manual UFRJ/SiBI, 9.ª ed. rev., 2026):
+%%  - pdfa ................ o depósito é em PDF/A (2.2d);
+%%  - orientadorexamina ... a 3.1.2.1.3(e) põe o orientador em primeiro lugar
+%%    na banca da folha de aprovação, como presidente;
+%%  - \maketitle .......... capa, folha de rosto (3.1.2.1.1) e folha adicional
+%%    com a Coleta CAPES e a ficha catalográfica (3.1.2.1.2);
+%%  - \frontmatter ........ folha de aprovação (3.1.2.1.3);
+%%  - abstract ............ resumo na língua do trabalho (3.1.2.1.4);
+%%  - foreignabstract ..... resumo em língua estrangeira (3.1.2.1.5);
+%%  - \tableofcontents .... sumário (3.1.2.1.6), o único obrigatório das listas;
+%%  - introdução, desenvolvimento e conclusão (3.1.3);
+%%  - \printbibliography .. referências, o único pós-textual obrigatório (3.1.4).
+%%
+%% O que NÃO está, por ser opcional: dedicatória, agradecimentos, epígrafe,
+%% todas as listas além do sumário, subtítulo, coorientador, linha de pesquisa,
+%% glossário, apêndices, anexos e índice. Tudo isso está no max-exemplo.tex.
+
+\addbibresource{exemplo.bib}% a base de referências
+
+\begin{document}
+  \title{Título do Trabalho}
+  \foreigntitle{Title of the Work}
+  \author{Nome do Autor}{Sobrenome}
+  \advisor{Nome do Orientador}{Sobrenome}{D.Sc.}{UFRJ}
+  % A composição da banca é regra do Programa, não da formatação.
+  \examiner{Nome do Primeiro Examinador Sobrenome}{D.Sc.}{UFRJ}
+  \examiner{Nome do Segundo Examinador Sobrenome}{D.Sc.}{UFRJ}
+  \examiner{Nome do Terceiro Examinador Sobrenome}{D.Sc.}{UFF}
+  \department{PESC}
+  \date{09}{2026}
+  % Data da aprovação: obrigatória na folha de aprovação (3.1.2.1.3d).
+  \dataaprovacao{15 de setembro de 2026}
+
+  % Palavras-chave, ao final de cada resumo (3.1.2.1.4 e 3.1.2.1.5).
+  \keyword{Primeira palavra-chave}
+  \keyword{Segunda palavra-chave}
+  \keyword{Terceira palavra-chave}
+  \foreignkeyword{First keyword}
+  \foreignkeyword{Second keyword}
+  \foreignkeyword{Third keyword}
+
+  % Folha de rosto e folha adicional: área de concentração (3.1.2.1.1e) e os
+  % campos da Coleta CAPES (3.1.2.1.2). A ficha catalográfica vem do gerador do
+  % SiBI; com o arquivo em mãos, descomente a linha \fichacatalografica.
+  \areaconcentracao{Engenharia de Sistemas e Computação}
+  \tipoproducao{bibliografica}
+  \projetovinculado{nao}
+  % \fichacatalografica{ficha.pdf}
+
+  \maketitle
+
+  \frontmatter
+
+  \begin{abstract}
+  Resumo do trabalho, de 150 a 500 palavras, num só parágrafo (3.1.2.1.4).
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+  tempor incididunt ut labore et dolore magna aliqua.
+  \end{abstract}
+
+  \begin{foreignabstract}
+  Abstract of the work, in English (3.1.2.1.5). Lorem ipsum dolor sit amet,
+  consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+  dolore magna aliqua.
+  \end{foreignabstract}
+
+  \tableofcontents
+
+  \mainmatter
+
+  \chapter{Introdução}
+
+  A introdução apresenta o tema, o problema e os objetivos do trabalho, e
+  anuncia como o texto está organizado. Toda afirmação que venha de outro
+  trabalho é citada, como em \citet{book-example}.
+
+  \chapter{Desenvolvimento}
+
+  O desenvolvimento pode ocupar quantos capítulos o trabalho pedir: revisão
+  da literatura, métodos, resultados e discussão \citep{article-example}.
+
+  \chapter{Conclusão}
+
+  A conclusão responde aos objetivos postos na introdução.
+
+  \backmatter
+
+  \printbibliography
+
+\end{document}
+
+%% 
+%%
+%% End of file `min-exemplo.tex'.
