@@ -4910,8 +4910,19 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \ClassInfo{coppe}{morewrites dispensado: o LuaTeX ja tem 128 fluxos}%
     \@coppemorewritesfalse
   \else
+% The streams still free are handed to morewrites as REAL streams. Without
+% `allocate' every stream it manages is virtual, and each write to a virtual
+% stream round-trips through \jobname.mw -- open, write, close, read back,
+% empty. That is what made example.tex open example.mw 772 times per pass and
+% cost a quarter of the compile time, while twelve real streams sat unused.
+% With them allocated, only what exceeds sixteen goes through the file: 118
+% opens (two per page, the package's floor), the same PDF, about 2 s less per
+% pass. \count17 is the last stream allocated so far; 15 is the last one TeX
+% has. Every \newwrite after this point is morewrites' own and virtual, so
+% taking all of them starves nobody.
     \IfFileExists{morewrites.sty}
-      {\RequirePackage{morewrites}}
+      {\RequirePackage{morewrites}%
+       \morewritessetup{allocate=\the\numexpr 15-\count17\relax}}
       {\if@coppemwforced
          \ClassError{coppe}{Opcao `morewrites' pedida, mas morewrites.sty nao
            esta instalado}{Instale o pacote morewrites, ou compile com lualatex,

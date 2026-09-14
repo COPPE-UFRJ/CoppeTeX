@@ -463,7 +463,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \@coppemorewritesfalse
   \else
     \IfFileExists{morewrites.sty}
-      {\RequirePackage{morewrites}}
+      {\RequirePackage{morewrites}%
+       \morewritessetup{allocate=\the\numexpr 15-\count17\relax}}
       {\if@coppemwforced
          \ClassError{coppe}{Opcao `morewrites' pedida, mas morewrites.sty nao
            esta instalado}{Instale o pacote morewrites, ou compile com lualatex,
