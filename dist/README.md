@@ -88,7 +88,7 @@ isso que não há exemplo pronto para eles.
 | `example.tex`, `example.bib`, `tipos.bib` | **O exemplo completo, em português**, comentado linha a linha, e as duas bases que ele cita. A `tipos.bib` traz uma entrada de **cada tipo** de referência da seção 4.2 do Manual. |
 | `coppe.bib` | A base com as referências da própria classe e da norma. |
 | `coppe.dtx`, `coppe.ins`, `manual.tex` | As **fontes** dos manuais. Não são necessárias para escrever; estão aqui para que a entrega baste também para refazer o manual e a classe. Não existe `coppe.tex`: o manual da classe é o próprio `coppe.dtx`, e quem o compõe é o `coppe.ins`. |
-| `COPYING` | A licença, GNU GPL versão 3. |
+| `COPYING.txt` | A licença, GNU GPL versão 3. |
 
 ### `logos/`
 
@@ -212,4 +212,4 @@ arquivo.
 
 ## Licença
 
-GNU General Public License, versão 3. O texto está em `COPYING`.
+GNU General Public License, versão 3. O texto está em `COPYING.txt`.

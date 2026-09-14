@@ -70,7 +70,12 @@ def main():
         # ACOPLAMENTO: tools/build-check.ps1 lia o .log pela mesma regra, e pelo
         # mesmo motivo. Os dois foram corrigidos juntos.
         texto = io.open(caminho, encoding="utf-8", errors="replace").read()
-        nome = os.path.relpath(caminho, RAIZ)
+        # No Windows, relpath entre discos diferentes (repositorio em D:, log
+        # num temporario em C:) levanta ValueError; o r90 morria assim.
+        try:
+            nome = os.path.relpath(caminho, RAIZ)
+        except ValueError:
+            nome = caminho
         achados = []
         for rotulo, padrao in PADROES:
             for m in padrao.finditer(texto):

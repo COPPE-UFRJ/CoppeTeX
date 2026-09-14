@@ -374,9 +374,11 @@
       \hline
       Pré-textual & Resumo em idioma estrangeiro & sim \\
       \hline
-      Pré-textual & Listas de ilustrações, tabelas e quadros & se houver \\
+      Pré-textual & Listas de ilustrações e de tabelas & não (3.1.2.2.4--5) \\
       \hline
-      Pré-textual & Listas de abreviaturas, siglas e símbolos & se houver \\
+      Pré-textual & Listas de quadros, programas e algoritmos & se houver (COPPE, §10) \\
+      \hline
+      Pré-textual & Listas de abreviaturas, siglas e símbolos & não (3.1.2.2.6--7) \\
       \hline
       Pré-textual & Sumário & sim \\
       \hline
@@ -458,14 +460,29 @@
 
   \section{O formato do arquivo}
 
-  O arquivo depositado é \textbf{PDF/A}, que é o formato de PDF pensado para
-  preservação de longo prazo: fontes embutidas, sem criptografia, sem
-  dependência de recurso externo.
+  O arquivo depositado é \textbf{PDF/A} (Manual, 2.2d). Desde a Resolução CEPG
+  n.~246/2023 o depósito é exclusivamente digital: sem cópia impressa, o arquivo
+  \emph{é} o trabalho, e precisa abrir igual daqui a décadas, em outro
+  computador, sem as fontes e os programas que o produziram.
 
-  Na classe, é a opção \verb|pdfa|. Ligue-a ao depositar. Ela não é o padrão
-  porque as restrições do formato podem tropeçar num documento que carregue
-  imagens ou pacotes arbitrários, e é melhor descobrir isso no momento de
-  depositar do que ter a compilação quebrada durante toda a escrita.
+  O PDF/A é o PDF restrito pela norma ISO~19005 para essa preservação. Nele,
+  todas as fontes vão embutidas; as cores declaram um perfil (sRGB) que as torna
+  independentes do equipamento; os metadados --- título, autor, assunto,
+  palavras-chave --- vão num bloco XMP que os repositórios leem sozinhos; e nada
+  depende de fora: sem conteúdo externo, sem JavaScript, sem criptografia.
+
+  A variante adotada é a \textbf{PDF/A-2b}. A parte 2 da norma admite
+  transparência, que a parte 1 proíbe e que caixas coloridas e gráficos
+  produzem com frequência; o nível \emph{b} garante a reprodução visual fiel,
+  que é o que o depósito pede. O Anexo I do Manual aceita 1b e 2b.
+
+  Na classe, é a opção \verb|pdfa|: ela carrega o pacote \verb|pdfx|, monta os
+  metadados a partir dos dados do próprio trabalho e embute o perfil de cor. A
+  opção fica desligada por padrão, mas o \verb|example.tex| já a traz ligada, e é
+  o que se recomenda: um problema de PDF/A --- quase sempre um PDF ou uma imagem
+  incluídos que não obedecem à norma --- aparece no dia em que o arquivo entra no
+  trabalho, e não na véspera do depósito. Para conferir, use o validador
+  gratuito veraPDF, no perfil PDF/A-2b.
 
   \chapter{Ilustrações, tabelas e quadros}
 

@@ -25,7 +25,7 @@
 %% GNU General Public License version 3 for more details.
 %% 
 %% You should have received a copy of the GNU General Public License
-%% version 3 along with this package (see COPYING file).
+%% version 3 along with this package (see the COPYING.txt file).
 %% If not, see <http://www.gnu.org/licenses/>.
 %% 
 %% Author(s): Vicente Helano F. Batista
@@ -33,23 +33,6 @@
 %%            Geraldo Xexéo
 %%            Eduardo Mangeli
 %% 
-%% \CheckSum{0}
-%% \CharacterTable
-%%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
-%%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
-%%   Digits        \0\1\2\3\4\5\6\7\8\9
-%%   Exclamation   \!     Double quote  \"     Hash (number) \#
-%%   Dollar        \$     Percent       \%     Ampersand     \&
-%%   Acute accent  \'     Left paren    \(     Right paren   \)
-%%   Asterisk      \*     Plus          \+     Comma         \,
-%%   Minus         \-     Point         \.     Solidus       \/
-%%   Colon         \:     Semicolon     \;     Less than     \<
-%%   Equals        \=     Greater than  \>     Question mark \?
-%%   Commercial at \@     Left bracket  \[     Backslash     \\
-%%   Right bracket \]     Circumflex    \^     Underscore    \_
-%%   Grave accent  \`     Left brace    \{     Vertical bar  \|
-%%   Right brace   \}     Tilde         \~}
-%%
 \def\filename{coppe.dtx}
 \def\fileversion{v4.1}
 \def\filedate{2026/09/10}
@@ -355,7 +338,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \newcommand{\@degreename}{Mestrado}
   \newcommand{\local@degname}{Mestre}
   \newcommand{\foreign@degname}{Master}
-  \newcommand\local@doctype{Disserta{\c c}{\~ a}o}
+  \newcommand\local@doctype{Dissertação}
   \newcommand\foreign@doctype{Dissertation}
 }
 \DeclareOption{dscexam}{%
@@ -365,7 +348,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \newcommand{\local@degname}{Doutor}
   \newcommand{\foreign@degname}{Doctor}
   \setboolean{maledoc}{true}\@coppeexametrue
-  \newcommand\local@doctype{Exame de Qualifica{\c c}{\~ a}o}
+  \newcommand\local@doctype{Exame de Qualificação}
   \newcommand\foreign@doctype{Qualifying Exam}
 }
 \DeclareOption{mscexam}{%
@@ -375,7 +358,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \newcommand{\local@degname}{Mestre}
   \newcommand{\foreign@degname}{Master}
   \setboolean{maledoc}{true}\@coppeexametrue
-  \newcommand\local@doctype{Exame de Qualifica{\c c}{\~ a}o}
+  \newcommand\local@doctype{Exame de Qualificação}
   \newcommand\foreign@doctype{Qualifying Exam}
 }
 \DeclareOption{mscsem}{%
@@ -385,7 +368,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \newcommand{\local@degname}{Mestre}
   \newcommand{\foreign@degname}{Master}
   \setboolean{maledoc}{true}\@coppeexametrue
-  \newcommand\local@doctype{Semin{\' a}rio}
+  \newcommand\local@doctype{Seminário}
   \newcommand\foreign@doctype{Seminar}
 }
 \DeclareOption{dsc}{%
@@ -498,7 +481,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \fi\fi}
 \providecommand{\titlein}[2]{%
   \expandafter\gdef\csname coppe@title@#1\endcsname{#2}}
-\copperdefstring{brazilian}{appendix}{Ap\^endice}
+\copperdefstring{brazilian}{appendix}{Apêndice}
 \copperdefstring{english}  {appendix}{Appendix}
 \copperdefstring{brazilian}{annex}   {Anexo}
 \copperdefstring{english}  {annex}   {Annex}
@@ -512,23 +495,23 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \copperdefstring{english}  {program}      {Program}
 \copperdefstring{brazilian}{listprogram}  {Lista de Programas}
 \copperdefstring{english}  {listprogram}  {List of Programs}
-\copperdefstring{brazilian}{references}   {Refer\^encias}
+\copperdefstring{brazilian}{references}   {Referências}
 \copperdefstring{english}  {references}   {References}
 \copperdefstring{brazilian}{in:}          {em}
 \copperdefstring{english}  {in:}          {in}
-\copperdefstring{brazilian}{art}          {Ilustra\c{c}\~ao}
+\copperdefstring{brazilian}{art}          {Ilustração}
 \copperdefstring{english}  {art}          {Art}
 \copperdefstring{brazilian}{platform}     {Plataforma}
 \copperdefstring{english}  {platform}     {Platform}
-\copperdefstring{brazilian}{directedby}   {Dire\c{c}\~ao de}
+\copperdefstring{brazilian}{directedby}   {Direção de}
 \copperdefstring{english}  {directedby}   {Directed by}
-\copperdefstring{brazilian}{producedby}   {Produ\c{c}\~ao de}
+\copperdefstring{brazilian}{producedby}   {Produção de}
 \copperdefstring{english}  {producedby}   {Produced by}
 \copperdefstring{brazilian}{listabbreviation}{Lista de Abreviaturas e Siglas}
 \copperdefstring{english}  {listabbreviation}{List of Abbreviations and Acronyms}
-\copperdefstring{brazilian}{listsymbol}      {Lista de S{\' i}mbolos}
+\copperdefstring{brazilian}{listsymbol}      {Lista de Símbolos}
 \copperdefstring{english}  {listsymbol}      {List of Symbols}
-\copperdefstring{brazilian}{glossary}        {Gloss{\' a}rio}
+\copperdefstring{brazilian}{glossary}        {Glossário}
 \copperdefstring{english}  {glossary}        {Glossary}
 \copperdefstring{brazilian}{abstractname}     {Resumo}
 \copperdefstring{english}  {abstractname}     {Abstract}
@@ -540,19 +523,19 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \copperdefstring{brazilian}{presentedfemale}  {apresentada}
 \copperdefstring{english}  {presentedmale}    {presented}
 \copperdefstring{english}  {presentedfemale}  {presented}
-\copperdefstring{brazilian}{abstracttail}{{\` a} COPPE/UFRJ como parte dos
-  requisitos necess{\' a}rios para a obten{\c c}{\~ a}o do grau de}
+\copperdefstring{brazilian}{abstracttail}{à COPPE/UFRJ como parte dos
+  requisitos necessários para a obtenção do grau de}
 \copperdefstring{english}{abstracttail}{to COPPE/UFRJ as a partial fulfillment
   of the requirements for the degree of}
-\copperdefstring{brazilian}{sciencename}      {em Ci{\^ e}ncias}
+\copperdefstring{brazilian}{sciencename}      {em Ciências}
 \copperdefstring{english}  {sciencename}      {of Science}
-\copperdefstring{brazilian}{doctypemsc}  {Disserta{\c c}{\~ a}o}
+\copperdefstring{brazilian}{doctypemsc}  {Dissertação}
 \copperdefstring{english}  {doctypemsc}  {Dissertation}
 \copperdefstring{brazilian}{doctypedsc}  {Tese}
 \copperdefstring{english}  {doctypedsc}  {Thesis}
-\copperdefstring{brazilian}{doctypeexam} {Exame de Qualifica{\c c}{\~ a}o}
+\copperdefstring{brazilian}{doctypeexam} {Exame de Qualificação}
 \copperdefstring{english}  {doctypeexam} {Qualifying Exam}
-\copperdefstring{brazilian}{doctypesem}  {Semin{\' a}rio}
+\copperdefstring{brazilian}{doctypesem}  {Seminário}
 \copperdefstring{english}  {doctypesem}  {Seminar}
 \copperdefstring{brazilian}{degnamemsc}  {Mestre}
 \copperdefstring{english}  {degnamemsc}  {Master}
@@ -596,7 +579,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \copperdefstring{english}  {countryname}  {Brasil}
 \copperdefstring{brazilian}{monthname1} {Janeiro}
 \copperdefstring{brazilian}{monthname2} {Fevereiro}
-\copperdefstring{brazilian}{monthname3} {Mar{\c c}o}
+\copperdefstring{brazilian}{monthname3} {Março}
 \copperdefstring{brazilian}{monthname4} {Abril}
 \copperdefstring{brazilian}{monthname5} {Maio}
 \copperdefstring{brazilian}{monthname6} {Junho}
@@ -724,7 +707,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \newcommand\department[1]{%
   \gdef\coppe@deptcode{#1}%
   \ifthenelse{\equal{#1}{PEB}}
-    {\global\def\local@deptname{Engenharia Biom{\' e}dica}
+    {\global\def\local@deptname{Engenharia Biomédica}
      \global\def\meta@deptname{Engenharia Biomédica}
      \global\def\foreign@deptname{Biomedical Engineering}}{}
   \ifthenelse{\equal{#1}{PEC}}
@@ -732,15 +715,15 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
      \global\def\meta@deptname{Engenharia Civil}
      \global\def\foreign@deptname{Civil Engineering}}{}
   \ifthenelse{\equal{#1}{PEE}}
-    {\global\def\local@deptname{Engenharia El{\' e}trica}
+    {\global\def\local@deptname{Engenharia Elétrica}
      \global\def\meta@deptname{Engenharia Elétrica}
      \global\def\foreign@deptname{Electrical Engineering}}{}
   \ifthenelse{\equal{#1}{PEM}}
-    {\global\def\local@deptname{Engenharia Mec{\^ a}nica}
+    {\global\def\local@deptname{Engenharia Mecânica}
      \global\def\meta@deptname{Engenharia Mecânica}
      \global\def\foreign@deptname{Mechanical Engineering}}{}
   \ifthenelse{\equal{#1}{PEMM}}
-    {\global\def\local@deptname{Engenharia Metal{\' u}rgica e de Materiais}
+    {\global\def\local@deptname{Engenharia Metalúrgica e de Materiais}
      \global\def\meta@deptname{Engenharia Metalúrgica e de Materiais}
 \global\def\foreign@deptname{Metallurgical and Materials Engineering}}{}
   \ifthenelse{\equal{#1}{PEN}}
@@ -748,23 +731,23 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
      \global\def\meta@deptname{Engenharia Nuclear}
      \global\def\foreign@deptname{Nuclear Engineering}}{}
   \ifthenelse{\equal{#1}{PENO}}
-    {\global\def\local@deptname{Engenharia Oce{\^ a}nica}
+    {\global\def\local@deptname{Engenharia Oceânica}
      \global\def\meta@deptname{Engenharia Oceânica}
      \global\def\foreign@deptname{Ocean Engineering}}{}
   \ifthenelse{\equal{#1}{PPE}}
-    {\global\def\local@deptname{Planejamento Energ{\' e}tico}
+    {\global\def\local@deptname{Planejamento Energético}
      \global\def\meta@deptname{Planejamento Energético}
      \global\def\foreign@deptname{Energy Planning}}{}
   \ifthenelse{\equal{#1}{PEP}}
-    {\global\def\local@deptname{Engenharia de Produ{\c c}{\~ a}o}
+    {\global\def\local@deptname{Engenharia de Produção}
      \global\def\meta@deptname{Engenharia de Produção}
      \global\def\foreign@deptname{Production Engineering}}{}
   \ifthenelse{\equal{#1}{PEQ}}
-    {\global\def\local@deptname{Engenharia Qu{\' i}mica}
+    {\global\def\local@deptname{Engenharia Química}
      \global\def\meta@deptname{Engenharia Química}
      \global\def\foreign@deptname{Chemical Engineering}}{}
   \ifthenelse{\equal{#1}{PESC}}
-    {\global\def\local@deptname{Engenharia de Sistemas e Computa{\c c}{\~ a}o}
+    {\global\def\local@deptname{Engenharia de Sistemas e Computação}
      \global\def\meta@deptname{Engenharia de Sistemas e Computação}
      \global\def\foreign@deptname{Systems Engineering and Computer Science}}{}
   \ifthenelse{\equal{#1}{PET}}
@@ -857,7 +840,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \def\coppe@docmonth{#1}%
   \def\coppe@docyear{#2}}
 \newcommand\local@monthname{\ifcase\coppe@docmonth\or
-  Janeiro\or Fevereiro\or Mar{\c c}o\or Abril\or Maio\or Junho\or
+  Janeiro\or Fevereiro\or Março\or Abril\or Maio\or Junho\or
   Julho\or Agosto\or Setembro\or Outubro\or Novembro\or Dezembro\fi}
 \newcommand\foreign@monthname{\ifcase\coppe@docmonth\or
   January\or February\or March\or April\or May\or June\or
@@ -980,7 +963,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \ifx\coppe@temp\coppe@lmssname
       Latin Modern Sans (\texttt{\coppe@temp}/\texttt{\encodingdefault})%
     \else
-      da fam\'\i lia \texttt{\coppe@temp}, codifica\c c\~ao
+      da família \texttt{\coppe@temp}, codificação
       \texttt{\encodingdefault}%
     \fi
   \fi}
@@ -1005,7 +988,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \providecommand{\coppefinalsystem}{%
   \ifx\coppe@sysname\@empty\else
     , em \coppe@sysname
-    \ifx\coppe@sysnode\@empty\else, na m\'aquina \texttt{\coppe@sysnode}\fi
+    \ifx\coppe@sysnode\@empty\else, na máquina \texttt{\coppe@sysnode}\fi
     \ifx\coppe@sysmach\@empty\else\space(\texttt{\coppe@sysmach})\fi
   \fi}
 \newcount\coppe@finalhh
@@ -1022,7 +1005,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \expandafter\expandafter\expandafter\coppe@grabversion
       \csname ver@#1\endcsname\space\space\@nil}}
 \providecommand{\coppefinalmanual}{%
-  \emph{Norma para a Elabora\c c\~ao Gr\'afica de Teses e Disserta\c c\~oes
+  \emph{Norma para a Elaboração Gráfica de Teses e Dissertações
   da COPPE/UFRJ}}
 \newcommand{\coppetexfinalpage}{%
   \clearpage
@@ -1038,18 +1021,18 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \begin{otherlanguage}{brazilian}%
     \begin{center}
       {\footnotesize\setstretch{1.0}%
-      \textbf{Colof\~ao}\par
+      \textbf{Colofão}\par
       \vspace{0.7em}
       \begin{minipage}{0.75\textwidth}\centering
       Este documento foi composto em \LaTeX{} com \coppefinalengine{},
       na fonte \coppefinalfont. \@ifpackageloaded{biblatex}{A bibliografia
       foi processada por Bib\LaTeX~\coppe@pkgversion{biblatex.sty} e
       Biber. }{}Foi utilizada a classe \CoppeTeX,
-      vers\~ao~\coppe@version, dispon\'\i vel no reposit\'orio GitHub
+      versão~\coppe@version, disponível no repositório GitHub
       \mbox{\url{https://github.com/COPPE-UFRJ/CoppeTeX}}, em
       conformidade com a \coppefinalmanual.
       \par\vspace{0.5em}
-      Gerado em \today, \`as \coppefinaltime\coppefinalsystem, por
+      Gerado em \today, às \coppefinaltime\coppefinalsystem, por
       \coppefinaltexsystem{} com o formato \LaTeX{} de \fmtversion.
       \end{minipage}\par}
     \end{center}
@@ -1068,7 +1051,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   {\singlespacing
  \MakeUppercase{\local@universityname}\par
    \nohyphens{\MakeUppercase{Instituto Alberto Luiz Coimbra de \\
-     P{\' o}s-Gradua{\c c}{\~ a}o e Pesquisa de Engenharia}}\par
+     Pós-Graduação e Pesquisa de Engenharia}}\par
    \MakeUppercase{Programa de \local@deptname}\par}
   \vspace{\stretch{2}}
   \textbf{\MakeUppercase{\textbf{\@authname\ \@authsurn}}}\par
@@ -1348,7 +1331,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
       \end{tabularx}}\par
       \nohyphens{\local@doctype\ ({\MakeLowercase\@degreename}) --
       UFRJ/COPPE/Programa de \local@deptname, \coppe@docyear.}\par
-      Refer{\^ e}ncias Bibliogr{\' a}ficas: p. \pageref{bib:begin} -- \pageref{bib:end}.\par
+      Referências Bibliográficas: p. \pageref{bib:begin} -- \pageref{bib:end}.\par
       \count1=0
       \count2=1
       \nohyphens{\@whilenum \count1<\value{keywords} \do {%
@@ -1359,7 +1342,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
       \ \csname CoppeAdvisorName:0\endcsname%
       \ifthenelse{\@advisor>1}{\ \emph{et~al.}{}}.
       II. \local@universityname, COPPE, Programa de \local@deptname.
-      III. T{\' i}tulo.}
+      III. Título.}
     \end{minipage}}
   \end{center}
   \vspace*{\fill}}
@@ -1395,28 +1378,28 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \coppe@checatipo
   {\singlespacing
   \begin{center}
-    {\large\bfseries Informa\c c\~oes Coleta CAPES}
+    {\large\bfseries Informações Coleta CAPES}
   \end{center}
   \vspace{7mm}
   \noindent\begin{tabular}{|@{\hspace{\tabcolsep}}p{\dimexpr\textwidth-2\tabcolsep-2\arrayrulewidth\relax}@{\hspace{\tabcolsep}}|}
     \hline
-    \coppe@capescelula{Tipo de produ\c c\~ao intelectual:}{%
+    \coppe@capescelula{Tipo de produção intelectual:}{%
       \vspace{1mm}
       \hspace*{10mm}(\coppe@marcatipo{bibliografica})\enspace
-        Bibliogr\'afica\par
-      \hspace*{10mm}(\coppe@marcatipo{artistica})\enspace Art\'{\i}stica\par
-      \hspace*{10mm}(\coppe@marcatipo{tecnologica})\enspace Tecnol\'ogica\par
-      \hspace*{10mm}(\coppe@marcatipo{tecnica})\enspace T\'ecnica}
-    \coppe@capescelula{Projeto de pesquisa vinculado \`a produ\c c\~ao
+        Bibliográfica\par
+      \hspace*{10mm}(\coppe@marcatipo{artistica})\enspace Artística\par
+      \hspace*{10mm}(\coppe@marcatipo{tecnologica})\enspace Tecnológica\par
+      \hspace*{10mm}(\coppe@marcatipo{tecnica})\enspace Técnica}
+    \coppe@capescelula{Projeto de pesquisa vinculado à produção
       intelectual?}{%
       \vspace{1mm}
       \hspace*{10mm}(\coppe@marcavinc{sim})\enspace Sim\par
-      \hspace*{10mm}(\coppe@marcavinc{nao})\enspace N\~ao}
+      \hspace*{10mm}(\coppe@marcavinc{nao})\enspace Não}
     \coppe@capescelula{Nome do projeto de pesquisa:}{%
       \coppe@campo{\coppe@nomeprojeto}}
-    \coppe@capescelula{\'Area de concentra\c c\~ao da produ\c c\~ao
+    \coppe@capescelula{Área de concentração da produção
       intelectual:}{\coppe@campo{\coppe@areaconc}}
-    \coppe@capescelula{Ag\^encia(s) de fomento financiadora(s) da produ\c c\~ao
+    \coppe@capescelula{Agência(s) de fomento financiadora(s) da produção
       intelectual:}{%
       \ifthenelse{\value{coppeagencias}=0}{\vspace*{\coppe@capesgap}}{%
         \count1=0
@@ -1427,17 +1410,17 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \end{tabular}\par
   \vspace{9mm}
   \begin{center}
-    {\large\bfseries Ficha catalogr\'afica}\par
+    {\large\bfseries Ficha catalográfica}\par
     \vspace{4mm}
     \ifthenelse{\equal{\coppe@fichafile}{}}{%
       \if@copperascunho
         \makecatalog
       \else
         \framebox[125mm][c]{\parbox[c][62mm][c]{115mm}{\centering\footnotesize
-          Espa\c co reservado \`a ficha catalogr\'afica.\\[1ex]
+          Espaço reservado à ficha catalográfica.\\[1ex]
           Gere-a em \texttt{fichacatalografica.sibi.ufrj.br} e inclua o
           arquivo com \texttt{\string\fichacatalografica\{arquivo.pdf\}},
-          ou solicite-a \`a biblioteca do seu Programa.}}%
+          ou solicite-a à biblioteca do seu Programa.}}%
       \fi}{%
       \includegraphics[page=\coppe@fichapage,width=125mm]{\coppe@fichafile}}%
   \end{center}
@@ -1479,7 +1462,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \fi
   \fi}
 \newcommand\local@instname{Instituto Alberto Luiz Coimbra de
-  P{\' o}s-Gradua{\c c}{\~ a}o e Pesquisa de Engenharia}
+  Pós-Graduação e Pesquisa de Engenharia}
 \newcommand\coppe@refresumo{%
   \if@copperefresumo
     \if@coppeexame\else
@@ -1808,22 +1791,22 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \newcommand\frontcover@maintext{
   \sloppy\nohyphens{\local@doctype\ de \@degreename\
   \ifthenelse{\boolean{maledoc}}{apresentado}{apresentada}
-  ao Programa de P{\' o}s-gradua{\c c}{\~ a}o em \local@deptname,
+  ao Programa de Pós-graduação em \local@deptname,
   COPPE, da \local@universityname, como parte dos requisitos
-  necess{\' a}rios {\` a} obten{\c c}{\~ a}o do t{\' i}tulo de
+  necessários à obtenção do título de
   \local@degname\ em \local@deptname.}%
   \ifthenelse{\equal{\coppe@areaconc}{}}{}{%
     \par\vspace{1ex}%
-    \sloppy\nohyphens{\'Area de concentra{\c c}{\~ a}o: \coppe@areaconc.}}%
+    \sloppy\nohyphens{Área de concentração: \coppe@areaconc.}}%
 }
 \newcommand\frontpage@maintext{
   \noindent {\MakeUppercase\local@doctype}
   \ifthenelse{\boolean{maledoc}}{SUBMETIDO}{SUBMETIDA}
   \sloppy\nohyphens{AO CORPO DOCENTE DO INSTITUTO ALBERTO LUIZ COIMBRA
-  DE P{\' O}S-GRADUA{\c C}{\~ A}O E PESQUISA DE ENGENHARIA DA
+  DE PÓS-GRADUAÇÃO E PESQUISA DE ENGENHARIA DA
   UNIVERSIDADE FEDERAL DO RIO DE JANEIRO COMO PARTE DOS REQUISITOS
-  NECESS{\' A}RIOS PARA A OBTEN{\c C}{\~ A}O DO GRAU DE
-  {\MakeUppercase\local@degname} EM CI{\^E}NCIAS EM
+  NECESSÁRIOS PARA A OBTENÇÃO DO GRAU DE
+  {\MakeUppercase\local@degname} EM CIÊNCIAS EM
   {\MakeUppercase\local@deptname.\par}}%
 }
 \newcommand\frontpage@bottomtext{%

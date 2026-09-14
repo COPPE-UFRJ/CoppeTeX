@@ -58,9 +58,9 @@
 \makeloabbreviations
 
  % Acronyms: \sigla expands on first use, abbreviates afterwards.
-\newsigla{coppe}{COPPE}{Instituto Alberto Luiz Coimbra de P\'os-Gradua\c c\~ao
+\newsigla{coppe}{COPPE}{Instituto Alberto Luiz Coimbra de Pós-Graduação
   e Pesquisa de Engenharia}
-\newsigla{abnt}{ABNT}{Associa\c c\~ao Brasileira de Normas T\'ecnicas}
+\newsigla{abnt}{ABNT}{Associação Brasileira de Normas Técnicas}
 
 \begin{document}
   \title{Documento de teste da classe coppe}
@@ -75,7 +75,7 @@
   \date{05}{2026}
 
   \keyword{teste}
-  \keyword{regress\~ao}
+  \keyword{regressão}
   \keyword{abnt}
 
   \maketitle
@@ -84,13 +84,13 @@
   \dedication{Dedico a quem tiver de depurar esta classe.}
 
   \chapter*{Agradecimentos}
-  Bloco m\'inimo apenas para verificar que \verb|\chapter*| produz a entrada
-  correta no sum\'ario e que a folha p\'os-dedicat\'oria \'e gerada sem erro.
+  Bloco mínimo apenas para verificar que \verb|\chapter*| produz a entrada
+  correta no sumário e que a folha pós-dedicatória é gerada sem erro.
 
   \begin{abstract}
-  Resumo de teste para validar o ambiente \texttt{abstract} sob a l\'ingua
-  principal \texttt{brazilian}. O conte\'udo \'e irrelevante; o que importa
-  \'e que a folha seja gerada com cabe\c{c}alho institucional, par\'agrafo
+  Resumo de teste para validar o ambiente \texttt{abstract} sob a língua
+  principal \texttt{brazilian}. O conteúdo é irrelevante; o que importa
+  é que a folha seja gerada com cabeçalho institucional, parágrafo
   central e linha de palavras-chave.
   \end{abstract}
 
@@ -114,12 +114,12 @@
   \chapter{Floats: figuras, tabelas, quadros, subcaption}
   \label{cap:floats}
 
-  Este cap\'itulo testa todos os ambientes flutuantes da classe. Adiante,
-  o \autoref{cap:math} cobre matem\'atica (com s\'imbolos do
-  \texttt{amssymb}) e o \autoref{cap:cite} testa cita\c{c}\~oes.
+  Este capítulo testa todos os ambientes flutuantes da classe. Adiante,
+  o \autoref{cap:math} cobre matemática (com símbolos do
+  \texttt{amssymb}) e o \autoref{cap:cite} testa citações.
 
   A \autoref{fig:logo} traz o logotipo da \sigla{coppe}; reapareceu como
-  \sigla{coppe} (segunda men\c{c}\~ao deve sair apenas como sigla).
+  \sigla{coppe} (segunda menção deve sair apenas como sigla).
 
   \begin{figure}[ht]
     \centering
@@ -150,19 +150,19 @@
     \label{tab:teste}
     \begin{tabular}{lrr}
       \toprule
-      Item & Quantidade & Pre\c{c}o (R\$) \\
+      Item & Quantidade & Preço (R\$) \\
       \midrule
       Caneta  &  3 &  4,50 \\
       Caderno &  1 & 18,90 \\
-      L\'apis & 12 &  0,75 \\
+      Lápis & 12 &  0,75 \\
       \bottomrule
     \end{tabular}
   \end{table}
-  \fonte{Pesquisa fict\'icia (apenas para teste).}
+  \fonte{Pesquisa fictícia (apenas para teste).}
 
   \begin{quadro}[ht]
     \centering
-    \caption{Quadro com bordas no conte\'udo.}
+    \caption{Quadro com bordas no conteúdo.}
     \label{q:teste}
     \begin{tabular}{|l|l|}
       \hline
@@ -171,10 +171,10 @@
       valor 3  & valor 4  \\ \hline
     \end{tabular}
   \end{quadro}
-  \fonte{Elabora\c{c}\~ao pr\'opria.}
+  \fonte{Elaboração própria.}
 
   \begin{longtable}{lll}
-    \caption{Longtable m\'inima (uma p\'agina apenas).}\label{tab:long}\\
+    \caption{Longtable mínima (uma página apenas).}\label{tab:long}\\
     \toprule A & B & C \\ \midrule \endfirsthead
     \toprule A & B & C \\ \midrule \endhead
     \bottomrule \endfoot
@@ -183,16 +183,16 @@
     4 & 5 & 6 \\
     7 & 8 & 9 \\
   \end{longtable}
-  \fonte{Elabora\c{c}\~ao pr\'opria.}
+  \fonte{Elaboração própria.}
 
   % --------------------------------------------------------------------
-  \chapter{Matem\'atica (amsmath + amssymb)}
+  \chapter{Matemática (amsmath + amssymb)}
   \label{cap:math}
 
-  Estes s\'imbolos v\^em da fonte matem\'atica que o pre\^ambulo escolhe:
-  $\mathbb{R}$, $\hbar$, $\varnothing$. A classe n\~ao carrega nenhuma.
+  Estes símbolos vêm da fonte matemática que o preâmbulo escolhe:
+  $\mathbb{R}$, $\hbar$, $\varnothing$. A classe não carrega nenhuma.
 
-  Operador personalizado (declarado no pre\^ambulo):
+  Operador personalizado (declarado no preâmbulo):
   $\RMSE(y,\hat{y})$.
 
   \begin{align}
@@ -234,50 +234,50 @@ def soma(v):
   \end{python}
 
   % --------------------------------------------------------------------
-  \chapter{Cita\c{c}\~oes, cita\c{c}\~oes longas e siglas}
+  \chapter{Citações, citações longas e siglas}
   \label{cap:cite}
 
-  Cita\c{c}\~oes com \texttt{biblatex}/\texttt{natbib} (autor-data, estilo
+  Citações com \texttt{biblatex}/\texttt{natbib} (autor-data, estilo
   \texttt{coppe}): segundo \citet{book-example}, algo importante;
-  \citep{article-example} aponta na mesma dire\c{c}\~ao.
+  \citep{article-example} aponta na mesma direção.
 
-  Cita\c{c}\~ao longa com o ambiente \texttt{longquote}:
+  Citação longa com o ambiente \texttt{longquote}:
   \begin{longquote}
-  Este \'e um teste do ambiente \texttt{longquote}, que deve aparecer em
-  espa\c{c}amento simples, com recuo \`a esquerda de 4\,cm e fonte menor.
-  O bloco precisa se distinguir claramente do par\'agrafo anterior.
+  Este é um teste do ambiente \texttt{longquote}, que deve aparecer em
+  espaçamento simples, com recuo à esquerda de 4\,cm e fonte menor.
+  O bloco precisa se distinguir claramente do parágrafo anterior.
   \end{longquote}
 
-  Uma nota de rodap\'e\footnote{Esta nota deve sair em espa\c{c}amento
-  simples (sob controle de \texttt{setspace}) e com filete curto (5\,cm) \`a
+  Uma nota de rodapé\footnote{Esta nota deve sair em espaçamento
+  simples (sob controle de \texttt{setspace}) e com filete curto (5\,cm) à
   esquerda, conforme manual2024.} valida \texttt{setspace} mais a regra
   \verb|\footnoterule|.
 
-  Acr\^onimos: a primeira men\c{c}\~ao a \sigla{abnt} deve sair por extenso
-  com a sigla entre par\^enteses; a segunda men\c{c}\~ao a \sigla{abnt}
-  deve sair apenas como ``ABNT''. Para\c{c}\~ao explicita da forma
+  Acrônimos: a primeira menção a \sigla{abnt} deve sair por extenso
+  com a sigla entre parênteses; a segunda menção a \sigla{abnt}
+  deve sair apenas como ``ABNT''. Paração explicita da forma
   completa: \sigla*{abnt}.
 
-  Lista de s\'imbolos (popula \texttt{\textbackslash printlosymbols} no
-  pr\'e-textual):
-  \symbl{R}{$\mathbb{R}$}{Conjunto dos n\'umeros reais.}
+  Lista de símbolos (popula \texttt{\textbackslash printlosymbols} no
+  pré-textual):
+  \symbl{R}{$\mathbb{R}$}{Conjunto dos números reais.}
   \symbl{hbar}{$\hbar$}{Constante de Planck reduzida.}
 
   \backmatter
   \printbibliography
 
   \appendix
-  \chapter{Primeiro ap\^endice}
+  \chapter{Primeiro apêndice}
   \label{ap:um}
-  Texto de ap\^endice apenas para gerar a entrada ``AP\^ENDICE A -- ...''
-  no sum\'ario e validar \verb|\appendix|.
+  Texto de apêndice apenas para gerar a entrada ``APÊNDICE A -- ...''
+  no sumário e validar \verb|\appendix|.
 
-  \chapter{Segundo ap\^endice}
-  Mais um, para verificar a numera\c{c}\~ao ``AP\^ENDICE B''.
+  \chapter{Segundo apêndice}
+  Mais um, para verificar a numeração ``APÊNDICE B''.
 
   \annex
   \chapter{Um anexo}
-  Texto de anexo para validar \verb|\annex| (numera\c{c}\~ao ``ANEXO A'').
+  Texto de anexo para validar \verb|\annex| (numeração ``ANEXO A'').
 
   \coppetexfinalpage% colofao institucional, sempre na pagina par final
 \end{document}

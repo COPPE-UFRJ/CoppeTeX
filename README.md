@@ -409,7 +409,7 @@ writes every file that is distributed:
 | `latexmkrc` | latexmk configuration (biber + the makeindex runs) |
 
 No derived file is edited by hand. The bundle ships two logos,
-`coppe-logo.[eps,pdf]` and `ufrj-logo.pdf`, and `COPYING`.
+`coppe-logo.[eps,pdf]` and `ufrj-logo.pdf`, and `COPYING.txt`.
 
 The BibTeX `.bst` styles of the 3.x series are gone: the bibliography engine
 is **biblatex with biber**.

@@ -17,7 +17,7 @@
 # GNU General Public License version 3 for more details.
 #
 # You should have received a copy of the GNU General Public License
-# version 3 along with this package (see COPYING file).
+# version 3 along with this package (see the COPYING.txt file).
 # If not, see <http://www.gnu.org/licenses/>.
 #
 # $URL$
@@ -110,7 +110,7 @@ install: doc class example.pdf
 	fi
 	mkdir -vp $(DOCDIR)
 	@${_printf} "Copying files from root directory.\n"
-	cp -vp ../README.md ../COPYING $(PACKAGE_NAME).pdf \
+	cp -vp ../README.md ../COPYING.txt $(PACKAGE_NAME).pdf \
 		example.tex example.pdf example.bib $(DOCDIR)
 
 build: doc class example.pdf
@@ -139,7 +139,7 @@ build: doc class example.pdf
 # de copiar de dist/ para onde quiser depois.
 	@${_printf} "Copying the distributable set (list lives in tools/painel.py).\n"
 	cd .. && python3 tools/painel.py --dist
-	cp -vp ../COPYING $(BUILDDIR)
+	cp -vp ../COPYING.txt $(BUILDDIR)
 
 help:
 	@${_printf} "Usage: make [TARGET]\n" "${PROGRAM_NAME}"
@@ -167,7 +167,7 @@ version:
 		"it and/or"
 	@${_printf} "modify it under the terms of the GNU General Public License as\n"
 	@${_printf} "published by the Free Software Foundation.\n"
-	@${_printf} "See COPYING for more details.\n"
+	@${_printf} "See COPYING.txt for more details.\n"
 
 $(PACKAGE_NAME).cls: $(PACKAGE_NAME).ins
 	@$(TEX) $(TEXFLAGS) $<

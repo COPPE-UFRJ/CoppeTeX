@@ -9,28 +9,22 @@
 %% This is a sample monograph which illustrates the use of the `coppe' document
 %% class and its biblatex/biber bibliography style.
 %% 
-%% \CheckSum{0}
-%% \CharacterTable
-%%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
-%%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
-%%   Digits        \0\1\2\3\4\5\6\7\8\9
-%%   Exclamation   \!     Double quote  \"     Hash (number) \#
-%%   Dollar        \$     Percent       \%     Ampersand     \&
-%%   Acute accent  \'     Left paren    \(     Right paren   \)
-%%   Asterisk      \*     Plus          \+     Comma         \,
-%%   Minus         \-     Point         \.     Solidus       \/
-%%   Colon         \:     Semicolon     \;     Less than     \<
-%%   Equals        \=     Greater than  \>     Question mark \?
-%%   Commercial at \@     Left bracket  \[     Backslash     \\
-%%   Right bracket \]     Circumflex    \^     Underscore    \_
-%%   Grave accent  \`     Left brace    \{     Vertical bar  \|
-%%   Right brace   \}     Tilde         \~}
-%%
-\documentclass[dsc]{coppe}
+%% Copyright (C) 2008-2026 Vicente Helano F. Batista, George O. Ainsworth Jr.,
+%% Geraldo Xexéo and Eduardo Mangeli. Released under the GNU General Public
+%% License version 3 (see the COPYING.txt file).
+%% 
+\documentclass[dsc,pdfa]{coppe}
 
 \usepackage{rotating}        % rodando coisas, como tabelas
 \usepackage[most]{tcolorbox} % caixas de texto
 \usepackage{tikz}            % gráficos vetoriais (o tcolorbox já o traz)
+
+\ifPDFTeX
+  \usepackage{amssymb}
+\else
+  \usepackage{unicode-math}
+  \setmathfont{Latin Modern Math}
+\fi
 \DeclareMathOperator{\RMSE}{RMSE}   % operadores próprios (cap. de matemática)
 \DeclareMathOperator{\diag}{diag}
 
@@ -85,7 +79,7 @@
 
   % Dados da folha adicional (Coleta CAPES), obrigatoria desde agosto de 2026.
   % A folha e preenchida pelo Programa; estes campos apenas a compoem.
-  \areaconcentracao{Engenharia de Sistemas e Computa\c c\~ao}
+  \areaconcentracao{Engenharia de Sistemas e Computação}
   \linhapesquisa{Engenharia de Dados e Conhecimento}
   \tipoproducao{bibliografica}   % bibliografica | artistica | tecnologica | tecnica
   \projetovinculado{sim}         % sim | nao
@@ -105,8 +99,8 @@
 
   \chapter*{Agradecimentos}
 
-  Gostaria de agradecer a todos os que contribu\'iram para este trabalho:
-  orientadores, colegas, familiares e \`as ag\^encias de fomento. Lorem ipsum
+  Gostaria de agradecer a todos os que contribuíram para este trabalho:
+  orientadores, colegas, familiares e às agências de fomento. Lorem ipsum
   dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
   ut labore et dolore magna aliqua.
 
@@ -142,8 +136,22 @@
 
   \end{foreignabstract}
 
-  % Ordem pre-textual (NBR 14724/6027, R55): listas (ilustracoes, tabelas,
-  % abreviaturas e siglas, simbolos) ANTES do sumario; sumario por ultimo.
+  % Ordem pré-textual (Manual 3.1.2.1.6): as listas ANTES do sumário, e o
+  % sumário por último.
+  %
+  % O que é obrigatório e o que é opcional:
+  %  - \tableofcontents ........ OBRIGATÓRIO (Manual 3.1.2.1.6);
+  %  - \listoffigures .......... opcional (3.1.2.2.4, lista de ilustrações);
+  %  - \listoftables ........... opcional (3.1.2.2.5);
+  %  - \listofquadros, \listofprogramas, \listofalgorithms: acréscimo da
+  %    Norma COPPE (§10), presentes quando o trabalho tem ao menos um quadro,
+  %    programa ou algoritmo;
+  %  - \listofmapas ............ opcional; o Manual admite uma lista por tipo
+  %    de ilustração (3.1.2.2.4), e \newcoppefloat cria o tipo;
+  %  - \printloabbreviations ... opcional (3.1.2.2.6);
+  %  - \printlosymbols ......... opcional (3.1.2.2.7).
+  % Este exemplo imprime todas para mostrá-las. No seu trabalho, apague a linha
+  % da lista que você não usa: deixada, ela sai como folha só com o título.
   \listoffigures
   \listoftables
   \listofquadros
@@ -160,7 +168,7 @@
   Este é um documento exemplo para o uso da classe CoppeTeX, destinado a ajudar os alunos do Instituto Alberto Luiz Coimbra de Pós-graduação e Pesquisa de Engenharia (COPPE), da Universidade Federal do Rio de Janeiro.
 
   A classe \verb|coppe| foi criada originalmente por Vicente Helano e George Ainsworth, porém, em 2024, passou a ser mantida por Geraldo Xexéo e Eduardo Mangeli.
-  Em 2026, Geraldo Xexéo, com forte ajuda das ferramentas Claude 4.7 Opus e Max e 4.8 Opus Max, fez modificações de alta monta para suportar o novo \citetitle{manualbib}, que implementava normas recentes da ABNT.
+  Em 2026, Geraldo Xexéo fez modificações de alta monta para suportar o novo \citetitle{manualbib}, que implementa normas recentes da ABNT: a versão 4.0, em maio, com apoio do Claude Opus 4.7 e do Claude Opus 4.8, e a versão 4.1, em setembro, com apoio do Claude Opus 5, ambos da Anthropic.
 
    Provavelmente Geraldo Xexéo, professor do Programa de Engenharia de Sistemas e Computação, deve continuar mantendo ou apoiando a manutenção por alguns anos. Se você quiser particiar do grupo de manutenção, é só entrar em contato via github.
 
@@ -208,7 +216,7 @@
 
 \section{Como e onde usar o \LaTeX}
 
-  Existem muitos tutoriais de \LaTeX, mas basicamente, em 2024, ele é usado em dois ambientes:
+  Existem muitos tutoriais de \LaTeX, mas basicamente, em 2026, ele é usado em dois ambientes:
   \begin{enumerate}
   \item Na sua máquina, instalando uma versão completa como o \hologo{MiKTeX}, típico do Windows, ou simplesmente os pacotes padrão do Linux\footnote{Também existem versões para Mac, das quais eu não estou informado}.
   \item Usar um ambiente na rede, como o Overleaf.
@@ -228,6 +236,23 @@
   Para as listas de abreviaturas e símbolos funcionarem no Overleaf é necessário rodar o \verb|latexmkrc|. O Overleaf faz isso automaticamente. Caso haja um problema, verifique se o arquivo \verb|coppe.ist| está no diretório. Também é útil compilar do início e também apagar todos os arquivos desnecessários.
 
   Como as listas de símbolos e de abreviaturas usamo o mesmo comando usado para criar índices, e também não há uma expectativa que a tese tenha um índice, se for desejado criar índices é necessário tanto criar, ou adotar, um novo arquivo \verb*|.ist|, que define o formato do índice, como alterar o \verb*|latexmkrc| para fazer também esse passo. Ou fazer o passo de rodar o \verb*|makeindex| na mão.
+
+\section{Níveis de seção}
+\label{sec:niveis}
+
+O Manual (2.6) numera as seções em cadeia e recomenda ir no máximo até a quinária. Na classe, cada nível tem um comando, e o destaque diminui a cada degrau: o capítulo é a seção primária, em caixa alta e negrito; a \verb|\section| é a secundária, em caixa alta sem negrito; a \verb|\subsection| é a terciária, em negrito; a \verb|\subsubsection| é a quaternária, em negrito e itálico; e o \verb|\paragraph| é a quinária, em itálico. Todos entram no sumário.
+
+\subsection{Seção terciária}
+
+Texto da seção terciária, escrita com \verb|\subsection|.
+
+\subsubsection{Seção quaternária}
+
+Texto da seção quaternária, escrita com \verb|\subsubsection|.
+
+\paragraph{Seção quinária}
+
+Texto da seção quinária, escrita com \verb|\paragraph|. Este é o único \verb|\paragraph| do exemplo, de propósito: é o último nível que o Manual recomenda, e num trabalho bem dividido ele quase nunca é necessário. Se você precisar dele com frequência, é provável que o capítulo esteja pedindo para ser dividido em dois.
 
 \section{Citações}
 \label{sec:citacoes}
@@ -251,6 +276,41 @@
   Em todo caso, \textbf{deve se tomar enorme atenção com as citações, para evitar ocorrer em plágio não intencional}.
 
   Quando se cita uma obra por meio de outra (\textit{apud}), pela ABNT entra na lista de referências \emph{apenas a obra efetivamente consultada}. A obra original (não consultada) é informada como texto e \emph{não} é referenciada. Use \verb*|\citetapud{autor}{ano}{chave}|, como em \citetapud{Drumond}{1953}{article-example}, ou a forma entre parênteses \verb*|\citepapud|, como em \citepapud[145]{Drumond}{1953}{article-example}. Note que, nas Referências, aparece somente a obra consultada.
+
+\section{O arquivo de depósito: PDF/A}
+\label{sec:pdfa}
+
+Este exemplo é compilado com a opção \verb|pdfa| da classe, logo na primeira linha:
+\begin{verbatim}
+\documentclass[dsc,pdfa]{coppe}
+\end{verbatim}
+Com ela, o arquivo sai em \textbf{PDF/A-2b}. Esta seção explica o que isso é, por que a COPPE exige, o que a classe faz e o que pode dar errado.
+
+\textbf{Por que é obrigatório.} Desde a Resolução CEPG n.~246/2023 o depósito de teses e dissertações na UFRJ é \emph{exclusivamente digital}: não há mais cópia impressa, e o arquivo é o documento. Por isso o Manual da UFRJ, na seção 2.2(d), diz que a versão digital final ``deve ser entregue em arquivo do tipo PDF/A (formato de arquivamento de longo prazo)''. Um PDF comum abre hoje, mas nada garante que abra igual daqui a trinta anos, em outro computador, sem as fontes e os programas que o produziram. O PDF/A garante.
+
+\textbf{O que é o PDF/A.} É o PDF restrito pela norma ISO~19005 para \emph{preservação}. A ideia central é que o arquivo seja autossuficiente:
+\begin{itemize}
+  \item \textbf{todas as fontes vão embutidas} no arquivo, e em forma vetorial;
+  \item \textbf{as cores são independentes do equipamento}: o arquivo declara um perfil de cor (sRGB) para dizer como elas devem ser reproduzidas;
+  \item \textbf{os metadados vão em XMP}, um bloco padronizado que bibliotecas e repositórios leem sozinhos: título, autor, assunto, palavras-chave;
+  \item \textbf{nada depende de fora}: sem conteúdo externo, sem JavaScript, sem áudio ou vídeo, sem criptografia nem senha.
+\end{itemize}
+
+\textbf{Por que 2b.} A norma tem partes e níveis. A \emph{parte 2} (PDF/A-2) admite transparência, que o PDF/A-1 proíbe e que o \verb|tcolorbox| e vários pacotes de gráficos produzem; com PDF/A-1 este mesmo exemplo seria rejeitado. O \emph{nível b} (\emph{basic}) garante a reprodução visual fiel, que é o que o depósito precisa. Os níveis \emph{u} e \emph{a} pedem, além disso, mapeamento Unicode completo e estrutura marcada para leitores de tela, que o \hologo{pdfLaTeX} não produz de forma confiável. O próprio Manual, no Anexo I, aceita as variantes 1b e 2b.
+
+\textbf{O que a classe faz.} Com a opção \verb|pdfa|, a classe carrega o pacote \verb|pdfx| no nível \verb|a-2b|, monta os metadados XMP a partir do \verb|\title|, do \verb|\author|, das \verb|\keyword| e do \verb|\department| que você já escreveu, embute o perfil sRGB, põe as cores em RGB e retira do arquivo as informações internas do \hologo{pdfTeX} que um validador rejeitaria. As fontes já são a Latin Modern, vetorial: a Computer Modern antiga saía em bitmap (Type~3), e bitmap não é PDF/A. Os metadados chegam ao PDF na segunda passada, porque são lidos de um arquivo \verb|.xmpdata| que a classe escreve na primeira. O custo em tempo de compilação, medido neste exemplo, fica dentro da variação normal entre uma passada e outra.
+
+\textbf{Por que ligar desde já.} A opção fica desligada por padrão na classe, mas vale ligar no começo da escrita, como neste exemplo: um problema de PDF/A --- uma imagem ou um PDF incluído que não obedece à norma --- aparece no dia em que o arquivo entra, e não na véspera do depósito, quando já são dezenas de figuras.
+
+\textbf{O que pode dar errado.} Quase sempre é o que vem de fora:
+\begin{itemize}
+  \item um \textbf{PDF incluído} (\verb|\includegraphics| ou \verb|pdfpages|) com fontes não embutidas, criptografado ou com formulário;
+  \item uma \textbf{imagem em CMYK} ou com perfil de cor próprio, típica de material de gráfica;
+  \item um \textbf{link para arquivo local} ou para executar um programa.
+\end{itemize}
+Refaça a figura (exportar de novo para PDF com as fontes embutidas costuma bastar) ou converta-a para PNG.
+
+\textbf{Como conferir.} Abra o PDF num leitor que indique a conformidade (o Adobe Acrobat mostra uma faixa ``Este arquivo está em conformidade com o padrão PDF/A''), ou passe-o pelo \emph{veraPDF} (\texttt{verapdf.org}), o validador de referência, gratuito, no perfil PDF/A-2b. Os documentos de prova da CoppeTeX passam pelo veraPDF a cada versão.
 
 \chapter{Floats}
 
@@ -283,7 +343,7 @@ Vamos ver uma tabela padrão, como a \autoref{tab:exemplo_numeros}.
 10 & 11 & 12 \\ % Quarta linha de dados
 \hline % Linha inferior
 \end{tabular}
-\fonte{Elabora\c{c}\~ao pr\'opria.} % fonte obrigatoria, abaixo do float
+\fonte{Elaboração própria.} % fonte obrigatoria, abaixo do float
 \end{table}
 
 Já a \autoref{fig:exemplo_figura} é uma figura padrão, com controle da largura.
@@ -311,7 +371,7 @@ Tabela & Linhas apenas no topo e na base. \\
 Quadro & Linhas em todas as bordas. \\
 \hline
 \end{tabular}
-\fonte{Elabora\c{c}\~ao pr\'opria.}
+\fonte{Elaboração própria.}
 \end{quadro}
 
 Um segundo quadro, no \autoref{qua:segundo}, prova que o contador anda e que a lista de quadros recebe as duas entradas.
@@ -346,7 +406,7 @@ Fonte & Abaixo da ilustração. \\
   \draw[fill=gray!40] (2.2,0.4) rectangle (3.6,1.2);
   \node at (2,-0.4) {\footnotesize esquema de ocupação};
 \end{tikzpicture}
-\fonte{Elabora\c{c}\~ao pr\'opria.}
+\fonte{Elaboração própria.}
 \end{mapa}
 
 \begin{mapa}[ht]
@@ -359,7 +419,7 @@ Fonte & Abaixo da ilustração. \\
   \draw[->] (0,-1.6) -- (0,1.6);
   \node at (0,-2) {\footnotesize esquema de alcance};
 \end{tikzpicture}
-\fonte{Elabora\c{c}\~ao pr\'opria.}
+\fonte{Elaboração própria.}
 \end{mapa}
 
 \section{Tabelas mais elegantes}
@@ -380,7 +440,7 @@ Atualmente a tendência é usar tabelas mais leves, como \autoref{tab:exemplo_nu
 10 & 11 & 12 \\ % Quarta linha de dados
 \bottomrule % Linha inferior
 \end{tabular}
-\fonte{Elabora\c{c}\~ao pr\'opria.}
+\fonte{Elaboração própria.}
 \end{table}
 
 \section{Tabelas Longas ou Largas}
@@ -397,7 +457,7 @@ Se sua tabela é muito longa ou larga, existem várias opções.
 
 É comum em teses que as tabelas sejam largas demais. Há várias formas de resolver isso.
 
-A \autoref{tab:tabela_largafns} é larga demais, e nela isso é resolvido diminuindo a fonte para \verb|\footnotesize|.
+A \autoref{tab:tabela_largafns} é larga demais para a mancha, e o que se fez nela foi diminuir o corpo da fonte com o comando \verb|\footnotesize|, colocado dentro do ambiente \verb|table|, antes do \verb|tabular|.
 
 \begin{table}[ht]
 \centering % Centraliza a tabela
@@ -413,7 +473,7 @@ Dado 2.1 & Dado 2.2 & Dado 2.3 & Dado 2.4 & Dado 2.5 & Dado 2.6 & Dado 2.7 & Dad
 Dado 3.1 & Dado 3.2 & Dado 3.3 & Dado 3.4 & Dado 3.5 & Dado 3.6 & Dado 3.7 & Dado 3.8 \\
 \bottomrule
 \end{tabular}
-\fonte{Elabora\c{c}\~ao pr\'opria.}
+\fonte{Elaboração própria.}
 \end{table}
 
 O comando \verb|\resizebox{width}{height}{content}| permite ajustar o tamanho de qualquer coisa, inclusive uma tabela, como na \autoref{tab:examplerb}. No caso, estou fazendo a tabela ficar maior, para ocupar o espaço, mas funciona para qualquer tamanho.
@@ -432,7 +492,7 @@ Dados 5 & Dados 6 & Dados 7 & Dados 8 \\
 \bottomrule
 \end{tabular}%
 }
-\fonte{Elabora\c{c}\~ao pr\'opria.}
+\fonte{Elaboração própria.}
 \end{table}
 
 Para rodar uma tabela muito larga em 90 graus no LaTeX, você pode usar o pacote \verb*|rotating|. Este pacote fornece o ambiente \verb*|sidewaystable|, que automaticamente gira a tabela, incluindo sua legenda, em 90 graus. Isso é especialmente útil para acomodar tabelas largas em documentos, garantindo que elas caibam na página sem comprometer a legibilidade.
@@ -451,7 +511,7 @@ Item 1 & Item 2 & Item 3 \\
 Item 4 & Item 5 & Item 6 \\
 \bottomrule
 \end{tabular}
-\fonte{Elabora\c{c}\~ao pr\'opria.}
+\fonte{Elaboração própria.}
 \end{sidewaystable}
 
 Se a tabela for muito longa, o ambiente \verb|longtable| é o ideal. Ele fornece comandos para \textit{headers}, cabeçalhos, e \textit{footers} tanto no ínicio e no fim da tabela, como em todas as páginas. A \autoref{tab:longa} fornece um exemplo de 3 páginas.
@@ -580,7 +640,7 @@ Se a tabela for muito longa, o ambiente \verb|longtable| é o ideal. Ele fornece
 4 & 5 & 6 \\
 
 \end{longtable}
-\fonte{Elabora\c{c}\~ao pr\'opria.}% a longtable não é float: a fonte vem após o ambiente
+\fonte{Elaboração própria.}% a longtable não é float: a fonte vem após o ambiente
 
 \section{Subfiguras (subcaption)}
 
@@ -599,7 +659,7 @@ Para colocar várias imagens (ou tabelas) lado a lado, cada uma com sua própria
   \end{subfigure}
   \caption{Figura com duas subfiguras}
   \label{fig:subs}
-  \fonte{Elabora\c{c}\~ao pr\'opria.}
+  \fonte{Elaboração própria.}
 \end{figure}
 
 Referencie a figura inteira com \verb|\autoref{fig:subs}|. Cada parte tem
@@ -617,21 +677,47 @@ Formatos aceitos com \hologo{pdfLaTeX}/\hologo{LuaLaTeX}: \texttt{pdf}, \texttt{
 
 \section{Introdução ao tikz}
 
-O \verb|tikz| (disponível também via \verb|tcolorbox|) desenha gráficos vetoriais no próprio \LaTeX. Um exemplo simples:
+O \verb|tikz| (disponível também via \verb|tcolorbox|) desenha gráficos vetoriais no próprio \LaTeX: o desenho sai com a mesma fonte do texto, escala sem perder qualidade e não depende de arquivo externo. A \autoref{fig:tikz} é um fluxograma de três etapas, e o código dela está logo abaixo, comentado. Como toda ilustração, a legenda vai \textbf{acima} e a fonte \textbf{abaixo}.
 
 \begin{figure}[ht]
   \centering
-  \begin{tikzpicture}
-    \node[draw, rounded corners] (a) at (0,0) {Início};
-    \node[draw, rounded corners] (b) at (4,0) {Fim};
-    \draw[->, thick] (a) -- (b) node[midway, above] {processo};
-  \end{tikzpicture}
   \caption{Diagrama simples em tikz}
   \label{fig:tikz}
-  \fonte{Elabora\c{c}\~ao pr\'opria.}
+  \begin{tikzpicture}[
+      % um estilo com nome, para não repetir as mesmas opções em cada nó
+      etapa/.style={draw, rounded corners, minimum width=2.4cm,
+                    minimum height=0.9cm, fill=gray!10},
+      seta/.style={->, thick}]
+    % os nós: estilo, nome entre parênteses, posição (x,y) em cm, texto
+    \node[etapa] (coleta)  at (0,0) {Coleta};
+    \node[etapa] (analise) at (4,0) {Análise};
+    \node[etapa] (relato)  at (8,0) {Relatório};
+    % as setas ligam os nós pelo nome; o rótulo vai no meio, por cima
+    \draw[seta] (coleta)  -- (analise) node[midway, above] {dados};
+    \draw[seta] (analise) -- (relato)  node[midway, above] {resultados};
+    % uma seta de volta, curvada por baixo
+    \draw[seta, dashed] (relato.south) to[bend left=25]
+      node[midway, below] {revisão} (coleta.south);
+  \end{tikzpicture}
+  \fonte{Elaboração própria.}
 \end{figure}
 
-Para gráficos de dados (curvas, barras), veja o \verb|pgfplots|, construído sobre o \verb|tikz|.
+\begin{verbatim}
+\begin{tikzpicture}[
+    etapa/.style={draw, rounded corners, minimum width=2.4cm,
+                  minimum height=0.9cm, fill=gray!10},
+    seta/.style={->, thick}]
+  \node[etapa] (coleta)  at (0,0) {Coleta};
+  \node[etapa] (analise) at (4,0) {Análise};
+  \node[etapa] (relato)  at (8,0) {Relatório};
+  \draw[seta] (coleta)  -- (analise) node[midway, above] {dados};
+  \draw[seta] (analise) -- (relato)  node[midway, above] {resultados};
+  \draw[seta, dashed] (relato.south) to[bend left=25]
+    node[midway, below] {revisão} (coleta.south);
+\end{tikzpicture}
+\end{verbatim}
+
+Três ideias bastam para começar: \textbf{nós} (\verb|\node|) são caixas de texto com nome e posição; \textbf{caminhos} (\verb|\draw|) ligam coordenadas ou nós; e \textbf{estilos} (\verb|nome/.style|) guardam opções para reaproveitar. Para gráficos de dados (curvas, barras), veja o \verb|pgfplots|, construído sobre o \verb|tikz|. A documentação do \verb|tikz| (\texttt{texdoc tikz}) começa com tutoriais.
 
 \section{Float ou direto no texto?}
 
@@ -647,7 +733,7 @@ Colocar a tabela ou imagem dentro de \verb|figure|/\verb|table| (um \emph{float}
   Os comandos do \texttt{natbib} (\verb|\citet|, \verb|\citep|) continuam disponíveis porque a classe carrega o BibLaTeX com a opção \texttt{natbib=true}; assim, você pode usar tanto os comandos nativos do BibLaTeX (\verb|\autocite|, \verb|\textcite|) quanto os do \texttt{natbib}. As Tabelas~\ref{tab:citation} e~\ref{tab:citation1} apresentam \verb|\cite| e \verb|\citet| para vários tipos de obra contidos na norma da CPGP (a primeira com regras manuais, a segunda com \texttt{booktabs}), no estilo numérico. Tirando o parâmetro opcional numérico da classe, as citações passam de numéricas para autor-data.
 
   \begin{table}[htb]
-  \caption{Exemplos de cita{\c c}\~oes utilizando o comando padr\~ao
+  \caption{Exemplos de citações utilizando o comando padrão
     \texttt{\textbackslash cite} do \LaTeX\ e
     o comando \texttt{\textbackslash citep},
     disponível pela opção \texttt{natbib} do BibLaTeX.}
@@ -671,11 +757,11 @@ Colocar a tabela ou imagem dentro de \verb|figure|/\verb|table| (um \emph{float}
     Tese de doutorado & \cite{phdthesis-example} & \citep{phdthesis-example}\\
     \hline
   \end{tabular}}
-  \fonte{Elabora\c{c}\~ao pr\'opria.}
+  \fonte{Elaboração própria.}
   \end{table}
 
  \begin{table}[htb]
-  \caption{Exemplos de cita{\c c}\~oes utilizando o comando padr\~ao
+  \caption{Exemplos de citações utilizando o comando padrão
     \texttt{\textbackslash cite} do \LaTeX\ e
     o comando \texttt{\textbackslash citet},
     disponível pela opção \texttt{natbib} do BibLaTeX. Além disso, usando o booktabs.}
@@ -699,7 +785,7 @@ Colocar a tabela ou imagem dentro de \verb|figure|/\verb|table| (um \emph{float}
     Tese de doutorado & \cite{phdthesis-example} & \citet{phdthesis-example}\\
     \bottomrule
   \end{tabular}}
-  \fonte{Elabora\c{c}\~ao pr\'opria.}
+  \fonte{Elaboração própria.}
   \end{table}
 
   \section{Comandos de citação}
@@ -722,6 +808,9 @@ Colocar a tabela ou imagem dentro de \verb|figure|/\verb|table| (um \emph{float}
 
   Cada tipo de documento da ABNT corresponde a um tipo de entrada do BibLaTeX, com um sinônimo em português (sem acentos) que você pode usar no \texttt{.bib}. Todos os tipos abaixo estão demonstrados nas Referências deste documento (veja \texttt{example.bib}). Entre parênteses, os sinônimos em português.
 
+  % Nomes de tipo em fonte de máquina não hifenizam: justificados, abriam
+  % buracos nas linhas (Underfull \hbox). Alinhado à esquerda, não.
+  \begingroup\raggedright
   \subsection{Tipos acadêmicos principais}
   \begin{itemize}
     \item Livro / monografia --- \verb|@book| (\verb|@livro|)
@@ -749,6 +838,7 @@ Colocar a tabela ou imagem dentro de \verb|figure|/\verb|table| (um \emph{float}
   \end{itemize}
 
   Os campos também aceitam sinônimos em português (sem acentos): \verb|autor|, \verb|titulo|, \verb|subtitulo|, \verb|editora|, \verb|local|, \verb|ano|, \verb|data|, \verb|paginas|, \verb|edicao|, \verb|numero|, \verb|periodico|/\verb|jornal|/\verb|revista|, \verb|caderno|, \verb|escala|, \verb|organizador|, \verb|tradutor|, entre outros. Sem autor nem organizador, a entrada é feita pelo título, com a 1ª palavra em CAIXA ALTA.
+  \par\endgroup
 
   \section{Uma referência de cada categoria do Manual}\label{sec:todosostipos}
 
@@ -756,7 +846,8 @@ Colocar a tabela ou imagem dentro de \verb|figure|/\verb|table| (um \emph{float}
 
   Metade das entradas está escrita com os nomes de tipo e de campo em \textbf{inglês} e metade com os sinônimos em \textbf{português}, de propósito, para que as duas formas apareçam funcionando lado a lado. \textbf{Prefira a inglesa}: é a do \texttt{biblatex}, é a que os gerenciadores de referência exportam, e é a que outra pessoa vai reconhecer quatro anos depois. Os sinônimos em português existem para quem chega de uma base antiga e não quer reescrever tudo.
 
-  \begin{longtable}{@{}p{0.46\textwidth}p{0.17\textwidth}p{0.28\textwidth}@{}}
+  % Colunas estreitas alinhadas à esquerda: justificadas, abriam buracos.
+  \begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.46\textwidth}>{\raggedright\arraybackslash}p{0.17\textwidth}>{\raggedright\arraybackslash}p{0.28\textwidth}@{}}
     \caption{Uma referência de cada categoria da seção 4.2 do Manual}
     \label{tab:todosostipos}\\
     \toprule
@@ -825,7 +916,7 @@ Este é o conteúdo do meu textbox sem título. Você pode adicionar qualquer te
         \begin{scope}[x={(image.south east)},y={(image.north west)}]
             % Definindo o textbox dentro da figura
             \node[anchor=north west, text width=0.3\textwidth, fill=white, opacity=0.7, text opacity=1] at (0.05,0.95) { % Ajuste a posição conforme necessário
-                \begin{tcolorbox}[colback=red!5!white,colframe=red!75!black,title=Textbox dentro de uma figura]
+                \begin{tcolorbox}[colback=red!5!white,colframe=red!75!black,halign=flush left,halign title=flush left,title=Textbox dentro de uma figura]
                     Este textbox fala sobre como inserir um textbox dentro de uma figura usando o pacote \texttt{tikz} e \texttt{tcolorbox} no \LaTeX.
                 \end{tcolorbox}
             };
@@ -833,7 +924,7 @@ Este é o conteúdo do meu textbox sem título. Você pode adicionar qualquer te
     \end{tikzpicture}
     \caption{Figura com Textbox}
     \label{fig:figura_com_textbox1}
-    \fonte{Elabora\c{c}\~ao pr\'opria.}
+    \fonte{Elaboração própria.}
 \end{figure}
 
 \begin{figure}[ht]
@@ -843,7 +934,7 @@ Este é o conteúdo do meu textbox sem título. Você pode adicionar qualquer te
 \end{tcolorbox}
     \caption{Figura com Textbox simples}
     \label{fig:figura_com_textbox}
-    \fonte{Elabora\c{c}\~ao pr\'opria.}
+    \fonte{Elaboração própria.}
 \end{figure}
 
 \section{Listagens de código e algoritmos}
@@ -908,7 +999,7 @@ $i \leftarrow 1$\;
 
   \chapter{Escrevendo matemática}
 
-  A classe carrega \texttt{amsmath} em qualquer motor. Sob \hologo{pdfLaTeX} ela também carrega \texttt{amssymb} (símbolos clássicos $\mathbb{R}$, $\hbar$, $\varnothing$, \ldots). Sob \hologo{LuaLaTeX}/\hologo{XeLaTeX}, \textbf{a classe NÃO carrega \texttt{amssymb}} (ele é incompatível com o \texttt{unicode-math}); se você terminar o documento sem ter carregado nem \texttt{unicode-math} nem \texttt{amssymb}, a classe emite um \emph{ClassWarning} no fim da compilação pedindo que você adicione \verb|\usepackage{unicode-math}| ao preâmbulo (veja a~\autoref{sec:unicode-math}). Fórmulas no texto vão entre \verb|$...$|; fórmulas destacadas e numeradas usam o ambiente \verb|equation|.
+  A classe carrega \texttt{amsmath} em qualquer motor: são os ambientes e comandos, não a fonte. \textbf{A fonte matemática é escolha sua}, e a classe não carrega nenhuma. Este exemplo a escolhe no preâmbulo, pelo motor: \texttt{amssymb} sob \hologo{pdfLaTeX} (símbolos clássicos $\mathbb{R}$, $\hbar$, $\varnothing$, \ldots) e \texttt{unicode-math} com a Latin Modern Math sob \hologo{LuaLaTeX}/\hologo{XeLaTeX} (veja a~\autoref{sec:unicode-math}). Copie o bloco para o seu trabalho, troque a fonte se quiser, ou apague-o se o trabalho não tem matemática. Fórmulas no texto vão entre \verb|$...$|; fórmulas destacadas e numeradas usam o ambiente \verb|equation|.
 
   \section{Alinhamento (align)}
   O ambiente \verb|align| alinha equações pelo \verb|&| e numera cada linha (\verb|\\| quebra a linha; \verb|align*| não numera):
@@ -959,11 +1050,14 @@ $i \leftarrow 1$\;
 
   \section{Unicode e LuaLaTeX (unicode-math)}
   \label{sec:unicode-math}
-  Ao migrar para \hologo{LuaLaTeX} (ou \hologo{XeLaTeX}), \textbf{não carregue} \texttt{amssymb}: ele é o pacote AMS legado, escrito para as fontes Type~1 de 8~bits (\texttt{msam}/\texttt{msbm}), e colide com \texttt{unicode-math} -- o pacote moderno que controla a fonte matemática OpenType. Por isso a classe \texttt{coppe} já \emph{omite} \texttt{amssymb} sob motores Unicode e emite um aviso na compilação (procure por \texttt{Class coppe Warning} no log) lembrando que cabe a você completar o preâmbulo:
+  Ao migrar para \hologo{LuaLaTeX} (ou \hologo{XeLaTeX}), \textbf{não carregue} \texttt{amssymb}: ele é o pacote AMS legado, escrito para as fontes Type~1 de 8~bits (\texttt{msam}/\texttt{msbm}), e colide com \texttt{unicode-math} -- o pacote moderno que controla a fonte matemática OpenType. Por isso o preâmbulo deste exemplo escolhe um ou outro pelo motor, com \verb|\ifPDFTeX| (do pacote \texttt{iftex}, que a classe já carrega):
   \begin{verbatim}
-  \usepackage{amsmath}      % a classe já carrega
-  \usepackage{unicode-math} % NÃO use \usepackage{amssymb} junto
-  \setmathfont{Latin Modern Math}  % ou STIX Two Math
+  \ifPDFTeX
+    \usepackage{amssymb}
+  \else
+    \usepackage{unicode-math} % NÃO use \usepackage{amssymb} junto
+    \setmathfont{Latin Modern Math}  % ou STIX Two Math
+  \fi
   \end{verbatim}
   O código clássico continua valendo ($\mathbb{R}$, $\int_a^b f(x)\,dx$, $\alpha$) e você ainda pode digitar os próprios símbolos Unicode no editor. A vantagem é que o PDF passa a indexar os símbolos em Unicode real: ao copiar uma fórmula do PDF, o significado dos símbolos é preservado.
 
@@ -1021,10 +1115,28 @@ use \verb|\href{https://exemplo.org}{texto}|. Evite digitar URLs como texto comu
   \section{\texttt{latexmkrc}, perl e Overleaf}
   O \verb|latexmk| automatiza a compilação (roda \LaTeX, \verb|biber| e \verb|makeindex| quantas vezes for preciso) e lê o \texttt{latexmkrc} do diretório. Como o \verb|latexmk| é um script \emph{Perl}, no Windows instale o \emph{Strawberry Perl}; no Linux e no macOS o Perl já vem instalado. No Overleaf, o \verb|latexmk| roda sozinho e lê o \texttt{latexmkrc} do projeto.
 
-  \chapter{Método Proposto}
-  \chapter{Resultados e Discuss\~oes}
+  \section{Fluxos de escrita e o \texttt{morewrites}}
+  \label{sec:morewrites}
 
-  \section{Algumas Demonstra{\c c}\~oes}
+  O \hologo{pdfLaTeX} só consegue manter \textbf{dezesseis} arquivos abertos para escrita ao mesmo tempo, e cada lista que o trabalho imprime ocupa um deles até o fim da compilação: o sumário, a lista de figuras, a de tabelas, a de quadros, a de programas, a de algoritmos, cada flutuante novo criado com \verb|\newcoppefloat|, a lista de símbolos, a de abreviaturas, o índice remissivo, cada índice a mais e o glossário. Este exemplo, sozinho, usa os dezesseis.
+
+  Por isso a classe carrega o pacote \verb|morewrites|, que tira esse teto. Ele custa cerca de meio segundo por passada do \hologo{pdfLaTeX}. Quando o tempo de compilação importa --- no plano gratuito do Overleaf, por exemplo ---, a opção \verb|semmorewrites| o desliga:
+  \begin{verbatim}
+  \documentclass[dsc,semmorewrites]{coppe}
+  \end{verbatim}
+
+  \begin{itemize}
+    \item \textbf{Pode desligar} se o trabalho \emph{não} tem índice remissivo, nem vários índices (\verb|imakeidx|, \verb|splitidx|), nem glossário, nem nomenclatura, e não soma listas além das deste exemplo.
+    \item \textbf{Deve desligar} se o \verb|morewrites| brigar com outro pacote, o que é raro: ele guarda o que é escrito até a página sair, e um pacote que escreve um arquivo e o lê de volta na mesma passada pode se perder.
+    \item \textbf{Não desligue} se o trabalho tem índice remissivo e glossário, ou vários índices: é para isso que o pacote está ali.
+  \end{itemize}
+
+  Se você desligar e os fluxos acabarem, a compilação para com a mensagem ``Acabaram os 16 fluxos de escrita do \TeX'', que diz o que fazer: tirar o \verb|semmorewrites| ou compilar com \hologo{LuaLaTeX}, que tem cento e vinte e oito fluxos e dispensa o pacote. O manual da classe discute o assunto em detalhe, com o custo de cada lista.
+
+  \chapter{Método Proposto}
+  \chapter{Resultados e Discussões}
+
+  \section{Algumas Demonstrações}
 
   A  Lista de Símbolos precisa usar comandos específicos. Aqui vamos usar os símbolos $\alpha$ e $\beta$.
   \symbl[beta]{Beta}{A palavra Beta more e corrigida}

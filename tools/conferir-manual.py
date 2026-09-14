@@ -51,6 +51,9 @@ PADRAO_LATEX = {
     "listabbreviationname", "listsymbolname", "lstlistingname",
     "lstlistlistingname", "quadroname", "listquadroname",
     "quadroautorefname", "cpsourcename",
+    # redefinidos localmente: \PackageWarning so durante o carregamento do
+    # pdfx, \thepage so na folha adicional, \theHchapter so nos anexos
+    "PackageWarning", "thepage", "theHchapter",
 }
 
 # Ambientes internos do mecanismo de listas, nunca escritos a mao.

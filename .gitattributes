@@ -22,7 +22,7 @@
 *.txt    text
 *.eps    text
 LEIAME   text
-COPYING  text
+COPYING.txt  text
 
 # Binários: nunca converter.
 *.pdf    binary

@@ -423,6 +423,36 @@ pedida sem explicar nada. Sob pdfLaTeX a classe agora carrega o pacote
 fazer da sua parte. `semmorewrites` desliga, se você topar com um
 conflito; sob LuaLaTeX, que tem 128 fluxos, nada disso é carregado.
 
+Desligar também poupa cerca de meio segundo por passada, o que conta no plano
+gratuito do Overleaf, mas só serve a trabalho **sem índice remissivo, sem
+vários índices e sem glossário**. O manual da classe tem a seção *Fluxos de
+escrita: quando desligar o morewrites*.
+
+### 4.12 A fonte matemática passou a ser sua
+
+Até a v4.1 a classe carregava o `amssymb` sob pdfLaTeX. Não carrega mais: a
+fonte matemática é escolha do autor. Se o seu trabalho usa `\mathbb`, `\hbar`,
+`\varnothing` ou outro símbolo AMS e passou a dar "Undefined control
+sequence", ponha no preâmbulo o bloco que o `example.tex` usa:
+
+```latex
+\ifPDFTeX
+  \usepackage{amssymb}
+\else
+  \usepackage{unicode-math}
+  \setmathfont{Latin Modern Math}
+\fi
+```
+
+O `\ifPDFTeX` vem do `iftex`, que a classe já carrega. Nunca carregue
+`amssymb` junto com `unicode-math`.
+
+### 4.13 A licença é `COPYING.txt`
+
+O arquivo da licença passou a se chamar `COPYING.txt`, porque o Overleaf não
+abre arquivo sem extensão. Se você mantém uma cópia da entrega, troque o nome
+também.
+
 ---
 
 ## Frequently asked

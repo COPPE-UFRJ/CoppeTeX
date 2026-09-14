@@ -4,6 +4,84 @@ Project changes worth noting, newest first. Follows
 [Keep a Changelog](https://keepachangelog.com/) loosely; dates are
 ISO-8601.
 
+## [Unreleased]
+
+### Breaking changes
+
+- **The class no longer loads a math font.** `amssymb` used to come with the
+  class under pdfLaTeX, and the class warned under LuaLaTeX when neither
+  `amssymb` nor `unicode-math` was loaded. The math font is now the author's
+  choice. A document that uses `\mathbb`, `\hbar`, `\varnothing` and friends must
+  load it in the preamble; `example.tex` and the empty-document generator carry
+  the block that picks by engine (#90):
+
+  ```latex
+  \ifPDFTeX
+    \usepackage{amssymb}
+  \else
+    \usepackage{unicode-math}
+    \setmathfont{Latin Modern Math}
+  \fi
+  ```
+
+- **The licence file is `COPYING.txt`.** Overleaf does not open a file without
+  an extension.
+
+### Changed
+
+- **`morewrites` gets the free real write streams** (`allocate`). Every stream
+  it managed used to be virtual, so each write went through `\jobname.mw`:
+  `example.tex` opened that file 772 times per pass. Now only what exceeds
+  sixteen goes through it: 118 opens, the same PDF, about 2 s (a quarter) less
+  per pdfLaTeX pass. The package stays — a work with an index and a glossary
+  overflows the sixteen streams without it (#95, #96).
+- **`example.tex` compiles as PDF/A-2b** (`\documentclass[dsc,pdfa]{coppe}`) and
+  explains why in a section of its own; the five per-language examples explain
+  it in their own language, and the class manual has a new section *Por que
+  PDF/A* (#86).
+- **UTF-8 everywhere.** TeX accent sequences (`\'a`, `\c c`, `{\~ a}`) became
+  UTF-8 characters in the `.dtx` — manual, class strings, language packs, `.bib`
+  databases, examples — in the COPPE norm and in the tests. The `listings`
+  `literate` table keeps its escapes on purpose (#88).
+- **Copyright** unified as 2008–2026 and the four authors in every header, and
+  the AI-support note names the models the commits record (#92, #93).
+- No `\paragraph` in the class manual; `example.tex` shows the five section
+  levels, with the one `\paragraph` there is.
+- **No more `\CharacterTable` and `\CheckSum`.** The current `doc`
+  documentation lists both as obsolete ("neither should be used in new
+  developments"): they guarded against mail gateways that mangled files. The
+  table was written with `%%`, which docstrip copies into the header of every
+  generated file — class, styles, `.bib` databases, examples — where it was a
+  dead comment. Both are gone from `coppe.dtx`, and the manual build no longer
+  logs "This macro file has no checksum!". Regression test r94 keeps them out.
+
+### Fixed
+
+- **`example.tex` compiles with no warning at all**: 0 LaTeX/package warnings,
+  0 Underfull/Overfull boxes, 0 font substitutions (#94). On the way:
+  - no more "Although slower, you should try compiling with LuaLaTeX" (#89);
+  - `lmss/m/it`, `lmss/bx/it`, `lmtt/bx/n` and neighbours are declared directly,
+    so no "Font shape … not available" (#87);
+  - duplicate PDF destinations `page.2` (folha adicional and approval sheet) and
+    `chapter.A`/`chapter.B` (appendix and annex with the same letter — a table of
+    contents link to an annex could land on the appendix);
+  - under `pdfa`, the five hyperref "already been used" warnings and the pdfx
+    colour-model warning.
+- The TikZ example has its caption above the figure, as the class's own rule
+  says (#91).
+- `tools/versao.py` no longer reports line-ending differences between `dist/`
+  and `src/` as divergences (#85).
+- `tools/conferir-referencias-cruzadas.py` no longer crashes when the log is on
+  a different Windows drive from the repository (regression test r90).
+
+### Documentation
+
+- When to turn `morewrites` off, and when not to, with the stream cost of each
+  list, index and glossary (#96).
+- Which front-matter lists the UFRJ Manual makes mandatory (only the table of
+  contents) and which are optional, in the manual, the quick reference, the norm
+  manual and before the lists in `example.tex` (#97).
+
 ## [4.1] — 2026-09-10 — Conformance with the revised UFRJ/SiBI Manual (2026)
 
 The September series aligned the class with the **9th edition, revised

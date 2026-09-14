@@ -227,12 +227,13 @@ def acao_dist(saida):
         saida("   %s" % (subpasta + "/" + nome if subpasta else nome))
     # A licenca vem da RAIZ, e nao de src/, e por isso esta fora da lista. Ela
     # tem de ir junto: a GPL exige que o texto acompanhe o que se distribui.
-    licenca = os.path.join(RAIZ, "COPYING")
+    # COPYING.txt, e nao COPYING: o Overleaf nao abre arquivo sem extensao.
+    licenca = os.path.join(RAIZ, "COPYING.txt")
     if os.path.exists(licenca):
-        shutil.copy2(licenca, os.path.join(DIST, "COPYING"))
-        saida("   COPYING")
+        shutil.copy2(licenca, os.path.join(DIST, "COPYING.txt"))
+        saida("   COPYING.txt")
     else:
-        faltando.append("COPYING")
+        faltando.append("COPYING.txt")
     if faltando:
         saida("")
         for nome in faltando:

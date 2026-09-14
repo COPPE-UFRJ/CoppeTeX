@@ -25,7 +25,7 @@
 %% GNU General Public License version 3 for more details.
 %% 
 %% You should have received a copy of the GNU General Public License
-%% version 3 along with this package (see COPYING file).
+%% version 3 along with this package (see the COPYING.txt file).
 %% If not, see <http://www.gnu.org/licenses/>.
 %% 
 %% Author(s): Vicente Helano F. Batista
@@ -33,23 +33,6 @@
 %%            Geraldo Xexéo
 %%            Eduardo Mangeli
 %% 
-%% \CheckSum{0}
-%% \CharacterTable
-%%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
-%%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
-%%   Digits        \0\1\2\3\4\5\6\7\8\9
-%%   Exclamation   \!     Double quote  \"     Hash (number) \#
-%%   Dollar        \$     Percent       \%     Ampersand     \&
-%%   Acute accent  \'     Left paren    \(     Right paren   \)
-%%   Asterisk      \*     Plus          \+     Comma         \,
-%%   Minus         \-     Point         \.     Solidus       \/
-%%   Colon         \:     Semicolon     \;     Less than     \<
-%%   Equals        \=     Greater than  \>     Question mark \?
-%%   Commercial at \@     Left bracket  \[     Backslash     \\
-%%   Right bracket \]     Circumflex    \^     Underscore    \_
-%%   Grave accent  \`     Left brace    \{     Vertical bar  \|
-%%   Right brace   \}     Tilde         \~}
-%%
 %% coppe-lang-spanish.def -- CoppeTeX 4.x Spanish class-string pack.
 %% Loaded by coppe.cls when \documentclass[spanish]{coppe} (or any other
 %% spanish slot) is active. Populates the dispatcher table for the
@@ -72,15 +55,15 @@
 \copperdefstring{spanish}{presentedmale}    {presentado}
 \copperdefstring{spanish}{presentedfemale}  {presentada}
 \copperdefstring{spanish}{abstracttail}{a la COPPE/UFRJ como parte de los
-  requisitos necesarios para la obtenci\'on del grado de}
+  requisitos necesarios para la obtención del grado de}
 \copperdefstring{spanish}{sciencename}      {en Ciencias}
-\copperdefstring{spanish}{doctypemsc}  {Disertaci\'on}
+\copperdefstring{spanish}{doctypemsc}  {Disertación}
 \copperdefstring{spanish}{doctypedsc}  {Tesis}
-\copperdefstring{spanish}{doctypeexam} {Examen de Calificaci\'on}
+\copperdefstring{spanish}{doctypeexam} {Examen de Calificación}
 \copperdefstring{spanish}{doctypesem}  {Seminario}
 \copperdefstring{spanish}{degnamemsc}  {Maestro}
 \copperdefstring{spanish}{degnamedsc}  {Doctor}
-\copperdefstring{spanish}{appendix}        {Ap\'endice}
+\copperdefstring{spanish}{appendix}        {Apéndice}
 \copperdefstring{spanish}{annex}           {Anexo}
 \copperdefstring{spanish}{frame}           {Cuadro}
 \copperdefstring{spanish}{listframe}       {Lista de Cuadros}
@@ -91,10 +74,10 @@
 \copperdefstring{spanish}{in:}             {en}
 \copperdefstring{spanish}{art}             {Arte}
 \copperdefstring{spanish}{platform}        {Plataforma}
-\copperdefstring{spanish}{directedby}      {Direcci\'on}
-\copperdefstring{spanish}{producedby}      {Producci\'on}
+\copperdefstring{spanish}{directedby}      {Dirección}
+\copperdefstring{spanish}{producedby}      {Producción}
 \copperdefstring{spanish}{listabbreviation}{Lista de Abreviaturas y Siglas}
-\copperdefstring{spanish}{listsymbol}      {Lista de S\'imbolos}
+\copperdefstring{spanish}{listsymbol}      {Lista de Símbolos}
 \copperdefstring{spanish}{glossary}        {Glosario}
 \copperdefstring{spanish}{advisor}         {Director}
 \copperdefstring{spanish}{advisors}        {Directores}
@@ -108,7 +91,7 @@
 \copperdefstring{spanish}{coadvisor}  {Codirector}
 \copperdefstring{spanish}{coadvisors} {Codirectores}
 \copperdefstring{spanish}{ofname}     {de}
-\copperdefstring{spanish}{researchline}{L\'\i nea de investigaci\'on}
+\copperdefstring{spanish}{researchline}{Línea de investigación}
 \copperdefstring{spanish}{tbddate}     {por determinar}
 \copperdefstring{spanish}{universityname}{Universidade Federal do Rio de Janeiro}
 \copperdefstring{spanish}{cityname}    {Rio de Janeiro}
