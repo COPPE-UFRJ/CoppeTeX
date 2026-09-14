@@ -8028,6 +8028,10 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \@mkboth{\MakeUppercase\indexname}%
   {\MakeUppercase\indexname}%
   \thispagestyle{plain}\parindent\z@
+% \twocolumn[...] nao cria ancora para o hyperref, e sem esta linha a
+% entrada do indice no sumario apontava para a ultima ancora que existia --
+% a do ultimo anexo: clicar em Indice Remissivo levava ao Anexo B.
+  \ifdefined\phantomsection\phantomsection\fi
   \addcontentsline{toc}{chapter}{\indexname}
   \parskip\z@ \@plus .3\p@\relax
   \columnseprule \z@
@@ -10947,6 +10951,16 @@ sub coppe_make_lsg { return system "makeindex -s coppe.ist -o \"$_[0].lsg\" \"$_
 
 # Make "latexmk -c" clean the generated list files too.
 push @generated_exts, qw(abx lab syx los sgx lsg);
+
+# The index (makeidx, \printindex): plain makeindex, with NO style file.
+# coppe.ist is for the lists above only -- it opens `theglossary', has no
+# page separator and does not read `!' as a sublevel. Overleaf's system-wide
+# LatexMk (read BEFORE this file) handled the .idx in a way that picked up
+# coppe.ist, and the index came out titled "Glossario", with "citacao23"
+# and "citacaocurta" (issue 102). This file is read last, so it wins: drop
+# any custom rule for .idx and set the built-in one explicitly.
+remove_cus_dep('idx', 'ind');
+$makeindex = 'makeindex %O -o %D %S';
 %</latexmkrc>
 % \fi
 %

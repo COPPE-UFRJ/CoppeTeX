@@ -1825,6 +1825,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \@mkboth{\MakeUppercase\indexname}%
   {\MakeUppercase\indexname}%
   \thispagestyle{plain}\parindent\z@
+  \ifdefined\phantomsection\phantomsection\fi
   \addcontentsline{toc}{chapter}{\indexname}
   \parskip\z@ \@plus .3\p@\relax
   \columnseprule \z@
