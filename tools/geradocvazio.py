@@ -205,8 +205,10 @@ CAMPOS = [
      None, ""),
     ("listofalgorithms", "Estrutura", "Lista de algoritmos", "sim/nao", False,
      None, ""),
-    ("abreviaturas", "Estrutura", "Lista de abreviaturas e siglas", "sim/nao",
+    ("abreviaturas", "Estrutura", "Lista de abreviaturas", "sim/nao",
      True, None, ""),
+    ("siglas", "Estrutura", "Lista de siglas separada", "sim/nao", True, None,
+     "A 3.1.2.2.6 recomenda; sem ela, as siglas entram na de abreviaturas"),
     ("simbolos", "Estrutura", "Lista de s\u00edmbolos", "sim/nao", True, None, ""),
     ("n_apendices", "Estrutura", "Quantos ap\u00eandices", "inteiro", 0, (0, 6),
      "Texto seu, que complementa a argumenta\u00e7\u00e3o"),
@@ -232,6 +234,7 @@ LISTAS = [("listoffigures", "\\listoffigures"),
           ("listofprogramas", "\\listofprogramas"),
           ("listofalgorithms", "\\listofalgorithms"),
           ("abreviaturas", "\\printloabbreviations"),
+          ("siglas", "\\printlosiglas"),
           ("simbolos", "\\printlosymbols")]
 
 
@@ -299,6 +302,8 @@ def monta_tex(v, nome_bib):
     A("\\addbibresource{%s}%% a sua base de referencias" % caminho_bib(v, nome_bib))
     if v["abreviaturas"]:
         A("\\makeloabbreviations")
+    if v["siglas"]:
+        A("\\makelosiglas")
     if v["simbolos"]:
         A("\\makelosymbols")
     if v["indice"]:

@@ -264,7 +264,7 @@ against it), [`MIGRATION_v3_to_v4.md`](./MIGRATION_v3_to_v4.md) and
 
 `pdflatex coppe.ins` in `src/` generates **everything that is distributed** —
 the class, the biblatex styles, the language packs, the `.bib` bases, the
-`.ist`, the five per-language examples, `example_pdfa`, the cover montage and
+`.ist`, the five per-language examples, the cover montage and
 the `latexmkrc`. No derived file is edited by hand.
 
 What exists only to *prove* the class works is not distributed and is not in
@@ -404,7 +404,6 @@ writes every file that is distributed:
 | `coppe.bib`, `example.bib` | the bibliography of the manual and the example's sample database |
 | `example.tex` | the full sample thesis |
 | `example_pt.tex`, `example_en.tex`, `example_es.tex`, `example_fr.tex`, `example_it.tex` | one short demonstration per main language |
-| `example_pdfa.tex` | the full example compiled as PDF/A-2b |
 | `covers_5languages.tex` | the side-by-side cover sheet |
 | `latexmkrc` | latexmk configuration (biber + the makeindex runs) |
 

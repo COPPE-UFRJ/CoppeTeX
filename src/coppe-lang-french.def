@@ -73,6 +73,8 @@
 \copperdefstring{french}{directedby}      {Réalisé par}
 \copperdefstring{french}{producedby}      {Produit par}
 \copperdefstring{french}{listabbreviation}{Liste des abréviations et acronymes}
+\copperdefstring{french}{listabbreviationonly}{Liste des abréviations}
+\copperdefstring{french}{listsigla}       {Liste des sigles}
 \copperdefstring{french}{listsymbol}      {Liste des symboles}
 \copperdefstring{french}{glossary}        {Glossaire}
 \copperdefstring{french}{advisor}         {Directeur}

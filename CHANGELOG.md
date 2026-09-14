@@ -32,6 +32,21 @@ Still version 4.1: these are corrections to the release published on
 
 ### Changed
 
+- **The list of symbols follows the order of appearance** in the text, as
+  3.1.2.2.7 of the UFRJ Manual asks: each symbol takes the position of the first
+  time it is registered, and registering it again does not repeat it. The new
+  option `simbolosalfabeticos` restores the alphabetical order, with the
+  optional sort key of `\symbl` (#100).
+- **A separate list of acronyms**, as 3.1.2.2.6 recommends: `\makelosiglas` in
+  the preamble and `\printlosiglas` among the lists. Acronyms from `\sigla` and
+  from the new `\acron[key]{ACRONYM}{meaning}` go there, and the other list is
+  titled "Lista de Abreviaturas". Without `\makelosiglas` nothing changes: the
+  acronyms stay in the list of abbreviations, titled "Abreviaturas e Siglas".
+  latexmkrc, the build scripts and the empty-document generator know the new
+  `.sgx`/`.lsg` pair. `example.tex` uses the separate list, and with it needs
+  `morewrites` (seventeen write streams) (#101).
+- **`example_pdfa.tex` is gone**: `example.tex` itself compiles with `pdfa`, and
+  the PDF/A scope of the build validates it (#99).
 - **`morewrites` gets the free real write streams** (`allocate`). Every stream
   it managed used to be virtual, so each write went through `\jobname.mw`:
   `example.tex` opened that file 772 times per pass. Now only what exceeds

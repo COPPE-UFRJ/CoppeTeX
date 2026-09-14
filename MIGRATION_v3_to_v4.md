@@ -447,7 +447,29 @@ sequence", ponha no preâmbulo o bloco que o `example.tex` usa:
 O `\ifPDFTeX` vem do `iftex`, que a classe já carrega. Nunca carregue
 `amssymb` junto com `unicode-math`.
 
-### 4.13 A licença é `COPYING.txt`
+### 4.13 Símbolos na ordem de aparição, e siglas numa lista própria
+
+A lista de símbolos passou a sair na **ordem em que cada símbolo aparece pela
+primeira vez**, como pede a 3.1.2.2.7 do Manual. Se você preferir a ordem
+alfabética de antes, passe a opção `simbolosalfabeticos`; a chave opcional de
+`\symbl` volta a valer.
+
+A 3.1.2.2.6 recomenda **listas separadas** de abreviaturas e de siglas. Para
+separar, ponha `\makelosiglas` no preâmbulo e `\printlosiglas` entre as listas,
+logo depois de `\printloabbreviations`. As siglas de `\sigla` vão sozinhas para a
+nova lista; para registrar uma sigla sem expandi-la no texto, use
+`\acron{SIGLA}{significado}`. Se você não fizer nada, nada muda: as siglas
+continuam na "Lista de Abreviaturas e Siglas".
+
+Quem compila à mão precisa de um `makeindex` a mais:
+
+```bash
+makeindex -s coppe.ist -o minha-tese.lsg minha-tese.sgx
+```
+
+O `latexmk` e o Overleaf já fazem isso com o `latexmkrc` da entrega.
+
+### 4.14 A licença é `COPYING.txt`
 
 O arquivo da licença passou a se chamar `COPYING.txt`, porque o Overleaf não
 abre arquivo sem extensão. Se você mantém uma cópia da entrega, troque o nome

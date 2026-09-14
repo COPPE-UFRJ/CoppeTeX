@@ -118,6 +118,7 @@ coorientador & [dsc,coorientador] & \pre & List coadvisors on the abstract pages
 rascunhoficha & [dsc,rascunhoficha] & \pre & Draft catalogue card while writing. \textbf{Never valid for deposit.} \\
 resumosemreferencia & [dsc,resumosemreferencia] & \pre & Drop the work's own reference from the top of the three abstracts. It is printed by default (3.1.2.1.4, Annexes E and F). \\
 listasnosumario & [dsc,listasnosumario] & \pre & Put the pre-textual lists back in the table of contents. \\
+simbolosalfabeticos & [dsc,simbolosalfabeticos] & \pre & List of symbols in alphabetical order instead of order of appearance. \\
 assinaturas & ---           & \pre & Accepted, does nothing. Signature rules are gone: deposit is digital. \\
 numeraisromanos & [dsc,numeraisromanos] & \pre & Roman numerals on pre-textual sheets. \textbf{Against 2.7}; legacy only. \\
 morewrites & [dsc,morewrites] & \pre & A missing \texttt{morewrites} package becomes an error, not a warning. \\
@@ -128,6 +129,7 @@ semmorewrites & [dsc,semmorewrites] & \pre & Do not load \texttt{morewrites}. Sa
 \textbackslash addbibresource & \textbackslash addbibresource\{thesis.bib\} & \pre & Declare the bibliography database. With the \texttt{.bib} extension. \\
 \textbackslash makelosymbols & \textbackslash makelosymbols & \pre & Turn on collection of the list of symbols. Without it, \texttt{\textbackslash symbl} records nothing. \\
 \textbackslash makeloabbreviations & \textbackslash makeloabbreviations & \pre & Same for the list of abbreviations. \\
+\textbackslash makelosiglas & \textbackslash makelosiglas & \pre & Separate list of acronyms (recommended by 3.1.2.2.6). Without it, acronyms go to the list of abbreviations. \\
 \textbackslash newcoppefloat & \textbackslash newcoppefloat\{map\}\{Map\}\{List of Maps\} & \pre & Declare your own float: caption on top, \texttt{\textbackslash source} below, own list. \\
 \textbackslash newsigla & \textbackslash newsigla\{ufrj\}\{UFRJ\}\{Universidade Federal...\} & \pre & Declare an acronym for \texttt{\textbackslash sigla}. \\
 \textbackslash usecoppelanguage & \textbackslash usecoppelanguage\{french\} & \pre & Load one more language pack, for quotations in a third language. \\
@@ -193,7 +195,9 @@ brazilianabstract & \textbackslash begin\{brazilianabstract\} ... & \doc & Third
 \textbackslash listofprogramas & \textbackslash listofprogramas & \doc & List of code listings. \\
 \textbackslash listofalgorithms & \textbackslash listofalgorithms & \doc & List of algorithms. \\
 \textbackslash printloabbreviations & \textbackslash printloabbreviations & \doc & List of abbreviations and acronyms. No page numbers (4.1.1). \\
-\textbackslash printlosymbols & \textbackslash printlosymbols & \doc & List of symbols. Likewise. \\
+\textbackslash printlosiglas & \textbackslash printlosiglas & \doc & List of acronyms, when \texttt{\textbackslash makelosiglas} is on. \\
+\textbackslash printlosymbols & \textbackslash printlosymbols & \doc & List of symbols, in order of first appearance (3.1.2.2.7). \\
+\textbackslash acron & \textbackslash acron[key]\{UFRJ\}\{meaning\} & \doc & Registers an acronym; \texttt{\textbackslash sigla} uses it. \\
 \textbackslash tableofcontents & \textbackslash tableofcontents & \doc & The table of contents. Comes last of all the lists. \\
 \midrule
 

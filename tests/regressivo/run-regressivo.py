@@ -152,7 +152,7 @@ def um_teste(tex, manter):
         rodar(["biber", nome], AQUI)
     if d.get("MAKEINDEX", "").lower() in ("sim", "yes", "1"):
         ist = os.path.join(SRC, "coppe.ist")
-        for ext, saida in (("abx", "lab"), ("syx", "los")):
+        for ext, saida in (("abx", "lab"), ("syx", "los"), ("sgx", "lsg")):
             if os.path.exists(os.path.join(AQUI, nome + "." + ext)):
                 rodar(["makeindex", "-s", ist, "-o", nome + "." + saida,
                        nome + "." + ext], AQUI)
@@ -253,7 +253,7 @@ def um_teste(tex, manter):
 # O PDF fica, porque e ele que se olha quando um teste falha; o resto sai. Os
 # .pdf daqui NAO vao para o git: ver o .gitignore de tests/.
 RESTOS = ("aux bbl bcf blg idx ilg ind lab lof log lol loq lot los mw out "
-          "run.xml syx abx toc xmpdata glo gls").split()
+          "run.xml syx abx sgx lsg toc xmpdata glo gls").split()
 
 
 def limpar(nome):

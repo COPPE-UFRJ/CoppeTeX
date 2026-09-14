@@ -404,6 +404,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \newif\if@copperesorient \@copperesorienttrue
 \newif\if@coppelistastoc \@coppelistastocfalse
 \DeclareOption{listasnosumario}{\@coppelistastoctrue}
+\newif\if@coppesimbalfa \@coppesimbalfafalse
+\DeclareOption{simbolosalfabeticos}{\@coppesimbalfatrue}
 \newif\if@copperascunho \@copperascunhofalse
 \DeclareOption{rascunhoficha}{\@copperascunhotrue}
 \newif\if@coppetwoside \@coppetwosidefalse
@@ -509,6 +511,10 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \copperdefstring{english}  {producedby}   {Produced by}
 \copperdefstring{brazilian}{listabbreviation}{Lista de Abreviaturas e Siglas}
 \copperdefstring{english}  {listabbreviation}{List of Abbreviations and Acronyms}
+\copperdefstring{brazilian}{listabbreviationonly}{Lista de Abreviaturas}
+\copperdefstring{english}  {listabbreviationonly}{List of Abbreviations}
+\copperdefstring{brazilian}{listsigla}       {Lista de Siglas}
+\copperdefstring{english}  {listsigla}       {List of Acronyms}
 \copperdefstring{brazilian}{listsymbol}      {Lista de Símbolos}
 \copperdefstring{english}  {listsymbol}      {List of Symbols}
 \copperdefstring{brazilian}{glossary}        {Glossário}
@@ -1614,11 +1620,26 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \begingroup\@coppeglosspretrue
 \renewcommand\glossaryname{\listsymbolname}%
 \@input@{\jobname.los}\endgroup}
+\newcount\coppe@symcount
+\newcommand\coppe@symzeros[1]{%
+  \ifnum#1<10000 0\fi\ifnum#1<1000 0\fi\ifnum#1<100 0\fi\ifnum#1<10 0\fi
+  \number#1}
+\newcommand\coppe@symchave[1]{%
+  \expandafter\ifx\csname coppe@sym@\detokenize{#1}\endcsname\relax
+    \global\advance\coppe@symcount\@ne
+    \expandafter\xdef\csname coppe@sym@\detokenize{#1}\endcsname{%
+      \coppe@symzeros\coppe@symcount}%
+  \fi
+  \edef\@tempsymbl{\csname coppe@sym@\detokenize{#1}\endcsname=}}
 \def\makelosymbols{%
   \newwrite\@losfile
   \immediate\openout\@losfile=\jobname.syx
   \newcommand\symbl[3][]{\@bsphack\begingroup
-  \ifstrempty{##1}{\def\@tempsymbl{##2=}}{\def\@tempsymbl{##1=}}%
+  \if@coppesimbalfa
+    \ifstrempty{##1}{\def\@tempsymbl{##2=}}{\def\@tempsymbl{##1=}}%
+  \else
+    \coppe@symchave{##2}%
+  \fi
              \@sanitize%
              \@wrlos{\@tempsymbl}{##2}{##3}}\typeout%
   {Writing index of symbols file \jobname.syx}%
@@ -1651,12 +1672,37 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     {\string\indexentry{#1[#2] #3|coppe@semfolio}{\thepage}}%
   \endgroup%
   \@esphack}
+\newif\if@coppesiglas \@coppesiglasfalse
+\def\makelosiglas{%
+  \newwrite\@lsgfile
+  \immediate\openout\@lsgfile=\jobname.sgx
+  \global\@coppesiglastrue
+  \typeout{Writing index of acronyms file \jobname.sgx}%
+  \let\makelosiglas\@empty}
+\@onlypreamble\makelosiglas
+\newcommand\@wrsgx[3]{%
+  \protected@write\@lsgfile{}%
+    {\string\indexentry{#1[#2] #3|coppe@semfolio}{\thepage}}%
+  \endgroup
+  \@esphack}
+\newcommand\acron[3][]{%
+  \if@coppesiglas
+    \@bsphack\begingroup
+    \ifstrempty{#1}{\def\@tempsymbl{#2=}}{\def\@tempsymbl{#1=}}%
+    \@sanitize
+    \@wrsgx{\@tempsymbl}{#2}{#3}%
+  \else
+    \@ifundefined{abbrev}{}{\abbrev[#1]{#2}{#3}}%
+  \fi}
+\newcommand\printlosiglas{%
+\begingroup\@coppeglosspretrue
+\renewcommand\glossaryname{\listsiglaname}%
+\@input@{\jobname.lsg}\endgroup}
 \newcommand\newsigla[3]{%
   \@namedef{coppe@sigla@s@#1}{#2}%
   \@namedef{coppe@sigla@l@#1}{#3}}
 \newcommand\coppe@sigla@reg[1]{%
-  \@ifundefined{abbrev}{}%
-    {\abbrev{\@nameuse{coppe@sigla@s@#1}}{\@nameuse{coppe@sigla@l@#1}}}}
+  \acron{\@nameuse{coppe@sigla@s@#1}}{\@nameuse{coppe@sigla@l@#1}}}
 \newcommand\coppe@sigla@full[1]{%
   \@nameuse{coppe@sigla@l@#1}\space(\@nameuse{coppe@sigla@s@#1})}
 \newcommand\coppe@sigla@undef[1]{%
@@ -1767,7 +1813,10 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \columnsep 35\p@
   \let\item\@idxitem}
   {\if@restonecol\onecolumn\else\clearpage\fi}
-\newcommand\listabbreviationname{\coppemainstring{listabbreviation}}
+\newcommand\listabbreviationname{%
+  \if@coppesiglas\coppemainstring{listabbreviationonly}%
+  \else\coppemainstring{listabbreviation}\fi}
+\newcommand\listsiglaname{\coppemainstring{listsigla}}
 \newcommand\listsymbolname{\coppemainstring{listsymbol}}
 \newcommand\glossaryname{\coppemainstring{glossary}}
 \newcommand\local@advisorstring{Orientador}

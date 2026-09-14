@@ -48,7 +48,7 @@ PADRAO_LATEX = {
     "and", "appendixname", "cleardoublepage", "csname", "familydefault",
     "filedate", "filename", "fileversion", "footnoterule", "headrulewidth",
     "item", "numberline", "protect", "theFancyVerbLine", "glossaryname",
-    "listabbreviationname", "listsymbolname", "lstlistingname",
+    "listabbreviationname", "listsymbolname", "listsiglaname", "lstlistingname",
     "lstlistlistingname", "quadroname", "listquadroname",
     "quadroautorefname", "cpsourcename",
     # redefinidos localmente: \PackageWarning so durante o carregamento do

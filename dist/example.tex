@@ -33,6 +33,7 @@
 
 \makelosymbols
 \makeloabbreviations
+\makelosiglas
 \newcoppefloat{mapa}{Mapa}{Lista de Mapas}
 
 \begin{document}
@@ -149,7 +150,9 @@
   %  - \listofmapas ............ opcional; o Manual admite uma lista por tipo
   %    de ilustração (3.1.2.2.4), e \newcoppefloat cria o tipo;
   %  - \printloabbreviations ... opcional (3.1.2.2.6);
-  %  - \printlosymbols ......... opcional (3.1.2.2.7).
+  %  - \printlosiglas .......... opcional; a 3.1.2.2.6 recomenda separar as
+  %    siglas das abreviaturas (exige \makelosiglas no preâmbulo);
+  %  - \printlosymbols ......... opcional (3.1.2.2.7), na ordem de aparição.
   % Este exemplo imprime todas para mostrá-las. No seu trabalho, apague a linha
   % da lista que você não usa: deixada, ela sai como folha só com o título.
   \listoffigures
@@ -159,6 +162,7 @@
   \listofprogramas
   \listofalgorithms
   \printloabbreviations
+  \printlosiglas
   \printlosymbols
   \tableofcontents
 
@@ -1118,7 +1122,7 @@ use \verb|\href{https://exemplo.org}{texto}|. Evite digitar URLs como texto comu
   \section{Fluxos de escrita e o \texttt{morewrites}}
   \label{sec:morewrites}
 
-  O \hologo{pdfLaTeX} só consegue manter \textbf{dezesseis} arquivos abertos para escrita ao mesmo tempo, e cada lista que o trabalho imprime ocupa um deles até o fim da compilação: o sumário, a lista de figuras, a de tabelas, a de quadros, a de programas, a de algoritmos, cada flutuante novo criado com \verb|\newcoppefloat|, a lista de símbolos, a de abreviaturas, o índice remissivo, cada índice a mais e o glossário. Este exemplo, sozinho, usa os dezesseis.
+  O \hologo{pdfLaTeX} só consegue manter \textbf{dezesseis} arquivos abertos para escrita ao mesmo tempo, e cada lista que o trabalho imprime ocupa um deles até o fim da compilação: o sumário, a lista de figuras, a de tabelas, a de quadros, a de programas, a de algoritmos, cada flutuante novo criado com \verb|\newcoppefloat|, a lista de símbolos, a de abreviaturas, a de siglas, o índice remissivo, cada índice a mais e o glossário. Este exemplo, sozinho, passa dos dezesseis.
 
   Por isso a classe carrega o pacote \verb|morewrites|, que tira esse teto. Ele custa cerca de meio segundo por passada do \hologo{pdfLaTeX}. Quando o tempo de compilação importa --- no plano gratuito do Overleaf, por exemplo ---, a opção \verb|semmorewrites| o desliga:
   \begin{verbatim}
@@ -1126,7 +1130,7 @@ use \verb|\href{https://exemplo.org}{texto}|. Evite digitar URLs como texto comu
   \end{verbatim}
 
   \begin{itemize}
-    \item \textbf{Pode desligar} se o trabalho \emph{não} tem índice remissivo, nem vários índices (\verb|imakeidx|, \verb|splitidx|), nem glossário, nem nomenclatura, e não soma listas além das deste exemplo.
+    \item \textbf{Pode desligar} se o trabalho \emph{não} tem índice remissivo, nem vários índices (\verb|imakeidx|, \verb|splitidx|), nem glossário, nem nomenclatura, e tem menos listas que este exemplo, que já precisa do pacote.
     \item \textbf{Deve desligar} se o \verb|morewrites| brigar com outro pacote, o que é raro: ele guarda o que é escrito até a página sair, e um pacote que escreve um arquivo e o lê de volta na mesma passada pode se perder.
     \item \textbf{Não desligue} se o trabalho tem índice remissivo e glossário, ou vários índices: é para isso que o pacote está ali.
   \end{itemize}
@@ -1138,7 +1142,7 @@ use \verb|\href{https://exemplo.org}{texto}|. Evite digitar URLs como texto comu
 
   \section{Algumas Demonstrações}
 
-  A  Lista de Símbolos precisa usar comandos específicos. Aqui vamos usar os símbolos $\alpha$ e $\beta$.
+  A Lista de Símbolos sai na ordem em que cada símbolo aparece pela primeira vez no texto, como pede a seção 3.1.2.2.7 do Manual. Aqui vamos usar os símbolos $\alpha$ e $\beta$. A chave entre colchetes só vale com a opção de classe \verb|simbolosalfabeticos|, que ordena a lista alfabeticamente; sem ela, é ignorada.
   \symbl[beta]{Beta}{A palavra Beta more e corrigida}
   \symbl[zzbeta]{$\beta$}{A letra $\beta$ corrigida}
   \symbl{beta}{A palavra beta}
@@ -1147,7 +1151,7 @@ use \verb|\href{https://exemplo.org}{texto}|. Evite digitar URLs como texto comu
   \symbl[zzalpha]{$\alpha$}{A letra $\alpha$ corrigida}
   \symbl[marco]{Marco}{A palavra Marco corrigida}
 
-  A Lista de Abreviações segue, a partir de 2024, a mesma regra, e aqui seguem alguns exemplos.
+  A Lista de Abreviaturas é alfabética, e nela a chave entre colchetes decide a posição de siglas de caixa mista. Alguns exemplos:
   \abbrev{GoT}{Game of Thrones}
   \abbrev[GOT]{GoT}{Game of Thrones ordenado como GOT}
   \abbrev[iot]{IoT}{IoT ordenado como iot}
@@ -1159,7 +1163,7 @@ use \verb|\href{https://exemplo.org}{texto}|. Evite digitar URLs como texto comu
   \newsigla{ufrj}{UFRJ}{Universidade Federal do Rio de Janeiro}
   \newsigla{cpgp}{CPGP}{Comissão de Pós-Graduação e Pesquisa de Engenharia}
 
-  As siglas (manual2024, seção 2.8) são expandidas na primeira ocorrência e registradas automaticamente na lista. Declaradas com \verb|\newsigla|, basta usá-las: a \sigla{ufrj} oferece vários cursos de pós-graduação, e este programa segue as normas da \sigla{cpgp}. Em menções seguintes aparecem apenas as siglas, como \sigla{ufrj} e \sigla{cpgp}; use \verb|\sigla*| para forçar a forma extensa.
+  As siglas (Manual, seção 2.8) são expandidas na primeira ocorrência e registradas automaticamente na Lista de Siglas, que este exemplo mantém separada da de abreviaturas com \verb|\makelosiglas|. Uma sigla que não se usa com \verb|\sigla| entra na lista com \verb|\acron|, que não imprime nada no texto: é assim que a ABNT, citada neste capítulo sem \verb|\sigla|, está na lista.\acron{ABNT}{Associação Brasileira de Normas Técnicas} Declaradas com \verb|\newsigla|, basta usá-las: a \sigla{ufrj} oferece vários cursos de pós-graduação, e este programa segue as normas da \sigla{cpgp}. Em menções seguintes aparecem apenas as siglas, como \sigla{ufrj} e \sigla{cpgp}; use \verb|\sigla*| para forçar a forma extensa.
 
   \chapter{Conclusões}
 

@@ -1,0 +1,16 @@
+
+\begin{theglossary}
+  \makeatletter
+  \item [ABNT] Associação Brasileira de Normas Técnicas
+		\coppe@semfolio{51}
+
+  \indexspace
+
+  \item [CPGP] Comissão de Pós-Graduação e Pesquisa de Engenharia
+		\coppe@semfolio{51}
+
+  \indexspace
+
+  \item [UFRJ] Universidade Federal do Rio de Janeiro
+		\coppe@semfolio{51}
+  \end{theglossary}

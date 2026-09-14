@@ -75,6 +75,8 @@
 \copperdefstring{italian}{directedby}      {Regia di}
 \copperdefstring{italian}{producedby}      {Prodotto da}
 \copperdefstring{italian}{listabbreviation}{Elenco di abbreviazioni e sigle}
+\copperdefstring{italian}{listabbreviationonly}{Elenco delle abbreviazioni}
+\copperdefstring{italian}{listsigla}       {Elenco delle sigle}
 \copperdefstring{italian}{listsymbol}      {Elenco dei simboli}
 \copperdefstring{italian}{glossary}        {Glossario}
 \copperdefstring{italian}{advisor}         {Relatore}

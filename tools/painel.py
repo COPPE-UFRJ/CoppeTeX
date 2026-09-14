@@ -112,7 +112,7 @@ PARA_DIST = [
 
 # Restos de compilacao. O .pdf nunca entra nesta lista: e o produto.
 RESTOS = """aux bbl bcf blg fdb_latexmk fls glo gls idx ilg ind lab loa lof
-lol lomapa loq los lot mw out run.xml syx toc xmpdata xmpi synctex.gz""".split()
+lol lomapa loq los lot lsg mw out run.xml sgx syx toc xmpdata xmpi synctex.gz""".split()
 
 
 # --------------------------------------------------------------------------

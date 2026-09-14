@@ -37,17 +37,9 @@ a classe; não falta documento normativo.
 - **Tornar `pdfa` o padrão da classe?** O `example.tex` já compila com ela, é
   PDF/A-2b conforme pelo veraPDF e o custo de tempo é desprezível. Falta decidir
   se a classe liga por padrão, com uma opção `sempdfa` para desligar.
-- **`example_pdfa.tex` ficou redundante.** Ele é o `example.tex` com `pdfa`, e o
-  `example.tex` agora já tem `pdfa`. Decidir se sai da geração, do
-  `build-check.ps1`, da prova e da lista do `dist/`.
 - **Palavras-chave no dicionário de informação do PDF sob `pdfa`.** Com a opção,
   `pdfinfo` mostra título, autor e assunto, mas não *Keywords* (sem a opção,
   mostra). Conferir se elas estão no XMP e, se não estiverem, fazê-las chegar.
-- **Lista de símbolos: ordem.** A 3.1.2.2.7 do Manual pede a lista "de acordo
-  com a ordem que aparece no texto"; a classe ordena alfabeticamente (com chave
-  de ordenação opcional). Decidir se muda o padrão ou se oferece as duas.
-- **Abreviaturas e siglas em listas separadas.** A 3.1.2.2.6 recomenda listas
-  separadas; a classe as reúne numa só. Avaliar uma opção que as separe.
 
 ## 4. Higiene do repositório
 

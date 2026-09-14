@@ -38,7 +38,7 @@ coppetex.bat --ajuda
 
 | Opção | O que faz |
 |---|---|
-| `--regerar` | Roda o `coppe.ins`: a classe, os estilos BibLaTeX, os pacotes de idioma, as bases `.bib`, os cinco exemplos por idioma, o `example_pdfa`, a montagem das capas e o `latexmkrc` saem todos do `src/coppe.dtx`. É rápido, e é o primeiro passo de qualquer coisa. |
+| `--regerar` | Roda o `coppe.ins`: a classe, os estilos BibLaTeX, os pacotes de idioma, as bases `.bib`, os cinco exemplos por idioma, a montagem das capas e o `latexmkrc` saem todos do `src/coppe.dtx`. É rápido, e é o primeiro passo de qualquer coisa. |
 | `--docs` | Compila os PDFs da entrega: o manual da classe (`coppe.pdf`), o guia rápido em inglês, o exemplo completo, os cinco exemplos por idioma, o manual da norma (`manual.pdf`), a Norma COPPE e a folha de capas. |
 | `--testes` | A **primeira camada**: a suíte de `tests/`. Pergunta *a classe compila?* |
 | `--adversativo` | A **segunda camada**: os seis documentos de `tests/adversativa/`, que acionam tudo ao mesmo tempo, nos dois motores, validados pelo veraPDF. |

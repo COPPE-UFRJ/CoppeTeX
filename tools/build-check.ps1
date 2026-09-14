@@ -19,7 +19,7 @@
     tests    - class + a suíte tests/run-tests.ps1
     docs     - class + coppe.pdf (manual), NORMA_COPPE_2026.pdf,
                manual.pdf e covers_5languages.pdf
-    pdfa     - class + example_pdfa.tex, tests/test_pdfa.tex e
+    pdfa     - class + example.tex (que ja usa pdfa), tests/test_pdfa.tex e
                tests/test_comserifa.tex, e passa os tres
                pelo veraPDF no perfil 2b. Precisa do veraPDF instalado (o
                script procura em %USERPROFILE%\verapdf e no PATH); sem ele o
@@ -161,6 +161,9 @@ function Build-Tex {
     if (Test-Path (Join-Path $Dir "$Stem.syx")) {
         Invoke-Step "$Stem-los" $Dir { & makeindex -s (Join-Path $script:src "coppe.ist") -o "$Stem.los" "$Stem.syx" }
     }
+    if (Test-Path (Join-Path $Dir "$Stem.sgx")) {
+        Invoke-Step "$Stem-lsg" $Dir { & makeindex -s (Join-Path $script:src "coppe.ist") -o "$Stem.lsg" "$Stem.sgx" }
+    }
     Invoke-Step "$Stem-2" $Dir { & pdflatex -interaction=nonstopmode -halt-on-error "$Stem.tex" }
 
     # Tres passadas bastam para referencia cruzada, e NAO bastam quando o
@@ -269,7 +272,7 @@ Add-Line ""
 
 # 1. Regenerar TUDO a partir do .dtx -- sempre, porque tudo depende disso.
 # O coppe.ins gera a classe, os estilos biblatex, os pacotes de idioma, as
-# bases .bib, os exemplos nos cinco idiomas, o example_pdfa, a montagem das
+# bases .bib, os exemplos nos cinco idiomas, a montagem das
 # capas, a suite de testes e o latexmkrc.
 Invoke-Step "coppe.ins" $src { & pdflatex -interaction=nonstopmode coppe.ins }
 
@@ -388,6 +391,9 @@ if ($Scope -in @("adversativa", "all")) {
         # estilo coppe.ist; o indice remissivo, pelo makeindex padrao
         Invoke-Step "$stem-lab" $advDir { & makeindex -s (Join-Path $src "coppe.ist") -o "$stem.lab" "$stem.abx" }
         Invoke-Step "$stem-los" $advDir { & makeindex -s (Join-Path $src "coppe.ist") -o "$stem.los" "$stem.syx" }
+        if (Test-Path (Join-Path $advDir "$stem.sgx")) {
+            Invoke-Step "$stem-lsg" $advDir { & makeindex -s (Join-Path $src "coppe.ist") -o "$stem.lsg" "$stem.sgx" }
+        }
         Invoke-Step "$stem-idx" $advDir { & makeindex "$stem.idx" }
         Invoke-Step "$stem-2"    $advDir { & pdflatex -interaction=nonstopmode -halt-on-error "$stem.tex" }
         Invoke-Step "$stem-3"    $advDir { & pdflatex -interaction=nonstopmode -halt-on-error "$stem.tex" }
@@ -405,6 +411,9 @@ if ($Scope -in @("adversativa", "all")) {
             Invoke-Step "$lj-biber" $advDir { & biber $lj }
             Invoke-Step "$lj-lab"   $advDir { & makeindex -s (Join-Path $src "coppe.ist") -o "$lj.lab" "$lj.abx" }
             Invoke-Step "$lj-los"   $advDir { & makeindex -s (Join-Path $src "coppe.ist") -o "$lj.los" "$lj.syx" }
+            if (Test-Path (Join-Path $advDir "$lj.sgx")) {
+                Invoke-Step "$lj-lsg" $advDir { & makeindex -s (Join-Path $src "coppe.ist") -o "$lj.lsg" "$lj.sgx" }
+            }
             Invoke-Step "$lj-idx"   $advDir { & makeindex "$lj.idx" }
             Invoke-Step "$lj-2"     $advDir { & lualatex -interaction=nonstopmode -halt-on-error -jobname $lj "$stem.tex" }
             Invoke-Step "$lj-3"     $advDir { & lualatex -interaction=nonstopmode -halt-on-error -jobname $lj "$stem.tex" }
@@ -420,7 +429,9 @@ if ($Scope -in @("pdfa", "all")) {
     # (bibliografia, listas, figuras, tcolorbox -- transparencia) e o teste
     # curto das paginas pre-textuais. Validar so o curto nao diria nada sobre o
     # que vai para o deposito.
-    Build-Tex -Stem "example_pdfa" -Dir $src     -WithBiber
+    # O example.tex ja compila com a opcao pdfa (#99); no escopo all ele ja
+    # saiu no passo "example", e compila-lo de novo so gastaria tempo.
+    if ($Scope -eq "pdfa") { Build-Tex -Stem "example" -Dir $src -WithBiber }
     Build-Tex -Stem "test_pdfa"    -Dir $testDir -WithBiber
     # A opcao `comserifa' volta o documento para a familia serifada. A pergunta que
     # interessa nao e se compila -- e se o documento com serifa continua sendo
@@ -448,7 +459,7 @@ if ($Scope -in @("pdfa", "all")) {
         Add-Line ""
         Add-Line "veraPDF: $vera"
         $veraTargets = @(
-            @{ Stem = "example_pdfa";   Dir = $src },
+            @{ Stem = "example";        Dir = $src },
             @{ Stem = "test_pdfa";      Dir = $testDir },
             @{ Stem = "test_comserifa"; Dir = $testDir })
         # todo documento adversativo e compilado com a opcao pdfa: se algum

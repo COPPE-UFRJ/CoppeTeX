@@ -77,6 +77,8 @@
 \copperdefstring{spanish}{directedby}      {Dirección}
 \copperdefstring{spanish}{producedby}      {Producción}
 \copperdefstring{spanish}{listabbreviation}{Lista de Abreviaturas y Siglas}
+\copperdefstring{spanish}{listabbreviationonly}{Lista de Abreviaturas}
+\copperdefstring{spanish}{listsigla}       {Lista de Siglas}
 \copperdefstring{spanish}{listsymbol}      {Lista de Símbolos}
 \copperdefstring{spanish}{glossary}        {Glosario}
 \copperdefstring{spanish}{advisor}         {Director}

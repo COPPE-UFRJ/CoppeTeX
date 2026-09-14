@@ -515,6 +515,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \begin{verbatim}
 %   makeindex -s coppe.ist -o minha-tese.lab minha-tese.abx
 %   makeindex -s coppe.ist -o minha-tese.los minha-tese.syx
+%   makeindex -s coppe.ist -o minha-tese.lsg minha-tese.sgx
 %   makeindex minha-tese.idx
 % \end{verbatim}
 %
@@ -795,6 +796,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \emph{Links} & coloridos & \texttt{semlinks} \\
 % Folhas pré-textuais & contadas, não numeradas & \texttt{numeraisromanos} \\
 % Listas no sumário & fora dele & \texttt{listasnosumario} \\
+% Lista de símbolos & ordem de aparição & \texttt{simbolosalfabeticos} \\
 % Orientador na banca & fora dela & \texttt{orientadorexamina} \\
 % Coorientador no resumo & fora dele & \texttt{coorientador} \\
 % Referência no resumo & \textbf{impressa} & \texttt{resumosemreferencia} \\
@@ -921,6 +923,11 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %   \item[\texttt{listasnosumario}] \textbf{Desligada por padrão}: as listas
 %     pré-textuais ficam \emph{fora} do sumário, como na 3.1.2.1.6. Ligue-a
 %     para devolvê-las a ele.
+%   \item[\texttt{simbolosalfabeticos}] \textbf{Desligada por padrão}: a lista
+%     de símbolos sai na \textbf{ordem em que cada símbolo aparece pela
+%     primeira vez no texto}, como pede a 3.1.2.2.7. Ligue-a para ordenar em
+%     ordem alfabética, pela chave opcional de |\symbl|, como a classe fazia
+%     antes. Veja a seção~\ref{sec:siglas}.
 %   \item[\texttt{assinaturas}] Aceita e \textbf{sem efeito} desde a v4.1. Punha
 %     uma régua de assinatura acima de cada membro da banca; com a entrega só
 %     digital não há o que assinar à mão. A classe avisa quando ela é
@@ -1033,7 +1040,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % Núcleo do \LaTeX\ (|.aux| e dois internos) & 3 \\
 % A classe e os pacotes que ela carrega (|biblatex|, |hyperref|\dots) & 3 \\
 % |tcolorbox|, se você o carrega & 1 \\
-% Lista de símbolos e lista de abreviaturas, uma cada & 2 \\
+% Lista de símbolos, de abreviaturas e de siglas, uma cada & 1 cada \\
 % |.out| do |hyperref| (os marcadores do PDF) & 1 \\
 % Sumário e cada lista impressa (figuras, tabelas, quadros, programas,
 %   algoritmos) & 1 cada \\
@@ -1045,9 +1052,9 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \end{tabular}
 % \end{center}
 %
-% O |example.tex| sozinho usa \textbf{os dezesseis}: três listas próprias do
-% exemplo (símbolos, abreviaturas e mapas) mais as seis de sempre. Um índice
-% remissivo a mais, e ele não compilaria sem o |morewrites|. O documento de prova
+% O |example.tex| sozinho \textbf{passa dos dezesseis}: quatro listas próprias
+% do exemplo (símbolos, abreviaturas, siglas e mapas) mais as seis de sempre.
+% Com a lista de siglas separada, ele deixou de compilar sem o |morewrites|. O documento de prova
 % |adv_dsc_pt|, que tem índice remissivo e glossário, para com o erro da classe
 % ``Acabaram os 16 fluxos de escrita do \TeX''.
 %
@@ -1064,8 +1071,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %
 % \textbf{Pode desligar} (|semmorewrites|) quando o trabalho cabe nos
 % dezesseis fluxos, ou seja, quando \textbf{não tem índice remissivo, nem mais de
-% um índice, nem glossário, nem nomenclatura}, e não soma listas além das do
-% exemplo. O ganho é o meio segundo por passada, que conta no plano gratuito do
+% um índice, nem glossário, nem nomenclatura}, e não soma tantas listas quanto
+% o exemplo. O ganho é o meio segundo por passada, que conta no plano gratuito do
 % Overleaf, onde o tempo de compilação é limitado. Se passar do limite, a classe
 % não deixa o erro chegar calado: para com a mensagem ``Acabaram os 16 fluxos de
 % escrita do \TeX'', que diz o que fazer. Aí é só tirar o |semmorewrites|.
@@ -1096,9 +1103,12 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %
 % \DescribeMacro{\makelosymbols}
 % \DescribeMacro{\makeloabbreviations}
-% Ligam a coleta da lista de símbolos e da lista de abreviaturas e siglas. Sem
-% eles, |\symbl| e |\abbrev| não registram nada e as listas saem vazias. Vão
-% no preâmbulo, uma vez cada.
+% \DescribeMacro{\makelosiglas}
+% Ligam a coleta da lista de símbolos, da lista de abreviaturas e da lista de
+% siglas. Sem eles, |\symbl|, |\abbrev| e |\acron| não registram nada e as
+% listas saem vazias. Vão no preâmbulo, uma vez cada. |\makelosiglas| é
+% opcional: sem ele, as siglas entram na lista de abreviaturas, que se chama
+% então ``Lista de Abreviaturas e Siglas''.
 %
 % \DescribeMacro{\newcoppefloat}
 % |\newcoppefloat{ambiente}{Nome}{Título da lista}| cria um flutuante seu, com
@@ -1380,6 +1390,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \DescribeMacro{\listofprogramas}
 % \DescribeMacro{\listofalgorithms}
 % \DescribeMacro{\printloabbreviations}
+% \DescribeMacro{\printlosiglas}
 % \DescribeMacro{\printlosymbols}
 % A ordem que a 3.1.2.1.6 pede é esta: as listas primeiro, o sumário por
 % último. As listas \textbf{não} entram no sumário, a não ser com a opção
@@ -1402,7 +1413,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % Lista de programas & |\listofprogramas| & COPPE: se houver programa (§10) \\
 % Lista de algoritmos & |\listofalgorithms| & COPPE: se houver algoritmo (§10) \\
 % Lista de outro tipo de ilustração & |\listof...| (|\newcoppefloat|) & opcional (3.1.2.2.4) \\
-% Lista de abreviaturas e siglas & |\printloabbreviations| & opcional (3.1.2.2.6) \\
+% Lista de abreviaturas (e siglas) & |\printloabbreviations| & opcional (3.1.2.2.6) \\
+% Lista de siglas, separada & |\printlosiglas| & opcional; recomendada (3.1.2.2.6) \\
 % Lista de símbolos & |\printlosymbols| & opcional (3.1.2.2.7) \\
 % \hline
 % \end{tabular}
@@ -1501,12 +1513,30 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \section{Siglas, símbolos e abreviaturas}\label{sec:siglas}
 %
 % \DescribeMacro{\abbrev}
+% \DescribeMacro{\acron}
 % \DescribeMacro{\symbl}
-% |\abbrev{sigla}{significado}| e |\symbl{símbolo}{significado}| registram uma
-% entrada na lista correspondente, no ponto do texto em que você a escreve.
-% Exigem |\makeloabbreviations| e |\makelosymbols| no preâmbulo.
+% |\abbrev{abreviatura}{significado}|, |\acron{sigla}{significado}| e
+% |\symbl{símbolo}{significado}| registram uma entrada na lista correspondente,
+% no ponto do texto em que você a escreve. Exigem |\makeloabbreviations|,
+% |\makelosiglas| e |\makelosymbols| no preâmbulo.
 %
-% O argumento opcional é a \textbf{chave de ordenação}, e é o que resolve
+% \textbf{Abreviaturas e siglas, juntas ou separadas.} A 3.1.2.2.6 do Manual
+% recomenda listas separadas. Com |\makelosiglas| no preâmbulo e
+% |\printlosiglas| entre as listas, as siglas --- as de |\acron| e as de
+% |\sigla| --- vão para a ``Lista de Siglas'', e a outra passa a se chamar
+% ``Lista de Abreviaturas''. Sem |\makelosiglas|, |\acron| manda a sigla para a
+% lista de abreviaturas, que continua ``de Abreviaturas e Siglas'': um trabalho
+% escrito antes não perde nada.
+%
+% \textbf{Símbolos na ordem de aparição.} A 3.1.2.2.7 pede a lista de símbolos
+% ``de acordo com a ordem que aparece no texto'', e é assim que ela sai: cada
+% símbolo na posição da primeira vez em que é registrado. Registrar o mesmo
+% símbolo de novo não o repete na lista. A opção |simbolosalfabeticos| volta à
+% ordem alfabética.
+%
+% O argumento opcional é a \textbf{chave de ordenação} das listas em ordem
+% alfabética --- abreviaturas, siglas e, com |simbolosalfabeticos|, símbolos
+% (na ordem de aparição ela é ignorada) ---, e é o que resolve
 % o problema das siglas de caixa mista. O |makeindex| ordena por código de
 % caractere, de modo que toda maiúscula vem antes de toda minúscula e |IoT|,
 % |eMBB| e |uRLLC| caem fora do alfabeto. Com a chave, caem no lugar:
@@ -1516,9 +1546,9 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %   \abbrev[EMBB]{eMBB}{enhanced Mobile Broadband}
 % \end{verbatim}
 %
-% As duas listas saem \textbf{sem número de página} e sem pontilhado: a 4.1.1
-% as descreve como relação alfabética do termo e do seu significado, e
-% não pede localização.
+% As listas saem \textbf{sem número de página} e sem pontilhado: a 4.1.1
+% as descreve como relação do termo e do seu significado, e não pede
+% localização.
 %
 % \DescribeMacro{\newsigla}
 % \DescribeMacro{\sigla}
@@ -2045,6 +2075,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %     |coppe.cls| já preenche para |brazilian| e |english|: |appendix|, |annex|,
 %     |frame|, |listframe|, |source|, |program|, |listprogram|, |references|,
 %     |in:|, |art|, |platform|, |directedby|, |producedby|, |listabbreviation|,
+%     |listabbreviationonly|, |listsigla|,
 %     |listsymbol|, |glossary|, |advisor|, |advisors|, |coadvisor|, |coadvisors|,
 %     |dept|, |approvedmale|, |approvedfemale|, |approvedonmale|,
 %     |approvedonfemale|, |keywordsname|, |volumename|, |ofname|, |researchline|,
@@ -2179,46 +2210,46 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % Base de referências        & |\addbibresource|       & 31 \\
 % Coleta da lista de símbolos& |\makelosymbols|        & 34 \\
 % Coleta das abreviaturas      & |\makeloabbreviations|  & 35 \\
-% Flutuante criado pelo autor  & |\newcoppefloat|        & 36 \\
-% Título                     & |\title|                & 39 \\
-% Título no estrangeiro      & |\foreigntitle|         & 40 \\
-% Autor                        & |\author|               & 41 \\
-% Orientação              & |\advisor|              & 45 \\
-% Coorientação            & |\coadvisor|            & 53 \\
-% Banca                        & |\examiner|             & 59 \\
-% Programa                     & |\department|           & 66 \\
-% Data do depósito           & |\date|                 & 67 \\
-% Data da defesa               & |\dataaprovacao|        & 70 \\
-% Palavras-chave               & |\keyword|              & 76 \\
-% Área de concentração  & |\areaconcentracao|     & 82 \\
-% Linha de pesquisa            & |\linhapesquisa|        & 83 \\
-% Coleta CAPES                 & |\tipoproducao|         & 84 \\
-% Projeto vinculado            & |\projetovinculado|     & 85 \\
-% Nome do projeto              & |\nomeprojeto|          & 86 \\
-% Agência de fomento         & |\agenciafomento|       & 87 \\
-% Ficha catalográfica        & |\fichacatalografica|   & 93 \\
-% Capa e folha de rosto        & |\maketitle|            & 95 \\
-% Parte pré-textual          & |\frontmatter|          & 97 \\
-% Dedicatória                & |\dedication|           & 98 \\
+% Flutuante criado pelo autor  & |\newcoppefloat|        & 37 \\
+% Título                     & |\title|                & 40 \\
+% Título no estrangeiro      & |\foreigntitle|         & 41 \\
+% Autor                        & |\author|               & 42 \\
+% Orientação              & |\advisor|              & 46 \\
+% Coorientação            & |\coadvisor|            & 54 \\
+% Banca                        & |\examiner|             & 60 \\
+% Programa                     & |\department|           & 67 \\
+% Data do depósito           & |\date|                 & 68 \\
+% Data da defesa               & |\dataaprovacao|        & 71 \\
+% Palavras-chave               & |\keyword|              & 77 \\
+% Área de concentração  & |\areaconcentracao|     & 83 \\
+% Linha de pesquisa            & |\linhapesquisa|        & 84 \\
+% Coleta CAPES                 & |\tipoproducao|         & 85 \\
+% Projeto vinculado            & |\projetovinculado|     & 86 \\
+% Nome do projeto              & |\nomeprojeto|          & 87 \\
+% Agência de fomento         & |\agenciafomento|       & 88 \\
+% Ficha catalográfica        & |\fichacatalografica|   & 94 \\
+% Capa e folha de rosto        & |\maketitle|            & 96 \\
+% Parte pré-textual          & |\frontmatter|          & 98 \\
+% Dedicatória                & |\dedication|           & 99 \\
 % Resumo                       & |abstract|              & 112 \\
 % Abstract                     & |foreignabstract|       & 128 \\
 % Listas pré-textuais        & |\listoffigures| \dots  & 146 \\
-% Sumário                    & |\tableofcontents|      & 143 \\
-% Parte textual                & |\mainmatter|           & 165 \\
-% Símbolo                    & |\symbl|                & 233 \\
+% Sumário                    & |\tableofcontents|      & 144 \\
+% Parte textual                & |\mainmatter|           & 169 \\
+% Símbolo                    & |\symbl|                & 237 \\
 % Citação longa           & |longquote|             & 236 \\
-% Fonte da ilustração     & |\fonte|                & 321 \\
+% Fonte da ilustração     & |\fonte|                & 325 \\
 % Quadro                       & |quadro|                & 300 \\
-% Bibliografia                 & |\printbibliography|    & 805 \\
-% Código no texto            & |\pythoninline|         & 953 \\
-% Código Java no texto       & |\javainline|           & 970 \\
-% Sigla declarada              & |\newsigla|             & 1159 \\
-% Sigla usada                  & |\sigla|                & 1162 \\
-% Abreviatura                  & |\abbrev|               & 1151 \\
-% Parte pós-textual          & |\backmatter|           & 1166 \\
-% Apêndices                  & |\appendix|             & 1176 \\
-% Anexos                       & |\annex|                & 1186 \\
-% Colófon                    & |\coppetexfinalpage|    & 1197 \\
+% Bibliografia                 & |\printbibliography|    & 809 \\
+% Código no texto            & |\pythoninline|         & 957 \\
+% Código Java no texto       & |\javainline|           & 974 \\
+% Sigla declarada              & |\newsigla|             & 1163 \\
+% Sigla usada                  & |\sigla|                & 1166 \\
+% Abreviatura                  & |\abbrev|               & 1155 \\
+% Parte pós-textual          & |\backmatter|           & 1170 \\
+% Apêndices                  & |\appendix|             & 1180 \\
+% Anexos                       & |\annex|                & 1190 \\
+% Colófon                    & |\coppetexfinalpage|    & 1201 \\
 % \end{tabular}
 % \end{center}
 %
@@ -2754,6 +2785,7 @@ coorientador & [dsc,coorientador] & \pre & List coadvisors on the abstract pages
 rascunhoficha & [dsc,rascunhoficha] & \pre & Draft catalogue card while writing. \textbf{Never valid for deposit.} \\
 resumosemreferencia & [dsc,resumosemreferencia] & \pre & Drop the work's own reference from the top of the three abstracts. It is printed by default (3.1.2.1.4, Annexes E and F). \\
 listasnosumario & [dsc,listasnosumario] & \pre & Put the pre-textual lists back in the table of contents. \\
+simbolosalfabeticos & [dsc,simbolosalfabeticos] & \pre & List of symbols in alphabetical order instead of order of appearance. \\
 assinaturas & ---           & \pre & Accepted, does nothing. Signature rules are gone: deposit is digital. \\
 numeraisromanos & [dsc,numeraisromanos] & \pre & Roman numerals on pre-textual sheets. \textbf{Against 2.7}; legacy only. \\
 morewrites & [dsc,morewrites] & \pre & A missing \texttt{morewrites} package becomes an error, not a warning. \\
@@ -2764,6 +2796,7 @@ semmorewrites & [dsc,semmorewrites] & \pre & Do not load \texttt{morewrites}. Sa
 \textbackslash addbibresource & \textbackslash addbibresource\{thesis.bib\} & \pre & Declare the bibliography database. With the \texttt{.bib} extension. \\
 \textbackslash makelosymbols & \textbackslash makelosymbols & \pre & Turn on collection of the list of symbols. Without it, \texttt{\textbackslash symbl} records nothing. \\
 \textbackslash makeloabbreviations & \textbackslash makeloabbreviations & \pre & Same for the list of abbreviations. \\
+\textbackslash makelosiglas & \textbackslash makelosiglas & \pre & Separate list of acronyms (recommended by 3.1.2.2.6). Without it, acronyms go to the list of abbreviations. \\
 \textbackslash newcoppefloat & \textbackslash newcoppefloat\{map\}\{Map\}\{List of Maps\} & \pre & Declare your own float: caption on top, \texttt{\textbackslash source} below, own list. \\
 \textbackslash newsigla & \textbackslash newsigla\{ufrj\}\{UFRJ\}\{Universidade Federal...\} & \pre & Declare an acronym for \texttt{\textbackslash sigla}. \\
 \textbackslash usecoppelanguage & \textbackslash usecoppelanguage\{french\} & \pre & Load one more language pack, for quotations in a third language. \\
@@ -2829,7 +2862,9 @@ brazilianabstract & \textbackslash begin\{brazilianabstract\} ... & \doc & Third
 \textbackslash listofprogramas & \textbackslash listofprogramas & \doc & List of code listings. \\
 \textbackslash listofalgorithms & \textbackslash listofalgorithms & \doc & List of algorithms. \\
 \textbackslash printloabbreviations & \textbackslash printloabbreviations & \doc & List of abbreviations and acronyms. No page numbers (4.1.1). \\
-\textbackslash printlosymbols & \textbackslash printlosymbols & \doc & List of symbols. Likewise. \\
+\textbackslash printlosiglas & \textbackslash printlosiglas & \doc & List of acronyms, when \texttt{\textbackslash makelosiglas} is on. \\
+\textbackslash printlosymbols & \textbackslash printlosymbols & \doc & List of symbols, in order of first appearance (3.1.2.2.7). \\
+\textbackslash acron & \textbackslash acron[key]\{UFRJ\}\{meaning\} & \doc & Registers an acronym; \texttt{\textbackslash sigla} uses it. \\
 \textbackslash tableofcontents & \textbackslash tableofcontents & \doc & The table of contents. Comes last of all the lists. \\
 \midrule
 
@@ -2896,8 +2931,9 @@ Problems: \url{https://github.com/COPPE-UFRJ/CoppeTeX/issues}
 %    "O arquivo de depósito: PDF/A", no capítulo de regras da COPPE.
 %  - semmorewrites: não carrega o pacote morewrites. Compila meio segundo mais
 %    rápido por passada, mas só serve a trabalho SEM índice remissivo, sem
-%    vários índices e sem glossário -- este exemplo já usa os 16 fluxos de
-%    escrita do pdfLaTeX. Ver o capítulo "Truques de LaTeX".
+%    vários índices e sem glossário, e com menos listas que este exemplo, que
+%    passa dos 16 fluxos de escrita do pdfLaTeX e precisa do pacote. Ver o
+%    capítulo "Truques de LaTeX".
 
 \usepackage{rotating}        % rodando coisas, como tabelas
 \usepackage[most]{tcolorbox} % caixas de texto
@@ -2929,6 +2965,9 @@ Problems: \url{https://github.com/COPPE-UFRJ/CoppeTeX/issues}
 
 \makelosymbols
 \makeloabbreviations
+% Lista de siglas separada da de abreviaturas, como recomenda a 3.1.2.2.6 do
+% Manual. Sem esta linha, as siglas entram na lista de abreviaturas.
+\makelosiglas
 % Flutuante criado pelo autor: mesma regra dos demais (legenda acima, fonte
 % abaixo) e uma lista propria, \listofmapas.
 \newcoppefloat{mapa}{Mapa}{Lista de Mapas}
@@ -3054,7 +3093,9 @@ Problems: \url{https://github.com/COPPE-UFRJ/CoppeTeX/issues}
   %  - \listofmapas ............ opcional; o Manual admite uma lista por tipo
   %    de ilustração (3.1.2.2.4), e \newcoppefloat cria o tipo;
   %  - \printloabbreviations ... opcional (3.1.2.2.6);
-  %  - \printlosymbols ......... opcional (3.1.2.2.7).
+  %  - \printlosiglas .......... opcional; a 3.1.2.2.6 recomenda separar as
+  %    siglas das abreviaturas (exige \makelosiglas no preâmbulo);
+  %  - \printlosymbols ......... opcional (3.1.2.2.7), na ordem de aparição.
   % Este exemplo imprime todas para mostrá-las. No seu trabalho, apague a linha
   % da lista que você não usa: deixada, ela sai como folha só com o título.
   \listoffigures
@@ -3064,6 +3105,7 @@ Problems: \url{https://github.com/COPPE-UFRJ/CoppeTeX/issues}
   \listofprogramas
   \listofalgorithms
   \printloabbreviations
+  \printlosiglas
   \printlosymbols
   \tableofcontents
 
@@ -4041,7 +4083,7 @@ use \verb|\href{https://exemplo.org}{texto}|. Evite digitar URLs como texto comu
   \section{Fluxos de escrita e o \texttt{morewrites}}
   \label{sec:morewrites}
 
-  O \hologo{pdfLaTeX} só consegue manter \textbf{dezesseis} arquivos abertos para escrita ao mesmo tempo, e cada lista que o trabalho imprime ocupa um deles até o fim da compilação: o sumário, a lista de figuras, a de tabelas, a de quadros, a de programas, a de algoritmos, cada flutuante novo criado com \verb|\newcoppefloat|, a lista de símbolos, a de abreviaturas, o índice remissivo, cada índice a mais e o glossário. Este exemplo, sozinho, usa os dezesseis.
+  O \hologo{pdfLaTeX} só consegue manter \textbf{dezesseis} arquivos abertos para escrita ao mesmo tempo, e cada lista que o trabalho imprime ocupa um deles até o fim da compilação: o sumário, a lista de figuras, a de tabelas, a de quadros, a de programas, a de algoritmos, cada flutuante novo criado com \verb|\newcoppefloat|, a lista de símbolos, a de abreviaturas, a de siglas, o índice remissivo, cada índice a mais e o glossário. Este exemplo, sozinho, passa dos dezesseis.
 
   Por isso a classe carrega o pacote \verb|morewrites|, que tira esse teto. Ele custa cerca de meio segundo por passada do \hologo{pdfLaTeX}. Quando o tempo de compilação importa --- no plano gratuito do Overleaf, por exemplo ---, a opção \verb|semmorewrites| o desliga:
   \begin{verbatim}
@@ -4049,7 +4091,7 @@ use \verb|\href{https://exemplo.org}{texto}|. Evite digitar URLs como texto comu
   \end{verbatim}
 
   \begin{itemize}
-    \item \textbf{Pode desligar} se o trabalho \emph{não} tem índice remissivo, nem vários índices (\verb|imakeidx|, \verb|splitidx|), nem glossário, nem nomenclatura, e não soma listas além das deste exemplo.
+    \item \textbf{Pode desligar} se o trabalho \emph{não} tem índice remissivo, nem vários índices (\verb|imakeidx|, \verb|splitidx|), nem glossário, nem nomenclatura, e tem menos listas que este exemplo, que já precisa do pacote.
     \item \textbf{Deve desligar} se o \verb|morewrites| brigar com outro pacote, o que é raro: ele guarda o que é escrito até a página sair, e um pacote que escreve um arquivo e o lê de volta na mesma passada pode se perder.
     \item \textbf{Não desligue} se o trabalho tem índice remissivo e glossário, ou vários índices: é para isso que o pacote está ali.
   \end{itemize}
@@ -4061,7 +4103,7 @@ use \verb|\href{https://exemplo.org}{texto}|. Evite digitar URLs como texto comu
 
   \section{Algumas Demonstrações}
 
-  A  Lista de Símbolos precisa usar comandos específicos. Aqui vamos usar os símbolos $\alpha$ e $\beta$.
+  A Lista de Símbolos sai na ordem em que cada símbolo aparece pela primeira vez no texto, como pede a seção 3.1.2.2.7 do Manual. Aqui vamos usar os símbolos $\alpha$ e $\beta$. A chave entre colchetes só vale com a opção de classe \verb|simbolosalfabeticos|, que ordena a lista alfabeticamente; sem ela, é ignorada.
   \symbl[beta]{Beta}{A palavra Beta more e corrigida}
   \symbl[zzbeta]{$\beta$}{A letra $\beta$ corrigida}
   \symbl{beta}{A palavra beta}
@@ -4070,7 +4112,7 @@ use \verb|\href{https://exemplo.org}{texto}|. Evite digitar URLs como texto comu
   \symbl[zzalpha]{$\alpha$}{A letra $\alpha$ corrigida}
   \symbl[marco]{Marco}{A palavra Marco corrigida}
 
-  A Lista de Abreviações segue, a partir de 2024, a mesma regra, e aqui seguem alguns exemplos.
+  A Lista de Abreviaturas é alfabética, e nela a chave entre colchetes decide a posição de siglas de caixa mista. Alguns exemplos:
   \abbrev{GoT}{Game of Thrones}
   \abbrev[GOT]{GoT}{Game of Thrones ordenado como GOT}
   \abbrev[iot]{IoT}{IoT ordenado como iot}
@@ -4082,7 +4124,7 @@ use \verb|\href{https://exemplo.org}{texto}|. Evite digitar URLs como texto comu
   \newsigla{ufrj}{UFRJ}{Universidade Federal do Rio de Janeiro}
   \newsigla{cpgp}{CPGP}{Comissão de Pós-Graduação e Pesquisa de Engenharia}
 
-  As siglas (manual2024, seção 2.8) são expandidas na primeira ocorrência e registradas automaticamente na lista. Declaradas com \verb|\newsigla|, basta usá-las: a \sigla{ufrj} oferece vários cursos de pós-graduação, e este programa segue as normas da \sigla{cpgp}. Em menções seguintes aparecem apenas as siglas, como \sigla{ufrj} e \sigla{cpgp}; use \verb|\sigla*| para forçar a forma extensa.
+  As siglas (Manual, seção 2.8) são expandidas na primeira ocorrência e registradas automaticamente na Lista de Siglas, que este exemplo mantém separada da de abreviaturas com \verb|\makelosiglas|. Uma sigla que não se usa com \verb|\sigla| entra na lista com \verb|\acron|, que não imprime nada no texto: é assim que a ABNT, citada neste capítulo sem \verb|\sigla|, está na lista.\acron{ABNT}{Associação Brasileira de Normas Técnicas} Declaradas com \verb|\newsigla|, basta usá-las: a \sigla{ufrj} oferece vários cursos de pós-graduação, e este programa segue as normas da \sigla{cpgp}. Em menções seguintes aparecem apenas as siglas, como \sigla{ufrj} e \sigla{cpgp}; use \verb|\sigla*| para forçar a forma extensa.
 
 
 
@@ -5108,6 +5150,11 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % Programas that want the old behaviour ask for it by name.
 \newif\if@coppelistastoc \@coppelistastocfalse
 \DeclareOption{listasnosumario}{\@coppelistastoctrue}
+% A 3.1.2.2.7 pede a lista de simbolos "de acordo com a ordem que aparece no
+% texto". E o padrao desde a revisao da v4.1 (#100); `simbolosalfabeticos'
+% devolve a ordem alfabetica de antes, com a chave opcional de \symbl.
+\newif\if@coppesimbalfa \@coppesimbalfafalse
+\DeclareOption{simbolosalfabeticos}{\@coppesimbalfatrue}
 \newif\if@copperascunho \@copperascunhofalse
 \DeclareOption{rascunhoficha}{\@copperascunhotrue}
 \newif\if@coppetwoside \@coppetwosidefalse
@@ -5361,6 +5408,10 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \copperdefstring{english}  {producedby}   {Produced by}
 \copperdefstring{brazilian}{listabbreviation}{Lista de Abreviaturas e Siglas}
 \copperdefstring{english}  {listabbreviation}{List of Abbreviations and Acronyms}
+\copperdefstring{brazilian}{listabbreviationonly}{Lista de Abreviaturas}
+\copperdefstring{english}  {listabbreviationonly}{List of Abbreviations}
+\copperdefstring{brazilian}{listsigla}       {Lista de Siglas}
+\copperdefstring{english}  {listsigla}       {List of Acronyms}
 \copperdefstring{brazilian}{listsymbol}      {Lista de Símbolos}
 \copperdefstring{english}  {listsymbol}      {List of Symbols}
 \copperdefstring{brazilian}{glossary}        {Glossário}
@@ -7219,11 +7270,36 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %
 % \begin{macro}{\makelosymbols}
 %    \begin{macrocode}
+% A lista de simbolos sai pelo makeindex, que ordena pela chave. Para a ordem
+% de aparicao da 3.1.2.2.7, a chave passa a ser o numero de ordem da PRIMEIRA
+% vez em que o simbolo e registrado, com cinco algarismos (00001, 00002...),
+% para que a ordem de texto e a numerica coincidam. O numero fica guardado por
+% simbolo: registrar de novo o mesmo simbolo -- ou o mesmo \symbl composto duas
+% vezes, numa legenda ou numa tabela medida em duas passagens -- reaproveita a
+% chave, e o makeindex junta as entradas iguais em vez de repeti-las.
+%
+% Sob `simbolosalfabeticos', o comportamento de antes: a chave e o argumento
+% opcional, ou o proprio simbolo.
+\newcount\coppe@symcount
+\newcommand\coppe@symzeros[1]{%
+  \ifnum#1<10000 0\fi\ifnum#1<1000 0\fi\ifnum#1<100 0\fi\ifnum#1<10 0\fi
+  \number#1}
+\newcommand\coppe@symchave[1]{%
+  \expandafter\ifx\csname coppe@sym@\detokenize{#1}\endcsname\relax
+    \global\advance\coppe@symcount\@ne
+    \expandafter\xdef\csname coppe@sym@\detokenize{#1}\endcsname{%
+      \coppe@symzeros\coppe@symcount}%
+  \fi
+  \edef\@tempsymbl{\csname coppe@sym@\detokenize{#1}\endcsname=}}
 \def\makelosymbols{%
   \newwrite\@losfile
   \immediate\openout\@losfile=\jobname.syx
   \newcommand\symbl[3][]{\@bsphack\begingroup
-  \ifstrempty{##1}{\def\@tempsymbl{##2=}}{\def\@tempsymbl{##1=}}%
+  \if@coppesimbalfa
+    \ifstrempty{##1}{\def\@tempsymbl{##2=}}{\def\@tempsymbl{##1=}}%
+  \else
+    \coppe@symchave{##2}%
+  \fi
              \@sanitize%
              \@wrlos{\@tempsymbl}{##2}{##3}}\typeout%
   {Writing index of symbols file \jobname.syx}%
@@ -7286,12 +7362,61 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \@esphack}
 %    \end{macrocode}
 %
+% \begin{macro}{\makelosiglas}
+% \begin{macro}{\printlosiglas}
+% \begin{macro}{\acron}
+% A 3.1.2.2.6 do Manual: "Recomenda-se a elaboracao de listas separadas" de
+% abreviaturas e de siglas (issue 101). |\makelosiglas|, no preambulo, abre a lista
+% de siglas, com arquivo proprio (.sgx, ordenado pelo makeindex em .lsg);
+% |\printlosiglas| a imprime; |\acron[chave]{SIGLA}{significado}| registra uma
+% sigla, e |\sigla| passa a registrar por ele.
+%
+% Sem |\makelosiglas|, |\acron| manda a sigla para a lista de abreviaturas, como
+% a classe sempre fez, e o titulo dela continua "Abreviaturas e Siglas". Assim
+% um trabalho escrito antes nao perde entrada nenhuma: separar e pedido, nao
+% efeito colateral. Com |\makelosiglas| o titulo vira so "Abreviaturas".
+%
+% Ordem: alfabetica, como a das abreviaturas -- a 3.1.2.2.6 fala em "relacao
+% alfabetica".
+%    \begin{macrocode}
+\newif\if@coppesiglas \@coppesiglasfalse
+\def\makelosiglas{%
+  \newwrite\@lsgfile
+  \immediate\openout\@lsgfile=\jobname.sgx
+  \global\@coppesiglastrue
+  \typeout{Writing index of acronyms file \jobname.sgx}%
+  \let\makelosiglas\@empty}
+\@onlypreamble\makelosiglas
+\newcommand\@wrsgx[3]{%
+  \protected@write\@lsgfile{}%
+    {\string\indexentry{#1[#2] #3|coppe@semfolio}{\thepage}}%
+  \endgroup
+  \@esphack}
+\newcommand\acron[3][]{%
+  \if@coppesiglas
+    \@bsphack\begingroup
+    \ifstrempty{#1}{\def\@tempsymbl{#2=}}{\def\@tempsymbl{#1=}}%
+    \@sanitize
+    \@wrsgx{\@tempsymbl}{#2}{#3}%
+  \else
+    \@ifundefined{abbrev}{}{\abbrev[#1]{#2}{#3}}%
+  \fi}
+\newcommand\printlosiglas{%
+\begingroup\@coppeglosspretrue
+\renewcommand\glossaryname{\listsiglaname}%
+\@input@{\jobname.lsg}\endgroup}
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+%
 % \begin{macro}{\newsigla}
 % \begin{macro}{\sigla}
 % Acronyms (siglas), manual2024 2.8 / R43. |\newsigla{key}{SIGLA}{full form}|
 % declares one; |\sigla{key}| prints ``full form (SIGLA)'' on first use and
-% registers it in the list of abbreviations and acronyms (through |\abbrev|, so
-% |\makeloabbreviations| must be active), then just ``SIGLA'' on later uses.
+% registers it (through |\acron|: in the list of acronyms when |\makelosiglas|
+% is active, otherwise in the list of abbreviations), then just ``SIGLA'' on
+% later uses.
 % |\sigla*{key}| forces the full form. The first-use flag is set globally so it
 % survives groups (floats, footnotes).
 %    \begin{macrocode}
@@ -7299,8 +7424,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \@namedef{coppe@sigla@s@#1}{#2}%
   \@namedef{coppe@sigla@l@#1}{#3}}
 \newcommand\coppe@sigla@reg[1]{%
-  \@ifundefined{abbrev}{}%
-    {\abbrev{\@nameuse{coppe@sigla@s@#1}}{\@nameuse{coppe@sigla@l@#1}}}}
+  \acron{\@nameuse{coppe@sigla@s@#1}}{\@nameuse{coppe@sigla@l@#1}}}
 \newcommand\coppe@sigla@full[1]{%
   \@nameuse{coppe@sigla@l@#1}\space(\@nameuse{coppe@sigla@s@#1})}
 \newcommand\coppe@sigla@undef[1]{%
@@ -7460,7 +7584,12 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \columnsep 35\p@
   \let\item\@idxitem}
   {\if@restonecol\onecolumn\else\clearpage\fi}
-\newcommand\listabbreviationname{\coppemainstring{listabbreviation}}
+% Com a lista de siglas separada (\makelosiglas), a de abreviaturas deixa de
+% dizer "e Siglas" no titulo.
+\newcommand\listabbreviationname{%
+  \if@coppesiglas\coppemainstring{listabbreviationonly}%
+  \else\coppemainstring{listabbreviation}\fi}
+\newcommand\listsiglaname{\coppemainstring{listsigla}}
 \newcommand\listsymbolname{\coppemainstring{listsymbol}}
 \newcommand\glossaryname{\coppemainstring{glossary}}
 %
@@ -8752,6 +8881,8 @@ postamble
 \copperdefstring{spanish}{directedby}      {Dirección}
 \copperdefstring{spanish}{producedby}      {Producción}
 \copperdefstring{spanish}{listabbreviation}{Lista de Abreviaturas y Siglas}
+\copperdefstring{spanish}{listabbreviationonly}{Lista de Abreviaturas}
+\copperdefstring{spanish}{listsigla}       {Lista de Siglas}
 \copperdefstring{spanish}{listsymbol}      {Lista de Símbolos}
 \copperdefstring{spanish}{glossary}        {Glosario}
 \copperdefstring{spanish}{advisor}         {Director}
@@ -8832,6 +8963,8 @@ postamble
 \copperdefstring{french}{directedby}      {Réalisé par}
 \copperdefstring{french}{producedby}      {Produit par}
 \copperdefstring{french}{listabbreviation}{Liste des abréviations et acronymes}
+\copperdefstring{french}{listabbreviationonly}{Liste des abréviations}
+\copperdefstring{french}{listsigla}       {Liste des sigles}
 \copperdefstring{french}{listsymbol}      {Liste des symboles}
 \copperdefstring{french}{glossary}        {Glossaire}
 \copperdefstring{french}{advisor}         {Directeur}
@@ -8911,6 +9044,8 @@ postamble
 \copperdefstring{italian}{directedby}      {Regia di}
 \copperdefstring{italian}{producedby}      {Prodotto da}
 \copperdefstring{italian}{listabbreviation}{Elenco di abbreviazioni e sigle}
+\copperdefstring{italian}{listabbreviationonly}{Elenco delle abbreviazioni}
+\copperdefstring{italian}{listsigla}       {Elenco delle sigle}
 \copperdefstring{italian}{listsymbol}      {Elenco dei simboli}
 \copperdefstring{italian}{glossary}        {Glossario}
 \copperdefstring{italian}{advisor}         {Relatore}
@@ -10214,28 +10349,6 @@ postamble
 %</exampleit>
 % \fi
 %
-% \subsubsection{\texttt{example\_pdfa.tex --- the full example as PDF/A}}
-%
-% example\_pdfa.tex -- o example.tex completo, compilado com a opção `pdfa'.
-% 
-% Existe para dar ao veraPDF o documento mais exigente que a classe produz: o
-% exemplo inteiro, com bibliografia, listas, figuras, tabelas, algoritmos e as
-% caixas do tcolorbox -- ou seja, transparência, que é justamente o que o
-% a-1b proibiria e o a-2b admite. Validar só um documento curto não diria nada
-% sobre o que vai de fato para o depósito.
-% 
-% \textbackslash PassOptionsToClass tem de vir ANTES do \textbackslash documentclass que o example.tex
-% traz dentro de si; é o único jeito de acrescentar uma opção de classe a um
-% arquivo gerado pelo docstrip sem duplicá-lo aqui e deixar as duas cópias
-% divergirem com o tempo.
-%
-% \iffalse
-%<*examplepdfa>
-\PassOptionsToClass{pdfa}{coppe}
-\input{example}
-%</examplepdfa>
-% \fi
-%
 % \subsubsection{\texttt{covers\_5languages.tex --- the five covers side by side}}
 %
 % covers\_5languages.tex -- One-page visual demonstration of the CoppeTeX 4.1
@@ -10352,8 +10465,12 @@ sub coppe_make_lab { return system "makeindex -s coppe.ist -o \"$_[0].lab\" \"$_
 add_cus_dep('syx', 'los', 0, 'coppe_make_los');
 sub coppe_make_los { return system "makeindex -s coppe.ist -o \"$_[0].los\" \"$_[0].syx\""; }
 
+# The separate list of acronyms (\makelosiglas): .sgx -> .lsg, same style.
+add_cus_dep('sgx', 'lsg', 0, 'coppe_make_lsg');
+sub coppe_make_lsg { return system "makeindex -s coppe.ist -o \"$_[0].lsg\" \"$_[0].sgx\""; }
+
 # Make "latexmk -c" clean the generated list files too.
-push @generated_exts, qw(abx lab syx los);
+push @generated_exts, qw(abx lab syx los sgx lsg);
 %</latexmkrc>
 % \fi
 %

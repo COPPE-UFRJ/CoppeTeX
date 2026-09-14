@@ -87,7 +87,7 @@ for nome, extras in CASOS:
         if b.returncode != 0:
             problemas.append("%s: o biber falhou (exit %d)" % (nome, b.returncode))
         ist = os.path.join(pasta, "coppe.ist")
-        for ext, saida in (("abx", "lab"), ("syx", "los")):
+        for ext, saida in (("abx", "lab"), ("syx", "los"), ("sgx", "lsg")):
             if os.path.exists(os.path.join(pasta, "main." + ext)):
                 roda("makeindex", "-s", ist, "-o", "main." + saida,
                      "main." + ext)
@@ -103,6 +103,14 @@ for nome, extras in CASOS:
             erros = [l for l in texto.splitlines() if l.startswith("!")][:3]
             problemas.append("%s: nao compilou -- %s"
                              % (nome, "; ".join(erros) or "sem PDF"))
+            continue
+
+        # Em nonstopmode o pdflatex escreve o PDF MESMO com erro, e "Output
+        # written" nao prova nada: um \makelosiglas desconhecido passava por
+        # aqui. Linha comecada por "!" e erro, e reprova.
+        erros = [l for l in texto.splitlines() if l.startswith("! ")]
+        if erros:
+            problemas.append("%s: erro na compilacao -- %s" % (nome, erros[0][:90]))
             continue
 
         citacoes = re.findall(
