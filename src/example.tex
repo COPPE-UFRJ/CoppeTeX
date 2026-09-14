@@ -30,7 +30,7 @@
 %%   Grave accent  \`     Left brace    \{     Vertical bar  \|
 %%   Right brace   \}     Tilde         \~}
 %%
-\documentclass[dsc]{coppe}
+\documentclass[dsc,pdfa]{coppe}
 
 \usepackage{rotating}        % rodando coisas, como tabelas
 \usepackage[most]{tcolorbox} % caixas de texto
@@ -277,6 +277,41 @@
 
   Quando se cita uma obra por meio de outra (\textit{apud}), pela ABNT entra na lista de referências \emph{apenas a obra efetivamente consultada}. A obra original (não consultada) é informada como texto e \emph{não} é referenciada. Use \verb*|\citetapud{autor}{ano}{chave}|, como em \citetapud{Drumond}{1953}{article-example}, ou a forma entre parênteses \verb*|\citepapud|, como em \citepapud[145]{Drumond}{1953}{article-example}. Note que, nas Referências, aparece somente a obra consultada.
 
+\section{O arquivo de depósito: PDF/A}
+\label{sec:pdfa}
+
+Este exemplo é compilado com a opção \verb|pdfa| da classe, logo na primeira linha:
+\begin{verbatim}
+\documentclass[dsc,pdfa]{coppe}
+\end{verbatim}
+Com ela, o arquivo sai em \textbf{PDF/A-2b}. Esta seção explica o que isso é, por que a COPPE exige, o que a classe faz e o que pode dar errado.
+
+\textbf{Por que é obrigatório.} Desde a Resolução CEPG n.~246/2023 o depósito de teses e dissertações na UFRJ é \emph{exclusivamente digital}: não há mais cópia impressa, e o arquivo é o documento. Por isso o Manual da UFRJ, na seção 2.2(d), diz que a versão digital final ``deve ser entregue em arquivo do tipo PDF/A (formato de arquivamento de longo prazo)''. Um PDF comum abre hoje, mas nada garante que abra igual daqui a trinta anos, em outro computador, sem as fontes e os programas que o produziram. O PDF/A garante.
+
+\textbf{O que é o PDF/A.} É o PDF restrito pela norma ISO~19005 para \emph{preservação}. A ideia central é que o arquivo seja autossuficiente:
+\begin{itemize}
+  \item \textbf{todas as fontes vão embutidas} no arquivo, e em forma vetorial;
+  \item \textbf{as cores são independentes do equipamento}: o arquivo declara um perfil de cor (sRGB) para dizer como elas devem ser reproduzidas;
+  \item \textbf{os metadados vão em XMP}, um bloco padronizado que bibliotecas e repositórios leem sozinhos: título, autor, assunto, palavras-chave;
+  \item \textbf{nada depende de fora}: sem conteúdo externo, sem JavaScript, sem áudio ou vídeo, sem criptografia nem senha.
+\end{itemize}
+
+\textbf{Por que 2b.} A norma tem partes e níveis. A \emph{parte 2} (PDF/A-2) admite transparência, que o PDF/A-1 proíbe e que o \verb|tcolorbox| e vários pacotes de gráficos produzem; com PDF/A-1 este mesmo exemplo seria rejeitado. O \emph{nível b} (\emph{basic}) garante a reprodução visual fiel, que é o que o depósito precisa. Os níveis \emph{u} e \emph{a} pedem, além disso, mapeamento Unicode completo e estrutura marcada para leitores de tela, que o \hologo{pdfLaTeX} não produz de forma confiável. O próprio Manual, no Anexo I, aceita as variantes 1b e 2b.
+
+\textbf{O que a classe faz.} Com a opção \verb|pdfa|, a classe carrega o pacote \verb|pdfx| no nível \verb|a-2b|, monta os metadados XMP a partir do \verb|\title|, do \verb|\author|, das \verb|\keyword| e do \verb|\department| que você já escreveu, embute o perfil sRGB, põe as cores em RGB e retira do arquivo as informações internas do \hologo{pdfTeX} que um validador rejeitaria. As fontes já são a Latin Modern, vetorial: a Computer Modern antiga saía em bitmap (Type~3), e bitmap não é PDF/A. Os metadados chegam ao PDF na segunda passada, porque são lidos de um arquivo \verb|.xmpdata| que a classe escreve na primeira. O custo em tempo de compilação, medido neste exemplo, fica dentro da variação normal entre uma passada e outra.
+
+\textbf{Por que ligar desde já.} A opção fica desligada por padrão na classe, mas vale ligar no começo da escrita, como neste exemplo: um problema de PDF/A --- uma imagem ou um PDF incluído que não obedece à norma --- aparece no dia em que o arquivo entra, e não na véspera do depósito, quando já são dezenas de figuras.
+
+\textbf{O que pode dar errado.} Quase sempre é o que vem de fora:
+\begin{itemize}
+  \item um \textbf{PDF incluído} (\verb|\includegraphics| ou \verb|pdfpages|) com fontes não embutidas, criptografado ou com formulário;
+  \item uma \textbf{imagem em CMYK} ou com perfil de cor próprio, típica de material de gráfica;
+  \item um \textbf{link para arquivo local} ou para executar um programa.
+\end{itemize}
+Refaça a figura (exportar de novo para PDF com as fontes embutidas costuma bastar) ou converta-a para PNG.
+
+\textbf{Como conferir.} Abra o PDF num leitor que indique a conformidade (o Adobe Acrobat mostra uma faixa ``Este arquivo está em conformidade com o padrão PDF/A''), ou passe-o pelo \emph{veraPDF} (\texttt{verapdf.org}), o validador de referência, gratuito, no perfil PDF/A-2b. Os documentos de prova da CoppeTeX passam pelo veraPDF a cada versão.
+
 \chapter{Floats}
 
 Grande parte dos problemas de iniciantes, e veteranos, em \LaTeX é da localização dos \textit{floats}, como figuras e tabelas. Para o bom comportamente é importante que sempre que usar um comando do tipo \verb*|\begin{figure}[hbt]| não sejam esquecidas as opções de posicionamento.
@@ -422,7 +457,7 @@ Se sua tabela é muito longa ou larga, existem várias opções.
 
 É comum em teses que as tabelas sejam largas demais. Há várias formas de resolver isso.
 
-A \autoref{tab:tabela_largafns} é larga demais, e nela isso é resolvido diminuindo a fonte para \verb|\footnotesize|.
+A \autoref{tab:tabela_largafns} é larga demais para a mancha, e o que se fez nela foi diminuir o corpo da fonte com o comando \verb|\footnotesize|, colocado dentro do ambiente \verb|table|, antes do \verb|tabular|.
 
 \begin{table}[ht]
 \centering % Centraliza a tabela
@@ -773,6 +808,9 @@ Colocar a tabela ou imagem dentro de \verb|figure|/\verb|table| (um \emph{float}
 
   Cada tipo de documento da ABNT corresponde a um tipo de entrada do BibLaTeX, com um sinônimo em português (sem acentos) que você pode usar no \texttt{.bib}. Todos os tipos abaixo estão demonstrados nas Referências deste documento (veja \texttt{example.bib}). Entre parênteses, os sinônimos em português.
 
+  % Nomes de tipo em fonte de máquina não hifenizam: justificados, abriam
+  % buracos nas linhas (Underfull \hbox). Alinhado à esquerda, não.
+  \begingroup\raggedright
   \subsection{Tipos acadêmicos principais}
   \begin{itemize}
     \item Livro / monografia --- \verb|@book| (\verb|@livro|)
@@ -800,6 +838,7 @@ Colocar a tabela ou imagem dentro de \verb|figure|/\verb|table| (um \emph{float}
   \end{itemize}
 
   Os campos também aceitam sinônimos em português (sem acentos): \verb|autor|, \verb|titulo|, \verb|subtitulo|, \verb|editora|, \verb|local|, \verb|ano|, \verb|data|, \verb|paginas|, \verb|edicao|, \verb|numero|, \verb|periodico|/\verb|jornal|/\verb|revista|, \verb|caderno|, \verb|escala|, \verb|organizador|, \verb|tradutor|, entre outros. Sem autor nem organizador, a entrada é feita pelo título, com a 1ª palavra em CAIXA ALTA.
+  \par\endgroup
 
   \section{Uma referência de cada categoria do Manual}\label{sec:todosostipos}
 
@@ -807,7 +846,8 @@ Colocar a tabela ou imagem dentro de \verb|figure|/\verb|table| (um \emph{float}
 
   Metade das entradas está escrita com os nomes de tipo e de campo em \textbf{inglês} e metade com os sinônimos em \textbf{português}, de propósito, para que as duas formas apareçam funcionando lado a lado. \textbf{Prefira a inglesa}: é a do \texttt{biblatex}, é a que os gerenciadores de referência exportam, e é a que outra pessoa vai reconhecer quatro anos depois. Os sinônimos em português existem para quem chega de uma base antiga e não quer reescrever tudo.
 
-  \begin{longtable}{@{}p{0.46\textwidth}p{0.17\textwidth}p{0.28\textwidth}@{}}
+  % Colunas estreitas alinhadas à esquerda: justificadas, abriam buracos.
+  \begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.46\textwidth}>{\raggedright\arraybackslash}p{0.17\textwidth}>{\raggedright\arraybackslash}p{0.28\textwidth}@{}}
     \caption{Uma referência de cada categoria da seção 4.2 do Manual}
     \label{tab:todosostipos}\\
     \toprule
@@ -876,7 +916,7 @@ Este é o conteúdo do meu textbox sem título. Você pode adicionar qualquer te
         \begin{scope}[x={(image.south east)},y={(image.north west)}]
             % Definindo o textbox dentro da figura
             \node[anchor=north west, text width=0.3\textwidth, fill=white, opacity=0.7, text opacity=1] at (0.05,0.95) { % Ajuste a posição conforme necessário
-                \begin{tcolorbox}[colback=red!5!white,colframe=red!75!black,title=Textbox dentro de uma figura]
+                \begin{tcolorbox}[colback=red!5!white,colframe=red!75!black,halign=flush left,halign title=flush left,title=Textbox dentro de uma figura]
                     Este textbox fala sobre como inserir um textbox dentro de uma figura usando o pacote \texttt{tikz} e \texttt{tcolorbox} no \LaTeX.
                 \end{tcolorbox}
             };

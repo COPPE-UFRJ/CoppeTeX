@@ -61,11 +61,41 @@
     main language, \texttt{foreignabstract} defaults to English by class
     convention.
   \end{foreignabstract}
+  % Listas pré-textuais: só o sumário é obrigatório (Manual 3.1.2.1.6).
+  % As listas de figuras, tabelas, abreviaturas e siglas e símbolos são
+  % opcionais (3.1.2.2); as de quadros, programas e algoritmos entram quando
+  % o trabalho tem um deles (Norma COPPE, §10). Esta demonstração não tem
+  % ilustrações, por isso só imprime o sumário.
   \tableofcontents
   \mainmatter
   \chapter{Introdução}
   Este capítulo demonstra que o corpo do trabalho é composto em português,
   com legendas, citações e referências automaticamente em português.
+  \section{O arquivo de depósito: PDF/A}
+  O depósito na UFRJ é exclusivamente digital desde a Resolução CEPG
+  n.~246/2023, e o Manual (2.2d) exige o arquivo final em \textbf{PDF/A}, o
+  formato de arquivamento de longo prazo. PDF/A é o PDF restrito pela norma
+  ISO~19005 para preservação: todas as fontes vão embutidas, as cores declaram
+  um perfil (sRGB) que as torna independentes do equipamento, os metadados vão
+  num bloco XMP que os repositórios leem, e nada depende de fora --- sem
+  conteúdo externo, JavaScript ou criptografia. Assim o arquivo abre igual daqui
+  a décadas, em qualquer computador.
+
+  A classe usa a variante \textbf{PDF/A-2b}: a parte 2 admite transparência,
+  que a parte 1 proíbe e que caixas coloridas e gráficos produzem, e o nível
+  \emph{b} garante a reprodução visual fiel. Basta a opção \texttt{pdfa} em
+  \verb|\documentclass[dsc,pdfa]{coppe}|: a classe carrega o \texttt{pdfx},
+  monta os metadados a partir do título, do autor e das palavras-chave, e
+  embute o perfil de cor. Ligue-a cedo, como faz o \texttt{example.tex}: um PDF
+  ou uma imagem incluídos fora da norma aparecem no dia em que entram, e não na
+  véspera do depósito. Para conferir, use o validador veraPDF, perfil PDF/A-2b.
+
+  \section{Fluxos de escrita}
+  O \hologo{pdfLaTeX} mantém no máximo dezesseis arquivos abertos para escrita,
+  e cada lista, índice ou glossário ocupa um. Por isso a classe carrega o
+  \texttt{morewrites}. A opção \texttt{semmorewrites} o desliga e poupa cerca de
+  meio segundo por passada, mas só serve a trabalho sem índice remissivo, sem
+  vários índices e sem glossário.
 \end{document}
 %% 
 %%

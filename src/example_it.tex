@@ -70,12 +70,44 @@
     \texttt{brazilianabstract} para a leitura da banca brasileira quando
     o idioma principal n\~ao \'e o portugu\^es.
   \end{brazilianabstract}
+  % Elenchi pre-testuali: solo l'indice generale è obbligatorio (Manuale
+  % UFRJ 3.1.2.1.6). Gli elenchi di figure, tabelle, abbreviazioni e simboli
+  % sono facoltativi (3.1.2.2); quelli di quadros, programmi e algoritmi
+  % compaiono quando il lavoro ne contiene (norma COPPE, §10). Questa
+  % dimostrazione stampa solo l'indice.
   \tableofcontents
   \mainmatter
   \chapter{Introduzione}
   Questo capitolo dimostra il corpo redatto in italiano, mentre la
   copertina e la folha-de-rosto rimangono in portoghese (modello
   istituzionale UFRJ).
+  \section{Il file di deposito: PDF/A}
+  Il deposito all'UFRJ è esclusivamente digitale dalla risoluzione CEPG
+  n.~246/2023, e il Manuale dell'UFRJ (2.2d) richiede il file finale in
+  \textbf{PDF/A}, il formato di archiviazione a lungo termine. Il PDF/A è il PDF
+  ristretto dalla norma ISO~19005 per la conservazione: tutti i font sono
+  incorporati, i colori dichiarano un profilo (sRGB) che li rende indipendenti
+  dal dispositivo, i metadati stanno in un blocco XMP letto dai repository, e
+  nulla dipende dall'esterno --- niente contenuti esterni, JavaScript o
+  cifratura. Così il file si apre allo stesso modo tra decenni, su qualsiasi
+  computer.
+
+  La classe usa il \textbf{PDF/A-2b}: la parte 2 ammette la trasparenza, che la
+  parte 1 vieta e che riquadri colorati e grafici producono spesso, e il livello
+  \emph{b} garantisce una riproduzione visiva fedele. Basta l'opzione
+  \texttt{pdfa}: la classe carica \texttt{pdfx}, costruisce i metadati da
+  titolo, autore e parole chiave, e incorpora il profilo colore. Attivatela
+  presto, come fa \texttt{example.tex}. Per verificare, usate il validatore
+  veraPDF, profilo PDF/A-2b. L'italiano non è una lingua ammessa per una tesi
+  della COPPE (risoluzione CEPG n.~302/2024, art.~57): questo documento
+  dimostra soltanto il meccanismo.
+
+  \section{Flussi di scrittura}
+  pdf\LaTeX{} tiene al massimo sedici file aperti in scrittura, e ogni elenco,
+  indice o glossario ne occupa uno. Per questo la classe carica
+  \texttt{morewrites}. L'opzione \texttt{semmorewrites} lo disattiva e fa
+  risparmiare circa mezzo secondo per passata, ma solo per un lavoro senza
+  indice analitico, senza più indici e senza glossario.
 \end{document}
 %% 
 %%

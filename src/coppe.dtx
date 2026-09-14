@@ -955,12 +955,71 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %     l\^e de um arquivo que a classe escreve no fim da primeira --- o que n\~ao
 %     custa nada, j\'a que s\~ao tr\^es passadas de qualquer jeito.
 %
-%     \textbf{Ligue esta op\c c\~ao ao depositar.} Ela fica desligada por padr\~ao
-%     porque as restri\c c\~oes do PDF/A (fontes embutidas, perfil de cor, nenhuma
-%     criptografia, transpar\^encia limitada) podem trope\c car num documento que
-%     carregue imagens ou pacotes arbitr\'arios, e \'e melhor voc\^e descobrir
-%     isso quando quiser do que ter a compila\c c\~ao quebrada o tempo todo.
+%     \textbf{Ligue esta opção cedo.} Ela fica desligada por padrão porque as
+%     restrições do PDF/A podem tropeçar num documento que carregue imagens ou
+%     pacotes arbitrários. Mas o |example.tex| já a traz ligada, e é o que se
+%     recomenda: o problema aparece no dia em que a figura entra, e não na
+%     véspera do depósito. A seção~\ref{sec:pdfa} explica o porquê.
 % \end{description}
+%
+% \subsection{Por que PDF/A}\label{sec:pdfa}
+%
+% \paragraph{Porque o arquivo é o trabalho.} Desde a Resolução CEPG n.~246/2023
+% o depósito na UFRJ é \emph{exclusivamente digital}. Não há mais exemplar
+% impresso na biblioteca: o PDF é o documento de arquivo, e precisa abrir igual
+% daqui a décadas, em outro computador, sem as fontes e os programas que o
+% produziram. Por isso a 2.2(d) do Manual manda entregar a versão digital final
+% ``em arquivo do tipo PDF/A (formato de arquivamento de longo prazo)'', e o
+% Anexo I ensina a salvá-la assim.
+%
+% \paragraph{O que o PDF/A exige.} É o PDF restrito pela ISO~19005 para
+% preservação, e a ideia é que o arquivo baste a si mesmo:
+% \begin{itemize}
+%   \item todas as \textbf{fontes embutidas}, e nenhuma em bitmap;
+%   \item \textbf{cores independentes do equipamento}, com um perfil declarado
+%     (\emph{output intent}, sRGB na classe);
+%   \item \textbf{metadados em XMP}, coerentes com o dicionário de informação do
+%     PDF;
+%   \item \textbf{nada que dependa de fora}: sem conteúdo externo, JavaScript,
+%     áudio, vídeo, criptografia ou senha.
+% \end{itemize}
+%
+% \paragraph{Por que 2b, e não 1b, 2u ou 2a.} A \emph{parte 1} (PDF/A-1) proíbe
+% transparência, que o |tcolorbox| e muitos pacotes de gráficos produzem; o
+% próprio |example.tex| seria rejeitado. A \emph{parte 2} a admite. O nível
+% \emph{b} garante a reprodução visual fiel, que é o que o depósito precisa; os
+% níveis \emph{u} (texto mapeado para Unicode) e \emph{a} (estrutura marcada, para
+% leitores de tela) pedem o que o \hologo{pdfLaTeX} não entrega de forma
+% confiável. O Anexo I do Manual cita as variantes 1b e 2b.
+%
+% \paragraph{O que a classe faz.} Com |pdfa|:
+% \begin{itemize}
+%   \item carrega o |pdfx| no nível |a-2b|, antes do |hyperref|, que ele mesmo
+%     carrega com as opções que o PDF/A pede;
+%   \item escreve o |\jobname.xmpdata| com título, autor, palavras-chave, assunto,
+%     editor e ano, tirados do que você já declarou --- por isso os metadados
+%     chegam ao PDF na segunda passada;
+%   \item deixa de repassar esses mesmos dados ao |hyperref|, que os receberia em
+%     dobro e reclamaria;
+%   \item põe as cores no modelo RGB do perfil sRGB e registra isso no log como
+%     informação, não como aviso;
+%   \item retira do arquivo as chaves internas do \hologo{pdfTeX}
+%     (|PTEX.Fullbanner| e vizinhas), que não têm correspondente no XMP.
+% \end{itemize}
+% A fonte já é a Latin Modern, vetorial, com ou sem a opção: a Computer Modern
+% padrão saía em Type~3, que é bitmap, e bitmap não é PDF/A.
+%
+% \paragraph{Quanto custa.} Medido no |example.tex|: o tempo de cada passada com
+% e sem |pdfa| fica dentro da variação normal de uma passada para outra.
+%
+% \paragraph{O que pode dar errado.} Quase sempre o que vem de fora: um PDF
+% incluído com fontes não embutidas, criptografado ou com formulário; uma imagem
+% em CMYK ou com perfil próprio; um link para arquivo local. Exportar a figura de
+% novo em PDF com fontes embutidas, ou convertê-la para PNG, costuma resolver.
+%
+% \paragraph{Como conferir.} Passe o PDF pelo veraPDF (\texttt{verapdf.org}),
+% perfil PDF/A-2b. É o validador de referência, gratuito, e é o que a prova da
+% \CoppeTeX\ usa: |tools/build-check.ps1 -Scope pdfa|.
 %
 % \subsection{Fluxos de escrita: quando desligar o \texttt{morewrites}}\label{sec:morewrites}
 %
@@ -1348,17 +1407,17 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \begin{center}
 % \begin{tabular}{@{}lll@{}}
 % \hline
-% Elemento & Comando & Situação \
+% Elemento & Comando & Situação \\
 % \hline
-% Sumário & |\tableofcontents| & \textbf{obrigatório} (3.1.2.1.6) \
-% Lista de ilustrações (figuras) & |\listoffigures| & opcional (3.1.2.2.4) \
-% Lista de tabelas & |\listoftables| & opcional (3.1.2.2.5) \
-% Lista de quadros & |\listofquadros| & COPPE: se houver quadro (§10) \
-% Lista de programas & |\listofprogramas| & COPPE: se houver programa (§10) \
-% Lista de algoritmos & |\listofalgorithms| & COPPE: se houver algoritmo (§10) \
-% Lista de outro tipo de ilustração & |\listof...| (|\newcoppefloat|) & opcional (3.1.2.2.4) \
-% Lista de abreviaturas e siglas & |\printloabbreviations| & opcional (3.1.2.2.6) \
-% Lista de símbolos & |\printlosymbols| & opcional (3.1.2.2.7) \
+% Sumário & |\tableofcontents| & \textbf{obrigatório} (3.1.2.1.6) \\
+% Lista de ilustrações (figuras) & |\listoffigures| & opcional (3.1.2.2.4) \\
+% Lista de tabelas & |\listoftables| & opcional (3.1.2.2.5) \\
+% Lista de quadros & |\listofquadros| & COPPE: se houver quadro (§10) \\
+% Lista de programas & |\listofprogramas| & COPPE: se houver programa (§10) \\
+% Lista de algoritmos & |\listofalgorithms| & COPPE: se houver algoritmo (§10) \\
+% Lista de outro tipo de ilustração & |\listof...| (|\newcoppefloat|) & opcional (3.1.2.2.4) \\
+% Lista de abreviaturas e siglas & |\printloabbreviations| & opcional (3.1.2.2.6) \\
+% Lista de símbolos & |\printlosymbols| & opcional (3.1.2.2.7) \\
 % \hline
 % \end{tabular}
 % \end{center}
@@ -2698,7 +2757,7 @@ italian   & [italian,dsc]   & \pre & Italian. Same. \\
 \multicolumn{4}{@{}l@{}}{\normalfont\bfseries\small CLASS OPTIONS --- the
   rest}\\[2pt]
 numbers   & [dsc,numbers]   & \pre & Numeric citations \texttt{[1]} instead of author-date; list in citation order. \\
-pdfa      & [dsc,pdfa]      & \pre & PDF/A-2b output, required for deposit (2.2d). Turn it on when you deposit. \\
+pdfa      & [dsc,pdfa]      & \pre & PDF/A-2b output, required for deposit (2.2d): the deposit is digital only, and PDF/A (ISO 19005) keeps the file self-contained --- embedded fonts, sRGB colour, XMP metadata, nothing external. Off by default; \texttt{example.tex} turns it on, and turning it on early is recommended. Check with veraPDF. \\
 comserifa & [dsc,comserifa] & \pre & Serif family. Sans is the default since v4.1. \\
 semserifa & ---             & \pre & Accepted, does nothing. What it asked for became the default. \\
 semlinks  & [dsc,semlinks]  & \pre & Links lose colour and frame; they stay clickable. For printing. \\
@@ -2776,7 +2835,7 @@ brazilianabstract & \textbackslash begin\{brazilianabstract\} ... & \doc & Third
 \textbackslash coppetexfinalpage & \textbackslash coppetexfinalpage & \doc & Optional colophon, every item measured at compile time: class version, engine and its version, TeX system, \LaTeX{} format, font family and encoding, biblatex version, date, hour, operating system and machine. \\
 \midrule
 
-\multicolumn{4}{@{}p{\linewidth}@{}}{\normalfont\small Only the table of contents is mandatory (3.1.2.1.6). Every list is optional (3.1.2.2); the COPPE norm (\S10) adds the lists of \emph{quadros}, programs and algorithms whenever the work has one of them.}\[2pt]
+\multicolumn{4}{@{}p{\linewidth}@{}}{\normalfont\small Only the table of contents is mandatory (3.1.2.1.6). Every list is optional (3.1.2.2); the COPPE norm (\S10) adds the lists of \emph{quadros}, programs and algorithms whenever the work has one of them.}\\[2pt]
 \multicolumn{4}{@{}l@{}}{\normalfont\bfseries\small PRE-TEXTUAL LISTS ---
   lists first, table of contents last (3.1.2.1.6)}\\[2pt]
 \textbackslash listoffigures & \textbackslash listoffigures & \doc & List of figures. \\
@@ -2845,8 +2904,11 @@ Problems: \url{https://github.com/COPPE-UFRJ/CoppeTeX/issues}
 % \label{COPPE:SAMPLE}
 %    \begin{macrocode}
 %<*example>
-\documentclass[dsc]{coppe}
+\documentclass[dsc,pdfa]{coppe}
 % Opções de classe que valem conhecer aqui:
+%  - pdfa: gera o arquivo em PDF/A-2b, o formato que o depósito exige (Manual
+%    2.2d). Este exemplo o liga desde a primeira linha; a razão está na seção
+%    "O arquivo de depósito: PDF/A", no capítulo de regras da COPPE.
 %  - semmorewrites: não carrega o pacote morewrites. Compila meio segundo mais
 %    rápido por passada, mas só serve a trabalho SEM índice remissivo, sem
 %    vários índices e sem glossário -- este exemplo já usa os 16 fluxos de
@@ -3122,6 +3184,41 @@ Problems: \url{https://github.com/COPPE-UFRJ/CoppeTeX/issues}
 
   Quando se cita uma obra por meio de outra (\textit{apud}), pela ABNT entra na lista de referências \emph{apenas a obra efetivamente consultada}. A obra original (não consultada) é informada como texto e \emph{não} é referenciada. Use \verb*|\citetapud{autor}{ano}{chave}|, como em \citetapud{Drumond}{1953}{article-example}, ou a forma entre parênteses \verb*|\citepapud|, como em \citepapud[145]{Drumond}{1953}{article-example}. Note que, nas Referências, aparece somente a obra consultada.
 
+\section{O arquivo de depósito: PDF/A}
+\label{sec:pdfa}
+
+Este exemplo é compilado com a opção \verb|pdfa| da classe, logo na primeira linha:
+\begin{verbatim}
+\documentclass[dsc,pdfa]{coppe}
+\end{verbatim}
+Com ela, o arquivo sai em \textbf{PDF/A-2b}. Esta seção explica o que isso é, por que a COPPE exige, o que a classe faz e o que pode dar errado.
+
+\textbf{Por que é obrigatório.} Desde a Resolução CEPG n.~246/2023 o depósito de teses e dissertações na UFRJ é \emph{exclusivamente digital}: não há mais cópia impressa, e o arquivo é o documento. Por isso o Manual da UFRJ, na seção 2.2(d), diz que a versão digital final ``deve ser entregue em arquivo do tipo PDF/A (formato de arquivamento de longo prazo)''. Um PDF comum abre hoje, mas nada garante que abra igual daqui a trinta anos, em outro computador, sem as fontes e os programas que o produziram. O PDF/A garante.
+
+\textbf{O que é o PDF/A.} É o PDF restrito pela norma ISO~19005 para \emph{preservação}. A ideia central é que o arquivo seja autossuficiente:
+\begin{itemize}
+  \item \textbf{todas as fontes vão embutidas} no arquivo, e em forma vetorial;
+  \item \textbf{as cores são independentes do equipamento}: o arquivo declara um perfil de cor (sRGB) para dizer como elas devem ser reproduzidas;
+  \item \textbf{os metadados vão em XMP}, um bloco padronizado que bibliotecas e repositórios leem sozinhos: título, autor, assunto, palavras-chave;
+  \item \textbf{nada depende de fora}: sem conteúdo externo, sem JavaScript, sem áudio ou vídeo, sem criptografia nem senha.
+\end{itemize}
+
+\textbf{Por que 2b.} A norma tem partes e níveis. A \emph{parte 2} (PDF/A-2) admite transparência, que o PDF/A-1 proíbe e que o \verb|tcolorbox| e vários pacotes de gráficos produzem; com PDF/A-1 este mesmo exemplo seria rejeitado. O \emph{nível b} (\emph{basic}) garante a reprodução visual fiel, que é o que o depósito precisa. Os níveis \emph{u} e \emph{a} pedem, além disso, mapeamento Unicode completo e estrutura marcada para leitores de tela, que o \hologo{pdfLaTeX} não produz de forma confiável. O próprio Manual, no Anexo I, aceita as variantes 1b e 2b.
+
+\textbf{O que a classe faz.} Com a opção \verb|pdfa|, a classe carrega o pacote \verb|pdfx| no nível \verb|a-2b|, monta os metadados XMP a partir do \verb|\title|, do \verb|\author|, das \verb|\keyword| e do \verb|\department| que você já escreveu, embute o perfil sRGB, põe as cores em RGB e retira do arquivo as informações internas do \hologo{pdfTeX} que um validador rejeitaria. As fontes já são a Latin Modern, vetorial: a Computer Modern antiga saía em bitmap (Type~3), e bitmap não é PDF/A. Os metadados chegam ao PDF na segunda passada, porque são lidos de um arquivo \verb|.xmpdata| que a classe escreve na primeira. O custo em tempo de compilação, medido neste exemplo, fica dentro da variação normal entre uma passada e outra.
+
+\textbf{Por que ligar desde já.} A opção fica desligada por padrão na classe, mas vale ligar no começo da escrita, como neste exemplo: um problema de PDF/A --- uma imagem ou um PDF incluído que não obedece à norma --- aparece no dia em que o arquivo entra, e não na véspera do depósito, quando já são dezenas de figuras.
+
+\textbf{O que pode dar errado.} Quase sempre é o que vem de fora:
+\begin{itemize}
+  \item um \textbf{PDF incluído} (\verb|\includegraphics| ou \verb|pdfpages|) com fontes não embutidas, criptografado ou com formulário;
+  \item uma \textbf{imagem em CMYK} ou com perfil de cor próprio, típica de material de gráfica;
+  \item um \textbf{link para arquivo local} ou para executar um programa.
+\end{itemize}
+Refaça a figura (exportar de novo para PDF com as fontes embutidas costuma bastar) ou converta-a para PNG.
+
+\textbf{Como conferir.} Abra o PDF num leitor que indique a conformidade (o Adobe Acrobat mostra uma faixa ``Este arquivo está em conformidade com o padrão PDF/A''), ou passe-o pelo \emph{veraPDF} (\texttt{verapdf.org}), o validador de referência, gratuito, no perfil PDF/A-2b. Os documentos de prova da CoppeTeX passam pelo veraPDF a cada versão.
+
 \chapter{Floats}
 
 Grande parte dos problemas de iniciantes, e veteranos, em \LaTeX é da localização dos \textit{floats}, como figuras e tabelas. Para o bom comportamente é importante que sempre que usar um comando do tipo \verb*|\begin{figure}[hbt]| não sejam esquecidas as opções de posicionamento.
@@ -3272,7 +3369,7 @@ Se sua tabela é muito longa ou larga, existem várias opções.
 
 É comum em teses que as tabelas sejam largas demais. Há várias formas de resolver isso.
 
-A \autoref{tab:tabela_largafns} é larga demais, e nela isso é resolvido diminuindo a fonte para \verb|\footnotesize|.
+A \autoref{tab:tabela_largafns} é larga demais para a mancha, e o que se fez nela foi diminuir o corpo da fonte com o comando \verb|\footnotesize|, colocado dentro do ambiente \verb|table|, antes do \verb|tabular|.
 
 \begin{table}[ht]
 \centering % Centraliza a tabela
@@ -3631,6 +3728,9 @@ Colocar a tabela ou imagem dentro de \verb|figure|/\verb|table| (um \emph{float}
 
   Cada tipo de documento da ABNT corresponde a um tipo de entrada do BibLaTeX, com um sinônimo em português (sem acentos) que você pode usar no \texttt{.bib}. Todos os tipos abaixo estão demonstrados nas Referências deste documento (veja \texttt{example.bib}). Entre parênteses, os sinônimos em português.
 
+  % Nomes de tipo em fonte de máquina não hifenizam: justificados, abriam
+  % buracos nas linhas (Underfull \hbox). Alinhado à esquerda, não.
+  \begingroup\raggedright
   \subsection{Tipos acadêmicos principais}
   \begin{itemize}
     \item Livro / monografia --- \verb|@book| (\verb|@livro|)
@@ -3658,6 +3758,7 @@ Colocar a tabela ou imagem dentro de \verb|figure|/\verb|table| (um \emph{float}
   \end{itemize}
 
   Os campos também aceitam sinônimos em português (sem acentos): \verb|autor|, \verb|titulo|, \verb|subtitulo|, \verb|editora|, \verb|local|, \verb|ano|, \verb|data|, \verb|paginas|, \verb|edicao|, \verb|numero|, \verb|periodico|/\verb|jornal|/\verb|revista|, \verb|caderno|, \verb|escala|, \verb|organizador|, \verb|tradutor|, entre outros. Sem autor nem organizador, a entrada é feita pelo título, com a 1ª palavra em CAIXA ALTA.
+  \par\endgroup
 
   \section{Uma referência de cada categoria do Manual}\label{sec:todosostipos}
 
@@ -3665,7 +3766,8 @@ Colocar a tabela ou imagem dentro de \verb|figure|/\verb|table| (um \emph{float}
 
   Metade das entradas está escrita com os nomes de tipo e de campo em \textbf{inglês} e metade com os sinônimos em \textbf{português}, de propósito, para que as duas formas apareçam funcionando lado a lado. \textbf{Prefira a inglesa}: é a do \texttt{biblatex}, é a que os gerenciadores de referência exportam, e é a que outra pessoa vai reconhecer quatro anos depois. Os sinônimos em português existem para quem chega de uma base antiga e não quer reescrever tudo.
 
-  \begin{longtable}{@{}p{0.46\textwidth}p{0.17\textwidth}p{0.28\textwidth}@{}}
+  % Colunas estreitas alinhadas à esquerda: justificadas, abriam buracos.
+  \begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.46\textwidth}>{\raggedright\arraybackslash}p{0.17\textwidth}>{\raggedright\arraybackslash}p{0.28\textwidth}@{}}
     \caption{Uma referência de cada categoria da seção 4.2 do Manual}
     \label{tab:todosostipos}\\
     \toprule
@@ -3734,7 +3836,7 @@ Este é o conteúdo do meu textbox sem título. Você pode adicionar qualquer te
         \begin{scope}[x={(image.south east)},y={(image.north west)}]
             % Definindo o textbox dentro da figura
             \node[anchor=north west, text width=0.3\textwidth, fill=white, opacity=0.7, text opacity=1] at (0.05,0.95) { % Ajuste a posição conforme necessário
-                \begin{tcolorbox}[colback=red!5!white,colframe=red!75!black,title=Textbox dentro de uma figura]
+                \begin{tcolorbox}[colback=red!5!white,colframe=red!75!black,halign=flush left,halign title=flush left,title=Textbox dentro de uma figura]
                     Este textbox fala sobre como inserir um textbox dentro de uma figura usando o pacote \texttt{tikz} e \texttt{tcolorbox} no \LaTeX.
                 \end{tcolorbox}
             };
@@ -6367,8 +6469,18 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % back after it.
 % An exame de qualificacao is not deposited with the library: no ficha
 % catalografica, and no Coleta CAPES sheet. Everything else gets both.
+%
+% Stepping back makes the approval sheet page 2 as well, and hyperref names
+% page anchors after \thepage: two "page.2" in one PDF, a pdfTeX warning
+% ("destination with the same identifier") and a bookmark that may land on the
+% wrong sheet. The folha adicional gets an anchor name of its own for the one
+% page it occupies; nothing is printed on it, so \thepage shows nowhere else.
   \if@coppeexame\else
-    \makefolhaadicional\clearpage\addtocounter{page}{-1}%
+    \begingroup
+      \def\thepage{\arabic{page}-folhaadicional}%
+      \makefolhaadicional\clearpage
+    \endgroup
+    \addtocounter{page}{-1}%
   \fi
   \global\let\maketitle\relax%
   \global\let\and\relax}
@@ -6542,12 +6654,22 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
       pdfkeywords={\the\toks@}%
     }%
   }%
-\x
+% Sob `pdfa' os metadados ja foram entregues: o pdfx os leu do .xmpdata que a
+% classe escreve a partir destes mesmos dados, e os passou ao hyperref. Repeti-
+% los aqui nao muda nada no PDF e rende cinco "Option `pdfauthor' has already
+% been used" no log, um por chave -- ruido em todo documento de deposito.
+% (\x fecha o grupo aberto la em cima; sem ele, o \endgroup vai sozinho.)
+\if@coppepdfa
+  \endgroup
+\else
+  \x
+  \hypersetup{%
+    pdfauthor={\@authname\ \@authsurn},
+    pdftitle={\local@title},
+    pdfsubject={\local@doctype\ de \@degreename\ em \local@deptname\ da COPPE/UFRJ},
+    pdfcreator={LaTeX with CoppeTeX toolkit}}%
+\fi
 \hypersetup{%
-  pdfauthor={\@authname\ \@authsurn},
-  pdftitle={\local@title},
-  pdfsubject={\local@doctype\ de \@degreename\ em \local@deptname\ da COPPE/UFRJ},
-  pdfcreator={LaTeX with CoppeTeX toolkit},
   breaklinks={true},
   raiselinks={true},
   pageanchor={true},
@@ -7486,7 +7608,23 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % documents that are otherwise perfectly fine. a-2b is ISO 19005-2, accepted by
 % Pantheon and by the SiBI's own instructions, which also list PDF/A-2b.
 \if@coppepdfa
+% pdfx announces, as a WARNING and in every compilation, that it sets all
+% colour commands to RGB. That is not a problem to fix but the intended
+% behaviour: PDF/A-2b carries an sRGB output intent, and RGB is the colour model
+% that matches it. A warning that never calls for action trains the author to
+% skip warnings, so that one sentence goes to the log as Info.
+%
+% It has to be caught while pdfx LOADS: xcolor is already loaded by then, and
+% pdfx sets the colour model on the spot, from a macro it defines a few lines
+% earlier -- redefining that macro afterwards is too late. Only messages
+% containing "Setting all color commands" are demoted; any other pdfx warning
+% (a missing .xmpdata, a colour profile not found) stays a warning.
+  \let\coppe@PackageWarning\PackageWarning
+  \def\PackageWarning#1#2{%
+    \in@{Setting all color commands}{#2}%
+    \ifin@\PackageInfo{#1}{#2}\else\coppe@PackageWarning{#1}{#2}\fi}
   \RequirePackage[a-2b]{pdfx}
+  \let\PackageWarning\coppe@PackageWarning
 % pdfTeX stamps /PTEX.Fullbanner into the document information dictionary.
 % It is not one of the keys ISO 19005-2 6.6.2.3.2 maps to an XMP property, and
 % no extension schema declares it, so it is a DocInfo entry with no XMP
@@ -7676,6 +7814,12 @@ postamble
     \renewcommand{\appendixname}{\coppestring{annex}}%
     \appendix
     \@coppeannextrue
+% \appendix restarts the chapter counter, so Annex A is chapter A again, just
+% like Appendix A -- and hyperref named both anchors "chapter.A". Two
+% destinations with one name: a pdfTeX warning per letter, and table-of-contents
+% links to an annex that could land on the appendix. The annexes get their own
+% hyperref names; sections, figures and tables inside inherit \theHchapter.
+    \def\theHchapter{annex.\Alph{chapter}}%
 % \appendix has already re-issued the centred chapter format, but it baked in
 % the \appendixname of that moment. Re-issue it now that the name is "Anexo".
     \coppe@appendixheadings
@@ -9689,11 +9833,41 @@ postamble
     main language, \texttt{foreignabstract} defaults to English by class
     convention.
   \end{foreignabstract}
+  % Listas pré-textuais: só o sumário é obrigatório (Manual 3.1.2.1.6).
+  % As listas de figuras, tabelas, abreviaturas e siglas e símbolos são
+  % opcionais (3.1.2.2); as de quadros, programas e algoritmos entram quando
+  % o trabalho tem um deles (Norma COPPE, §10). Esta demonstração não tem
+  % ilustrações, por isso só imprime o sumário.
   \tableofcontents
   \mainmatter
   \chapter{Introdução}
   Este capítulo demonstra que o corpo do trabalho é composto em português,
   com legendas, citações e referências automaticamente em português.
+  \section{O arquivo de depósito: PDF/A}
+  O depósito na UFRJ é exclusivamente digital desde a Resolução CEPG
+  n.~246/2023, e o Manual (2.2d) exige o arquivo final em \textbf{PDF/A}, o
+  formato de arquivamento de longo prazo. PDF/A é o PDF restrito pela norma
+  ISO~19005 para preservação: todas as fontes vão embutidas, as cores declaram
+  um perfil (sRGB) que as torna independentes do equipamento, os metadados vão
+  num bloco XMP que os repositórios leem, e nada depende de fora --- sem
+  conteúdo externo, JavaScript ou criptografia. Assim o arquivo abre igual daqui
+  a décadas, em qualquer computador.
+
+  A classe usa a variante \textbf{PDF/A-2b}: a parte 2 admite transparência,
+  que a parte 1 proíbe e que caixas coloridas e gráficos produzem, e o nível
+  \emph{b} garante a reprodução visual fiel. Basta a opção \texttt{pdfa} em
+  \verb|\documentclass[dsc,pdfa]{coppe}|: a classe carrega o \texttt{pdfx},
+  monta os metadados a partir do título, do autor e das palavras-chave, e
+  embute o perfil de cor. Ligue-a cedo, como faz o \texttt{example.tex}: um PDF
+  ou uma imagem incluídos fora da norma aparecem no dia em que entram, e não na
+  véspera do depósito. Para conferir, use o validador veraPDF, perfil PDF/A-2b.
+
+  \section{Fluxos de escrita}
+  O \hologo{pdfLaTeX} mantém no máximo dezesseis arquivos abertos para escrita,
+  e cada lista, índice ou glossário ocupa um. Por isso a classe carrega o
+  \texttt{morewrites}. A opção \texttt{semmorewrites} o desliga e poupa cerca de
+  meio segundo por passada, mas só serve a trabalho sem índice remissivo, sem
+  vários índices e sem glossário.
 \end{document}
 %</examplept>
 % \fi
@@ -9731,12 +9905,41 @@ postamble
     Este é o resumo em língua estrangeira (português), produzido pelo
     ambiente \texttt{foreignabstract} quando o idioma principal é o inglês.
   \end{foreignabstract}
+  % Front-matter lists: only the table of contents is mandatory (UFRJ
+  % Manual 3.1.2.1.6). The lists of figures, tables, abbreviations and
+  % symbols are optional (3.1.2.2); the lists of quadros, programs and
+  % algorithms appear when the work has one (COPPE norm, §10). This demo
+  % has no illustrations, so it prints only the table of contents.
   \tableofcontents
   \mainmatter
   \chapter{Introduction}
   This chapter shows that the body is composed in English while the
   cover and folha-de-rosto remain in Portuguese (the UFRJ institutional
   template).
+  \section{The deposit file: PDF/A}
+  Deposit at UFRJ has been digital only since CEPG Resolution 246/2023, and the
+  UFRJ Manual (2.2d) requires the final file in \textbf{PDF/A}, the long-term
+  archiving format. PDF/A is PDF restricted by ISO~19005 for preservation: every
+  font is embedded, colours declare a profile (sRGB) that makes them device
+  independent, metadata go in an XMP packet that repositories read, and nothing
+  depends on the outside --- no external content, JavaScript or encryption. The
+  file then opens the same way decades from now, on any computer.
+
+  The class uses \textbf{PDF/A-2b}: part 2 allows transparency, which part 1
+  forbids and which coloured boxes and graphics often produce, and level
+  \emph{b} guarantees faithful visual reproduction. The \texttt{pdfa} option in
+  \verb|\documentclass[english,dsc,pdfa]{coppe}| is all it takes: the class
+  loads \texttt{pdfx}, builds the metadata from the title, author and keywords,
+  and embeds the colour profile. Turn it on early, as \texttt{example.tex}
+  does: a non-conforming PDF or image shows up the day it is added, not the day
+  before the deposit. To check, use the veraPDF validator, PDF/A-2b profile.
+
+  \section{Write streams}
+  pdf\LaTeX{} keeps at most sixteen files open for writing, and each list,
+  index or glossary takes one. That is why the class loads
+  \texttt{morewrites}. The \texttt{semmorewrites} option turns it off and saves
+  about half a second per pass, but only suits a work with no index, no
+  multiple indexes and no glossary.
 \end{document}
 %</exampleen>
 % \fi
@@ -9786,12 +9989,43 @@ postamble
     \texttt{brazilianabstract} para a leitura da banca brasileira quando o
     idioma principal n\~ao \'e o portugu\^es.
   \end{brazilianabstract}
+  % Listas pretextuales: solo el sumario es obligatorio (Manual UFRJ
+  % 3.1.2.1.6). Las listas de figuras, tablas, abreviaturas y símbolos son
+  % opcionales (3.1.2.2); las de cuadros, programas y algoritmos aparecen
+  % cuando el trabajo tiene uno (Norma COPPE, §10). Esta demostración no
+  % tiene ilustraciones, por eso solo imprime el sumario.
   \tableofcontents
   \mainmatter
   \chapter{Introducci\'on}
   Este cap\'itulo demuestra el cuerpo en espa\~nol, mientras la portada
   y la folha-de-rosto permanecen en portugu\'es (plantilla institucional
   UFRJ).
+  \section{El archivo de depósito: PDF/A}
+  El depósito en la UFRJ es exclusivamente digital desde la Resolución CEPG
+  n.~246/2023, y el Manual de la UFRJ (2.2d) exige el archivo final en
+  \textbf{PDF/A}, el formato de archivo a largo plazo. PDF/A es el PDF
+  restringido por la norma ISO~19005 para la preservación: todas las fuentes van
+  incrustadas, los colores declaran un perfil (sRGB) que los hace independientes
+  del equipo, los metadatos van en un bloque XMP que los repositorios leen, y
+  nada depende del exterior --- sin contenido externo, JavaScript ni cifrado.
+  Así el archivo se abre igual dentro de décadas, en cualquier computadora.
+
+  La clase usa la variante \textbf{PDF/A-2b}: la parte 2 admite transparencia,
+  que la parte 1 prohíbe y que producen las cajas de color y los gráficos, y el
+  nivel \emph{b} garantiza la reproducción visual fiel. Basta la opción
+  \texttt{pdfa} en \verb|\documentclass[spanish,dsc,pdfa]{coppe}|: la clase carga
+  \texttt{pdfx}, arma los metadatos a partir del título, el autor y las palabras
+  clave, e incrusta el perfil de color. Actívela temprano, como hace
+  \texttt{example.tex}: un PDF o una imagen fuera de la norma aparecen el día en
+  que entran, y no la víspera del depósito. Para verificar, use el validador
+  veraPDF, perfil PDF/A-2b.
+
+  \section{Flujos de escritura}
+  pdf\LaTeX{} mantiene como máximo dieciséis archivos abiertos para escritura,
+  y cada lista, índice o glosario ocupa uno. Por eso la clase carga
+  \texttt{morewrites}. La opción \texttt{semmorewrites} lo desactiva y ahorra
+  cerca de medio segundo por pasada, pero solo sirve para un trabajo sin índice
+  alfabético, sin varios índices y sin glosario.
 \end{document}
 %</examplees>
 % \fi
@@ -9842,12 +10076,44 @@ postamble
     \texttt{brazilianabstract} para a leitura da banca brasileira quando
     o idioma principal n\~ao \'e o portugu\^es.
   \end{brazilianabstract}
+  % Listes pré-textuelles : seule la table des matières est obligatoire
+  % (Manuel UFRJ 3.1.2.1.6). Les listes des figures, des tableaux, des
+  % abréviations et des symboles sont facultatives (3.1.2.2) ; celles des
+  % quadros, programmes et algorithmes apparaissent quand le travail en
+  % contient (norme COPPE, §10). Cette démonstration n'imprime que la table.
   \tableofcontents
   \mainmatter
   \chapter{Introduction}
   Ce chapitre d\'emontre le corps r\'edig\'e en fran\c{c}ais, tandis que
   la couverture et la folha-de-rosto restent en portugais (mod\`ele
   institutionnel UFRJ).
+  \section{Le fichier de dépôt : PDF/A}
+  Le dépôt à l'UFRJ est exclusivement numérique depuis la résolution CEPG
+  n.~246/2023, et le Manuel de l'UFRJ (2.2d) exige le fichier final en
+  \textbf{PDF/A}, le format d'archivage à long terme. Le PDF/A est le PDF
+  restreint par la norme ISO~19005 pour la conservation : toutes les polices
+  sont incorporées, les couleurs déclarent un profil (sRGB) qui les rend
+  indépendantes du matériel, les métadonnées sont dans un bloc XMP que lisent
+  les dépôts, et rien ne dépend de l'extérieur --- ni contenu externe, ni
+  JavaScript, ni chiffrement. Le fichier s'ouvre ainsi de la même façon dans
+  plusieurs décennies, sur n'importe quel ordinateur.
+
+  La classe utilise le \textbf{PDF/A-2b} : la partie 2 admet la transparence,
+  que la partie 1 interdit et que produisent souvent les boîtes colorées et les
+  graphiques, et le niveau \emph{b} garantit une reproduction visuelle fidèle.
+  L'option \texttt{pdfa} suffit : la classe charge \texttt{pdfx}, construit les
+  métadonnées à partir du titre, de l'auteur et des mots-clés, et incorpore le
+  profil de couleur. Activez-la tôt, comme le fait \texttt{example.tex}. Pour
+  vérifier, utilisez le validateur veraPDF, profil PDF/A-2b. Le français n'est
+  pas une langue de rédaction admise pour une thèse de la COPPE (résolution
+  CEPG n.~302/2024, art.~57) : ce document ne fait que démontrer le mécanisme.
+
+  \section{Flux d'écriture}
+  pdf\LaTeX{} garde au plus seize fichiers ouverts en écriture, et chaque liste,
+  index ou glossaire en occupe un. C'est pourquoi la classe charge
+  \texttt{morewrites}. L'option \texttt{semmorewrites} le désactive et gagne
+  environ une demi-seconde par passe, mais seulement pour un travail sans index,
+  sans index multiples et sans glossaire.
 \end{document}
 %</examplefr>
 % \fi
@@ -9897,12 +10163,44 @@ postamble
     \texttt{brazilianabstract} para a leitura da banca brasileira quando
     o idioma principal n\~ao \'e o portugu\^es.
   \end{brazilianabstract}
+  % Elenchi pre-testuali: solo l'indice generale è obbligatorio (Manuale
+  % UFRJ 3.1.2.1.6). Gli elenchi di figure, tabelle, abbreviazioni e simboli
+  % sono facoltativi (3.1.2.2); quelli di quadros, programmi e algoritmi
+  % compaiono quando il lavoro ne contiene (norma COPPE, §10). Questa
+  % dimostrazione stampa solo l'indice.
   \tableofcontents
   \mainmatter
   \chapter{Introduzione}
   Questo capitolo dimostra il corpo redatto in italiano, mentre la
   copertina e la folha-de-rosto rimangono in portoghese (modello
   istituzionale UFRJ).
+  \section{Il file di deposito: PDF/A}
+  Il deposito all'UFRJ è esclusivamente digitale dalla risoluzione CEPG
+  n.~246/2023, e il Manuale dell'UFRJ (2.2d) richiede il file finale in
+  \textbf{PDF/A}, il formato di archiviazione a lungo termine. Il PDF/A è il PDF
+  ristretto dalla norma ISO~19005 per la conservazione: tutti i font sono
+  incorporati, i colori dichiarano un profilo (sRGB) che li rende indipendenti
+  dal dispositivo, i metadati stanno in un blocco XMP letto dai repository, e
+  nulla dipende dall'esterno --- niente contenuti esterni, JavaScript o
+  cifratura. Così il file si apre allo stesso modo tra decenni, su qualsiasi
+  computer.
+
+  La classe usa il \textbf{PDF/A-2b}: la parte 2 ammette la trasparenza, che la
+  parte 1 vieta e che riquadri colorati e grafici producono spesso, e il livello
+  \emph{b} garantisce una riproduzione visiva fedele. Basta l'opzione
+  \texttt{pdfa}: la classe carica \texttt{pdfx}, costruisce i metadati da
+  titolo, autore e parole chiave, e incorpora il profilo colore. Attivatela
+  presto, come fa \texttt{example.tex}. Per verificare, usate il validatore
+  veraPDF, profilo PDF/A-2b. L'italiano non è una lingua ammessa per una tesi
+  della COPPE (risoluzione CEPG n.~302/2024, art.~57): questo documento
+  dimostra soltanto il meccanismo.
+
+  \section{Flussi di scrittura}
+  pdf\LaTeX{} tiene al massimo sedici file aperti in scrittura, e ogni elenco,
+  indice o glossario ne occupa uno. Per questo la classe carica
+  \texttt{morewrites}. L'opzione \texttt{semmorewrites} lo disattiva e fa
+  risparmiare circa mezzo secondo per passata, ma solo per un lavoro senza
+  indice analitico, senza più indici e senza glossario.
 \end{document}
 %</exampleit>
 % \fi

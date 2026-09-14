@@ -71,12 +71,44 @@
     \texttt{brazilianabstract} para a leitura da banca brasileira quando
     o idioma principal n\~ao \'e o portugu\^es.
   \end{brazilianabstract}
+  % Listes pré-textuelles : seule la table des matières est obligatoire
+  % (Manuel UFRJ 3.1.2.1.6). Les listes des figures, des tableaux, des
+  % abréviations et des symboles sont facultatives (3.1.2.2) ; celles des
+  % quadros, programmes et algorithmes apparaissent quand le travail en
+  % contient (norme COPPE, §10). Cette démonstration n'imprime que la table.
   \tableofcontents
   \mainmatter
   \chapter{Introduction}
   Ce chapitre d\'emontre le corps r\'edig\'e en fran\c{c}ais, tandis que
   la couverture et la folha-de-rosto restent en portugais (mod\`ele
   institutionnel UFRJ).
+  \section{Le fichier de dépôt : PDF/A}
+  Le dépôt à l'UFRJ est exclusivement numérique depuis la résolution CEPG
+  n.~246/2023, et le Manuel de l'UFRJ (2.2d) exige le fichier final en
+  \textbf{PDF/A}, le format d'archivage à long terme. Le PDF/A est le PDF
+  restreint par la norme ISO~19005 pour la conservation : toutes les polices
+  sont incorporées, les couleurs déclarent un profil (sRGB) qui les rend
+  indépendantes du matériel, les métadonnées sont dans un bloc XMP que lisent
+  les dépôts, et rien ne dépend de l'extérieur --- ni contenu externe, ni
+  JavaScript, ni chiffrement. Le fichier s'ouvre ainsi de la même façon dans
+  plusieurs décennies, sur n'importe quel ordinateur.
+
+  La classe utilise le \textbf{PDF/A-2b} : la partie 2 admet la transparence,
+  que la partie 1 interdit et que produisent souvent les boîtes colorées et les
+  graphiques, et le niveau \emph{b} garantit une reproduction visuelle fidèle.
+  L'option \texttt{pdfa} suffit : la classe charge \texttt{pdfx}, construit les
+  métadonnées à partir du titre, de l'auteur et des mots-clés, et incorpore le
+  profil de couleur. Activez-la tôt, comme le fait \texttt{example.tex}. Pour
+  vérifier, utilisez le validateur veraPDF, profil PDF/A-2b. Le français n'est
+  pas une langue de rédaction admise pour une thèse de la COPPE (résolution
+  CEPG n.~302/2024, art.~57) : ce document ne fait que démontrer le mécanisme.
+
+  \section{Flux d'écriture}
+  pdf\LaTeX{} garde au plus seize fichiers ouverts en écriture, et chaque liste,
+  index ou glossaire en occupe un. C'est pourquoi la classe charge
+  \texttt{morewrites}. L'option \texttt{semmorewrites} le désactive et gagne
+  environ une demi-seconde par passe, mais seulement pour un travail sans index,
+  sans index multiples et sans glossaire.
 \end{document}
 %% 
 %%

@@ -1172,7 +1172,11 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   % R57); the verso is gone with the printed copy.
   \setcounter{page}{2}%
   \if@coppeexame\else
-    \makefolhaadicional\clearpage\addtocounter{page}{-1}%
+    \begingroup
+      \def\thepage{\arabic{page}-folhaadicional}%
+      \makefolhaadicional\clearpage
+    \endgroup
+    \addtocounter{page}{-1}%
   \fi
   \global\let\maketitle\relax%
   \global\let\and\relax}
@@ -1286,12 +1290,17 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
       pdfkeywords={\the\toks@}%
     }%
   }%
-\x
+\if@coppepdfa
+  \endgroup
+\else
+  \x
+  \hypersetup{%
+    pdfauthor={\@authname\ \@authsurn},
+    pdftitle={\local@title},
+    pdfsubject={\local@doctype\ de \@degreename\ em \local@deptname\ da COPPE/UFRJ},
+    pdfcreator={LaTeX with CoppeTeX toolkit}}%
+\fi
 \hypersetup{%
-  pdfauthor={\@authname\ \@authsurn},
-  pdftitle={\local@title},
-  pdfsubject={\local@doctype\ de \@degreename\ em \local@deptname\ da COPPE/UFRJ},
-  pdfcreator={LaTeX with CoppeTeX toolkit},
   breaklinks={true},
   raiselinks={true},
   pageanchor={true},
@@ -1861,7 +1870,12 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \RequirePackage{setspace}
 \if@coppedoublespace\doublespacing\else\onehalfspacing\fi
 \if@coppepdfa
+  \let\coppe@PackageWarning\PackageWarning
+  \def\PackageWarning#1#2{%
+    \in@{Setting all color commands}{#2}%
+    \ifin@\PackageInfo{#1}{#2}\else\coppe@PackageWarning{#1}{#2}\fi}
   \RequirePackage[a-2b]{pdfx}
+  \let\PackageWarning\coppe@PackageWarning
   \ifdefined\pdfsuppressptexinfo
     \pdfsuppressptexinfo=-1
   \else
@@ -1926,6 +1940,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \renewcommand{\appendixname}{\coppestring{annex}}%
     \appendix
     \@coppeannextrue
+    \def\theHchapter{annex.\Alph{chapter}}%
     \coppe@appendixheadings
 }
 

@@ -60,12 +60,41 @@
     Este é o resumo em língua estrangeira (português), produzido pelo
     ambiente \texttt{foreignabstract} quando o idioma principal é o inglês.
   \end{foreignabstract}
+  % Front-matter lists: only the table of contents is mandatory (UFRJ
+  % Manual 3.1.2.1.6). The lists of figures, tables, abbreviations and
+  % symbols are optional (3.1.2.2); the lists of quadros, programs and
+  % algorithms appear when the work has one (COPPE norm, §10). This demo
+  % has no illustrations, so it prints only the table of contents.
   \tableofcontents
   \mainmatter
   \chapter{Introduction}
   This chapter shows that the body is composed in English while the
   cover and folha-de-rosto remain in Portuguese (the UFRJ institutional
   template).
+  \section{The deposit file: PDF/A}
+  Deposit at UFRJ has been digital only since CEPG Resolution 246/2023, and the
+  UFRJ Manual (2.2d) requires the final file in \textbf{PDF/A}, the long-term
+  archiving format. PDF/A is PDF restricted by ISO~19005 for preservation: every
+  font is embedded, colours declare a profile (sRGB) that makes them device
+  independent, metadata go in an XMP packet that repositories read, and nothing
+  depends on the outside --- no external content, JavaScript or encryption. The
+  file then opens the same way decades from now, on any computer.
+
+  The class uses \textbf{PDF/A-2b}: part 2 allows transparency, which part 1
+  forbids and which coloured boxes and graphics often produce, and level
+  \emph{b} guarantees faithful visual reproduction. The \texttt{pdfa} option in
+  \verb|\documentclass[english,dsc,pdfa]{coppe}| is all it takes: the class
+  loads \texttt{pdfx}, builds the metadata from the title, author and keywords,
+  and embeds the colour profile. Turn it on early, as \texttt{example.tex}
+  does: a non-conforming PDF or image shows up the day it is added, not the day
+  before the deposit. To check, use the veraPDF validator, PDF/A-2b profile.
+
+  \section{Write streams}
+  pdf\LaTeX{} keeps at most sixteen files open for writing, and each list,
+  index or glossary takes one. That is why the class loads
+  \texttt{morewrites}. The \texttt{semmorewrites} option turns it off and saves
+  about half a second per pass, but only suits a work with no index, no
+  multiple indexes and no glossary.
 \end{document}
 %% 
 %%

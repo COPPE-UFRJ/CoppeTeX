@@ -70,12 +70,43 @@
     \texttt{brazilianabstract} para a leitura da banca brasileira quando o
     idioma principal n\~ao \'e o portugu\^es.
   \end{brazilianabstract}
+  % Listas pretextuales: solo el sumario es obligatorio (Manual UFRJ
+  % 3.1.2.1.6). Las listas de figuras, tablas, abreviaturas y símbolos son
+  % opcionales (3.1.2.2); las de cuadros, programas y algoritmos aparecen
+  % cuando el trabajo tiene uno (Norma COPPE, §10). Esta demostración no
+  % tiene ilustraciones, por eso solo imprime el sumario.
   \tableofcontents
   \mainmatter
   \chapter{Introducci\'on}
   Este cap\'itulo demuestra el cuerpo en espa\~nol, mientras la portada
   y la folha-de-rosto permanecen en portugu\'es (plantilla institucional
   UFRJ).
+  \section{El archivo de depósito: PDF/A}
+  El depósito en la UFRJ es exclusivamente digital desde la Resolución CEPG
+  n.~246/2023, y el Manual de la UFRJ (2.2d) exige el archivo final en
+  \textbf{PDF/A}, el formato de archivo a largo plazo. PDF/A es el PDF
+  restringido por la norma ISO~19005 para la preservación: todas las fuentes van
+  incrustadas, los colores declaran un perfil (sRGB) que los hace independientes
+  del equipo, los metadatos van en un bloque XMP que los repositorios leen, y
+  nada depende del exterior --- sin contenido externo, JavaScript ni cifrado.
+  Así el archivo se abre igual dentro de décadas, en cualquier computadora.
+
+  La clase usa la variante \textbf{PDF/A-2b}: la parte 2 admite transparencia,
+  que la parte 1 prohíbe y que producen las cajas de color y los gráficos, y el
+  nivel \emph{b} garantiza la reproducción visual fiel. Basta la opción
+  \texttt{pdfa} en \verb|\documentclass[spanish,dsc,pdfa]{coppe}|: la clase carga
+  \texttt{pdfx}, arma los metadatos a partir del título, el autor y las palabras
+  clave, e incrusta el perfil de color. Actívela temprano, como hace
+  \texttt{example.tex}: un PDF o una imagen fuera de la norma aparecen el día en
+  que entran, y no la víspera del depósito. Para verificar, use el validador
+  veraPDF, perfil PDF/A-2b.
+
+  \section{Flujos de escritura}
+  pdf\LaTeX{} mantiene como máximo dieciséis archivos abiertos para escritura,
+  y cada lista, índice o glosario ocupa uno. Por eso la clase carga
+  \texttt{morewrites}. La opción \texttt{semmorewrites} lo desactiva y ahorra
+  cerca de medio segundo por pasada, pero solo sirve para un trabajo sin índice
+  alfabético, sin varios índices y sin glosario.
 \end{document}
 %% 
 %%
