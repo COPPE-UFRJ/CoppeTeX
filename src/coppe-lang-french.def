@@ -34,25 +34,25 @@
 %%            Eduardo Mangeli
 %% 
 %% coppe-lang-french.def -- CoppeTeX 4.x French class-string pack.
-%% See coppe-lang-spanish.def for the structure. Institutional names
-%% remain Portuguese; only document-content strings translate.
+%% See coppe-lang-spanish.def for the structure. Nothing institutional lives
+%% here; only document-content strings translate.
 \ProvidesFile{coppe-lang-french.def}[2026/09/09 v4.1 CoppeTeX french class strings]
 %% --- A folha de resumo ------------------------------------------------------
 %% Tudo o que a classe escreve numa folha de resumo sai no idioma daquela folha.
 %% A frase de abertura e montada de pedacos porque a concordancia muda de idioma
 %% para idioma; ver o comentario no coppe.dtx, na tabela de portugues e ingles.
 %%
-%% O NOME do Programa nao entra aqui: a COPPE tem nome oficial para cada Programa
-%% em portugues e em ingles, e so. Numa folha neste idioma vai o nome em
-%% portugues, que e o nome proprio da unidade.
+%% O NOME do Programa nao entra aqui: a unidade o declara em portugues e em
+%% ingles, e so. Numa folha neste idioma vai o nome em portugues, que e o nome
+%% proprio do Programa. O `tounit' daqui e o da classe sem unidade.
 \copperdefstring{french}{abstractname}     {Résumé}
 \copperdefstring{french}{abstractofmale}   {du}
 \copperdefstring{french}{abstractoffemale} {de la}
 \copperdefstring{french}{presentedmale}    {présenté}
 \copperdefstring{french}{presentedfemale}  {présentée}
-\copperdefstring{french}{abstracttail}{à la COPPE/UFRJ comme partie des
+\copperdefstring{french}{tounit}           {à l'UFRJ}
+\copperdefstring{french}{abstracttail}{comme partie des
   exigences requises pour l'obtention du grade de}
-\copperdefstring{french}{sciencename}      {en Sciences}
 \copperdefstring{french}{doctypemsc}  {Mémoire}
 \copperdefstring{french}{doctypedsc}  {Thèse}
 \copperdefstring{french}{doctypeexam} {Examen de Qualification}
@@ -91,10 +91,6 @@
 \copperdefstring{french}{ofname}     {de}
 \copperdefstring{french}{researchline}{Axe de recherche}
 \copperdefstring{french}{tbddate}     {à déterminer}
-\copperdefstring{french}{universityname}{Universidade Federal do Rio de Janeiro}
-\copperdefstring{french}{cityname}    {Rio de Janeiro}
-\copperdefstring{french}{statename}   {RJ}
-\copperdefstring{french}{countryname} {Brasil}
 \copperdefstring{french}{monthname1} {janvier}
 \copperdefstring{french}{monthname2} {février}
 \copperdefstring{french}{monthname3} {mars}

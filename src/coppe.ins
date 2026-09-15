@@ -147,7 +147,10 @@ License version 3 (see the COPYING.txt file).
   \file{manual.bib}{\from{coppe.dtx}{examplebib}}%
   \file{coppe.bib}{\from{coppe.dtx}{coppebib}}%
   \usepreamble\classpreamble
-  \file{coppe.cls}{\from{coppe.dtx}{class}}%
+% A classe e a unidade saem juntas no coppe.cls por enquanto. O modulo `unidade'
+% traz tudo o que e da COPPE (o Instituto, os Programas, o logotipo da direita,
+% as frases e a norma do colofao) e vem por ultimo no arquivo gerado.
+  \file{coppe.cls}{\from{coppe.dtx}{class,unidade}}%
   \file{coppe.dbx}{\from{coppe.dtx}{dbx}}%
   \file{coppe.bbx}{\from{coppe.dtx}{bbx}}%
   \file{coppe.cbx}{\from{coppe.dtx}{cbx}}%

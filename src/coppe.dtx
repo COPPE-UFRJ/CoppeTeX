@@ -167,6 +167,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \changes{v4.1}{2026/09/12}{Two macrocode guards in the .dtx were written with three spaces instead of four. doc.sty only closes a code block on a percent sign followed by exactly four spaces, so sixty lines of documentation were printed as verbatim code in coppe.pdf, and had been for several versions. A dead @wrlab block commented out with four percent signs had the same effect, for the opposite reason: doc.sty ignores every percent sign in the documentation part, so that line opened a real code block. Both are fixed, and tools/conferir-manual.py now checks every guard.}
 % \changes{v4.1}{2026/09/12}{The options section opens with a table of what is default, and every entry states its own default. Three were wrong or missing: resumosemreferencia was described as on by default when it is the reference that is on and the option that is off, and rascunhoficha and the morewrites loading stated no default at all.}
 % \changes{v4.1}{2026/09/12}{The files section described the delivery as it was before the folders: the logos in the root, no logos/, no manuais/, no language folders, and an instruction not to copy coppe.dtx and coppe.ins, which the delivery now ships on purpose. The developer sections still said twelve adversarial documents (there are six), still placed them outside tests/, and did not know tests/regressivo/ or the panel existed.}
+% \changes{v5.0}{2026/09/15}{Everything that belongs to COPPE and not to UFRJ -- the institute's name on the cover and in the reference, the thirteen Programas, the right-hand logo, the phrases a COPPE/UFRJ and em Ciencias, the COPPE norm in the colophon -- is declared in one block at the end of the class, the unidade module, through a generic interface: coppedeclareunit, coppedeclareprogram, coppedeclarelogos, coppedeclarenorm and coppedefunitstring. No other part of the class names a unit. The language packs carry no institutional string any more, and the four institutional keys that no code ever read are gone from every table. A department code that no unit declared is now a class error instead of a cover without the Programa. Every COPPE document comes out unchanged, page by page.}
 % \changes{v4.0}{2026/05/30}{Catalog-label writers (coppe@mainBegin, coppe@bibBegin, coppe@bibEnd, coppe@hasLof) made language-agnostic: detokenize wrap on label names protects ':' and '.' from babel shorthand activation, and the raw etex primitives romannumeral/number replace LaTeX's roman/arabic to bypass spanish-babel's small-caps @roman redefinition that would otherwise crash pdftex with "Unbalanced write command" on every es-main document.}
 %
 % \DoNotIndex{\!,\',\.,\>,\^,\`,\',\=,\\}
@@ -2438,8 +2439,14 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %     |listsymbol|, |glossary|, |advisor|, |advisors|, |coadvisor|, |coadvisors|,
 %     |dept|, |approvedmale|, |approvedfemale|, |approvedonmale|,
 %     |approvedonfemale|, |keywordsname|, |volumename|, |ofname|, |researchline|,
-%     |tbddate|, |universityname|, |cityname|, |statename|, |countryname|,
-%     |monthname1| a |monthname12|, |algorithm2eopt| e |babelname|. Termine com
+%     |tbddate|, |abstractname|, |abstractofmale|, |abstractoffemale|,
+%     |presentedmale|, |presentedfemale|, |tounit|, |abstracttail|,
+%     |doctypemsc|, |doctypedsc|, |doctypeexam|, |doctypesem|, |degnamemsc|,
+%     |degnamedsc|, |monthname1| a |monthname12|, |algorithm2eopt| e
+%     |babelname|. Nada de institucional entra num pacote de idioma: os nomes da
+%     universidade, da unidade e do Programa não se traduzem, e o que é da
+%     unidade --- o nome do grau em |sciencename|, por exemplo --- vem do estilo
+%     dela (seção~\ref{sec:unidade}). Termine com
 % \begin{verbatim}
 %     \AtBeginDocument{\DeclareLanguageMapping{<idioma>}{<idioma>-coppe}}
 % \end{verbatim}
@@ -5025,11 +5032,11 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor i
     {\IfFileExists{#2.pdf}
       {\includegraphics[height=#1]{#2}}
       {\ClassError{coppe}{Logotipo `#2.pdf' nao encontrado}%
-        {Ele vem junto com a classe. Procurei em logos/#2.pdf e em\MessageBreak
-         #2.pdf, e nao achei em nenhum dos dois.\MessageBreak
+        {Ele vem junto com a classe ou com o estilo da unidade. Procurei\MessageBreak
+         em logos/#2.pdf e em #2.pdf, e nao achei em nenhum dos dois.\MessageBreak
          Copie a pasta logos/ para junto do seu trabalho, ou ponha\MessageBreak
-         coppe-logo.pdf e ufrj-logo.pdf ao lado do coppe.cls na\MessageBreak
-         arvore do TeX. Os tres estao em dist/logos/ no repositorio.}%
+         #2.pdf ao lado do coppe.cls na arvore do TeX. Os logotipos\MessageBreak
+         estao em dist/logos/ no repositorio.}%
        \framebox[3cm][c]{\rule{0pt}{#1}\ttfamily #2?}}}}
 \RequirePackage{tabularx}
 \RequirePackage{booktabs}      % regras de tabela profissionais (toprule/midrule/bottomrule)
@@ -6219,12 +6226,21 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \copperdefstring{brazilian}{presentedfemale}  {apresentada}
 \copperdefstring{english}  {presentedmale}    {presented}
 \copperdefstring{english}  {presentedfemale}  {presented}
-\copperdefstring{brazilian}{abstracttail}{à COPPE/UFRJ como parte dos
+% A quem o trabalho foi apresentado (tounit) e o resto da frase
+% (abstracttail) sao duas chaves, e nao uma, porque a primeira e da UNIDADE e
+% a segunda e do IDIOMA. A contracao depende do genero do nome da unidade --
+% "a COPPE", "o Instituto", "la COPPE", "el Instituto" --, e so quem declara a
+% unidade sabe dizer. O valor daqui e o da classe sem unidade nenhuma: o
+% trabalho foi apresentado a UFRJ. Um estilo de unidade o troca com
+% \coppedefunitstring, que tem precedencia sobre esta tabela. O grau "em
+% Ciencias" (sciencename) nao tem valor aqui pelo mesmo motivo: e o nome que
+% uma unidade da ao seu grau, e sem unidade a frase termina no grau.
+\copperdefstring{brazilian}{tounit}           {à UFRJ}
+\copperdefstring{english}  {tounit}           {to UFRJ}
+\copperdefstring{brazilian}{abstracttail}{como parte dos
   requisitos necessários para a obtenção do grau de}
-\copperdefstring{english}{abstracttail}{to COPPE/UFRJ as a partial fulfillment
+\copperdefstring{english}{abstracttail}{as a partial fulfillment
   of the requirements for the degree of}
-\copperdefstring{brazilian}{sciencename}      {em Ciências}
-\copperdefstring{english}  {sciencename}      {of Science}
 % O tipo do trabalho e o grau, por idioma. A chave e escolhida pela opcao de
 % tipo de trabalho, que grava \coppe@doctypekey e \coppe@degkey.
 \copperdefstring{brazilian}{doctypemsc}  {Dissertação}
@@ -6273,15 +6289,11 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \copperdefstring{english}  {ofname}     {of}
 \copperdefstring{english}  {researchline}{Research line}
 \copperdefstring{english}  {tbddate}    {to be determined}
-% Institutional names: always Portuguese on the cover/folha (UFRJ template).
-\copperdefstring{brazilian}{universityname}{Universidade Federal do Rio de Janeiro}
-\copperdefstring{english}  {universityname}{Universidade Federal do Rio de Janeiro}
-\copperdefstring{brazilian}{cityname}     {Rio de Janeiro}
-\copperdefstring{english}  {cityname}     {Rio de Janeiro}
-\copperdefstring{brazilian}{statename}    {RJ}
-\copperdefstring{english}  {statename}    {RJ}
-\copperdefstring{brazilian}{countryname}  {Brasil}
-\copperdefstring{english}  {countryname}  {Brasil}
+% Os nomes da universidade, da cidade, do estado e do pais nao estao nesta
+% tabela. Estiveram, como universityname, cityname, statename e countryname, em
+% todos os idiomas e com o mesmo valor em portugues, e nada nunca os leu: a capa
+% e a folha de rosto usam \local@universityname e seus vizinhos, que nao mudam
+% com o idioma porque a identidade institucional nao se traduz.
 % Month names.
 \copperdefstring{brazilian}{monthname1} {Janeiro}
 \copperdefstring{brazilian}{monthname2} {Fevereiro}
@@ -6519,80 +6531,179 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % ficha catalográfica, folha de aprovação, dedicatória, os resumos e o
 % colófon.
 %
+% \subsubsection{A instituição e a unidade}\label{sec:unidade}
+%
+% A classe sabe o que é da \textbf{UFRJ}: o nome da universidade, a cidade, o
+% logotipo da esquerda, o Manual do SiBI. O que é de uma \textbf{unidade} --- o
+% nome do instituto ou da escola, os Programas, o logotipo da direita, as
+% frases que só aquela unidade escreve e a norma que ela acrescenta ao Manual
+% --- a classe não sabe: recebe por declaração. As declarações da COPPE estão
+% todas num lugar só, na seção~\ref{sec:unidade-coppe}, e nenhuma outra parte
+% da classe nomeia unidade nenhuma.
+%
+% \DescribeMacro{\coppedeclareunit}
+% |\coppedeclareunit|\marg{nome por extenso}\marg{nome na capa}\marg{sigla}
+% declara a unidade. O nome por extenso vai, numa linha só, na referência do
+% trabalho que abre as folhas de resumo; o nome na capa é o mesmo nome com as
+% quebras de linha que a capa usa, escritas com |\\|; a sigla vai na natureza da
+% folha de rosto, nos metadados do PDF e na ficha em rascunho.
+%
+% \DescribeMacro{\coppedeclareprogram}
+% |\coppedeclareprogram|\marg{sigla}\marg{nome em português}\marg{nome em
+% inglês} declara um Programa, que o autor escolhe com |\department|\marg{sigla}.
+% O nome em inglês só aparece na folha do \emph{abstract}; em todo o resto, e nas
+% folhas de resumo em outros idiomas, vai o nome em português, que é o nome
+% próprio do Programa.
+%
+% \DescribeMacro{\coppedeclarelogos}
+% |\coppedeclarelogos|\oarg{altura}\marg{esquerda}\marg{direita} diz quais
+% logotipos vão no alto da capa e da folha de rosto, pelo nome do arquivo |.pdf|
+% sem a extensão. Um nome vazio tira aquele logotipo. Sem declaração nenhuma,
+% vai só o da UFRJ, à esquerda, com 2\,cm de altura: o Anexo~A do Manual marca os
+% dois logotipos como opcionais.
+%
+% \DescribeMacro{\coppedeclarenorm}
+% |\coppedeclarenorm|\marg{artigo}\marg{título} troca a norma que o colofão diz
+% seguir. O artigo vem à parte porque a frase é ``em conformidade com
+% \meta{artigo} \meta{título}'', e \emph{o} Manual e \emph{a} Norma pedem
+% artigos diferentes.
+%
+% \DescribeMacro{\coppedefunitstring}
+% |\coppedefunitstring|\marg{idioma}\marg{chave}\marg{texto} define um texto da
+% unidade num idioma, com precedência sobre a tabela da classe e dos pacotes de
+% idioma, não importa qual dos dois foi carregado antes. As chaves que uma
+% unidade costuma definir são |tounit|, a quem o trabalho foi apresentado, com a
+% contração (``à COPPE/UFRJ''); |sciencename|, o nome do grau (``em
+% Ciências''); e |coverprogram|, a linha do Programa na capa. A chave |natureza|,
+% a frase da folha de rosto e da folha de aprovação, tem um valor da classe que
+% já inclui a sigla da unidade, e raramente precisa ser trocada.
+%
+%    \begin{macrocode}
+% A unidade. \local@instname e o nome que a referencia do resumo sempre usou, e
+% ficou com o nome antigo para que nada mais precisasse mudar. Os tres comecam
+% vazios com \newcommand*, e nao com \newcommand: a forma sem estrela define uma
+% macro \long, e \ifx nunca acha uma macro \long igual a \@empty -- o teste de
+% "nenhuma unidade declarada" daria sempre falso.
+\newcommand*\local@instname{}
+\newcommand*\coppe@unitcover{}
+\newcommand*\coppe@unitacronym{}
+\newcommand\coppedeclareunit[3]{%
+  \gdef\local@instname{#1}%
+  \gdef\coppe@unitcover{#2}%
+  \gdef\coppe@unitacronym{#3}}
+% A sigla dentro das frases da classe. \coppe@unitsep e o trecho ", COPPE," do
+% meio da natureza e da ficha; o espaco do comeco vem sempre, com ou sem unidade,
+% para que a frase sem unidade nao grude a virgula na palavra seguinte.
+% \coppe@unitshort e "COPPE/UFRJ", e \coppe@unitshortrev e "UFRJ/COPPE", a ordem
+% da ficha catalografica. Os tres expandem ate o fim, porque vao parar no XMP e
+% nos metadados do hyperref.
+\newcommand*\coppe@unitsep{ \ifx\coppe@unitacronym\@empty\else\coppe@unitacronym, \fi}
+\newcommand*\coppe@unitshort{%
+  \ifx\coppe@unitacronym\@empty\else\coppe@unitacronym/\fi UFRJ}
+\newcommand*\coppe@unitshortrev{%
+  UFRJ\ifx\coppe@unitacronym\@empty\else/\coppe@unitacronym\fi}
+% Os logotipos da capa e da folha de rosto. O da UFRJ, a esquerda, e o padrao da
+% classe; o da direita e da unidade.
+\newcommand*\coppe@logoheight{2cm}
+\newcommand*\coppe@logoleft{ufrj-logo}
+\newcommand*\coppe@logoright{}
+\newcommand\coppedeclarelogos[3][2cm]{%
+  \gdef\coppe@logoheight{#1}%
+  \gdef\coppe@logoleft{#2}%
+  \gdef\coppe@logoright{#3}}
+% A linha dos logotipos. Nenhum espaco solto entre as pecas: a caixa tem a
+% largura da linha, e um espaco a mais empurraria o logotipo da direita.
+\newcommand\coppe@logoline{%
+  \makebox[\linewidth]{%
+    \ifx\coppe@logoleft\@empty\else
+      \coppe@logo[\coppe@logoheight]{\coppe@logoleft}\fi
+    \hfill
+    \ifx\coppe@logoright\@empty\else
+      \coppe@logo[\coppe@logoheight]{\coppe@logoright}\fi}}
+% Os Programas: cada um guarda o nome nos dois idiomas em que a unidade o tem.
+\newcommand\coppedeclareprogram[3]{%
+  \expandafter\gdef\csname coppe@prog@#1@brazilian\endcsname{#2}%
+  \expandafter\gdef\csname coppe@prog@#1@english\endcsname{#3}}
+% Os textos da unidade, e a leitura deles. A unidade escreve numa tabela propria,
+% coppe@unit@<idioma>@<chave>, e nao na da classe: um pacote de idioma carregado
+% DEPOIS dela -- \usecoppelanguage vale no preambulo inteiro -- apagaria o texto
+% da unidade com o valor generico do idioma.
+\newcommand\coppedefunitstring[3]{%
+  \expandafter\gdef\csname coppe@unit@#1@#2\endcsname{#3}}
+\newcommand\coppe@unitstr[2]{%
+  \@ifundefined{coppe@unit@#1@#2}%
+    {\@nameuse{coppe@str@#1@#2}}%
+    {\@nameuse{coppe@unit@#1@#2}}}
+% O mesmo com um espaco na frente, ou nada quando o texto nao existe: e o que
+% evita "Doutor  (D.Sc.)", com dois espacos, numa unidade que nao da nome ao grau.
+\newcommand\coppe@unitstrsp[2]{%
+  \@ifundefined{coppe@unit@#1@#2}%
+    {\@ifundefined{coppe@str@#1@#2}{}{\ \@nameuse{coppe@str@#1@#2}}}%
+    {\ \@nameuse{coppe@unit@#1@#2}}}
+% No idioma principal, e em portugues quando nem a unidade nem o idioma tem o
+% texto. E a regra da identidade institucional: o que nao foi traduzido sai em
+% portugues, e nunca em branco.
+\newcommand\coppe@unitstrmain[1]{%
+  \@ifundefined{coppe@unit@\coppe@mainlang @#1}%
+    {\@ifundefined{coppe@str@\coppe@mainlang @#1}%
+      {\coppe@unitstr{brazilian}{#1}}%
+      {\@nameuse{coppe@str@\coppe@mainlang @#1}}}%
+    {\@nameuse{coppe@unit@\coppe@mainlang @#1}}}
+% O texto guardado numa macro, para quem precisa dele assim: o \MakeUppercase da
+% capa expande o argumento, e \@ifundefined nao pode ir la dentro.
+\newcommand\coppe@letunitstr[3]{%
+  \@ifundefined{coppe@unit@#2@#3}%
+    {\expandafter\let\expandafter#1\csname coppe@str@#2@#3\endcsname}%
+    {\expandafter\let\expandafter#1\csname coppe@unit@#2@#3\endcsname}}
+% A norma do colofao, com o artigo que concorda com ela. O titulo padrao, o do
+% Manual do SiBI, esta com o colofao.
+\newcommand*\coppe@finalmanualart{o }
+\newcommand\coppedeclarenorm[2]{%
+  \gdef\coppe@finalmanualart{#1 }%
+  \gdef\coppefinalmanual{#2}}
+% Os textos institucionais que a classe escreve quando nenhuma unidade diz outra
+% coisa. Estao em portugues, e so em portugues, porque sao identidade.
+\copperdefstring{brazilian}{coverprogram}{Programa de Pós-Graduação em \local@deptname}
+\copperdefstring{brazilian}{natureza}{\local@doctype\ de \@degreename\
+  \ifthenelse{\boolean{maledoc}}{apresentado}{apresentada}
+  ao Programa de Pós-graduação em \local@deptname,\coppe@unitsep
+  da \local@universityname, como parte dos requisitos
+  necessários à obtenção do título de
+  \local@degname\ em \local@deptname.}
+%    \end{macrocode}
+%
 % \subsubsection{Identificação do trabalho}
 %
 % \begin{macro}{\department}
-% This macro is used to set the author's affiliation. There are twelve options
-% which correspond to all academic units at COPPE/UFRJ. It defines the current
-% and the foreign names of these units.
+% Escolhe o Programa pela sigla, entre os que a unidade declarou com
+% |\coppedeclareprogram|. Uma sigla que ninguém declarou é erro, e o erro diz
+% isso, em vez de a capa sair sem o nome do Programa.
 %    \begin{macrocode}
 \newcommand\coppe@deptcode{}
 \newcommand\meta@deptname{}
 \newcommand\department[1]{%
-% The programme CODE is kept alongside the resolved name, and each name is
-% declared TWICE. \local@deptname keeps the TeX accent escapes with braces
-% (Computação) that the cover and the folha de rosto typeset;
-% \meta@deptname is the same name in literal UTF-8, and is the one that goes
-% into the XMP. pdfx copies whatever it is given straight through, so feeding it
-% the escaped form produced "Computa{c}o" in dc:description -- which is why the
-% subject line used to fall back to the bare programme code. Both forms are
-% written out here rather than derived from one another because there is no
-% reliable way to strip TeX accent syntax at the point where the .xmpdata is
-% written, and a table of thirteen entries is cheaper than that machinery.
+% \local@deptname e o nome da capa e da folha de rosto, \meta@deptname o que vai
+% para o XMP e \foreign@deptname o da folha do abstract. Os dois primeiros tem o
+% mesmo texto desde que a classe inteira passou a UTF-8; continuam dois nomes
+% porque o XMP e escrito por \write e a capa e composta, e quem mexer num dos dois
+% caminhos nao deve ter de pensar no outro.
+%
+% \let, e nao \def com o texto: o nome sai da tabela da unidade exatamente como
+% ela o declarou, e a capa recebe a mesma sequencia de tokens que recebia quando
+% os nomes estavam escritos aqui dentro.
   \gdef\coppe@deptcode{#1}%
-  \ifthenelse{\equal{#1}{PEB}}
-    {\global\def\local@deptname{Engenharia Biomédica}
-     \global\def\meta@deptname{Engenharia Biomédica}
-     \global\def\foreign@deptname{Biomedical Engineering}}{}
-  \ifthenelse{\equal{#1}{PEC}}
-    {\global\def\local@deptname{Engenharia Civil}
-     \global\def\meta@deptname{Engenharia Civil}
-     \global\def\foreign@deptname{Civil Engineering}}{}
-  \ifthenelse{\equal{#1}{PEE}}
-    {\global\def\local@deptname{Engenharia Elétrica}
-     \global\def\meta@deptname{Engenharia Elétrica}
-     \global\def\foreign@deptname{Electrical Engineering}}{}
-  \ifthenelse{\equal{#1}{PEM}}
-    {\global\def\local@deptname{Engenharia Mecânica}
-     \global\def\meta@deptname{Engenharia Mecânica}
-     \global\def\foreign@deptname{Mechanical Engineering}}{}
-  \ifthenelse{\equal{#1}{PEMM}}
-    {\global\def\local@deptname{Engenharia Metalúrgica e de Materiais}
-     \global\def\meta@deptname{Engenharia Metalúrgica e de Materiais}
-\global\def\foreign@deptname{Metallurgical and Materials Engineering}}{}
-  \ifthenelse{\equal{#1}{PEN}}
-    {\global\def\local@deptname{Engenharia Nuclear}
-     \global\def\meta@deptname{Engenharia Nuclear}
-     \global\def\foreign@deptname{Nuclear Engineering}}{}
-  \ifthenelse{\equal{#1}{PENO}}
-    {\global\def\local@deptname{Engenharia Oceânica}
-     \global\def\meta@deptname{Engenharia Oceânica}
-     \global\def\foreign@deptname{Ocean Engineering}}{}
-  \ifthenelse{\equal{#1}{PPE}}
-    {\global\def\local@deptname{Planejamento Energético}
-     \global\def\meta@deptname{Planejamento Energético}
-     \global\def\foreign@deptname{Energy Planning}}{}
-  \ifthenelse{\equal{#1}{PEP}}
-    {\global\def\local@deptname{Engenharia de Produção}
-     \global\def\meta@deptname{Engenharia de Produção}
-     \global\def\foreign@deptname{Production Engineering}}{}
-  \ifthenelse{\equal{#1}{PEQ}}
-    {\global\def\local@deptname{Engenharia Química}
-     \global\def\meta@deptname{Engenharia Química}
-     \global\def\foreign@deptname{Chemical Engineering}}{}
-  \ifthenelse{\equal{#1}{PESC}}
-    {\global\def\local@deptname{Engenharia de Sistemas e Computação}
-     \global\def\meta@deptname{Engenharia de Sistemas e Computação}
-     \global\def\foreign@deptname{Systems Engineering and Computer Science}}{}
-  \ifthenelse{\equal{#1}{PET}}
-    {\global\def\local@deptname{Engenharia de Transportes}
-     \global\def\meta@deptname{Engenharia de Transportes}
-     \global\def\foreign@deptname{Transportation Engineering}}{}
-  \ifthenelse{\equal{#1}{PENT}}
-    {\global\def\local@deptname{Engenharia de Nanotecnologia}
-     \global\def\meta@deptname{Engenharia de Nanotecnologia}
-      \global\def\foreign@deptname{Nanotechnology Engineering}}{}
-}
+  \@ifundefined{coppe@prog@#1@brazilian}{%
+    \ClassError{coppe}{Programa `#1' nao declarado}{%
+      A sigla dada a \string\department\space tem de ser a de um\MessageBreak
+      Programa declarado pelo estilo da unidade, com\MessageBreak
+      \string\coppedeclareprogram.}%
+  }{%
+    \coppe@gletcs\local@deptname{coppe@prog@#1@brazilian}%
+    \coppe@gletcs\meta@deptname{coppe@prog@#1@brazilian}%
+    \coppe@gletcs\foreign@deptname{coppe@prog@#1@english}}}
+% \global\let de uma macro para outra dada pelo nome.
+\newcommand\coppe@gletcs[2]{%
+  \expandafter\global\expandafter\let\expandafter#1\csname #2\endcsname}
 %    \end{macrocode}
 % \changes{v3.0}{2020/03/02}{Added new course on Nanotechnology.}
 % \changes{v3.1}{2022/03/07}{Included a sort key in symbl}
@@ -7112,9 +7223,12 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \@ifundefined{ver@#1}{}{%
     \expandafter\expandafter\expandafter\coppe@grabversion
       \csname ver@#1\endcsname\space\space\@nil}}
+% A norma que o documento segue, como o colofao a cita. A da classe e o Manual do
+% SiBI; um estilo de unidade troca o titulo e o artigo com \coppedeclarenorm, e o
+% autor ainda pode trocar o titulo com \renewcommand, como sempre pode.
 \providecommand{\coppefinalmanual}{%
-  \emph{Norma para a Elaboração Gráfica de Teses e Dissertações
-  da COPPE/UFRJ}}
+  \emph{Manual para elaboração e normalização de trabalhos acadêmicos} da
+  UFRJ/SiBI}
 \newcommand{\coppetexfinalpage}{%
   \clearpage
   % Force the colophon onto a verso (even) page so it faces the rear cover.
@@ -7138,7 +7252,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
       Biber. }{}Foi utilizada a classe \CoppeTeX,
       versão~\coppe@version, disponível no repositório GitHub
       \mbox{\url{https://github.com/COPPE-UFRJ/CoppeTeX}}, em
-      conformidade com a \coppefinalmanual.
+      conformidade com \coppe@finalmanualart\coppefinalmanual.
       \par\vspace{0.5em}
       Gerado em \today, às \coppefinaltime\coppefinalsystem, por
       \coppefinaltexsystem{} com o formato \LaTeX{} de \fmtversion.
@@ -7156,11 +7270,12 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %
 % \begin{macro}{\makecover}
 % The ABNT cover (capa, NBR 14724) suggested in the manual's Anexo A. It is
-% the institution block --- the university, the full COPPE name, and the
-% graduate program taken from |\department| --- followed by the author, the
-% title, and the city and year, all centred and uppercased. The optional UFRJ
-% and COPPE logos head the page. The capa is not counted: it precedes the
-% (roman) front matter and is produced before the |titlepage| (folha de rosto).
+% the institution block --- the university, the unit as |\coppedeclareunit|
+% wrote it for the cover, and the graduate program taken from |\department| ---
+% followed by the author, the title, and the city and year, all centred and
+% uppercased. The logos declared with |\coppedeclarelogos| head the page. The
+% capa is not counted: it precedes the (roman) front matter and is produced
+% before the |titlepage| (folha de rosto).
 %    \begin{macrocode}
 \newcommand\makecover{%
   \begin{titlepage}%
@@ -7172,15 +7287,15 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \pagestyle{empty}%
   \singlespacing
   \centering
-  \makebox[\linewidth]{%
-    \coppe@logo{ufrj-logo}\hfill
-    \coppe@logo{coppe-logo}}\par
+  \coppe@logoline\par
   \vspace{1.5cm}
-  {\singlespacing 
+  {\singlespacing
  \MakeUppercase{\local@universityname}\par
-   \nohyphens{\MakeUppercase{Instituto Alberto Luiz Coimbra de \\
-     Pós-Graduação e Pesquisa de Engenharia}}\par
-   \MakeUppercase{Programa de \local@deptname}\par}
+   \ifx\coppe@unitcover\@empty\else
+     \nohyphens{\MakeUppercase{\coppe@unitcover}}\par
+   \fi
+   \coppe@letunitstr\coppe@tmpcover{brazilian}{coverprogram}%
+   \MakeUppercase{\coppe@tmpcover}\par}
   \vspace{\stretch{2}}
   \textbf{\MakeUppercase{\textbf{\@authname\ \@authsurn}}}\par
   \vspace{\stretch{2}}
@@ -7215,9 +7330,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \vspace*{1.5mm}
   \setlength\baselineskip{0pt}
   \setlength\parskip{1mm}
-  \makebox[\linewidth]{%
-    \coppe@logo{ufrj-logo}\hfill
-    \coppe@logo{coppe-logo}}
+  \coppe@logoline
   \end{flushleft}
   \vspace{1.05cm}
   \begin{center}
@@ -7516,7 +7629,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \hypersetup{%
     pdfauthor={\@authname\ \@authsurn},
     pdftitle={\local@title},
-    pdfsubject={\local@doctype\ de \@degreename\ em \local@deptname\ da COPPE/UFRJ},
+    pdfsubject={\local@doctype\ de \@degreename\ em \local@deptname\ da \coppe@unitshort},
     pdfcreator={LaTeX with CoppeTeX toolkit}}%
 \fi
 \hypersetup{%
@@ -7547,7 +7660,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
       \nohyphens\@authname\par
       \nohyphens{%
         \coppe@selecttitle/\@authname\ \@authsurn. -- \local@cityname:
-      UFRJ/COPPE, \coppe@docyear.}\par
+      \coppe@unitshortrev, \coppe@docyear.}\par
       \pageref{front:pageno},
       \pageref{LastPage}
       p.\@ifundefined{r@cat:lofflag}{}{\pageref{cat:lofflag}} $29,7$cm.\par
@@ -7577,7 +7690,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
         \the\toks@
       \end{tabularx}}\par
       \nohyphens{\local@doctype\ ({\MakeLowercase\@degreename}) --
-      UFRJ/COPPE/Programa de \local@deptname, \coppe@docyear.}\par
+      \coppe@unitshortrev/Programa de \local@deptname, \coppe@docyear.}\par
       Referências Bibliográficas: p. \pageref{bib:begin} -- \pageref{bib:end}.\par
       \count1=0
       \count2=1
@@ -7588,7 +7701,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
       I. \csname CoppeAdvisorSurname:0\endcsname,%
       \ \csname CoppeAdvisorName:0\endcsname%
       \ifthenelse{\@advisor>1}{\ \emph{et~al.}{}}.
-      II. \local@universityname, COPPE, Programa de \local@deptname.
+      II. \local@universityname,\coppe@unitsep Programa de \local@deptname.
       III. Título.}
     \end{minipage}}
   \end{center}
@@ -7796,12 +7909,13 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %   \item An exame de qualificação gets none. It is not deposited in the
 %     library, has no ficha catalográfica and is not a referenceable
 %     document.
-%   \item ACOPLAMENTO: the institution's long name also appears, broken across
-%     two lines by hand, in |\makecover|. Change one and look at the other.
+%   \item The unit's long name comes from |\coppedeclareunit|, which also takes
+%     the same name broken across lines for |\makecover|. Both forms are
+%     declared side by side, so changing one puts the other in view. With no
+%     unit declared the reference goes straight from the Programa to the
+%     university.
 %    \end{itemize}
 %    \begin{macrocode}
-\newcommand\local@instname{Instituto Alberto Luiz Coimbra de
-  Pós-Graduação e Pesquisa de Engenharia}
 \newcommand\coppe@refresumo{%
   \if@copperefresumo
     \if@coppeexame\else
@@ -7813,7 +7927,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
             : \coppe@selectsubtitle}.
           \local@cityname, \coppe@docyear.
           \local@doctype\ (\@degreename\ em \local@deptname) --
-          \local@instname, \local@universityname,
+          \ifx\local@instname\@empty\else\local@instname, \fi
+          \local@universityname,
           \local@cityname, \coppe@docyear.}\par}%
       \vspace*{4mm}
     \fi
@@ -8610,35 +8725,20 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % name of the institution AND the area de concentracao in this block. The area
 % was missing; it is appended as its own sentence when \areaconcentracao was
 % given, and simply omitted otherwise.
+%
+% A frase da natureza e a chave `natureza' da tabela, lida no idioma principal
+% e, na falta dela, em portugues -- que e o que sai hoje em todo idioma, porque
+% so o portugues a define. A frase esta com a instituicao e a unidade, na
+% subsecao "A instituicao e a unidade"; aqui fica so a montagem do bloco.
 \newcommand\frontcover@maintext{
-  \sloppy\nohyphens{\local@doctype\ de \@degreename\
-  \ifthenelse{\boolean{maledoc}}{apresentado}{apresentada}
-  ao Programa de Pós-graduação em \local@deptname,
-  COPPE, da \local@universityname, como parte dos requisitos
-  necessários à obtenção do título de
-  \local@degname\ em \local@deptname.}%
+  \sloppy\nohyphens{\coppe@unitstrmain{natureza}}%
   \ifthenelse{\equal{\coppe@areaconc}{}}{}{%
     \par\vspace{1ex}%
     \sloppy\nohyphens{Área de concentração: \coppe@areaconc.}}%
 }
-%
-\newcommand\frontpage@maintext{
-  \noindent {\MakeUppercase\local@doctype}
-  \ifthenelse{\boolean{maledoc}}{SUBMETIDO}{SUBMETIDA}
-  \sloppy\nohyphens{AO CORPO DOCENTE DO INSTITUTO ALBERTO LUIZ COIMBRA
-  DE PÓS-GRADUAÇÃO E PESQUISA DE ENGENHARIA DA
-  UNIVERSIDADE FEDERAL DO RIO DE JANEIRO COMO PARTE DOS REQUISITOS
-  NECESSÁRIOS PARA A OBTENÇÃO DO GRAU DE
-  {\MakeUppercase\local@degname} EM CIÊNCIAS EM
-  {\MakeUppercase\local@deptname.\par}}%
-}
-%
-\newcommand\frontpage@bottomtext{%
-  \begin{center}
-  {\MakeUppercase{\local@cityname, \local@statename\ -- \local@countryname}}\par
-  {\MakeUppercase\local@monthname\ DE \coppe@docyear}
-  \end{center}%
-}
+% \frontpage@maintext e \frontpage@bottomtext, que ninguem mais chama e que
+% escreviam o nome da COPPE com todas as letras, foram para o bloco da unidade,
+% onde continuam definidos para quem os chamar diretamente.
 %
 % A frase de abertura da folha de resumo, num idioma qualquer. O argumento e o
 % NOME do idioma, e nao o texto: e dele que saem todas as pecas.
@@ -8654,9 +8754,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \ifthenelse{\boolean{maledoc}}%
     {\@nameuse{coppe@str@#1@presentedmale}}%
     {\@nameuse{coppe@str@#1@presentedfemale}}
-  \sloppy\nohyphens{\@nameuse{coppe@str@#1@abstracttail}\
-  \@nameuse{coppe@str@#1@degname\coppe@degkey}\
-  \@nameuse{coppe@str@#1@sciencename} (\@degree)}%
+  \sloppy\nohyphens{\coppe@unitstr{#1}{tounit} \@nameuse{coppe@str@#1@abstracttail}\
+  \@nameuse{coppe@str@#1@degname\coppe@degkey}\coppe@unitstrsp{#1}{sciencename} (\@degree)}%
 }
 % As demais pecas que a classe escreve na folha. Sao macros, e nao texto solto
 % dentro do ambiente, porque as tres folhas de resumo usam as mesmas seis e a
@@ -8698,11 +8797,10 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \@nameuse{coppe@str@#1@coadvisor}%
   \fi}
 \newcommand\coppe@res@deptlabel[1]{\@nameuse{coppe@str@#1@dept}}
-% O NOME do Programa nao se traduz para qualquer idioma: a COPPE tem nome
-% oficial para cada Programa em portugues e em ingles, e so. Numa folha em
-% espanhol, frances ou italiano vai o nome em portugues, que e o nome proprio
-% da unidade -- a mesma regra da secao 4 da Norma COPPE, que mantem a identidade
-% institucional em portugues.
+% O NOME do Programa nao se traduz para qualquer idioma: a unidade o declara em
+% portugues e em ingles, e so (\coppedeclareprogram). Numa folha em espanhol,
+% frances ou italiano vai o nome em portugues, que e o nome proprio do Programa
+% -- a mesma regra que mantem a identidade institucional em portugues.
 % \edef, e nao \def: o argumento chega como \coppe@reslang, que e uma MACRO com
 % o nome do idioma dentro. Com \def o teste comparava o nome da macro com a
 % palavra "english" e nunca dava certo -- a folha em ingles saia com "Department:
@@ -8861,7 +8959,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
       \ifthenelse{\equal{\coppe@deptcode}{}}{}{%
         \immediate\write\coppe@xmpout{\string\Subject{\local@doctype\space de
           \@degreename. Programa de \meta@deptname\space(\coppe@deptcode),
-          COPPE/UFRJ}}}%
+          \coppe@unitshort}}}%
       \immediate\write\coppe@xmpout{\string\Publisher{\local@universityname}}%
       \@ifundefined{coppe@docyear}{}{%
         \immediate\write\coppe@xmpout{\string\Date{\coppe@docyear}}}%
@@ -9017,6 +9115,95 @@ postamble
 }
 %</class>
 %    \end{macrocode}
+%
+% \subsection{A unidade: a COPPE}\label{sec:unidade-coppe}
+%
+% Tudo o que a classe escreve e é da COPPE, e não da UFRJ, está declarado
+% aqui, e só aqui, com a interface da seção~\ref{sec:unidade}. É o que a
+% \emph{Norma para a Elaboração Gráfica de Teses e Dissertações da COPPE/UFRJ}
+% chama de ``dado próprio'' e de ``escolha'' da unidade, e cada bloco abaixo
+% diz de que seção dela vem.
+%
+% O bloco é um módulo próprio do |.dtx|, |unidade|, e não parte do módulo
+% |class|. Por enquanto o |coppe.ins| junta os dois no |coppe.cls|, e o bloco
+% vem por último, depois do |hyperref| e do |biblatex| --- que é exatamente onde
+% vai estar quando virar um estilo carregado por |\usepackage|. Nada acima dele
+% pode depender de ele já ter sido lido: tudo o que ele declara é consultado
+% na hora de compor as folhas.
+%
+% Uma unidade nova escreve um bloco destes. A classe não muda.
+%
+%    \begin{macrocode}
+%<*unidade>
+% Norma COPPE, secao 2: o nome da instituicao na capa, em tres linhas -- a
+% universidade, o Instituto e o Programa. O nome do Instituto vai inteiro na
+% referencia do trabalho, e quebrado em duas linhas na capa.
+\coppedeclareunit
+  {Instituto Alberto Luiz Coimbra de Pós-Graduação e Pesquisa de Engenharia}
+  {Instituto Alberto Luiz Coimbra de \\
+     Pós-Graduação e Pesquisa de Engenharia}
+  {COPPE}
+% Secao 1: o logotipo da UFRJ a esquerda e o da COPPE a direita, os dois com
+% 2 cm de altura.
+\coppedeclarelogos[2cm]{ufrj-logo}{coppe-logo}
+% Secao 3: os treze Programas, com o nome em portugues e em ingles. O nome em
+% ingles so aparece na folha do abstract.
+\coppedeclareprogram{PEB} {Engenharia Biomédica}{Biomedical Engineering}
+\coppedeclareprogram{PEC} {Engenharia Civil}{Civil Engineering}
+\coppedeclareprogram{PEE} {Engenharia Elétrica}{Electrical Engineering}
+\coppedeclareprogram{PEM} {Engenharia Mecânica}{Mechanical Engineering}
+\coppedeclareprogram{PEMM}{Engenharia Metalúrgica e de Materiais}
+                          {Metallurgical and Materials Engineering}
+\coppedeclareprogram{PEN} {Engenharia Nuclear}{Nuclear Engineering}
+\coppedeclareprogram{PENO}{Engenharia Oceânica}{Ocean Engineering}
+\coppedeclareprogram{PENT}{Engenharia de Nanotecnologia}{Nanotechnology Engineering}
+\coppedeclareprogram{PEP} {Engenharia de Produção}{Production Engineering}
+\coppedeclareprogram{PEQ} {Engenharia Química}{Chemical Engineering}
+\coppedeclareprogram{PESC}{Engenharia de Sistemas e Computação}
+                          {Systems Engineering and Computer Science}
+\coppedeclareprogram{PET} {Engenharia de Transportes}{Transportation Engineering}
+\coppedeclareprogram{PPE} {Planejamento Energético}{Energy Planning}
+% Na capa, a linha do Programa e o nome oficial dele: os Programas da COPPE se
+% chamam "Programa de Engenharia Civil", e nao "Programa de Pos-Graduacao em".
+\coppedefunitstring{brazilian}{coverprogram}{Programa de \local@deptname}
+% A abertura da folha de resumo: a quem o trabalho foi apresentado, com a
+% contracao de cada idioma, e o nome que a COPPE da ao grau, M.Sc. e D.Sc.
+\coppedefunitstring{brazilian}{tounit}{à COPPE/UFRJ}
+\coppedefunitstring{english}  {tounit}{to COPPE/UFRJ}
+\coppedefunitstring{spanish}  {tounit}{a la COPPE/UFRJ}
+\coppedefunitstring{french}   {tounit}{à la COPPE/UFRJ}
+\coppedefunitstring{italian}  {tounit}{alla COPPE/UFRJ}
+\coppedefunitstring{brazilian}{sciencename}{em Ciências}
+\coppedefunitstring{english}  {sciencename}{of Science}
+\coppedefunitstring{spanish}  {sciencename}{en Ciencias}
+\coppedefunitstring{french}   {sciencename}{en Sciences}
+\coppedefunitstring{italian}  {sciencename}{in Scienze}
+% Secao 16: a norma que o colofao diz seguir.
+\coppedeclarenorm{a}{\emph{Norma para a Elaboração Gráfica de Teses e Dissertações
+  da COPPE/UFRJ}}
+% Legado. A folha de aprovacao anterior a v4.1 abria com a natureza em caixa alta
+% e fechava com cidade, estado, pais, mes e ano. A classe nao usa mais nenhuma
+% das duas macros; ficam definidas para quem as chamar diretamente, e ficam aqui
+% porque escrevem o nome da COPPE com todas as letras.
+\newcommand\frontpage@maintext{
+  \noindent {\MakeUppercase\local@doctype}
+  \ifthenelse{\boolean{maledoc}}{SUBMETIDO}{SUBMETIDA}
+  \sloppy\nohyphens{AO CORPO DOCENTE DO INSTITUTO ALBERTO LUIZ COIMBRA
+  DE PÓS-GRADUAÇÃO E PESQUISA DE ENGENHARIA DA
+  UNIVERSIDADE FEDERAL DO RIO DE JANEIRO COMO PARTE DOS REQUISITOS
+  NECESSÁRIOS PARA A OBTENÇÃO DO GRAU DE
+  {\MakeUppercase\local@degname} EM CIÊNCIAS EM
+  {\MakeUppercase\local@deptname.\par}}%
+}
+\newcommand\frontpage@bottomtext{%
+  \begin{center}
+  {\MakeUppercase{\local@cityname, \local@statename\ -- \local@countryname}}\par
+  {\MakeUppercase\local@monthname\ DE \coppe@docyear}
+  \end{center}%
+}
+%</unidade>
+%    \end{macrocode}
+%
 % \subsection*{BibLaTeX style files}
 %
 % Generated from this .dtx by coppe.ins (one docstrip module each).
@@ -9897,26 +10084,26 @@ postamble
 %% Loaded by coppe.cls when \documentclass[spanish]{coppe} (or any other
 %% spanish slot) is active. Populates the dispatcher table for the
 %% spanish language and registers the biblatex language mapping.
-%% Institutional names (universityname/cityname/statename/countryname)
-%% are deliberately kept Portuguese: the COPPE/UFRJ cover and folha de
-%% rosto are a Brazilian institutional template that does not translate.
+%% Nothing institutional lives here: the names of the university, the unit and
+%% the Programa do not translate, and a unit style declares its own texts with
+%% \coppedefunitstring, which takes precedence over this table.
 \ProvidesFile{coppe-lang-spanish.def}[2026/09/09 v4.1 CoppeTeX spanish class strings]
 %% --- A folha de resumo ------------------------------------------------------
 %% Tudo o que a classe escreve numa folha de resumo sai no idioma daquela folha.
 %% A frase de abertura e montada de pedacos porque a concordancia muda de idioma
 %% para idioma; ver o comentario no coppe.dtx, na tabela de portugues e ingles.
 %%
-%% O NOME do Programa nao entra aqui: a COPPE tem nome oficial para cada Programa
-%% em portugues e em ingles, e so. Numa folha neste idioma vai o nome em
-%% portugues, que e o nome proprio da unidade.
+%% O NOME do Programa nao entra aqui: a unidade o declara em portugues e em
+%% ingles, e so. Numa folha neste idioma vai o nome em portugues, que e o nome
+%% proprio do Programa. O `tounit' daqui e o da classe sem unidade.
 \copperdefstring{spanish}{abstractname}     {Resumen}
 \copperdefstring{spanish}{abstractofmale}   {del}
 \copperdefstring{spanish}{abstractoffemale} {de la}
 \copperdefstring{spanish}{presentedmale}    {presentado}
 \copperdefstring{spanish}{presentedfemale}  {presentada}
-\copperdefstring{spanish}{abstracttail}{a la COPPE/UFRJ como parte de los
+\copperdefstring{spanish}{tounit}           {a la UFRJ}
+\copperdefstring{spanish}{abstracttail}{como parte de los
   requisitos necesarios para la obtención del grado de}
-\copperdefstring{spanish}{sciencename}      {en Ciencias}
 \copperdefstring{spanish}{doctypemsc}  {Disertación}
 \copperdefstring{spanish}{doctypedsc}  {Tesis}
 \copperdefstring{spanish}{doctypeexam} {Examen de Calificación}
@@ -9955,10 +10142,6 @@ postamble
 \copperdefstring{spanish}{ofname}     {de}
 \copperdefstring{spanish}{researchline}{Línea de investigación}
 \copperdefstring{spanish}{tbddate}     {por determinar}
-\copperdefstring{spanish}{universityname}{Universidade Federal do Rio de Janeiro}
-\copperdefstring{spanish}{cityname}    {Rio de Janeiro}
-\copperdefstring{spanish}{statename}   {RJ}
-\copperdefstring{spanish}{countryname} {Brasil}
 \copperdefstring{spanish}{monthname1} {enero}
 \copperdefstring{spanish}{monthname2} {febrero}
 \copperdefstring{spanish}{monthname3} {marzo}
@@ -9980,25 +10163,25 @@ postamble
 %</langes>
 %<*langfr>
 %% coppe-lang-french.def -- CoppeTeX 4.x French class-string pack.
-%% See coppe-lang-spanish.def for the structure. Institutional names
-%% remain Portuguese; only document-content strings translate.
+%% See coppe-lang-spanish.def for the structure. Nothing institutional lives
+%% here; only document-content strings translate.
 \ProvidesFile{coppe-lang-french.def}[2026/09/09 v4.1 CoppeTeX french class strings]
 %% --- A folha de resumo ------------------------------------------------------
 %% Tudo o que a classe escreve numa folha de resumo sai no idioma daquela folha.
 %% A frase de abertura e montada de pedacos porque a concordancia muda de idioma
 %% para idioma; ver o comentario no coppe.dtx, na tabela de portugues e ingles.
 %%
-%% O NOME do Programa nao entra aqui: a COPPE tem nome oficial para cada Programa
-%% em portugues e em ingles, e so. Numa folha neste idioma vai o nome em
-%% portugues, que e o nome proprio da unidade.
+%% O NOME do Programa nao entra aqui: a unidade o declara em portugues e em
+%% ingles, e so. Numa folha neste idioma vai o nome em portugues, que e o nome
+%% proprio do Programa. O `tounit' daqui e o da classe sem unidade.
 \copperdefstring{french}{abstractname}     {Résumé}
 \copperdefstring{french}{abstractofmale}   {du}
 \copperdefstring{french}{abstractoffemale} {de la}
 \copperdefstring{french}{presentedmale}    {présenté}
 \copperdefstring{french}{presentedfemale}  {présentée}
-\copperdefstring{french}{abstracttail}{à la COPPE/UFRJ comme partie des
+\copperdefstring{french}{tounit}           {à l'UFRJ}
+\copperdefstring{french}{abstracttail}{comme partie des
   exigences requises pour l'obtention du grade de}
-\copperdefstring{french}{sciencename}      {en Sciences}
 \copperdefstring{french}{doctypemsc}  {Mémoire}
 \copperdefstring{french}{doctypedsc}  {Thèse}
 \copperdefstring{french}{doctypeexam} {Examen de Qualification}
@@ -10037,10 +10220,6 @@ postamble
 \copperdefstring{french}{ofname}     {de}
 \copperdefstring{french}{researchline}{Axe de recherche}
 \copperdefstring{french}{tbddate}     {à déterminer}
-\copperdefstring{french}{universityname}{Universidade Federal do Rio de Janeiro}
-\copperdefstring{french}{cityname}    {Rio de Janeiro}
-\copperdefstring{french}{statename}   {RJ}
-\copperdefstring{french}{countryname} {Brasil}
 \copperdefstring{french}{monthname1} {janvier}
 \copperdefstring{french}{monthname2} {février}
 \copperdefstring{french}{monthname3} {mars}
@@ -10069,17 +10248,17 @@ postamble
 %% A frase de abertura e montada de pedacos porque a concordancia muda de idioma
 %% para idioma; ver o comentario no coppe.dtx, na tabela de portugues e ingles.
 %%
-%% O NOME do Programa nao entra aqui: a COPPE tem nome oficial para cada Programa
-%% em portugues e em ingles, e so. Numa folha neste idioma vai o nome em
-%% portugues, que e o nome proprio da unidade.
+%% O NOME do Programa nao entra aqui: a unidade o declara em portugues e em
+%% ingles, e so. Numa folha neste idioma vai o nome em portugues, que e o nome
+%% proprio do Programa. O `tounit' daqui e o da classe sem unidade.
 \copperdefstring{italian}{abstractname}     {Riassunto}
 \copperdefstring{italian}{abstractofmale}   {del}
 \copperdefstring{italian}{abstractoffemale} {della}
 \copperdefstring{italian}{presentedmale}    {presentato}
 \copperdefstring{italian}{presentedfemale}  {presentata}
-\copperdefstring{italian}{abstracttail}{alla COPPE/UFRJ come parte dei
+\copperdefstring{italian}{tounit}           {all'UFRJ}
+\copperdefstring{italian}{abstracttail}{come parte dei
   requisiti necessari per il conseguimento del titolo di}
-\copperdefstring{italian}{sciencename}      {in Scienze}
 \copperdefstring{italian}{doctypemsc}  {Dissertazione}
 \copperdefstring{italian}{doctypedsc}  {Tesi}
 \copperdefstring{italian}{doctypeexam} {Esame di Qualificazione}
@@ -10118,10 +10297,6 @@ postamble
 \copperdefstring{italian}{ofname}     {di}
 \copperdefstring{italian}{researchline}{Linea di ricerca}
 \copperdefstring{italian}{tbddate}     {da determinare}
-\copperdefstring{italian}{universityname}{Universidade Federal do Rio de Janeiro}
-\copperdefstring{italian}{cityname}    {Rio de Janeiro}
-\copperdefstring{italian}{statename}   {RJ}
-\copperdefstring{italian}{countryname} {Brasil}
 \copperdefstring{italian}{monthname1} {gennaio}
 \copperdefstring{italian}{monthname2} {febbraio}
 \copperdefstring{italian}{monthname3} {marzo}

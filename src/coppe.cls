@@ -4,7 +4,7 @@
 %%
 %% The original source files were:
 %%
-%% coppe.dtx  (with options: `class')
+%% coppe.dtx  (with options: `class,unidade')
 %% 
 %% This is the `coppe' document class used for composition of LaTeX
 %% monographs (master and PhD thesis, and PhD qualifying exams)
@@ -54,11 +54,11 @@
     {\IfFileExists{#2.pdf}
       {\includegraphics[height=#1]{#2}}
       {\ClassError{coppe}{Logotipo `#2.pdf' nao encontrado}%
-        {Ele vem junto com a classe. Procurei em logos/#2.pdf e em\MessageBreak
-         #2.pdf, e nao achei em nenhum dos dois.\MessageBreak
+        {Ele vem junto com a classe ou com o estilo da unidade. Procurei\MessageBreak
+         em logos/#2.pdf e em #2.pdf, e nao achei em nenhum dos dois.\MessageBreak
          Copie a pasta logos/ para junto do seu trabalho, ou ponha\MessageBreak
-         coppe-logo.pdf e ufrj-logo.pdf ao lado do coppe.cls na\MessageBreak
-         arvore do TeX. Os tres estao em dist/logos/ no repositorio.}%
+         #2.pdf ao lado do coppe.cls na arvore do TeX. Os logotipos\MessageBreak
+         estao em dist/logos/ no repositorio.}%
        \framebox[3cm][c]{\rule{0pt}{#1}\ttfamily #2?}}}}
 \RequirePackage{tabularx}
 \RequirePackage{booktabs}      % regras de tabela profissionais (toprule/midrule/bottomrule)
@@ -540,12 +540,12 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \copperdefstring{brazilian}{presentedfemale}  {apresentada}
 \copperdefstring{english}  {presentedmale}    {presented}
 \copperdefstring{english}  {presentedfemale}  {presented}
-\copperdefstring{brazilian}{abstracttail}{à COPPE/UFRJ como parte dos
+\copperdefstring{brazilian}{tounit}           {à UFRJ}
+\copperdefstring{english}  {tounit}           {to UFRJ}
+\copperdefstring{brazilian}{abstracttail}{como parte dos
   requisitos necessários para a obtenção do grau de}
-\copperdefstring{english}{abstracttail}{to COPPE/UFRJ as a partial fulfillment
+\copperdefstring{english}{abstracttail}{as a partial fulfillment
   of the requirements for the degree of}
-\copperdefstring{brazilian}{sciencename}      {em Ciências}
-\copperdefstring{english}  {sciencename}      {of Science}
 \copperdefstring{brazilian}{doctypemsc}  {Dissertação}
 \copperdefstring{english}  {doctypemsc}  {Dissertation}
 \copperdefstring{brazilian}{doctypedsc}  {Tese}
@@ -586,14 +586,6 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \copperdefstring{english}  {ofname}     {of}
 \copperdefstring{english}  {researchline}{Research line}
 \copperdefstring{english}  {tbddate}    {to be determined}
-\copperdefstring{brazilian}{universityname}{Universidade Federal do Rio de Janeiro}
-\copperdefstring{english}  {universityname}{Universidade Federal do Rio de Janeiro}
-\copperdefstring{brazilian}{cityname}     {Rio de Janeiro}
-\copperdefstring{english}  {cityname}     {Rio de Janeiro}
-\copperdefstring{brazilian}{statename}    {RJ}
-\copperdefstring{english}  {statename}    {RJ}
-\copperdefstring{brazilian}{countryname}  {Brasil}
-\copperdefstring{english}  {countryname}  {Brasil}
 \copperdefstring{brazilian}{monthname1} {Janeiro}
 \copperdefstring{brazilian}{monthname2} {Fevereiro}
 \copperdefstring{brazilian}{monthname3} {Março}
@@ -729,63 +721,81 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \SetKwFor{For}{para}{faça}{fim do para}
   \SetKwFor{While}{enquanto}{faça}{fim do enquanto}
 \fi
+\newcommand*\local@instname{}
+\newcommand*\coppe@unitcover{}
+\newcommand*\coppe@unitacronym{}
+\newcommand\coppedeclareunit[3]{%
+  \gdef\local@instname{#1}%
+  \gdef\coppe@unitcover{#2}%
+  \gdef\coppe@unitacronym{#3}}
+\newcommand*\coppe@unitsep{ \ifx\coppe@unitacronym\@empty\else\coppe@unitacronym, \fi}
+\newcommand*\coppe@unitshort{%
+  \ifx\coppe@unitacronym\@empty\else\coppe@unitacronym/\fi UFRJ}
+\newcommand*\coppe@unitshortrev{%
+  UFRJ\ifx\coppe@unitacronym\@empty\else/\coppe@unitacronym\fi}
+\newcommand*\coppe@logoheight{2cm}
+\newcommand*\coppe@logoleft{ufrj-logo}
+\newcommand*\coppe@logoright{}
+\newcommand\coppedeclarelogos[3][2cm]{%
+  \gdef\coppe@logoheight{#1}%
+  \gdef\coppe@logoleft{#2}%
+  \gdef\coppe@logoright{#3}}
+\newcommand\coppe@logoline{%
+  \makebox[\linewidth]{%
+    \ifx\coppe@logoleft\@empty\else
+      \coppe@logo[\coppe@logoheight]{\coppe@logoleft}\fi
+    \hfill
+    \ifx\coppe@logoright\@empty\else
+      \coppe@logo[\coppe@logoheight]{\coppe@logoright}\fi}}
+\newcommand\coppedeclareprogram[3]{%
+  \expandafter\gdef\csname coppe@prog@#1@brazilian\endcsname{#2}%
+  \expandafter\gdef\csname coppe@prog@#1@english\endcsname{#3}}
+\newcommand\coppedefunitstring[3]{%
+  \expandafter\gdef\csname coppe@unit@#1@#2\endcsname{#3}}
+\newcommand\coppe@unitstr[2]{%
+  \@ifundefined{coppe@unit@#1@#2}%
+    {\@nameuse{coppe@str@#1@#2}}%
+    {\@nameuse{coppe@unit@#1@#2}}}
+\newcommand\coppe@unitstrsp[2]{%
+  \@ifundefined{coppe@unit@#1@#2}%
+    {\@ifundefined{coppe@str@#1@#2}{}{\ \@nameuse{coppe@str@#1@#2}}}%
+    {\ \@nameuse{coppe@unit@#1@#2}}}
+\newcommand\coppe@unitstrmain[1]{%
+  \@ifundefined{coppe@unit@\coppe@mainlang @#1}%
+    {\@ifundefined{coppe@str@\coppe@mainlang @#1}%
+      {\coppe@unitstr{brazilian}{#1}}%
+      {\@nameuse{coppe@str@\coppe@mainlang @#1}}}%
+    {\@nameuse{coppe@unit@\coppe@mainlang @#1}}}
+\newcommand\coppe@letunitstr[3]{%
+  \@ifundefined{coppe@unit@#2@#3}%
+    {\expandafter\let\expandafter#1\csname coppe@str@#2@#3\endcsname}%
+    {\expandafter\let\expandafter#1\csname coppe@unit@#2@#3\endcsname}}
+\newcommand*\coppe@finalmanualart{o }
+\newcommand\coppedeclarenorm[2]{%
+  \gdef\coppe@finalmanualart{#1 }%
+  \gdef\coppefinalmanual{#2}}
+\copperdefstring{brazilian}{coverprogram}{Programa de Pós-Graduação em \local@deptname}
+\copperdefstring{brazilian}{natureza}{\local@doctype\ de \@degreename\
+  \ifthenelse{\boolean{maledoc}}{apresentado}{apresentada}
+  ao Programa de Pós-graduação em \local@deptname,\coppe@unitsep
+  da \local@universityname, como parte dos requisitos
+  necessários à obtenção do título de
+  \local@degname\ em \local@deptname.}
 \newcommand\coppe@deptcode{}
 \newcommand\meta@deptname{}
 \newcommand\department[1]{%
   \gdef\coppe@deptcode{#1}%
-  \ifthenelse{\equal{#1}{PEB}}
-    {\global\def\local@deptname{Engenharia Biomédica}
-     \global\def\meta@deptname{Engenharia Biomédica}
-     \global\def\foreign@deptname{Biomedical Engineering}}{}
-  \ifthenelse{\equal{#1}{PEC}}
-    {\global\def\local@deptname{Engenharia Civil}
-     \global\def\meta@deptname{Engenharia Civil}
-     \global\def\foreign@deptname{Civil Engineering}}{}
-  \ifthenelse{\equal{#1}{PEE}}
-    {\global\def\local@deptname{Engenharia Elétrica}
-     \global\def\meta@deptname{Engenharia Elétrica}
-     \global\def\foreign@deptname{Electrical Engineering}}{}
-  \ifthenelse{\equal{#1}{PEM}}
-    {\global\def\local@deptname{Engenharia Mecânica}
-     \global\def\meta@deptname{Engenharia Mecânica}
-     \global\def\foreign@deptname{Mechanical Engineering}}{}
-  \ifthenelse{\equal{#1}{PEMM}}
-    {\global\def\local@deptname{Engenharia Metalúrgica e de Materiais}
-     \global\def\meta@deptname{Engenharia Metalúrgica e de Materiais}
-\global\def\foreign@deptname{Metallurgical and Materials Engineering}}{}
-  \ifthenelse{\equal{#1}{PEN}}
-    {\global\def\local@deptname{Engenharia Nuclear}
-     \global\def\meta@deptname{Engenharia Nuclear}
-     \global\def\foreign@deptname{Nuclear Engineering}}{}
-  \ifthenelse{\equal{#1}{PENO}}
-    {\global\def\local@deptname{Engenharia Oceânica}
-     \global\def\meta@deptname{Engenharia Oceânica}
-     \global\def\foreign@deptname{Ocean Engineering}}{}
-  \ifthenelse{\equal{#1}{PPE}}
-    {\global\def\local@deptname{Planejamento Energético}
-     \global\def\meta@deptname{Planejamento Energético}
-     \global\def\foreign@deptname{Energy Planning}}{}
-  \ifthenelse{\equal{#1}{PEP}}
-    {\global\def\local@deptname{Engenharia de Produção}
-     \global\def\meta@deptname{Engenharia de Produção}
-     \global\def\foreign@deptname{Production Engineering}}{}
-  \ifthenelse{\equal{#1}{PEQ}}
-    {\global\def\local@deptname{Engenharia Química}
-     \global\def\meta@deptname{Engenharia Química}
-     \global\def\foreign@deptname{Chemical Engineering}}{}
-  \ifthenelse{\equal{#1}{PESC}}
-    {\global\def\local@deptname{Engenharia de Sistemas e Computação}
-     \global\def\meta@deptname{Engenharia de Sistemas e Computação}
-     \global\def\foreign@deptname{Systems Engineering and Computer Science}}{}
-  \ifthenelse{\equal{#1}{PET}}
-    {\global\def\local@deptname{Engenharia de Transportes}
-     \global\def\meta@deptname{Engenharia de Transportes}
-     \global\def\foreign@deptname{Transportation Engineering}}{}
-  \ifthenelse{\equal{#1}{PENT}}
-    {\global\def\local@deptname{Engenharia de Nanotecnologia}
-     \global\def\meta@deptname{Engenharia de Nanotecnologia}
-      \global\def\foreign@deptname{Nanotechnology Engineering}}{}
-}
+  \@ifundefined{coppe@prog@#1@brazilian}{%
+    \ClassError{coppe}{Programa `#1' nao declarado}{%
+      A sigla dada a \string\department\space tem de ser a de um\MessageBreak
+      Programa declarado pelo estilo da unidade, com\MessageBreak
+      \string\coppedeclareprogram.}%
+  }{%
+    \coppe@gletcs\local@deptname{coppe@prog@#1@brazilian}%
+    \coppe@gletcs\meta@deptname{coppe@prog@#1@brazilian}%
+    \coppe@gletcs\foreign@deptname{coppe@prog@#1@english}}}
+\newcommand\coppe@gletcs[2]{%
+  \expandafter\global\expandafter\let\expandafter#1\csname #2\endcsname}
 \renewcommand\title[1]{%
   \global\def\local@title{#1}%
   \expandafter\gdef\csname coppe@title@brazilian\endcsname{#1}%
@@ -1032,8 +1042,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \expandafter\expandafter\expandafter\coppe@grabversion
       \csname ver@#1\endcsname\space\space\@nil}}
 \providecommand{\coppefinalmanual}{%
-  \emph{Norma para a Elaboração Gráfica de Teses e Dissertações
-  da COPPE/UFRJ}}
+  \emph{Manual para elaboração e normalização de trabalhos acadêmicos} da
+  UFRJ/SiBI}
 \newcommand{\coppetexfinalpage}{%
   \clearpage
   % Force the colophon onto a verso (even) page so it faces the rear cover.
@@ -1057,7 +1067,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
       Biber. }{}Foi utilizada a classe \CoppeTeX,
       versão~\coppe@version, disponível no repositório GitHub
       \mbox{\url{https://github.com/COPPE-UFRJ/CoppeTeX}}, em
-      conformidade com a \coppefinalmanual.
+      conformidade com \coppe@finalmanualart\coppefinalmanual.
       \par\vspace{0.5em}
       Gerado em \today, às \coppefinaltime\coppefinalsystem, por
       \coppefinaltexsystem{} com o formato \LaTeX{} de \fmtversion.
@@ -1071,15 +1081,15 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \pagestyle{empty}%
   \singlespacing
   \centering
-  \makebox[\linewidth]{%
-    \coppe@logo{ufrj-logo}\hfill
-    \coppe@logo{coppe-logo}}\par
+  \coppe@logoline\par
   \vspace{1.5cm}
   {\singlespacing
  \MakeUppercase{\local@universityname}\par
-   \nohyphens{\MakeUppercase{Instituto Alberto Luiz Coimbra de \\
-     Pós-Graduação e Pesquisa de Engenharia}}\par
-   \MakeUppercase{Programa de \local@deptname}\par}
+   \ifx\coppe@unitcover\@empty\else
+     \nohyphens{\MakeUppercase{\coppe@unitcover}}\par
+   \fi
+   \coppe@letunitstr\coppe@tmpcover{brazilian}{coverprogram}%
+   \MakeUppercase{\coppe@tmpcover}\par}
   \vspace{\stretch{2}}
   \textbf{\MakeUppercase{\textbf{\@authname\ \@authsurn}}}\par
   \vspace{\stretch{2}}
@@ -1102,9 +1112,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \vspace*{1.5mm}
   \setlength\baselineskip{0pt}
   \setlength\parskip{1mm}
-  \makebox[\linewidth]{%
-    \coppe@logo{ufrj-logo}\hfill
-    \coppe@logo{coppe-logo}}
+  \coppe@logoline
   \end{flushleft}
   \vspace{1.05cm}
   \begin{center}
@@ -1307,7 +1315,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \hypersetup{%
     pdfauthor={\@authname\ \@authsurn},
     pdftitle={\local@title},
-    pdfsubject={\local@doctype\ de \@degreename\ em \local@deptname\ da COPPE/UFRJ},
+    pdfsubject={\local@doctype\ de \@degreename\ em \local@deptname\ da \coppe@unitshort},
     pdfcreator={LaTeX with CoppeTeX toolkit}}%
 \fi
 \hypersetup{%
@@ -1327,7 +1335,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
       \nohyphens\@authname\par
       \nohyphens{%
         \coppe@selecttitle/\@authname\ \@authsurn. -- \local@cityname:
-      UFRJ/COPPE, \coppe@docyear.}\par
+      \coppe@unitshortrev, \coppe@docyear.}\par
       \pageref{front:pageno},
       \pageref{LastPage}
       p.\@ifundefined{r@cat:lofflag}{}{\pageref{cat:lofflag}} $29,7$cm.\par
@@ -1357,7 +1365,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
         \the\toks@
       \end{tabularx}}\par
       \nohyphens{\local@doctype\ ({\MakeLowercase\@degreename}) --
-      UFRJ/COPPE/Programa de \local@deptname, \coppe@docyear.}\par
+      \coppe@unitshortrev/Programa de \local@deptname, \coppe@docyear.}\par
       Referências Bibliográficas: p. \pageref{bib:begin} -- \pageref{bib:end}.\par
       \count1=0
       \count2=1
@@ -1368,7 +1376,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
       I. \csname CoppeAdvisorSurname:0\endcsname,%
       \ \csname CoppeAdvisorName:0\endcsname%
       \ifthenelse{\@advisor>1}{\ \emph{et~al.}{}}.
-      II. \local@universityname, COPPE, Programa de \local@deptname.
+      II. \local@universityname,\coppe@unitsep Programa de \local@deptname.
       III. Título.}
     \end{minipage}}
   \end{center}
@@ -1497,8 +1505,6 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
       \end{tabularx}%
     \fi
   \fi}
-\newcommand\local@instname{Instituto Alberto Luiz Coimbra de
-  Pós-Graduação e Pesquisa de Engenharia}
 \newcommand\coppe@refresumo{%
   \if@copperefresumo
     \if@coppeexame\else
@@ -1510,7 +1516,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
             : \coppe@selectsubtitle}.
           \local@cityname, \coppe@docyear.
           \local@doctype\ (\@degreename\ em \local@deptname) --
-          \local@instname, \local@universityname,
+          \ifx\local@instname\@empty\else\local@instname, \fi
+          \local@universityname,
           \local@cityname, \coppe@docyear.}\par}%
       \vspace*{4mm}
     \fi
@@ -2009,31 +2016,10 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \newcommand\local@statename{RJ}
 \newcommand\local@countryname{Brasil}
 \newcommand\frontcover@maintext{
-  \sloppy\nohyphens{\local@doctype\ de \@degreename\
-  \ifthenelse{\boolean{maledoc}}{apresentado}{apresentada}
-  ao Programa de Pós-graduação em \local@deptname,
-  COPPE, da \local@universityname, como parte dos requisitos
-  necessários à obtenção do título de
-  \local@degname\ em \local@deptname.}%
+  \sloppy\nohyphens{\coppe@unitstrmain{natureza}}%
   \ifthenelse{\equal{\coppe@areaconc}{}}{}{%
     \par\vspace{1ex}%
     \sloppy\nohyphens{Área de concentração: \coppe@areaconc.}}%
-}
-\newcommand\frontpage@maintext{
-  \noindent {\MakeUppercase\local@doctype}
-  \ifthenelse{\boolean{maledoc}}{SUBMETIDO}{SUBMETIDA}
-  \sloppy\nohyphens{AO CORPO DOCENTE DO INSTITUTO ALBERTO LUIZ COIMBRA
-  DE PÓS-GRADUAÇÃO E PESQUISA DE ENGENHARIA DA
-  UNIVERSIDADE FEDERAL DO RIO DE JANEIRO COMO PARTE DOS REQUISITOS
-  NECESSÁRIOS PARA A OBTENÇÃO DO GRAU DE
-  {\MakeUppercase\local@degname} EM CIÊNCIAS EM
-  {\MakeUppercase\local@deptname.\par}}%
-}
-\newcommand\frontpage@bottomtext{%
-  \begin{center}
-  {\MakeUppercase{\local@cityname, \local@statename\ -- \local@countryname}}\par
-  {\MakeUppercase\local@monthname\ DE \coppe@docyear}
-  \end{center}%
 }
 \newcommand\coppe@toptext[1]{%
   \noindent \@nameuse{coppe@str@#1@abstractname}\
@@ -2044,9 +2030,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \ifthenelse{\boolean{maledoc}}%
     {\@nameuse{coppe@str@#1@presentedmale}}%
     {\@nameuse{coppe@str@#1@presentedfemale}}
-  \sloppy\nohyphens{\@nameuse{coppe@str@#1@abstracttail}\
-  \@nameuse{coppe@str@#1@degname\coppe@degkey}\
-  \@nameuse{coppe@str@#1@sciencename} (\@degree)}%
+  \sloppy\nohyphens{\coppe@unitstr{#1}{tounit} \@nameuse{coppe@str@#1@abstracttail}\
+  \@nameuse{coppe@str@#1@degname\coppe@degkey}\coppe@unitstrsp{#1}{sciencename} (\@degree)}%
 }
 \newcommand\coppe@res@title[1]{%
   \@ifundefined{coppe@title@#1}%
@@ -2122,7 +2107,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
       \ifthenelse{\equal{\coppe@deptcode}{}}{}{%
         \immediate\write\coppe@xmpout{\string\Subject{\local@doctype\space de
           \@degreename. Programa de \meta@deptname\space(\coppe@deptcode),
-          COPPE/UFRJ}}}%
+          \coppe@unitshort}}}%
       \immediate\write\coppe@xmpout{\string\Publisher{\local@universityname}}%
       \@ifundefined{coppe@docyear}{}{%
         \immediate\write\coppe@xmpout{\string\Date{\coppe@docyear}}}%
@@ -2193,6 +2178,56 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \@coppeannextrue
     \def\theHchapter{annex.\Alph{chapter}}%
     \coppe@appendixheadings
+}
+\coppedeclareunit
+  {Instituto Alberto Luiz Coimbra de Pós-Graduação e Pesquisa de Engenharia}
+  {Instituto Alberto Luiz Coimbra de \\
+     Pós-Graduação e Pesquisa de Engenharia}
+  {COPPE}
+\coppedeclarelogos[2cm]{ufrj-logo}{coppe-logo}
+\coppedeclareprogram{PEB} {Engenharia Biomédica}{Biomedical Engineering}
+\coppedeclareprogram{PEC} {Engenharia Civil}{Civil Engineering}
+\coppedeclareprogram{PEE} {Engenharia Elétrica}{Electrical Engineering}
+\coppedeclareprogram{PEM} {Engenharia Mecânica}{Mechanical Engineering}
+\coppedeclareprogram{PEMM}{Engenharia Metalúrgica e de Materiais}
+                          {Metallurgical and Materials Engineering}
+\coppedeclareprogram{PEN} {Engenharia Nuclear}{Nuclear Engineering}
+\coppedeclareprogram{PENO}{Engenharia Oceânica}{Ocean Engineering}
+\coppedeclareprogram{PENT}{Engenharia de Nanotecnologia}{Nanotechnology Engineering}
+\coppedeclareprogram{PEP} {Engenharia de Produção}{Production Engineering}
+\coppedeclareprogram{PEQ} {Engenharia Química}{Chemical Engineering}
+\coppedeclareprogram{PESC}{Engenharia de Sistemas e Computação}
+                          {Systems Engineering and Computer Science}
+\coppedeclareprogram{PET} {Engenharia de Transportes}{Transportation Engineering}
+\coppedeclareprogram{PPE} {Planejamento Energético}{Energy Planning}
+\coppedefunitstring{brazilian}{coverprogram}{Programa de \local@deptname}
+\coppedefunitstring{brazilian}{tounit}{à COPPE/UFRJ}
+\coppedefunitstring{english}  {tounit}{to COPPE/UFRJ}
+\coppedefunitstring{spanish}  {tounit}{a la COPPE/UFRJ}
+\coppedefunitstring{french}   {tounit}{à la COPPE/UFRJ}
+\coppedefunitstring{italian}  {tounit}{alla COPPE/UFRJ}
+\coppedefunitstring{brazilian}{sciencename}{em Ciências}
+\coppedefunitstring{english}  {sciencename}{of Science}
+\coppedefunitstring{spanish}  {sciencename}{en Ciencias}
+\coppedefunitstring{french}   {sciencename}{en Sciences}
+\coppedefunitstring{italian}  {sciencename}{in Scienze}
+\coppedeclarenorm{a}{\emph{Norma para a Elaboração Gráfica de Teses e Dissertações
+  da COPPE/UFRJ}}
+\newcommand\frontpage@maintext{
+  \noindent {\MakeUppercase\local@doctype}
+  \ifthenelse{\boolean{maledoc}}{SUBMETIDO}{SUBMETIDA}
+  \sloppy\nohyphens{AO CORPO DOCENTE DO INSTITUTO ALBERTO LUIZ COIMBRA
+  DE PÓS-GRADUAÇÃO E PESQUISA DE ENGENHARIA DA
+  UNIVERSIDADE FEDERAL DO RIO DE JANEIRO COMO PARTE DOS REQUISITOS
+  NECESSÁRIOS PARA A OBTENÇÃO DO GRAU DE
+  {\MakeUppercase\local@degname} EM CIÊNCIAS EM
+  {\MakeUppercase\local@deptname.\par}}%
+}
+\newcommand\frontpage@bottomtext{%
+  \begin{center}
+  {\MakeUppercase{\local@cityname, \local@statename\ -- \local@countryname}}\par
+  {\MakeUppercase\local@monthname\ DE \coppe@docyear}
+  \end{center}%
 }
 
 %% 
