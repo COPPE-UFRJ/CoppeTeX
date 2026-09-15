@@ -25,7 +25,7 @@ AQUI = os.path.dirname(os.path.abspath(__file__))
 RAIZ = os.path.dirname(os.path.dirname(AQUI))
 SRC = os.path.join(RAIZ, "src")
 
-DOC = r"""\documentclass[dsc%(opcao)s]{coppe}
+DOC = r"""\documentclass[dsc%(opcao)s]{ufrj}
 \makelosymbols
 \title{Simbolos}
 \foreigntitle{Symbols}
@@ -64,7 +64,7 @@ def lista(opcao):
                                            stdout=subprocess.DEVNULL,
                                            stderr=subprocess.DEVNULL)
         rodar(["pdflatex", "-interaction=nonstopmode", "s.tex"])
-        rodar(["makeindex", "-s", os.path.join(SRC, "coppe.ist"), "-o",
+        rodar(["makeindex", "-s", os.path.join(SRC, "ufrj.ist"), "-o",
                "s.los", "s.syx"])
         los = os.path.join(pasta, "s.los")
         texto = io.open(los, encoding="utf-8").read() if os.path.exists(los) else ""

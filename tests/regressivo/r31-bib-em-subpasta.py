@@ -53,7 +53,7 @@ BIB = u"""@book{livro-da-subpasta,
 }
 """
 
-MODELO = r"""\documentclass[dsc]{coppe}
+MODELO = r"""\documentclass[dsc]{ufrj}
 %(recursos)s
 \title{Bibliografia em subpasta}
 \foreigntitle{Bibliography in a subfolder}

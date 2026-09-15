@@ -1,7 +1,7 @@
 Leia README.md nesta pasta.
 
-Em uma linha, para quem não vai ler: coppe.dtx é a fonte única. Todo o resto
-desta pasta é gerado dele por `pdflatex coppe.ins`, e uma edição feita num
+Em uma linha, para quem não vai ler: ufrj.dtx é a fonte única. Todo o resto
+desta pasta é gerado dele por `pdflatex ufrj.ins`, e uma edição feita num
 arquivo gerado se perde na próxima geração, sem aviso.
 
 Este arquivo trazia instruções sobre o Makefile e o doall.bat, que são de antes

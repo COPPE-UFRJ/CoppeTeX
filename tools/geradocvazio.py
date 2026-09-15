@@ -291,7 +291,7 @@ def monta_tex(v, nome_bib):
       % (v["tex"][:-4], v["tex"][:-4]))
     A("%% Ou, mais curto:  latexmk -pdf %s" % v["tex"][:-4])
     A("")
-    A("\\documentclass[%s]{coppe}" % ",".join(opcoes))
+    A("\\documentclass[%s]{ufrj}" % ",".join(opcoes))
     A("")
     if v["matematica"]:
         # A fonte matematica e escolha do autor, e a classe nao carrega
@@ -475,7 +475,7 @@ def monta_tex(v, nome_bib):
         A("  \\printindex")
         A("")
     if v["colofao"]:
-        A("  \\coppetexfinalpage")
+        A("  \\ufrjfinalpage")
         A("")
     A("\\end{document}")
     return "\n".join(L) + "\n"
@@ -565,9 +565,9 @@ def _serve_para_compilar(relativo):
     nome = relativo.replace("\\", "/").split("/")[-1]
     if (nome.startswith("example") or nome.endswith("-exemplo.tex")
             or nome.endswith("-exemplo.pdf")
-            or nome in ("exemplo.bib", "coppe.bib", "README.md")):
+            or nome in ("exemplo.bib", "ufrj.bib", "README.md")):
         return False
-    if nome in ("coppe.dtx", "coppe.ins", "manual.tex"):
+    if nome in ("ufrj.dtx", "ufrj.ins", "manual.tex"):
         return False   # sao FONTES dos manuais, nao servem para compilar a tese
     return True
 
@@ -633,11 +633,11 @@ def baixar_entrega(pasta, idioma, aviso):
         # unica de dentro; no zip do ramo e <repo>-master/dist.
         base = None
         for raiz, pastas, nomes in os.walk(temp):
-            if "coppe.cls" in nomes:
+            if "ufrj.cls" in nomes:
                 base = raiz
                 break
         if base is None:
-            aviso("   o arquivo baixado nao tem coppe.cls dentro")
+            aviso("   o arquivo baixado nao tem ufrj.cls dentro")
             return False
         if de_dentro_do_repo:
             aviso("   (do ramo master, pasta dist/)")
@@ -865,7 +865,7 @@ def abrir_janela(valores=None):
             "Gerador de documento vazio da CoppeTeX.\n\n"
             "Escreve o .tex e o .bib com que um trabalho comeca, ja com a\n"
             "estrutura que a norma pede e os cinco capitulos de sempre.\n\n"
-            "Os manuais estao em manuais/ na entrega: coppe.pdf ensina os\n"
+            "Os manuais estao em manuais/ na entrega: ufrj.pdf ensina os\n"
             "comandos, manual.pdf diz o que o trabalho tem de ser."))
     menu.add_cascade(label="Ajuda", menu=ajudam)
     janela.config(menu=menu)

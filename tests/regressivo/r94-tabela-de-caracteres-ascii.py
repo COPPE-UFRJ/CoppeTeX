@@ -45,12 +45,12 @@ for pasta in ("src", "dist"):
                 problemas.append("%s: usa \\%s, que o pacote doc declara obsoleto"
                                  % (os.path.relpath(caminho, RAIZ), m.group(1)))
 
-dtx = io.open(os.path.join(RAIZ, "src", "coppe.dtx"), encoding="utf-8").read()
+dtx = io.open(os.path.join(RAIZ, "src", "ufrj.dtx"), encoding="utf-8").read()
 m = re.search(r"literate=%(.*?)\n\}", dtx, re.S)
 if not m:
-    problemas.append("coppe.dtx: sumiu a tabela literate do listings")
+    problemas.append("ufrj.dtx: sumiu a tabela literate do listings")
 elif "{{\\" not in m.group(1):
-    problemas.append("coppe.dtx: a tabela literate perdeu as sequencias de acento")
+    problemas.append("ufrj.dtx: a tabela literate perdeu as sequencias de acento")
 
 for x in problemas:
     print(x)

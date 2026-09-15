@@ -6,7 +6,7 @@
     python tools/versao.py --subir 2       # 4.1 -> 4.2
     python tools/versao.py --subir 3       # 4.1 -> 4.1.1
 
-A versao canonica e a do `\\def\\fileversion` em src/coppe.dtx. Tudo o mais e
+A versao canonica e a do `\\def\\fileversion` em src/ufrj.dtx. Tudo o mais e
 conferido contra ela.
 
 Por que existe, e por que o nivel 1 nao existe
@@ -29,7 +29,7 @@ import sys
 import datetime
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DTX = os.path.join(RAIZ, "src", "coppe.dtx")
+DTX = os.path.join(RAIZ, "src", "ufrj.dtx")
 
 # O console do Windows e cp1252 e nao sabe escrever uma seta, um travessao nem
 # um til combinante. Sem isto, o script MORRE no meio ao imprimir uma linha de
@@ -43,20 +43,20 @@ if hasattr(sys.stdout, "reconfigure"):
 
 # Arquivos gerados pelo docstrip que carimbam a versao num \ProvidesFile ou
 # \ProvidesClass. Divergencia aqui quase sempre quer dizer a mesma coisa: o
-# coppe.ins nao foi rodado depois da ultima mudanca no .dtx.
+# ufrj.ins nao foi rodado depois da ultima mudanca no .dtx.
 #
 # Os de src/ estao escritos aqui; os de dist/ NAO, e sao deduzidos da lista do
 # painel. A razao: dist/ tem subpastas -- es/, outraslinguas/ --, e a lista de
 # quem vai para onde ja existe em tools/painel.py. Escrever os caminhos aqui de
 # novo criaria a segunda copia da mesma lista, e ela divergiu no dia seguinte a
-# reorganizacao: este verificador cobrava dist/spanish-coppe.lbx, que tinha
-# passado a ser dist/es/spanish-coppe.lbx.
+# reorganizacao: este verificador cobrava dist/spanish-ufrj.lbx, que tinha
+# passado a ser dist/es/spanish-ufrj.lbx.
 ESTILOS = [
-    "coppe.cls", "coppe.dbx", "coppe.bbx", "coppe.cbx",
-    "coppe-numeric.bbx", "coppe-numeric.cbx",
-    "brazilian-coppe.lbx", "english-coppe.lbx", "spanish-coppe.lbx",
-    "french-coppe.lbx", "italian-coppe.lbx",
-    "coppe-lang-spanish.def", "coppe-lang-french.def", "coppe-lang-italian.def",
+    "ufrj.cls", "ufrj.dbx", "ufrj.bbx", "ufrj.cbx",
+    "ufrj-numeric.bbx", "ufrj-numeric.cbx",
+    "brazilian-ufrj.lbx", "english-ufrj.lbx", "spanish-ufrj.lbx",
+    "french-ufrj.lbx", "italian-ufrj.lbx",
+    "ufrj-lang-spanish.def", "ufrj-lang-french.def", "ufrj-lang-italian.def",
 ]
 
 GERADOS = ["src/" + n for n in ESTILOS]
@@ -98,13 +98,13 @@ def ler(caminho):
 def canonica():
     m = RE_FILEVERSION.search(ler(DTX))
     if not m:
-        raise SystemExit("nao achei \\def\\fileversion em src/coppe.dtx")
+        raise SystemExit("nao achei \\def\\fileversion em src/ufrj.dtx")
     return m.group(2)
 
 
 def conferir(detalhe=False):
     alvo = canonica()
-    print("versao canonica (src/coppe.dtx): %s" % alvo)
+    print("versao canonica (src/ufrj.dtx): %s" % alvo)
     problemas = []
 
     # 1. O proprio .dtx: todo \ProvidesFile/\ProvidesClass, inclusive o que fica
@@ -113,17 +113,17 @@ def conferir(detalhe=False):
     for m in RE_PROVIDES.finditer(texto):
         if m.group(4) != alvo:
             linha = texto[:m.start()].count("\n") + 1
-            problemas.append("src/coppe.dtx:%d  %s (esperado %s)"
+            problemas.append("src/ufrj.dtx:%d  %s (esperado %s)"
                              % (linha, m.group(0).strip(), alvo))
 
-    # 2. Os gerados. Divergir aqui costuma ser o coppe.ins nao rodado.
+    # 2. Os gerados. Divergir aqui costuma ser o ufrj.ins nao rodado.
     for rel in GERADOS:
         caminho = os.path.join(RAIZ, rel.replace("/", os.sep))
         if not os.path.exists(caminho):
             problemas.append("%s  nao existe" % rel)
             continue
         conteudo = ler(caminho)
-        # O coppe.cls nao carimba a versao literalmente: o \ProvidesClass dele
+        # O ufrj.cls nao carimba a versao literalmente: o \ProvidesClass dele
         # usa \filedate e \fileversion, que sao definidos duas linhas acima. Por
         # isso os dois padroes, e nao so o \ProvidesFile.
         achou = None
@@ -234,7 +234,7 @@ def subir(nivel):
     texto = RE_PROVIDES.sub(
         lambda m: m.group(1) + hoje + m.group(3) + nova, texto)
     io.open(DTX, "w", encoding="utf-8", newline="\n").write(texto)
-    print("src/coppe.dtx atualizado")
+    print("src/ufrj.dtx atualizado")
 
     # A prosa NAO e reescrita por conta propria. O aviso do README e o titulo do
     # CHANGELOG nao sao so um numero: sao uma frase sobre o que aquela versao e,

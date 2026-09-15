@@ -22,7 +22,7 @@ AQUI = os.path.dirname(os.path.abspath(__file__))
 RAIZ = os.path.dirname(os.path.dirname(AQUI))
 SRC = os.path.join(RAIZ, "src")
 
-DOC = r"""\documentclass[dsc]{coppe}
+DOC = r"""\documentclass[dsc]{ufrj}
 \makeloabbreviations
 %(siglas)s
 \newsigla{ufrj}{UFRJ}{Universidade Federal do Rio de Janeiro}
@@ -62,7 +62,7 @@ def compila(separada):
                                            stdout=subprocess.DEVNULL,
                                            stderr=subprocess.DEVNULL)
         rodar(["pdflatex", "-interaction=nonstopmode", "s.tex"])
-        ist = os.path.join(SRC, "coppe.ist")
+        ist = os.path.join(SRC, "ufrj.ist")
         for ext, saida in (("abx", "lab"), ("sgx", "lsg")):
             if os.path.exists(os.path.join(pasta, "s." + ext)):
                 rodar(["makeindex", "-s", ist, "-o", "s." + saida, "s." + ext])

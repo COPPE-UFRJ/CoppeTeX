@@ -1,0 +1,528 @@
+%%
+%% This is file `ufrj.bbx',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% ufrj.dtx  (with options: `bbx')
+%% 
+%% This is the `ufrj' document class used for composition of LaTeX
+%% monographs (master's dissertations, PhD theses and qualifying exams)
+%% satisfying the requirements of the Federal University of Rio de
+%% Janeiro (UFRJ), specialized for each academic unit by a unit style.
+%% 
+%% Copyright (C) 2008-2026 Vicente Helano F. Batista, George O. Ainsworth Jr.,
+%% Geraldo Xexéo and Eduardo Mangeli.
+%% 
+%% This program is free software; you can redistribute it and/or modify
+%% it under the terms of the GNU General Public License version 3 as
+%% published by the Free Software Foundation.
+%% 
+%% This program is distributed in the hope that it will be useful,
+%% but WITHOUT ANY WARRANTY; without even the implied warranty of
+%% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+%% GNU General Public License version 3 for more details.
+%% 
+%% You should have received a copy of the GNU General Public License
+%% version 3 along with this package (see the COPYING.txt file).
+%% If not, see <http://www.gnu.org/licenses/>.
+%% 
+%% Author(s): Vicente Helano F. Batista
+%%            George O. Ainsworth Jr.
+%%            Geraldo Xexéo
+%%            Eduardo Mangeli
+%% 
+\ProvidesFile{ufrj.bbx}[2026/09/09 v4.1 CoppeTeX ABNT bibliography style]
+\RequirePackage{setspace}
+\RequireBibliographyStyle{standard}
+
+\ExecuteBibliographyOptions{%
+  maxbibnames=99,      % ABNT 4.3.1.3: list all authors by default
+  giveninits=false,
+  uniquename=false,
+  uniquelist=false,
+  labeldateparts=true, % needed for author-date extradate (1999a/1999b)
+  sorting=nyt,
+}
+
+\DeclareLanguageMapping{brazilian}{brazilian-ufrj}
+\DeclareLanguageMapping{english}{english-ufrj}
+
+\DeclareNameAlias{author}{family-given}
+\DeclareNameAlias{editor}{family-given}
+\DeclareNameAlias{translator}{family-given}
+\DeclareNameAlias{default}{family-given}
+\DeclareDelimFormat[bib,biblist]{multinamedelim}{\addsemicolon\space}
+\DeclareDelimFormat[bib,biblist]{finalnamedelim}{\addsemicolon\space}
+
+\renewbibmacro*{editor+others}{%
+  \ifboolexpr{ test \ifuseeditor and not test {\ifnameundef{editor}} }
+    {\printnames{editor}%
+     \setunit*{\addspace}%
+     \printtext{\mkbibparens{\usebibmacro{editor+othersstrg}}}%
+     \clearname{editor}}
+    {}}
+\renewbibmacro*{editor}{%
+  \ifboolexpr{ test \ifuseeditor and not test {\ifnameundef{editor}} }
+    {\printnames{editor}%
+     \setunit*{\addspace}%
+     \printtext{\mkbibparens{\usebibmacro{editorstrg}}}%
+     \clearname{editor}}
+    {}}
+
+\protected\def\ufrj@ucfamily#1{%
+  \protected@edef\ufrj@uctmp{#1}%
+  \edef\ufrj@ucstr{\detokenize\expandafter{\ufrj@uctmp}}%
+  \expandafter\ufrj@ucscan\ufrj@ucstr.\ufrj@ucstop{#1}}
+\protected\def\ufrj@ucscan#1.#2\ufrj@ucstop#3{%
+  \ifblank{#2}
+    {\expandafter\ufrj@ucscanp\ufrj@ucstr(\ufrj@ucstop{#3}}
+    {#3}}
+\protected\def\ufrj@ucscanp#1(#2\ufrj@ucstop#3{%
+  \ifblank{#2}{\MakeUppercase{#3}}{#3}}
+\renewcommand*{\bibdaterangesep}{/}
+\protected\def\ufrj@abntdate#1#2#3{%
+  \iffieldundef{#3}{}{\stripzeros{\thefield{#3}}\nobreakspace}%
+  \iffieldundef{#2}{}{\mkbibmonth{\thefield{#2}}\iffieldundef{#1}{}{\space}}%
+  \iffieldundef{#1}{}{\stripzeros{\thefield{#1}}}}
+\AtBeginBibliography{%
+  \singlespacing                        % entries single-spaced internally (2.4)
+  \setlength{\bibitemsep}{\baselineskip}% one blank line between entries (2.4)
+  \renewcommand*{\mkbibnamefamily}[1]{\ufrj@ucfamily{#1}}%
+  \renewcommand*{\mkbibnameprefix}[1]{\MakeUppercase{#1}}%
+  \let\mkbibdatelong\ufrj@abntdate     % ABNT date format (drop the "de")
+  \let\mkbibdateshort\ufrj@abntdate
+}
+
+\protected\def\ufrjUCtitle#1{\ufrjUCtitleA#1 \ufrjUCstop}
+\protected\def\ufrjUCtitleA#1 #2\ufrjUCstop{%
+  \ufrjUCifart{#1}
+    {\MakeUppercase{#1}\ifblank{#2}{}{\space\ufrjUCtitleB#2\ufrjUCstop}}%
+    {\MakeUppercase{#1}\ifblank{#2}{}{\space\ufrjUCkeep#2\ufrjUCstop}}}
+\protected\def\ufrjUCtitleB#1 #2\ufrjUCstop{%
+  \MakeUppercase{#1}\ifblank{#2}{}{\space\ufrjUCkeep#2\ufrjUCstop}}
+\protected\def\ufrjUCkeep#1 \ufrjUCstop{#1}
+\protected\def\ufrjUCifart#1{%
+  \begingroup
+  \lowercase{\def\ufrjUC@w{#1}}%
+  \edef\ufrjUC@w{,\ufrjUC@w,}%
+  \expandafter\in@\expandafter{\ufrjUC@w}{,a,o,as,os,um,uma,uns,umas,the,an,}%
+  \ifin@\aftergroup\@firstoftwo\else\aftergroup\@secondoftwo\fi
+  \endgroup}
+\DeclareFieldFormat{title}{%
+  \ifboolexpr{ test {\ifnameundef{labelname}} }
+    {#1}%
+    {\mkbibbold{#1}}}
+\DeclareFieldFormat{titlecase}{%
+  \ifboolexpr{ test {\ifnameundef{labelname}} }
+    {\ufrjUCtitle{#1}}%
+    {#1}}
+\DeclareFieldFormat[article,incollection,inbook,inproceedings,suppperiodical,review]{title}{#1}
+\DeclareFieldFormat[thesis]{title}{\mkbibbold{#1}}
+\DeclareFieldFormat[patent]{title}{\mkbibbold{#1}}
+\DeclareFieldFormat[legislation,jurisdiction,legal]{title}{#1}
+\DeclareFieldFormat[legislation,jurisdiction,legal]{volume}{v\adddot\addnbspace#1}
+\DeclareFieldFormat[legislation,jurisdiction,legal]{number}{n\adddot\addnbspace#1}
+\DeclareFieldFormat{journaltitle}{\mkbibbold{#1}}
+\DeclareFieldFormat{booktitle}{\mkbibbold{#1}}
+\DeclareFieldFormat{maintitle}{\mkbibbold{#1}}
+
+\DeclareFieldFormat{pagetotal}{#1\addnbspace p\adddot}
+\DeclareFieldFormat[thesis]{pagetotal}{#1\addnbspace f\adddot}
+\DeclareFieldFormat{pages}{p\adddot\addnbspace#1}
+
+\DeclareFieldFormat[article]{volume}{v\adddot\addnbspace#1}
+\DeclareFieldFormat[article]{number}{n\adddot\addnbspace#1}
+
+\renewbibmacro*{in:}{\printtext{\bibstring{in}\addcolon\space}}
+
+\DeclareFieldFormat{url}{\bibstring{availablefrom}\addcolon\space\url{#1}}
+\DeclareFieldFormat{urldate}{\bibstring{urlseen}\addcolon\space#1}
+\renewbibmacro*{url+urldate}{%
+  \iffieldundef{addendum}
+    {}
+    {\printfield{addendum}\clearfield{addendum}%
+     \setunit{\adddot\space}}%
+  \iffieldundef{url}
+    {}
+    {\printfield{url}%
+     \iffieldundef{urlyear}{}{\setunit{\adddot\space}\printurldate}}}
+
+\DeclareBibliographyDriver{article}{%
+  \usebibmacro{bibindex}%
+  \usebibmacro{begentry}%
+  \usebibmacro{author/translator+others}%
+  \setunit{\labelnamepunct}\newblock
+  \usebibmacro{title}%
+  \newunit\newblock
+  \printfield{journaltitle}%
+  \iflistundef{location}{}{\printtext{,}\setunit{\space}\printlist{location}}%
+  \iffieldequalstr{entrysubtype}{newspaper}
+    {\iffieldundef{caderno}
+       {\setunit{\addcomma\space}\printfield{pages}%
+        \setunit{\addcomma\space}\printdate}%
+       {\setunit{\addcomma\space}\printdate%
+        \setunit{\adddot\space}\printfield{caderno}%
+        \setunit{\addcomma\space}\printfield{pages}}}%
+    {\setunit{\addcomma\space}\printfield{volume}%
+     \setunit{\addcomma\space}\printfield{number}%
+     \setunit{\addcomma\space}\printfield{pages}%
+     \setunit{\addcomma\space}\printdate}%
+  \newunit\newblock
+  \printfield{doi}%
+  \newunit\newblock
+  \usebibmacro{url+urldate}%
+  \usebibmacro{finentry}}
+
+\newbibmacro*{ufrj:bookeditor}{%
+  \ifnameundef{editor}
+    {}
+    {\printnames{editor}%
+     \setunit*{\addspace}\printtext{\mkbibparens{\usebibmacro{editorstrg}}}%
+     \clearname{editor}%
+     \setunit{\adddot\space}}}
+\newbibmacro*{ufrj:partdriver}{%
+  \usebibmacro{bibindex}\usebibmacro{begentry}%
+  \usebibmacro{author/translator+others}%
+  \setunit{\labelnamepunct}\newblock
+  \usebibmacro{title}%
+  \newunit\newblock
+  \usebibmacro{in:}%
+  \usebibmacro{ufrj:bookeditor}%
+  \printfield{booktitle}%
+  \newunit\newblock
+  \printfield{edition}%
+  \newunit\newblock
+  \printlist{location}%
+  \setunit*{\addcolon\space}\printlist{publisher}%
+  \setunit*{\addcomma\space}\printdate%
+  \newunit\newblock
+  \printfield{pages}%
+  \setunit{\addcomma\space}\printfield{chapter}%
+  \newunit\newblock
+  \usebibmacro{url+urldate}%
+  \usebibmacro{finentry}}
+\DeclareBibliographyDriver{incollection}{\usebibmacro{ufrj:partdriver}}
+\DeclareBibliographyDriver{inbook}{\usebibmacro{ufrj:partdriver}}
+
+\DeclareFieldFormat{type}{\ifbibstring{#1}{\bibstring{#1}}{#1}}
+
+\newcommand*\ufrj@degword{%
+  \iffieldundef{ufrjdegree}
+    {\iffieldequalstr{type}{mscdiss}{\bibstring{ufrjmscdeg}}{%
+     \iffieldequalstr{type}{dscthesis}{\bibstring{ufrjdscdeg}}{%
+     \iffieldequalstr{type}{phdthesis}{\bibstring{ufrjphddeg}}{%
+     \iffieldequalstr{type}{tcc}{\bibstring{ufrjtccdeg}}{}}}}}
+    {\printfield{ufrjdegree}}}
+\DeclareFieldFormat{course}{%
+  \mkbibparens{\ufrj@degword\addspace\ufrjstring{in:}\addspace#1}}
+\DeclareBibliographyDriver{thesis}{%
+  \usebibmacro{bibindex}\usebibmacro{begentry}%
+  \usebibmacro{author}%
+  \setunit{\labelnamepunct}\newblock
+  \usebibmacro{title}%
+  \newunit\newblock
+  \printdate%
+  \newunit\newblock
+  \printfield{pagetotal}%
+  \newunit\newblock
+  \printfield{type}\setunit*{\addspace}\printfield{course}%
+  \iflistundef{institution}
+    {}
+    {\setunit*{\addspace\textemdash\addspace}\printlist{institution}}%
+  \setunit*{\addcomma\space}\printlist{location}%
+  \setunit*{\addcomma\space}\printdate%
+  \newunit\newblock
+  \printfield{note}%
+  \newunit\newblock
+  \usebibmacro{url+urldate}%
+  \usebibmacro{finentry}}
+\newbibmacro*{ufrj:media}{%
+  \iflistundef{artist}{}{\setunit{\addperiod\space}%
+    \printtext{\ufrjstring{art}\addcolon\space}\printlist{artist}}%
+  \iffieldundef{platform}{}{\setunit{\addperiod\space}%
+    \printtext{\ufrjstring{platform}\addcolon\space}\printfield{platform}}%
+  \iflistundef{director}{}{\setunit{\addperiod\space}%
+    \printtext{\ufrjstring{directedby}\addspace}\printlist{director}}%
+  \iflistundef{producer}{}{\setunit{\addperiod\space}%
+    \printtext{\ufrjstring{producedby}\addspace}\printlist{producer}}}
+\newbibmacro*{ufrj:mediadriver}{%
+  \usebibmacro{bibindex}\usebibmacro{begentry}%
+  \usebibmacro{author/translator+others}%
+  \setunit{\labelnamepunct}\newblock
+  \usebibmacro{title}%
+  \newunit\newblock
+  \usebibmacro{ufrj:media}%
+  \newunit\newblock
+  \usebibmacro{ufrj:imprenta}%
+  \newunit\newblock
+  \printfield{version}%
+  \newunit\newblock
+  \printfield{note}%
+  \newunit\newblock
+  \usebibmacro{url+urldate}%
+  \usebibmacro{finentry}}
+\DeclareFieldFormat[periodical,suppperiodical]{title}{\MakeUppercase{#1}}
+\DeclareFieldFormat[periodical,suppperiodical]{volume}{v\adddot\addnbspace#1}
+\DeclareFieldFormat[periodical,suppperiodical]{number}{n\adddot\addnbspace#1}
+\DeclareBibliographyDriver{periodical}{%
+  \usebibmacro{bibindex}\usebibmacro{begentry}%
+  \printfield{title}%
+  \newunit\newblock
+  \printlist{location}%
+  \iflistundef{publisher}{}{\setunit*{\addcolon\space}\printlist{publisher}}%
+  \setunit*{\addcomma\space}\printfield{volume}%
+  \setunit*{\addcomma\space}\printfield{number}%
+  \setunit*{\addcomma\space}\printdate%
+  \newunit\newblock
+  \printfield{note}%
+  \newunit\newblock
+  \usebibmacro{url+urldate}%
+  \usebibmacro{finentry}}
+\DeclareBibliographyDriver{suppperiodical}{%
+  \usedriver{}{periodical}\usebibmacro{finentry}}
+\DeclareFieldFormat{eventtitle}{\MakeUppercase{#1}}
+\DeclareFieldFormat[proceedings]{title}{#1}
+\DeclareFieldFormat[proceedings,inproceedings]{number}{#1\adddot}
+\DeclareFieldFormat[proceedings,inproceedings]{volume}{v\adddot\addnbspace#1}
+\newbibmacro*{ufrj:evento}{%
+  \printfield{eventtitle}%
+  \setunit*{\addcomma\space}\printfield{number}%
+  \setunit*{\addcomma\space}\printeventdate%
+  \setunit*{\addcomma\space}\printfield{venue}}
+\DeclareBibliographyDriver{proceedings}{%
+  \usebibmacro{bibindex}\usebibmacro{begentry}%
+  \usebibmacro{ufrj:evento}%
+  \newunit\newblock
+  \iffieldundef{title}{}{\printfield{title}\printtext{.}}%
+  \setunit{\space}\newblock
+  \usebibmacro{ufrj:imprenta}%
+  \newunit\newblock
+  \usebibmacro{url+urldate}%
+  \usebibmacro{finentry}}
+\DeclareBibliographyDriver{inproceedings}{%
+  \usebibmacro{bibindex}\usebibmacro{begentry}%
+  \usebibmacro{author/translator+others}%
+  \setunit{\labelnamepunct}\newblock
+  \usebibmacro{title}%
+  \newunit\newblock
+  \usebibmacro{in:}%
+  \usebibmacro{ufrj:evento}%
+  \newunit\newblock
+  \iffieldundef{booktitle}{}{\printfield{booktitle}\printtext{.}}%
+  \setunit{\space}\newblock
+  \usebibmacro{ufrj:imprenta}%
+  \newunit\newblock
+  \printfield{volume}%
+  \setunit*{\addcomma\space}\printfield{pages}%
+  \newunit\newblock
+  \usebibmacro{url+urldate}%
+  \usebibmacro{finentry}}
+\DeclareBibliographyDriver{game}{\usebibmacro{ufrj:mediadriver}}
+\DeclareBibliographyDriver{videogame}{\usebibmacro{ufrj:mediadriver}}
+\DeclareBibliographyDriver{boardgame}{\usebibmacro{ufrj:mediadriver}}
+\DeclareBibliographyDriver{movie}{\usebibmacro{ufrj:mediadriver}}
+\DeclareBibliographyDriver{tvshow}{\usebibmacro{ufrj:mediadriver}}
+\DeclareFieldFormat{scale}{\bibstring{ufrjscale}\addnbspace#1}
+\newbibmacro*{ufrj:imprenta}{%
+  \printlist{location}%
+  \iflistundef{publisher}
+    {}
+    {\setunit*{\addcolon\space}\printlist{publisher}}%
+  \setunit*{\addcomma\space}\printdate}
+\DeclareBibliographyDriver{map}{%
+  \usebibmacro{bibindex}\usebibmacro{begentry}%
+  \usebibmacro{author/translator+others}%
+  \setunit{\labelnamepunct}\newblock
+  \usebibmacro{title}%
+  \newunit\newblock
+  \usebibmacro{ufrj:imprenta}%
+  \newunit\newblock
+  \iffieldundef{addendum}{}{\printfield{addendum}\clearfield{addendum}}%
+  \newunit\newblock
+  \printfield{scale}%
+  \newunit\newblock
+  \printfield{note}%
+  \newunit\newblock
+  \usebibmacro{url+urldate}%
+  \usebibmacro{finentry}}
+\newbibmacro*{ufrj:depositor}{%
+  \ifnameundef{holder}
+    {}
+    {\printtext{\bibstring{depositor}\addcolon\space}%
+     \begingroup
+       \def\mkbibnamefamily##1{##1}%
+       \def\mkbibnameprefix##1{##1}%
+       \printnames{holder}%
+     \endgroup}}
+\DeclareBibliographyAlias{letter}{misc}
+\DeclareBibliographyDriver{patent}{%
+  \usebibmacro{bibindex}%
+  \usebibmacro{begentry}%
+  \usebibmacro{author/translator+others}%
+  \setunit{\labelnamepunct}\newblock
+  \usebibmacro{title}%
+  \newunit\newblock
+  \usebibmacro{ufrj:depositor}%
+  \newunit\newblock
+  \printfield{type}%
+  \setunit*{\addspace}\printfield{number}%
+  \newunit\newblock
+  \iffieldundef{filingdate}
+    {}
+    {\printtext{\bibstring{ufrjfiling}\addcolon\space}\printfield{filingdate}%
+     \setunit{\adddot\space}}%
+  \iffieldundef{grantdate}
+    {}
+    {\printtext{\bibstring{ufrjgrant}\addcolon\space}\printfield{grantdate}}%
+  \ifboolexpr{ test {\iffieldundef{filingdate}} and test {\iffieldundef{grantdate}} }
+    {\printdate}
+    {}%
+  \newunit\newblock
+  \usebibmacro{url+urldate}%
+  \usebibmacro{finentry}}
+\DeclareBibliographyDriver{standard}{\usedriver{}{book}\usebibmacro{finentry}}
+\DeclareBibliographyDriver{music}{\usedriver{}{book}\usebibmacro{finentry}}
+\newbibmacro*{ufrj:legaldriver}{%
+  \usebibmacro{bibindex}\usebibmacro{begentry}%
+  \usebibmacro{author/translator+others}%
+  \setunit{\labelnamepunct}\newblock
+  \usebibmacro{title}%
+  \newunit\newblock
+  % Jurisprudência: "Relator: <nome>." after the decision title (NBR 6023).
+  \iffieldundef{relator}{}{\printtext{Relator\addcolon\space}\printfield{relator}\newunit\newblock}%
+  \printfield{edition}%
+  \newunit\newblock
+  \printlist{location}%
+  \iflistundef{publisher}{}{\setunit*{\addcolon\space}\printlist{publisher}}%
+  \setunit*{\addcomma\space}\printfield{volume}%
+  \setunit*{\addcomma\space}\printfield{number}%
+  \setunit*{\addcomma\space}\printfield{pages}%
+  \setunit{\addcomma\space}\printdate%
+  \newunit\newblock
+  \printfield{note}%
+  \newunit\newblock
+  \usebibmacro{url+urldate}%
+  \usebibmacro{finentry}}
+\DeclareBibliographyDriver{online}{%
+  \usebibmacro{bibindex}\usebibmacro{begentry}%
+  \usebibmacro{author/translator+others}%
+  \setunit{\labelnamepunct}\newblock
+  \usebibmacro{title}%
+  \newunit\newblock
+  \usebibmacro{ufrj:imprenta}%
+  \newunit\newblock
+  \printfield{note}%
+  \newunit\newblock
+  \usebibmacro{url+urldate}%
+  \usebibmacro{finentry}}
+\DeclareBibliographyDriver{legislation}{\usebibmacro{ufrj:legaldriver}}
+\DeclareBibliographyDriver{jurisdiction}{\usebibmacro{ufrj:legaldriver}}
+\DeclareBibliographyDriver{legal}{\usebibmacro{ufrj:legaldriver}}
+\DeclareBibliographyDriver{audio}{\usebibmacro{ufrj:mediadriver}}
+\DeclareBibliographyDriver{video}{\usebibmacro{ufrj:mediadriver}}
+\DeclareBibliographyDriver{software}{\usedriver{}{misc}\usebibmacro{finentry}}
+\DeclareBibliographyDriver{image}{\usedriver{}{misc}\usebibmacro{finentry}}
+\DeclareBibliographyDriver{artwork}{\usedriver{}{misc}\usebibmacro{finentry}}
+\DeclareBibliographyDriver{performance}{\usedriver{}{misc}\usebibmacro{finentry}}
+\DeclareBibliographyDriver{dataset}{\usedriver{}{misc}\usebibmacro{finentry}}
+
+\DeclareSourcemap{%
+  \maps[datatype=bibtex]{%
+    % entry-type PT synonyms -> canonical English
+    \map{\step[typesource=livro,typetarget=book]}
+    \map{\step[typesource=artigo,typetarget=article]}
+    \map{\step[typesource=artigodejornal,typetarget=article,final]\step[fieldset=entrysubtype,fieldvalue=newspaper]}
+    \map{\step[typesource=partedelivro,typetarget=incollection]}
+    \map{\step[typesource=emlivro,typetarget=inbook]}
+    \map{\step[typesource=verbete,typetarget=inreference]}
+    \map{\step[typesource=anais,typetarget=proceedings]}
+    \map{\step[typesource=trabalhodeevento,typetarget=inproceedings]}
+    \map{\step[typesource=periodico,typetarget=periodical]}
+    \map{\step[typesource=relatorio,typetarget=report]}
+    \map{\step[typesource=relatoriotecnico,typetarget=report]}
+    \map{\step[typesource=manual,typetarget=manual]}
+    \map{\step[typesource=correspondencia,typetarget=letter]}
+    \map{\step[typesource=patente,typetarget=patent]}
+    \map{\step[typesource=diverso,typetarget=misc]}
+    \map{\step[typesource=jogo,typetarget=game]}
+    \map{\step[typesource=jogoeletronico,typetarget=videogame]}
+    \map{\step[typesource=jogodetabuleiro,typetarget=boardgame]}
+    \map{\step[typesource=filme,typetarget=movie]}
+    \map{\step[typesource=serietv,typetarget=tvshow]}
+    \map{\step[typesource=programadetv,typetarget=tvshow]}
+    % Exotic ABNT types (NBR 6023 4.2.5-4.2.14); targets are biblatex-native
+    % except map (declared in ufrj.dbx).
+    \map{\step[typesource=legislacao,typetarget=legislation]}
+    \map{\step[typesource=atonormativo,typetarget=legislation]}
+    \map{\step[typesource=jurisprudencia,typetarget=jurisdiction]}
+    \map{\step[typesource=documentojuridico,typetarget=legal]}
+    \map{\step[typesource=documentocivil,typetarget=legal]}
+    \map{\step[typesource=norma,typetarget=standard]}
+    \map{\step[typesource=partitura,typetarget=music]}
+    \map{\step[typesource=iconografico,typetarget=image]}
+    \map{\step[typesource=obradearte,typetarget=artwork]}
+    \map{\step[typesource=tridimensional,typetarget=artwork]}
+    \map{\step[typesource=cartografico,typetarget=map]}
+    \map{\step[typesource=mapa,typetarget=map]}
+    \map{\step[typesource=audiovisual,typetarget=video]}
+    \map{\step[typesource=conjuntodedados,typetarget=dataset]}
+    \map{\step[typesource=fasciculo,typetarget=suppperiodical]}
+    \map{\step[typesource=trabalhoapresentado,typetarget=unpublished]}
+    % thesis family: retype to thesis and preset the (babel-aware) type word
+    \map{\step[typesource=tese,typetarget=thesis]}
+    \map{\step[typesource=dissertacao,typetarget=thesis]}
+    \map{\step[typesource=masterdissertation,typetarget=thesis,final]\step[fieldset=type,fieldvalue=mscdiss]}
+    \map{\step[typesource=mscdissertation,typetarget=thesis,final]\step[fieldset=type,fieldvalue=mscdiss]}
+    \map{\step[typesource=dissertacaomestrado,typetarget=thesis,final]\step[fieldset=type,fieldvalue=mscdiss]}
+    \map{\step[typesource=dscthesis,typetarget=thesis,final]\step[fieldset=type,fieldvalue=dscthesis]}
+    \map{\step[typesource=tesedoutorado,typetarget=thesis,final]\step[fieldset=type,fieldvalue=dscthesis]}
+    \map{\step[typesource=phdthesis,typetarget=thesis,final]\step[fieldset=type,fieldvalue=phdthesis]}
+    \map{\step[typesource=tesephd,typetarget=thesis,final]\step[fieldset=type,fieldvalue=phdthesis]}
+    \map{\step[typesource=tcc,typetarget=thesis,final]\step[fieldset=type,fieldvalue=tcc]}
+    % field PT synonyms (unaccented) -> canonical English
+    \map{\step[fieldsource=periodico,fieldtarget=journaltitle]}
+    \map{\step[fieldsource=revista,fieldtarget=journaltitle]}
+    \map{\step[fieldsource=jornal,fieldtarget=journaltitle]}
+    \map{\step[fieldsource=titulo,fieldtarget=title]}
+    \map{\step[fieldsource=subtitulo,fieldtarget=subtitle]}
+    \map{\step[fieldsource=autor,fieldtarget=author]}
+    \map{\step[fieldsource=editora,fieldtarget=publisher]}
+    \map{\step[fieldsource=local,fieldtarget=location]}
+    \map{\step[fieldsource=ano,fieldtarget=year]}
+    \map{\step[fieldsource=data,fieldtarget=date]}
+    \map{\step[fieldsource=edicao,fieldtarget=edition]}
+    \map{\step[fieldsource=paginas,fieldtarget=pages]}
+    \map{\step[fieldsource=numero,fieldtarget=number]}
+    \map{\step[fieldsource=tradutor,fieldtarget=translator]}
+    \map{\step[fieldsource=organizador,fieldtarget=editor]}
+    \map{\step[fieldsource=instituicao,fieldtarget=institution]}
+    \map{\step[fieldsource=tipo,fieldtarget=type]}
+    \map{\step[fieldsource=nota,fieldtarget=note]}
+    \map{\step[fieldsource=dataacesso,fieldtarget=urldate]}
+    \map{\step[fieldsource=curso,fieldtarget=course]}
+    \map{\step[fieldsource=grau,fieldtarget=ufrjdegree]}
+    \map{\step[fieldsource=artista,fieldtarget=artist]}
+    \map{\step[fieldsource=plataforma,fieldtarget=platform]}
+    \map{\step[fieldsource=diretor,fieldtarget=director]}
+    \map{\step[fieldsource=produtor,fieldtarget=producer]}
+    \map{\step[fieldsource=versao,fieldtarget=version]}
+    \map{\step[fieldsource=escala,fieldtarget=scale]}
+    \map{\step[fieldsource=evento,fieldtarget=eventtitle]}
+    \map{\step[fieldsource=dataevento,fieldtarget=eventdate]}
+    \map{\step[fieldsource=localevento,fieldtarget=venue]}
+    \map{\step[fieldsource=deposito,fieldtarget=filingdate]}
+    \map{\step[fieldsource=concessao,fieldtarget=grantdate]}
+    % caderno e campo da classe (a secao do jornal); newspapersection e o nome
+    % em ingles, e e o que as bases da entrega usam.
+    \map{\step[fieldsource=newspapersection,fieldtarget=caderno]}
+  }%
+}
+
+\setlength{\bibhang}{0pt}
+\setlength{\bibitemsep}{\baselineskip}
+
+
+%% 
+%%
+%% End of file `ufrj.bbx'.

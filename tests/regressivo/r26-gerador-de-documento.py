@@ -87,7 +87,7 @@ for nome, extras in CASOS:
         b = roda("biber", "main")
         if b.returncode != 0:
             problemas.append("%s: o biber falhou (exit %d)" % (nome, b.returncode))
-        ist = os.path.join(pasta, "coppe.ist")
+        ist = os.path.join(pasta, "ufrj.ist")
         for ext, saida in (("abx", "lab"), ("syx", "los"), ("sgx", "lsg"), ("gsx", "lgs")):
             if os.path.exists(os.path.join(pasta, "main." + ext)):
                 roda("makeindex", "-s", ist, "-o", "main." + saida,
@@ -148,13 +148,13 @@ except ImportError as e:
 else:
     if not any(c[0] == "baixar" for c in geradocvazio.CAMPOS):
         problemas.append("sumiu a opcao de baixar a classe do GitHub")
-    for precisa in ("coppe.cls", "coppe.ist", "latexmkrc",
-                    "brazilian-coppe.lbx", "coppe-logo.pdf"):
+    for precisa in ("ufrj.cls", "ufrj.ist", "latexmkrc",
+                    "brazilian-ufrj.lbx", "coppe-logo.pdf"):
         if not geradocvazio._serve_para_compilar(precisa):
             problemas.append("o download deixaria de trazer %s" % precisa)
     for nao_precisa in ("max-exemplo.tex", "min-exemplo.tex", "example_en.pdf",
                         "exemplo.bib",
-                        "README.md", "coppe.dtx"):
+                        "README.md", "ufrj.dtx"):
         if geradocvazio._serve_para_compilar(nao_precisa):
             problemas.append("o download traria %s, que nao serve a um"
                              " documento em branco" % nao_precisa)

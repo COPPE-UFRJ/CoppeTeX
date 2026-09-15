@@ -1,0 +1,113 @@
+%%
+%% This is file `ufrj-lang-italian.def',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% ufrj.dtx  (with options: `langit')
+%% 
+%% This is the `ufrj' document class used for composition of LaTeX
+%% monographs (master's dissertations, PhD theses and qualifying exams)
+%% satisfying the requirements of the Federal University of Rio de
+%% Janeiro (UFRJ), specialized for each academic unit by a unit style.
+%% 
+%% Copyright (C) 2008-2026 Vicente Helano F. Batista, George O. Ainsworth Jr.,
+%% Geraldo Xexéo and Eduardo Mangeli.
+%% 
+%% This program is free software; you can redistribute it and/or modify
+%% it under the terms of the GNU General Public License version 3 as
+%% published by the Free Software Foundation.
+%% 
+%% This program is distributed in the hope that it will be useful,
+%% but WITHOUT ANY WARRANTY; without even the implied warranty of
+%% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+%% GNU General Public License version 3 for more details.
+%% 
+%% You should have received a copy of the GNU General Public License
+%% version 3 along with this package (see the COPYING.txt file).
+%% If not, see <http://www.gnu.org/licenses/>.
+%% 
+%% Author(s): Vicente Helano F. Batista
+%%            George O. Ainsworth Jr.
+%%            Geraldo Xexéo
+%%            Eduardo Mangeli
+%% 
+%% ufrj-lang-italian.def -- CoppeTeX 4.x Italian class-string pack.
+%% See ufrj-lang-spanish.def for the structure. The algorithm2e
+%% language option for Italian is spelled "italiano" -- that's the
+%% spelling algorithm2e ships, even though babel calls the language
+%% "italian".
+\ProvidesFile{ufrj-lang-italian.def}[2026/09/09 v4.1 CoppeTeX italian class strings]
+%% --- A folha de resumo ------------------------------------------------------
+%% Tudo o que a classe escreve numa folha de resumo sai no idioma daquela folha.
+%% A frase de abertura e montada de pedacos porque a concordancia muda de idioma
+%% para idioma; ver o comentario no ufrj.dtx, na tabela de portugues e ingles.
+%%
+%% O NOME do Programa nao entra aqui: a unidade o declara em portugues e em
+%% ingles, e so. Numa folha neste idioma vai o nome em portugues, que e o nome
+%% proprio do Programa. O `tounit' daqui e o da classe sem unidade.
+\ufrjdefstring{italian}{abstractname}     {Riassunto}
+\ufrjdefstring{italian}{abstractofmale}   {del}
+\ufrjdefstring{italian}{abstractoffemale} {della}
+\ufrjdefstring{italian}{presentedmale}    {presentato}
+\ufrjdefstring{italian}{presentedfemale}  {presentata}
+\ufrjdefstring{italian}{tounit}           {all'UFRJ}
+\ufrjdefstring{italian}{abstracttail}{come parte dei
+  requisiti necessari per il conseguimento del titolo di}
+\ufrjdefstring{italian}{doctypemsc}  {Dissertazione}
+\ufrjdefstring{italian}{doctypedsc}  {Tesi}
+\ufrjdefstring{italian}{doctypeexam} {Esame di Qualificazione}
+\ufrjdefstring{italian}{doctypesem}  {Seminario}
+\ufrjdefstring{italian}{degnamemsc}  {Magistrale}
+\ufrjdefstring{italian}{degnamedsc}  {Dottore}
+\ufrjdefstring{italian}{appendix}        {Appendice}
+\ufrjdefstring{italian}{annex}           {Allegato}
+\ufrjdefstring{italian}{frame}           {Riquadro}
+\ufrjdefstring{italian}{listframe}       {Elenco dei riquadri}
+\ufrjdefstring{italian}{source}          {Fonte}
+\ufrjdefstring{italian}{program}         {Programma}
+\ufrjdefstring{italian}{listprogram}     {Elenco dei programmi}
+\ufrjdefstring{italian}{references}      {Riferimenti}
+\ufrjdefstring{italian}{in:}             {in}
+\ufrjdefstring{italian}{art}             {Illustrazione}
+\ufrjdefstring{italian}{platform}        {Piattaforma}
+\ufrjdefstring{italian}{directedby}      {Regia di}
+\ufrjdefstring{italian}{producedby}      {Prodotto da}
+\ufrjdefstring{italian}{listabbreviation}{Elenco di abbreviazioni e sigle}
+\ufrjdefstring{italian}{listabbreviationonly}{Elenco delle abbreviazioni}
+\ufrjdefstring{italian}{listsigla}       {Elenco delle sigle}
+\ufrjdefstring{italian}{listsymbol}      {Elenco dei simboli}
+\ufrjdefstring{italian}{glossary}        {Glossario}
+\ufrjdefstring{italian}{advisor}         {Relatore}
+\ufrjdefstring{italian}{advisors}        {Relatori}
+\ufrjdefstring{italian}{dept}            {Programma}
+\ufrjdefstring{italian}{approvedmale}    {Approvato da}
+\ufrjdefstring{italian}{approvedfemale}  {Approvata da}
+\ufrjdefstring{italian}{approvedonmale}  {Approvato il}
+\ufrjdefstring{italian}{approvedonfemale}{Approvata il}
+\ufrjdefstring{italian}{keywordsname} {Parole chiave}
+\ufrjdefstring{italian}{volumename} {Volume}
+\ufrjdefstring{italian}{coadvisor}  {Correlatore}
+\ufrjdefstring{italian}{coadvisors} {Correlatori}
+\ufrjdefstring{italian}{ofname}     {di}
+\ufrjdefstring{italian}{researchline}{Linea di ricerca}
+\ufrjdefstring{italian}{tbddate}     {da determinare}
+\ufrjdefstring{italian}{monthname1} {gennaio}
+\ufrjdefstring{italian}{monthname2} {febbraio}
+\ufrjdefstring{italian}{monthname3} {marzo}
+\ufrjdefstring{italian}{monthname4} {aprile}
+\ufrjdefstring{italian}{monthname5} {maggio}
+\ufrjdefstring{italian}{monthname6} {giugno}
+\ufrjdefstring{italian}{monthname7} {luglio}
+\ufrjdefstring{italian}{monthname8} {agosto}
+\ufrjdefstring{italian}{monthname9} {settembre}
+\ufrjdefstring{italian}{monthname10}{ottobre}
+\ufrjdefstring{italian}{monthname11}{novembre}
+\ufrjdefstring{italian}{monthname12}{dicembre}
+\ufrjdefstring{italian}{algorithm2eopt}{italiano}
+\ufrjdefstring{italian}{babelname}     {italian}
+\AtBeginDocument{\DeclareLanguageMapping{italian}{italian-ufrj}}
+
+%% 
+%%
+%% End of file `ufrj-lang-italian.def'.

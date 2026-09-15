@@ -9,8 +9,8 @@ folhas de uma vez: capa, folha de rosto, folha de aprovacao e o alto dos
 resumos.
 
 A opcao `mscsem' veio por pedido de fora (PR #61). A implementacao daquele PR
-mexia no coppe.cls, que e gerado e seria apagado na geracao seguinte, e esquecia
-o \\@coppeexametrue -- sem ele o seminario sairia com folha adicional da Coleta
+mexia no ufrj.cls, que e gerado e seria apagado na geracao seguinte, e esquecia
+o \\@ufrjexametrue -- sem ele o seminario sairia com folha adicional da Coleta
 CAPES, ficha catalografica e a referencia no alto do resumo, tres coisas que so
 cabem a trabalho depositado na biblioteca.
 
@@ -46,7 +46,7 @@ IDIOMAS = [
     ("italian", "italian", r"\braziliankeyword{Terceiro}"),
 ]
 
-MODELO = r"""\documentclass[mscsem,%(opcao)s]{coppe}
+MODELO = r"""\documentclass[mscsem,%(opcao)s]{ufrj}
 \title{Seminario de teste}
 \foreigntitle{Test seminar}
 %(titulo_proprio)s

@@ -1,7 +1,7 @@
 %% Documento da revisao adversativa -- GERADO por tools/mk-adversativa.py.
 %% tipo=dsc idioma=pt programa=PEE
 %% Opcoes: dsc, pdfa, coorientador
-\documentclass[dsc,pdfa,coorientador]{coppe}
+\documentclass[dsc,pdfa,coorientador]{ufrj}
 
 \usepackage[most]{tcolorbox}
 \usepackage{makeidx}\makeindex
@@ -123,7 +123,7 @@ def adversativo(n):
     \end{subfigure}\hfill
     \begin{subfigure}[b]{0.35\textwidth}
       \centering\includegraphics[height=2cm]{coppe-logo}
-      \caption{A marca do Instituto}\label{fig:sub-coppe}
+      \caption{A marca do Instituto}\label{fig:sub-ufrj}
     \end{subfigure}
     \caption{Duas subfiguras numa figura só}\label{fig:subs}
     \source{Elaboração própria.}
@@ -287,7 +287,7 @@ public static int adversativo(int n) {
     Duas caixas, porque uma só não mostra que o estilo se repete.
   \end{tcolorbox}
   \begin{Verbatim}[frame=single]
-  pdflatex coppe.ins   % gera todos os arquivos derivados
+  pdflatex ufrj.ins   % gera todos os arquivos derivados
   \end{Verbatim}
   Uma nota de rodapé com citação dentro.\footnote{Como em
   \citet{m-norma}, a nota sai em corpo menor, 2.2(b).}
@@ -433,5 +433,5 @@ public static int adversativo(int n) {
   \includepdf[pages=-,scale=0.85,pagecommand={\thispagestyle{fancy}}]{coppe-logo.pdf}
 
   \printindex
-  \coppetexfinalpage
+  \ufrjfinalpage
 \end{document}

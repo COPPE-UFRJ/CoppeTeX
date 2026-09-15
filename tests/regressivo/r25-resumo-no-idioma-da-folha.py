@@ -40,7 +40,7 @@ AQUI = os.path.dirname(os.path.abspath(__file__))
 RAIZ = os.path.dirname(os.path.dirname(AQUI))
 SRC = os.path.join(RAIZ, "src")
 
-MODELO = r"""\documentclass[dsc,%(idioma)s]{coppe}
+MODELO = r"""\documentclass[dsc,%(idioma)s]{ufrj}
 \title{Titulo em portugues}
 \foreigntitle{Title in English}
 %(titulo_proprio)s

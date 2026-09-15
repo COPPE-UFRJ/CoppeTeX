@@ -151,7 +151,7 @@ def um_teste(tex, manter):
     if d.get("BIBER", "").lower() in ("sim", "yes", "1"):
         rodar(["biber", nome], AQUI)
     if d.get("MAKEINDEX", "").lower() in ("sim", "yes", "1"):
-        ist = os.path.join(SRC, "coppe.ist")
+        ist = os.path.join(SRC, "ufrj.ist")
         for ext, saida in (("abx", "lab"), ("syx", "los"), ("sgx", "lsg"), ("gsx", "lgs")):
             if os.path.exists(os.path.join(AQUI, nome + "." + ext)):
                 rodar(["makeindex", "-s", ist, "-o", nome + "." + saida,

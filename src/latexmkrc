@@ -1,6 +1,6 @@
 
-# latexmkrc -- GERADO a partir de coppe.dtx pelo coppe.ins.
-# Nao edite este arquivo: edite o modulo `latexmkrc' no coppe.dtx.
+# latexmkrc -- GERADO a partir de ufrj.dtx pelo ufrj.ins.
+# Nao edite este arquivo: edite o modulo `latexmkrc' no ufrj.dtx.
 #
 # latexmkrc -- CoppeTeX build configuration (works locally and on Overleaf).
 #
@@ -18,31 +18,31 @@ $pdf_mode = 1;            # 1 = pdflatex | 4 = lualatex | 5 = xelatex
 $biber = 'biber %O %B';
 
 # CoppeTeX lists: the abbreviations list (.abx -> .lab) and the symbols list
-# (.syx -> .los) are built with the coppe.ist makeindex style. These custom
+# (.syx -> .los) are built with the ufrj.ist makeindex style. These custom
 # dependencies let latexmk -- and Overleaf -- build the lists automatically;
-# otherwise you must run makeindex by hand. Requires coppe.ist in the build dir.
-add_cus_dep('abx', 'lab', 0, 'coppe_make_lab');
-sub coppe_make_lab { return system "makeindex -s coppe.ist -o \"$_[0].lab\" \"$_[0].abx\""; }
+# otherwise you must run makeindex by hand. Requires ufrj.ist in the build dir.
+add_cus_dep('abx', 'lab', 0, 'ufrj_make_lab');
+sub ufrj_make_lab { return system "makeindex -s ufrj.ist -o \"$_[0].lab\" \"$_[0].abx\""; }
 
-add_cus_dep('syx', 'los', 0, 'coppe_make_los');
-sub coppe_make_los { return system "makeindex -s coppe.ist -o \"$_[0].los\" \"$_[0].syx\""; }
+add_cus_dep('syx', 'los', 0, 'ufrj_make_los');
+sub ufrj_make_los { return system "makeindex -s ufrj.ist -o \"$_[0].los\" \"$_[0].syx\""; }
 
 # The automatic glossary (\makeglossarylist): .gsx -> .lgs, same style.
-add_cus_dep('gsx', 'lgs', 0, 'coppe_make_lgs');
-sub coppe_make_lgs { return system "makeindex -s coppe.ist -o \"$_[0].lgs\" \"$_[0].gsx\""; }
+add_cus_dep('gsx', 'lgs', 0, 'ufrj_make_lgs');
+sub ufrj_make_lgs { return system "makeindex -s ufrj.ist -o \"$_[0].lgs\" \"$_[0].gsx\""; }
 
 # The separate list of acronyms (\makelosiglas): .sgx -> .lsg, same style.
-add_cus_dep('sgx', 'lsg', 0, 'coppe_make_lsg');
-sub coppe_make_lsg { return system "makeindex -s coppe.ist -o \"$_[0].lsg\" \"$_[0].sgx\""; }
+add_cus_dep('sgx', 'lsg', 0, 'ufrj_make_lsg');
+sub ufrj_make_lsg { return system "makeindex -s ufrj.ist -o \"$_[0].lsg\" \"$_[0].sgx\""; }
 
 # Make "latexmk -c" clean the generated list files too.
 push @generated_exts, qw(abx lab syx los sgx lsg gsx lgs);
 
 # The index (makeidx, \printindex): plain makeindex, with NO style file.
-# coppe.ist is for the lists above only -- it opens `theglossary', has no
+# ufrj.ist is for the lists above only -- it opens `theglossary', has no
 # page separator and does not read `!' as a sublevel. Overleaf's system-wide
 # LatexMk (read BEFORE this file) handled the .idx in a way that picked up
-# coppe.ist, and the index came out titled "Glossario", with "citacao23"
+# ufrj.ist, and the index came out titled "Glossario", with "citacao23"
 # and "citacaocurta" (issue 102). This file is read last, so it wins: drop
 # any custom rule for .idx and set the built-in one explicitly.
 remove_cus_dep('idx', 'ind');

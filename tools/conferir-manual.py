@@ -31,8 +31,8 @@ import re
 import sys
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DTX = os.path.join(RAIZ, "src", "coppe.dtx")
-CLS = os.path.join(RAIZ, "src", "coppe.cls")
+DTX = os.path.join(RAIZ, "src", "ufrj.dtx")
+CLS = os.path.join(RAIZ, "src", "ufrj.cls")
 EXEMPLO = os.path.join(RAIZ, "src", "max-exemplo.tex")
 
 # Logotipos da familia TeX e afins: a classe os define para uso tipografico,
@@ -84,7 +84,7 @@ def documentados(dtx):
     envs = set(re.findall(r"\\DescribeEnv\{([A-Za-z@]+)\}", dtx))
     # A secao "Comandos que voce nao deve chamar" lista os de montagem de folha.
     naochame = set(re.findall(r"\|\\(make[A-Za-z]+)\|", dtx))
-    naochame |= set(re.findall(r"\|\\(coppefinal[a-z]+)\|", dtx))
+    naochame |= set(re.findall(r"\|\\(ufrjfinal[a-z]+)\|", dtx))
     return macros, envs, naochame
 
 
@@ -118,7 +118,7 @@ def guardas(dtx):
     O doc.sty so fecha um bloco de codigo quando a linha e, EXATAMENTE, um '%'
     seguido de QUATRO espacos e do \\end{macrocode}. Com tres espacos o bloco
     nao fecha, e tudo o que vem depois -- documentacao inclusive -- sai
-    impresso como codigo, verbatim, no coppe.pdf. Nada quebra a compilacao, e
+    impresso como codigo, verbatim, no ufrj.pdf. Nada quebra a compilacao, e
     por isso ninguem ve: foi assim que sessenta linhas do manual passaram
     quatro versoes impressas como se fossem codigo.
 
@@ -203,7 +203,7 @@ def main():
 
     if tortos:
         erros += len(tortos)
-        print("\nERRO  %d guarda(s) de macrocode mal escrito(s) no coppe.dtx:"
+        print("\nERRO  %d guarda(s) de macrocode mal escrito(s) no ufrj.dtx:"
               % len(tortos))
         for n, obs in tortos:
             print("        linha %-6s %s" % (n or "?", obs))

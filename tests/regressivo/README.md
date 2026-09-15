@@ -40,7 +40,7 @@ e pronto:
 %% BUG: uma linha dizendo o que acontecia antes, e por quê.
 %% ESPERA-TEXTO: o que tem de sair
 %% NAO-ESPERA-TEXTO: o que não pode sair
-\documentclass[dsc]{coppe}
+\documentclass[dsc]{ufrj}
 ...
 ```
 
@@ -79,7 +79,7 @@ sempre que o defeito for de uma folha só.
 
 | Arquivo | O defeito |
 |---|---|
-| `r01-flutuante-do-autor` | `\newcoppefloat` embrulhava o `\newfloat` num grupo; como o `\newfloat` define o ambiente localmente, o flutuante do autor sumia ao fechar o grupo. A lista também saía sem número e sem pontilhado. |
+| `r01-flutuante-do-autor` | `\newufrjfloat` (antes `\newcoppefloat`) embrulhava o `\newfloat` num grupo; como o `\newfloat` define o ambiente localmente, o flutuante do autor sumia ao fechar o grupo. A lista também saía sem número e sem pontilhado. |
 | `r02-capa-espaco-duplo` | Com `doublespacing` a capa transbordava para uma segunda folha, e a folha de sobra saía **numerada** na parte pré-textual, o que a 2.7 proíbe. |
 | `r03-folha-aprovacao-oito` | A folha de aprovação com sete ou mais membros transbordava, e o `\thispagestyle` valia só para uma folha: a de sobra vinha numerada. Oito é o teto. |
 | `r04-sumario-dois-digitos` | O `\@dottedtocline` dá ao número uma caixa de largura fixa; indicativos como `10.10.10.10` estouravam a caixa em até 4,6 mm e passavam **por cima** do título. A coluna passou a ser medida e viaja no `.aux`. |
@@ -120,7 +120,7 @@ que verificador nenhum, porque parece que alguém conferiu.
 | Arquivo | O defeito |
 |---|---|
 | `r90-log-de-uma-passada` | Os verificadores liam só o trecho do `.log` depois do **último** `LaTeX2e <`, achando que o arquivo guardasse várias passadas. Não guarda: o que aparece duas vezes é o banner, que o LaTeX repete no fim. O corte jogava fora o corpo da passada — onde estão os avisos — e o verificador passou a aprovar qualquer coisa. |
-| `r91-logotipo-ausente` | Quem copiava só o `coppe.cls` recebia `File 'coppe-logo' not found`, sem pista de que o arquivo vem com a classe. |
+| `r91-logotipo-ausente` | Quem copiava só o `coppe.cls` (hoje `ufrj.cls`) recebia `File 'coppe-logo' not found`, sem pista de que o arquivo vem com a classe. |
 | `r93-dist-basta-sozinha` | A pasta `dist/` é a única coisa que o aluno baixa, e nada garantia que ela bastasse — já saiu incompleta mais de uma vez, e o defeito só aparecia do outro lado, na máquina de quem foi escrever a tese. Aqui tudo compila porque `src/` está no caminho de busca do TeX e supre o que faltar. O teste tira essa muleta: copia `dist/` para uma pasta temporária, aponta o `TEXINPUTS` só para ela e compila os três exemplos. É o mais demorado da suíte. |
 | `r92-lista-do-dist` | A cópia para `dist/` levava junto o `README.md` da raiz — que é a proposta para a CPGP, não o guia de instalação — e os cinco exemplos por idioma, que tinham sido tirados de propósito. A lista estava escrita em dois lugares e os dois divergiram. Este teste lê a lista; não compila nada. Cobra também que o rodador da primeira camada não volte a morrer no banner do `makeindex`. |
 

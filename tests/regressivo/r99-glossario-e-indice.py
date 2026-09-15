@@ -29,7 +29,7 @@ AQUI = os.path.dirname(os.path.abspath(__file__))
 RAIZ = os.path.dirname(os.path.dirname(AQUI))
 SRC = os.path.join(RAIZ, "src")
 
-DOC = r"""\documentclass[dsc%(opcoes)s]{coppe}
+DOC = r"""\documentclass[dsc%(opcoes)s]{ufrj}
 %(preambulo)s
 \title{Glossario e indice}
 \foreigntitle{Glossary and index}
@@ -63,9 +63,9 @@ def compila(opcoes="", preambulo="", texto=TERMOS, fim="", passadas=2):
         doc = DOC % {"opcoes": opcoes, "preambulo": preambulo,
                      "texto": texto, "fim": fim}
         io.open(os.path.join(pasta, "g.tex"), "w", encoding="utf-8").write(doc)
-        # O coppe.ist vai ao lado do documento, como na pasta do aluno: o
+        # O ufrj.ist vai ao lado do documento, como na pasta do aluno: o
         # makeindex procura o estilo ali e na arvore do TeX, e nao no TEXINPUTS.
-        shutil.copy(os.path.join(SRC, "coppe.ist"), pasta)
+        shutil.copy(os.path.join(SRC, "ufrj.ist"), pasta)
         amb = dict(os.environ)
         amb["TEXINPUTS"] = pasta + os.pathsep + SRC + os.pathsep
         for _ in range(passadas):

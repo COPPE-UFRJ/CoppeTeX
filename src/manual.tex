@@ -7,7 +7,7 @@
 %% Manual de elaboração gráfica de teses e dissertações COPPE/UFRJ, escrito com
 %% a própria classe coppe e seus estilos BibLaTeX/biber.
 %%
-%% NÃO confundir com coppe.pdf: aquele é o manual da CLASSE, que ensina os
+%% NÃO confundir com ufrj.pdf: aquele é o manual da CLASSE, que ensina os
 %% comandos; este é o manual da NORMA, que diz como o trabalho tem de sair. Este
 %% documento é, ele mesmo, a demonstração: ele obedece a tudo o que enuncia.
 %%
@@ -16,11 +16,11 @@
 %% e Dissertações da COPPE/UFRJ.
 %%
 %% Compilação:  pdflatex manual ; biber manual ;
-%%              makeindex -s coppe.ist -o manual.lab manual.abx ;
-%%              makeindex -s coppe.ist -o manual.los manual.syx ;
+%%              makeindex -s ufrj.ist -o manual.lab manual.abx ;
+%%              makeindex -s ufrj.ist -o manual.los manual.syx ;
 %%              pdflatex manual ; pdflatex manual
 %% Ou, mais curto:  latexmk -pdf manual
-\documentclass[dsc]{coppe}
+\documentclass[dsc]{ufrj}
 
 %% A classe já carrega booktabs e hyperref. Carregá-los de novo aqui era o que
 %% este documento fazia, e é exatamente o que o manual da classe diz para não
@@ -182,7 +182,7 @@
   Basta declarar a classe e o tipo do trabalho:
 
 \begin{verbatim}
-\documentclass[dsc]{coppe}
+\documentclass[dsc]{ufrj}
 \end{verbatim}
 
   \section{Os arquivos, e onde eles ficam}
@@ -238,7 +238,7 @@
   do \TeX.
 
   O manual da classe, que descreve todos os comandos um a um, é o
-  \texttt{coppe.pdf}, distribuído junto. Este aqui descreve a norma; aquele
+  \texttt{ufrj.pdf}, distribuído junto. Este aqui descreve a norma; aquele
   descreve a ferramenta.
 
   \chapter{Formato gráfico}
@@ -595,7 +595,7 @@
   categoria própria --- ele pode ter numeração e lista próprias:
 
 \begin{verbatim}
-\newcoppefloat{mapa}{Mapa}{Lista de Mapas}
+\newufrjfloat{mapa}{Mapa}{Lista de Mapas}
 \end{verbatim}
 
   O novo flutuante segue a mesma regra: legenda no topo, fonte abaixo, numeração
@@ -992,7 +992,7 @@ public class Saudacao {
   \chapter{Referência rápida de comandos}
 
   Os comandos da classe \CoppeTeX\ que este manual usou, por assunto. A descrição
-  completa de cada um está no \texttt{coppe.pdf}.
+  completa de cada um está no \texttt{ufrj.pdf}.
 
   % Alinhadas à esquerda: justificadas, as linhas cheias de nomes de comando,
   % que não se hifenizam, estouravam a margem.
@@ -1006,7 +1006,7 @@ public class Saudacao {
     \item estrutura: \verb|\maketitle|, \verb|\frontmatter|, \verb|\mainmatter|,
       \verb|\backmatter|, \verb|\dedication|, \verb|\appendix|, \verb|\annex|;
     \item ilustrações: \verb|\source|, ambiente \verb|framefloat|,
-      \verb|\listofframes|, \verb|\newcoppefloat|;
+      \verb|\listofframes|, \verb|\newufrjfloat|;
     \item siglas e símbolos: \verb|\defineacronym|, \verb|\useacronym|, \verb|\useacronym*|,
       \verb|\abbrev|, \verb|\symbl|;
     \item listas: ambiente \verb|alineas|, \verb|\listofprograms|,

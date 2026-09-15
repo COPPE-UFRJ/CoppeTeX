@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""Confere PDFs gerados pela classe coppe contra o Manual UFRJ/SiBI 2026.
+"""Confere PDFs gerados pela classe ufrj contra o Manual UFRJ/SiBI 2026.
 
 Le o PDF pronto e mede o que a norma fixa em centimetros e em ordem, que e o
 que nenhuma compilacao bem-sucedida garante: uma tese compila perfeitamente com

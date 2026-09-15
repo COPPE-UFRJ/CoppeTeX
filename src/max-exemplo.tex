@@ -4,9 +4,9 @@
 %%
 %% The original source files were:
 %%
-%% coppe.dtx  (with options: `maxexemplo')
+%% ufrj.dtx  (with options: `maxexemplo')
 %% 
-%% This is a sample monograph which illustrates the use of the `coppe' document
+%% This is a sample monograph which illustrates the use of the `ufrj' document
 %% class and its biblatex/biber bibliography style.
 %% 
 %% Copyright (C) 2008-2026 Vicente Helano F. Batista, George O. Ainsworth Jr.,
@@ -19,7 +19,7 @@
 %% !BIB program = biber
 %% Com o latexmk funcionando (no Windows ele pede o Perl), troque a primeira
 %% linha por: % !TeX program = latexmk -pdf -synctex=1
-\documentclass[dsc,pdfa,setavermelha]{coppe}
+\documentclass[dsc,pdfa,setavermelha]{ufrj}
 %% max-exemplo.tex -- tudo o que a classe oferece e o Manual prevê, inclusive o
 %% opcional. Para só o obrigatório, veja o min-exemplo.tex.
 %%
@@ -86,7 +86,7 @@
 \fi
 \DeclareMathOperator{\RMSE}{RMSE}   % operadores próprios (cap. de matemática)
 \DeclareMathOperator{\diag}{diag}
-%% A classe coppe já carrega: amsmath, booktabs, longtable, subcaption,
+%% A classe ufrj já carrega: amsmath, booktabs, longtable, subcaption,
 %% hyperref, biblatex, listings, fancyvrb, algorithm2e -- não recarregue esses
 %% pacotes aqui (em particular, hyperref deve ficar a cargo da classe para que
 %% a ordem com setspace e biblatex permaneça correta).
@@ -101,7 +101,7 @@
 \makeloacronyms
 %% Flutuante criado pelo autor: mesma regra dos demais (legenda acima, fonte
 %% abaixo) e uma lista propria, \listofmapas.
-\newcoppefloat{mapa}{Mapa}{Lista de Mapas}
+\newufrjfloat{mapa}{Mapa}{Lista de Mapas}
 %% Fonte: a norma fixa o corpo 12, e não a família. A classe compõe sem serifa
 %% por padrão; para compor com serifa, passe a opção de classe `comserifa' lá
 %% em cima -- NÃO redefina \familydefault aqui, porque isso venceria a opção.
@@ -237,7 +237,7 @@
   %    Norma COPPE (§10), presentes quando o trabalho tem ao menos um quadro,
   %    programa ou algoritmo;
   %  - \listofmapas ............ opcional; o Manual admite uma lista por tipo
-  %    de ilustração (3.1.2.2.4), e \newcoppefloat cria o tipo;
+  %    de ilustração (3.1.2.2.4), e \newufrjfloat cria o tipo;
   %  - \printloabbreviations ... opcional (3.1.2.2.6);
   %  - \printloacronyms .......... opcional; a 3.1.2.2.6 recomenda separar as
   %    siglas das abreviaturas (exige \makeloacronyms no preâmbulo);
@@ -260,14 +260,14 @@
 
   Este é um documento exemplo para o uso da classe CoppeTeX, destinado a ajudar os alunos do Instituto Alberto Luiz Coimbra de Pós-graduação e Pesquisa de Engenharia (COPPE), da Universidade Federal do Rio de Janeiro.
 
-  A classe \verb|coppe| foi criada originalmente por Vicente Helano e George Ainsworth, porém, em 2024, passou a ser mantida por Geraldo Xexéo e Eduardo Mangeli.
+  A classe \verb|ufrj| foi criada originalmente por Vicente Helano e George Ainsworth, com o nome \verb|coppe|, porém, em 2024, passou a ser mantida por Geraldo Xexéo e Eduardo Mangeli.
   Em 2026, Geraldo Xexéo fez modificações de alta monta para suportar o novo \citetitle{manualbib}, que implementa normas recentes da ABNT: a versão 4.0, em maio, com apoio do Claude Opus 4.7 e do Claude Opus 4.8, e a versão 4.1, em setembro, com apoio do Claude Opus 5, ambos da Anthropic.
 
    Provavelmente Geraldo Xexéo, professor do Programa de Engenharia de Sistemas e Computação, deve continuar mantendo ou apoiando a manutenção por alguns anos. Se você quiser particiar do grupo de manutenção, é só entrar em contato via github.
 
   A versão mais atual dessa classe é mantida no GitHub, no repositório \url{https://github.com/COPPE-UFRJ/CoppeTeX}. De maneira arbitrária o prof. Geraldo Xexéo criou a organização COPPE-UFRJ no GitHub, e também está disposto a compartilhar com outras iniciativas semelhantes.
 
-  Esse documento segue a norma de formatação de teses e dissertações da COPPE. Ele também pode ser usado para exames de qualificação. As principais instruções estão no documento que explica a classe, ``The \verb|coppe| document class'', que fica disponível no GitHub.
+  Esse documento segue a norma de formatação de teses e dissertações da COPPE. Ele também pode ser usado para exames de qualificação. As principais instruções estão no documento que explica a classe, ``The \verb|ufrj| document class'', que fica disponível no GitHub.
 
   Há um grupo de WhatsApp para perguntas e discussões do estilo: \href{https://github.com/COPPE-UFRJ/CoppeTeX/wiki}{here}.
 
@@ -283,11 +283,11 @@
 
 \chapter{Configurações Iniciais}
 
-   A primeira coisa a fazer é escolher o tipo de documento. Isso é feito como uma opção no comando inicial do arquivo, \verb|documentclass|. A classe \verb|coppe| suporta cinco formatos: tese de doutorado (\verb|dsc|), dissertação de mestrado (\verb|msc|), exame de qualificação de doutorado (\verb|dscexam|), exame de qualificação de mestrado (\verb|mscexam|) e seminário de mestrado (\verb|mscsem|), que é requisito obrigatório de alguns Programas e não se confunde com a qualificação. Na verdade, a norma da COPPE não cobre os exames nem o seminário, mas é interessante seguir o padrão nesses casos também: os três saem sem folha adicional da Coleta CAPES, sem ficha catalográfica e sem a referência no alto dos resumos, porque não são depositados na biblioteca.
+   A primeira coisa a fazer é escolher o tipo de documento. Isso é feito como uma opção no comando inicial do arquivo, \verb|documentclass|. A classe \verb|ufrj| suporta cinco formatos: tese de doutorado (\verb|dsc|), dissertação de mestrado (\verb|msc|), exame de qualificação de doutorado (\verb|dscexam|), exame de qualificação de mestrado (\verb|mscexam|) e seminário de mestrado (\verb|mscsem|), que é requisito obrigatório de alguns Programas e não se confunde com a qualificação. Na verdade, a norma da COPPE não cobre os exames nem o seminário, mas é interessante seguir o padrão nesses casos também: os três saem sem folha adicional da Coleta CAPES, sem ficha catalográfica e sem a referência no alto dos resumos, porque não são depositados na biblioteca.
 
    Como pode ser visto nesse documento, muita coisa pode ser configurada, o que gerará o tratamento correto segundo as normas da COPPE. Para isso, logo após o \verb|\begin{document}| várias variáveis devem receber valor. Isso é feito com os comandos descritos que aparecem nesse exemplo.
 
-   Recomendo ler o documento ``The \verb*|coppe| document class'' para entender melhor todas as opções disponíveis.
+   Recomendo ler o documento ``The \verb*|ufrj| document class'' para entender melhor todas as opções disponíveis.
 
 \section{Linguagem principal do texto}
 
@@ -326,7 +326,7 @@
   \symbl{$\mathbb{R}$}{Conjunto dos números reais}
   \symbl{$\emptyset$}{Conjunto vazio}. Usamos esse exemplo aqui justamente para mostrar como devem ser usados os símbolos de Reais ($\mathbb{R}$), Inteiros ($\mathbb{Z}$), Complexos($\mathbb{C}$), Racionais (($\mathbb{Q}$)) Booleanos (($\mathbb{B}$)), etc.
 
-  Para as listas de abreviaturas e símbolos funcionarem no Overleaf é necessário rodar o \verb|latexmkrc|. O Overleaf faz isso automaticamente. Caso haja um problema, verifique se o arquivo \verb|coppe.ist| está no diretório. Também é útil compilar do início e também apagar todos os arquivos desnecessários.
+  Para as listas de abreviaturas e símbolos funcionarem no Overleaf é necessário rodar o \verb|latexmkrc|. O Overleaf faz isso automaticamente. Caso haja um problema, verifique se o arquivo \verb|ufrj.ist| está no diretório. Também é útil compilar do início e também apagar todos os arquivos desnecessários.
 
   Como as listas de símbolos e de abreviaturas usamo o mesmo comando usado para criar índices, e também não há uma expectativa que a tese tenha um índice, se for desejado criar índices é necessário tanto criar, ou adotar, um novo arquivo \verb*|.ist|, que define o formato do índice, como alterar o \verb*|latexmkrc| para fazer também esse passo. Ou fazer o passo de rodar o \verb*|makeindex| na mão.
 
@@ -377,7 +377,7 @@ Texto da seção quinária, escrita com \verb|\paragraph|. Este é o único \ver
 
 Este exemplo é compilado com a opção \verb|pdfa| da classe, logo na primeira linha:
 \begin{verbatim}
-\documentclass[dsc,pdfa,setavermelha]{coppe}
+\documentclass[dsc,pdfa,setavermelha]{ufrj}
 \end{verbatim}
 Com ela, o arquivo sai em \textbf{PDF/A-2b}. Esta seção explica o que isso é, por que a COPPE exige, o que a classe faz e o que pode dar errado.
 
@@ -415,7 +415,7 @@ A regra geral de posicionamento é que uma figura ou quadro só pode aparecer a 
 
 \textbf{Pela norma atual (manual2024), a legenda} \verb|\caption| \textbf{de toda ilustração --- figura, tabela ou quadro --- fica \emph{acima} dela}, com o número em algarismos arábicos, travessão e o título. \textbf{A fonte é obrigatória e fica \emph{abaixo}}, indicada com \verb|\source{...}| (sinônimo: \verb|\fonte{...}|), em letra menor; ela não numera nem avança nenhum contador. Se outro pacote já definir \verb|\source| ou \verb|\fonte|, use \verb|\cpsource| / \verb|\cpfonte|.
 
-Quadros são ilustrações cujos dados são delimitados por linhas em \emph{todas} as bordas (ao contrário das tabelas, com linhas só no topo e na base). O CoppeTeX oferece o float \verb|quadro| (sinônimo em inglês: \verb|frame|) e o comando \verb|\listofframes| para a lista correspondente. Para criar outros floats com a mesma regra (legenda acima, \verb|\source| abaixo e uma \verb|\listof...|), use \verb|\newcoppefloat{nome}{Nome}{Título da Lista}|.
+Quadros são ilustrações cujos dados são delimitados por linhas em \emph{todas} as bordas (ao contrário das tabelas, com linhas só no topo e na base). O CoppeTeX oferece o float \verb|quadro| (sinônimo em inglês: \verb|frame|) e o comando \verb|\listofframes| para a lista correspondente. Para criar outros floats com a mesma regra (legenda acima, \verb|\source| abaixo e uma \verb|\listof...|), use \verb|\newufrjfloat{nome}{Nome}{Título da Lista}|.
 
 \section{Tabelas e Figuras Padrão}
 
@@ -489,7 +489,7 @@ Fonte & Abaixo da ilustração. \\
 
 \section{Criando um float novo}
 
-\verb|\newcoppefloat{nome}{Nome}{Título da Lista}| cria um flutuante que segue a mesma regra: legenda acima, \verb|\source| abaixo e uma lista própria. O exemplo declara \verb|mapa| no preâmbulo e o usa duas vezes, no \autoref{mapa:primeiro} e no \autoref{mapa:segundo}; a lista sai com \verb|\listofmapas|.
+\verb|\newufrjfloat{nome}{Nome}{Título da Lista}| cria um flutuante que segue a mesma regra: legenda acima, \verb|\source| abaixo e uma lista própria. O exemplo declara \verb|mapa| no preâmbulo e o usa duas vezes, no \autoref{mapa:primeiro} e no \autoref{mapa:segundo}; a lista sai com \verb|\listofmapas|.
 
 \begin{mapa}[ht]
 \centering
@@ -1385,11 +1385,11 @@ use \verb|\href{https://exemplo.org}{texto}|. Evite digitar URLs como texto comu
   \section{Fluxos de escrita e o \texttt{morewrites}}
   \label{sec:morewrites}
 
-  O \hologo{pdfLaTeX} só consegue manter \textbf{dezesseis} arquivos abertos para escrita ao mesmo tempo, e cada lista que o trabalho imprime ocupa um deles até o fim da compilação: o sumário, a lista de figuras, a de tabelas, a de quadros, a de programas, a de algoritmos, cada flutuante novo criado com \verb|\newcoppefloat|, a lista de símbolos, a de abreviaturas, a de siglas, o índice remissivo, cada índice a mais e o glossário. Este exemplo, sozinho, passa dos dezesseis.
+  O \hologo{pdfLaTeX} só consegue manter \textbf{dezesseis} arquivos abertos para escrita ao mesmo tempo, e cada lista que o trabalho imprime ocupa um deles até o fim da compilação: o sumário, a lista de figuras, a de tabelas, a de quadros, a de programas, a de algoritmos, cada flutuante novo criado com \verb|\newufrjfloat|, a lista de símbolos, a de abreviaturas, a de siglas, o índice remissivo, cada índice a mais e o glossário. Este exemplo, sozinho, passa dos dezesseis.
 
   Por isso a classe carrega o pacote \verb|morewrites|, que tira esse teto. Ele custa cerca de meio segundo por passada do \hologo{pdfLaTeX}. Quando o tempo de compilação importa --- no plano gratuito do Overleaf, por exemplo ---, a opção \verb|semmorewrites| o desliga:
   \begin{verbatim}
-  \documentclass[dsc,semmorewrites]{coppe}
+  \documentclass[dsc,semmorewrites]{ufrj}
   \end{verbatim}
 
   \begin{itemize}
@@ -1482,7 +1482,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor i
 \renewcommand{\indexname}{Índice de Assuntos}
 \printindex
 
-\coppetexfinalpage% colofão institucional (página par, face do contracapa)
+\ufrjfinalpage% colofão institucional (página par, face do contracapa)
 
 \end{document}
 

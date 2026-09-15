@@ -1,0 +1,266 @@
+%%
+%% This is file `ufrj-quickref.tex',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% ufrj.dtx  (with options: `quickref')
+%% 
+%% This is one of the demonstration documents of the `ufrj' document class:
+%% the five main-language demos, the PDF/A build of the full example and the
+%% side-by-side cover sheet.  It is generated from ufrj.dtx by docstrip; edit
+%% the .dtx source, not this file.
+%% 
+%% Copyright (C) 2008-2026 Vicente Helano F. Batista, George O. Ainsworth Jr.,
+%% Geraldo Xexéo and Eduardo Mangeli. Released under the GNU General Public
+%% License version 3 (see the COPYING.txt file).
+%% 
+%% ufrj-quickref.tex -- CoppeTeX quick reference, in English.
+%%
+%% GERADO de ufrj.dtx. Nao edite este arquivo: edite o modulo `quickref' do
+%% ufrj.dtx e rode `pdflatex ufrj.ins'.
+\documentclass[a4paper,10pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[margin=2cm,landscape]{geometry}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{xcolor}
+\usepackage[colorlinks=true,allbordercolors=white]{hyperref}
+
+\newcommand\ufrjversion{v4.1}
+
+\newcolumntype{C}{>{\ttfamily\raggedright\arraybackslash}p{0.20\textwidth}}
+\newcolumntype{E}{>{\ttfamily\footnotesize\raggedright\arraybackslash}p{0.30\textwidth}}
+\newcolumntype{W}{>{\centering\arraybackslash}p{0.055\textwidth}}
+\newcolumntype{D}{>{\raggedright\arraybackslash}p{0.37\textwidth}}
+
+\newcommand\pre{\textsc{pre}}
+\newcommand\doc{\textsc{doc}}
+
+\setlength\parindent{0pt}
+
+\begin{document}
+
+\begin{center}
+  {\Large\bfseries CoppeTeX quick reference}\\[2pt]
+  {\normalsize Class \texttt{ufrj}, \ufrjversion\ --- every option, command and
+  environment}\\[6pt]
+  \begin{minipage}{0.86\textwidth}\small
+  This is the short companion to \texttt{ufrj.pdf}, the full manual, which is
+  written in Portuguese. A COPPE thesis may be written in Portuguese, English or
+  Spanish (CEPG Resolution 302/2024, art.~57); this sheet is for whoever writes
+  it in English.
+
+  \medskip
+  The \textbf{Where} column says where a command may appear:
+  \pre\ means the preamble, before \verb|\begin{document}|;
+  \doc\ means after \verb|\begin{document}|, and, for everything that feeds the
+  cover, \emph{before} \verb|\maketitle|.
+
+  \medskip
+  \textbf{Three things that surprise people.} The document data goes
+  \emph{inside} \texttt{document}, not in the preamble. The bibliography is
+  \texttt{biblatex} with \texttt{biber}, not Bib\TeX. And
+  \verb|\frontmatter|/\verb|\mainmatter| are what switch folio numbering on, so
+  leaving them out gives the wrong page numbers.
+  \end{minipage}
+\end{center}
+
+\vspace{4pt}
+
+\begin{longtable}{@{}CEWD@{}}
+\toprule
+\normalfont\bfseries Command & \normalfont\bfseries Example &
+\normalfont\bfseries Where & \normalfont\bfseries What it does \\
+\midrule
+\endfirsthead
+\toprule
+\normalfont\bfseries Command & \normalfont\bfseries Example &
+\normalfont\bfseries Where & \normalfont\bfseries What it does \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+
+\multicolumn{4}{@{}l@{}}{\normalfont\bfseries\small CLASS OPTIONS --- work
+  type, one is required}\\[2pt]
+msc      & \textbackslash documentclass[msc]\{ufrj\}     & \pre & M.Sc.\ dissertation. \\
+dsc      & \textbackslash documentclass[dsc]\{ufrj\}     & \pre & D.Sc.\ thesis. \\
+mscexam  & \textbackslash documentclass[mscexam]\{ufrj\} & \pre & M.Sc.\ qualifying exam. No CAPES sheet, no catalogue card, no reference above the abstract. \\
+dscexam  & \textbackslash documentclass[dscexam]\{ufrj\} & \pre & D.Sc.\ qualifying exam. Same. \\
+mscsem   & \textbackslash documentclass[mscsem]\{ufrj\}  & \pre & M.Sc.\ seminar, a requirement of some Programas and \emph{not} a qualifying exam. Same three omissions: it is not deposited. \\
+\midrule
+
+\multicolumn{4}{@{}l@{}}{\normalfont\bfseries\small CLASS OPTIONS --- writing
+  language}\\[2pt]
+brazilian & [brazilian,dsc] & \pre & Portuguese. The default; needs no writing. \\
+english   & [english,dsc]   & \pre & English. The foreign abstract switches to Portuguese. \\
+spanish   & [spanish,dsc]   & \pre & Spanish. Needs \texttt{ufrj-lang-spanish.def} and \texttt{spanish-ufrj.lbx}. Three abstracts. \\
+french    & [french,dsc]    & \pre & French. \textbf{Not} a permitted thesis language; ships as a demonstration. \\
+italian   & [italian,dsc]   & \pre & Italian. Same. \\
+\midrule
+
+\multicolumn{4}{@{}l@{}}{\normalfont\bfseries\small CLASS OPTIONS --- the
+  rest}\\[2pt]
+numbers   & [dsc,numbers]   & \pre & Numeric citations \texttt{[1]} instead of author-date; list in citation order. \\
+pdfa      & [dsc,pdfa]      & \pre & PDF/A-2b output, required for deposit (2.2d): the deposit is digital only, and PDF/A (ISO 19005) keeps the file self-contained --- embedded fonts, sRGB colour, XMP metadata, nothing external. Off by default; \texttt{max-exemplo.tex} turns it on, and turning it on early is recommended. Check with veraPDF. \\
+comserifa & [dsc,comserifa] & \pre & Serif family. Sans is the default since v4.1. \\
+semserifa & ---             & \pre & Accepted, does nothing. What it asked for became the default. \\
+semlinks  & [dsc,semlinks]  & \pre & Accepted; confirms the default (links with no colour and no frame, still clickable). Wins over the two below. \\
+linkscommoldura & [dsc,linkscommoldura] & \pre & Framed links, on screen only (the frame is not printed). \\
+setavermelha & [dsc,setavermelha] & \pre & Red curved arrow at the start of a wrapped listing line. Black by default. \\
+linkscoloridos & [dsc,linkscoloridos] & \pre & Coloured link text. Against 2.1(b) of the UFRJ manual (black text): for on-screen reading copies, not for deposit. \\
+doublespacing & [dsc,doublespacing] & \pre & Double spacing instead of one-and-a-half (2.2c). \\
+twoside   & [dsc,twoside]   & \pre & Mirrored margins, for printing and binding. \\
+oneside   & [dsc,oneside]   & \pre & One-sided, 3\,cm left margin on every sheet. The default. \\
+semorientadornabanca & [dsc,semorientadornabanca] & \pre & Approval sheet with the examiners only. By default the advisors head the board, as 3.1.2.1.3(e) requires. \\
+orientadorexamina & [dsc,orientadorexamina] & \pre & Accepted, no effect: the advisors are on the board by default. \\
+coorientador & [dsc,coorientador] & \pre & List coadvisors on the abstract pages too. \\
+rascunhoficha & [dsc,rascunhoficha] & \pre & Draft catalogue card while writing. \textbf{Never valid for deposit.} \\
+resumosemreferencia & [dsc,resumosemreferencia] & \pre & Drop the work's own reference from the top of the three abstracts. It is printed by default (3.1.2.1.4, Annexes E and F). \\
+listasnosumario & [dsc,listasnosumario] & \pre & Put the pre-textual lists in the table of contents. Against NBR 6027 and the UFRJ manual (3.1.2.1.6): use only if your Programa requires it. \\
+simbolosalfabeticos & [dsc,simbolosalfabeticos] & \pre & List of symbols in alphabetical order instead of order of appearance. \\
+assinaturas & ---           & \pre & Accepted, does nothing. Signature rules are gone: deposit is digital. \\
+numeraisromanos & [dsc,numeraisromanos] & \pre & Roman numerals on pre-textual sheets. \textbf{Against 2.7}; legacy only. \\
+morewrites & [dsc,morewrites] & \pre & A missing \texttt{morewrites} package becomes an error, not a warning. \\
+semmakeindex & [dsc,semmakeindex] & \pre & Do not run makeindex from the class. By default the class runs it at the end of each compilation (restricted shell escape is enough), so the lists and the index appear in any editor. \\
+semmorewrites & [dsc,semmorewrites] & \pre & Do not load \texttt{morewrites}. Saves about half a second per pdflatex pass (Overleaf free plan). Safe only without an index, several indexes, a glossary or nomenclature: the class stops with a clear error if the 16 streams run out. \\
+\midrule
+
+\multicolumn{4}{@{}l@{}}{\normalfont\bfseries\small PREAMBLE}\\[2pt]
+\textbackslash addbibresource & \textbackslash addbibresource\{thesis.bib\} & \pre & Declare the bibliography database. With the \texttt{.bib} extension. \\
+\textbackslash makelosymbols & \textbackslash makelosymbols & \pre & Turn on collection of the list of symbols. Without it, \texttt{\textbackslash symbl} records nothing. \\
+\textbackslash makeloabbreviations & \textbackslash makeloabbreviations & \pre & Same for the list of abbreviations. \\
+\textbackslash makelosiglas & \textbackslash makelosiglas & \pre & Separate list of acronyms (recommended by 3.1.2.2.6). Without it, acronyms go to the list of abbreviations. \\
+\textbackslash newufrjfloat & \textbackslash newufrjfloat\{map\}\{Map\}\{List of Maps\} & \pre & Declare your own float: caption on top, \texttt{\textbackslash source} below, own list. \\
+\textbackslash newsigla & \textbackslash newsigla\{ufrj\}\{UFRJ\}\{Universidade Federal...\} & \pre & Declare an acronym for \texttt{\textbackslash sigla}. \\
+\textbackslash useufrjlanguage & \textbackslash useufrjlanguage\{french\} & \pre & Load one more language pack, for quotations in a third language. \\
+\textbackslash graphicspath & \textbackslash graphicspath\{\{figures/\}\} & \pre & Where your figures live. Standard \LaTeX. \\
+\textbackslash freeconfig & \textbackslash freeconfig\{Dr.\}\{...\}\{...\}\{...\}\{...\}\{...\} & \pre & Override the work type entirely. Escape hatch; do not use for a normal thesis. \\
+\midrule
+
+\multicolumn{4}{@{}l@{}}{\normalfont\bfseries\small IDENTIFICATION --- after
+  \textbackslash begin\{document\}, before \textbackslash maketitle}\\[2pt]
+\textbackslash title & \textbackslash title\{Título da tese\} & \doc & The Portuguese title. \\
+\textbackslash foreigntitle & \textbackslash foreigntitle\{Thesis title\} & \doc & The English title. \\
+\textbackslash titlein & \textbackslash titlein\{spanish\}\{Título\} & \doc & The title in any other language. \\
+\textbackslash subtitle & \textbackslash subtitle\{Um subtítulo\} & \doc & Optional subtitle, Portuguese. Printed after a colon, in ordinary case. \\
+\textbackslash foreignsubtitle & \textbackslash foreignsubtitle\{A subtitle\} & \doc & The same, English. \\
+\textbackslash subtitlein & \textbackslash subtitlein\{spanish\}\{...\} & \doc & The same, any language. \\
+\textbackslash author & \textbackslash author\{All given names\}\{Surname\} & \doc & Two arguments: the catalogue card has to invert the name. \\
+\textbackslash advisor & \textbackslash advisor\{Ana\}\{Lima\}\{D.Sc.\}\{UFRJ\} & \doc & Name, surname, degree, institution. Repeat per advisor. Optional first argument is the treatment. \\
+\textbackslash coadvisor & \textbackslash coadvisor\{Bia\}\{Sousa\}\{Ph.D.\}\{UFF\} & \doc & Same four arguments. \\
+\textbackslash examiner & \textbackslash examiner\{Carlos Dias\}\{D.Sc.\}\{USP\} & \doc & Name and surname in one argument, then degree and institution. \\
+\textbackslash department & \textbackslash department\{PESC\} & \doc & The Programa's acronym. The class knows all thirteen. \\
+\textbackslash date & \textbackslash date\{09\}\{2026\} & \doc & Month and year of deposit, as numbers. Not the defence date. \\
+\textbackslash dataaprovacao & \textbackslash dataaprovacao\{15 de setembro de 2026\} & \doc & Defence date, in words. Without it the sheet reads ``a ser determinada''. \\
+\textbackslash keyword & \textbackslash keyword\{Formal methods\} & \doc & One call per keyword, main language. \\
+\textbackslash foreignkeyword & \textbackslash foreignkeyword\{Métodos formais\} & \doc & One call per keyword, foreign language. \\
+\textbackslash braziliankeyword & \textbackslash braziliankeyword\{Métodos formais\} & \doc & Portuguese keywords when the work is not in Portuguese. \\
+\textbackslash volumes & \textbackslash volumes\{3\} & \doc & How many volumes. Nothing is printed when there is one. \\
+\textbackslash volume & \textbackslash volume\{1\} & \doc & Which volume this is. \\
+\midrule
+
+\multicolumn{4}{@{}l@{}}{\normalfont\bfseries\small TITLE PAGE AND CAPES
+  SHEET}\\[2pt]
+\textbackslash areaconcentracao & \textbackslash areaconcentracao\{Engenharia de Sistemas\} & \doc & Area of concentration. On three sheets. \\
+\textbackslash linhapesquisa & \textbackslash linhapesquisa\{Engenharia de Dados\} & \doc & Research line, on the title page. Label follows the main language. Empty is fine. \\
+\textbackslash tipoproducao & \textbackslash tipoproducao\{bibliografica\} & \doc & One of \texttt{bibliografica}, \texttt{artistica}, \texttt{tecnologica}, \texttt{tecnica}. \\
+\textbackslash projetovinculado & \textbackslash projetovinculado\{sim\} & \doc & \texttt{sim} or \texttt{nao}: is there a linked research project? \\
+\textbackslash nomeprojeto & \textbackslash nomeprojeto\{Nome do projeto\} & \doc & Its name, if there is one. \\
+\textbackslash agenciafomento & \textbackslash agenciafomento\{Conselho...\}\{CNPq\} & \doc & Funding agency, full name and acronym. One call each. \\
+\textbackslash fichacatalografica & \textbackslash fichacatalografica\{ficha.pdf\} & \doc & The official catalogue card, as a PDF from the SiBI generator. \\
+\midrule
+
+\multicolumn{4}{@{}l@{}}{\normalfont\bfseries\small STRUCTURE}\\[2pt]
+\textbackslash maketitle & \textbackslash maketitle & \doc & Typesets cover, title page and CAPES sheet. After all the data. \\
+\textbackslash frontmatter & \textbackslash frontmatter & \doc & Opens the pre-textual part and typesets the approval sheet. \\
+\textbackslash mainmatter & \textbackslash mainmatter & \doc & Opens the textual part. This is what starts printing the folio. \\
+\textbackslash backmatter & \textbackslash backmatter & \doc & Opens the post-textual part. \\
+\textbackslash dedication & \textbackslash dedication\{To those who waited.\} & \doc & Dedication, on a sheet of its own. \\
+\textbackslash epigrafe & \textbackslash epigrafe\{quotation\}\{author\} & \doc & Epigraph (3.1.2.2.3), on a sheet of its own, after the acknowledgements. \\
+abstract & \textbackslash begin\{abstract\} ... & \doc & Abstract in the main language. One sheet, one paragraph, 250 words. \\
+foreignabstract & \textbackslash begin\{foreignabstract\} ... & \doc & Abstract in the foreign language. \\
+brazilianabstract & \textbackslash begin\{brazilianabstract\} ... & \doc & Third abstract, Portuguese, for a Spanish- or French-main work. \\
+\textbackslash configuraresumos & \textbackslash configuraresumos\{true\}\{true\}\{true\}\{true\} & \pre & Turns the four optional elements of every abstract sheet on or off, in every language: page identification, title and author, advising, reference. All on by default; only the abstract text itself cannot be turned off. \\
+\textbackslash appendix & \textbackslash appendix & \doc & Opens the appendices: text \emph{you} wrote. \\
+\textbackslash annex & \textbackslash annex & \doc & Opens the annexes: documents you did \emph{not} write. \\
+\textbackslash printbibliography & \textbackslash printbibliography & \doc & The reference list, titled ``Referências'' (3.1.4.1). \\
+\textbackslash ufrjfinalpage & \textbackslash ufrjfinalpage & \doc & Optional colophon, every item measured at compile time: class version, engine and its version, TeX system, \LaTeX{} format, font family and encoding, biblatex version, date, hour, operating system and machine. \\
+\midrule
+
+\multicolumn{4}{@{}p{\linewidth}@{}}{\normalfont\small Only the table of contents is mandatory (3.1.2.1.6). Every list is optional (3.1.2.2); the COPPE norm (\S10) adds the lists of \emph{quadros}, programs and algorithms whenever the work has one of them.}\\[2pt]
+\multicolumn{4}{@{}l@{}}{\normalfont\bfseries\small PRE-TEXTUAL LISTS ---
+  lists first, table of contents last (3.1.2.1.6)}\\[2pt]
+\textbackslash listoffigures & \textbackslash listoffigures & \doc & List of figures. \\
+\textbackslash listoftables & \textbackslash listoftables & \doc & List of tables. \\
+\textbackslash listofquadros & \textbackslash listofquadros & \doc & List of \emph{quadros} (framed on all sides, unlike a table). \\
+\textbackslash listofprogramas & \textbackslash listofprogramas & \doc & List of code listings. \\
+\textbackslash listofalgorithms & \textbackslash listofalgorithms & \doc & List of algorithms. \\
+\textbackslash printloabbreviations & \textbackslash printloabbreviations & \doc & List of abbreviations and acronyms. No page numbers (4.1.1). \\
+\textbackslash printlosiglas & \textbackslash printlosiglas & \doc & List of acronyms, when \texttt{\textbackslash makelosiglas} is on. \\
+\textbackslash printlosymbols & \textbackslash printlosymbols & \doc & List of symbols, in order of first appearance (3.1.2.2.7). \\
+\textbackslash makeglossarylist & \textbackslash makeglossarylist & \pre & The automatic glossary (3.1.4.2). Without it, write \texttt{theglossary} by hand. \\
+\textbackslash glossaryterm & \textbackslash glossaryterm[key]\{term\}\{definition\} & \doc & Registers a glossary term where it appears; prints nothing. Alphabetical, accents included. \\
+\textbackslash printglossarylist & \textbackslash printglossarylist & \doc & The glossary, right after \texttt{\textbackslash printbibliography}. \\
+\textbackslash index & \textbackslash index\{term!sub\textbar see\{other\}\} & \doc & Index entry (with \texttt{makeidx}). Accented entries get an unaccented sort key; \texttt{key@term} wins. \\
+\textbackslash acron & \textbackslash acron[key]\{UFRJ\}\{meaning\} & \doc & Registers an acronym; \texttt{\textbackslash sigla} uses it. \\
+\textbackslash tableofcontents & \textbackslash tableofcontents & \doc & The table of contents. Comes last of all the lists. \\
+\midrule
+
+\multicolumn{4}{@{}l@{}}{\normalfont\bfseries\small ILLUSTRATIONS ---
+  caption on top, source below (2.10)}\\[2pt]
+\textbackslash source & \textbackslash source\{Prepared by the author.\} & \doc & The source line, below the float. Mandatory by the norm. \\
+\textbackslash fonte & \textbackslash fonte\{Elaboração própria.\} & \doc & The same command, Portuguese name. \\
+\textbackslash cpsource & \textbackslash cpsource\{...\} & \doc & Clash-safe alias, always available. \\
+\textbackslash cpfonte & \textbackslash cpfonte\{...\} & \doc & Likewise. \\
+quadro & \textbackslash begin\{quadro\}[ht] ... & \doc & A float framed on all sides. Behaves like \texttt{figure}. \\
+python & \textbackslash begin\{python\}[caption=\{...\}] & \doc & Python listing, syntax-highlighted, caption on top. \\
+java, xml, html, prolog & \textbackslash begin\{java\}[...] ... & \doc & The same, for those languages. \\
+\textbackslash pythoninline & \textbackslash pythoninline\{f(x)\} & \doc & Code inside a paragraph. \\
+\textbackslash javainline & \textbackslash javainline\{new X()\} & \doc & Likewise. \\
+\textbackslash pythonexternal & \textbackslash pythonexternal\{code.py\} & \doc & Listing read from a file. \\
+\textbackslash javaexternal & \textbackslash javaexternal\{Code.java\} & \doc & Likewise. \\
+\textbackslash pythonstyle & \textbackslash pythonstyle & \doc & Apply a language's style without opening the environment. Also \texttt{\textbackslash javastyle}, \texttt{\textbackslash xmlstyle}, \texttt{\textbackslash htmlstyle}, \texttt{\textbackslash prologstyle}. \\
+\midrule
+
+\multicolumn{4}{@{}l@{}}{\normalfont\bfseries\small QUOTATIONS, ACRONYMS,
+  SYMBOLS}\\[2pt]
+\textbackslash citacao & \textbackslash citacao\{up to three lines\} & \doc & Short quotation, inside the paragraph, in quotation marks. \\
+longquote & \textbackslash begin\{longquote\} ... & \doc & Quotation over three lines: indented 4\,cm past the margin, smaller, single spaced, no quotation marks (2.2b). \\
+\textbackslash abbrev & \textbackslash abbrev[IOT]\{IoT\}\{Internet of Things\} & \doc & Register an acronym. Optional first argument is the sort key. \\
+\textbackslash symbl & \textbackslash symbl\{\$\textbackslash alpha\$\}\{Learning rate\} & \doc & Register a symbol. Same optional sort key. \\
+\textbackslash sigla & \textbackslash sigla\{ufrj\} & \doc & Full form on first use, acronym afterwards (2.8). \texttt{\textbackslash sigla*} forces the full form. \\
+\midrule
+
+\multicolumn{4}{@{}l@{}}{\normalfont\bfseries\small CITATIONS --- biblatex,
+  with the natbib layer on}\\[2pt]
+\textbackslash cite & \textbackslash cite\{key\} & \doc & (SURNAME, 2026), or [1] with \texttt{numbers}. \\
+\textbackslash citet & \textbackslash citet\{key\} & \doc & SURNAME (2026). \\
+\textbackslash citep & \textbackslash citep\{key\} & \doc & (SURNAME, 2026). \\
+\textbackslash textcite & \textbackslash textcite\{key\} & \doc & Same as \texttt{\textbackslash citet}, biblatex spelling. \\
+\textbackslash parencite & \textbackslash parencite\{key\} & \doc & Same as \texttt{\textbackslash citep}. \\
+\textbackslash citeauthor & \textbackslash citeauthor\{key\} & \doc & The author alone. \\
+\textbackslash citeyear & \textbackslash citeyear\{key\} & \doc & The year alone. \\
+\textbackslash citetitle & \textbackslash citetitle\{key\} & \doc & The title alone. \\
+\textbackslash cite[p.~45] & \textbackslash cite[p.~45, our translation]\{key\} & \doc & Page, and any note, in the optional argument. \\
+\textbackslash citepapud & \textbackslash citepapud[45]\{Original\}\{1953\}\{key-read\} & \doc & Citation of a citation (4.1.2.2.1). \textbf{Three} mandatory arguments: the original author and year, which are printed as text, and the key of the work you actually read, which is the only one that enters the list. Also \texttt{\textbackslash citetapud}. \\
+\textbackslash nocite & \textbackslash nocite\{key\} & \doc & Into the list without citing in the text. \\
+
+\end{longtable}
+
+\vfill
+\begin{center}\small
+Full manual: \texttt{ufrj.pdf}, in Portuguese.\quad
+Worked examples: \texttt{min-exemplo.tex} (only what is mandatory) and \texttt{max-exemplo.tex} (everything).\quad
+Problems: \url{https://github.com/COPPE-UFRJ/CoppeTeX/issues}
+\end{center}
+
+\end{document}
+
+%% 
+%%
+%% End of file `ufrj-quickref.tex'.

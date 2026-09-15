@@ -57,12 +57,12 @@ else:
     # E o outro lado: o que tem de estar la. Um arquivo que sai da lista sem
     # querer nao quebra nada no ato -- a distribuicao simplesmente fica sem ele,
     # e quem descobre e o aluno, depois.
-    for preciso in ("coppe.cls", "coppe.pdf", "manual.pdf", "coppe-quickref.pdf",
+    for preciso in ("ufrj.cls", "ufrj.pdf", "manual.pdf", "ufrj-quickref.pdf",
                     "min-exemplo.tex", "min-exemplo.pdf",
                     "max-exemplo.tex", "max-exemplo.pdf", "exemplo.bib",
                     "example_en.tex", "example_en.pdf",
                     "example_es.tex", "example_es.pdf",
-                    "latexmkrc", "coppe.ist", "ufrj-logo.pdf"):
+                    "latexmkrc", "ufrj.ist", "ufrj-logo.pdf"):
         if '"%s"' % preciso not in lista:
             problemas.append("PARA_DIST nao leva %s" % preciso)
 
