@@ -83,7 +83,7 @@ doc: $(PACKAGE_NAME).dtx
 	mkdir -vp "${BUILDDIR}"
 	cp $(basename $<).pdf "${BUILDDIR}/"
 
-class: $(PACKAGE_NAME).cls
+class: $(PACKAGE_NAME).cls ufrj-coppe.sty coppe.cls
 
 
 install: doc class max-exemplo.pdf min-exemplo.pdf
@@ -96,7 +96,8 @@ install: doc class max-exemplo.pdf min-exemplo.pdf
 	  rm -rf $(CLSDIR); \
 	fi
 	mkdir -vp $(CLSDIR)
-	cp -vp $(PACKAGE_NAME).cls coppe-logo.eps coppe-logo.pdf ufrj-logo.pdf ufrj.ist \
+	cp -vp $(PACKAGE_NAME).cls ufrj-coppe.sty coppe.cls \
+		coppe-logo.eps coppe-logo.pdf ufrj-logo.pdf ufrj.ist \
 		$(PACKAGE_NAME).bbx $(PACKAGE_NAME).cbx $(PACKAGE_NAME).dbx \
 		$(PACKAGE_NAME)-numeric.bbx $(PACKAGE_NAME)-numeric.cbx \
 		brazilian-$(PACKAGE_NAME).lbx english-$(PACKAGE_NAME).lbx $(CLSDIR)/
@@ -174,7 +175,9 @@ $(PACKAGE_NAME).cls: $(PACKAGE_NAME).ins
 	mkdir -vp "${BUILDDIR}"
 	cp $(basename $<).cls "${BUILDDIR}/" 
 
-max-exemplo.tex min-exemplo.tex: $(PACKAGE_NAME).ins
+# O estilo da COPPE, a classe coppe de compatibilidade e os exemplos saem do
+# ufrj-coppe.ins, e nao do ufrj.ins.
+ufrj-coppe.sty coppe.cls max-exemplo.tex min-exemplo.tex: ufrj-coppe.ins
 	@$(TEX) $(TEXFLAGS) $<
 	
 %.ist: $(PACKAGE_NAME).ins

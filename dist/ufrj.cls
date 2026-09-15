@@ -33,8 +33,8 @@
 %%            Eduardo Mangeli
 %% 
 \def\filename{ufrj.dtx}
-\def\fileversion{v4.1}
-\def\filedate{2026/09/10}
+\def\fileversion{v5.0}
+\def\filedate{2026/09/15}
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{ufrj}[\filedate\ \fileversion\ UFRJ Dissertations and Theses]
 \let\ufrj@version\fileversion
@@ -1063,7 +1063,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
       Este documento foi composto em \LaTeX{} com \ufrjfinalengine{},
       na fonte \ufrjfinalfont. \@ifpackageloaded{biblatex}{A bibliografia
       foi processada por Bib\LaTeX~\ufrj@pkgversion{biblatex.sty} e
-      Biber. }{}Foi utilizada a classe \CoppeTeX,
+      Biber. }{}Foi utilizada a classe \texttt{ufrj}, do projeto \CoppeTeX,
       versão~\ufrj@version, disponível no repositório GitHub
       \mbox{\url{https://github.com/COPPE-UFRJ/CoppeTeX}}, em
       conformidade com \ufrj@finalmanualart\ufrjfinalmanual.

@@ -3,8 +3,8 @@
 
     python tools/versao.py                 # confere; sai 1 se algo divergir
     python tools/versao.py --detalhe       # confere e lista as mencoes historicas
-    python tools/versao.py --subir 2       # 4.1 -> 4.2
-    python tools/versao.py --subir 3       # 4.1 -> 4.1.1
+    python tools/versao.py --subir 2       # 5.0 -> 5.1
+    python tools/versao.py --subir 3       # 5.0 -> 5.0.1
 
 A versao canonica e a do `\\def\\fileversion` em src/ufrj.dtx. Tudo o mais e
 conferido contra ela.
@@ -16,9 +16,10 @@ docstrip gera a partir dele, nos avisos dos dois README e no topo do CHANGELOG
 -- e basta um deles ficar para tras para que a distribuicao se contradiga: o
 usuario le 4.1 no README e o LaTeX escreve v4.0 no log.
 
-Subir o primeiro nivel (de 4 para 5) NAO e oferecido de proposito. A troca de
-major na CoppeTeX significou, historicamente, mudanca de modelo: a 4.0 trouxe o
-modelo multilingue e a 3.0 a reescrita da classe. Isso e decisao de quem
+Subir o primeiro nivel (de 5 para 6) NAO e oferecido de proposito. A troca de
+major na CoppeTeX significou, historicamente, mudanca de modelo: a 5.0 separou a
+classe da UFRJ do estilo da unidade, a 4.0 trouxe o modelo multilingue e a 3.0 a
+reescrita da classe. Isso e decisao de quem
 mantem o projeto e da CPGP, nao de um script -- e um clique errado num painel
 nao pode anunciar uma versao que nao existe.
 """
@@ -82,8 +83,10 @@ for subpasta, nome in PARA_DIST:
 PROSA = [
     ("README.md", r"Esta é a CoppeTeX (\d+\.\d+(?:\.\d+)?)"),
     ("README.md", r"This is CoppeTeX (\d+\.\d+(?:\.\d+)?)"),
-    ("README.md", r"proposal for CPGP \(v(\d+\.\d+(?:\.\d+)?)\)"),
-    ("README.md", r"carries CoppeTeX \*\*(\d+\.\d+(?:\.\d+)?)\*\*"),
+    # A secao "The proposal for CPGP (v4.1)" do README NAO esta aqui: ela descreve
+    # a proposta levada a CPGP, que foi escrita para a 4.1, e nao a versao do
+    # checkout. Conferida contra a canonica, ela obrigaria cada versao nova a
+    # dizer que foi ela a submetida.
     ("dist/README.md", r"Esta é a CoppeTeX (\d+\.\d+(?:\.\d+)?)"),
     # O CHANGELOG e o mais novo primeiro, entao o primeiro "## [x.y]" do arquivo
     # e o da versao corrente.
@@ -216,7 +219,7 @@ def conferir(detalhe=False):
 def subir(nivel):
     """Sobe o segundo ou o terceiro nivel. O primeiro nunca."""
     if nivel not in (2, 3):
-        print("nivel tem de ser 2 (4.1 -> 4.2) ou 3 (4.1 -> 4.1.1).")
+        print("nivel tem de ser 2 (5.0 -> 5.1) ou 3 (5.0 -> 5.0.1).")
         print("O nivel 1 nao e oferecido: trocar de major e decisao do projeto")
         print("e da CPGP, nao de um script.")
         return 2

@@ -1,10 +1,10 @@
 <!-- AVISO-CPGP:INICIO — apagar deste comentário até AVISO-CPGP:FIM depois da aprovação -->
 > ## ⚠️ Versão nova, ainda não aprovada
 >
-> **Esta é a CoppeTeX 4.1, e ela ainda não foi aprovada.** Vai à próxima reunião
-> da Comissão de Programas de Pós-Graduação (CPGP) da COPPE/UFRJ. Use-a para
-> escrever e para experimentar, mas confirme com a secretaria do seu Programa
-> antes de depositar um trabalho com ela.
+> **Esta é a CoppeTeX 5.0, e ela ainda não foi aprovada** pela Comissão de
+> Programas de Pós-Graduação (CPGP) da COPPE/UFRJ. Use-a para escrever e para
+> experimentar, mas confirme com a secretaria do seu Programa antes de depositar
+> um trabalho com ela.
 <!-- AVISO-CPGP:FIM -->
 
 # CoppeTeX — a entrega

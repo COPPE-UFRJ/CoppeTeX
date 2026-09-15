@@ -34,7 +34,7 @@
 %%            Eduardo Mangeli
 %% 
 \NeedsTeXFormat{LaTeX2e}[2020/10/01]
-\ProvidesClass{coppe}[2026/09/15 v4.1 CoppeTeX compatibility class: ufrj with ufrj-coppe]
+\ProvidesClass{coppe}[2026/09/15 v5.0 CoppeTeX compatibility class: ufrj with ufrj-coppe]
 \ClassWarningNoLine{coppe}{A classe coppe agora e a classe ufrj com o estilo\MessageBreak
   ufrj-coppe. Este documento compila como esta, mas troque\MessageBreak
   \string\documentclass[...]{coppe} por\MessageBreak

@@ -7,7 +7,7 @@
 %
 % Copyright (C) 2008-2026 Vicente Helano F. Batista, George O. Ainsworth Jr.,
 %                         Geraldo Xexéo and Eduardo Mangeli.
-% CoppeTeX 4.1.
+% CoppeTeX 5.0.
 %
 % This program is free software; you can redistribute it and/or modify
 % it under the terms of the GNU General Public License version 3 as
@@ -27,8 +27,9 @@
 %            Geraldo Xexéo
 %            Eduardo Mangeli
 %
-% Version 4.1 (September 2026) was developed with the support of Claude Opus 5
-% (Anthropic). Version 4.0 (May 2026) had used Claude Opus 4.7 and Opus 4.8.
+% Version 5.0 (September 2026), which split the class from the COPPE unit style,
+% and version 4.1 (September 2026) were developed with the support of Claude
+% Opus 5 (Anthropic). Version 4.0 (May 2026) had used Claude Opus 4.7 and Opus 4.8.
 % The AI was used to analyse and write code, to discuss better solutions and
 % to generate text; every change was reviewed by the maintainer.
 %
@@ -136,39 +137,44 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \changes{v3.2}{2023/11/11}{Fixed version problem between cls and dtx.}
 % \changes{v3.3}{2024/01/24}{Extend abrev to work like symb and accept a sorting key}
 % \changes{v3.4}{2024/02/22}{Some examples for figures, tables, longtables, etc.}
-% \changes{v4.0}{2026/05/28}{Multilingual model: three fixed slots (main, foreign, optional third); five built-in language options (brazilian, english, spanish, french, italian); plug-in mechanism for any other Babel language via ufrj-lang-lang.def plus lang-ufrj.lbx.}
-% \changes{v4.0}{2026/05/28}{New user API: titlein, useufrjlanguage, brazilianabstract environment.}
-% \changes{v4.0}{2026/05/28}{Class-wide string dispatcher (ufrjdefstring, ufrjstring, ufrjmainstring, ufrjforeignstring) replaces scattered iflanguage and if english branches; pt/en outputs remain byte-identical.}
+% \changes{v4.0}{2026/05/28}{Multilingual model: three fixed slots (main, foreign, optional third); five built-in language options (brazilian, english, spanish, french, italian); plug-in mechanism for any other Babel language via coppe-lang-lang.def plus lang-coppe.lbx.}
+% \changes{v4.0}{2026/05/28}{New user API: titlein, usecoppelanguage, brazilianabstract environment.}
+% \changes{v4.0}{2026/05/28}{Class-wide string dispatcher (copperdefstring, coppestring, coppemainstring, coppeforeignstring) replaces scattered iflanguage and if english branches; pt/en outputs remain byte-identical.}
 % \changes{v4.1}{2026/09/09}{Conformance with the revised 9th edition (2026) of the UFRJ/SiBI manual: continuous pagination from the folha de rosto, folio in 10pt at 2cm from the top and right edges, one-sided layout with a 3cm left margin, additional sheet with the catalog card and the CAPES collection fields, approval sheet of 3.1.2.1.3, keywords closing the three abstracts, pre-textual lists out of the sumario, Apendice and Anexo headings centred, fifth heading level, and Latin Modern instead of the bitmap fonts.}
 % \changes{v4.1}{2026/09/09}{New options: pdfa (PDF/A-2b via pdfx, XMP built from the document), assinaturas, coorientador, rascunhoficha, listasnosumario, morewrites/semmorewrites. New command coadvisor. Under pdfTeX the class loads morewrites by itself when installed, because a work that asks for every list needs seventeen of TeX's sixteen output streams.}
-% \changes{v4.1}{2026/09/09}{Single source: pdflatex ufrj.ins generates everything distributed -- class, biblatex styles, language packs, .bib bases, .ist, the five per-language examples, example\_pdfa, the cover montage and latexmkrc. The regression suite, the adversarial documents and the harness prove the class and are NOT distributed.}
+% \changes{v4.1}{2026/09/09}{Single source: pdflatex coppe.ins generates everything distributed -- class, biblatex styles, language packs, .bib bases, .ist, the five per-language examples, example\_pdfa, the cover montage and latexmkrc. The regression suite, the adversarial documents and the harness prove the class and are NOT distributed.}
 % \changes{v4.1}{2026/09/09}{Fixes found by the adversarial review: cover and folha de rosto compose in single spacing so they do not overflow under doublespacing, no folio is printed on a pre-textual sheet when something does overflow, the approval sheet holds a board of eight, and es-nosectiondot removes the period babel-spanish put in the sumario indicative.}
 % \changes{v4.1}{2026/09/10}{Breaking change in how the board is declared: advisor, coadvisor and examiner now take the TREATMENT as the optional argument, empty by default, and the INSTITUTION as the last mandatory one, which may be left empty. 3.1.2.1.3(e) asks for name, titulacao and institution and asks for no treatment, so that is what the folha de aprovacao prints.}
 % \changes{v4.1}{2026/09/10}{The class sets the document in the sans-serif family by DEFAULT; comserifa restores the serif one. Neither the manual nor the COPPE norm prescribes a family, and the SiBI manual that carries the rule is itself set in Arial. semserifa is still accepted and now does nothing.}
 % \changes{v4.1}{2026/09/10}{No signature rules on the folha de aprovacao: the deposit has been digital only since Resolucao CEPG n. 246/2023, so there is nothing to sign by hand. The assinaturas option is still accepted and only warns.}
 % \changes{v4.1}{2026/09/10}{The folha adicional draws the Coleta CAPES fields as the closed frame of Annex H -- one cell per field, a rule between cells, and no rules to write on -- instead of loose paragraphs with dotted fill rules.}
 % \changes{v4.1}{2026/09/10}{The research-line label on the folha de rosto follows the main language of the work instead of being hard-coded in Portuguese.}
-% \changes{v4.1}{2026/09/10}{newufrjfloat fixed twice: newfloat was wrapped in a group, and since newfloat defines the environment locally the new float vanished when the group closed; and its list came out unnumbered and without leaders because l@figure was not inherited. Author-declared floats are now numbered within the chapter like every other illustration.}
+% \changes{v4.1}{2026/09/10}{newcoppefloat fixed twice: newfloat was wrapped in a group, and since newfloat defines the environment locally the new float vanished when the group closed; and its list came out unnumbered and without leaders because l@figure was not inherited. Author-declared floats are now numbered within the chapter like every other illustration.}
 % \changes{v4.1}{2026/09/10}{The folha de aprovacao lists only the EXAMINERS. The sheet records who examined the work, and the advisor conducted it; the new orientadorexamina option puts advisors and coadvisors back, ahead of the examiners, for the Programas that seat the advisor on the board. Before this there was no choice, and the only way out was not to declare the advisor at all, which also removed them from the capa and the folha de rosto.}
 % \changes{v4.1}{2026/09/10}{With no dataaprovacao given, the folha de aprovacao writes the date as "a ser determinada" in the main language instead of drawing a rule to fill in by hand: the deposit is digital and nobody writes on a PDF.}
-% \changes{v4.1}{2026/09/10}{The lists of abbreviations and of symbols no longer carry a page number, nor the dot leaders that led to it. 4.1.1 describes both as an alphabetical list of the term and its meaning and asks for no location; the folio was inherited from building them with the index machinery. makeindex always writes the number, so the class discards it at composition through the ufrj@semfolio encapsulator, and every delimiter in ufrj.ist is now empty.}
+% \changes{v4.1}{2026/09/10}{The lists of abbreviations and of symbols no longer carry a page number, nor the dot leaders that led to it. 4.1.1 describes both as an alphabetical list of the term and its meaning and asks for no location; the folio was inherited from building them with the index machinery. makeindex always writes the number, so the class discards it at composition through the coppe@semfolio encapsulator, and every delimiter in coppe.ist is now empty.}
 % \changes{v4.1}{2026/09/10}{New option semlinks: hidelinks over everything else, so the links keep working and lose only the colour and the frame. For anyone printing.}
 % \changes{v4.1}{2026/09/10}{A missing cover logo now raises a class error naming the file and saying it ships with the class, instead of TeX's bare "File not found". No graphicspath is set: kpathsea finds a logo installed beside the class and does not report where it found anything, so the class cannot deduce its own directory.}
 % \changes{v4.1}{2026/09/11}{Everything the class writes on an abstract sheet -- the opening sentence, the title, the month, the advisor and department labels -- now follows the language of that sheet. It was pinned to Portuguese on the abstract page and to English on the foreignabstract page, whatever the languages of the work: an English-written thesis came out with its English text under a Portuguese heading and its Portuguese text under an English one, and a Spanish-written thesis had TWO Portuguese-headed sheets and no Spanish heading at all. Portuguese output is unchanged, character for character.}
-% \changes{v4.1}{2026/09/11}{New work type mscsem, the Seminario de Mestrado that some Programas require and that is not a qualifying exam. It came as PR \#61, which edited the generated ufrj.cls -- lost at the next generation -- and left out the exam flag, so the seminar would have come out with the CAPES sheet, the catalogue card and the reference above the abstract, three things that belong only to a work deposited in the library.}
+% \changes{v4.1}{2026/09/11}{New work type mscsem, the Seminario de Mestrado that some Programas require and that is not a qualifying exam. It came as PR \#61, which edited the generated coppe.cls -- lost at the next generation -- and left out the exam flag, so the seminar would have come out with the CAPES sheet, the catalogue card and the reference above the abstract, three things that belong only to a work deposited in the library.}
 % \changes{v4.1}{2026/09/11}{The three abstracts open with the work's own bibliographic reference, composed by the class from the folha de rosto data. 3.1.2.1.4 suggests it and Annexes E and F show both the resumo and the abstract beginning with it; the class printed none. It is the same reference on the three pages and always in Portuguese, because a reference is not translated, and only the title follows the language of the work. An exame de qualificacao gets none, and resumosemreferencia turns it off for an abstract already at the 500-word limit.}
 % \changes{v4.1}{2026/09/12}{The abstract sheet is now five named elements -- page identification, title and author, advising, the work's own reference, and the abstract itself -- and only the last is mandatory. The new configuraresumos takes four booleans and turns the other four off or on at once, for every abstract and every language in the document; all four are on by default, which is the sheet of Annexes E and F. A value that is neither true nor false is a class error, because a switch that silently keeps the previous state is discovered in the deposited PDF.}
-% \changes{v4.1}{2026/09/12}{The three abstract environments carried the whole leading block copied byte for byte, and that copy is what produced the two worst defects those sheets ever had: a fix would land in two of them and be missing from the third, and the third was always brazilianabstract, which only appears in a work written in Spanish. The three now call one macro, ufrj@resumocabeca.}
+% \changes{v4.1}{2026/09/12}{The three abstract environments carried the whole leading block copied byte for byte, and that copy is what produced the two worst defects those sheets ever had: a fix would land in two of them and be missing from the third, and the third was always brazilianabstract, which only appears in a work written in Spanish. The three now call one macro, coppe@resumocabeca.}
 % \changes{v4.1}{2026/09/12}{The vertical spaces of the abstract sheet went from 44 mm to 30 mm and the sheet is composed from the top. A 500-word abstract, which is the limit of 3.1.2.1.4, did not fit on one sheet with the five elements on, and one sheet is what the same item requires. The Manual prescribes none of these measures.}
 % \changes{v4.1}{2026/09/12}{Nothing in the colophon is written by hand any more. It reports the engine and its version, the engine's own banner (which names the distribution), the LaTeX format date, the font family and encoding in force, the biblatex version, the date, the hour, and the operating system and machine -- every one of them asked of the engine at composition time. The last hard-coded item was the font, which said Latin Modern and went on saying it after the author changed fonts. Under LuaLaTeX the machine name comes from os.uname(); pdfLaTeX and XeLaTeX can only tell whether the system is Windows, and when even that is unknown the sentence omits the system rather than inventing one.}
 % \changes{v4.1}{2026/09/12}{The .bib files may live in a subfolder, and the documentation now recommends it: addbibresource{referencias/x.bib} works locally and on Overleaf, because biber opens the path relative to the document. It is also safer than the bare name, which goes through the kpathsea search and silently resolves to the .bib of the same name shipped with the TeX distribution when the file is absent from the work's folder. The empty-document generator writes the subfolder by default.}
 % \changes{v4.1}{2026/09/12}{The type of work is the only class option with no default, and nothing was demanding it. Without it the class loaded in silence and died later, inside maketitle, with `Undefined control sequence local@doctype' pointing at a line of the class itself. It now stops with a message naming the five options, and patches the six macros so the cascade of forty unreadable errors does not bury the one that matters.}
 % \changes{v4.1}{2026/09/12}{The implementation section was a single 60-page subsection with seven subsubsections, five of them in the first ten pages. It is now eleven subsections and twenty-four subsubsections, grouped by subject.}
-% \changes{v4.1}{2026/09/12}{Two macrocode guards in the .dtx were written with three spaces instead of four. doc.sty only closes a code block on a percent sign followed by exactly four spaces, so sixty lines of documentation were printed as verbatim code in ufrj.pdf, and had been for several versions. A dead @wrlab block commented out with four percent signs had the same effect, for the opposite reason: doc.sty ignores every percent sign in the documentation part, so that line opened a real code block. Both are fixed, and tools/conferir-manual.py now checks every guard.}
+% \changes{v4.1}{2026/09/12}{Two macrocode guards in the .dtx were written with three spaces instead of four. doc.sty only closes a code block on a percent sign followed by exactly four spaces, so sixty lines of documentation were printed as verbatim code in coppe.pdf, and had been for several versions. A dead @wrlab block commented out with four percent signs had the same effect, for the opposite reason: doc.sty ignores every percent sign in the documentation part, so that line opened a real code block. Both are fixed, and tools/conferir-manual.py now checks every guard.}
 % \changes{v4.1}{2026/09/12}{The options section opens with a table of what is default, and every entry states its own default. Three were wrong or missing: resumosemreferencia was described as on by default when it is the reference that is on and the option that is off, and rascunhoficha and the morewrites loading stated no default at all.}
-% \changes{v4.1}{2026/09/12}{The files section described the delivery as it was before the folders: the logos in the root, no logos/, no manuais/, no language folders, and an instruction not to copy ufrj.dtx and ufrj.ins, which the delivery now ships on purpose. The developer sections still said twelve adversarial documents (there are six), still placed them outside tests/, and did not know tests/regressivo/ or the panel existed.}
-% \changes{v5.0}{2026/09/15}{Everything that belongs to COPPE and not to UFRJ -- the institute's name on the cover and in the reference, the thirteen Programas, the right-hand logo, the phrases a COPPE/UFRJ and em Ciencias, the COPPE norm in the colophon -- is declared in one block at the end of the class, the unidade module, through a generic interface: ufrjdeclareunit, ufrjdeclareprogram, ufrjdeclarelogos, ufrjdeclarenorm and ufrjdefunitstring. No other part of the class names a unit. The language packs carry no institutional string any more, and the four institutional keys that no code ever read are gone from every table. A department code that no unit declared is now a class error instead of a cover without the Programa. Every COPPE document comes out unchanged, page by page.}
-% \changes{v4.0}{2026/05/30}{Catalog-label writers (ufrj@mainBegin, ufrj@bibBegin, ufrj@bibEnd, ufrj@hasLof) made language-agnostic: detokenize wrap on label names protects ':' and '.' from babel shorthand activation, and the raw etex primitives romannumeral/number replace LaTeX's roman/arabic to bypass spanish-babel's small-caps @roman redefinition that would otherwise crash pdftex with "Unbalanced write command" on every es-main document.}
+% \changes{v4.1}{2026/09/12}{The files section described the delivery as it was before the folders: the logos in the root, no logos/, no manuais/, no language folders, and an instruction not to copy coppe.dtx and coppe.ins, which the delivery now ships on purpose. The developer sections still said twelve adversarial documents (there are six), still placed them outside tests/, and did not know tests/regressivo/ or the panel existed.}
+% \changes{v5.0}{2026/09/15}{The class coppe is now the class ufrj, which implements the UFRJ/SiBI Manual and names no unit. Every file generated from the source, now ufrj.dtx, carries the new name -- ufrj.cls, ufrj.bbx, ufrj.cbx, ufrj.dbx, ufrj-numeric.bbx and .cbx, the five language packs such as brazilian-ufrj.lbx, the three ufrj-lang definition files, ufrj.ist, ufrj.bib and ufrj-quickref.tex -- and so does every name the class defines: the internal prefix coppe@ is ufrj@, copperdefstring is ufrjdefstring, newcoppefloat is newufrjfloat, coppetexfinalpage is ufrjfinalpage, the colophon pieces coppefinal... are ufrjfinal..., the page style coppe is ufrj and the bib field coppedegree is ufrjdegree.}
+% \changes{v5.0}{2026/09/15}{Everything that belongs to a unit and not to UFRJ -- the unit's name on the cover and in the work's reference, its Programas, the right-hand logo, the phrase that says to whom the work was presented, the name of the degree, the norm in the colophon -- is declared by a unit style through a generic interface: ufrjdeclareunit, ufrjdeclareprogram, ufrjdeclarelogos, ufrjdeclarenorm and ufrjdefunitstring, whose texts take precedence over the tables of the class and of the language packs, whichever was loaded first. The language packs carry no institutional string any more, and the four institutional keys that no code ever read are gone from every table. Without a unit style the class composes a work of UFRJ with the texts of UFRJ, and a Programa can be declared in the preamble. A department code that no unit declared is a class error instead of a cover without the Programa.}
+% \changes{v5.0}{2026/09/15}{COPPE is the unit style ufrj-coppe, with its own source (ufrj-coppe.dtx and ufrj-coppe.ins), its own manual (ufrj-coppe.pdf) and every example document, which all load it. A work begun with the class coppe compiles as it is: coppe.cls is now a compatibility class that loads ufrj with the same options, loads ufrj-coppe and writes one warning, and the style keeps the old public names as aliases, the old colophon pieces answering renewcommand by the old name, the three internal names that auxiliary files written by the old class contain, the page style coppe and the bib field coppedegree.}
+% \changes{v5.0}{2026/09/15}{The colophon names the class and the project apart -- Foi utilizada a classe ufrj, do projeto CoppeTeX -- where it said a classe CoppeTeX, which is the name of the project and not of a class. The norm it cites is the one the unit declares with ufrjdeclarenorm, and the UFRJ/SiBI Manual when no unit declares one.}
+% \changes{v5.0}{2026/09/15}{The documentation follows the split: this manual (ufrj.pdf) describes the class and the interface a unit style uses; ufrj-coppe.pdf describes only what COPPE declares; manual.pdf, the norm, is written for UFRJ with COPPE as the example; and the migration guide from 4.x to 5.0 tells the author of a work begun with the class coppe what to change.}
+% \changes{v5.0}{2026/09/15}{tests/regressivo gains four tests of the split: r33 composes a work with the class alone and forbids every COPPE phrase, r34 composes one with a made-up unit style that uses only the public interface, r35 compiles a work of the class coppe with the old names and a .toc written by the old class, and r36 reads the class, the bibliography styles, the language packs and the glossary style and fails if one names COPPE or any of its data.}
+% \changes{v4.0}{2026/05/30}{Catalog-label writers (coppe@mainBegin, coppe@bibBegin, coppe@bibEnd, coppe@hasLof) made language-agnostic: detokenize wrap on label names protects ':' and '.' from babel shorthand activation, and the raw etex primitives romannumeral/number replace LaTeX's roman/arabic to bypass spanish-babel's small-caps @roman redefinition that would otherwise crash pdftex with "Unbalanced write command" on every es-main document.}
 %
 % \DoNotIndex{\!,\',\.,\>,\^,\`,\',\=,\\}
 % \DoNotIndex{\@arabic,\@auxout,\@biblabel,\@bsphack,\@clubpenalty,\@empty}
@@ -229,7 +235,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % lido pelo driver -- ele e uma classe, e o driver usa ltxdoc. O proprio .dtx,
 % que esta sendo lido agora, serve de fonte.
 % \fi
-% \ProvidesFile{ufrj.dtx}[2026/09/11 v4.1 CoppeTeX]
+% \ProvidesFile{ufrj.dtx}[2026/09/15 v5.0 CoppeTeX]
 % \GetFileInfo{ufrj.dtx}
 %
 % \title{A classe \texttt{ufrj}, do projeto \CoppeTeX\ \\
@@ -3393,8 +3399,8 @@ Problems: \url{https://github.com/COPPE-UFRJ/CoppeTeX/issues}
 %    \begin{macrocode}
 %<*class>
 \def\filename{ufrj.dtx}
-\def\fileversion{v4.1}
-\def\filedate{2026/09/10}
+\def\fileversion{v5.0}
+\def\filedate{2026/09/15}
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{ufrj}[\filedate\ \fileversion\ UFRJ Dissertations and Theses]
 % Save the class version and date into private macros immediately, before any
@@ -5694,7 +5700,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
       Este documento foi composto em \LaTeX{} com \ufrjfinalengine{},
       na fonte \ufrjfinalfont. \@ifpackageloaded{biblatex}{A bibliografia
       foi processada por Bib\LaTeX~\ufrj@pkgversion{biblatex.sty} e
-      Biber. }{}Foi utilizada a classe \CoppeTeX,
+      Biber. }{}Foi utilizada a classe \texttt{ufrj}, do projeto \CoppeTeX,
       versão~\ufrj@version, disponível no repositório GitHub
       \mbox{\url{https://github.com/COPPE-UFRJ/CoppeTeX}}, em
       conformidade com \ufrj@finalmanualart\ufrjfinalmanual.
@@ -5707,7 +5713,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \vspace*{2cm}%
   \clearpage}
 %    \end{macrocode}
-% \changes{v4.0}{2026/05/30}{Initial ufrjfinalpage colophon page.}
+% \changes{v4.0}{2026/05/30}{Initial coppetexfinalpage colophon page.}
 % \end{macro}
 %
 %
@@ -7586,7 +7592,7 @@ postamble
 %
 %    \begin{macrocode}
 %<*dbx>
-\ProvidesFile{ufrj.dbx}[2026/09/09 v4.1 CoppeTeX ABNT datamodel]
+\ProvidesFile{ufrj.dbx}[2026/09/15 v5.0 CoppeTeX ABNT datamodel]
 % Custom entry types beyond biblatex's standard datamodel (games, TV, maps).
 % map = cartographic document (NBR 6023 4.2.12); biblatex has no native @map.
 % The remaining ABNT "exotic" types (legislation, jurisdiction, legal, patent,
@@ -7614,7 +7620,7 @@ postamble
 \DeclareDatamodelEntryfields[patent]{filingdate,grantdate}
 %</dbx>
 %<*bbx>
-\ProvidesFile{ufrj.bbx}[2026/09/09 v4.1 CoppeTeX ABNT bibliography style]
+\ProvidesFile{ufrj.bbx}[2026/09/15 v5.0 CoppeTeX ABNT bibliography style]
 % The reference list is single-spaced (ABNT 2.4) via \singlespacing in
 % \AtBeginBibliography. ufrj.cls already loads setspace, but the style must work
 % standalone too (e.g. \usepackage[bibstyle=ufrj]{biblatex} in a plain article),
@@ -8277,7 +8283,7 @@ postamble
 
 %</bbx>
 %<*cbx>
-\ProvidesFile{ufrj.cbx}[2026/09/09 v4.1 CoppeTeX ABNT author-date citations]
+\ProvidesFile{ufrj.cbx}[2026/09/15 v5.0 CoppeTeX ABNT author-date citations]
 % Author-date is the CoppeTeX 4.1 default. authoryear-comp gives compressed
 % author-year cites with normal-caps names (post-2020 rule) out of the box.
 \RequireCitationStyle{authoryear-comp}
@@ -8310,7 +8316,7 @@ postamble
     \ifblank{#1}{}{\addcomma\space\mkpageprefix[pagination]{#1}}}}
 %</cbx>
 %<*lbxbr>
-\ProvidesFile{brazilian-ufrj.lbx}[2026/09/09 v4.1 CoppeTeX brazilian strings]
+\ProvidesFile{brazilian-ufrj.lbx}[2026/09/15 v5.0 CoppeTeX brazilian strings]
 \InheritBibliographyExtras{brazilian}
 \NewBibliographyString{availablefrom,mscdiss,dscthesis,tcc,depositor,ufrjscale,
   ufrjmscdeg,ufrjdscdeg,ufrjphddeg,ufrjtccdeg,ufrjfiling,ufrjgrant}
@@ -8339,7 +8345,7 @@ postamble
 }
 %</lbxbr>
 %<*lbxen>
-\ProvidesFile{english-ufrj.lbx}[2026/09/09 v4.1 CoppeTeX english strings]
+\ProvidesFile{english-ufrj.lbx}[2026/09/15 v5.0 CoppeTeX english strings]
 \InheritBibliographyExtras{english}
 \NewBibliographyString{availablefrom,mscdiss,dscthesis,tcc,depositor,ufrjscale,
   ufrjmscdeg,ufrjdscdeg,ufrjphddeg,ufrjtccdeg,ufrjfiling,ufrjgrant}
@@ -8365,7 +8371,7 @@ postamble
 }
 %</lbxen>
 %<*lbxes>
-\ProvidesFile{spanish-ufrj.lbx}[2026/09/09 v4.1 CoppeTeX spanish strings]
+\ProvidesFile{spanish-ufrj.lbx}[2026/09/15 v5.0 CoppeTeX spanish strings]
 \InheritBibliographyExtras{spanish}
 \NewBibliographyString{availablefrom,mscdiss,dscthesis,tcc,depositor,ufrjscale,
   ufrjmscdeg,ufrjdscdeg,ufrjphddeg,ufrjtccdeg,ufrjfiling,ufrjgrant}
@@ -8391,7 +8397,7 @@ postamble
 }
 %</lbxes>
 %<*lbxfr>
-\ProvidesFile{french-ufrj.lbx}[2026/09/09 v4.1 CoppeTeX french strings]
+\ProvidesFile{french-ufrj.lbx}[2026/09/15 v5.0 CoppeTeX french strings]
 \InheritBibliographyExtras{french}
 \NewBibliographyString{availablefrom,mscdiss,dscthesis,tcc,depositor,ufrjscale,
   ufrjmscdeg,ufrjdscdeg,ufrjphddeg,ufrjtccdeg,ufrjfiling,ufrjgrant}
@@ -8417,7 +8423,7 @@ postamble
 }
 %</lbxfr>
 %<*lbxit>
-\ProvidesFile{italian-ufrj.lbx}[2026/09/09 v4.1 CoppeTeX italian strings]
+\ProvidesFile{italian-ufrj.lbx}[2026/09/15 v5.0 CoppeTeX italian strings]
 \InheritBibliographyExtras{italian}
 \NewBibliographyString{availablefrom,mscdiss,dscthesis,tcc,depositor,ufrjscale,
   ufrjmscdeg,ufrjdscdeg,ufrjphddeg,ufrjtccdeg,ufrjfiling,ufrjgrant}
@@ -8444,7 +8450,7 @@ postamble
 %% Nothing institutional lives here: the names of the university, the unit and
 %% the Programa do not translate, and a unit style declares its own texts with
 %% \ufrjdefunitstring, which takes precedence over this table.
-\ProvidesFile{ufrj-lang-spanish.def}[2026/09/09 v4.1 CoppeTeX spanish class strings]
+\ProvidesFile{ufrj-lang-spanish.def}[2026/09/15 v5.0 CoppeTeX spanish class strings]
 %% --- A folha de resumo ------------------------------------------------------
 %% Tudo o que a classe escreve numa folha de resumo sai no idioma daquela folha.
 %% A frase de abertura e montada de pedacos porque a concordancia muda de idioma
@@ -8522,7 +8528,7 @@ postamble
 %% ufrj-lang-french.def -- CoppeTeX 4.x French class-string pack.
 %% See ufrj-lang-spanish.def for the structure. Nothing institutional lives
 %% here; only document-content strings translate.
-\ProvidesFile{ufrj-lang-french.def}[2026/09/09 v4.1 CoppeTeX french class strings]
+\ProvidesFile{ufrj-lang-french.def}[2026/09/15 v5.0 CoppeTeX french class strings]
 %% --- A folha de resumo ------------------------------------------------------
 %% Tudo o que a classe escreve numa folha de resumo sai no idioma daquela folha.
 %% A frase de abertura e montada de pedacos porque a concordancia muda de idioma
@@ -8599,7 +8605,7 @@ postamble
 %% language option for Italian is spelled "italiano" -- that's the
 %% spelling algorithm2e ships, even though babel calls the language
 %% "italian".
-\ProvidesFile{ufrj-lang-italian.def}[2026/09/09 v4.1 CoppeTeX italian class strings]
+\ProvidesFile{ufrj-lang-italian.def}[2026/09/15 v5.0 CoppeTeX italian class strings]
 %% --- A folha de resumo ------------------------------------------------------
 %% Tudo o que a classe escreve numa folha de resumo sai no idioma daquela folha.
 %% A frase de abertura e montada de pedacos porque a concordancia muda de idioma
@@ -8671,7 +8677,7 @@ postamble
 \AtBeginDocument{\DeclareLanguageMapping{italian}{italian-ufrj}}
 %</langit>
 %<*numbbx>
-\ProvidesFile{ufrj-numeric.bbx}[2026/09/09 v4.1 CoppeTeX ABNT numeric bibliography]
+\ProvidesFile{ufrj-numeric.bbx}[2026/09/15 v5.0 CoppeTeX ABNT numeric bibliography]
 % Numeric reference list for the ABNT numeric system (NBR 10520). It reuses the
 % full ufrj ABNT style (drivers, CAPS surnames, bold titles, "In:", p./f.,
 % the PT->EN source map and the language mappings) and only adds the [n] list
@@ -8706,7 +8712,7 @@ postamble
 
 %</numbbx>
 %<*numcbx>
-\ProvidesFile{ufrj-numeric.cbx}[2026/09/09 v4.1 CoppeTeX ABNT numeric citations]
+\ProvidesFile{ufrj-numeric.cbx}[2026/09/15 v5.0 CoppeTeX ABNT numeric citations]
 % Numeric citation system (ABNT NBR 10520): in-text references are bracketed
 % numbers [1], compressed and sorted within a single cite group. This is the
 % opt-in alternative to the author-date default (ufrj.cbx); it pairs with

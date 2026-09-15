@@ -64,8 +64,8 @@ fazer.
 ## Versão
 
 ```bat
-coppetex.bat --versao 2      REM  4.1  ->  4.2
-coppetex.bat --versao 3      REM  4.1  ->  4.1.1
+coppetex.bat --versao 2      REM  5.0  ->  5.1
+coppetex.bat --versao 3      REM  5.0  ->  5.0.1
 ```
 
 A versão canônica é a do `\def\fileversion` em `src/ufrj.dtx`. Subir a versão
@@ -76,8 +76,9 @@ o número novo precisa entrar nos arquivos gerados na mesma rodada. Uma
 distribuição com metade de cada versão é pior que uma versão velha.
 
 **O primeiro nível não é oferecido, nem na janela nem na linha de comando.** Na
-CoppeTeX a troca de *major* sempre significou mudança de modelo — a 4.0 trouxe o
-modelo multilíngue, a 3.0 foi a reescrita da classe. Isso é decisão de quem
+CoppeTeX a troca de *major* sempre significou mudança de modelo — a 5.0 separou
+a classe da UFRJ do estilo da unidade, a 4.0 trouxe o modelo multilíngue, a 3.0
+foi a reescrita da classe. Isso é decisão de quem
 mantém o projeto e da CPGP, e um clique errado num painel não pode anunciar uma
 versão que não existe.
 

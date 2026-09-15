@@ -1,8 +1,10 @@
 <!-- AVISO-CPGP:INICIO — apagar deste comentário até AVISO-CPGP:FIM depois da aprovação -->
 > ## ⚠️ Versão nova, ainda não aprovada
 >
-> **Esta é a CoppeTeX 4.1, e ela ainda não foi aprovada.** Vai à próxima reunião
-> da Comissão de Programas de Pós-Graduação (CPGP) da COPPE/UFRJ.
+> **Esta é a CoppeTeX 5.0, e ela ainda não foi aprovada.** A proposta que vai à
+> próxima reunião da Comissão de Programas de Pós-Graduação (CPGP) da COPPE/UFRJ
+> foi escrita para a 4.1; a 5.0 separa a classe da UFRJ, `ufrj`, do estilo da
+> COPPE, `ufrj-coppe`.
 >
 > Enquanto isso: use-a para escrever e para experimentar, mas confirme com a
 > secretaria do seu Programa antes de depositar um trabalho com ela.
@@ -19,11 +21,12 @@
 >
 > ---
 >
-> **New version, not yet approved.** This is CoppeTeX 4.1, going to the next
-> meeting of COPPE/UFRJ's graduate programme committee (CPGP). Write and
-> experiment with it, but check with your Programa's office before depositing a
-> thesis. **`master` carries this version, not the approved one**; the last
-> state the CPGP approved is the tag `coppetex-3.5.1`.
+> **New version, not yet approved.** This is CoppeTeX 5.0. The proposal going to
+> the next meeting of COPPE/UFRJ's graduate programme committee (CPGP) was
+> written for 4.1; 5.0 splits the UFRJ class, `ufrj`, from the COPPE style,
+> `ufrj-coppe`. Write and experiment with it, but check with your Programa's
+> office before depositing a thesis. **`master` carries this version, not the
+> approved one**; the last state the CPGP approved is the tag `coppetex-3.5.1`.
 <!-- AVISO-CPGP:FIM -->
 
 # CoppeTeX
@@ -110,7 +113,7 @@ This version follows the [document](https://registro.daac.coppe.ufrj.br/wp-conte
 
 ## The proposal for CPGP (v4.1)
 
-`master` carries CoppeTeX **4.1**, submitted for evaluation by the Comissão de
+CoppeTeX **4.1** is the version submitted for evaluation by the Comissão de
 Programas de Pós-Graduação (CPGP) of COPPE/UFRJ. Subject to CPGP review and
 approval, it becomes the next official release of the `coppe` class. It was
 developed on the `nlinguas` branch and merged so that Programas and students can

@@ -8,7 +8,7 @@
 %
 % Copyright (C) 2008-2026 Vicente Helano F. Batista, George O. Ainsworth Jr.,
 %                         Geraldo Xexéo and Eduardo Mangeli.
-% CoppeTeX 4.1.
+% CoppeTeX 5.0.
 %
 % This program is free software; you can redistribute it and/or modify
 % it under the terms of the GNU General Public License version 3 as
@@ -57,9 +57,9 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % de porcentagem e documentacao, linha sem ele e codigo, e os guardas de modulo
 % dizem para qual arquivo gerado cada trecho vai. O ufrj-coppe.ins diz o resto.
 % \fi
-% \changes{v4.1}{2026/09/15}{First version of the COPPE unit style, split out of the class: the institute, the thirteen Programas, the right-hand logo, the COPPE phrases of the abstract header and the COPPE norm in the colophon, plus the names the class had until v4.1, the coppe compatibility class and the example documents, which all use this style.}
+% \changes{v5.0}{2026/09/15}{First version of the COPPE unit style, split out of the class: the institute, the thirteen Programas, the right-hand logo, the COPPE phrases of the abstract header and the COPPE norm in the colophon, plus the names the class had until v4.1, the coppe compatibility class and the example documents, which all use this style.}
 %
-% \ProvidesFile{ufrj-coppe.dtx}[2026/09/15 v4.1 CoppeTeX]
+% \ProvidesFile{ufrj-coppe.dtx}[2026/09/15 v5.0 CoppeTeX]
 % \GetFileInfo{ufrj-coppe.dtx}
 %
 % \title{O estilo \texttt{ufrj-coppe}\\
@@ -453,7 +453,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \mainmatter
   \chapter{Introdução}
 
-  Este é um documento exemplo para o uso da classe CoppeTeX, destinado a ajudar os alunos do Instituto Alberto Luiz Coimbra de Pós-graduação e Pesquisa de Engenharia (COPPE), da Universidade Federal do Rio de Janeiro.
+  Este é um documento exemplo para o uso da classe \verb|ufrj|, do projeto \CoppeTeX, com o estilo \verb|ufrj-coppe|, destinado a ajudar os alunos do Instituto Alberto Luiz Coimbra de Pós-graduação e Pesquisa de Engenharia (COPPE), da Universidade Federal do Rio de Janeiro.
 
   A classe \verb|ufrj| foi criada originalmente por Vicente Helano e George Ainsworth, com o nome \verb|coppe|, porém, em 2024, passou a ser mantida por Geraldo Xexéo e Eduardo Mangeli.
   Em 2026, Geraldo Xexéo fez modificações de alta monta para suportar o novo \citetitle{manualbib}, que implementa normas recentes da ABNT: a versão 4.0, em maio, com apoio do Claude Opus 4.7 e do Claude Opus 4.8, e a versão 4.1, em setembro, com apoio do Claude Opus 5, ambos da Anthropic.
@@ -494,7 +494,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
  \item A bibliografia segue automaticamente o idioma do Babel (português ou inglês); não é preciso escolher um estilo separado.
  \end{itemize}
 
-  A variação de linguagem, em inglês ou português apenas, já é suportada pela classe \CoppeTeX  com o pacote Babel. Não é necessário incluí-lo.
+  A variação de linguagem, em inglês ou português apenas, já é suportada pela classe \verb|ufrj| com o pacote Babel. Não é necessário incluí-lo.
 
 
 \section{Por que usar o \LaTeX}
@@ -1861,7 +1861,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor i
 %    \begin{macrocode}
 %<*package>
 \NeedsTeXFormat{LaTeX2e}[2020/10/01]
-\ProvidesPackage{ufrj-coppe}[2026/09/15 v4.1 CoppeTeX COPPE/UFRJ unit style]
+\ProvidesPackage{ufrj-coppe}[2026/09/15 v5.0 CoppeTeX COPPE/UFRJ unit style]
 % O estilo so faz sentido com a classe: o que ele declara, e a classe que le.
 % Sem ela os comandos de declaracao nem existem, e o erro seria um "Undefined
 % control sequence" na primeira declaracao, sem dizer o que falta.
@@ -1990,7 +1990,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor i
 %    \begin{macrocode}
 %<*compat>
 \NeedsTeXFormat{LaTeX2e}[2020/10/01]
-\ProvidesClass{coppe}[2026/09/15 v4.1 CoppeTeX compatibility class: ufrj with ufrj-coppe]
+\ProvidesClass{coppe}[2026/09/15 v5.0 CoppeTeX compatibility class: ufrj with ufrj-coppe]
 \ClassWarningNoLine{coppe}{A classe coppe agora e a classe ufrj com o estilo\MessageBreak
   ufrj-coppe. Este documento compila como esta, mas troque\MessageBreak
   \string\documentclass[...]{coppe} por\MessageBreak

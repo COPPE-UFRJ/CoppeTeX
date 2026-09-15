@@ -37,7 +37,7 @@
 %% language option for Italian is spelled "italiano" -- that's the
 %% spelling algorithm2e ships, even though babel calls the language
 %% "italian".
-\ProvidesFile{ufrj-lang-italian.def}[2026/09/09 v4.1 CoppeTeX italian class strings]
+\ProvidesFile{ufrj-lang-italian.def}[2026/09/15 v5.0 CoppeTeX italian class strings]
 %% --- A folha de resumo ------------------------------------------------------
 %% Tudo o que a classe escreve numa folha de resumo sai no idioma daquela folha.
 %% A frase de abertura e montada de pedacos porque a concordancia muda de idioma

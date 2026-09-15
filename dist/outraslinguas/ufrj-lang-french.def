@@ -35,7 +35,7 @@
 %% ufrj-lang-french.def -- CoppeTeX 4.x French class-string pack.
 %% See ufrj-lang-spanish.def for the structure. Nothing institutional lives
 %% here; only document-content strings translate.
-\ProvidesFile{ufrj-lang-french.def}[2026/09/09 v4.1 CoppeTeX french class strings]
+\ProvidesFile{ufrj-lang-french.def}[2026/09/15 v5.0 CoppeTeX french class strings]
 %% --- A folha de resumo ------------------------------------------------------
 %% Tudo o que a classe escreve numa folha de resumo sai no idioma daquela folha.
 %% A frase de abertura e montada de pedacos porque a concordancia muda de idioma

@@ -4,8 +4,9 @@ Para quem escreve um trabalho com a CoppeTeX 4.0 ou 4.1 e vai atualizar os
 arquivos da classe. Leia a tabela, faça o que ela mandar para o seu caso, e é
 só isso.
 
-A 5.0 não muda a forma do trabalho: **as folhas saem iguais**. O que muda é a
-organização. A classe passa a se chamar `ufrj` e a implementar só o Manual da
+A 5.0 não muda a forma do trabalho: **as folhas saem iguais**, exceto a frase do
+colofão que diz com que classe o trabalho foi composto — agora "a classe ufrj,
+do projeto CoppeTeX, versão v5.0". O que muda é a organização. A classe passa a se chamar `ufrj` e a implementar só o Manual da
 UFRJ/SiBI, e tudo o que era da COPPE — o nome do Instituto, os treze
 Programas, o logotipo, as frases que a Norma COPPE fixa — sai da classe e vai
 para um **estilo de unidade**, o `ufrj-coppe`. É o que permite que outra

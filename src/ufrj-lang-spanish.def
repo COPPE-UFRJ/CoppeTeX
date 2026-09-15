@@ -39,7 +39,7 @@
 %% Nothing institutional lives here: the names of the university, the unit and
 %% the Programa do not translate, and a unit style declares its own texts with
 %% \ufrjdefunitstring, which takes precedence over this table.
-\ProvidesFile{ufrj-lang-spanish.def}[2026/09/09 v4.1 CoppeTeX spanish class strings]
+\ProvidesFile{ufrj-lang-spanish.def}[2026/09/15 v5.0 CoppeTeX spanish class strings]
 %% --- A folha de resumo ------------------------------------------------------
 %% Tudo o que a classe escreve numa folha de resumo sai no idioma daquela folha.
 %% A frase de abertura e montada de pedacos porque a concordancia muda de idioma

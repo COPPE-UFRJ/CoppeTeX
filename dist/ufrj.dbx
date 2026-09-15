@@ -32,7 +32,7 @@
 %%            Geraldo Xexéo
 %%            Eduardo Mangeli
 %% 
-\ProvidesFile{ufrj.dbx}[2026/09/09 v4.1 CoppeTeX ABNT datamodel]
+\ProvidesFile{ufrj.dbx}[2026/09/15 v5.0 CoppeTeX ABNT datamodel]
 \DeclareDatamodelEntrytypes{game,videogame,boardgame,tvshow,map}
 \DeclareDatamodelFields[type=field,datatype=literal]{course}      % "(... em <course>)"
 \DeclareDatamodelFields[type=field,datatype=literal]{ufrjdegree} % degree word

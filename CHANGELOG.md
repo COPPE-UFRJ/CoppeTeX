@@ -4,6 +4,107 @@ Project changes worth noting, newest first. Follows
 [Keep a Changelog](https://keepachangelog.com/) loosely; dates are
 ISO-8601.
 
+## [5.0] — 2026-09-15 — The UFRJ class and the COPPE unit style
+
+The class that was `coppe` is now **`ufrj`**, and implements the UFRJ/SiBI
+Manual only. Everything that belongs to COPPE — the institute's name, the
+thirteen Programas, the right-hand logo, the phrases the Norma COPPE fixes, the
+norm the colophon cites — moved out of the class into the **unit style
+`ufrj-coppe`**. Another unit of UFRJ gets its own style and the class does not
+change. A COPPE document keeps its pages except for the colophon sentence that
+names the class, and a work begun with `\documentclass{coppe}` compiles as it
+is. What to change, and when, is in
+[`MIGRATION_v4_to_v5.md`](./MIGRATION_v4_to_v5.md).
+
+### Breaking changes
+
+- **The class is `ufrj`, and so is every file generated from it**: `ufrj.cls`,
+  `ufrj.bbx`, `ufrj.cbx`, `ufrj.dbx`, `ufrj-numeric.bbx`/`.cbx`,
+  `brazilian-ufrj.lbx` and the other language packs, `ufrj-lang-spanish.def`
+  and the other two, `ufrj.ist`, `ufrj.bib`, and the manuals `ufrj.pdf` and
+  `ufrj-quickref.pdf`. The sources are `src/ufrj.dtx` and `src/ufrj.ins`.
+- **A COPPE work starts with two lines**:
+
+  ```latex
+  \documentclass[dsc]{ufrj}
+  \usepackage{ufrj-coppe}
+  ```
+
+  Without the style, `\department{PESC}` stops with
+  ``Class ufrj Error: Programa `PESC' nao declarado``: a department code that no
+  unit declared is now an error, where 4.1 printed a cover without the Programa.
+- **`coppe.cls` is now a compatibility class** of a few lines. A 4.1
+  `coppe.cls` left in the work's folder keeps loading 4.1, and must be replaced;
+  so must a 4.1 `latexmkrc`, which runs makeindex with `coppe.ist`.
+- **A language pack written by an author** must be renamed
+  (`ufrj-lang-<language>.def`, `<language>-ufrj.lbx`) and loses what is
+  institutional: the keys `universityname`, `cityname`, `statename` and
+  `countryname`, which no code ever read, are gone, and the start of
+  `abstracttail` ("à COPPE/UFRJ") is the new key `tounit`.
+
+### Added
+
+- **The unit interface**, public and documented in `ufrj.pdf`, section "A
+  instituição e a unidade": `\ufrjdeclareunit`, `\ufrjdeclareprogram`,
+  `\ufrjdeclarelogos`, `\ufrjdeclarenorm` and `\ufrjdefunitstring`. The texts of
+  a unit live in their own table, which wins over the class's and the language
+  packs' whichever was loaded first.
+- **`src/ufrj-coppe.dtx` and `src/ufrj-coppe.ins`**: the COPPE style, the
+  compatibility class, and every example document — `min-exemplo.tex`,
+  `max-exemplo.tex`, the five per-language examples and the covers sheet —,
+  with their own manual, `ufrj-coppe.pdf`. `ufrj.ins` generates no document.
+- **The class alone composes a work of UFRJ**: the cover reads "Programa de
+  Pós-Graduação em …", the abstract says the work was presented "à UFRJ", the
+  colophon cites the SiBI Manual, and the Programa is declared in the preamble
+  with `\ufrjdeclareprogram`. It is the way for a unit that has no style yet.
+- **The old names keep working** while `ufrj-coppe` is loaded:
+  `\copperdefstring`, `\coppestring`, `\coppemainstring`,
+  `\coppeforeignstring`, `\usecoppelanguage`, `\newcoppefloat`,
+  `\coppetexfinalpage`, the six colophon pieces `\coppefinal…` (a
+  `\renewcommand` by the old name still changes the colophon), the page style
+  `coppe`, the `.bib` field `coppedegree`, and the internal names that `.toc`,
+  `.lab` and the list files written by 4.1 contain, so the first compilation
+  after the update reads them without error.
+- **Four regression tests of the split.** `r33` composes a work with the class
+  alone and forbids every COPPE phrase in the PDF; `r34` composes one with a
+  made-up unit style that uses only the public interface; `r35` compiles a 4.1
+  work — `\documentclass{coppe}`, old names, a `.toc` written by the old class;
+  `r36` reads the class, the bibliography styles, the language packs and the
+  glossary style that `ufrj.ins` generates, and fails if one names COPPE or any
+  of its data.
+
+### Changed
+
+- **The colophon names the class and the project apart**: "Foi utilizada a
+  classe ufrj, do projeto CoppeTeX, versão v5.0". It said "a classe CoppeTeX",
+  and CoppeTeX is the name of the project, not of a class. `manual.pdf` and
+  `max-exemplo.pdf`, which also said "classe CoppeTeX", say the same.
+- **The norm the colophon cites is the unit's**, declared with
+  `\ufrjdeclarenorm`: the Norma COPPE under `ufrj-coppe`, the UFRJ/SiBI Manual
+  with no unit.
+- **The documentation follows the split.** `ufrj.pdf` is the class and the
+  interface a unit style uses; `ufrj-coppe.pdf` is only what COPPE declares, the
+  table of the thirteen Programas, the old names and how to start a new unit;
+  `manual.pdf` is the norm of UFRJ with COPPE as the example, with a new chapter,
+  "O que é de cada unidade". `CONTRIBUTING.md` has a section on adding a unit
+  style.
+- **`NORMA_COPPE_2026`**, section 16, names the class `ufrj` with the style
+  `ufrj-coppe` as the implementation of reference from 5.0 on.
+- **The tools know both sources**: `tools/build-check.ps1` runs both `.ins` and
+  composes both manuals, and `painel.py`, `versao.py`, `conferir-manual.py`,
+  `geradocvazio.py` and `mk-adversativa.py` handle the style, the compatibility
+  class and the second `.dtx`. The empty-document generator writes
+  `\usepackage{ufrj-coppe}`.
+
+### How it was checked
+
+Three steps, each compared with the state before it through an image of every
+page of the 33 documents built: COPPE isolated in one block of the `.dtx`
+(`22e7dc9`, all 33 identical, and also word by word, with coordinates, and in
+the XMP), the rename (`fc0eb20`, the differences only in text that names the
+class) and the two sources (`547bf45`, only `max-exemplo` differs: the code it
+shows gained the line `\usepackage{ufrj-coppe}`).
+
 ## [4.1] — 2026-09-14 — Revision of the 4.1 release
 
 Still version 4.1: these are corrections to the release published on

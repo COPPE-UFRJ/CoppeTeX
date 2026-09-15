@@ -63,6 +63,11 @@ a classe; não falta documento normativo.
 - **Autoria do `manual.pdf`.** O manual da norma passou a tratar da UFRJ, com a
   COPPE como exemplo, mas continua assinado pela CPGP da COPPE, que o
   encomendou. Decidir se muda.
+- **A 5.0 e a proposta à CPGP.** `PROPOSTA_CPGP.md`, `CARTA_CPGP.md` e a seção
+  *The proposal for CPGP* do `README.md` foram escritos para a 4.1 e falam da
+  classe `coppe`; o aviso do topo do `README.md` diz isso. Decidir se a 5.0 vai
+  à votação no lugar da 4.1 — e então reescrever os três — ou se a 4.1 é votada
+  e a 5.0 vem depois.
 
 ## 4. Higiene do repositório
 
@@ -90,4 +95,4 @@ O trabalho acontece no `master`. O manual do painel é o
 `RESULTADO: tudo passou`. Não vêm pelo git as pastas locais `ABNT/`, `LIXO/`,
 `LaTeXManuals/` e `_scratch/`.
 
-*Última atualização: 14 de setembro de 2026.*
+*Última atualização: 15 de setembro de 2026.*
