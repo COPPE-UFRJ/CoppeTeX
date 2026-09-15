@@ -22,8 +22,10 @@ a classe; não falta documento normativo.
 
 ## 2. Distribuição
 
-- **CTAN** — pacote a partir de `dist/` mais `src/coppe.dtx` e `src/coppe.ins`,
-  que bastam para reconstruir a distribuição. Issue #14.
+- **CTAN** — pacote a partir de `dist/` mais os dois `.dtx` e os dois `.ins`
+  (`src/ufrj.*` e `src/ufrj-coppe.*`), que bastam para reconstruir a
+  distribuição. Os nomes da 5.0 já têm o prefixo `ufrj`, que evita colisão com
+  outro pacote da TeX Live. Issue #14.
 - **Overleaf** — modelo público com o conteúdo de `dist/` e botão "Open in
   Overleaf" no `README.md`. O `latexmkrc` já configura biber e makeindex.
 
@@ -40,6 +42,27 @@ a classe; não falta documento normativo.
 - **Palavras-chave no dicionário de informação do PDF sob `pdfa`.** Com a opção,
   `pdfinfo` mostra título, autor e assunto, mas não *Keywords* (sem a opção,
   mostra). Conferir se elas estão no XMP e, se não estiverem, fazê-las chegar.
+- **A natureza da folha de rosto no idioma principal?** A seção 4 da Norma COPPE
+  diz que a natureza acompanha o idioma principal; a classe a escreve em
+  português em qualquer idioma (conferido no `example_en.pdf`). Decidido na 5.0
+  deixar para depois. O texto já está pronto para isso: a natureza é a chave
+  `natureza`, lida no idioma principal e, na falta, em português. Seguir a
+  Norma é escrever a chave em inglês e em espanhol, com teste regressivo;
+  manter é corrigir a seção 4.
+- **Escolhas de comportamento por unidade.** Na 5.0 o estilo de unidade traz só
+  identidade — nomes, Programas, logotipos, frases. As escolhas da Norma COPPE
+  que são comportamento (orientador e Programa no resumo, referência no alto do
+  resumo, orientador na banca) continuam padrão da classe. Uma unidade que
+  precise de outro padrão pede um mecanismo novo: o `\usepackage` do estilo roda
+  depois das opções da classe, e a classe teria de distinguir o que o autor
+  pediu explicitamente para o estilo não passar por cima.
+- **O gerador de documento só conhece a COPPE.** `tools/geradocvazio.py`
+  escreve `\usepackage{ufrj-coppe}` e tem a própria lista dos treze Programas,
+  cópia da que está no `ufrj-coppe.dtx`. Com uma segunda unidade, ele tem de
+  perguntar a unidade e ler os Programas do estilo.
+- **Autoria do `manual.pdf`.** O manual da norma passou a tratar da UFRJ, com a
+  COPPE como exemplo, mas continua assinado pela CPGP da COPPE, que o
+  encomendou. Decidir se muda.
 
 ## 4. Higiene do repositório
 

@@ -232,7 +232,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \ProvidesFile{ufrj.dtx}[2026/09/11 v4.1 CoppeTeX]
 % \GetFileInfo{ufrj.dtx}
 %
-% \title{A classe \CoppeTeX\ \\
+% \title{A classe \texttt{ufrj}, do projeto \CoppeTeX\ \\
 %   \large Manual de uso --- versão \fileversion, \filedate}
 % \author{Geraldo Xexéo \and Vicente H. F. Batista \and George O. Ainsworth Jr.
 %   \and Eduardo Mangeli}
@@ -241,20 +241,22 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %
 % \begin{abstract}
 % \noindent
-% A classe |ufrj| compõe teses, dissertações e exames de qualificação
-% do Instituto Alberto Luiz Coimbra de Pós-Graduação e Pesquisa de
-% Engenharia (COPPE) da Universidade Federal do Rio de Janeiro, seguindo o
-% \emph{Manual para elaboração e normalização de trabalhos
-% acadêmicos} da UFRJ/SiBI, 9.\textsuperscript{a} ed. rev.\ (2026), e a
-% \emph{Norma para a Elaboração Gráfica de Teses e Dissertações} da
-% COPPE/UFRJ. Este manual descreve todas as opções de classe, todos os
+% A classe |ufrj| compõe teses, dissertações e exames de qualificação da
+% Universidade Federal do Rio de Janeiro, seguindo o \emph{Manual para
+% elaboração e normalização de trabalhos acadêmicos} da UFRJ/SiBI,
+% 9.\textsuperscript{a} ed. rev.\ (2026). O que é próprio de cada unidade
+% acadêmica --- o nome do instituto ou da escola, os Programas, o logotipo, as
+% frases que a norma da unidade fixa --- vem de um \emph{estilo de unidade},
+% carregado logo depois da classe. A COPPE, que é a unidade de onde a classe
+% nasceu, tem o seu: o |ufrj-coppe|, com manual próprio, e é ele que os
+% exemplos usam. Este manual descreve todas as opções de classe, todos os
 % comandos e todos os ambientes, diz quais arquivos pôr na pasta do trabalho e
 % onde, e aponta, para cada recurso, a linha do exemplo em que ele aparece
 % funcionando.
 %
 % \medskip\noindent
 % \textbf{In English.} This manual is written in Portuguese because its reader is
-% a COPPE graduate student. The class itself is multilingual: a thesis may be
+% a UFRJ graduate student. The class itself is multilingual: a thesis may be
 % \emph{written} in Portuguese, English or Spanish (CEPG Resolution 302/2024,
 % art.~57), and French and Italian ship as demonstrations of the language-pack
 % mechanism. Section~\ref{sec:multilingual} covers that, and every command name
@@ -263,11 +265,11 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %
 % \tableofcontents
 %
-% \section{Para o aluno da COPPE}
+% \section{Para o aluno}
 %
 % \subsection{O que esta classe faz por você}
 %
-% Um trabalho acadêmico da COPPE tem uma forma fixa. A capa, a folha de rosto,
+% Um trabalho acadêmico da UFRJ tem uma forma fixa. A capa, a folha de rosto,
 % a folha da Coleta CAPES, a ficha catalográfica, a folha de aprovação, os
 % resumos, as listas, o sumário, as referências, os apêndices e os anexos
 % vêm em uma ordem determinada, com margens, corpo de letra e espaçamento
@@ -294,6 +296,29 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %   \item \textbf{As referências} são suas. A classe as formata; os dados,
 %     quem digita é você.
 % \end{itemize}
+%
+% \subsection{O estilo da sua unidade}\label{sec:estilounidade}
+%
+% O Manual do SiBI vale para a UFRJ inteira, mas deixa escolhas em aberto e
+% pede dados que só a unidade tem: o logotipo da direita, o nome da instituição
+% na capa, a lista dos Programas. A classe não os sabe. Ela os recebe de um
+% \emph{estilo de unidade}, que vem logo depois dela:
+% \begin{verbatim}
+%   \documentclass[dsc]{ufrj}
+%   \usepackage{ufrj-coppe}
+% \end{verbatim}
+% Este é o começo de um trabalho da COPPE. O que o |ufrj-coppe| declara, e a
+% lista dos Programas com as siglas que o |\department| aceita, estão no manual
+% dele, o |ufrj-coppe.pdf|.
+%
+% Um trabalho de uma unidade que ainda não tem estilo compila só com a classe,
+% com os textos da UFRJ, e declara o seu Programa no preâmbulo, com
+% |\ufrjdeclareprogram| (seção~\ref{sec:unidade}).
+%
+% \textbf{Um trabalho escrito até a versão 4.1}, com
+% |\documentclass[dsc]{coppe}|, continua compilando como está: a entrega traz
+% uma classe |coppe| que carrega a |ufrj| e o |ufrj-coppe|, e que avisa no
+% |.log| que as duas linhas podem ser trocadas.
 %
 % \subsection{Por onde começar}
 %
@@ -347,22 +372,23 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \begin{verbatim}
 %   raiz/
 %     minha-tese.tex          <- o seu trabalho
-%     ufrj.cls               <- a classe
-%     ufrj.dbx               <- tipos de entrada bibliografica
-%     ufrj.bbx  ufrj.cbx    <- estilo de bibliografia e de citacao
-%     ufrj.ist               <- ordenacao das listas e do glossario
-%     brazilian-ufrj.lbx     <- termos de bibliografia em portugues
-%     english-ufrj.lbx       <- termos de bibliografia em ingles
+%     ufrj.cls                <- a classe
+%     ufrj-coppe.sty          <- o estilo da unidade (aqui, o da COPPE)
+%     ufrj.dbx                <- tipos de entrada bibliografica
+%     ufrj.bbx  ufrj.cbx      <- estilo de bibliografia e de citacao
+%     ufrj.ist                <- ordenacao das listas e do glossario
+%     brazilian-ufrj.lbx      <- termos de bibliografia em portugues
+%     english-ufrj.lbx        <- termos de bibliografia em ingles
 %     latexmkrc               <- receita de compilacao (se voce usa latexmk)
 %     logos/
-%       coppe-logo.pdf        <- logotipo da COPPE, na capa
 %       ufrj-logo.pdf         <- logotipo da UFRJ, na capa
+%       coppe-logo.pdf        <- logotipo da unidade, na capa
 %     referencias/
 %       minha-tese.bib        <- as suas referencias
 % \end{verbatim}
 %
 % Os dois |.lbx| são necessários em \textbf{qualquer} trabalho, inclusive num
-% escrito em português: toda tese da COPPE tem um resumo em idioma
+% escrito em português: toda tese da UFRJ tem um resumo em idioma
 % estrangeiro, que por convenção é o inglês.
 %
 % \textbf{Os logotipos.} A classe procura primeiro em |logos/| e depois ao
@@ -376,9 +402,10 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % ler, |en/| e |es/| têm o exemplo naquele idioma, |outraslinguas/| tem
 % francês e italiano, e a raiz traz os exemplos em português
 % (|min-exemplo.tex| e |max-exemplo.tex|), as bases |exemplo.bib| e
-% |ufrj.bib|, e as fontes |ufrj.dtx|, |ufrj.ins|
-% e |manual.tex|, que estão lá para que a entrega baste também para
-% refazer a classe e os manuais.
+% |ufrj.bib|, a classe |coppe.cls|, que só serve a trabalho escrito até a
+% versão~4.1, e as fontes |ufrj.dtx|, |ufrj.ins|, |ufrj-coppe.dtx|,
+% |ufrj-coppe.ins| e |manual.tex|, que estão lá para que a entrega baste também
+% para refazer a classe, o estilo e os manuais.
 %
 % \subsection{Arquivos que só algumas opções exigem}
 %
@@ -398,7 +425,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %
 % Português e inglês não têm arquivo |.def|: os textos dos dois moram
 % dentro da própria classe, porque são os dois idiomas que todo trabalho da
-% COPPE usa --- um no corpo, o outro no |abstract|.
+% UFRJ usa --- um no corpo, o outro no |abstract|.
 %
 % \subsection{Figuras, e por que a subpasta é uma boa ideia}
 %
@@ -438,10 +465,12 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %
 % \subsection{O que da entrega você pode deixar de fora}
 %
-% O |ufrj.dtx| e o |ufrj.ins| vêm na entrega porque com eles ela basta para
-% refazer a classe e os manuais, e não porque o seu trabalho precise deles:
-% são a \emph{fonte} da classe. Apague-os da pasta do seu trabalho se
-% preferir; nada deixa de compilar.
+% O |ufrj.dtx|, o |ufrj.ins|, o |ufrj-coppe.dtx| e o |ufrj-coppe.ins| vêm na
+% entrega porque com eles ela basta para refazer a classe, o estilo e os
+% manuais, e não porque o seu trabalho precise deles: são a \emph{fonte}.
+% Apague-os da pasta do seu trabalho se preferir; nada deixa de compilar. O
+% |coppe.cls| também pode sair, a menos que o seu trabalho tenha começado com
+% |\documentclass{coppe}|.
 %
 % Vale o mesmo para o |manual.tex|, para os exemplos (|min-exemplo.tex|,
 % |max-exemplo.tex| e os das pastas de idioma) e para as bases |exemplo.bib| e
@@ -453,6 +482,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %
 % \begin{verbatim}
 %   \documentclass[dsc]{ufrj}
+%   \usepackage{ufrj-coppe}
 %   \addbibresource{referencias/minha-tese.bib}
 %
 %   \begin{document}
@@ -485,9 +515,13 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %   \end{document}
 % \end{verbatim}
 %
-% Repare em três coisas, porque são as que mais causam dúvida:
+% Repare em quatro coisas, porque são as que mais causam dúvida:
 %
 % \begin{enumerate}
+%   \item \textbf{O estilo da unidade vem logo depois da classe}, e é dele que
+%     sai a sigla que o |\department| aceita. Numa unidade que ainda não tem
+%     estilo, a linha sai, e o Programa é declarado no preâmbulo com
+%     |\ufrjdeclareprogram| (seção~\ref{sec:estilounidade}).
 %   \item \textbf{Os dados do trabalho vão \emph{dentro} do |document|}, antes
 %     do |\maketitle|, e não no preâmbulo. É diferente do \LaTeX\ comum.
 %   \item \textbf{\texttt{\textbackslash maketitle} compõe várias folhas}, não uma: a capa, a
@@ -1498,8 +1532,11 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % |semorientadornabanca| deixa só os examinadores.
 %
 % \DescribeMacro{\department}
-% A sigla do Programa: |\department{PESC}|. A classe conhece os treze Programas
-% da COPPE e escreve o nome por extenso onde ele é preciso.
+% A sigla do Programa: |\department{PESC}|. A classe escreve o nome por extenso
+% onde ele é preciso, e o nome vem do estilo da unidade, que declara os
+% Programas dela: o |ufrj-coppe| declara os treze da COPPE, listados no
+% |ufrj-coppe.pdf|. Uma sigla que nenhum estilo declarou para a compilação com
+% um erro que diz isso.
 %
 % \DescribeMacro{\date}
 % |\date{mes}{ano}|, em dois argumentos numéricos: |\date{09}{2026}|. É a data
@@ -1595,11 +1632,11 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % idioma daquela folha. Você escreve o corpo em um idioma e a folha inteira
 % sai naquele idioma; não há nada a configurar.
 %
-% A única coisa que não se traduz é o \textbf{nome do Programa}: a COPPE tem
-% nome oficial para cada Programa em português e em inglês, e só. Numa folha
-% em espanhol, francês ou italiano vai o nome em português, que é o nome
-% próprio da unidade --- a mesma regra da seção~4 da Norma COPPE, que
-% mantém a identidade institucional em português.
+% A única coisa que não se traduz é o \textbf{nome do Programa}: o estilo da
+% unidade o declara em português e em inglês, e só. Numa folha em espanhol,
+% francês ou italiano vai o nome em português, que é o nome próprio do Programa
+% --- a mesma regra que mantém a identidade institucional em português, e que
+% na COPPE está na seção~4 da Norma da unidade.
 %
 % A capa, a folha de rosto e a folha de aprovação seguem outra regra e
 % continuam em português, qualquer que seja o idioma do trabalho: ali o texto
@@ -1635,7 +1672,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \begin{enumerate}
 %   \item a \textbf{identificação da página}: a frase ``Resumo da
 %     Dissertação apresentada à COPPE/UFRJ como parte dos requisitos
-%     \ldots'', que diz que folha é aquela;
+%     \ldots'', que diz que folha é aquela --- a quem o trabalho foi
+%     apresentado vem do estilo da unidade, e sem estilo a frase diz ``à UFRJ'';
 %   \item a \textbf{identificação de título e autor}: o título em
 %     versal, o seu nome e o mês e o ano, centralizados;
 %   \item a \textbf{identificação de orientação}: o orientador, os
@@ -2499,8 +2537,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %
 % \begin{enumerate}
 %   \item o \textbf{Manual do SiBI}, edição vigente;
-%   \item as \textbf{decisões próprias da COPPE} sobre ele, registradas na
-%     Norma da COPPE;
+%   \item as \textbf{decisões próprias da unidade} sobre ele, registradas na
+%     norma da unidade --- na COPPE, a Norma da COPPE;
 %   \item onde nenhum dos dois manda nada, a \textbf{escolha do autor}, que na
 %     classe vira opção e nunca decisão embutida.
 % \end{enumerate}
@@ -2527,13 +2565,17 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % decisão tomada e o motivo. Uma divergência resolvida em silêncio dentro do
 % código é uma decisão que ninguém consegue revisar depois.
 %
-% \subsection{Norma da COPPE}
+% \subsection{A norma da unidade: o exemplo da COPPE}
+%
+% Cada unidade pode ter a sua norma, que adota o Manual do SiBI e registra
+% onde a unidade se especializa. O que dela é dado ou texto vai no estilo da
+% unidade; o que é comportamento, a classe já oferece como opção ou padrão.
 %
 % COPPE/UFRJ. \emph{Norma para a Elaboração Gráfica de Teses e
 % Dissertações}. Ela adota o Manual do SiBI por inteiro e registra apenas
 % onde a COPPE se especializa: os logotipos, a lista dos treze Programas e a
 % estrutura de três resumos. O texto está em |NORMA_COPPE_2026.md|, na raiz do
-% repositório.
+% repositório, e o estilo |ufrj-coppe| a implementa.
 %
 % \subsection{Resoluções do CEPG}
 %
@@ -2677,7 +2719,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % usa |git|, |git pull| basta.
 %
 % \textbf{Confira qual versão você está usando.} O número aparece na
-% primeira linha da compilação, em |Document Class: coppe|, e também na
+% primeira linha da compilação, em |Document Class: ufrj|, e também na
 % folha de colófon, se você usar |\ufrjfinalpage|. Esta é a
 % \fileversion, de \filedate. Se a sua for anterior, atualize antes de relatar
 % qualquer coisa.
@@ -2728,8 +2770,11 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %   \item[As listas de siglas e de símbolos saem vazias.] Faltou o \texttt{makeindex}
 %     com o |ufrj.ist| entre a primeira e a segunda passada. Veja a
 %     seção~\ref{sec:compilar}, ou use |latexmk|.
-%   \item[``File \texttt{coppe-logo} not found''.] Os logotipos não estão na
-%     pasta. Copie |coppe-logo.pdf| e |ufrj-logo.pdf| da |dist/|.
+%   \item[``Logotipo \texttt{coppe-logo.pdf} não encontrado''.] Os logotipos
+%     não estão na pasta. Copie a pasta |logos/| da |dist/| para junto do
+%     trabalho.
+%   \item[``Programa \texttt{PESC} não declarado''.] Falta o estilo da unidade:
+%     acrescente |\usepackage{ufrj-coppe}| logo depois do |\documentclass|.
 %   \item[``No room for a new \texttt{write}''.] O \hologo{pdfTeX} ficou sem
 %     fluxos de escrita. Tire a opção |semmorewrites|, se você a passou; instale
 %     o |morewrites|; ou compile com \hologo{LuaLaTeX}. Ver a
@@ -2857,10 +2902,20 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %
 % \subsection{A regra que explica todo o resto}
 %
-% \textbf{\texttt{ufrj.dtx} é a fonte única.} Tudo o que a \CoppeTeX\ distribui sai
-% dele, por |pdflatex ufrj.ins|: a classe, os estilos de bibliografia, os pacotes
-% de idioma, as bases |.bib|, o estilo do glossário, os seis exemplos, a montagem
-% de capas e a receita de compilação. Este manual também sai dele.
+% \textbf{Os \texttt{.dtx} são a fonte única.} Tudo o que a \CoppeTeX\
+% distribui sai de dois arquivos. Do |ufrj.dtx|, por |pdflatex ufrj.ins|: a
+% classe, os estilos de bibliografia, os pacotes de idioma, as bases |.bib|, o
+% estilo do glossário, a referência rápida e a receita de compilação. Do
+% |ufrj-coppe.dtx|, por |pdflatex ufrj-coppe.ins|: o estilo da COPPE, a classe
+% |coppe| de compatibilidade, os exemplos e a montagem de capas. Os dois
+% manuais saem dos próprios |.dtx|.
+%
+% A divisão tem uma regra: \textbf{a classe não sabe nada de unidade}. Nada
+% do que o |ufrj.ins| gera pode nomear a COPPE, e isso é cobrado pelo
+% |tests/regressivo/r36|; o |r33| prova pelo PDF que a classe sem estilo
+% compõe um trabalho da UFRJ, e o |r34| que uma unidade inventada se escreve só
+% com a interface da seção~\ref{sec:unidade}. Um estilo de unidade novo é um
+% |.dtx| novo, que copia o |ufrj-coppe.dtx|.
 %
 % A consequência prática é dura e precisa ser dita sem rodeio: \textbf{uma
 % edição feita num arquivo gerado se perde na próxima geração, sem
@@ -2874,9 +2929,11 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \subsection{As pastas}
 %
 % \begin{description}
-%   \item[\texttt{src/}] a fonte. \texttt{ufrj.dtx} e \texttt{ufrj.ins}, mais os três logotipos,
-%     que são binários e não saem do |.dtx|. Todo o resto que está ali é
-%     gerado. Tem |README.md| próprio, com o guia de programação.
+%   \item[\texttt{src/}] a fonte. \texttt{ufrj.dtx} e \texttt{ufrj.ins}, a
+%     classe; \texttt{ufrj-coppe.dtx} e \texttt{ufrj-coppe.ins}, o estilo da
+%     COPPE e os exemplos; mais os três logotipos, que são binários e não saem
+%     de |.dtx| nenhum. Todo o resto que está ali é gerado. Tem |README.md|
+%     próprio, com o guia de programação.
 %   \item[\texttt{dist/}] a entrega: o mínimo para instalar a classe e escrever. É o
 %     que se copia para a pasta do trabalho ou para o Overleaf.
 %   \item[\texttt{tests/}] as três camadas de prova, em subpastas. A de cima
@@ -2911,9 +2968,11 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %   \item \textbf{Linha começada por \texttt{%} é documentação}, e vira este
 %     manual. Linha que não começa por \texttt{\%} é código, e vai para o arquivo
 %     gerado.
-%   \item \textbf{\texttt{%<*nome>} e \texttt{%</nome>} delimitam um módulo.} O |ufrj.ins|
-%     diz qual módulo vai para qual arquivo: |class| vira |ufrj.cls|, |bbx|
-%     vira |ufrj.bbx|, |maxexemplo| vira |max-exemplo.tex|, e assim por diante.
+%   \item \textbf{\texttt{%<*nome>} e \texttt{%</nome>} delimitam um módulo.} O |.ins|
+%     diz qual módulo vai para qual arquivo: no |ufrj.ins|, |class| vira
+%     |ufrj.cls| e |bbx| vira |ufrj.bbx|; no |ufrj-coppe.ins|, |package| vira
+%     |ufrj-coppe.sty|, |compat| vira |coppe.cls| e |maxexemplo| vira
+%     |max-exemplo.tex|; e assim por diante.
 % \end{enumerate}
 %
 % \subsection{O ciclo de trabalho}
@@ -3102,9 +3161,11 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   environment}\\[6pt]
   \begin{minipage}{0.86\textwidth}\small
   This is the short companion to \texttt{ufrj.pdf}, the full manual, which is
-  written in Portuguese. A COPPE thesis may be written in Portuguese, English or
+  written in Portuguese. A UFRJ thesis may be written in Portuguese, English or
   Spanish (CEPG Resolution 302/2024, art.~57); this sheet is for whoever writes
-  it in English.
+  it in English. A thesis starts with the class and the style of its academic
+  unit, \verb|\documentclass[dsc]{ufrj}| and, at COPPE,
+  \verb|\usepackage{ufrj-coppe}|; everything below is the class.
 
   \medskip
   The \textbf{Where} column says where a command may appear:
@@ -3206,7 +3267,7 @@ semmorewrites & [dsc,semmorewrites] & \pre & Do not load \texttt{morewrites}. Sa
 \textbackslash advisor & \textbackslash advisor\{Ana\}\{Lima\}\{D.Sc.\}\{UFRJ\} & \doc & Name, surname, degree, institution. Repeat per advisor. Optional first argument is the treatment. \\
 \textbackslash coadvisor & \textbackslash coadvisor\{Bia\}\{Sousa\}\{Ph.D.\}\{UFF\} & \doc & Same four arguments. \\
 \textbackslash examiner & \textbackslash examiner\{Carlos Dias\}\{D.Sc.\}\{USP\} & \doc & Name and surname in one argument, then degree and institution. \\
-\textbackslash department & \textbackslash department\{PESC\} & \doc & The Programa's acronym. The class knows all thirteen. \\
+\textbackslash department & \textbackslash department\{PESC\} & \doc & The Programa's acronym, as the unit style declares it (\texttt{ufrj-coppe} declares COPPE's thirteen). \\
 \textbackslash date & \textbackslash date\{09\}\{2026\} & \doc & Month and year of deposit, as numbers. Not the defence date. \\
 \textbackslash dataaprovacao & \textbackslash dataaprovacao\{15 de setembro de 2026\} & \doc & Defence date, in words. Without it the sheet reads ``a ser determinada''. \\
 \textbackslash keyword & \textbackslash keyword\{Formal methods\} & \doc & One call per keyword, main language. \\
@@ -9410,12 +9471,12 @@ postamble
 %
 % \subsection{Os arquivos que saem junto}
 %
-% Everything the distribution ships is extracted from this file: the class, the
-% BibLaTeX styles, the language packs, the databases, the |.ist|, the
-% demonstration documents and the |latexmkrc|. One \texttt{pdflatex ufrj.ins}
-% rebuilds all of it and there is no second place to edit. Each one sits in an
-% |\iffalse| block: the documentation driver never typesets them, and only
-% |ufrj.ins| extracts them.
+% Everything the class ships is extracted from this file: the class, the
+% BibLaTeX styles, the language packs, the databases, the |.ist| and the
+% |latexmkrc|. One \texttt{pdflatex ufrj.ins} rebuilds all of it. The COPPE
+% unit style, the |coppe| compatibility class and the demonstration documents,
+% which all depend on a unit, come from |ufrj-coppe.dtx| through
+% |ufrj-coppe.ins|; there is no third place to edit.
 %
 % The line is drawn at what is DISTRIBUTED. What exists only to prove the class
 % works stays outside, as ordinary files under version control:

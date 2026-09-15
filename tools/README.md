@@ -8,16 +8,17 @@ se a página tem as margens da norma, se as referências saem na forma que o
 Manual imprime, se o PDF/A é mesmo PDF/A, e se alguém editou à mão um arquivo
 que deveria ter sido gerado.
 
-Nada aqui é distribuído. Nada aqui sai do `coppe.dtx`.
+Nada aqui é distribuído. Nada aqui sai de `.dtx` nenhum.
 
-## Antes de tudo: a fonte é o `.dtx`
+## Antes de tudo: a fonte são os `.dtx`
 
-**`src/coppe.dtx` é a fonte única.** Toda a distribuição sai dele por
-`pdflatex coppe.ins`, e editar um arquivo gerado é perder a edição na próxima
-geração. O guia de programação está em [`../src/README.md`](../src/README.md);
+**`src/ufrj.dtx` e `src/ufrj-coppe.dtx` são a fonte única.** A classe sai do
+primeiro, por `pdflatex ufrj.ins`; o estilo da COPPE, a classe `coppe` de
+compatibilidade e os exemplos saem do segundo, por `pdflatex ufrj-coppe.ins`.
+Editar um arquivo gerado é perder a edição na próxima geração. O guia de programação está em [`../src/README.md`](../src/README.md);
 leia-o antes de mexer na classe.
 
-O `build-check.ps1` regenera a distribuição no começo de **todo** escopo,
+O `build-check.ps1` regenera a distribuição, dos dois `.ins`, no começo de **todo** escopo,
 inclusive o mais rápido. Isso é de propósito: garante que o que você acabou de
 compilar veio do `.dtx`, e não de um arquivo que ficou para trás.
 
@@ -35,7 +36,7 @@ compilar veio do `.dtx`, e não de um arquivo que ficou para trás.
 | `conferir-norma.py` | Lê um PDF pronto e mede, em centímetros, o que a norma fixa: margens, corpo, recuos, ordem das páginas pré-textuais. |
 | `conferir-referencias.py` | Compõe as referências e as compara, uma a uma, com o texto que o Manual imprime. O gabarito está nos comentários `%%` de `../tests/adversativa/referencias-manual.bib`. |
 | `conferir-referencias-cruzadas.py` | Caça `\ref` e `\cite` sem resolver em todos os `.log`. Nada disso aparece no código de saída do `pdflatex`: sai `??` na página e o PDF é gerado assim mesmo. |
-| `conferir-manual.py` | Cobra que todo comando público, todo ambiente e toda opção da classe estejam documentados, que a tabela "onde ver" do manual ainda bata com o `max-exemplo.tex`, e que os guardas de `macrocode` do `.dtx` estejam bem escritos — o `doc.sty` só fecha um bloco de código com `%` e **quatro** espaços, e um guarda de três espaços fez sessenta linhas de documentação saírem impressas como código no `coppe.pdf` por várias versões, sem quebrar nada. |
+| `conferir-manual.py` | Cobra que todo comando público, todo ambiente e toda opção da classe estejam documentados, que a tabela "onde ver" do manual ainda bata com o `max-exemplo.tex`, e que os guardas de `macrocode` do `.dtx` estejam bem escritos — o `doc.sty` só fecha um bloco de código com `%` e **quatro** espaços, e um guarda de três espaços fez sessenta linhas de documentação saírem impressas como código no `ufrj.pdf` por várias versões, sem quebrar nada. |
 | `atualizar-onde-ver.py` | Reescreve essa tabela a partir do `max-exemplo.tex` atual, quando ela envelhece. |
 
 A suíte de regressão tem rodador próprio, em

@@ -33,12 +33,31 @@ subpastas. Um arquivo que fique em `es/` é um arquivo que o LaTeX não vê.
 
 | Pasta | O que é | O que fazer |
 |---|---|---|
-| **raiz** | A classe, os estilos de bibliografia e o **exemplo em português** | Nada. Já funciona. |
+| **raiz** | A classe, o estilo da COPPE, os estilos de bibliografia e o **exemplo em português** | Nada. Já funciona. |
 | `logos/` | Os três logotipos da capa | Nada. A classe procura aqui. |
 | `manuais/` | Os PDFs para ler | Nada. São leitura. |
 | `en/` | O exemplo em **inglês** | **Copie o conteúdo para a raiz** antes de usar |
 | `es/` | O exemplo em **espanhol** e os arquivos que só ele precisa | **Copie o conteúdo para a raiz** antes de usar |
 | `outraslinguas/` | Francês e italiano | **Copie para a raiz**, ciente de que não são idiomas admitidos para redigir tese |
+
+## As duas primeiras linhas
+
+Todo trabalho começa pela classe da UFRJ e pelo estilo da sua unidade. Na
+COPPE:
+
+```latex
+\documentclass[dsc]{ufrj}
+\usepackage{ufrj-coppe}
+```
+
+A classe `ufrj` é a da UFRJ inteira; o estilo `ufrj-coppe` traz o que é da COPPE
+— o nome do Instituto, os treze Programas, o logotipo, as frases da Norma COPPE.
+Todos os exemplos desta pasta já começam assim, e a lista dos Programas, com a
+sigla que o `\department` aceita, está no `manuais/ufrj-coppe.pdf`.
+
+Se o seu trabalho começou com `\documentclass[dsc]{coppe}`, da versão 4.1 ou
+anterior, **não precisa mudar nada**: a classe `coppe.cls` desta pasta carrega as
+duas coisas e avisa, no `.log`, que as duas linhas podem ser trocadas.
 
 ## Vou escrever em português
 
@@ -53,7 +72,7 @@ o que precisar.
 Copie o conteúdo de `en/` para a raiz, e depois a raiz inteira mais `logos/`
 para a pasta do seu trabalho. O seu documento passa a ser o `example_en.tex`.
 
-O `english-coppe.lbx` **já está na raiz**, e não em `en/`: toda tese da COPPE
+O `english-ufrj.lbx` **já está na raiz**, e não em `en/`: toda tese da COPPE
 tem um resumo em idioma estrangeiro, que por convenção é o inglês, e por isso
 ele é necessário mesmo num trabalho escrito em português.
 
@@ -61,8 +80,8 @@ ele é necessário mesmo num trabalho escrito em português.
 
 Copie o conteúdo de `es/` para a raiz, e depois a raiz inteira mais `logos/`
 para a pasta do seu trabalho. O seu documento passa a ser o `example_es.tex`.
-São dois arquivos além do exemplo: o `spanish-coppe.lbx`, com os termos de
-bibliografia, e o `coppe-lang-spanish.def`, com os textos fixos da classe.
+São dois arquivos além do exemplo: o `spanish-ufrj.lbx`, com os termos de
+bibliografia, e o `ufrj-lang-spanish.def`, com os textos fixos da classe.
 
 Um trabalho em espanhol tem **três** resumos: espanhol, inglês e português. O
 exemplo já vem com os três.
@@ -81,17 +100,19 @@ isso que não há exemplo pronto para eles.
 
 | Arquivo | Para que serve |
 |---|---|
-| `coppe.cls` | A classe. É o arquivo que o seu documento carrega. |
-| `coppe.dbx`, `coppe.bbx`, `coppe.cbx` | O estilo de bibliografia e de citação, em autor-data. |
-| `coppe-numeric.bbx`, `coppe-numeric.cbx` | O mesmo, no sistema numérico, usado pela opção `numbers`. |
-| `brazilian-coppe.lbx`, `english-coppe.lbx` | Os termos de bibliografia em português e em inglês. **Os dois são necessários em qualquer trabalho**, por causa do resumo em idioma estrangeiro. |
-| `coppe.ist` | O estilo de ordenação das listas de abreviaturas, de siglas e de símbolos e do glossário automático. |
+| `ufrj.cls` | A classe. É o arquivo que o seu documento carrega. |
+| `ufrj-coppe.sty` | O estilo da COPPE, carregado logo depois da classe: o Instituto, os Programas, o logotipo e as frases da Norma COPPE. |
+| `coppe.cls` | A classe antiga, só para trabalho começado com `\documentclass{coppe}`: carrega a `ufrj` e o `ufrj-coppe`. Um trabalho novo não precisa dela. |
+| `ufrj.dbx`, `ufrj.bbx`, `ufrj.cbx` | O estilo de bibliografia e de citação, em autor-data. |
+| `ufrj-numeric.bbx`, `ufrj-numeric.cbx` | O mesmo, no sistema numérico, usado pela opção `numbers`. |
+| `brazilian-ufrj.lbx`, `english-ufrj.lbx` | Os termos de bibliografia em português e em inglês. **Os dois são necessários em qualquer trabalho**, por causa do resumo em idioma estrangeiro. |
+| `ufrj.ist` | O estilo de ordenação das listas de abreviaturas, de siglas e de símbolos e do glossário automático. |
 | `latexmkrc` | A receita de compilação, para quem usa `latexmk` ou o Overleaf. |
 | `min-exemplo.tex` | **O exemplo mínimo, em português**: tudo o que a norma exige e nada além disso. É o ponto de partida. |
 | `max-exemplo.tex` | **O exemplo máximo, em português**: tudo o que a classe oferece e o Manual prevê, inclusive o opcional, comentado linha a linha. |
 | `exemplo.bib` | A base de referências dos exemplos, com uma entrada de **cada tipo** de referência da seção 4.2 do Manual. |
-| `coppe.bib` | A base com as referências da própria classe e da norma. |
-| `coppe.dtx`, `coppe.ins`, `manual.tex`, `manual.bib` | As **fontes** dos manuais. Não são necessárias para escrever; estão aqui para que a entrega baste também para refazer o manual e a classe. Não existe `coppe.tex`: o manual da classe é o próprio `coppe.dtx`, e quem o compõe é o `coppe.ins`. |
+| `ufrj.bib` | A base com as referências da própria classe e da norma. |
+| `ufrj.dtx`, `ufrj.ins`, `ufrj-coppe.dtx`, `ufrj-coppe.ins`, `manual.tex`, `manual.bib` | As **fontes** dos manuais. Não são necessárias para escrever; estão aqui para que a entrega baste também para refazer os manuais, a classe e o estilo. Não existe `ufrj.tex`: o manual da classe é o próprio `ufrj.dtx`, e o do estilo, o `ufrj-coppe.dtx`. |
 | `COPYING.txt` | A licença, GNU GPL versão 3. |
 
 ### `logos/`
@@ -104,9 +125,10 @@ documento, então funciona com a pasta ou sem ela.
 
 | Arquivo | O que é |
 |---|---|
-| `coppe.pdf` | **O manual da classe.** Todos os comandos, todas as opções, com exemplos. Comece por ele. |
+| `ufrj.pdf` | **O manual da classe.** Todos os comandos, todas as opções, com exemplos. Comece por ele. |
+| `ufrj-coppe.pdf` | **O manual do estilo da COPPE.** O que o estilo declara, a lista dos Programas e o que muda para um trabalho escrito com a classe `coppe`. |
 | `manual.pdf` | **O manual da norma.** O que o trabalho tem de ser — margens, estrutura, ilustrações, citações, referências. Ele é, ele mesmo, a demonstração: foi composto com a classe e obedece a tudo o que enuncia. |
-| `coppe-quickref.pdf` | Uma referência rápida de uma tabela só, em inglês: comando, exemplo, onde se usa. |
+| `ufrj-quickref.pdf` | Uma referência rápida de uma tabela só, em inglês: comando, exemplo, onde se usa. |
 | `min-exemplo.pdf`, `max-exemplo.pdf` | Os dois exemplos em português, já compilados, para você ver o resultado antes de compilar. |
 
 ## Menos arquivos na sua raiz: os `.bib` podem ir para uma subpasta
@@ -140,9 +162,9 @@ pasta `logos/` para a pasta do seu trabalho e compile ali. No Overleaf é igual 
 suba os arquivos junto com o seu `.tex`.
 
 Para instalar de vez, ponha os arquivos na árvore local do seu TeX, em
-`tex/latex/coppe`, e mande o sistema reindexar (`texhash` no TeX Live,
+`tex/latex/ufrj`, e mande o sistema reindexar (`texhash` no TeX Live,
 `initexmf --update-fndb` no MiKTeX). Nesse caso os logotipos ficam ao lado do
-`coppe.cls`, e a classe os encontra do mesmo jeito.
+`ufrj.cls`, e a classe os encontra do mesmo jeito.
 
 ## Como compilar
 
@@ -182,7 +204,7 @@ listas pré-textuais, os cinco níveis de seção, os flutuantes com legenda aci
 fonte abaixo, as citações, os apêndices e os anexos.
 
 Troque o conteúdo e apague o que não usar. Se algo não estiver claro,
-`manuais/coppe.pdf` explica o comando e `manuais/manual.pdf` explica a regra.
+`manuais/ufrj.pdf` explica o comando e `manuais/manual.pdf` explica a regra.
 
 Se preferir começar de uma folha em branco em vez de apagar o exemplo, o
 repositório traz um gerador: **`coppetex-novo.bat`** abre uma janela que pergunta
@@ -202,7 +224,8 @@ Manual, e inclua a ficha catalográfica de verdade, gerada em
 Programa:
 
 ```latex
-\documentclass[dsc,pdfa]{coppe}
+\documentclass[dsc,pdfa]{ufrj}
+\usepackage{ufrj-coppe}
 ...
 \fichacatalografica{ficha.pdf}
 ```
@@ -213,12 +236,15 @@ A lista de verificação completa está no fim do `manuais/manual.pdf`.
 
 Pegue a última versão em <https://github.com/COPPE-UFRJ/CoppeTeX>, atualize a
 sua instalação do LaTeX, e, se ainda assim não funcionar, abra uma *issue* lá.
-O capítulo de solução de problemas do `manuais/coppe.pdf` cobre os casos comuns.
+O capítulo de solução de problemas do `manuais/ufrj.pdf` cobre os casos comuns.
 
 **O erro mais comum desta versão** é compilar um exemplo sem ter trazido a pasta
-do idioma para a raiz. O sintoma é `File 'coppe-lang-spanish.def' not found` ou
+do idioma para a raiz. O sintoma é `File 'ufrj-lang-spanish.def' not found` ou
 `Cannot find 'exemplo.bib'`. Volte à regra da arrumação, no começo deste
 arquivo.
+
+O segundo é esquecer o estilo da unidade. O sintoma é `Programa 'PESC' nao
+declarado`: falta `\usepackage{ufrj-coppe}` logo depois do `\documentclass`.
 
 ## Licença
 

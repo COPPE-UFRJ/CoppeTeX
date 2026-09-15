@@ -1,9 +1,9 @@
 # Revisão adversativa
 
-> **`src/coppe.dtx` é a fonte única da classe.** Os documentos desta pasta não
+> **`src/ufrj.dtx` é a fonte única da classe.** Os documentos desta pasta não
 > saem dele — saem de `tools/mk-adversativa.py` — mas a classe que eles
-> exercitam sai. Uma correção descoberta aqui vai para `src/coppe.dtx`, nunca
-> para `src/coppe.cls`, que é regerado por cima. Veja
+> exercitam sai. Uma correção descoberta aqui vai para `src/ufrj.dtx`, nunca
+> para `src/ufrj.cls`, que é regerado por cima. Veja
 > [`../../src/README.md`](../../src/README.md).
 
 Seis documentos que existem para quebrar a classe.
@@ -19,7 +19,7 @@ Nada aqui é escrito à mão: `tools/mk-adversativa.py` gera os seis. Para mudar
 que eles exercitam, mude o gerador — a matriz está no topo dele — e rode-o de
 novo a partir da raiz do repositório.
 
-**Nada aqui é distribuído, e nada aqui sai do `coppe.dtx`.** Esta pasta prova
+**Nada aqui é distribuído, e nada aqui sai do `ufrj.dtx`.** Esta pasta prova
 que a classe funciona; não faz parte dela. Só os `.tex`, a base de referências
 do Manual e este README entram no git; os PDFs e os auxiliares são produto de
 build e ficam de fora.

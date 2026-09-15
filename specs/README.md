@@ -21,7 +21,7 @@ a edição impressa na capa. Nunca existiu um manual de 2024.
 
 É o documento de referência para margens, sumário, destaque gradativo dos
 títulos de seção, elementos pré-textuais e as 34 categorias de referência
-implementadas em `coppe.bbx`.
+implementadas em `ufrj.bbx`.
 
 ### `Folha adicional T&D Coleta+ CAPES.pdf`
 

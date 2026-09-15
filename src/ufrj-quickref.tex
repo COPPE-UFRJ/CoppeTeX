@@ -67,9 +67,11 @@
   environment}\\[6pt]
   \begin{minipage}{0.86\textwidth}\small
   This is the short companion to \texttt{ufrj.pdf}, the full manual, which is
-  written in Portuguese. A COPPE thesis may be written in Portuguese, English or
+  written in Portuguese. A UFRJ thesis may be written in Portuguese, English or
   Spanish (CEPG Resolution 302/2024, art.~57); this sheet is for whoever writes
-  it in English.
+  it in English. A thesis starts with the class and the style of its academic
+  unit, \verb|\documentclass[dsc]{ufrj}| and, at COPPE,
+  \verb|\usepackage{ufrj-coppe}|; everything below is the class.
 
   \medskip
   The \textbf{Where} column says where a command may appear:
@@ -171,7 +173,7 @@ semmorewrites & [dsc,semmorewrites] & \pre & Do not load \texttt{morewrites}. Sa
 \textbackslash advisor & \textbackslash advisor\{Ana\}\{Lima\}\{D.Sc.\}\{UFRJ\} & \doc & Name, surname, degree, institution. Repeat per advisor. Optional first argument is the treatment. \\
 \textbackslash coadvisor & \textbackslash coadvisor\{Bia\}\{Sousa\}\{Ph.D.\}\{UFF\} & \doc & Same four arguments. \\
 \textbackslash examiner & \textbackslash examiner\{Carlos Dias\}\{D.Sc.\}\{USP\} & \doc & Name and surname in one argument, then degree and institution. \\
-\textbackslash department & \textbackslash department\{PESC\} & \doc & The Programa's acronym. The class knows all thirteen. \\
+\textbackslash department & \textbackslash department\{PESC\} & \doc & The Programa's acronym, as the unit style declares it (\texttt{ufrj-coppe} declares COPPE's thirteen). \\
 \textbackslash date & \textbackslash date\{09\}\{2026\} & \doc & Month and year of deposit, as numbers. Not the defence date. \\
 \textbackslash dataaprovacao & \textbackslash dataaprovacao\{15 de setembro de 2026\} & \doc & Defence date, in words. Without it the sheet reads ``a ser determinada''. \\
 \textbackslash keyword & \textbackslash keyword\{Formal methods\} & \doc & One call per keyword, main language. \\

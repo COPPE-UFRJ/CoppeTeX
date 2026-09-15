@@ -32,8 +32,23 @@
 
 **Baixe o `.zip` do [release](https://github.com/COPPE-UFRJ/CoppeTeX/releases/latest)**, ou a
 pasta [`dist/`](./dist), que é a mesma coisa. Lá está tudo o que é preciso para
-escrever e depositar: a classe, os estilos de bibliografia, os logotipos, os
-dois manuais e um exemplo completo em cada idioma que a UFRJ admite.
+escrever e depositar: a classe, o estilo da COPPE, os estilos de bibliografia,
+os logotipos, os manuais e um exemplo completo em cada idioma que a UFRJ admite.
+
+Um trabalho começa por **duas linhas**: a classe da UFRJ e o estilo da sua
+unidade. Na COPPE:
+
+```latex
+\documentclass[dsc]{ufrj}
+\usepackage{ufrj-coppe}
+```
+
+A classe `ufrj` implementa o Manual da UFRJ/SiBI e não conhece unidade
+nenhuma; o estilo `ufrj-coppe` traz o que é da COPPE — o Instituto, os
+Programas, o logotipo, as frases que a Norma COPPE fixa. Um trabalho começado
+até a versão 4.1, com `\documentclass{coppe}`, continua compilando como está.
+O que mudou, e como trocar as duas linhas, está no
+[`MIGRATION_v4_to_v5.md`](./MIGRATION_v4_to_v5.md).
 
 A entrega tem uma **regra de arrumação** que vale saber antes de abrir: o que
 está na raiz dela funciona sem você mexer em nada, e quem vai escrever em
@@ -59,23 +74,30 @@ comentada, os testes, os documentos normativos e as ferramentas. Se é o seu
 caso, clone o repositório inteiro e comece pelo [`PAINEL.md`](./PAINEL.md).
 
 *Writing a thesis? Download only [`dist/`](./dist) — it has the class, the
-styles, the logos, both manuals and one complete example per language. Working
-**on** the class? Clone everything and start from [`PAINEL.md`](./PAINEL.md).*
+styles, the logos, the manuals and one complete example per language. A thesis
+starts with `\documentclass[dsc]{ufrj}` and the style of its academic unit,
+`\usepackage{ufrj-coppe}` at COPPE. Working **on** the class? Clone everything
+and start from [`PAINEL.md`](./PAINEL.md).*
 
 ---
 
 This project provides a LaTeX document class suitable for writing academic
-dissertations and thesis according to the formatting rules established by the
-Alberto Luiz Coimbra Institute for Graduate Studies and Research in Engineering
-(COPPE/UFRJ).
+dissertations and thesis according to the formatting rules of the Federal
+University of Rio de Janeiro (UFRJ), and a unit style for the Alberto Luiz
+Coimbra Institute for Graduate Studies and Research in Engineering
+(COPPE/UFRJ), where the project was born.
 
-The 'coppe' class contains a minimalist set of macro commands which allows its
-users to create the required textual elements following the COPPE/UFRJ
-dissertation/thesis guidelines. Among these elements, there are a front cover,
-a title page, cataloging details, native and foreign languages abstracts, table
-of contents, and list of bibliographic references.
+The `ufrj` class implements the UFRJ Library System's manual and knows no
+academic unit. Everything a unit fixes on its own — the institute's name on the
+cover, its graduate programmes, the right-hand logo, the phrases of its norm —
+comes from a **unit style** loaded right after the class. `ufrj-coppe` is
+COPPE's, and it is the model for any other unit: a new unit is a new
+`ufrj-<unit>.dtx`, and the class does not change.
 
-Although it is tied to the COPPE/UFRJ guidelines, it can be easily ported to other institutions.
+The class contains a minimalist set of macro commands which allows its users to
+create the required textual elements: a front cover, a title page, cataloging
+details, native and foreign languages abstracts, table of contents, and list of
+bibliographic references.
 
 This version follows the [document](https://registro.daac.coppe.ufrj.br/wp-content/uploads/2020/09/Normas-de-Elaboracao.pdf):
 
@@ -239,8 +261,8 @@ about to touch. Only one of them is meant for people writing a thesis.
 
 | Folder | For whom | What it is |
 |---|---|---|
-| **`dist/`** | **Anyone writing a thesis** | **The delivery — download this and nothing else.** The class, the bibliography styles, the logos, both manuals and one complete example per admitted language. 35 files plus its own README, which is the installation guide, arranged in `logos/`, `manuais/`, `en/`, `es/` and `outraslinguas/` around a root that works as it is. → [dist/README.md](./dist/README.md) |
-| `src/` | Whoever changes the class | The source, and the **programming guide**. `coppe.dtx` is the single source: everything distributed is generated from it, and a hand edit to a generated file is lost at the next generation. Also holds the norm manual and the five per-language demos. → [src/README.md](./src/README.md) |
+| **`dist/`** | **Anyone writing a thesis** | **The delivery — download this and nothing else.** The class, the bibliography styles, the logos, both manuals and one complete example per admitted language, plus its own README, which is the installation guide, arranged in `logos/`, `manuais/`, `en/`, `es/` and `outraslinguas/` around a root that works as it is. → [dist/README.md](./dist/README.md) |
+| `src/` | Whoever changes the class | The source, and the **programming guide**. Two `.dtx` files are the single source: `ufrj.dtx` for the class and `ufrj-coppe.dtx` for the COPPE unit style and the examples. Everything distributed is generated from them, and a hand edit to a generated file is lost at the next generation. Also holds the norm manual. → [src/README.md](./src/README.md) |
 | `tools/` | Whoever changes the class | The build and verification harness, and the developer panel behind `coppetex.bat`. → [tools/README.md](./tools/README.md) |
 | `tests/` | Whoever changes the class | Three layers of testing, each asking a different question. No PDF here is versioned. → [tests/README.md](./tests/README.md) |
 | `tests/adversativa/` | Whoever changes the class | Six documents that fire everything at once, under both engines. → [tests/adversativa/README.md](./tests/adversativa/README.md) |
@@ -251,21 +273,24 @@ The root also carries the documents *about* the release rather than the code:
 [`PAINEL.md`](./PAINEL.md) (how to build and test), [`CHANGELOG.md`](./CHANGELOG.md),
 [`NORMA_COPPE_2026.md`](./NORMA_COPPE_2026.md) (what COPPE decides on top of the
 UFRJ Manual), [`REVISAO_SIBI.md`](./REVISAO_SIBI.md) (the item-by-item check
-against it), [`MIGRATION_v3_to_v4.md`](./MIGRATION_v3_to_v4.md) and
+against it), [`MIGRATION_v4_to_v5.md`](./MIGRATION_v4_to_v5.md),
+[`MIGRATION_v3_to_v4.md`](./MIGRATION_v3_to_v4.md) and
 [`CONTRIBUTING.md`](./CONTRIBUTING.md).
 
 ### Single source, and proving a release
 
-> **`src/coppe.dtx` is the single source.** Everything the project distributes
-> is generated from it; a hand edit to a generated file is lost at the next
-> generation, without warning. If you want to change the class, change the
-> `.dtx`. `tools\prova.ps1` checks this by git and refuses to close a release
-> when a derived file has diverged.
+> **`src/ufrj.dtx` and `src/ufrj-coppe.dtx` are the single source.** Everything
+> the project distributes is generated from them; a hand edit to a generated
+> file is lost at the next generation, without warning. If you want to change
+> the class or the COPPE style, change the `.dtx`. `tools\prova.ps1` checks this
+> by git and refuses to close a release when a derived file has diverged.
 
-`pdflatex coppe.ins` in `src/` generates **everything that is distributed** —
-the class, the biblatex styles, the language packs, the `.bib` bases, the
-`.ist`, the five per-language examples, the cover montage and
-the `latexmkrc`. No derived file is edited by hand.
+`pdflatex ufrj.ins` in `src/` generates the class, the biblatex styles, the
+language packs, the `.bib` bases, the `.ist`, the English quick reference and
+the `latexmkrc`; `pdflatex ufrj-coppe.ins` generates the COPPE unit style, the
+`coppe` compatibility class, the examples and the cover montage. No derived
+file is edited by hand. The class generates no document and names no unit, and
+`tests/regressivo/r33` to `r36` hold that line.
 
 What exists only to *prove* the class works is not distributed and is not in
 the `.dtx`: everything under `tests/` and the harness in `tools/`. One command
@@ -293,7 +318,7 @@ pagination order, sumário contents, approval sheet, abstract pages.
 
 ## Required LaTeX packages
 
-`coppe.cls` is built on the standard **`book`** class (`12pt, a4paper,
+`ufrj.cls` is built on the standard **`book`** class (`12pt, a4paper,
 twoside`) and loads the stock CTAN packages below with `\RequirePackage`.
 A full TeX Live or MiKTeX install already has every one of them, so the
 list matters only for a minimal install — or when you want to know which
@@ -350,7 +375,7 @@ these in your thesis). Bracketed text is the options the class passes.
 - `csquotes` — context-sensitive quotation marks (recommended companion of
   biblatex).
 - `biblatex` [`backend=biber`] — bibliography engine and the ABNT `coppe`
-  styles (`coppe` / `coppe-numeric`). The backend is **biber**, not bibtex.
+  styles (`coppe` / `ufrj-numeric`). The backend is **biber**, not bibtex.
 
 **Hyperlinks**
 
@@ -368,7 +393,7 @@ these in your thesis). Bracketed text is the options the class passes.
 
 Everything is loaded unconditionally except `inputenc` (pdfTeX
 only) and the option-driven `biblatex` style choice (`numbers` selects the
-numeric `coppe-numeric` style). The language packs add no packages — only
+numeric `ufrj-numeric` style). The language packs add no packages — only
 the string files described above.
 
 
@@ -383,25 +408,29 @@ the string files described above.
 ### Content
 
 The development of this class follows the Comprehensive TeX Archive Network
-(CTAN) standards. **Two files are the whole source**: `src/coppe.dtx`, which
-carries the code, the documentation and the demonstration documents, and
-`src/coppe.ins`, the docstrip script. One run,
+(CTAN) standards. **Two pairs of files are the whole source**: `src/ufrj.dtx`
+and `src/ufrj.ins` for the class, and `src/ufrj-coppe.dtx` and
+`src/ufrj-coppe.ins` for the COPPE unit style and the demonstration documents.
+Each `.dtx` carries code and documentation, and each `.ins` is its docstrip
+script. Two runs,
 
 ```bash
-cd src && pdflatex coppe.ins
+cd src && pdflatex ufrj.ins && pdflatex ufrj-coppe.ins
 ```
 
-writes every file that is distributed:
+write every file that is distributed:
 
 | File(s) | Role |
 | --- | --- |
-| `coppe.cls` | the document class |
-| `coppe.bbx`, `coppe.cbx`, `coppe.dbx` | ABNT author--date biblatex style and data model |
-| `coppe-numeric.bbx`, `coppe-numeric.cbx` | the numeric variant (class option `numbers`) |
-| `brazilian-coppe.lbx`, `english-coppe.lbx`, `spanish-coppe.lbx`, `french-coppe.lbx`, `italian-coppe.lbx` | biblatex localization strings |
-| `coppe-lang-spanish.def`, `coppe-lang-french.def`, `coppe-lang-italian.def` | class-level string packs |
-| `coppe.ist` | makeindex style for the lists of symbols and abbreviations |
-| `coppe.bib`, `manual.bib`, `exemplo.bib` | the bibliographies of the class manual, of `manual.tex`, and of the examples |
+| `ufrj.cls` | the document class |
+| `ufrj-coppe.sty` | the COPPE unit style: the institute, its thirteen programmes, the logo and the COPPE phrases |
+| `coppe.cls` | compatibility class for theses started with `\documentclass{coppe}` up to v4.1 |
+| `ufrj.bbx`, `ufrj.cbx`, `ufrj.dbx` | ABNT author--date biblatex style and data model |
+| `ufrj-numeric.bbx`, `ufrj-numeric.cbx` | the numeric variant (class option `numbers`) |
+| `brazilian-ufrj.lbx`, `english-ufrj.lbx`, `spanish-ufrj.lbx`, `french-ufrj.lbx`, `italian-ufrj.lbx` | biblatex localization strings |
+| `ufrj-lang-spanish.def`, `ufrj-lang-french.def`, `ufrj-lang-italian.def` | class-level string packs |
+| `ufrj.ist` | makeindex style for the lists of symbols and abbreviations |
+| `ufrj.bib`, `manual.bib`, `exemplo.bib` | the bibliographies of the class manual, of `manual.tex`, and of the examples |
 | `min-exemplo.tex` | the minimal sample thesis: only what the norm makes mandatory |
 | `max-exemplo.tex` | the maximal sample thesis: everything the class offers |
 | `example_pt.tex`, `example_en.tex`, `example_es.tex`, `example_fr.tex`, `example_it.tex` | one short demonstration per main language |
@@ -432,8 +461,8 @@ Suppose `TEXMF` is your local LaTeX tree. Then:
 
 | From `dist/` | Goes to |
 | --- | --- |
-| `coppe.cls`, the `.bbx`/`.cbx`/`.dbx`, the `.lbx`, the `coppe-lang-*.def`, `coppe-logo.[eps,pdf]`, `ufrj-logo.pdf` | `$TEXMF/tex/latex/coppe` |
-| `coppe.ist` | `$TEXMF/makeindex/coppe` |
+| `ufrj.cls`, `ufrj-coppe.sty`, `coppe.cls`, the `.bbx`/`.cbx`/`.dbx`, the `.lbx`, the `ufrj-lang-*.def`, `coppe-logo.[eps,pdf]`, `ufrj-logo.pdf` | `$TEXMF/tex/latex/ufrj` |
+| `ufrj.ist` | `$TEXMF/makeindex/ufrj` |
 
 Then run `texhash` (or `initexmf --update-fndb` on MiKTeX) so the class becomes
 visible to your compiler.
@@ -441,11 +470,11 @@ visible to your compiler.
 ### From sources
 
 ```bash
-cd src && pdflatex coppe.ins
+cd src && pdflatex ufrj.ins && pdflatex ufrj-coppe.ins
 ```
 
-gives you the same files, freshly generated from `coppe.dtx`. Then follow the
-section above.
+gives you the same files, freshly generated from `ufrj.dtx` and
+`ufrj-coppe.dtx`. Then follow the section above.
 
 ### Compiling a thesis
 

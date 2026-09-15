@@ -116,7 +116,7 @@ nome vai em português (Seção 4).
 
 Alterações nesta lista — criação, extinção ou renomeação de Programa — são
 comunicadas à equipe mantenedora da implementação de referência, e entram na
-revisão seguinte da classe.
+revisão seguinte do estilo da COPPE.
 
 ## 4. Identidade institucional em português — *Escolha*
 
@@ -298,11 +298,14 @@ usado de forma consistente em todo o trabalho.
 
 ## 16. Implementação de referência
 
-A classe LaTeX `coppe`, versões 4.0 e posteriores (**CoppeTeX 4.x**),
-distribuída em <https://github.com/COPPE-UFRJ/CoppeTeX>, é a implementação de
-referência desta Norma. Produz, sem configuração adicional por parte do autor,
-um documento aderente ao mesmo tempo ao *Manual UFRJ 2026* e a esta Norma, e
-distribui os arquivos das duas logomarcas.
+A classe LaTeX `ufrj` com o estilo de unidade `ufrj-coppe`, versões 5.0 e
+posteriores (**CoppeTeX 5.x**), distribuída em
+<https://github.com/COPPE-UFRJ/CoppeTeX>, é a implementação de referência desta
+Norma; nas versões 4.0 e 4.1 foi a classe `coppe`. A classe implementa o
+*Manual UFRJ 2026*, e o estilo, o que esta Norma fixa como dado próprio e como
+texto da COPPE. Produz, sem configuração adicional por parte do autor além de
+carregar o estilo, um documento aderente ao mesmo tempo ao *Manual UFRJ 2026* e
+a esta Norma, e distribui os arquivos das duas logomarcas.
 
 Em caso de divergência entre o que está escrito aqui e o que a versão estável
 corrente da classe produz, **prevalecem esta Norma e o Manual**, e a divergência
