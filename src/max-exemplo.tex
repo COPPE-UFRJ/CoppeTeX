@@ -4,10 +4,11 @@
 %%
 %% The original source files were:
 %%
-%% ufrj.dtx  (with options: `maxexemplo')
+%% ufrj-coppe.dtx  (with options: `maxexemplo')
 %% 
 %% This is a sample monograph which illustrates the use of the `ufrj' document
-%% class and its biblatex/biber bibliography style.
+%% class with the `ufrj-coppe' unit style and its biblatex/biber bibliography
+%% style. It is generated from ufrj-coppe.dtx by docstrip.
 %% 
 %% Copyright (C) 2008-2026 Vicente Helano F. Batista, George O. Ainsworth Jr.,
 %% Geraldo Xexéo and Eduardo Mangeli. Released under the GNU General Public
@@ -20,6 +21,7 @@
 %% Com o latexmk funcionando (no Windows ele pede o Perl), troque a primeira
 %% linha por: % !TeX program = latexmk -pdf -synctex=1
 \documentclass[dsc,pdfa,setavermelha]{ufrj}
+\usepackage{ufrj-coppe}
 %% max-exemplo.tex -- tudo o que a classe oferece e o Manual prevê, inclusive o
 %% opcional. Para só o obrigatório, veja o min-exemplo.tex.
 %%
@@ -378,6 +380,7 @@ Texto da seção quinária, escrita com \verb|\paragraph|. Este é o único \ver
 Este exemplo é compilado com a opção \verb|pdfa| da classe, logo na primeira linha:
 \begin{verbatim}
 \documentclass[dsc,pdfa,setavermelha]{ufrj}
+\usepackage{ufrj-coppe}
 \end{verbatim}
 Com ela, o arquivo sai em \textbf{PDF/A-2b}. Esta seção explica o que isso é, por que a COPPE exige, o que a classe faz e o que pode dar errado.
 
@@ -1390,6 +1393,7 @@ use \verb|\href{https://exemplo.org}{texto}|. Evite digitar URLs como texto comu
   Por isso a classe carrega o pacote \verb|morewrites|, que tira esse teto. Ele custa cerca de meio segundo por passada do \hologo{pdfLaTeX}. Quando o tempo de compilação importa --- no plano gratuito do Overleaf, por exemplo ---, a opção \verb|semmorewrites| o desliga:
   \begin{verbatim}
   \documentclass[dsc,semmorewrites]{ufrj}
+  \usepackage{ufrj-coppe}
   \end{verbatim}
 
   \begin{itemize}
@@ -1485,7 +1489,6 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor i
 \ufrjfinalpage% colofão institucional (página par, face do contracapa)
 
 \end{document}
-
 
 %% 
 %%

@@ -1,0 +1,22 @@
+%% ufrj-ficticia.sty -- estilo de uma unidade que nao existe, usado por
+%% r34-unidade-ficticia.tex. Nao e distribuido.
+%%
+%% Existe para provar que uma unidade nova se escreve SO com a interface publica
+%% da classe (ufrjdeclareunit, ufrjdeclareprogram, ufrjdeclarelogos,
+%% ufrjdeclarenorm, ufrjdefunitstring), sem tocar em nada da classe. Tudo aqui
+%% e diferente do que a COPPE declara, de proposito: artigo masculino na norma,
+%% so o logotipo da UFRJ, um grau com outro nome e uma sigla que nao e COPPE.
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{ufrj-ficticia}[2026/09/15 v4.1 CoppeTeX unidade ficticia de teste]
+\ufrjdeclareunit
+  {Escola Fictícia de Engenharia de Teste}
+  {Escola Fictícia de\\Engenharia de Teste}
+  {EFET}
+\ufrjdeclarelogos{ufrj-logo}{}
+\ufrjdeclareprogram{PFT}{Engenharia de Testes}{Test Engineering}
+\ufrjdefunitstring{brazilian}{coverprogram}{Programa de \local@deptname}
+\ufrjdefunitstring{brazilian}{tounit}{à EFET/UFRJ}
+\ufrjdefunitstring{english}{tounit}{to EFET/UFRJ}
+\ufrjdefunitstring{brazilian}{sciencename}{em Engenharia}
+\ufrjdefunitstring{english}{sciencename}{in Engineering}
+\ufrjdeclarenorm{o}{\emph{Regulamento Fictício de Teses da EFET}}

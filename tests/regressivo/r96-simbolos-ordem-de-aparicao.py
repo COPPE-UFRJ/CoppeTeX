@@ -26,6 +26,7 @@ RAIZ = os.path.dirname(os.path.dirname(AQUI))
 SRC = os.path.join(RAIZ, "src")
 
 DOC = r"""\documentclass[dsc%(opcao)s]{ufrj}
+\usepackage{ufrj-coppe}
 \makelosymbols
 \title{Simbolos}
 \foreigntitle{Symbols}

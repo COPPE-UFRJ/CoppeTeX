@@ -4,7 +4,7 @@
 %%
 %% The original source files were:
 %%
-%% ufrj.dtx  (with options: `class,unidade')
+%% ufrj.dtx  (with options: `class')
 %% 
 %% This is the `ufrj' document class used for composition of LaTeX
 %% monographs (master's dissertations, PhD theses and qualifying exams)
@@ -2177,81 +2177,6 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \@ufrjannextrue
     \def\theHchapter{annex.\Alph{chapter}}%
     \ufrj@appendixheadings
-}
-\ufrjdeclareunit
-  {Instituto Alberto Luiz Coimbra de Pós-Graduação e Pesquisa de Engenharia}
-  {Instituto Alberto Luiz Coimbra de \\
-     Pós-Graduação e Pesquisa de Engenharia}
-  {COPPE}
-\ufrjdeclarelogos[2cm]{ufrj-logo}{coppe-logo}
-\ufrjdeclareprogram{PEB} {Engenharia Biomédica}{Biomedical Engineering}
-\ufrjdeclareprogram{PEC} {Engenharia Civil}{Civil Engineering}
-\ufrjdeclareprogram{PEE} {Engenharia Elétrica}{Electrical Engineering}
-\ufrjdeclareprogram{PEM} {Engenharia Mecânica}{Mechanical Engineering}
-\ufrjdeclareprogram{PEMM}{Engenharia Metalúrgica e de Materiais}
-                          {Metallurgical and Materials Engineering}
-\ufrjdeclareprogram{PEN} {Engenharia Nuclear}{Nuclear Engineering}
-\ufrjdeclareprogram{PENO}{Engenharia Oceânica}{Ocean Engineering}
-\ufrjdeclareprogram{PENT}{Engenharia de Nanotecnologia}{Nanotechnology Engineering}
-\ufrjdeclareprogram{PEP} {Engenharia de Produção}{Production Engineering}
-\ufrjdeclareprogram{PEQ} {Engenharia Química}{Chemical Engineering}
-\ufrjdeclareprogram{PESC}{Engenharia de Sistemas e Computação}
-                          {Systems Engineering and Computer Science}
-\ufrjdeclareprogram{PET} {Engenharia de Transportes}{Transportation Engineering}
-\ufrjdeclareprogram{PPE} {Planejamento Energético}{Energy Planning}
-\ufrjdefunitstring{brazilian}{coverprogram}{Programa de \local@deptname}
-\ufrjdefunitstring{brazilian}{tounit}{à COPPE/UFRJ}
-\ufrjdefunitstring{english}  {tounit}{to COPPE/UFRJ}
-\ufrjdefunitstring{spanish}  {tounit}{a la COPPE/UFRJ}
-\ufrjdefunitstring{french}   {tounit}{à la COPPE/UFRJ}
-\ufrjdefunitstring{italian}  {tounit}{alla COPPE/UFRJ}
-\ufrjdefunitstring{brazilian}{sciencename}{em Ciências}
-\ufrjdefunitstring{english}  {sciencename}{of Science}
-\ufrjdefunitstring{spanish}  {sciencename}{en Ciencias}
-\ufrjdefunitstring{french}   {sciencename}{en Sciences}
-\ufrjdefunitstring{italian}  {sciencename}{in Scienze}
-\ufrjdeclarenorm{a}{\emph{Norma para a Elaboração Gráfica de Teses e Dissertações
-  da COPPE/UFRJ}}
-\let\copperdefstring\ufrjdefstring
-\let\coppestring\ufrjstring
-\let\coppemainstring\ufrjmainstring
-\let\coppeforeignstring\ufrjforeignstring
-\let\usecoppelanguage\useufrjlanguage
-\let\newcoppefloat\newufrjfloat
-\let\coppetexfinalpage\ufrjfinalpage
-\let\coppefinalengine\ufrjfinalengine
-\def\ufrjfinalengine{\coppefinalengine}
-\let\coppefinaltexsystem\ufrjfinaltexsystem
-\def\ufrjfinaltexsystem{\coppefinaltexsystem}
-\let\coppefinalfont\ufrjfinalfont
-\def\ufrjfinalfont{\coppefinalfont}
-\let\coppefinalsystem\ufrjfinalsystem
-\def\ufrjfinalsystem{\coppefinalsystem}
-\let\coppefinaltime\ufrjfinaltime
-\def\ufrjfinaltime{\coppefinaltime}
-\let\coppefinalmanual\ufrjfinalmanual
-\def\ufrjfinalmanual{\coppefinalmanual}
-\let\coppe@tocapp\ufrj@tocapp
-\let\coppe@tocanx\ufrj@tocanx
-\let\coppe@semfolio\ufrj@semfolio
-\def\ps@coppe{\ps@ufrj}
-\DeclareSourcemap{\maps[datatype=bibtex]{\map{%
-  \step[fieldsource=coppedegree, fieldtarget=ufrjdegree]}}}
-\newcommand\frontpage@maintext{
-  \noindent {\MakeUppercase\local@doctype}
-  \ifthenelse{\boolean{maledoc}}{SUBMETIDO}{SUBMETIDA}
-  \sloppy\nohyphens{AO CORPO DOCENTE DO INSTITUTO ALBERTO LUIZ COIMBRA
-  DE PÓS-GRADUAÇÃO E PESQUISA DE ENGENHARIA DA
-  UNIVERSIDADE FEDERAL DO RIO DE JANEIRO COMO PARTE DOS REQUISITOS
-  NECESSÁRIOS PARA A OBTENÇÃO DO GRAU DE
-  {\MakeUppercase\local@degname} EM CIÊNCIAS EM
-  {\MakeUppercase\local@deptname.\par}}%
-}
-\newcommand\frontpage@bottomtext{%
-  \begin{center}
-  {\MakeUppercase{\local@cityname, \local@statename\ -- \local@countryname}}\par
-  {\MakeUppercase\local@monthname\ DE \ufrj@docyear}
-  \end{center}%
 }
 
 %% 

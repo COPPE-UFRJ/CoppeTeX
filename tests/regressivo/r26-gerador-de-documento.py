@@ -148,13 +148,14 @@ except ImportError as e:
 else:
     if not any(c[0] == "baixar" for c in geradocvazio.CAMPOS):
         problemas.append("sumiu a opcao de baixar a classe do GitHub")
-    for precisa in ("ufrj.cls", "ufrj.ist", "latexmkrc",
+    for precisa in ("ufrj.cls", "ufrj-coppe.sty", "ufrj.ist", "latexmkrc",
                     "brazilian-ufrj.lbx", "coppe-logo.pdf"):
         if not geradocvazio._serve_para_compilar(precisa):
             problemas.append("o download deixaria de trazer %s" % precisa)
     for nao_precisa in ("max-exemplo.tex", "min-exemplo.tex", "example_en.pdf",
                         "exemplo.bib",
-                        "README.md", "ufrj.dtx"):
+                        "README.md", "ufrj.dtx", "ufrj-coppe.dtx",
+                        "coppe.cls"):
         if geradocvazio._serve_para_compilar(nao_precisa):
             problemas.append("o download traria %s, que nao serve a um"
                              " documento em branco" % nao_precisa)

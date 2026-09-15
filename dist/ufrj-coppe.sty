@@ -1,0 +1,120 @@
+%%
+%% This is file `ufrj-coppe.sty',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% ufrj-coppe.dtx  (with options: `package')
+%% 
+%% This is the `ufrj-coppe' unit style of the `ufrj' document class: the data
+%% and texts of the Instituto Alberto Luiz Coimbra de Pos-Graduacao e Pesquisa
+%% de Engenharia (COPPE) of the Federal University of Rio de Janeiro, as the
+%% COPPE norm for theses and dissertations fixes them. It is generated from
+%% ufrj-coppe.dtx by docstrip; edit the .dtx source, not this file.
+%% 
+%% Copyright (C) 2008-2026 Vicente Helano F. Batista, George O. Ainsworth Jr.,
+%% Geraldo Xexéo and Eduardo Mangeli.
+%% 
+%% This program is free software; you can redistribute it and/or modify
+%% it under the terms of the GNU General Public License version 3 as
+%% published by the Free Software Foundation.
+%% 
+%% This program is distributed in the hope that it will be useful,
+%% but WITHOUT ANY WARRANTY; without even the implied warranty of
+%% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+%% GNU General Public License version 3 for more details.
+%% 
+%% You should have received a copy of the GNU General Public License
+%% version 3 along with this package (see the COPYING.txt file).
+%% If not, see <http://www.gnu.org/licenses/>.
+%% 
+%% Author(s): Vicente Helano F. Batista
+%%            George O. Ainsworth Jr.
+%%            Geraldo Xexéo
+%%            Eduardo Mangeli
+%% 
+\NeedsTeXFormat{LaTeX2e}[2020/10/01]
+\ProvidesPackage{ufrj-coppe}[2026/09/15 v4.1 CoppeTeX COPPE/UFRJ unit style]
+\@ifclassloaded{ufrj}{}{%
+  \PackageError{ufrj-coppe}{O estilo ufrj-coppe precisa da classe ufrj}{%
+    Escreva \string\documentclass[...]{ufrj} antes de\MessageBreak
+    \string\usepackage{ufrj-coppe}.}%
+  \endinput}
+\ufrjdeclareunit
+  {Instituto Alberto Luiz Coimbra de Pós-Graduação e Pesquisa de Engenharia}
+  {Instituto Alberto Luiz Coimbra de \\
+     Pós-Graduação e Pesquisa de Engenharia}
+  {COPPE}
+\ufrjdeclarelogos[2cm]{ufrj-logo}{coppe-logo}
+\ufrjdeclareprogram{PEB} {Engenharia Biomédica}{Biomedical Engineering}
+\ufrjdeclareprogram{PEC} {Engenharia Civil}{Civil Engineering}
+\ufrjdeclareprogram{PEE} {Engenharia Elétrica}{Electrical Engineering}
+\ufrjdeclareprogram{PEM} {Engenharia Mecânica}{Mechanical Engineering}
+\ufrjdeclareprogram{PEMM}{Engenharia Metalúrgica e de Materiais}
+                          {Metallurgical and Materials Engineering}
+\ufrjdeclareprogram{PEN} {Engenharia Nuclear}{Nuclear Engineering}
+\ufrjdeclareprogram{PENO}{Engenharia Oceânica}{Ocean Engineering}
+\ufrjdeclareprogram{PENT}{Engenharia de Nanotecnologia}{Nanotechnology Engineering}
+\ufrjdeclareprogram{PEP} {Engenharia de Produção}{Production Engineering}
+\ufrjdeclareprogram{PEQ} {Engenharia Química}{Chemical Engineering}
+\ufrjdeclareprogram{PESC}{Engenharia de Sistemas e Computação}
+                          {Systems Engineering and Computer Science}
+\ufrjdeclareprogram{PET} {Engenharia de Transportes}{Transportation Engineering}
+\ufrjdeclareprogram{PPE} {Planejamento Energético}{Energy Planning}
+\ufrjdefunitstring{brazilian}{coverprogram}{Programa de \local@deptname}
+\ufrjdefunitstring{brazilian}{tounit}{à COPPE/UFRJ}
+\ufrjdefunitstring{english}  {tounit}{to COPPE/UFRJ}
+\ufrjdefunitstring{spanish}  {tounit}{a la COPPE/UFRJ}
+\ufrjdefunitstring{french}   {tounit}{à la COPPE/UFRJ}
+\ufrjdefunitstring{italian}  {tounit}{alla COPPE/UFRJ}
+\ufrjdefunitstring{brazilian}{sciencename}{em Ciências}
+\ufrjdefunitstring{english}  {sciencename}{of Science}
+\ufrjdefunitstring{spanish}  {sciencename}{en Ciencias}
+\ufrjdefunitstring{french}   {sciencename}{en Sciences}
+\ufrjdefunitstring{italian}  {sciencename}{in Scienze}
+\ufrjdeclarenorm{a}{\emph{Norma para a Elaboração Gráfica de Teses e Dissertações
+  da COPPE/UFRJ}}
+\let\copperdefstring\ufrjdefstring
+\let\coppestring\ufrjstring
+\let\coppemainstring\ufrjmainstring
+\let\coppeforeignstring\ufrjforeignstring
+\let\usecoppelanguage\useufrjlanguage
+\let\newcoppefloat\newufrjfloat
+\let\coppetexfinalpage\ufrjfinalpage
+\let\coppefinalengine\ufrjfinalengine
+\def\ufrjfinalengine{\coppefinalengine}
+\let\coppefinaltexsystem\ufrjfinaltexsystem
+\def\ufrjfinaltexsystem{\coppefinaltexsystem}
+\let\coppefinalfont\ufrjfinalfont
+\def\ufrjfinalfont{\coppefinalfont}
+\let\coppefinalsystem\ufrjfinalsystem
+\def\ufrjfinalsystem{\coppefinalsystem}
+\let\coppefinaltime\ufrjfinaltime
+\def\ufrjfinaltime{\coppefinaltime}
+\let\coppefinalmanual\ufrjfinalmanual
+\def\ufrjfinalmanual{\coppefinalmanual}
+\let\coppe@tocapp\ufrj@tocapp
+\let\coppe@tocanx\ufrj@tocanx
+\let\coppe@semfolio\ufrj@semfolio
+\def\ps@coppe{\ps@ufrj}
+\DeclareSourcemap{\maps[datatype=bibtex]{\map{%
+  \step[fieldsource=coppedegree, fieldtarget=ufrjdegree]}}}
+\newcommand\frontpage@maintext{
+  \noindent {\MakeUppercase\local@doctype}
+  \ifthenelse{\boolean{maledoc}}{SUBMETIDO}{SUBMETIDA}
+  \sloppy\nohyphens{AO CORPO DOCENTE DO INSTITUTO ALBERTO LUIZ COIMBRA
+  DE PÓS-GRADUAÇÃO E PESQUISA DE ENGENHARIA DA
+  UNIVERSIDADE FEDERAL DO RIO DE JANEIRO COMO PARTE DOS REQUISITOS
+  NECESSÁRIOS PARA A OBTENÇÃO DO GRAU DE
+  {\MakeUppercase\local@degname} EM CIÊNCIAS EM
+  {\MakeUppercase\local@deptname.\par}}%
+}
+\newcommand\frontpage@bottomtext{%
+  \begin{center}
+  {\MakeUppercase{\local@cityname, \local@statename\ -- \local@countryname}}\par
+  {\MakeUppercase\local@monthname\ DE \ufrj@docyear}
+  \end{center}%
+}
+%% 
+%%
+%% End of file `ufrj-coppe.sty'.

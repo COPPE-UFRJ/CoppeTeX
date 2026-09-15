@@ -30,6 +30,10 @@ import datetime
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DTX = os.path.join(RAIZ, "src", "ufrj.dtx")
+# As fontes que carimbam versao. A canonica e a do ufrj.dtx; o estilo da COPPE
+# sai no mesmo pacote e com o mesmo numero, e um estilo de unidade que ficasse
+# para tras contradiria a distribuicao do mesmo jeito que um .lbx.
+FONTES = [DTX, os.path.join(RAIZ, "src", "ufrj-coppe.dtx")]
 
 # O console do Windows e cp1252 e nao sabe escrever uma seta, um travessao nem
 # um til combinante. Sem isto, o script MORRE no meio ao imprimir uma linha de
@@ -57,6 +61,7 @@ ESTILOS = [
     "brazilian-ufrj.lbx", "english-ufrj.lbx", "spanish-ufrj.lbx",
     "french-ufrj.lbx", "italian-ufrj.lbx",
     "ufrj-lang-spanish.def", "ufrj-lang-french.def", "ufrj-lang-italian.def",
+    "ufrj-coppe.sty", "coppe.cls",
 ]
 
 GERADOS = ["src/" + n for n in ESTILOS]
@@ -86,7 +91,7 @@ PROSA = [
 ]
 
 RE_PROVIDES = re.compile(
-    r"(\\Provides(?:File|Class)\{[^}]+\}\[)(\d{4}/\d{2}/\d{2})( v)(\d+\.\d+(?:\.\d+)?)")
+    r"(\\Provides(?:File|Class|Package)\{[^}]+\}\[)(\d{4}/\d{2}/\d{2})( v)(\d+\.\d+(?:\.\d+)?)")
 RE_FILEVERSION = re.compile(r"(\\def\\fileversion\{v)(\d+\.\d+(?:\.\d+)?)(\})")
 RE_FILEDATE = re.compile(r"(\\def\\filedate\{)(\d{4}/\d{2}/\d{2})(\})")
 
@@ -107,14 +112,16 @@ def conferir(detalhe=False):
     print("versao canonica (src/ufrj.dtx): %s" % alvo)
     problemas = []
 
-    # 1. O proprio .dtx: todo \ProvidesFile/\ProvidesClass, inclusive o que fica
-    #    em comentario e alimenta o \GetFileInfo do manual.
-    texto = ler(DTX)
-    for m in RE_PROVIDES.finditer(texto):
-        if m.group(4) != alvo:
-            linha = texto[:m.start()].count("\n") + 1
-            problemas.append("src/ufrj.dtx:%d  %s (esperado %s)"
-                             % (linha, m.group(0).strip(), alvo))
+    # 1. Os proprios .dtx: todo \ProvidesFile/\ProvidesClass/\ProvidesPackage,
+    #    inclusive o que fica em comentario e alimenta o \GetFileInfo do manual.
+    for fonte in FONTES:
+        texto = ler(fonte)
+        for m in RE_PROVIDES.finditer(texto):
+            if m.group(4) != alvo:
+                linha = texto[:m.start()].count("\n") + 1
+                problemas.append("src/%s:%d  %s (esperado %s)"
+                                 % (os.path.basename(fonte), linha,
+                                    m.group(0).strip(), alvo))
 
     # 2. Os gerados. Divergir aqui costuma ser o ufrj.ins nao rodado.
     for rel in GERADOS:
@@ -228,13 +235,14 @@ def subir(nivel):
     hoje = datetime.date.today().strftime("%Y/%m/%d")
     print("%s  ->  %s   (data %s)" % (velha, nova, hoje))
 
-    texto = ler(DTX)
-    texto = RE_FILEVERSION.sub(lambda m: m.group(1) + nova + m.group(3), texto)
-    texto = RE_FILEDATE.sub(lambda m: m.group(1) + hoje + m.group(3), texto)
-    texto = RE_PROVIDES.sub(
-        lambda m: m.group(1) + hoje + m.group(3) + nova, texto)
-    io.open(DTX, "w", encoding="utf-8", newline="\n").write(texto)
-    print("src/ufrj.dtx atualizado")
+    for fonte in FONTES:
+        texto = ler(fonte)
+        texto = RE_FILEVERSION.sub(lambda m: m.group(1) + nova + m.group(3), texto)
+        texto = RE_FILEDATE.sub(lambda m: m.group(1) + hoje + m.group(3), texto)
+        texto = RE_PROVIDES.sub(
+            lambda m: m.group(1) + hoje + m.group(3) + nova, texto)
+        io.open(fonte, "w", encoding="utf-8", newline="\n").write(texto)
+        print("src/%s atualizado" % os.path.basename(fonte))
 
     # A prosa NAO e reescrita por conta propria. O aviso do README e o titulo do
     # CHANGELOG nao sao so um numero: sao uma frase sobre o que aquela versao e,

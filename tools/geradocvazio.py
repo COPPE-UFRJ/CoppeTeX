@@ -292,6 +292,9 @@ def monta_tex(v, nome_bib):
     A("%% Ou, mais curto:  latexmk -pdf %s" % v["tex"][:-4])
     A("")
     A("\\documentclass[%s]{ufrj}" % ",".join(opcoes))
+    # O estilo da unidade vem logo depois da classe. O gerador e da COPPE, e o
+    # estilo e o dela.
+    A("\\usepackage{ufrj-coppe}")
     A("")
     if v["matematica"]:
         # A fonte matematica e escolha do autor, e a classe nao carrega
@@ -567,8 +570,11 @@ def _serve_para_compilar(relativo):
             or nome.endswith("-exemplo.pdf")
             or nome in ("exemplo.bib", "ufrj.bib", "README.md")):
         return False
-    if nome in ("ufrj.dtx", "ufrj.ins", "manual.tex"):
+    if nome in ("ufrj.dtx", "ufrj.ins", "ufrj-coppe.dtx", "ufrj-coppe.ins",
+                "manual.tex"):
         return False   # sao FONTES dos manuais, nao servem para compilar a tese
+    if nome == "coppe.cls":
+        return False   # so existe para trabalho antigo; um novo usa ufrj + ufrj-coppe
     return True
 
 

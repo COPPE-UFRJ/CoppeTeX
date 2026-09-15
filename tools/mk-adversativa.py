@@ -195,6 +195,7 @@ def doc(i, linha, tiponome):
     A("%%%% tipo=%s idioma=%s programa=%s" % (tipo, lang, dept))
     A("%% Opcoes: " + ", ".join(opts))
     A("\\documentclass[" + ",".join(opts) + "]{ufrj}")
+    A("\\usepackage{ufrj-coppe}")
     A("")
     A("\\usepackage[most]{tcolorbox}")
     A("\\usepackage{makeidx}\\makeindex")

@@ -1,0 +1,43 @@
+%% BUG: nao havia defeito antigo aqui -- este teste prova o objetivo da v5.0: uma
+%% unidade nova se escreve num estilo proprio, so com a interface publica da
+%% classe, e a classe nao muda. O estilo e o ufrj-ficticia.sty desta pasta, e
+%% tudo nele difere da COPPE: a sigla, o artigo da norma, o nome do grau, o
+%% logotipo da direita (nenhum). Cada frase que a unidade controla e cobrada.
+%% PASSADAS: 2
+%% ESPERA-TEXTO-PAGINA: 1::ESCOLA FICTICIA DE ENGENHARIA DE TESTE PROGRAMA DE ENGENHARIA DE TESTES
+%% ESPERA-TEXTO: apresentada ao Programa de Pos-graduacao em Engenharia de Testes, EFET, da Universidade Federal do Rio de Janeiro
+%% ESPERA-TEXTO: Resumo da Tese apresentada a EFET/UFRJ como parte dos requisitos necessarios para a obtencao do grau de Doutor em Engenharia (D.Sc.)
+%% ESPERA-TEXTO: Abstract of Thesis presented to EFET/UFRJ as a partial fulfillment of the requirements for the degree of Doctor in Engineering (D.Sc.)
+%% ESPERA-TEXTO: Department: Test Engineering
+%% ESPERA-TEXTO: (Doutorado em Engenharia de Testes) - Escola Ficticia de Engenharia de Teste, Universidade Federal do Rio de Janeiro
+%% ESPERA-TEXTO: em conformidade com o Regulamento Ficticio de Teses da EFET
+%% NAO-ESPERA-TEXTO: COPPE/UFRJ
+%% NAO-ESPERA-TEXTO: Alberto Luiz Coimbra
+%% NAO-ESPERA-TEXTO: em Ciencias
+%% NAO-ESPERA-LOG: Undefined control sequence
+%% NAO-ESPERA-LOG: nao encontrado
+\documentclass[dsc]{ufrj}
+\usepackage{ufrj-ficticia}
+\begin{document}
+\title{Um trabalho de uma unidade inventada}
+\foreigntitle{A work from a made-up unit}
+\author{Fulana}{de Tal}
+\department{PFT}
+\advisor{Sicrano}{Souza}{D.Sc.}{UFRJ}
+\examiner{Beltrano Silva}{D.Sc.}{UFRJ}
+\date{9}{2026}
+\keyword{unidade}
+\foreignkeyword{unit}
+\maketitle
+\frontmatter
+\begin{abstract}
+Texto do resumo.
+\end{abstract}
+\begin{foreignabstract}
+Abstract text.
+\end{foreignabstract}
+\mainmatter
+\chapter{Introdução}
+Texto.
+\ufrjfinalpage
+\end{document}

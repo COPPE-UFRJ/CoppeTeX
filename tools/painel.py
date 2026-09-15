@@ -94,11 +94,18 @@ PARA_DIST = [
     # REFAZER o manual e a classe, e nao so para usa-los -- e porque o
     # ufrj.dtx e o unico lugar onde o codigo esta comentado.
     ("", "ufrj.dtx"), ("", "ufrj.ins"), ("", "manual.tex"), ("", "manual.bib"),
+    # --- o estilo da COPPE --------------------------------------------------
+    # Vai na raiz, ao lado da classe: um trabalho da COPPE carrega os dois. A
+    # classe coppe.cls e so a de compatibilidade, para trabalho escrito ate a
+    # v4.1; o .dtx e o .ins do estilo vao pela mesma razao dos da classe.
+    ("", "ufrj-coppe.sty"), ("", "coppe.cls"),
+    ("", "ufrj-coppe.dtx"), ("", "ufrj-coppe.ins"),
     # --- logos/ -------------------------------------------------------------
     ("logos", "coppe-logo.eps"), ("logos", "coppe-logo.pdf"),
     ("logos", "ufrj-logo.pdf"),
     # --- manuais/ -----------------------------------------------------------
-    ("manuais", "ufrj.pdf"), ("manuais", "ufrj-quickref.pdf"),
+    ("manuais", "ufrj.pdf"), ("manuais", "ufrj-coppe.pdf"),
+    ("manuais", "ufrj-quickref.pdf"),
     ("manuais", "manual.pdf"), ("manuais", "min-exemplo.pdf"),
     ("manuais", "max-exemplo.pdf"),
     # --- en/ e es/: traga para a raiz para usar -----------------------------
@@ -186,7 +193,8 @@ def powershell(script, saida, *args):
 # As acoes
 # --------------------------------------------------------------------------
 def acao_regerar(saida):
-    """O src inteiro sai do ufrj.dtx e do ufrj.ins. So isso, e e rapido."""
+    """O src inteiro sai do ufrj.dtx e do ufrj-coppe.dtx, pelos dois .ins. So isso,
+    e e rapido."""
     return powershell("build-check.ps1", saida, "-Scope", "class")
 
 
@@ -375,7 +383,7 @@ def acao_versao3(saida):
 # nome de linha de comando, rotulo na janela, funcao, explicacao de uma linha
 ACOES = [
     ("regerar", "Regerar o src a partir do .dtx", acao_regerar,
-     "ufrj.ins gera a classe, os estilos, os exemplos e o latexmkrc"),
+     "ufrj.ins e ufrj-coppe.ins geram a classe, os estilos, os exemplos e o latexmkrc"),
     ("docs", "Compilar os PDFs da entrega", acao_docs,
      "manual da classe, exemplo, os cinco idiomas, manual da norma, capas"),
     ("testes", "Testes - primeira camada", acao_testes,

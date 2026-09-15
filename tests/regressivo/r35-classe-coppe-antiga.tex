@@ -1,0 +1,51 @@
+%% BUG: nao havia defeito antigo aqui -- este teste guarda a compatibilidade da
+%% v5.0 com o que foi escrito ate a v4.1, quando a classe se chamava coppe. Um
+%% trabalho assim diz \documentclass{coppe}, usa os comandos pelo nome antigo,
+%% redefine uma peca do colofao pelo nome antigo, e tem na pasta um .toc escrito
+%% pela classe antiga. Tudo isso tem de compilar sem erro, e com um aviso so.
+%%
+%% O .toc velho e escrito pelo filecontents antes do \documentclass, a cada
+%% compilacao, com o nome interno \coppe@tocapp que a classe antiga usava. Com
+%% uma passada so, o .log e o da compilacao que o leu: sem o apelido, sai
+%% "Undefined control sequence" -- que foi o que a propria troca de nome
+%% encontrou nos auxiliares do repositorio.
+%% PASSADAS: 1
+%% ESPERA-LOG: A classe coppe agora e a classe ufrj
+%% ESPERA-TEXTO-PAGINA: 1::INSTITUTO ALBERTO LUIZ COIMBRA
+%% ESPERA-TEXTO: Resumo da Tese apresentada a COPPE/UFRJ
+%% ESPERA-TEXTO: APENDICE A - Um apendice antigo
+%% ESPERA-TEXTO: Lista de Mapas
+%% ESPERA-TEXTO: em conformidade com a Norma Antiga de Teste
+%% NAO-ESPERA-LOG: Undefined control sequence
+\begin{filecontents*}[overwrite]{\jobname.toc}
+\contentsline {chapter}{\protect \coppe@tocapp {A}Um apêndice antigo}{9}{chapter.A}%
+\end{filecontents*}
+\documentclass[dsc]{coppe}
+\newcoppefloat{mapa}{Mapa}{Lista de Mapas}
+\renewcommand\coppefinalmanual{\emph{Norma Antiga de Teste}}
+\begin{document}
+\title{Um trabalho da classe antiga}
+\foreigntitle{A work from the old class}
+\author{Fulana}{de Tal}
+\department{PESC}
+\advisor{Sicrano}{Souza}{D.Sc.}{UFRJ}
+\examiner{Beltrano Silva}{D.Sc.}{UFRJ}
+\date{9}{2026}
+\keyword{compatibilidade}
+\maketitle
+\frontmatter
+\begin{abstract}
+Texto do resumo.
+\end{abstract}
+\tableofcontents
+\listofmapas
+\mainmatter
+\chapter{Introdução}
+Texto.
+\begin{mapa}[h]
+  \caption{Um mapa}
+  \centering Mapa.
+  \source{O autor.}
+\end{mapa}
+\coppetexfinalpage
+\end{document}

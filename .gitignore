@@ -3,6 +3,8 @@ dist/example.los
 dist/exemple.los
 src/ufrj.glo
 src/ufrj.idx
+src/ufrj-coppe.glo
+src/ufrj-coppe.idx
 src/ufrj.ist
 src/ufrj.out
 src/ufrj.aux

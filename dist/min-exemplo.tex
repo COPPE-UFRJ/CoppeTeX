@@ -4,10 +4,11 @@
 %%
 %% The original source files were:
 %%
-%% ufrj.dtx  (with options: `minexemplo')
+%% ufrj-coppe.dtx  (with options: `minexemplo')
 %% 
 %% This is a sample monograph which illustrates the use of the `ufrj' document
-%% class and its biblatex/biber bibliography style.
+%% class with the `ufrj-coppe' unit style and its biblatex/biber bibliography
+%% style. It is generated from ufrj-coppe.dtx by docstrip.
 %% 
 %% Copyright (C) 2008-2026 Vicente Helano F. Batista, George O. Ainsworth Jr.,
 %% Geraldo Xexéo and Eduardo Mangeli. Released under the GNU General Public
@@ -20,6 +21,7 @@
 %% Com o latexmk funcionando (no Windows ele pede o Perl), troque a primeira
 %% linha por: % !TeX program = latexmk -pdf -synctex=1
 \documentclass[dsc,pdfa]{ufrj}
+\usepackage{ufrj-coppe}
 %% min-exemplo.tex -- tudo o que a norma exige, e nada além disso.
 %%
 %% O que está aqui e por quê (Manual UFRJ/SiBI, 9.ª ed. rev., 2026):
@@ -114,7 +116,6 @@
   \printbibliography
 
 \end{document}
-
 %% 
 %%
 %% End of file `min-exemplo.tex'.

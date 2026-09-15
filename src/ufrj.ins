@@ -1,9 +1,11 @@
 %
 % This is file `ufrj.ins'.
 %
-% It uses the docstrip utility to generate the `ufrj'
-% document class and a sample manuscript `example.tex'
-% from file `ufrj.dtx'.
+% It uses the docstrip utility to generate, from file `ufrj.dtx', the `ufrj'
+% document class, its biblatex styles and language packs, the makeindex style,
+% the bibliographic databases, the English quick reference and the latexmkrc.
+% The unit styles, and the example documents that use them, come from their
+% own files: `ufrj-coppe.ins' generates the COPPE one.
 %
 % Copyright (C) 2008-2026 Vicente Helano F. Batista, George O. Ainsworth Jr.,
 %                         Geraldo Xexéo and Eduardo Mangeli.
@@ -94,35 +96,11 @@ Author(s): Vicente Helano F. Batista
 
 \endpreamble
 
-\declarepreamble\examplepreamble
-
-This is a sample monograph which illustrates the use of the `ufrj' document
-class and its biblatex/biber bibliography style.
-
-Copyright (C) 2008-2026 Vicente Helano F. Batista, George O. Ainsworth Jr.,
-Geraldo Xexéo and Eduardo Mangeli. Released under the GNU General Public
-License version 3 (see the COPYING.txt file).
-
-\endpreamble
-
 \declarepreamble\bibpreamble
 
 This is a BibLaTeX/biber bibliographic database for the `ufrj' document
 class.  It is generated from ufrj.dtx by docstrip; edit the .dtx source,
 not this file.
-
-Copyright (C) 2008-2026 Vicente Helano F. Batista, George O. Ainsworth Jr.,
-Geraldo Xexéo and Eduardo Mangeli. Released under the GNU General Public
-License version 3 (see the COPYING.txt file).
-
-\endpreamble
-
-\declarepreamble\demopreamble
-
-This is one of the demonstration documents of the `ufrj' document class:
-the five main-language demos, the PDF/A build of the full example and the
-side-by-side cover sheet.  It is generated from ufrj.dtx by docstrip; edit
-the .dtx source, not this file.
 
 Copyright (C) 2008-2026 Vicente Helano F. Batista, George O. Ainsworth Jr.,
 Geraldo Xexéo and Eduardo Mangeli. Released under the GNU General Public
@@ -136,20 +114,17 @@ License version 3 (see the COPYING.txt file).
 
 \usedir{tex/latex/ufrj}
 \generate{%
+% A classe nao gera documento nenhum e nao conhece unidade nenhuma. O estilo da
+% COPPE, a classe coppe de compatibilidade e os exemplos saem do ufrj-coppe.dtx,
+% pelo ufrj-coppe.ins.
   \usepreamble\glossarypreamble
   \file{ufrj.ist}{\from{ufrj.dtx}{glossary}}%
-  \usepreamble\examplepreamble
-  \file{max-exemplo.tex}{\from{ufrj.dtx}{maxexemplo}}%
-  \file{min-exemplo.tex}{\from{ufrj.dtx}{minexemplo}}%
   \usepreamble\bibpreamble
   \file{exemplo.bib}{\from{ufrj.dtx}{examplebib,tiposbib}}%
   \file{manual.bib}{\from{ufrj.dtx}{examplebib}}%
   \file{ufrj.bib}{\from{ufrj.dtx}{ufrjbib}}%
   \usepreamble\classpreamble
-% A classe e a unidade saem juntas no ufrj.cls por enquanto. O modulo `unidade'
-% traz tudo o que e da COPPE (o Instituto, os Programas, o logotipo da direita,
-% as frases e a norma do colofao) e vem por ultimo no arquivo gerado.
-  \file{ufrj.cls}{\from{ufrj.dtx}{class,unidade}}%
+  \file{ufrj.cls}{\from{ufrj.dtx}{class}}%
   \file{ufrj.dbx}{\from{ufrj.dtx}{dbx}}%
   \file{ufrj.bbx}{\from{ufrj.dtx}{bbx}}%
   \file{ufrj.cbx}{\from{ufrj.dtx}{cbx}}%
@@ -163,16 +138,6 @@ License version 3 (see the COPYING.txt file).
   \file{ufrj-lang-italian.def}{\from{ufrj.dtx}{langit}}%
   \file{ufrj-numeric.bbx}{\from{ufrj.dtx}{numbbx}}%
   \file{ufrj-numeric.cbx}{\from{ufrj.dtx}{numcbx}}%
-% Documentos de demonstracao: os cinco idiomas principais e a montagem das
-% capas. A versao PDF/A do exemplo completo saiu: o proprio example.tex ja
-% compila com a opcao pdfa (#99).
-  \usepreamble\demopreamble
-  \file{example_pt.tex}{\from{ufrj.dtx}{examplept}}%
-  \file{example_en.tex}{\from{ufrj.dtx}{exampleen}}%
-  \file{example_es.tex}{\from{ufrj.dtx}{examplees}}%
-  \file{example_fr.tex}{\from{ufrj.dtx}{examplefr}}%
-  \file{example_it.tex}{\from{ufrj.dtx}{exampleit}}%
-  \file{covers_5languages.tex}{\from{ufrj.dtx}{covers}}%
 % Referencia rapida em ingles: uma tabela com toda opcao, comando e ambiente.
 % O manual (ufrj.pdf) e em portugues, porque o leitor dele e o aluno da COPPE;
 % isto e o que serve a quem escreve a tese em ingles ou espanhol, como o art. 57

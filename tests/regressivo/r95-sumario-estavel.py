@@ -27,6 +27,7 @@ AQUI = os.path.dirname(os.path.abspath(__file__))
 RAIZ = os.path.dirname(os.path.dirname(AQUI))
 SRC = os.path.join(RAIZ, "src")
 DOC = r"""\documentclass[dsc]{ufrj}
+\usepackage{ufrj-coppe}
 \title{Sumario estavel}
 \foreigntitle{Stable table of contents}
 \author{Nome}{Sobrenome}

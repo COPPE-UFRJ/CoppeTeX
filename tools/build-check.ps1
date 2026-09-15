@@ -254,6 +254,7 @@ if ($prova) {
         Pop-Location
         Push-Location $src
         & pdflatex -interaction=nonstopmode ufrj.ins 2>&1 | Out-Null
+        & pdflatex -interaction=nonstopmode ufrj-coppe.ins 2>&1 | Out-Null
         Pop-Location
         Push-Location $root
         $gitDepois = @(& git status --porcelain -- src 2>$null)
@@ -277,11 +278,13 @@ Add-Line "pdflatex: $((Get-Command pdflatex -ErrorAction SilentlyContinue).Sourc
 Add-Line "biber:    $((Get-Command biber -ErrorAction SilentlyContinue).Source)"
 Add-Line ""
 
-# 1. Regenerar TUDO a partir do .dtx -- sempre, porque tudo depende disso.
+# 1. Regenerar TUDO a partir dos dois .dtx -- sempre, porque tudo depende disso.
 # O ufrj.ins gera a classe, os estilos biblatex, os pacotes de idioma, as
-# bases .bib, os exemplos nos cinco idiomas, a montagem das
-# capas, a suite de testes e o latexmkrc.
+# bases .bib, a referencia rapida e o latexmkrc. O ufrj-coppe.ins gera o estilo
+# da COPPE, a classe coppe de compatibilidade, os exemplos nos cinco idiomas e a
+# montagem das capas -- tudo o que depende de uma unidade.
 Invoke-Step "ufrj.ins" $src { & pdflatex -interaction=nonstopmode ufrj.ins }
+Invoke-Step "ufrj-coppe.ins" $src { & pdflatex -interaction=nonstopmode ufrj-coppe.ins }
 
 # O latexmkrc sai do docstrip como latexmkrc.tex: o \openout do TeX acrescenta
 # .tex a todo nome sem extensao, e nao ha como pedir a ele o nome exato. Poe no
@@ -324,6 +327,15 @@ if ($Scope -in @("docs", "all")) {
     Invoke-Step "ufrj-glo" $src { & makeindex -s gglo.ist -o ufrj.gls ufrj.glo }
     Invoke-Step "ufrj-2" $src { & pdflatex -interaction=nonstopmode ufrj.dtx }
     Invoke-Step "ufrj-3" $src { & pdflatex -interaction=nonstopmode ufrj.dtx }
+
+    # O manual do estilo da COPPE, do mesmo jeito e pela mesma razao.
+    Remove-Item (Join-Path $src "ufrj-coppe.gls"), (Join-Path $src "ufrj-coppe.ind") `
+        -ErrorAction SilentlyContinue
+    Invoke-Step "ufrj-coppe-1" $src { & pdflatex -interaction=nonstopmode ufrj-coppe.dtx }
+    Invoke-Step "ufrj-coppe-idx" $src { & makeindex -s gind.ist -o ufrj-coppe.ind ufrj-coppe.idx }
+    Invoke-Step "ufrj-coppe-glo" $src { & makeindex -s gglo.ist -o ufrj-coppe.gls ufrj-coppe.glo }
+    Invoke-Step "ufrj-coppe-2" $src { & pdflatex -interaction=nonstopmode ufrj-coppe.dtx }
+    Invoke-Step "ufrj-coppe-3" $src { & pdflatex -interaction=nonstopmode ufrj-coppe.dtx }
 
     # O manual envelhece em silencio: um comando novo entra na classe e ninguem o
     # documenta, e nada quebra. Este passo cobra isso, e tambem confere se a

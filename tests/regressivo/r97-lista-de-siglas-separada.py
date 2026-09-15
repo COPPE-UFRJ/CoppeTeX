@@ -23,6 +23,7 @@ RAIZ = os.path.dirname(os.path.dirname(AQUI))
 SRC = os.path.join(RAIZ, "src")
 
 DOC = r"""\documentclass[dsc]{ufrj}
+\usepackage{ufrj-coppe}
 \makeloabbreviations
 %(siglas)s
 \newsigla{ufrj}{UFRJ}{Universidade Federal do Rio de Janeiro}

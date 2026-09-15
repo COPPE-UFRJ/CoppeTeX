@@ -47,6 +47,7 @@ IDIOMAS = [
 ]
 
 MODELO = r"""\documentclass[mscsem,%(opcao)s]{ufrj}
+\usepackage{ufrj-coppe}
 \title{Seminario de teste}
 \foreigntitle{Test seminar}
 %(titulo_proprio)s

@@ -41,6 +41,7 @@ RAIZ = os.path.dirname(os.path.dirname(AQUI))
 SRC = os.path.join(RAIZ, "src")
 
 MODELO = r"""\documentclass[dsc,%(idioma)s]{ufrj}
+\usepackage{ufrj-coppe}
 \title{Titulo em portugues}
 \foreigntitle{Title in English}
 %(titulo_proprio)s

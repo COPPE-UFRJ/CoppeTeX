@@ -26,6 +26,7 @@ RAIZ = os.path.dirname(os.path.dirname(AQUI))
 SRC = os.path.join(RAIZ, "src")
 
 DOC = r"""\documentclass[dsc,%(opcoes)s]{ufrj}
+\usepackage{ufrj-coppe}
 %(preambulo)s
 \title{Links}
 \foreigntitle{Links}

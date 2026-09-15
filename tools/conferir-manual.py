@@ -34,6 +34,12 @@ RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DTX = os.path.join(RAIZ, "src", "ufrj.dtx")
 CLS = os.path.join(RAIZ, "src", "ufrj.cls")
 EXEMPLO = os.path.join(RAIZ, "src", "max-exemplo.tex")
+# O estilo da COPPE tem fonte e manual proprios. Um comando publico dele pode
+# estar documentado em qualquer dos dois manuais -- os que o estilo redefine sao
+# da classe, e e la que estao descritos --, e os guardas de macrocode dos dois
+# .dtx sao conferidos.
+STY = os.path.join(RAIZ, "src", "ufrj-coppe.sty")
+DTX_COPPE = os.path.join(RAIZ, "src", "ufrj-coppe.dtx")
 
 # Logotipos da familia TeX e afins: a classe os define para uso tipografico,
 # nao sao interface de quem escreve uma tese.
@@ -150,8 +156,12 @@ def guardas(dtx):
 
 def main():
     cls, dtx, exemplo = ler(CLS), ler(DTX), ler(EXEMPLO)
+    sty, dtx_coppe = ler(STY), ler(DTX_COPPE)
     cmds, envs, opts = definidos(cls)
-    docmac, docenv, naochame = documentados(dtx)
+    cmds_sty, envs_sty, _ = definidos(sty)
+    cmds |= cmds_sty
+    envs |= envs_sty
+    docmac, docenv, naochame = documentados(dtx + "\n" + dtx_coppe)
 
     faltam_cmd = sorted(
         c for c in cmds
@@ -161,7 +171,8 @@ def main():
     faltam_env = sorted(e for e in envs if e not in docenv and e not in ENV_INTERNO)
     faltam_opt = sorted(o for o in opts if ("texttt{%s}" % o) not in dtx)
     desalinhadas = onde_ver(dtx, exemplo)
-    tortos = guardas(dtx)
+    tortos = guardas(dtx) + [(n, "ufrj-coppe.dtx: " + obs)
+                             for n, obs in guardas(dtx_coppe)]
 
     erros = 0
     print("=== conferir-manual: %d comandos publicos, %d ambientes, %d opcoes"
