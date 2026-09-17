@@ -291,6 +291,11 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
 \let\ufrj@orig@footnotetext\@footnotetext
 \long\def\@footnotetext#1{\ufrj@orig@footnotetext{\singlespacing#1}}
 \renewcommand\footnoterule{\kern-3\p@\hrule\@width 5cm\kern 2.6\p@}
+\renewcommand\@makefntext[1]{%
+  \setbox\@tempboxa\hbox{\@makefnmark}%
+  \noindent\hangindent\wd\@tempboxa\hangafter\@ne
+  \box\@tempboxa #1}
+\interfootnotelinepenalty=\@M
 \RequirePackage{enumitem}
 \newlist{alineas}{enumerate}{2}
 \setlist[alineas,1]{label=\alph*),leftmargin=1.8em,itemsep=0pt}

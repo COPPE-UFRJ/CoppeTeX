@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
-"""Teste de conformidade da CoppeTeX. NAO roda na suite normal.
+"""Teste de conformidade da CoppeTeX.
 
 BUG: (desconformidade, 2.5 e 4.1.2) a segunda linha de uma nota de rodape voltava para a margem esquerda, em vez de alinhar sob a primeira letra do texto da nota; o numero saia recuado; e uma nota longa podia continuar na folha seguinte (#117).
-ABERTO: #117
 
 A 2.5 e a 4.1.2 do Manual UFRJ/SiBI pedem a nota alinhada, a partir da segunda
 linha, abaixo da primeira letra da primeira palavra, destacando o numero

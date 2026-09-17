@@ -145,6 +145,15 @@ run it, and the fix removes the mark.
 
 ### Fixed
 
+- **Footnotes hang from the mark, and no longer split across sheets** (#117).
+  4.2 says that a reference in a note is aligned to the left margin of the text
+  and that, from its second line on, the text sits under the first letter of
+  the first word, "de forma a destacar o expoente"; what holds for the
+  reference holds for the note. The class used book's `\@makefntext`, which
+  indents the mark by `\parindent` and returns the second line to the margin,
+  so the mark was buried in the block. `\interfootnotelinepenalty` is now
+  infinite: half a note on the next sheet separates the mark from what it
+  explains.
 - **The reference above each abstract is composed like the references in the
   list** (#119). 4.2 asks for one presentation for every reference in the work,
   and Annex E shows it aligned to the left margin with the title highlighted.
