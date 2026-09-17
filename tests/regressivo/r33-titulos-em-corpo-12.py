@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
-"""Teste de conformidade da CoppeTeX. NAO roda na suite normal.
+"""Teste de conformidade da CoppeTeX.
 
 BUG: (desconformidade, 2.2b e 2.6) os titulos saiam em corpo MAIOR que o do texto: capitulo e titulos sem indicativo em \\Large (17,28 pt), secao em \\large (14,4 pt), e os dois titulos da folha adicional em \\large (#113).
-ABERTO: #113
 
 A 2.2(b) do Manual UFRJ/SiBI fixa fonte tamanho 12 para o trabalho e so admite
 corpo MENOR, e uniforme, para citacao longa, nota de rodape, paginacao e

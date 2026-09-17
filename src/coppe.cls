@@ -130,13 +130,13 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
 \RequirePackage{titlesec}
 \newif\if@coppeappendix \@coppeappendixfalse
 \titleformat{\chapter}[hang]
-  {\normalfont\Large\bfseries}
+  {\normalfont\normalsize\bfseries}
   {\if@coppeappendix\MakeUppercase{\appendixname}\ \thechapter\ \textendash\else\thechapter\fi}
   {1ex}{\MakeUppercase}
 \titlespacing*{\chapter}{0pt}{10pt}{1.5\baselineskip}
 \newcommand\coppe@appendixheadings{%
   \titleformat{\chapter}[block]
-    {\normalfont\Large\bfseries\filcenter}
+    {\normalfont\normalsize\bfseries\filcenter}
     {\MakeUppercase{\appendixname}\ \thechapter\ \textendash}
     {1ex}{\MakeUppercase}%
   \titlespacing*{\chapter}{0pt}{10pt}{1.5\baselineskip}}
@@ -180,17 +180,20 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
     \@afterheading
   \fi}
 \titleformat{name=\chapter,numberless}[hang]
-  {\normalfont\Large\bfseries\filcenter}{}{0pt}{\MakeUppercase}
+  {\normalfont\normalsize\bfseries\filcenter}{}{0pt}{\MakeUppercase}
 \titlespacing*{name=\chapter,numberless}{0pt}{10pt}{1.5\baselineskip}
 \titleformat{\section}
-  {\normalfont\large}{\thesection}{1ex}{\MakeUppercase}
+  {\normalfont\normalsize}{\thesection}{1ex}{\MakeUppercase}
 \titleformat{\subsection}
   {\normalfont\bfseries}{\thesubsection}{1ex}{}
 \titleformat{\subsubsection}
   {\normalfont\bfseries\itshape}{\thesubsubsection}{1ex}{}
+\titlespacing*{\section}{0pt}{\baselineskip}{\baselineskip}
+\titlespacing*{\subsection}{0pt}{\baselineskip}{\baselineskip}
+\titlespacing*{\subsubsection}{0pt}{\baselineskip}{\baselineskip}
 \titleformat{\paragraph}[hang]
   {\normalfont\itshape}{\theparagraph}{1ex}{}
-\titlespacing*{\paragraph}{0pt}{2.5ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+\titlespacing*{\paragraph}{0pt}{\baselineskip}{\baselineskip}
 \setcounter{secnumdepth}{4}
 \setcounter{tocdepth}{4}
 \newlength\coppe@tocnumwidth
@@ -1435,7 +1438,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \coppe@checatipo
   {\singlespacing
   \begin{center}
-    {\large\bfseries Informações Coleta CAPES}
+    {\bfseries Informações Coleta CAPES}
   \end{center}
   \vspace{7mm}
   \noindent\begin{tabular}{|@{\hspace{\tabcolsep}}p{\dimexpr\textwidth-2\tabcolsep-2\arrayrulewidth\relax}@{\hspace{\tabcolsep}}|}
@@ -1467,7 +1470,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \end{tabular}\par
   \vspace{9mm}
   \begin{center}
-    {\large\bfseries Ficha catalográfica}\par
+    {\bfseries Ficha catalográfica}\par
     \vspace{4mm}
     \ifthenelse{\equal{\coppe@fichafile}{}}{%
       \if@copperascunho

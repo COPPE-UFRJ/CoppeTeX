@@ -166,19 +166,23 @@ Legenda: **validada** = a receita foi acrescentada a uma cópia da classe gerada
 e o teste passou (Apêndice A tem o código exato usado). **Proposta** = não foi
 prototipada; conferir com cuidado.
 
-### #113 — títulos em corpo 12 · `r33` · validada
+### #113 — títulos em corpo 12 · `r33` · FEITA
 - `\Large`→`\normalsize` em `\titleformat{\chapter}`, `name=\chapter,numberless`,
   `\coppe@appendixheadings`; `\large`→`\normalsize` em `\titleformat{\section}`;
   `\large\bfseries`→`\bfseries` nos dois títulos de `\makefolhaadicional`.
-- Rodar depois: `r04`, `r05`, `r20`, `r22`, `r95`, `r99`; `conferir-norma` nos
-  exemplos; olhar as folhas de capítulo do max-exemplo (quebras mudam).
+- Provado: `r33`; `r04`, `r05`, `r20`, `r22`, `r95`, `r99` pelo nome; o
+  max-exemplo compilado num rascunho.
 
-### #122 — uma linha em branco antes e depois dos títulos · `r42` · validada
+### #122 — uma linha em branco antes e depois dos títulos · `r42` · FEITA
 - `\titlespacing*{\section}{0pt}{\baselineskip}{\baselineskip}` e o mesmo para
-  `\subsection`, `\subsubsection`, `\paragraph` (este último hoje tem
-  `2.5ex…/1.5ex…`). O capítulo já tem `1.5\baselineskip` depois.
-- Cuidado: `\baselineskip` é avaliado no uso (com 1,5 = 18 pt); com a opção
-  `doublespacing` vira 2 linhas — aceitável, conferir.
+  `\subsection`, `\subsubsection`, `\paragraph` (este tinha `2.5ex…/1.5ex…`). O
+  capítulo já tinha `1.5\baselineskip` depois.
+- **Armadilha:** nada de elástico (`\baselineskip plus .2\baselineskip`). O
+  titlesec passa o valor ao `\setlength` do `calc`, que não aceita `plus` depois
+  de registro: "Missing number", "plus .2" impresso na folha, e o espaço depois
+  do título menor que uma entrelinha. E o `r42` falhou só pela medida, porque o
+  `Documento.ok` do `medidas.py` olhava só se o PDF existia — agora exige também
+  nenhuma linha `!` no `.log`.
 
 ### #115 — pós-textuais na coluna do sumário · `r35` · validada
 - `\protect\numberline{}` antes do título nas entradas: `\@chapter` (ramos de
@@ -438,6 +442,8 @@ prototipada; conferir com cuidado.
   quem escreve o `.bib` (decisão de 16/09/2026, ver #144), e o exemplo tem de
   mostrar isso. "Algoritmo 6.1". Lista de abreviaturas sem as entradas de teste.
   `\LaTeX` em título: usar `\texorpdfstring` ou evitar o logotipo em caixa alta.
+  Espaço engolido depois dos logotipos no texto do max-exemplo ("COPPETEXcom",
+  "LATEXpor", visto na folha 22 ao conferir #113): `\CoppeTeX{}`, `\LaTeX{}`.
 
 ### #151 — a prova roda os verificadores · `r89` · FEITA
 - Os dois verificadores, sem argumento, sabem o que conferir (a lista mora

@@ -168,6 +168,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \changes{v4.1}{2026/09/12}{The options section opens with a table of what is default, and every entry states its own default. Three were wrong or missing: resumosemreferencia was described as on by default when it is the reference that is on and the option that is off, and rascunhoficha and the morewrites loading stated no default at all.}
 % \changes{v4.1}{2026/09/12}{The files section described the delivery as it was before the folders: the logos in the root, no logos/, no manuais/, no language folders, and an instruction not to copy coppe.dtx and coppe.ins, which the delivery now ships on purpose. The developer sections still said twelve adversarial documents (there are six), still placed them outside tests/, and did not know tests/regressivo/ or the panel existed.}
 % \changes{v4.1}{2026/09/16}{The m-diss entry of exemplo.bib printed "1997. 203 f. Memoria Social e Documento Centro de Ciencias Humanas", without "Dissertacao (Mestrado em ...)": when the base moved to English field names, the Portuguese field curso became type instead of course, and the mscdiss type was lost. The checker that compares every reference with the Manual reported it, but the proof did not run the checker. The 34 Manual references now have different keys in the two bases (m- in exemplo.bib, pt- in the adversarial referencias-manual.bib): with the same keys, biber found every citation in the first file and never opened the second, so the Portuguese field names had gone unchecked.}
+% \changes{v4.1}{2026/09/16}{Every heading is set in the body size. 2.2(b) of the UFRJ Manual fixes size 12 for the work and allows only SMALLER sizes (long quotations, notes, folio, captions and sources, catalogue card), and 2.6 builds the gradual emphasis from bold, italic, capitals and small capitals, not from size. Chapters and unnumbered headings were Large (17.28 pt), sections large (14.4 pt), and the two headings of the CAPES additional sheet large.}
+% \changes{v4.1}{2026/09/16}{One blank line before and after section, subsection, subsubsection and paragraph headings, as 2.4 asks. The titlesec default left 2.3 ex after the heading, about two thirds of a one-and-a-half line.}
 % \changes{v4.1}{2026/09/16}{Under LuaLaTeX the class no longer loads fontenc with T1. Unicode engines send each input character straight to the font, and in T1 the slot of the masculine ordinal holds z-caron: "no" with the ordinal printed as "nz" with a caron, and the section sign, degree sign, guillemets and the arithmetic signs came out as other letters, while the em and en dashes, curly quotes, ellipsis, euro sign and oe ligature vanished with only a Missing character line in the log. Portuguese accented letters were right, because T1 matches Latin-1 there, so nobody saw it. Unicode engines now keep TU, the LaTeX default for them, with Latin Modern in OpenType; the shape declarations that silence substitution messages exist for TU too, and the fixed typewriter fonts of the language listing styles use Latin Modern Mono instead of txtt, which has no OpenType version. pdfLaTeX output does not change.}
 % \changes{v4.0}{2026/05/30}{Catalog-label writers (coppe@mainBegin, coppe@bibBegin, coppe@bibEnd, coppe@hasLof) made language-agnostic: detokenize wrap on label names protects ':' and '.' from babel shorthand activation, and the raw etex primitives romannumeral/number replace LaTeX's roman/arabic to bypass spanish-babel's small-caps @roman redefinition that would otherwise crash pdftex with "Unbalanced write command" on every es-main document.}
 %
@@ -5274,8 +5276,14 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
 % APENDICE/ANEXO chapters print "APENDICE A -- Title" (R75/R76); normal chapters
 % keep "N Title". \appendix and \annex raise the flag (see below).
 \newif\if@coppeappendix \@coppeappendixfalse
+% Todo titulo em \normalsize, o corpo do texto. A 2.2(b) fixa a fonte tamanho 12
+% para o trabalho e so admite corpo MENOR (citacao longa, notas, paginacao,
+% legendas e fontes das ilustracoes e tabelas, ficha catalografica); e a 2.6
+% faz o destaque gradativo com negrito, italico, caixa alta e versal -- nao com
+% corpo. Ate a v4.1 o capitulo e os titulos sem indicativo saiam em \Large
+% (17,28 pt) e a secao em \large (14,4 pt) (#113).
 \titleformat{\chapter}[hang]
-  {\normalfont\Large\bfseries}
+  {\normalfont\normalsize\bfseries}
   {\if@coppeappendix\MakeUppercase{\appendixname}\ \thechapter\ \textendash\else\thechapter\fi}
   {1ex}{\MakeUppercase}
 \titlespacing*{\chapter}{0pt}{10pt}{1.5\baselineskip}
@@ -5288,7 +5296,7 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
 % are untouched -- they DO carry a numeric indicative and stay flush left.
 \newcommand\coppe@appendixheadings{%
   \titleformat{\chapter}[block]
-    {\normalfont\Large\bfseries\filcenter}
+    {\normalfont\normalsize\bfseries\filcenter}
     {\MakeUppercase{\appendixname}\ \thechapter\ \textendash}
     {1ex}{\MakeUppercase}%
   \titlespacing*{\chapter}{0pt}{10pt}{1.5\baselineskip}}
@@ -5338,7 +5346,7 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
 % chapter (unnumbered): centred ALL CAPS bold (errata, lists, resumo, sumario,
 % referencias, glossario, ... -- unnumbered headings are centred, P29-P30).
 \titleformat{name=\chapter,numberless}[hang]
-  {\normalfont\Large\bfseries\filcenter}{}{0pt}{\MakeUppercase}
+  {\normalfont\normalsize\bfseries\filcenter}{}{0pt}{\MakeUppercase}
 \titlespacing*{name=\chapter,numberless}{0pt}{10pt}{1.5\baselineskip}
 % section: ALL CAPS, normal weight -- the \bfseries here contradicted this very
 % comment until v4.1, and made the secondary level as heavy as the primary one,
@@ -5346,13 +5354,24 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
 % chapter = ALL CAPS bold, section = ALL CAPS regular, subsection = Title Case
 % bold, subsubsection = Title Case bold italic, as read from the manual.
 \titleformat{\section}
-  {\normalfont\large}{\thesection}{1ex}{\MakeUppercase}
+  {\normalfont\normalsize}{\thesection}{1ex}{\MakeUppercase}
 % subsection: bold (author writes Title Case).
 \titleformat{\subsection}
   {\normalfont\bfseries}{\thesubsection}{1ex}{}
 % subsubsection: bold italic.
 \titleformat{\subsubsection}
   {\normalfont\bfseries\itshape}{\thesubsubsection}{1ex}{}
+% A 2.4 separa os titulos das secoes do texto que os precede e do que os sucede
+% por um espaco de 1,5 -- uma linha em branco na entrelinha do texto. O padrao do
+% titlesec deixava 3,5 ex antes e 2,3 ex depois, e 2,3 ex sao uns dois tercos de
+% linha (#122). \baselineskip e medido no uso, ja na entrelinha do documento.
+% Sem "plus": o titlesec entrega o valor ao \setlength do calc, que nao aceita
+% elastico depois de um registro -- com "\baselineskip plus .2\baselineskip" o
+% TeX reclamava "Missing number", imprimia "plus .2" na folha, e o espaco depois
+% do titulo caia para menos de uma entrelinha.
+\titlespacing*{\section}{0pt}{\baselineskip}{\baselineskip}
+\titlespacing*{\subsection}{0pt}{\baselineskip}{\baselineskip}
+\titlespacing*{\subsubsection}{0pt}{\baselineskip}{\baselineskip}
 % paragraph = quinary section: italic, the author capitalising only the first
 % word. 2.6 recommends going as deep as the quinary, and the annotation on the
 % 2025 manual (specs/ANOTACOES.md) describes exactly this shape.
@@ -5362,7 +5381,7 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
 % "after" spacing in \titlespacing turns it into a displayed heading.
 \titleformat{\paragraph}[hang]
   {\normalfont\itshape}{\theparagraph}{1ex}{}
-\titlespacing*{\paragraph}{0pt}{2.5ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+\titlespacing*{\paragraph}{0pt}{\baselineskip}{\baselineskip}
 % book defaults secnumdepth to 2, so \subsubsection and \paragraph came out
 % UNNUMBERED however carefully \titleformat named \thesubsubsection. 2.6 has
 % the numbering following the whole chain down to the quinary, and the manual's
@@ -7704,7 +7723,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \coppe@checatipo
   {\singlespacing
   \begin{center}
-    {\large\bfseries Informações Coleta CAPES}
+    {\bfseries Informações Coleta CAPES}
   \end{center}
   \vspace{7mm}
   \noindent\begin{tabular}{|@{\hspace{\tabcolsep}}p{\dimexpr\textwidth-2\tabcolsep-2\arrayrulewidth\relax}@{\hspace{\tabcolsep}}|}
@@ -7736,7 +7755,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \end{tabular}\par
   \vspace{9mm}
   \begin{center}
-    {\large\bfseries Ficha catalográfica}\par
+    {\bfseries Ficha catalográfica}\par
     \vspace{4mm}
     \ifthenelse{\equal{\coppe@fichafile}{}}{%
       \if@copperascunho

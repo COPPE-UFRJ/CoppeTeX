@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
-"""Teste de conformidade da CoppeTeX. NAO roda na suite normal.
+"""Teste de conformidade da CoppeTeX.
 
 BUG: (desconformidade, 2.4) entre o titulo de uma secao e o texto que o segue ficava menos de uma linha em branco: o espaco depois do titulo era o padrao do titlesec (2,3 ex), cerca de dois tercos de uma linha de 1,5 (#122).
-ABERTO: #122
 
 A 2.4 do Manual UFRJ/SiBI pede os titulos das secoes separados do texto que os
 precede E do texto que os sucede por um espaco de 1,5 -- uma linha em branco na

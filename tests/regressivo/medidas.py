@@ -231,7 +231,15 @@ class Documento(object):
 
     @property
     def ok(self):
-        return os.path.exists(self.pdf)
+        """O PDF saiu E a ultima passada nao registrou erro (linha "!" no .log).
+
+        So o PDF nao basta: em nonstopmode o TeX segue depois de um erro e
+        produz o PDF assim mesmo. Um \\titlespacing com "plus", que o calc nao
+        entende, saiu assim -- "Missing number" no log e "plus .2" impresso na
+        folha --, e o teste que media o espaco reprovou pela medida, sem dizer
+        que o documento tinha erro.
+        """
+        return os.path.exists(self.pdf) and not self.erros_do_log(1)
 
     @property
     def log(self):

@@ -133,7 +133,10 @@ as diretivas de texto deste rodador não veem de propósito (tiram acento, caixa
 largura de traço). Por isso são `.py`, e usam o apoio [`medidas.py`](./medidas.py):
 `pdftohtml -xml` dá a fonte e o corpo de cada pedaço de texto, `pdftotext -bbox`
 dá a caixa exata de cada palavra, em pontos. O `medidas.py` não é teste — o
-nome não casa com `r<número>-` — e compila numa pasta temporária.
+nome não casa com `r<número>-` — e compila numa pasta temporária. O
+`Documento.ok` dele exige o PDF **e** nenhuma linha `!` no `.log`: em
+`nonstopmode` o TeX produz o PDF mesmo depois de um erro, e um teste de medida
+reprovava (ou aprovava) um documento quebrado sem dizer que ele tinha erro.
 
 **Provar uma correção antes de levá-la ao `.dtx`.** `COPPE_SRC=<pasta>` faz os
 testes usarem a classe de outra pasta: copie `src/` para um rascunho, mexa nos

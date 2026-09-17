@@ -39,6 +39,21 @@ run it, and the fix removes the mark.
   result: 68 checks, no divergence, and the same three accepted ones in each
   form.
 
+### Changed
+
+- **Headings are set in the body size** (#113). 2.2(b) of the UFRJ Manual fixes
+  size 12 for the work and allows only smaller sizes (long quotations, notes,
+  folio, captions and sources, catalogue card). 2.6 builds the gradual emphasis
+  from bold, italic and capitals, not from size. Chapters and unnumbered
+  headings (RESUMO, SUMÁRIO, REFERÊNCIAS…) were `\Large` (17.28 pt), sections
+  `\large` (14.4 pt), and the two headings of the CAPES additional sheet
+  `\large`. The gradation is unchanged: chapter bold capitals, section
+  capitals, subsection bold, subsubsection bold italic, paragraph italic.
+- **One blank line before and after section headings** (#122), as 2.4 asks,
+  for section, subsection, subsubsection and paragraph. titlesec's default
+  left 2.3 ex after the heading, about two thirds of a line at 1.5 spacing.
+  Documents get a little longer, and page breaks move.
+
 ### Fixed
 
 - **LuaLaTeX printed "nº" as "nž"** (#152). The class loaded `fontenc` with T1
