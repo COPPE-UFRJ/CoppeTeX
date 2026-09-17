@@ -169,6 +169,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \changes{v4.1}{2026/09/12}{The files section described the delivery as it was before the folders: the logos in the root, no logos/, no manuais/, no language folders, and an instruction not to copy coppe.dtx and coppe.ins, which the delivery now ships on purpose. The developer sections still said twelve adversarial documents (there are six), still placed them outside tests/, and did not know tests/regressivo/ or the panel existed.}
 % \changes{v4.1}{2026/09/16}{The m-diss entry of exemplo.bib printed "1997. 203 f. Memoria Social e Documento Centro de Ciencias Humanas", without "Dissertacao (Mestrado em ...)": when the base moved to English field names, the Portuguese field curso became type instead of course, and the mscdiss type was lost. The checker that compares every reference with the Manual reported it, but the proof did not run the checker. The 34 Manual references now have different keys in the two bases (m- in exemplo.bib, pt- in the adversarial referencias-manual.bib): with the same keys, biber found every citation in the first file and never opened the second, so the Portuguese field names had gone unchecked.}
 % \changes{v4.1}{2026/09/16}{Every heading is set in the body size. 2.2(b) of the UFRJ Manual fixes size 12 for the work and allows only SMALLER sizes (long quotations, notes, folio, captions and sources, catalogue card), and 2.6 builds the gradual emphasis from bold, italic, capitals and small capitals, not from size. Chapters and unnumbered headings were Large (17.28 pt), sections large (14.4 pt), and the two headings of the CAPES additional sheet large.}
+% \changes{v4.1}{2026/09/17}{Every abstract sheet opens with its heading -- RESUMO, ABSTRACT, RESUMEN, in the language of that abstract -- centred and in bold capitals like every heading without a numeric indicative (2.6). The sheets used to open straight on the sentence "Resumo da Tese apresentada a COPPE/UFRJ...". The heading has no switch in setupabstracts.}
 % \changes{v4.1}{2026/09/16}{Lists in the order of 3.1.2 in max-exemplo, manual.tex, the document generator, the adversarial documents, this manual and the quick reference: every list of illustrations (figures, quadros, maps, programs, algorithms) before the list of tables. Quadro, program and algorithm are illustrations (2.10), and section 10 of the COPPE norm, which placed its three lists between the list of tables and the list of abbreviations, now follows the Manual too. The class imposes no order; the models were teaching the wrong one.}
 % \changes{v4.1}{2026/09/16}{The sign between number and title is the em dash everywhere: captions (a new emdash caption label separator), algorithm captions, appendix and annex headings, their sumario entries and the lists of illustrations. The Manual calls it travessao (2.10, 3.1.2.2.4, 3.1.4.3, 3.1.4.4) and section 12 of the COPPE norm shows the em dash; the class used the en dash almost everywhere and the em dash in the thesis reference driver.}
 % \changes{v4.1}{2026/09/16}{Lists of illustrations and of tables name each item: "Figura 4.1 --- Titulo ..... 27" instead of "4.1 Titulo ..... 27" (3.1.2.2.4, 3.1.2.2.5). The name comes from a table keyed by list extension, extended by newcoppefloat; list entries have no indent, so a long title continues at the margin as in the Manual's example.}
@@ -1639,8 +1640,10 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % |resumosemreferencia|.
 %
 % \DescribeMacro{\configuraresumos}
-% \par\textbf{Os cinco elementos da folha, e como desligar quatro.} Uma folha de
-% resumo tem cinco partes, nesta ordem:
+% \par\textbf{Os cinco elementos da folha, e como desligar quatro.} A folha abre
+% com o \textbf{título} --- RESUMO, ABSTRACT, RESUMEN, no idioma daquele resumo
+% ---, centralizado como todo título sem indicativo numérico (2.6). O título não
+% se desliga. Abaixo dele, uma folha de resumo tem cinco partes, nesta ordem:
 % \begin{enumerate}
 %   \item a \textbf{identificação da página}: a frase ``Resumo da
 %     Dissertação apresentada à COPPE/UFRJ como parte dos requisitos
@@ -8018,7 +8021,20 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % com os cinco elementos ligados. Agora somam 30\,mm. O Manual não prescreve
 % nenhuma dessas medidas -- prescreve que o resumo caiba em UMA folha.
 %    \begin{macrocode}
+% O TITULO da folha -- RESUMO, ABSTRACT, RESUMEN --, no idioma daquele resumo,
+% vem antes de tudo e nao tem interruptor. A 2.6 poe o resumo entre os titulos
+% sem indicativo numerico, que sao centralizados, na mesma lista de
+% agradecimentos, sumario e referencias; ate a v4.1 a folha abria direto na
+% frase "Resumo da Tese apresentada a COPPE/UFRJ...", alinhada a esquerda
+% (#114). O titulo e o que diz ao leitor o que a folha e; a frase de abertura
+% (Norma COPPE, secoes 6 a 8) continua, abaixo dele, sob o seu interruptor.
+\newcommand\coppe@res@heading[1]{%
+  \begin{center}
+    \bfseries\MakeUppercase{\@nameuse{coppe@str@#1@abstractname}}%
+  \end{center}\par
+  \vspace*{4mm}}
 \newcommand\coppe@resumocabeca{%
+  \coppe@res@heading{\coppe@reslang}%
   \if@copperesidpag
     \coppe@toptext{\coppe@reslang}\par
     \vspace*{6mm}

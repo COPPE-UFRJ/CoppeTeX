@@ -229,12 +229,16 @@ prototipada; conferir com cuidado.
   apontava para a linha do COMENTÁRIO; agora aponta para o comando (256).
 - Provado: `r67`; `r26` (gerador compila); `conferir-manual` limpo.
 
-### #114 — título RESUMO/ABSTRACT · `r34` · validada
-- No começo de `\coppe@resumocabeca`: `\begin{center}\bfseries\MakeUppercase{\@nameuse{coppe@str@\coppe@reslang @abstractname}}\end{center}` e um respiro.
-- O título **não** fica sob `\configuraresumos` (é o único obrigatório).
-- Conferir que `r27` e `r28` passam, e que as três folhas do espanhol (resumen,
-  abstract, resumo) ganham o título no idioma de cada uma (`r25`, `r23`).
-- Documentar no `.dtx` e no `manual.tex` (seção do resumo).
+### #114 — título RESUMO/ABSTRACT · `r34` · FEITA
+- `\coppe@res@heading{<idioma>}` no começo de `\coppe@resumocabeca`: centralizado,
+  negrito, caixa alta, 4 mm de respiro. Não fica sob `\configuraresumos`.
+- Provado: `r34`; `r15`, `r16`, `r23`, `r25`, `r27`, `r28`; folha conferida.
+- **Achado ao medir:** 500 palavras com os cinco elementos NÃO cabem numa folha,
+  nem antes do título (sonda com a classe do commit anterior, `COPPE_SRC`). E o
+  Manual 2026 não pede folha única: a 3.1.2.1.4 diz "digitado em espaço 1,5 …
+  no máximo, 500 palavras". A documentação da classe (seção do resumo), o
+  `manual.tex` ("cabe em uma folha"), o `r16` e a Norma §8 afirmam a folha única
+  como regra do Manual — issue própria.
 
 ### #119 — referência do resumo · `r39` · validada
 - `\coppe@refresumo`: `\raggedright`; `\textbf{\coppe@selecttitle}` e o subtítulo

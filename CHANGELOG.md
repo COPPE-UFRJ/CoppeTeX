@@ -80,6 +80,11 @@ run it, and the fix removes the mark.
   tables and abbreviations; it now places them with the other illustrations,
   since 2.10 counts quadros, programs and algorithms as illustrations. The class
   imposes no order, so an existing document keeps the order its author wrote.
+- **Abstract sheets have a heading** (#114): RESUMO, ABSTRACT or RESUMEN, in the
+  language of each sheet, centred in bold capitals like every heading without a
+  numeric indicative (2.6). The sheets used to open straight on "Resumo da Tese
+  apresentada à COPPE/UFRJ…". The heading cannot be switched off; the four
+  optional elements below it still can.
 
 ### Fixed
 

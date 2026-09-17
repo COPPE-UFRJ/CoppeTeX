@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
-"""Teste de conformidade da CoppeTeX. NAO roda na suite normal.
+"""Teste de conformidade da CoppeTeX.
 
 BUG: (desconformidade, 2.6) as folhas de resumo e de abstract nao tinham TITULO: abriam direto na frase "Resumo da Tese apresentada a COPPE/UFRJ...", alinhada a esquerda (#114).
-ABERTO: #114
 
 A 2.6 do Manual UFRJ/SiBI lista o resumo entre os titulos sem indicativo
 numerico, que sao CENTRALIZADOS -- a mesma lista de agradecimentos, sumario e

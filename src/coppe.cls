@@ -1592,7 +1592,13 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \coppe@setresflag{restitulo}{#2}%
   \coppe@setresflag{resorient}{#3}%
   \coppe@setresflag{refresumo}{#4}}
+\newcommand\coppe@res@heading[1]{%
+  \begin{center}
+    \bfseries\MakeUppercase{\@nameuse{coppe@str@#1@abstractname}}%
+  \end{center}\par
+  \vspace*{4mm}}
 \newcommand\coppe@resumocabeca{%
+  \coppe@res@heading{\coppe@reslang}%
   \if@copperesidpag
     \coppe@toptext{\coppe@reslang}\par
     \vspace*{6mm}
