@@ -117,7 +117,7 @@ sempre que o defeito for de uma folha só.
 | `r16-resumo-sem-referencia` | O outro lado: `resumosemreferencia`, para o resumo que já está no limite das 500 palavras. |
 | `r17-folio-so-na-parte-textual` | A contagem começava na Introdução, que saía como folha 1. A 2.7 manda contar da folha de rosto e **não** contar a folha adicional. |
 | `r18-legenda-em-cima-fonte-embaixo` | A legenda ficava embaixo, como no `\caption` padrão. A norma põe a legenda em cima e a fonte, obrigatória, embaixo. |
-| `r19-linha-de-pesquisa-no-idioma` | O rótulo da linha de pesquisa estava fixo em português num trabalho em inglês. |
+| `r19-folha-de-rosto-em-portugues` | A folha de rosto de um trabalho em inglês ou espanhol saía com metade dos rótulos em cada idioma: "Research line" e "Co-advisor" sobre uma natureza e um "Orientador:" em português. Ela é identidade institucional e fica inteira em português (#128). O teste nasceu ao contrário — cobrava o rótulo no idioma do trabalho, defeito corrigido na v4.1 —, e a decisão da #128 desfez a regra, não a correção. |
 | `r20-folha-adicional-capes` | A folha adicional do Anexo H não existia; depois existiu com parágrafos soltos e pontilhado, em vez da moldura fechada do modelo. |
 | `r21-tratamento-e-instituicao` | `\advisor` e `\examiner` pediam o tratamento como obrigatório e a instituição como opcional. A 3.1.2.1.3(e) pede o contrário. |
 | `r22-nivel-quinario` | A 2.6 admite até a seção quinária, e a classe parava na quaternária. |

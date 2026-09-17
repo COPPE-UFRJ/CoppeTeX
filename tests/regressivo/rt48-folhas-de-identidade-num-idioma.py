@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
-"""Teste de conformidade da CoppeTeX. NAO roda na suite normal.
+"""Teste de conformidade da CoppeTeX.
 
 BUG: (inconsistencia, Norma COPPE 4 e 7) num trabalho em ingles ou espanhol, a folha de rosto e a folha de aprovacao misturavam idiomas: a frase de natureza em portugues, o rotulo do orientador em portugues e o da linha de pesquisa -- ou o "Aprobada por" -- no idioma principal (#128).
-ABERTO: #128
 
 A Norma COPPE 2026 se contradiz: a secao 4 diz que natureza, objetivo e area de
 concentracao acompanham o idioma principal; a secao 7 diz que capa, folha de

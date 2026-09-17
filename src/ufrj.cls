@@ -893,6 +893,12 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \else
     \ufrjforeignstring{coadvisor}%
   \fi}
+\newcommand\ufrj@idcoadvisorstring{%
+  \ifnum\@coadvisor>1
+    \ufrj@unitstr{brazilian}{coadvisors}%
+  \else
+    \ufrj@unitstr{brazilian}{coadvisor}%
+  \fi}
 \newcommand\ufrj@nvolumes{1}
 \newcommand\ufrj@thisvolume{1}
 \newcommand\volumes[1]{\gdef\ufrj@nvolumes{#1}}
@@ -1187,7 +1193,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \vspace*{12mm}
   {\singlespacing
   \ifthenelse{\equal{\ufrj@linhapesq}{}}{}{%
-    \noindent\ufrjmainstring{researchline}: \ufrj@linhapesq\par
+    \noindent\ufrj@unitstr{brazilian}{researchline}: \ufrj@linhapesq\par
     \vspace*{5mm}}%
   \nohyphens{%
   \noindent\begin{tabularx}{\textwidth}[b]{@{}l@{ }>{\raggedright\arraybackslash}X@{}}
@@ -1214,7 +1220,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \par\vspace*{2mm}%
     \nohyphens{%
     \noindent\begin{tabularx}{\textwidth}[b]{@{}l@{ }>{\raggedright\arraybackslash}X@{}}
-      \local@coadvisorstring: &
+      \ufrj@idcoadvisorstring: &
       \count1=0
       \toks@={}
       \@whilenum \count1<\@coadvisor \do{%
@@ -2064,14 +2070,14 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \newcommand\local@advisorstring{Orientador}
 \newcommand\foreign@advisorstring{Advisor}
 \ifthenelse{\boolean{maledoc}}{%
-  \newcommand\local@approvedname{\ufrjmainstring{approvedmale}}%
+  \newcommand\local@approvedname{\ufrj@unitstr{brazilian}{approvedmale}}%
 }{%
-  \newcommand\local@approvedname{\ufrjmainstring{approvedfemale}}%
+  \newcommand\local@approvedname{\ufrj@unitstr{brazilian}{approvedfemale}}%
 }
 \ifthenelse{\boolean{maledoc}}{%
-  \newcommand\local@approvedonname{\ufrjmainstring{approvedonmale}}%
+  \newcommand\local@approvedonname{\ufrj@unitstr{brazilian}{approvedonmale}}%
 }{%
-  \newcommand\local@approvedonname{\ufrjmainstring{approvedonfemale}}%
+  \newcommand\local@approvedonname{\ufrj@unitstr{brazilian}{approvedonfemale}}%
 }
 \newcommand\local@universityname{Universidade Federal do Rio de Janeiro}
 \newcommand\local@deptstring{Programa}
@@ -2080,7 +2086,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \newcommand\local@statename{RJ}
 \newcommand\local@countryname{Brasil}
 \newcommand\frontcover@maintext{
-  \sloppy\nohyphens{\ufrj@unitstrmain{natureza}}%
+  \sloppy\nohyphens{\ufrj@unitstr{brazilian}{natureza}}%
   \if@ufrjarearosto
     \ifthenelse{\equal{\ufrj@areaconc}{}}{}{%
       \par\vspace{1ex}%

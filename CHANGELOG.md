@@ -49,6 +49,18 @@ run it, and the fix removes the mark.
 
 ### Changed
 
+- **The folha de rosto and the folha de aprovação are written entirely in
+  Portuguese** (#128). The research-line label, the coadvisor label and the two
+  approval labels followed the main language, while the natureza and the
+  advisor label did not: an English work had "Research line" and "Co-advisor"
+  over a Portuguese natureza and a Portuguese "Orientador:", and a Spanish one
+  had "Aprobada el" over the same Portuguese block. Both the class manual and
+  section 7 of the Norma COPPE already said these sheets are institutional
+  identity and stay in Portuguese; section 4 of the norm said the natureza
+  follows the main language, and now says what it meant — that the natureza
+  follows the language of each **abstract sheet**. The four labels read the
+  Portuguese key through `\ufrj@unitstr`, which still honours a text the unit
+  declared. The regression test `r19` was rewritten and renamed accordingly.
 - **The area de concentracao leaves the folha de rosto and the folha de
   aprovacao** (#155). The class used to append "Área de concentração: …" to the
   natureza block of both identity sheets, on the strength of the prose in

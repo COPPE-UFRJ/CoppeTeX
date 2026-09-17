@@ -126,10 +126,12 @@ Instituto, nome do Programa, cidade (Rio de Janeiro), estado (RJ) e país
 (Brasil) — **figuram sempre em português**, qualquer que seja o idioma
 principal do trabalho.
 
-Acompanham o idioma principal apenas o título do trabalho, o subtítulo, a
-natureza e o objetivo. A área de concentração não entra na conta: ela é campo
-da folha adicional, que é um formulário da Coleta CAPES em português, e não
-figura nas folhas de identidade.
+Acompanham o idioma principal apenas o **título** e o **subtítulo**. A natureza
+e o objetivo acompanham o idioma de **cada página de resumo**, onde a frase de
+abertura os traz (Seção 7); nas folhas de identidade — capa, folha de rosto e
+folha de aprovação — eles ficam em português como o resto da folha. A área de
+concentração não entra na conta: ela é campo da folha adicional, que é um
+formulário da Coleta CAPES em português, e não figura nas folhas de identidade.
 
 ## 5. Orientação na folha de rosto — *Escolha*
 

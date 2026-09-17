@@ -184,6 +184,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \changes{v5.0}{2026/09/15}{COPPE is the unit style ufrj-coppe, with its own source (ufrj-coppe.dtx and ufrj-coppe.ins), its own manual (ufrj-coppe.pdf) and every example document, which all load it. A work begun with the class coppe compiles as it is: coppe.cls is now a compatibility class that loads ufrj with the same options, loads ufrj-coppe and writes one warning, and the style keeps the old public names as aliases, the old colophon pieces answering renewcommand by the old name, the three internal names that auxiliary files written by the old class contain, the page style coppe and the bib field coppedegree.}
 % \changes{v5.0}{2026/09/15}{The colophon names the class and the project apart -- Foi utilizada a classe ufrj, do projeto CoppeTeX -- where it said a classe CoppeTeX, which is the name of the project and not of a class. The norm it cites is the one the unit declares with ufrjdeclarenorm, and the UFRJ/SiBI Manual when no unit declares one.}
 % \changes{v5.0}{2026/09/15}{The documentation follows the split: this manual (ufrj.pdf) describes the class and the interface a unit style uses; ufrj-coppe.pdf describes only what COPPE declares; manual.pdf, the norm, is written for UFRJ with COPPE as the example; and the migration guide from 4.x to 5.0 tells the author of a work begun with the class coppe what to change.}
+% \changes{v5.0}{2026/09/17}{The folha de rosto and the folha de aprovacao are written entirely in Portuguese, whatever the language of the work. The research-line label, the coadvisor label and the two approval labels followed the main language while the natureza and the advisor label did not, so an English or Spanish work came out with half of each sheet in each language. The class manual and section 7 of the Norma COPPE already stated the rule: these sheets are institutional identity. The four now read the Portuguese key through ufrj@unitstr, which still honours a text the unit declared.}
 % \changes{v5.0}{2026/09/17}{The reference above each abstract is composed like the references in the list: aligned to the left margin only, the title in bold and the subtitle out of it, and an em dash before the vinculacao academica. 4.2 asks for one presentation for every reference in the work; this one was justified, set the title flat and used an en dash, so the same reference had two shapes in the same work.}
 % \changes{v5.0}{2026/09/17}{The area de concentracao leaves the natureza block of the folha de rosto and of the folha de aprovacao, and the new option areanafolhaderosto brings it back. The SiBI model that 3.1.2.1.2 links to carries it on the folha adicional, as a Coleta CAPES field, and Annexes B and D end the natureza block at the degree; only the prose of 3.1.2.1.1(e) and 3.1.2.1.3(c) lists it among the elements of the two sheets. The data is untouched: areaconcentracao still feeds the folha adicional, where it is mandatory.}
 % \changes{v5.0}{2026/09/15}{tests/regressivo gains four tests of the split: rtu01 composes a work with the class alone and forbids every COPPE phrase, rtu02 composes one with a made-up unit style that uses only the public interface, rtu03 compiles a work of the class coppe with the old names and a .toc written by the old class, and rtu04 reads the class, the bibliography styles, the language packs and the glossary style and fails if one names COPPE or any of its data.}
@@ -5391,6 +5392,16 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \else
     \ufrjforeignstring{coadvisor}%
   \fi}
+% E o das FOLHAS DE IDENTIDADE, sempre em portugues (#128). A folha de rosto e a
+% de aprovacao nao seguem o idioma do trabalho: sao identidade institucional, e
+% o manual da classe e a secao 7 da Norma COPPE ja diziam isso. \ufrj@unitstr
+% respeita o texto que a unidade tenha declarado para a chave.
+\newcommand\ufrj@idcoadvisorstring{%
+  \ifnum\@coadvisor>1
+    \ufrj@unitstr{brazilian}{coadvisors}%
+  \else
+    \ufrj@unitstr{brazilian}{coadvisor}%
+  \fi}
 \newcommand\ufrj@nvolumes{1}
 \newcommand\ufrj@thisvolume{1}
 \newcommand\volumes[1]{\gdef\ufrj@nvolumes{#1}}
@@ -5963,7 +5974,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \vspace*{12mm}
   {\singlespacing
   \ifthenelse{\equal{\ufrj@linhapesq}{}}{}{%
-    \noindent\ufrjmainstring{researchline}: \ufrj@linhapesq\par
+    \noindent\ufrj@unitstr{brazilian}{researchline}: \ufrj@linhapesq\par
     \vspace*{5mm}}%
   \nohyphens{%
   \noindent\begin{tabularx}{\textwidth}[b]{@{}l@{ }>{\raggedright\arraybackslash}X@{}}
@@ -5990,7 +6001,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \par\vspace*{2mm}%
     \nohyphens{%
     \noindent\begin{tabularx}{\textwidth}[b]{@{}l@{ }>{\raggedright\arraybackslash}X@{}}
-      \local@coadvisorstring: &
+      \ufrj@idcoadvisorstring: &
       \count1=0
       \toks@={}
       \@whilenum \count1<\@coadvisor \do{%
@@ -7340,18 +7351,22 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %    \begin{macrocode}
 \newcommand\local@advisorstring{Orientador}
 \newcommand\foreign@advisorstring{Advisor}
-% Fed by the string dispatcher instead of a hard-coded Portuguese literal.
-% Expansion is lazy (it happens inside \makefrontpage), so \ufrj@mainlang is
-% already set by the time this is used.
+% Os dois rotulos da folha de aprovacao. Saem pela tabela de textos, e nao por
+% um literal, para que a unidade possa troca-los -- mas sempre pela chave em
+% PORTUGUES (#128): a folha de aprovacao e identidade institucional e nao segue
+% o idioma do trabalho. Ate a v5.0 liam \ufrjmainstring, e um trabalho em
+% espanhol saia com "Aprobada el" em cima de uma natureza em portugues. A
+% expansao e preguicosa (acontece dentro do \makefrontpage), entao o genero ja
+% esta decidido quando isto e usado.
 \ifthenelse{\boolean{maledoc}}{%
-  \newcommand\local@approvedname{\ufrjmainstring{approvedmale}}%
+  \newcommand\local@approvedname{\ufrj@unitstr{brazilian}{approvedmale}}%
 }{%
-  \newcommand\local@approvedname{\ufrjmainstring{approvedfemale}}%
+  \newcommand\local@approvedname{\ufrj@unitstr{brazilian}{approvedfemale}}%
 }
 \ifthenelse{\boolean{maledoc}}{%
-  \newcommand\local@approvedonname{\ufrjmainstring{approvedonmale}}%
+  \newcommand\local@approvedonname{\ufrj@unitstr{brazilian}{approvedonmale}}%
 }{%
-  \newcommand\local@approvedonname{\ufrjmainstring{approvedonfemale}}%
+  \newcommand\local@approvedonname{\ufrj@unitstr{brazilian}{approvedonfemale}}%
 }
 \newcommand\local@universityname{Universidade Federal do Rio de Janeiro}
 \newcommand\local@deptstring{Programa}
@@ -7381,12 +7396,16 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % change: \areaconcentracao goes on feeding the folha adicional, where it is
 % mandatory.
 %
-% A frase da natureza e a chave `natureza' da tabela, lida no idioma principal
-% e, na falta dela, em portugues -- que e o que sai hoje em todo idioma, porque
-% so o portugues a define. A frase esta com a instituicao e a unidade, na
-% subsecao "A instituicao e a unidade"; aqui fica so a montagem do bloco.
+% A frase da natureza e a chave `natureza' da tabela, lida SEMPRE em portugues
+% (#128): estas duas folhas sao identidade institucional e nao acompanham o
+% idioma do trabalho -- e o que o manual da classe diz na secao dos idiomas e a
+% secao 7 da Norma COPPE. \ufrj@unitstr respeita a frase que a unidade tenha
+% declarado; o \ufrj@unitstrmain, que lia o idioma principal, ficou para as
+% folhas de resumo, que seguem o idioma de cada resumo. A frase esta com a
+% instituicao e a unidade, na subsecao "A instituicao e a unidade"; aqui fica so
+% a montagem do bloco.
 \newcommand\frontcover@maintext{
-  \sloppy\nohyphens{\ufrj@unitstrmain{natureza}}%
+  \sloppy\nohyphens{\ufrj@unitstr{brazilian}{natureza}}%
   \if@ufrjarearosto
     \ifthenelse{\equal{\ufrj@areaconc}{}}{}{%
       \par\vspace{1ex}%
