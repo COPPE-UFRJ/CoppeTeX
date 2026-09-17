@@ -87,9 +87,14 @@ O item 3.1.1 do Manual pede "nome da instituição", sem dizer em quantos nívei
 Na COPPE são **três linhas**, nesta ordem:
 
 1. **Universidade Federal do Rio de Janeiro**
-2. **Instituto Alberto Luiz Coimbra de Pós-Graduação e Pesquisa de Engenharia
-   (COPPE)**
+2. **Instituto Alberto Luiz Coimbra de Pós-Graduação e Pesquisa de Engenharia**
 3. O nome do **Programa de Pós-graduação** em que o trabalho foi defendido.
+
+**Sem sigla na segunda linha.** O Anexo A do Manual, que é o modelo da capa,
+escreve o nome da unidade por extenso e sem sigla ("ESCOLA DE BELAS ARTES"). A
+sigla da COPPE não se perde: ela está no logotipo, no alto da mesma folha, e na
+frase da natureza da folha de rosto ("…, COPPE, da Universidade Federal do Rio
+de Janeiro, …").
 
 ## 3. Programas de Pós-graduação da COPPE — *Dado próprio*
 

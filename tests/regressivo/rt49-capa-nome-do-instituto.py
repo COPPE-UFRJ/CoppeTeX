@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
-"""Teste de conformidade da CoppeTeX. NAO roda na suite normal.
+"""Teste de conformidade da CoppeTeX.
 
 BUG: (inconsistencia, Norma COPPE 2) a capa compunha a segunda linha da instituicao como "INSTITUTO ALBERTO LUIZ COIMBRA DE POS-GRADUACAO E PESQUISA DE ENGENHARIA", e a Norma COPPE 2026 manda "Instituto Alberto Luiz Coimbra de Pos-Graduacao e Pesquisa de Engenharia (COPPE)" (#129).
-ABERTO: #129
 
 A 3.1.1 do Manual UFRJ/SiBI pede o nome da instituicao e deixa os niveis em
 aberto; a secao 2 da Norma COPPE fixa as tres linhas. Classe e Norma tem de dizer

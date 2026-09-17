@@ -49,6 +49,14 @@ run it, and the fix removes the mark.
 
 ### Changed
 
+- **The Norma COPPE drops the acronym from the institute line of the capa**
+  (#129). Section 2 asked for "Instituto Alberto Luiz Coimbra de
+  Pós-Graduação e Pesquisa de Engenharia (COPPE)" and the class composed the
+  line without the acronym, so norm and implementation disagreed. Annex A of
+  the Manual, the model of the capa, writes the unit's name in full and without
+  an acronym ("ESCOLA DE BELAS ARTES"), and the acronym is not lost: it is in
+  the logo at the top of the same sheet and in the natureza sentence of the
+  folha de rosto. The norm follows the model; the class is unchanged.
 - **The logos are printed on the capa only** (#130). The folha de rosto
   repeated the capa's logo line. Annex A of the Manual puts "Logo da UFRJ" and
   "Logo do Programa" at the top of the **capa**, and marks both as optional;
