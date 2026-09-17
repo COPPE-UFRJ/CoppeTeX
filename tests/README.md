@@ -23,7 +23,7 @@ every compile and only matter to whoever is running the tests at that moment.
 This directory holds smoke tests that exercise public APIs of `ufrj.cls`.
 Every one of them is a COPPE document: it loads `\usepackage{ufrj-coppe}` right
 after the class. The class alone, with no unit style, is proved by
-`regressivo/r33`, and a made-up unit by `regressivo/r34`.
+`regressivo/rtu01`, and a made-up unit by `regressivo/rtu02`.
 Each `.tex` file is meant to compile cleanly (no LaTeX errors, no new warnings)
 under the standard pipeline:
 

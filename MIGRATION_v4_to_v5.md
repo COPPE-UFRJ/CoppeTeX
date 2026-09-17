@@ -164,14 +164,14 @@ Se você escreveu um pacote para outro idioma, ele precisa de quatro ajustes:
   o estilo da COPPE, a classe `coppe` de compatibilidade e os exemplos. Cada um
   tem o seu `.ins` e o seu manual. O harness, o painel e os verificadores já
   conhecem os dois.
-- **A classe não nomeia unidade nenhuma.** `tests/regressivo/r36` reprova
-  qualquer menção à COPPE no código que o `ufrj.ins` gera, e `r33` compõe um
+- **A classe não nomeia unidade nenhuma.** `tests/regressivo/rtu04` reprova
+  qualquer menção à COPPE no código que o `ufrj.ins` gera, e `rtu01` compõe um
   trabalho sem estilo e cobra que nada da COPPE apareça no PDF.
 - A interface entre a classe e o estilo é pública e está documentada no
   `ufrj.pdf`, na seção *A instituição e a unidade*: `\ufrjdeclareunit`,
   `\ufrjdeclareprogram`, `\ufrjdeclarelogos`, `\ufrjdeclarenorm` e
-  `\ufrjdefunitstring`. `r34` prova que uma unidade inventada se escreve só com
-  ela, e `r35` que um documento da 4.1 continua compilando.
+  `\ufrjdefunitstring`. `rtu02` prova que uma unidade inventada se escreve só com
+  ela, e `rtu03` que um documento da 4.1 continua compilando.
 - Os textos de uma unidade ficam numa tabela própria, que tem precedência sobre a
   dos pacotes de idioma, carregados antes ou depois.
 - Três passos, cada um conferido contra imagens das páginas do estado anterior:

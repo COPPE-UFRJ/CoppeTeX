@@ -14,7 +14,7 @@ aviso**.
 Se você quer mudar o comportamento da classe, mude o `ufrj.dtx`. Se quer mudar
 o que é da COPPE — um Programa, o logotipo, uma frase —, mude o
 `ufrj-coppe.dtx`. **A classe não nomeia unidade nenhuma**, e isso também é
-cobrado: `tests/regressivo/r36` lê o código que o `ufrj.ins` gera e reprova
+cobrado: `tests/regressivo/rtu04` lê o código que o `ufrj.ins` gera e reprova
 qualquer menção à COPPE.
 
 Isso é verificado, e não é honra. `tools\prova.ps1` roda os dois `.ins` e pergunta

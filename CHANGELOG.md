@@ -65,11 +65,11 @@ is. What to change, and when, is in
   `coppe`, the `.bib` field `coppedegree`, and the internal names that `.toc`,
   `.lab` and the list files written by 4.1 contain, so the first compilation
   after the update reads them without error.
-- **Four regression tests of the split.** `r33` composes a work with the class
-  alone and forbids every COPPE phrase in the PDF; `r34` composes one with a
-  made-up unit style that uses only the public interface; `r35` compiles a 4.1
+- **Four regression tests of the split.** `rtu01` composes a work with the class
+  alone and forbids every COPPE phrase in the PDF; `rtu02` composes one with a
+  made-up unit style that uses only the public interface; `rtu03` compiles a 4.1
   work — `\documentclass{coppe}`, old names, a `.toc` written by the old class;
-  `r36` reads the class, the bibliography styles, the language packs and the
+  `rtu04` reads the class, the bibliography styles, the language packs and the
   glossary style that `ufrj.ins` generates, and fails if one names COPPE or any
   of its data.
 

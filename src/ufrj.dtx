@@ -173,7 +173,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \changes{v5.0}{2026/09/15}{COPPE is the unit style ufrj-coppe, with its own source (ufrj-coppe.dtx and ufrj-coppe.ins), its own manual (ufrj-coppe.pdf) and every example document, which all load it. A work begun with the class coppe compiles as it is: coppe.cls is now a compatibility class that loads ufrj with the same options, loads ufrj-coppe and writes one warning, and the style keeps the old public names as aliases, the old colophon pieces answering renewcommand by the old name, the three internal names that auxiliary files written by the old class contain, the page style coppe and the bib field coppedegree.}
 % \changes{v5.0}{2026/09/15}{The colophon names the class and the project apart -- Foi utilizada a classe ufrj, do projeto CoppeTeX -- where it said a classe CoppeTeX, which is the name of the project and not of a class. The norm it cites is the one the unit declares with ufrjdeclarenorm, and the UFRJ/SiBI Manual when no unit declares one.}
 % \changes{v5.0}{2026/09/15}{The documentation follows the split: this manual (ufrj.pdf) describes the class and the interface a unit style uses; ufrj-coppe.pdf describes only what COPPE declares; manual.pdf, the norm, is written for UFRJ with COPPE as the example; and the migration guide from 4.x to 5.0 tells the author of a work begun with the class coppe what to change.}
-% \changes{v5.0}{2026/09/15}{tests/regressivo gains four tests of the split: r33 composes a work with the class alone and forbids every COPPE phrase, r34 composes one with a made-up unit style that uses only the public interface, r35 compiles a work of the class coppe with the old names and a .toc written by the old class, and r36 reads the class, the bibliography styles, the language packs and the glossary style and fails if one names COPPE or any of its data.}
+% \changes{v5.0}{2026/09/15}{tests/regressivo gains four tests of the split: rtu01 composes a work with the class alone and forbids every COPPE phrase, rtu02 composes one with a made-up unit style that uses only the public interface, rtu03 compiles a work of the class coppe with the old names and a .toc written by the old class, and rtu04 reads the class, the bibliography styles, the language packs and the glossary style and fails if one names COPPE or any of its data.}
 % \changes{v4.0}{2026/05/30}{Catalog-label writers (coppe@mainBegin, coppe@bibBegin, coppe@bibEnd, coppe@hasLof) made language-agnostic: detokenize wrap on label names protects ':' and '.' from babel shorthand activation, and the raw etex primitives romannumeral/number replace LaTeX's roman/arabic to bypass spanish-babel's small-caps @roman redefinition that would otherwise crash pdftex with "Unbalanced write command" on every es-main document.}
 %
 % \DoNotIndex{\!,\',\.,\>,\^,\`,\',\=,\\}
@@ -2918,8 +2918,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %
 % A divisão tem uma regra: \textbf{a classe não sabe nada de unidade}. Nada
 % do que o |ufrj.ins| gera pode nomear a COPPE, e isso é cobrado pelo
-% |tests/regressivo/r36|; o |r33| prova pelo PDF que a classe sem estilo
-% compõe um trabalho da UFRJ, e o |r34| que uma unidade inventada se escreve só
+% |tests/regressivo/rtu04|; o |rtu01| prova pelo PDF que a classe sem estilo
+% compõe um trabalho da UFRJ, e o |rtu02| que uma unidade inventada se escreve só
 % com a interface da seção~\ref{sec:unidade}. Um estilo de unidade novo é um
 % |.dtx| novo, que copia o |ufrj-coppe.dtx|.
 %

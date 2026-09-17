@@ -293,7 +293,7 @@ language packs, the `.bib` bases, the `.ist`, the English quick reference and
 the `latexmkrc`; `pdflatex ufrj-coppe.ins` generates the COPPE unit style, the
 `coppe` compatibility class, the examples and the cover montage. No derived
 file is edited by hand. The class generates no document and names no unit, and
-`tests/regressivo/r33` to `r36` hold that line.
+`tests/regressivo/rtu01` to `rtu04` hold that line.
 
 What exists only to *prove* the class works is not distributed and is not in
 the `.dtx`: everything under `tests/` and the harness in `tools/`. One command

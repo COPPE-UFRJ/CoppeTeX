@@ -26,6 +26,17 @@ O filtro é qualquer pedaço do nome. `--manter` deixa os arquivos intermediári
 para você olhar; sem ele fica só o PDF, que é o que se abre quando um teste
 falha. Pelo painel: `coppetex.bat --regressivo`.
 
+O nome de cada teste começa por um prefixo que diz de onde ele veio:
+
+| Prefixo | Origem |
+|---|---|
+| `r` | um defeito da classe até a 4.1, ou das ferramentas (`r90` em diante) |
+| `rt` | a conferência contra o Manual UFRJ/SiBI 2026, feita no `master` (issue #112) — cada um falha até a issue dele ser corrigida |
+| `rtu` | a classe `ufrj` e o estilo de unidade, da 5.0 |
+
+O filtro por pedaço do nome continua valendo: `rtu` roda só os da 5.0, e `rt3`
+roda os da conferência que começam por 3.
+
 Precisa do `pdflatex`, do `lualatex` (um teste), do `biber`, do `makeindex` e do
 `pdftotext`. Sem o `pdftotext` as cobranças de texto são **puladas com aviso** —
 nunca aprovadas em silêncio.
@@ -110,11 +121,19 @@ sempre que o defeito for de uma folha só.
 | `r30-colofao-na-compilacao` | O colofão anunciava "Latin Modern" mesmo depois de o autor trocar de fonte, e dizia só o nome do motor — sem versão, sem sistema TeX, sem formato, sem data e sem hora. Colofão é registro de como **aquele** exemplar foi produzido. O teste troca `\familydefault` para uma família que a classe não conhece e cobra que o colofão diga a família nova. |
 | `r31-bib-em-subpasta` | Não repara defeito antigo: prova uma recomendação. Os `.bib` passaram a morar numa subpasta, e o teste cobra as duas metades da resposta — que o caminho relativo **funciona** sem o `src/` para socorrer, e que ele **protege**, porque um nome pelado passa pela busca do kpathsea e acha, em silêncio, o `.bib` de mesmo nome que vem na distribuição do TeX. |
 | `r32-tipo-do-trabalho-obrigatorio` | A única opção sem padrão é o tipo do trabalho, e nada cobrava que ela viesse. Sem ela a classe carregava em silêncio e morria mais tarde, dentro do `\maketitle`, com `Undefined control sequence \local@doctype` apontando para uma linha da própria classe. Agora para com uma mensagem que nomeia as cinco opções, e o teste cobra também que a cascata de quarenta erros **não** volte. |
-| `r33-classe-sem-unidade` | Não repara defeito antigo: guarda a separação em camadas da v5.0. A classe `ufrj`, **sem estilo de unidade nenhum**, compõe o trabalho inteiro com os textos da UFRJ — "Programa de Pós-Graduação em", "apresentada à UFRJ", "em conformidade com o Manual" — e não escreve o Instituto, a sigla, o grau "em Ciências" nem a norma da COPPE. |
-| `r34-unidade-ficticia` | Não repara defeito antigo: prova o objetivo da v5.0. Uma unidade inventada, no `ufrj-ficticia.sty` desta pasta, escrita **só com a interface pública** da classe, troca a capa, a natureza, a abertura do resumo, a referência e o colofão — com outra sigla, outro artigo e outro nome de grau — sem que a classe mude. |
-| `r35-classe-coppe-antiga` | Não repara defeito antigo: guarda a compatibilidade com o que foi escrito até a v4.1. `\documentclass{coppe}`, `\newcoppefloat`, `\coppetexfinalpage`, um `\renewcommand\coppefinalmanual` e um `.toc` escrito pela classe antiga compilam sem erro e com um aviso só. O `.toc` velho é o caso que a própria troca de nome encontrou: sem o apelido de `\coppe@tocapp`, a primeira compilação parava. |
-| `r36-classe-nao-nomeia-unidade` | Não repara defeito antigo: a mesma separação do r33, cobrada no **código**. Nada do que o `ufrj.ins` gera — classe, estilos de bibliografia, pacotes de idioma — pode nomear a COPPE, o Instituto, o logotipo, o grau "em Ciências" ou a sigla de um Programa. Pega o dado que voltasse para um ramo que o documento do r33 não percorre. Rodado contra a classe da v4.1, falha. |
 | `r23-terceiro-resumo-com-titulo` | O terceiro resumo saía **sem título**. Ao fechar, o `foreignabstract` apagava `\local@title` — faxina de quando ele era a última folha pré-textual. Desde a v4.0 não é: o `brazilianabstract` vem depois e compõe o título com o que acabara de ser apagado. Só aparece em trabalho escrito em espanhol, e ia para o depósito assim. |
+
+### A classe da UFRJ e o estilo da unidade (`rtu`)
+
+Os testes da 5.0. Nenhum repara defeito antigo: guardam a separação entre a
+classe `ufrj` e o estilo da unidade.
+
+| Arquivo | O que guarda |
+|---|---|
+| `rtu01-classe-sem-unidade` | Não repara defeito antigo: guarda a separação em camadas da v5.0. A classe `ufrj`, **sem estilo de unidade nenhum**, compõe o trabalho inteiro com os textos da UFRJ — "Programa de Pós-Graduação em", "apresentada à UFRJ", "em conformidade com o Manual" — e não escreve o Instituto, a sigla, o grau "em Ciências" nem a norma da COPPE. |
+| `rtu02-unidade-ficticia` | Não repara defeito antigo: prova o objetivo da v5.0. Uma unidade inventada, no `ufrj-ficticia.sty` desta pasta, escrita **só com a interface pública** da classe, troca a capa, a natureza, a abertura do resumo, a referência e o colofão — com outra sigla, outro artigo e outro nome de grau — sem que a classe mude. |
+| `rtu03-classe-coppe-antiga` | Não repara defeito antigo: guarda a compatibilidade com o que foi escrito até a v4.1. `\documentclass{coppe}`, `\newcoppefloat`, `\coppetexfinalpage`, um `\renewcommand\coppefinalmanual` e um `.toc` escrito pela classe antiga compilam sem erro e com um aviso só. O `.toc` velho é o caso que a própria troca de nome encontrou: sem o apelido de `\coppe@tocapp`, a primeira compilação parava. |
+| `rtu04-classe-nao-nomeia-unidade` | Não repara defeito antigo: a mesma separação do rtu01, cobrada no **código**. Nada do que o `ufrj.ins` gera — classe, estilos de bibliografia, pacotes de idioma — pode nomear a COPPE, o Instituto, o logotipo, o grau "em Ciências" ou a sigla de um Programa. Pega o dado que voltasse para um ramo que o documento do rtu01 não percorre. Rodado contra a classe da v4.1, falha. |
 
 ### As ferramentas
 

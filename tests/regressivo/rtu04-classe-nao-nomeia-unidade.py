@@ -6,9 +6,9 @@ BUG: nao havia defeito antigo aqui -- este teste guarda, no CODIGO, a separacao 
 Ate a v4.1 o nome do Instituto, os treze Programas, o logotipo, "a COPPE/UFRJ",
 "em Ciencias" e a norma do colofao estavam espalhados pelo meio da classe, e os
 pacotes de idioma carregavam "a la COPPE/UFRJ". A v5.0 os tirou dali e os pos no
-estilo ufrj-coppe.sty. O r33 prova pelo PDF que a classe sozinha nao escreve
+estilo ufrj-coppe.sty. O rtu01 prova pelo PDF que a classe sozinha nao escreve
 nada disso; este prova pelo codigo, e pega o que o PDF nao pega: um dado da
-COPPE que voltasse para um ramo que o documento do r33 nao percorre.
+COPPE que voltasse para um ramo que o documento do rtu01 nao percorre.
 
 Le os arquivos que o ufrj.ins gera -- a classe, os estilos de bibliografia, os
 pacotes de idioma, o estilo do glossario --, ignora os comentarios, e procura os

@@ -66,8 +66,11 @@ RAIZ = os.path.dirname(os.path.dirname(AQUI))
 SRC = os.path.join(RAIZ, "src")
 
 DIRETIVA = re.compile(r"^%%\s*([A-Z-]+):\s*(.*?)\s*$")
-# r<numero>-<apelido>.tex ou .py. Ver o comentario em main().
-RE_NOME = re.compile(r"^r\d+-.*\.(tex|py)$")
+# <prefixo><numero>-<apelido>.tex ou .py. Ver o comentario em main(). Os
+# prefixos dizem de onde o teste veio: r, os defeitos da classe ate a 4.1; rt, os
+# da conferencia contra o Manual UFRJ/SiBI 2026 (issue #112), feita no master;
+# rtu, os da classe ufrj e do estilo de unidade, da 5.0.
+RE_NOME = re.compile(r"^r(?:tu?)?\d+-.*\.(tex|py)$")
 
 
 def ler_diretivas(caminho):
@@ -289,7 +292,8 @@ def um_teste_python(caminho):
 def main():
     argv = [a for a in sys.argv[1:] if not a.startswith("-")]
     manter = "--manter" in sys.argv
-    # O nome de um teste e r<numero>-<apelido>. O numero nao e enfeite: sem ele,
+    # O nome de um teste e r, rt ou rtu, um numero e um apelido. O numero nao e
+    # enfeite: sem ele,
     # "r" no comeco do nome bastava, e este proprio arquivo -- run-regressivo.py
     # -- se enquadrava. O rodador achava a si mesmo, rodava a si mesmo, e cada
     # copia achava a si mesma outra vez: uma recursao que so parou quando alguem

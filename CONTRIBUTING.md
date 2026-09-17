@@ -170,7 +170,7 @@ its own examples, or none.
 
 Put the unit's logo in `src/logos/` as a PDF. Build a document with the new
 style and check the cover, the folha de rosto, the abstract sheets and the
-colophon. `tests/regressivo/r34-unidade-ficticia.tex` shows what to check.
+colophon. `tests/regressivo/rtu02-unidade-ficticia.tex` shows what to check.
 
 ### 5. Submit (optional)
 
@@ -195,7 +195,7 @@ in between.
 
 **The class never names a unit.** Nothing generated from `ufrj.dtx` may
 mention COPPE, its institute, its logo or its Programas;
-`tests/regressivo/r36` checks the generated code and `r33` checks a PDF
+`tests/regressivo/rtu04` checks the generated code and `rtu01` checks a PDF
 composed without any unit style. If a change needs unit data, it needs a new
 declaration in the class interface, filled by the unit style.
 
