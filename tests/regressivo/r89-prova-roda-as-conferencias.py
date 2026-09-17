@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
-"""Teste de regressao da CoppeTeX (ferramentas). NAO roda na suite normal.
+"""Teste de regressao da CoppeTeX (ferramentas).
 
 BUG: a prova da versao nao rodava tools/conferir-referencias.py nem tools/conferir-norma.py; a referencia m-diss do exemplo.bib saiu errada na 4.1 (r66) com o verificador acusando a divergencia -- mas ninguem o chamava (#151).
-ABERTO: #151
 
 O PAINEL.md diz que `--tudo --regressivo --conferir --dist' tem de sair limpo
 antes de marcar uma versao. O `--conferir' do painel roda

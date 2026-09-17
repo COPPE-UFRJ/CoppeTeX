@@ -184,6 +184,7 @@ $env:COPPE_SRC = "C:\rascunho\src"; python tests/regressivo/r38-referencias-alin
 | `r67-ordem-das-listas` | #148 | Listas de ilustração depois da lista de tabelas nos modelos e na Norma COPPE §10 (3.1.2). Sem compilar. | |
 | `r68-conteudo-dos-exemplos` | #149 | Conteúdo dos exemplos contra o Manual: algoritmo sem fonte, acentos, palavras-chave, repetidas… Sem compilar. | |
 | `r69-mesmo-traco` | #150 | Traço diferente na legenda, no apêndice, no sumário e na Norma COPPE §12; cobra só que seja o mesmo. | |
+| `r70-lualatex-caracteres` | #152 | Achado ao ligar os verificadores à prova (#151): no LuaLaTeX, com `fontenc` T1, `º` saía `ž`, `§` saía `ğ`, e travessão, aspas curvas e reticências sumiam. Compila a mesma amostra nos dois motores. | |
 
 A issue #130 (logotipos na folha de rosto) não tem teste: depende de decisão.
 
@@ -197,7 +198,7 @@ que verificador nenhum, porque parece que alguém conferiu.
 | `r90-log-de-uma-passada` | Os verificadores liam só o trecho do `.log` depois do **último** `LaTeX2e <`, achando que o arquivo guardasse várias passadas. Não guarda: o que aparece duas vezes é o banner, que o LaTeX repete no fim. O corte jogava fora o corpo da passada — onde estão os avisos — e o verificador passou a aprovar qualquer coisa. |
 | `r91-logotipo-ausente` | Quem copiava só o `coppe.cls` recebia `File 'coppe-logo' not found`, sem pista de que o arquivo vem com a classe. |
 | `r93-dist-basta-sozinha` | A pasta `dist/` é a única coisa que o aluno baixa, e nada garantia que ela bastasse — já saiu incompleta mais de uma vez, e o defeito só aparecia do outro lado, na máquina de quem foi escrever a tese. Aqui tudo compila porque `src/` está no caminho de busca do TeX e supre o que faltar. O teste tira essa muleta: copia `dist/` para uma pasta temporária, aponta o `TEXINPUTS` só para ela e compila os três exemplos. É o mais demorado da suíte. |
-| `r89-prova-roda-as-conferencias` | Aberto (#151). A prova não rodava `conferir-referencias.py` nem `conferir-norma.py`; a m-diss do `exemplo.bib` saiu errada na 4.1 com o verificador acusando a divergência, mas ninguém o chamava. Sem compilar: cobra que o painel ou o `build-check` chamem os dois. |
+| `r89-prova-roda-as-conferencias` | A prova não rodava `conferir-referencias.py` nem `conferir-norma.py` (#151); a m-diss do `exemplo.bib` saiu errada na 4.1 com o verificador acusando a divergência, mas ninguém o chamava. Sem compilar: cobra que o painel ou o `build-check` chamem os dois. No primeiro dia ligados, os dois acharam o `nž` do LuaLaTeX (#152). |
 | `r92-lista-do-dist` | A cópia para `dist/` levava junto o `README.md` da raiz — que é a proposta para a CPGP, não o guia de instalação — e os cinco exemplos por idioma, que tinham sido tirados de propósito. A lista estava escrita em dois lugares e os dois divergiram. Este teste lê a lista; não compila nada. Cobra também que o rodador da primeira camada não volte a morrer no banner do `makeindex`. |
 
 Um defeito do próprio rodador ficou de fora da tabela porque está corrigido no

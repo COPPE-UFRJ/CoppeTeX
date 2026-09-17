@@ -12,17 +12,47 @@ A comparacao ignora o que nao e da norma: quebras de linha e de hifenizacao do
 pdftotext, os espacos que o biblatex mete dentro de URLs longas, e a diferenca
 entre hifen, meia-risca e travessao. O resto conta.
 
-    python3 tools/conferir-referencias.py tests/adversativa/adv_dsc_pt.pdf
-    CONFERIR=-v python3 tools/conferir-referencias.py tests/adversativa/adv_dsc_pt.pdf
+    python3 tools/conferir-referencias.py
+    python3 tools/conferir-referencias.py tests/adversativa/adv_dscexam_pt.pdf
+    CONFERIR=-v python3 tools/conferir-referencias.py tests/adversativa/adv_dscexam_pt.pdf
 
-Precisa de python3 e poppler (pdftotext, pdfinfo). O documento tem de ter sido
+Precisa de python3 e poppler (pdftotext). O documento tem de ter sido
 compilado com a opcao de classe `numbers': e a marca [n] que separa uma
 referencia da seguinte no texto extraido.
-"""
-import sys, re, os, subprocess, unicodedata
 
-BIB = os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                   "..", "tests", "adversativa", "referencias-manual.bib")
+Sem argumento, confere os documentos adversativos ja compilados que carregam o
+gabarito com a opcao `numbers', nos dois motores. E assim que o `--conferir' do
+painel e o build-check.ps1 o chamam: a lista mora aqui, e so aqui. Ficar fora
+dos dois foi o que deixou a m-diss sair errada na 4.1 com este script acusando
+a divergencia para ninguem (#151).
+"""
+import sys, re, os, subprocess, unicodedata, glob
+
+# Saida por um cano, no Windows: sem isto o primeiro caractere fora da
+# codificacao do console derrubava o verificador no meio do relato.
+if hasattr(sys.stdout, "reconfigure"):
+    try:
+        sys.stdout.reconfigure(errors="replace")
+    except (ValueError, OSError):
+        pass
+
+ADVERSATIVA = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                           "..", "tests", "adversativa")
+BIB = os.path.join(ADVERSATIVA, "referencias-manual.bib")
+
+
+def alvos_padrao():
+    """Os adversativos compilados que servem ao gabarito: os que carregam
+    referencias-manual.bib com a opcao `numbers', pdfLaTeX e LuaLaTeX."""
+    alvos = []
+    for tex in sorted(glob.glob(os.path.join(ADVERSATIVA, "adv_*.tex"))):
+        fonte = open(tex, encoding="utf-8", errors="replace").read()
+        m = re.search(r"\\documentclass\[([^\]]*)\]", fonte)
+        opcoes = [o.strip() for o in m.group(1).split(",")] if m else []
+        if "numbers" in opcoes and "referencias-manual.bib" in fonte:
+            base = os.path.splitext(tex)[0]
+            alvos += [p for p in (base + ".pdf", base + "_lua.pdf") if os.path.exists(p)]
+    return alvos
 
 
 def gabaritos(caminho):
@@ -87,12 +117,12 @@ def _saida(args):
 
 
 def referencias_do_pdf(pdf):
-    """As referencias compostas, na ordem, separadas pela marca [n]."""
-    info = _saida(["pdfinfo", pdf])
-    n = int(re.search(r"^Pages:\s+(\d+)", info, re.M).group(1))
-    todo = ""
-    for p in range(1, n + 1):
-        todo += _saida(["pdftotext", "-f", str(p), "-l", str(p), pdf, "-"])
+    """As referencias compostas, na ordem, separadas pela marca [n].
+
+    O documento inteiro numa chamada so do pdftotext. Folha a folha, como era,
+    dava o mesmo texto e custava meio segundo por folha no Windows (#151).
+    """
+    todo = _saida(["pdftotext", pdf, "-"])
     m = re.search(r"^\s*REFER[ÊE]NCIAS\s*$", todo, re.M)
     if not m: return []
     corpo = re.sub(r"(?m)^\s*\d{1,3}\s*$", "", todo[m.end():])
@@ -150,7 +180,13 @@ def diferenca(esperado, obtido):
 if __name__ == "__main__":
     alvos = sys.argv[1:]
     if not alvos:
-        print(__doc__); sys.exit(2)
+        alvos = alvos_padrao()
+        if not alvos:
+            # Nada compilado ainda. Diz o que faltou, em vez de sair calado: um
+            # verificador que nao conferiu nada nao pode parecer aprovacao.
+            print("=== pulado: nenhum documento adversativo com o gabarito foi "
+                  "compilado (coppetex.bat --adversativo)")
+            sys.exit(0)
     gab = gabaritos(BIB)
     verboso = "-v" in os.environ.get("CONFERIR", "")
     total_dif = 0

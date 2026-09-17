@@ -9,7 +9,8 @@ histórico, como o `REVISAO_SIBI.md`).
 - **Base:** `master` em `b8103c7` (v4.1). O trabalho vai num **ramo novo**.
 - **Norma:** `specs/Manual para elaboração e normalização de trabalhos acadêmicos 2024.pdf`
   (é a 9.ª ed. rev., 2026 — ver `specs/README.md`) e o modelo da folha adicional.
-- **Issues:** guarda-chuva **#112**; uma por problema, **#113 a #151**.
+- **Issues:** guarda-chuva **#112**; uma por problema, **#113 a #151**, e
+  **#152** (LuaLaTeX, achada ao corrigir #151; teste `r70`).
 - **Testes:** `tests/regressivo/r33` a `r69` e `r89` — **todos falham hoje**
   (`38 teste(s), 38 falha(s)`); o apoio `tests/regressivo/medidas.py`; a tabela
   está no `tests/regressivo/README.md`. Cada um traz a marca `ABERTO: #<issue>`,
@@ -146,7 +147,7 @@ correções mexem no mesmo código.
 | Fase | Issues | Por quê |
 |---|---|---|
 | **0. Decisões** (perguntar ao usuário, registrar na issue) | #128 idioma das folhas de identidade · #129 "(COPPE)" na capa · #130 logotipos na folha de rosto · #150 travessão ou meia-risca · #124 `pdfa` por padrão · versão 4.1 ou 4.2 · confirmar #113 (muda a aparência) | O que se implementa em #116, #119, #128–#130 depende disto |
-| **1. Rede de segurança** | #151 (prova roda `conferir-norma` e `conferir-referencias`) · #147 (m-diss) | A partir daqui a prova acusa regressão de referência e de leiaute |
+| **1. Rede de segurança** | #151 (prova roda `conferir-norma` e `conferir-referencias`) · #147 (m-diss) · #152 (LuaLaTeX com T1) | A partir daqui a prova acusa regressão de referência e de leiaute; #147 e #152 são as duas divergências que o #151 passou a acusar |
 | **2. Títulos** | #113 corpo 12 · #122 espaço depois do título | Mesmo bloco de `\titleformat`/`\titlespacing`; conferir `r04`, `r95`, `r22` |
 | **3. Sumário e listas** | #115 coluna dos pós-textuais · #116 nome e traço nas listas · #148 ordem das listas | Mesmo envoltório `\coppe@wrapstarttoc`; #116 usa o traço de #150 |
 | **4. Pré-textuais** | #114 título do resumo · #119 referência do resumo · #123 dedicatória e epígrafe · #128 · #129 · #130 | #119 depois de #150 e de #131 (forma do título:subtítulo) |
@@ -425,12 +426,32 @@ prototipada; conferir com cuidado.
   mostrar isso. "Algoritmo 6.1". Lista de abreviaturas sem as entradas de teste.
   `\LaTeX` em título: usar `\texorpdfstring` ou evitar o logotipo em caixa alta.
 
-### #151 — a prova roda os verificadores · `r89` · proposta
-- `tools/painel.py` `acao_conferir`: acrescentar `conferir-norma.py` (max-exemplo,
-  min-exemplo, adversativos) e `conferir-referencias.py` (adv_dscexam_pt, adv_msc_en).
-- `tools/build-check.ps1` escopo `prova`: idem, contando divergência como falha.
-- Discussão aberta: estender `conferir-norma.py` com as medidas de r33–r43, ou
-  confiar na suíte de regressão (que a prova já roda).
+### #151 — a prova roda os verificadores · `r89` · FEITA
+- Os dois verificadores, sem argumento, sabem o que conferir (a lista mora
+  neles): `conferir-norma.py` → `src/max-exemplo.pdf`, `src/min-exemplo.pdf` e
+  todo `adv_*.pdf`; `conferir-referencias.py` → os `adv_*` com `numbers` e
+  `referencias-manual.bib` (hoje só o `adv_dscexam_pt`), nos dois motores.
+- `painel.py --conferir` chama os dois sem argumento; `build-check.ps1` chama o
+  `conferir-norma` logo depois do escopo `example` e os dois depois do
+  `adversativa` (e portanto no `all` e na `prova`), com as linhas acusadas no
+  `RESULTADO.txt`.
+- Uma chamada do `pdftotext` por documento, e não por folha: os mesmos 7 PDFs
+  levavam 174 s e levam 18 s; os 14 (dois exemplos, doze adversativos) mais o
+  gabarito, 40 s.
+- Ligados, acusaram duas coisas: m-diss (#147) e o `nž` do LuaLaTeX (#152). A
+  prova só sai limpa depois das duas.
+- Continua aberta a discussão: estender `conferir-norma.py` com as medidas de
+  r33–r43, ou confiar na suíte de regressão.
+
+### #152 — LuaLaTeX com `fontenc` T1 · `r70` · proposta
+- No ramo dos motores Unicode (`\ifPDFTeX ... \else`), não carregar `fontenc` T1:
+  fica a codificação TU do kernel, com a Latin Modern em OpenType
+  (`tulmr.fd`, `tulmss.fd`, `tulmtt.fd` já vêm no LaTeX base).
+- Refazer para TU as substituições de forma que a classe declara para `T1/lmss`;
+  conferir o `\begingroup\fontencoding{T1}...` de pré-carga; colofão (`r30`),
+  `comserifa`, `listings`/`\texttt`, `r14` (id no LuaLaTeX).
+- `r70` pelo nome; depois os gêmeos `_lua` da adversativa pelo
+  `conferir-referencias.py` (0 divergências) e pelo veraPDF.
 
 ### #124 — `pdfa` por padrão · `r44` · proposta (decisão na fase 0)
 - `\@coppepdfatrue` por padrão, `\DeclareOption{sempdfa}{\@coppepdfafalse}`, manter
@@ -458,7 +479,8 @@ prototipada; conferir com cuidado.
 ### #128, #129, #130, #150 — decisões
 - Implementar só depois da resposta registrada na issue. `r48`, `r49`, `r69` já
   são neutros quanto à decisão. `r19` muda se #128 for "tudo em português".
-- #130 não tem teste: se sair o logotipo da folha de rosto, criar `r70`. Os
+- #130 não tem teste: se sair o logotipo da folha de rosto, criar `r71` (o `r70`
+  ficou com o #152). Os
   logotipos são PDF vetorial incluído (XObject de formulário), que o
   `pdfimages` não lista: medir tinta na faixa de 3 a 5,5 cm do topo da folha 2
   com `pdftoppm -gray` (como o `tinta_folio` do `conferir-norma.py`), ou procurar

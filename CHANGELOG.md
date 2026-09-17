@@ -4,6 +4,30 @@ Project changes worth noting, newest first. Follows
 [Keep a Changelog](https://keepachangelog.com/) loosely; dates are
 ISO-8601.
 
+## [Unreleased] — Full check against the UFRJ/SiBI Manual (2026)
+
+On 2026-09-16, version 4.1 was checked in full against the Manual (9th ed.
+rev., 2026) and the CAPES additional-sheet model. Each defect found has one
+issue (#113–#152, umbrella #112) and a minimal test in `tests/regressivo/`
+(`r33`–`r70`, `r89`) that fails until the fix lands. The fix plan is
+`CORRECOES_MANUAL_2026.md`. A test still waiting for its fix carries an
+`ABERTO: #<issue>` mark: the unfiltered regression run lists it but does not
+run it, and the fix removes the mark.
+
+### Verification
+
+- **The proof now runs the two checkers that compare the finished PDF with the
+  Manual** (#151). `conferir-norma.py` (sheet, folio, margins, sumário) and
+  `conferir-referencias.py` (each reference against the Manual's own
+  examples) were in neither `coppetex.bat --conferir` nor `build-check.ps1`,
+  so the m-diss reference shipped wrong in 4.1 while the checker reported the
+  divergence to no one. Both now run in `--conferir`, and in `build-check.ps1`
+  right after the examples and the adversarial documents are compiled.
+  Without arguments, each knows which PDFs to read. Each reads a document with
+  one `pdftotext` call instead of one per page, which cuts 174 s to about 20 s.
+  On their first run they found the m-diss divergence (#147) and a LuaLaTeX
+  defect (#152).
+
 ## [4.1] — 2026-09-14 — Revision of the 4.1 release
 
 Still version 4.1: these are corrections to the release published on
