@@ -127,7 +127,9 @@ Instituto, nome do Programa, cidade (Rio de Janeiro), estado (RJ) e país
 principal do trabalho.
 
 Acompanham o idioma principal apenas o título do trabalho, o subtítulo, a
-natureza, o objetivo e a área de concentração.
+natureza e o objetivo. A área de concentração não entra na conta: ela é campo
+da folha adicional, que é um formulário da Coleta CAPES em português, e não
+figura nas folhas de identidade.
 
 ## 5. Orientação na folha de rosto — *Escolha*
 

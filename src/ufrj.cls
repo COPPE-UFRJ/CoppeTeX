@@ -281,7 +281,7 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
   \floatstyle{plaintop}\newfloat{#1}{htbp}{lo#1}[chapter]%
   \floatname{#1}{#2}%
   \expandafter\let\csname l@#1\endcsname\l@figure
-  \expandafter\def\csname coppe@listname@lo#1\endcsname{#2}%
+  \expandafter\def\csname ufrj@listname@lo#1\endcsname{#2}%
   \AtBeginDocument{\expandafter\let\csname l@#1\endcsname\l@figure}%
   \expandafter\providecommand\csname #1autorefname\endcsname{#2}%
   \expandafter\newcommand\csname listof#1s\endcsname{%
@@ -461,6 +461,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \newif\if@ufrjresorient \@ufrjresorienttrue
 \newif\if@ufrjlistastoc \@ufrjlistastocfalse
 \DeclareOption{listasnosumario}{\@ufrjlistastoctrue}
+\newif\if@ufrjarearosto \@ufrjarearostofalse
+\DeclareOption{areanafolhaderosto}{\@ufrjarearostotrue}
 \newif\if@ufrjsimbalfa \@ufrjsimbalfafalse
 \DeclareOption{simbolosalfabeticos}{\@ufrjsimbalfatrue}
 \newif\if@ufrjrascunho \@ufrjrascunhofalse
@@ -2078,9 +2080,11 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \newcommand\local@countryname{Brasil}
 \newcommand\frontcover@maintext{
   \sloppy\nohyphens{\ufrj@unitstrmain{natureza}}%
-  \ifthenelse{\equal{\ufrj@areaconc}{}}{}{%
-    \par\vspace{1ex}%
-    \sloppy\nohyphens{Área de concentração: \ufrj@areaconc.}}%
+  \if@ufrjarearosto
+    \ifthenelse{\equal{\ufrj@areaconc}{}}{}{%
+      \par\vspace{1ex}%
+      \sloppy\nohyphens{Área de concentração: \ufrj@areaconc.}}%
+  \fi
 }
 \newcommand\ufrj@toptext[1]{%
   \noindent \@nameuse{ufrj@str@#1@abstractname}\

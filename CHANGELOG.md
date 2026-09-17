@@ -41,6 +41,17 @@ run it, and the fix removes the mark.
 
 ### Changed
 
+- **The area de concentracao leaves the folha de rosto and the folha de
+  aprovacao** (#155). The class used to append "Área de concentração: …" to the
+  natureza block of both identity sheets, on the strength of the prose in
+  3.1.2.1.1(e) and 3.1.2.1.3(c). The SiBI's own model — the two sheets that
+  3.1.2.1.2 links to, kept in `specs/` — carries the area on the **folha
+  adicional**, as the Coleta CAPES field "Área de concentração da produção
+  intelectual", and shows a folha de rosto without it; Annexes B and D end the
+  natureza block at the degree. The model wins. The new option
+  `areanafolhaderosto` brings the sentence back to both sheets for a Programa
+  that requires it, and `ufrj-coppe` does not set it. `\concentrationarea` is
+  unchanged and still mandatory for the folha adicional.
 - **Headings are set in the body size** (#113). 2.2(b) of the UFRJ Manual fixes
   size 12 for the work and allows only smaller sizes (long quotations, notes,
   folio, captions and sources, catalogue card). 2.6 builds the gradual emphasis

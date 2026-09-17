@@ -184,6 +184,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \changes{v5.0}{2026/09/15}{COPPE is the unit style ufrj-coppe, with its own source (ufrj-coppe.dtx and ufrj-coppe.ins), its own manual (ufrj-coppe.pdf) and every example document, which all load it. A work begun with the class coppe compiles as it is: coppe.cls is now a compatibility class that loads ufrj with the same options, loads ufrj-coppe and writes one warning, and the style keeps the old public names as aliases, the old colophon pieces answering renewcommand by the old name, the three internal names that auxiliary files written by the old class contain, the page style coppe and the bib field coppedegree.}
 % \changes{v5.0}{2026/09/15}{The colophon names the class and the project apart -- Foi utilizada a classe ufrj, do projeto CoppeTeX -- where it said a classe CoppeTeX, which is the name of the project and not of a class. The norm it cites is the one the unit declares with ufrjdeclarenorm, and the UFRJ/SiBI Manual when no unit declares one.}
 % \changes{v5.0}{2026/09/15}{The documentation follows the split: this manual (ufrj.pdf) describes the class and the interface a unit style uses; ufrj-coppe.pdf describes only what COPPE declares; manual.pdf, the norm, is written for UFRJ with COPPE as the example; and the migration guide from 4.x to 5.0 tells the author of a work begun with the class coppe what to change.}
+% \changes{v5.0}{2026/09/17}{The area de concentracao leaves the natureza block of the folha de rosto and of the folha de aprovacao, and the new option areanafolhaderosto brings it back. The SiBI model that 3.1.2.1.2 links to carries it on the folha adicional, as a Coleta CAPES field, and Annexes B and D end the natureza block at the degree; only the prose of 3.1.2.1.1(e) and 3.1.2.1.3(c) lists it among the elements of the two sheets. The data is untouched: areaconcentracao still feeds the folha adicional, where it is mandatory.}
 % \changes{v5.0}{2026/09/15}{tests/regressivo gains four tests of the split: rtu01 composes a work with the class alone and forbids every COPPE phrase, rtu02 composes one with a made-up unit style that uses only the public interface, rtu03 compiles a work of the class coppe with the old names and a .toc written by the old class, and rtu04 reads the class, the bibliography styles, the language packs and the glossary style and fails if one names COPPE or any of its data.}
 % \changes{v4.0}{2026/05/30}{Catalog-label writers (coppe@mainBegin, coppe@bibBegin, coppe@bibEnd, coppe@hasLof) made language-agnostic: detokenize wrap on label names protects ':' and '.' from babel shorthand activation, and the raw etex primitives romannumeral/number replace LaTeX's roman/arabic to bypass spanish-babel's small-caps @roman redefinition that would otherwise crash pdftex with "Unbalanced write command" on every es-main document.}
 %
@@ -1062,6 +1063,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \emph{Links} & clicáveis, sem cor nem moldura & \texttt{linkscommoldura} \texttt{linkscoloridos} \\
 % Folhas pré-textuais & contadas, não numeradas & \texttt{numeraisromanos} \\
 % Listas no sumário & fora dele & \texttt{listasnosumario} \\
+% Área de concentração nas folhas de identidade & \textbf{fora delas} & \texttt{areanafolhaderosto} \\
 % Seta da linha quebrada nas listagens & preta & \texttt{setavermelha} \\
 % Lista de símbolos & ordem de aparição & \texttt{simbolosalfabeticos} \\
 % Orientador na banca & em primeiro lugar & \texttt{semorientadornabanca} \\
@@ -1209,6 +1211,15 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %     começa em ``1~INTRODUÇÃO''. Use-a só se o seu Programa exigir, por
 %     escrito, o contrário. Os pós-textuais --- referências, glossário,
 %     apêndices, anexos e índice --- entram no sumário com ou sem ela.
+%   \item[\texttt{areanafolhaderosto}] \textbf{Desligada por padrão}: a área
+%     de concentração \emph{não} sai no bloco da natureza da folha de rosto
+%     nem no da folha de aprovação. É o que mostram o modelo oficial do SiBI
+%     --- aquele que a 3.1.2.1.2 manda baixar, e que traz a área entre os
+%     campos da Coleta CAPES, na folha adicional --- e os Anexos B e D, onde o
+%     bloco termina no grau. Ligue-a se o seu Programa exigir a frase
+%     ``Área de concentração: \dots'' nessas folhas; ela volta às duas, porque
+%     a 2.4 compõe as duas com o mesmo bloco. O dado continua obrigatório de
+%     qualquer jeito: |\areaconcentracao| alimenta a folha adicional.
 %   \item[\texttt{simbolosalfabeticos}] \textbf{Desligada por padrão}: a lista
 %     de símbolos sai na \textbf{ordem em que cada símbolo aparece pela
 %     primeira vez no texto}, como pede a 3.1.2.2.7. Ligue-a para ordenar em
@@ -1579,8 +1590,11 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \subsection{Folha de rosto e folha da Coleta CAPES}\label{sec:folha-adicional}
 %
 % \DescribeMacro{\areaconcentracao}
-% A área de concentração. Aparece na folha de rosto, na de aprovação e
-% na folha adicional.
+% A área de concentração, obrigatória: é um dos campos da Coleta CAPES, e sai
+% na \textbf{folha adicional}. \textbf{Não} sai na folha de rosto nem na de
+% aprovação --- o modelo oficial do SiBI e os Anexos B e D não a põem no bloco
+% da natureza. Um Programa que a exija ali liga a opção
+% |areanafolhaderosto|, e a frase volta às duas folhas.
 %
 % \DescribeMacro{\linhapesquisa}
 % A linha de pesquisa, impressa na folha de rosto à margem esquerda, logo acima
@@ -2675,7 +2689,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % Resumo                       & |abstract|              & 112 \\
 % Abstract                     & |foreignabstract|       & 128 \\
 % Listas pré-textuais        & |\listoffigures| \dots  & 146 \\
-% Sumário                    & |\tableofcontents|      & 235 \\
+% Sumário                    & |\tableofcontents|      & 246 \\
 % Parte textual                & |\mainmatter|           & 260 \\
 % Símbolo                    & |\symbl|                & 328 \\
 % Citação longa           & |longquote|             & 236 \\
@@ -3312,7 +3326,7 @@ semmorewrites & [dsc,semmorewrites] & \pre & Do not load \texttt{morewrites}. Sa
 
 \multicolumn{4}{@{}l@{}}{\normalfont\bfseries\small TITLE PAGE AND CAPES
   SHEET}\\[2pt]
-\textbackslash areaconcentracao & \textbackslash areaconcentracao\{Engenharia de Sistemas\} & \doc & Area of concentration. On three sheets. \\
+\textbackslash areaconcentracao & \textbackslash areaconcentracao\{Engenharia de Sistemas\} & \doc & Area of concentration. On the folha adicional; on the identity sheets only under the \texttt{areanafolhaderosto} option. \\
 \textbackslash linhapesquisa & \textbackslash linhapesquisa\{Engenharia de Dados\} & \doc & Research line, on the title page. Label follows the main language. Empty is fine. \\
 \textbackslash tipoproducao & \textbackslash tipoproducao\{bibliografica\} & \doc & One of \texttt{bibliografica}, \texttt{artistica}, \texttt{tecnologica}, \texttt{tecnica}. \\
 \textbackslash projetovinculado & \textbackslash projetovinculado\{sim\} & \doc & \texttt{sim} or \texttt{nao}: is there a linked research project? \\
@@ -4493,6 +4507,12 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % Programas that want the old behaviour ask for it by name.
 \newif\if@ufrjlistastoc \@ufrjlistastocfalse
 \DeclareOption{listasnosumario}{\@ufrjlistastoctrue}
+% A area de concentracao NAO sai no bloco da natureza das folhas de identidade:
+% o modelo do SiBI a poe na folha adicional (ver \frontcover@maintext). Um
+% Programa que a exija na folha de rosto pede pelo nome, e ela volta as duas
+% folhas.
+\newif\if@ufrjarearosto \@ufrjarearostofalse
+\DeclareOption{areanafolhaderosto}{\@ufrjarearostotrue}
 % A 3.1.2.2.7 pede a lista de simbolos "de acordo com a ordem que aparece no
 % texto". E o padrao desde a revisao da v4.1 (#100); `simbolosalfabeticos'
 % devolve a ordem alfabetica de antes, com a chave opcional de \symbl.
@@ -6424,7 +6444,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % margem direita, na parte inferior" -- o mesmo lugar da dedicatoria. Na parte
 % pre-textual "nao e necessario seguir a norma de citacao", entao a autoria vai
 % so abaixo do texto, alinhada a direita. O texto em si comeca no meio da
-% mancha, como o da dedicatoria (#123).
+% mancha, como o da dedicatoria (\#123).
 %    \begin{macrocode}
 \newcommand\epigrafe[2]{%
   \cleardoublepage
@@ -7329,10 +7349,26 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \newcommand\local@statename{RJ}
 \newcommand\local@countryname{Brasil}
 %
-% 3.1.2.1.1(e) of the 2026 manual requires the natureza, the objetivo, the
-% name of the institution AND the area de concentracao in this block. The area
-% was missing; it is appended as its own sentence when \areaconcentracao was
-% given, and simply omitted otherwise.
+% 3.1.2.1.1(e) and 3.1.2.1.3(c) of the 2026 manual list the natureza, the
+% objetivo, the name of the institution AND the area de concentracao among the
+% elements of the folha de rosto and of the folha de aprovacao, and until v5.0
+% the class appended the area as its own sentence in this block.
+%
+% The SiBI's own model says otherwise, and it wins: the two sheets of
+% specs/Folha adicional T&D Coleta+ CAPES.pdf -- the model the manual itself
+% links to in 3.1.2.1.2 -- carry the area de concentracao on the FOLHA
+% ADICIONAL, as a Coleta CAPES field ("Area de concentracao da producao
+% intelectual:"), and the folha de rosto has natureza, linha de pesquisa,
+% orientacao, city and year, with no area. Annex B (folha de rosto) and Annex D
+% (folha de aprovacao) show the same: the natureza block ends at the degree,
+% whose parenthesis is where the area shows up when it shows up at all
+% ("Mestre em Ciencias biologicas (Botanica)").
+%
+% So the sentence is off by default, and the areanafolhaderosto option brings
+% it back -- to BOTH identity sheets, because 2.4 sets them from the same block
+% -- for a Programa that requires it in writing. The data itself does not
+% change: \areaconcentracao goes on feeding the folha adicional, where it is
+% mandatory.
 %
 % A frase da natureza e a chave `natureza' da tabela, lida no idioma principal
 % e, na falta dela, em portugues -- que e o que sai hoje em todo idioma, porque
@@ -7340,9 +7376,11 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % subsecao "A instituicao e a unidade"; aqui fica so a montagem do bloco.
 \newcommand\frontcover@maintext{
   \sloppy\nohyphens{\ufrj@unitstrmain{natureza}}%
-  \ifthenelse{\equal{\ufrj@areaconc}{}}{}{%
-    \par\vspace{1ex}%
-    \sloppy\nohyphens{Área de concentração: \ufrj@areaconc.}}%
+  \if@ufrjarearosto
+    \ifthenelse{\equal{\ufrj@areaconc}{}}{}{%
+      \par\vspace{1ex}%
+      \sloppy\nohyphens{Área de concentração: \ufrj@areaconc.}}%
+  \fi
 }
 % \frontpage@maintext e \frontpage@bottomtext, que ninguem mais chama e que
 % escreviam o nome da COPPE com todas as letras, foram para o bloco da unidade,
