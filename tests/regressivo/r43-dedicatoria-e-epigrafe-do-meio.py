@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
-"""Teste de conformidade da CoppeTeX. NAO roda na suite normal.
+"""Teste de conformidade da CoppeTeX.
 
 BUG: (desconformidade, 3.1.2.2.1 e 3.1.2.2.3) a dedicatoria saia num bloco de 60 mm encostado na margem direita, com o texto alinhado a direita -- o bloco comecava por volta de 13 cm da borda, e nao no meio da mancha (#123).
-ABERTO: #123
 
 A 2.6, a 3.1.2.2.1 e a 3.1.2.2.3 do Manual UFRJ/SiBI recomendam dedicatoria e
 epigrafe digitadas com alinhamento do MEIO da mancha grafica ate a margem

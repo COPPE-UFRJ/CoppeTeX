@@ -34,6 +34,11 @@ histórico, como o `REVISAO_SIBI.md`).
    dentro de uma string — conferir `python -c "import ast; ..."` depois.
 3. **UTF-8** em tudo (nada de `\'a`), sem `\CharacterTable`/`\CheckSum`, sem
    `\paragraph` nos manuais (o max-exemplo tem exatamente um).
+3a. **`#` no texto de documentação do `.dtx` é `\#`.** Dentro de `macrocode` sai
+   verbatim e pode ficar; fora dele (e nas entradas de `\changes`) derruba o
+   manual com "macro parameter character". Aconteceu no `e0d0764`, corrigido no
+   `d088aa1`. Depois de mexer em parágrafo de documentação, compilar o manual
+   (`pdflatex coppe.dtx` num rascunho) **antes** do commit, em chamada separada.
 4. **Uma issue por problema**, fechada no commit que corrige, com o hash num
    comentário. Problema novo achado no caminho → issue nova.
 4a. **A suíte nova roda aos poucos, nunca inteira** (pedido do usuário). Cada

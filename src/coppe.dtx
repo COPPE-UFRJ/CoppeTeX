@@ -169,6 +169,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \changes{v4.1}{2026/09/12}{The files section described the delivery as it was before the folders: the logos in the root, no logos/, no manuais/, no language folders, and an instruction not to copy coppe.dtx and coppe.ins, which the delivery now ships on purpose. The developer sections still said twelve adversarial documents (there are six), still placed them outside tests/, and did not know tests/regressivo/ or the panel existed.}
 % \changes{v4.1}{2026/09/16}{The m-diss entry of exemplo.bib printed "1997. 203 f. Memoria Social e Documento Centro de Ciencias Humanas", without "Dissertacao (Mestrado em ...)": when the base moved to English field names, the Portuguese field curso became type instead of course, and the mscdiss type was lost. The checker that compares every reference with the Manual reported it, but the proof did not run the checker. The 34 Manual references now have different keys in the two bases (m- in exemplo.bib, pt- in the adversarial referencias-manual.bib): with the same keys, biber found every citation in the first file and never opened the second, so the Portuguese field names had gone unchecked.}
 % \changes{v4.1}{2026/09/16}{Every heading is set in the body size. 2.2(b) of the UFRJ Manual fixes size 12 for the work and allows only SMALLER sizes (long quotations, notes, folio, captions and sources, catalogue card), and 2.6 builds the gradual emphasis from bold, italic, capitals and small capitals, not from size. Chapters and unnumbered headings were Large (17.28 pt), sections large (14.4 pt), and the two headings of the CAPES additional sheet large.}
+% \changes{v4.1}{2026/09/17}{Dedication and epigraph start at the middle of the text block, 11 cm from the edge, and run to the right margin at the foot of the sheet, as 2.6, 3.1.2.2.1 and 3.1.2.2.3 recommend. The dedication was a 60 mm block against the right margin with right-aligned text, starting near 13 cm; the epigraph had the half-width block but right-aligned text. The epigraph author stays right-aligned below.}
 % \changes{v4.1}{2026/09/17}{The documentation no longer says that 3.1.2.1.4 requires the abstract to fit on one sheet. The 2026 Manual asks for 1.5 spacing, a single paragraph and 150 to 500 words, and says nothing about the number of sheets; a 500-word abstract with the five elements does not fit on one A4 sheet anyway. resumosemreferencia and setupabstracts serve whoever prefers one sheet.}
 % \changes{v4.1}{2026/09/17}{Every abstract sheet opens with its heading -- RESUMO, ABSTRACT, RESUMEN, in the language of that abstract -- centred and in bold capitals like every heading without a numeric indicative (2.6). The sheets used to open straight on the sentence "Resumo da Tese apresentada a COPPE/UFRJ...". The heading has no switch in setupabstracts.}
 % \changes{v4.1}{2026/09/16}{Lists in the order of 3.1.2 in max-exemplo, manual.tex, the document generator, the adversarial documents, this manual and the quick reference: every list of illustrations (figures, quadros, maps, programs, algorithms) before the list of tables. Quadro, program and algorithm are illustrations (2.10), and section 10 of the COPPE norm, which placed its three lists between the list of tables and the list of abbreviations, now follows the Manual too. The class imposes no order; the models were teaching the wrong one.}
@@ -1585,12 +1586,13 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % folha de aprovação. Sem eles, a numeração das folhas sai errada.
 %
 % \DescribeMacro{\dedication}
-% A dedicatória, numa folha só para ela, alinhada embaixo à direita.
+% A dedicatória, numa folha só para ela, embaixo, num bloco que vai do meio da
+% mancha à margem direita, com o texto começando no meio da mancha (3.1.2.2.1).
 %
 % \DescribeMacro{\epigrafe}
 % |\epigrafe{citação}{autoria}| compõe a epígrafe (3.1.2.2.3), numa folha
-% própria, depois dos agradecimentos, embaixo e da metade da mancha à margem
-% direita. Opcional.
+% própria, depois dos agradecimentos, no mesmo lugar da dedicatória; a autoria
+% vai embaixo do texto, alinhada à direita. Opcional.
 %
 % \DescribeEnv{abstract}
 % \DescribeEnv{foreignabstract}
@@ -7833,15 +7835,22 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %
 % \begin{macro}{\dedication}
 %    \begin{macrocode}
-\newcommand\dedication[1]{
-  \gdef\@dedic{#1}
-    \cleardoublepage
-    \vspace*{\fill}
-    \begin{flushright}
-      \begin{minipage}{60mm}
-        \raggedleft \it \normalsize \@dedic
-      \end{minipage}
-    \end{flushright}}
+% A 2.6, a 3.1.2.2.1 e a 3.1.2.2.3 recomendam dedicatoria e epigrafe com
+% alinhamento do MEIO da mancha grafica ate a margem direita, na parte inferior
+% da folha: o bloco ocupa a metade direita da mancha, e o texto, alinhado a
+% esquerda, comeca no meio dela, a 11 cm da borda. A dedicatoria saia num bloco
+% de 60 mm encostado na margem direita, com o texto alinhado a direita, e
+% comecava perto de 13 cm; a epigrafe ja tinha a meia mancha, mas tambem com o
+% texto alinhado a direita (#123).
+\newcommand\dedication[1]{%
+  \gdef\@dedic{#1}%
+  \cleardoublepage
+  \vspace*{\fill}%
+  \begin{flushright}
+    \begin{minipage}{0.5\textwidth}
+      \raggedright\itshape\normalsize \@dedic
+    \end{minipage}
+  \end{flushright}}
 %    \end{macrocode}
 % \end{macro}
 %
@@ -7850,15 +7859,16 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % depois dos agradecimentos, "com alinhamento no meio da pagina ou folha ate a
 % margem direita, na parte inferior" -- o mesmo lugar da dedicatoria. Na parte
 % pre-textual "nao e necessario seguir a norma de citacao", entao a autoria vai
-% so abaixo do texto, alinhada a direita.
+% so abaixo do texto, alinhada a direita. O texto em si comeca no meio da
+% mancha, como o da dedicatoria (#123).
 %    \begin{macrocode}
 \newcommand\epigrafe[2]{%
   \cleardoublepage
-  \vspace*{\fill}
+  \vspace*{\fill}%
   \begin{flushright}
     \begin{minipage}{0.5\textwidth}
-      \raggedleft\itshape\normalsize #1\par
-      \vspace{1ex}\normalfont\small #2
+      \raggedright\itshape\normalsize #1\par
+      \vspace{1ex}{\raggedleft\normalfont\small #2\par}
     \end{minipage}
   \end{flushright}}
 %    \end{macrocode}

@@ -1508,22 +1508,22 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
       \includegraphics[page=\coppe@fichapage,width=125mm]{\coppe@fichafile}}%
   \end{center}
   \par}}
-\newcommand\dedication[1]{
-  \gdef\@dedic{#1}
-    \cleardoublepage
-    \vspace*{\fill}
-    \begin{flushright}
-      \begin{minipage}{60mm}
-        \raggedleft \it \normalsize \@dedic
-      \end{minipage}
-    \end{flushright}}
-\newcommand\epigrafe[2]{%
+\newcommand\dedication[1]{%
+  \gdef\@dedic{#1}%
   \cleardoublepage
-  \vspace*{\fill}
+  \vspace*{\fill}%
   \begin{flushright}
     \begin{minipage}{0.5\textwidth}
-      \raggedleft\itshape\normalsize #1\par
-      \vspace{1ex}\normalfont\small #2
+      \raggedright\itshape\normalsize \@dedic
+    \end{minipage}
+  \end{flushright}}
+\newcommand\epigrafe[2]{%
+  \cleardoublepage
+  \vspace*{\fill}%
+  \begin{flushright}
+    \begin{minipage}{0.5\textwidth}
+      \raggedright\itshape\normalsize #1\par
+      \vspace{1ex}{\raggedleft\normalfont\small #2\par}
     \end{minipage}
   \end{flushright}}
 
