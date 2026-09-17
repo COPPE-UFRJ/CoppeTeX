@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
-"""Teste de conformidade da CoppeTeX. NAO roda na suite normal.
+"""Teste de conformidade da CoppeTeX.
 
 BUG: (desconformidade, 2.3) nas listagens de codigo com numeracao de linha (ambientes python, java, xml, html e prolog da classe), os numeros das linhas saiam DENTRO da margem esquerda, a cerca de 2,6 cm da borda (#120).
-ABERTO: #120
 
 A 2.3 do Manual UFRJ/SiBI fixa a margem esquerda em 3 cm. O listings poe o
 numero da linha a esquerda do codigo, a `numbersep' dele, e sem `xleftmargin'

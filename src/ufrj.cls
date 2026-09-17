@@ -717,7 +717,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \if@ufrjsetavermelha\textcolor{red}{$\hookrightarrow$}\else$\hookrightarrow$\fi
   \space}}
 \newcommand\pythonstyle{\lstset{language=Python,basicstyle=\ttm,numbers=left,%
-  numberstyle=\small\ttfamily,numbersep=0.5em,commentstyle=\color{purple},%
+  numberstyle=\small\ttfamily,numbersep=0.5em,xleftmargin=2em,commentstyle=\color{purple},%
   morekeywords={self,as},keywordstyle=\ttb\color[rgb]{0,0,0.5},%
   emph={MyClass,__init__},emphstyle=\ttb\color[rgb]{0.6,0,0},%
   stringstyle=\color[rgb]{0,0.5,0},frame=tb,showstringspaces=false,%
@@ -728,7 +728,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \newcommand\pythoninline[1]{{\pythonstyle\lstinline!#1!}}
 \newcommand\pythonexternal[2][]{{\pythonstyle\lstinputlisting[#1]{#2}}}
 \newcommand\xmlstyle{\lstset{language=XML,basicstyle=\ttm,numbers=left,%
-  numberstyle=\small\ttfamily,numbersep=0.5em,%
+  numberstyle=\small\ttfamily,numbersep=0.5em,xleftmargin=2em,%
   morekeywords={xs:schema,xs:element,xs:sequence,xs:complexType},%
   keywordstyle=\ttb\color[rgb]{0,0,0.5},%
   emph={name,type,attributeFormDefault,elementFormDefault,xmlns:xs},%
@@ -737,14 +737,14 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   postbreak=\usebox\ufrj@lstarrow}}
 \lstnewenvironment{xml}[1][]{\xmlstyle\lstset{#1}}{}
 \newcommand\htmlstyle{\lstset{language=HTML,basicstyle=\ttm,numbers=left,%
-  numberstyle=\small\ttfamily,numbersep=0.5em,%
+  numberstyle=\small\ttfamily,numbersep=0.5em,xleftmargin=2em,%
   keywordstyle=\ttb\color[rgb]{0,0,0.5},emphstyle=\ttb\color[rgb]{0.6,0,0},%
   stringstyle=\color[rgb]{0,0.5,0},frame=tb,showstringspaces=false,%
   extendedchars=true,inputencoding=utf8,breaklines=true,%
   postbreak=\usebox\ufrj@lstarrow}}
 \lstnewenvironment{html}[1][]{\htmlstyle\lstset{#1}}{}
 \newcommand\prologstyle{\lstset{language=Prolog,basicstyle=\ttm,numbers=left,%
-  numberstyle=\small\ttfamily,numbersep=0.5em,commentstyle=\color{purple},%
+  numberstyle=\small\ttfamily,numbersep=0.5em,xleftmargin=2em,commentstyle=\color{purple},%
   keywordstyle=\ttb\color[rgb]{0,0,0.5},emph={MyClass,__init__},%
   emphstyle=\ttb\color[rgb]{0.6,0,0},stringstyle=\color[rgb]{0,0.5,0},frame=tb,%
   showstringspaces=false,extendedchars=true,firstnumber=auto,inputencoding=utf8,%
@@ -753,7 +753,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \lstnewenvironment{prolog}[1][]{\prologstyle\lstset{#1}%
   \csname\@lst @SetFirstNumber\endcsname}{\csname\@lst @SaveFirstNumber\endcsname}
 \newcommand\javastyle{\lstset{language=Java,basicstyle=\ttm,numbers=left,%
-  numberstyle=\small\ttfamily,numbersep=0.5em,commentstyle=\color{purple},%
+  numberstyle=\small\ttfamily,numbersep=0.5em,xleftmargin=2em,commentstyle=\color{purple},%
   morekeywords={self,as},keywordstyle=\ttb\color[rgb]{0,0,0.5},%
   emphstyle=\ttb\color[rgb]{0.6,0,0},stringstyle=\color[rgb]{0,0.5,0},frame=tb,%
   showstringspaces=false,extendedchars=true,firstnumber=auto,inputencoding=utf8,%

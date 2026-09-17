@@ -145,6 +145,12 @@ run it, and the fix removes the mark.
 
 ### Fixed
 
+- **The line numbers of a listing stay inside the margin** (#120). The five
+  language styles (`python`, `java`, `xml`, `html`, `prolog`) number the lines
+  on the left; without `xleftmargin` the `listings` package indents the code
+  and leaves the number where it was, about 2.6 cm from the edge, outside the
+  3 cm margin of 2.3. The global `\lstset` is unchanged, so a plain
+  `lstlisting` still starts at the margin.
 - **Footnotes hang from the mark, and no longer split across sheets** (#117).
   4.2 says that a reference in a note is aligned to the left margin of the text
   and that, from its second line on, the text sits under the first letter of

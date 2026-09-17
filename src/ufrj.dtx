@@ -184,6 +184,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \changes{v5.0}{2026/09/15}{COPPE is the unit style ufrj-coppe, with its own source (ufrj-coppe.dtx and ufrj-coppe.ins), its own manual (ufrj-coppe.pdf) and every example document, which all load it. A work begun with the class coppe compiles as it is: coppe.cls is now a compatibility class that loads ufrj with the same options, loads ufrj-coppe and writes one warning, and the style keeps the old public names as aliases, the old colophon pieces answering renewcommand by the old name, the three internal names that auxiliary files written by the old class contain, the page style coppe and the bib field coppedegree.}
 % \changes{v5.0}{2026/09/15}{The colophon names the class and the project apart -- Foi utilizada a classe ufrj, do projeto CoppeTeX -- where it said a classe CoppeTeX, which is the name of the project and not of a class. The norm it cites is the one the unit declares with ufrjdeclarenorm, and the UFRJ/SiBI Manual when no unit declares one.}
 % \changes{v5.0}{2026/09/15}{The documentation follows the split: this manual (ufrj.pdf) describes the class and the interface a unit style uses; ufrj-coppe.pdf describes only what COPPE declares; manual.pdf, the norm, is written for UFRJ with COPPE as the example; and the migration guide from 4.x to 5.0 tells the author of a work begun with the class coppe what to change.}
+% \changes{v5.0}{2026/09/17}{The line numbers of a listing stay inside the margin. The five language styles number the lines on the left, and without xleftmargin the listings package indents the code and leaves the number outside the 3 cm margin of 2.3.}
 % \changes{v5.0}{2026/09/17}{Footnotes start at the left margin and hang: from the second line the text aligns under the first letter, not under the mark, as 4.2 asks of a reference in a note -- the class used book's makefntext, which indented the mark by parindent and returned the second line to the margin. A footnote no longer splits across sheets either.}
 % \changes{v5.0}{2026/09/17}{PDF/A-2b is the default output, and the new option sempdfa turns it off. 2.2(d) of the Manual requires the final digital version to be PDF/A, the deposit has been digital only since Resolucao CEPG n. 246/2023, and the class already produced conformant PDF/A -- but only when asked, so a work written without reading the manual was deposited off the norm. The v4.1 option pdfa is still accepted and now does nothing.}
 % \changes{v5.0}{2026/09/17}{The logos are printed on the capa only. The folha de rosto repeated the capa's logo line; Annex B, which is the model of the folha de rosto, and the two sheets of the SiBI model carry no image there. Annex A puts the two logos on the CAPA and marks both as optional.}
@@ -5058,8 +5059,13 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \AtBeginDocument{\sbox\ufrj@lstarrow{%
   \if@ufrjsetavermelha\textcolor{red}{$\hookrightarrow$}\else$\hookrightarrow$\fi
   \space}}
+% Os cinco estilos de linguagem numeram as linhas a esquerda. Sem xleftmargin o
+% listings recua o CODIGO e deixa o numero onde estava -- fora da mancha, contra
+% a margem de 3 cm da 2.3 (#120). Os 2em cabem o numero (\small, ate tres
+% digitos) mais a numbersep de 0.5em. O \lstset global nao leva a chave: um
+% lstlisting sem numeros nao tem o que recuar.
 \newcommand\pythonstyle{\lstset{language=Python,basicstyle=\ttm,numbers=left,%
-  numberstyle=\small\ttfamily,numbersep=0.5em,commentstyle=\color{purple},%
+  numberstyle=\small\ttfamily,numbersep=0.5em,xleftmargin=2em,commentstyle=\color{purple},%
   morekeywords={self,as},keywordstyle=\ttb\color[rgb]{0,0,0.5},%
   emph={MyClass,__init__},emphstyle=\ttb\color[rgb]{0.6,0,0},%
   stringstyle=\color[rgb]{0,0.5,0},frame=tb,showstringspaces=false,%
@@ -5070,7 +5076,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \newcommand\pythoninline[1]{{\pythonstyle\lstinline!#1!}}
 \newcommand\pythonexternal[2][]{{\pythonstyle\lstinputlisting[#1]{#2}}}
 \newcommand\xmlstyle{\lstset{language=XML,basicstyle=\ttm,numbers=left,%
-  numberstyle=\small\ttfamily,numbersep=0.5em,%
+  numberstyle=\small\ttfamily,numbersep=0.5em,xleftmargin=2em,%
   morekeywords={xs:schema,xs:element,xs:sequence,xs:complexType},%
   keywordstyle=\ttb\color[rgb]{0,0,0.5},%
   emph={name,type,attributeFormDefault,elementFormDefault,xmlns:xs},%
@@ -5079,14 +5085,14 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   postbreak=\usebox\ufrj@lstarrow}}
 \lstnewenvironment{xml}[1][]{\xmlstyle\lstset{#1}}{}
 \newcommand\htmlstyle{\lstset{language=HTML,basicstyle=\ttm,numbers=left,%
-  numberstyle=\small\ttfamily,numbersep=0.5em,%
+  numberstyle=\small\ttfamily,numbersep=0.5em,xleftmargin=2em,%
   keywordstyle=\ttb\color[rgb]{0,0,0.5},emphstyle=\ttb\color[rgb]{0.6,0,0},%
   stringstyle=\color[rgb]{0,0.5,0},frame=tb,showstringspaces=false,%
   extendedchars=true,inputencoding=utf8,breaklines=true,%
   postbreak=\usebox\ufrj@lstarrow}}
 \lstnewenvironment{html}[1][]{\htmlstyle\lstset{#1}}{}
 \newcommand\prologstyle{\lstset{language=Prolog,basicstyle=\ttm,numbers=left,%
-  numberstyle=\small\ttfamily,numbersep=0.5em,commentstyle=\color{purple},%
+  numberstyle=\small\ttfamily,numbersep=0.5em,xleftmargin=2em,commentstyle=\color{purple},%
   keywordstyle=\ttb\color[rgb]{0,0,0.5},emph={MyClass,__init__},%
   emphstyle=\ttb\color[rgb]{0.6,0,0},stringstyle=\color[rgb]{0,0.5,0},frame=tb,%
   showstringspaces=false,extendedchars=true,firstnumber=auto,inputencoding=utf8,%
@@ -5095,7 +5101,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \lstnewenvironment{prolog}[1][]{\prologstyle\lstset{#1}%
   \csname\@lst @SetFirstNumber\endcsname}{\csname\@lst @SaveFirstNumber\endcsname}
 \newcommand\javastyle{\lstset{language=Java,basicstyle=\ttm,numbers=left,%
-  numberstyle=\small\ttfamily,numbersep=0.5em,commentstyle=\color{purple},%
+  numberstyle=\small\ttfamily,numbersep=0.5em,xleftmargin=2em,commentstyle=\color{purple},%
   morekeywords={self,as},keywordstyle=\ttb\color[rgb]{0,0,0.5},%
   emphstyle=\ttb\color[rgb]{0.6,0,0},stringstyle=\color[rgb]{0,0.5,0},frame=tb,%
   showstringspaces=false,extendedchars=true,firstnumber=auto,inputencoding=utf8,%
