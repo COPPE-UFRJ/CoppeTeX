@@ -291,9 +291,19 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
   \@mkboth{\MakeUppercase\listquadroname}{\MakeUppercase\listquadroname}%
   \@starttoc{loq}}
 \newcommand{\cpsourcename}{\ufrjstring{source}}
+\newcommand\ufrj@ilwidth{}
+\newcommand\illustrationwidth[1]{%
+  \captionsetup{width=#1}\def\ufrj@ilwidth{#1}}
+\let\largurailustracao\illustrationwidth
 \newcommand{\cpsource}[1]{%
   \par\addvspace{\smallskipamount}%
-  {\footnotesize\singlespacing\centering\cpsourcename: #1\par}}
+  \ifx\ufrj@ilwidth\@empty
+    {\footnotesize\singlespacing\centering\cpsourcename: #1\par}%
+  \else
+    {\centering
+      \parbox{\ufrj@ilwidth}{%
+        \footnotesize\singlespacing\centering\cpsourcename: #1\par}\par}%
+  \fi}
 \let\cpfonte\cpsource
 \@ifundefined{source}{\let\source\cpsource}{}%
 \@ifundefined{fonte}{\let\fonte\cpsource}{}%

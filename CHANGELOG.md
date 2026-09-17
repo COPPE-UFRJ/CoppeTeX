@@ -47,6 +47,16 @@ run it, and the fix removes the mark.
   result: 68 checks, no divergence, and the same three accepted ones in each
   form.
 
+### Added
+
+- **`\illustrationwidth` (`\largurailustracao`)** (#125): inside a float, it
+  sets the caption and the source line to the width of the illustration. 2.10
+  ends by requiring that "tipo, número de ordem, título, fonte, legenda e notas
+  devem respeitar as margens da ilustração", and a narrow figure had its
+  caption and source across the whole text block. The caption comes *before*
+  the content, so the class cannot know that width — the author gives it once,
+  inside the float, and it lapses with the float.
+
 ### Changed
 
 - **PDF/A-2b is the default output** (#124). 2.2(d) of the Manual requires the

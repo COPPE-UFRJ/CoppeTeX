@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
-"""Teste de conformidade da CoppeTeX. NAO roda na suite normal.
+"""Teste de conformidade da CoppeTeX.
 
 BUG: (desconformidade, 2.10) legenda e fonte de uma ilustracao estreita ocupavam a largura inteira da mancha, e nao havia na classe como limita-las a largura da ilustracao (#125).
-ABERTO: #125
 
 A 2.10 do Manual UFRJ/SiBI pede que tipo, numero de ordem, titulo, fonte,
 legenda e notas respeitem as margens da ILUSTRACAO. Como a legenda vem antes do

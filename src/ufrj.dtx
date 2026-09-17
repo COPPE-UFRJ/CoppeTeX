@@ -184,6 +184,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \changes{v5.0}{2026/09/15}{COPPE is the unit style ufrj-coppe, with its own source (ufrj-coppe.dtx and ufrj-coppe.ins), its own manual (ufrj-coppe.pdf) and every example document, which all load it. A work begun with the class coppe compiles as it is: coppe.cls is now a compatibility class that loads ufrj with the same options, loads ufrj-coppe and writes one warning, and the style keeps the old public names as aliases, the old colophon pieces answering renewcommand by the old name, the three internal names that auxiliary files written by the old class contain, the page style coppe and the bib field coppedegree.}
 % \changes{v5.0}{2026/09/15}{The colophon names the class and the project apart -- Foi utilizada a classe ufrj, do projeto CoppeTeX -- where it said a classe CoppeTeX, which is the name of the project and not of a class. The norm it cites is the one the unit declares with ufrjdeclarenorm, and the UFRJ/SiBI Manual when no unit declares one.}
 % \changes{v5.0}{2026/09/15}{The documentation follows the split: this manual (ufrj.pdf) describes the class and the interface a unit style uses; ufrj-coppe.pdf describes only what COPPE declares; manual.pdf, the norm, is written for UFRJ with COPPE as the example; and the migration guide from 4.x to 5.0 tells the author of a work begun with the class coppe what to change.}
+% \changes{v5.0}{2026/09/17}{New illustrationwidth (largurailustracao): the caption and the source line of a narrow illustration are set to the width of the illustration, as 2.10 requires -- the caption comes before the content, so the class cannot know that width and the author gives it once, inside the float.}
 % \changes{v5.0}{2026/09/17}{Appendices, annexes and alineas go past Z with doubled letters -- AA, BB, ZZ -- as 3.1.4.4 and 2.6(f) require. The 27th of any of them stopped the compilation with LaTeX's "Counter too large", because the letter came from Alph and alph.}
 % \changes{v5.0}{2026/09/17}{A subalinea is marked with a hyphen placed under the first letter of the text of its alinea, one space from the text, and its continuation lines start under its own first letter -- the three things 2.6 asks for. The class used an en dash and a fixed 1.8 em indent, which falls under no letter.}
 % \changes{v5.0}{2026/09/17}{The line numbers of a listing stay inside the margin. The five language styles number the lines on the left, and without xleftmargin the listings package indents the code and leaves the number outside the 3 cm margin of 2.3.}
@@ -1856,6 +1857,26 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % pacote já tiver tomado os nomes curtos. A linha de fonte não avança
 % contador nenhum e não entra em lista nenhuma.
 %
+% \DescribeMacro{\illustrationwidth}
+% \DescribeMacro{\largurailustracao}
+% A largura da ilustração, para a legenda e a fonte não ficarem mais largas do
+% que ela. A 2.10 termina dizendo que ``tipo, número de ordem, título, fonte,
+% legenda e notas devem respeitar as margens da ilustração'', e a legenda vem
+% \emph{antes} do conteúdo: quando a classe a compõe, ainda não há como saber
+% a largura do que vem depois. Você diz, uma vez, no começo do flutuante:
+%
+% \begin{verbatim}
+%   \begin{figure}
+%     \illustrationwidth{4cm}
+%     \caption{Uma figura estreita}
+%     \includegraphics[width=4cm]{arquivo}
+%     \source{Elaboracao propria.}
+%   \end{figure}
+% \end{verbatim}
+%
+% Vale só dentro daquele flutuante, e a próxima ilustração volta ao normal --
+% a legenda na largura da mancha. Sem o comando nada muda.
+%
 % \DescribeEnv{quadro}
 % Um \emph{quadro} é a ilustração cujos dados são delimitados por linhas
 % em \textbf{todas} as bordas, ao contrário da tabela, que leva linha só no
@@ -3384,6 +3405,7 @@ brazilianabstract & \textbackslash begin\{brazilianabstract\} ... & \doc & Third
 \multicolumn{4}{@{}l@{}}{\normalfont\bfseries\small ILLUSTRATIONS ---
   caption on top, source below (2.10)}\\[2pt]
 \textbackslash source & \textbackslash source\{Prepared by the author.\} & \doc & The source line, below the float. Mandatory by the norm. \\
+\textbackslash illustrationwidth & \textbackslash illustrationwidth\{4cm\} & \doc & Inside a float: sets the caption and the source line to the width of the illustration (2.10). Alias: \texttt{\textbackslash largurailustracao}. \\
 \textbackslash fonte & \textbackslash fonte\{Elaboração própria.\} & \doc & The same command, Portuguese name. \\
 \textbackslash cpsource & \textbackslash cpsource\{...\} & \doc & Clash-safe alias, always available. \\
 \textbackslash cpfonte & \textbackslash cpfonte\{...\} & \doc & Likewise. \\
@@ -4107,9 +4129,29 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
 % caption counter. \cpsource/\cpfonte are clash-safe aliases (the rename rule);
 % the label is "Fonte" (pt) / "Source" (en).
 \newcommand{\cpsourcename}{\ufrjstring{source}}
+% \illustrationwidth{<largura>}: a 2.10 fecha dizendo que "tipo, numero de
+% ordem, titulo, fonte, legenda e notas devem respeitar as margens da
+% ilustracao" (#125). Numa ilustracao mais estreita que a mancha, a legenda e a
+% fonte saiam na mancha inteira.
+%
+% A legenda vem ANTES do conteudo -- e a regra da 2.10, identificacao em cima --
+% e nesse momento a classe nao tem como saber a largura do que vem depois. Quem
+% sabe e o autor, que escreve a largura uma vez, dentro do flutuante, e ela vale
+% para a legenda (pelo \captionsetup do caption) e para a fonte (aqui). Fora do
+% flutuante nada muda, porque o grupo do ambiente devolve as duas.
+\newcommand\ufrj@ilwidth{}
+\newcommand\illustrationwidth[1]{%
+  \captionsetup{width=#1}\def\ufrj@ilwidth{#1}}
+\let\largurailustracao\illustrationwidth
 \newcommand{\cpsource}[1]{%
   \par\addvspace{\smallskipamount}%
-  {\footnotesize\singlespacing\centering\cpsourcename: #1\par}}
+  \ifx\ufrj@ilwidth\@empty
+    {\footnotesize\singlespacing\centering\cpsourcename: #1\par}%
+  \else
+    {\centering
+      \parbox{\ufrj@ilwidth}{%
+        \footnotesize\singlespacing\centering\cpsourcename: #1\par}\par}%
+  \fi}
 \let\cpfonte\cpsource
 \@ifundefined{source}{\let\source\cpsource}{}%
 \@ifundefined{fonte}{\let\fonte\cpsource}{}%
