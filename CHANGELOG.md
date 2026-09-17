@@ -145,6 +145,17 @@ run it, and the fix removes the mark.
 
 ### Fixed
 
+- **Appendices, annexes and alineas go past Z with doubled letters** (#127).
+  3.1.4.4 says that when the alphabet runs out the annexes take doubled capital
+  letters, and 2.6(f) says the same of the alineas; the 27th of any of them
+  stopped the compilation with LaTeX's "Counter too large". The class now
+  patches `\@alph` and `\@Alph` themselves — 27 is AA, 52 is ZZ, then three
+  letters up to ZZZ — instead of putting a new macro in each place that numbers
+  by letter: `enumitem` expands a list label once, when the list is built, so a
+  conditional written in the label froze with the counter still at zero. Inside
+  `\@alph` the count sits where LaTeX already expands it at the right moment,
+  and one fix serves the alinea label, a `\ref` to it, and the appendix and
+  annex letters.
 - **A subalinea is marked with a hyphen, under the first letter of its alinea**
   (#121). 2.6 asks for three things: the hyphen and nothing else; the hyphen
   under the first letter of the text of the corresponding alinea, one space

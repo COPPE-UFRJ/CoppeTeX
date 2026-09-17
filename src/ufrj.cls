@@ -133,6 +133,26 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
   {\if@ufrjappendix\MakeUppercase{\appendixname}\ \thechapter\ \textemdash\else\thechapter\fi}
   {1ex}{\MakeUppercase}
 \titlespacing*{\chapter}{0pt}{10pt}{1.5\baselineskip}
+\let\ufrj@k@alph\@alph
+\let\ufrj@k@Alph\@Alph
+\renewcommand\@alph[1]{%
+  \ifnum#1>52
+    \ufrj@k@alph{\numexpr#1-52\relax}\ufrj@k@alph{\numexpr#1-52\relax}%
+    \ufrj@k@alph{\numexpr#1-52\relax}%
+  \else\ifnum#1>26
+    \ufrj@k@alph{\numexpr#1-26\relax}\ufrj@k@alph{\numexpr#1-26\relax}%
+  \else
+    \ufrj@k@alph{#1}%
+  \fi\fi}
+\renewcommand\@Alph[1]{%
+  \ifnum#1>52
+    \ufrj@k@Alph{\numexpr#1-52\relax}\ufrj@k@Alph{\numexpr#1-52\relax}%
+    \ufrj@k@Alph{\numexpr#1-52\relax}%
+  \else\ifnum#1>26
+    \ufrj@k@Alph{\numexpr#1-26\relax}\ufrj@k@Alph{\numexpr#1-26\relax}%
+  \else
+    \ufrj@k@Alph{#1}%
+  \fi\fi}
 \newcommand\ufrj@appendixheadings{%
   \titleformat{\chapter}[block]
     {\normalfont\normalsize\bfseries\filcenter}

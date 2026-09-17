@@ -184,6 +184,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \changes{v5.0}{2026/09/15}{COPPE is the unit style ufrj-coppe, with its own source (ufrj-coppe.dtx and ufrj-coppe.ins), its own manual (ufrj-coppe.pdf) and every example document, which all load it. A work begun with the class coppe compiles as it is: coppe.cls is now a compatibility class that loads ufrj with the same options, loads ufrj-coppe and writes one warning, and the style keeps the old public names as aliases, the old colophon pieces answering renewcommand by the old name, the three internal names that auxiliary files written by the old class contain, the page style coppe and the bib field coppedegree.}
 % \changes{v5.0}{2026/09/15}{The colophon names the class and the project apart -- Foi utilizada a classe ufrj, do projeto CoppeTeX -- where it said a classe CoppeTeX, which is the name of the project and not of a class. The norm it cites is the one the unit declares with ufrjdeclarenorm, and the UFRJ/SiBI Manual when no unit declares one.}
 % \changes{v5.0}{2026/09/15}{The documentation follows the split: this manual (ufrj.pdf) describes the class and the interface a unit style uses; ufrj-coppe.pdf describes only what COPPE declares; manual.pdf, the norm, is written for UFRJ with COPPE as the example; and the migration guide from 4.x to 5.0 tells the author of a work begun with the class coppe what to change.}
+% \changes{v5.0}{2026/09/17}{Appendices, annexes and alineas go past Z with doubled letters -- AA, BB, ZZ -- as 3.1.4.4 and 2.6(f) require. The 27th of any of them stopped the compilation with LaTeX's "Counter too large", because the letter came from Alph and alph.}
 % \changes{v5.0}{2026/09/17}{A subalinea is marked with a hyphen placed under the first letter of the text of its alinea, one space from the text, and its continuation lines start under its own first letter -- the three things 2.6 asks for. The class used an en dash and a fixed 1.8 em indent, which falls under no letter.}
 % \changes{v5.0}{2026/09/17}{The line numbers of a listing stay inside the margin. The five language styles number the lines on the left, and without xleftmargin the listings package indents the code and leaves the number outside the 3 cm margin of 2.3.}
 % \changes{v5.0}{2026/09/17}{Footnotes start at the left margin and hang: from the second line the text aligns under the first letter, not under the mark, as 4.2 asks of a reference in a note -- the class used book's makefntext, which indented the mark by parindent and returned the second line to the margin. A footnote no longer splits across sheets either.}
@@ -3787,6 +3788,48 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
 % therefore re-issued when \appendix or \annex is called: same label, same
 % travessao, but a centred block instead of a flush-left hang. Numbered chapters
 % are untouched -- they DO carry a numeric indicative and stay flush left.
+% Letras DOBRADAS quando o alfabeto acaba (#127). A 3.1.4.4 manda isso dos
+% anexos -- "quando esgotadas as letras do alfabeto, devem ser utilizadas letras
+% maiusculas dobradas" -- e a 2.6(f) das alineas; os apendices seguem os anexos,
+% que a mesma secao numera do mesmo jeito. O \@Alph e o \@alph do LaTeX morrem
+% no 27 com "Counter too large", e levavam a compilacao junto.
+%
+% Dobrada quer dizer a MESMA letra repetida: 27 e AA, 28 e BB, 52 e ZZ, e dai em
+% diante tres, ate ZZZ no 78. Nao e a contagem do Excel (AA, AB, AC), que a
+% norma nao pede. Acima de 78 o \@Alph do kernel volta a reclamar, e um trabalho
+% com 79 anexos tem outro problema.
+%
+% A conta entra nos PROPRIOS \@alph e \@Alph, e nao numa macro nova posta em
+% cada lugar que numera por letra. Foi a primeira tentativa, e nao serve para a
+% alinea: o enumitem expande o rotulo uma vez, ao montar a lista, e o \ifnum se
+% resolvia ali, com o contador ainda em zero -- o rotulo ficava com o ramo de
+% ate 26 congelado. Dentro do \@alph, a conta fica onde o LaTeX ja expande no
+% momento certo, e vale de uma vez para o rotulo da alinea, para o \ref a ela,
+% para a letra do apendice e para a do anexo.
+%
+% As duas continuam EXPANSIVEIS -- so \ifnum, \numexpr e a versao do kernel --,
+% que e o que o .toc e o .aux precisam: a letra e resolvida na hora de escrever,
+% com o contador certo, e nao na hora de ler.
+\let\ufrj@k@alph\@alph
+\let\ufrj@k@Alph\@Alph
+\renewcommand\@alph[1]{%
+  \ifnum#1>52
+    \ufrj@k@alph{\numexpr#1-52\relax}\ufrj@k@alph{\numexpr#1-52\relax}%
+    \ufrj@k@alph{\numexpr#1-52\relax}%
+  \else\ifnum#1>26
+    \ufrj@k@alph{\numexpr#1-26\relax}\ufrj@k@alph{\numexpr#1-26\relax}%
+  \else
+    \ufrj@k@alph{#1}%
+  \fi\fi}
+\renewcommand\@Alph[1]{%
+  \ifnum#1>52
+    \ufrj@k@Alph{\numexpr#1-52\relax}\ufrj@k@Alph{\numexpr#1-52\relax}%
+    \ufrj@k@Alph{\numexpr#1-52\relax}%
+  \else\ifnum#1>26
+    \ufrj@k@Alph{\numexpr#1-26\relax}\ufrj@k@Alph{\numexpr#1-26\relax}%
+  \else
+    \ufrj@k@Alph{#1}%
+  \fi\fi}
 \newcommand\ufrj@appendixheadings{%
   \titleformat{\chapter}[block]
     {\normalfont\normalsize\bfseries\filcenter}
@@ -4122,6 +4165,9 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
 %     (manual2024 2.6 / proposta P24). ----------------------------------------
 \RequirePackage{enumitem}
 \newlist{alineas}{enumerate}{2}
+% A letra da alinea dobra depois do z (2.6f) sem que a lista precise saber:
+% quem dobra e o \@alph, remendado mais adiante, e o \alph* do enumitem passa
+% por ele.
 \setlist[alineas,1]{label=\alph*),leftmargin=1.8em,itemsep=0pt}
 % A subalinea da 2.6, ao pe da letra (#121): "utilizando apenas o hifen para
 % caracteriza-la. O hifen deve ser colocado sob a primeira letra do texto da

@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
-"""Teste de conformidade da CoppeTeX. NAO roda na suite normal.
+"""Teste de conformidade da CoppeTeX.
 
 BUG: (desconformidade, 3.1.4.3, 3.1.4.4 e 2.6f) o vigesimo setimo apendice, anexo ou alinea parava a compilacao com "Counter too large", porque a letra vinha de \\Alph e \\alph, que so vao ate Z (#127).
-ABERTO: #127
 
 O Manual UFRJ/SiBI manda usar letras maiusculas DOBRADAS quando se esgotam as
 letras do alfabeto na identificacao de apendices e anexos (AA, AB...), e letras
