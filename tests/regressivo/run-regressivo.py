@@ -58,6 +58,7 @@ auxiliar, onde o texto esta como o LaTeX o escreveu.
 import io
 import os
 import re
+import shutil
 import subprocess
 import sys
 import unicodedata
@@ -311,6 +312,40 @@ def aberto(caminho):
     return None
 
 
+def conferir_ferramentas():
+    """As ferramentas que os testes usam para ler o PDF, conferidas uma vez.
+
+    O -bbox e do poppler. O pdftotext do Xpdf -- o que vem com o Git for
+    Windows -- nao o tem, e quando ele esta na frente do PATH os testes de
+    medida recebem lista vazia e passam SEM MEDIR NADA (#156). Aqui isso vira
+    uma linha no cabecalho da rodada, e nao um `ok' mentiroso trinta vezes."""
+    linhas = []
+    problema = False
+    for nome, args, marca in (("pdftotext", ["-v"], "poppler"),
+                              ("pdftohtml", ["-v"], "poppler"),
+                              ("pdfinfo", ["-v"], "poppler")):
+        caminho = shutil.which(nome)
+        if caminho is None:
+            linhas.append("%-10s NAO ACHEI no PATH" % nome)
+            problema = True
+            continue
+        p = subprocess.run([nome] + args, stdout=subprocess.PIPE,
+                           stderr=subprocess.STDOUT)
+        saida = p.stdout.decode("utf-8", "replace").strip().split("\n")
+        versao = saida[0] if saida else ""
+        eh_poppler = any(marca in l.lower() for l in saida)
+        linhas.append("%-10s %s%s" % (nome, versao, "" if eh_poppler else
+                                      "   <- NAO e o do poppler: %s" % caminho))
+        if not eh_poppler:
+            problema = True
+    print("\n".join(linhas))
+    if problema:
+        print("ATENCAO: os testes de medida precisam do poppler (pdftotext -bbox).\n"
+              "         No Windows com Git instalado, rode pelo PowerShell.")
+    print()
+    return not problema
+
+
 def main():
     argv = [a for a in sys.argv[1:] if not a.startswith("-")]
     manter = "--manter" in sys.argv
@@ -337,6 +372,7 @@ def main():
     if not testes:
         print("nenhum teste casou com o filtro")
         return 1
+    conferir_ferramentas()
 
     # O pdflatex precisa achar a classe em src/ e as bases .bib de la.
     for var in ("TEXINPUTS", "BIBINPUTS"):

@@ -41,6 +41,15 @@ Precisa do `pdflatex`, do `lualatex` (um teste), do `biber`, do `makeindex` e do
 `pdftotext`. Sem o `pdftotext` as cobranças de texto são **puladas com aviso** —
 nunca aprovadas em silêncio.
 
+**O `pdftotext` e o `pdftohtml` têm de ser os do poppler.** Os testes de medida
+usam `pdftotext -bbox`, que é opção do poppler; o `pdftotext` do Xpdf — o que o
+Git for Windows instala em `mingw64\bin` — não a tem, e devolve uma saída sem
+palavra nenhuma. Antes da guarda da #156 isso não dava erro: o teste passava
+**sem medir nada**. No Windows com o Git instalado, o Git Bash acha o do Xpdf e
+o PowerShell acha o do MiKTeX (poppler), então **rode a suíte pelo PowerShell**.
+O rodador imprime as versões que achou antes do primeiro teste, e avisa quando
+não são as do poppler.
+
 ## Como escrever um teste novo
 
 Quando um defeito for corrigido, o teste entra aqui **no mesmo commit da

@@ -340,6 +340,18 @@ class Documento(object):
             saida.append(Palavra(html.unescape(m.group(5)), float(m.group(1)),
                                  float(m.group(2)), float(m.group(3)),
                                  float(m.group(4))))
+        if not saida and self.fragmentos(pagina):
+            # A folha tem texto, e o -bbox nao devolveu palavra nenhuma: quase
+            # sempre o pdftotext do PATH e o do Xpdf (o que vem com o Git), que
+            # nao tem a opcao. Sem esta guarda, o teste de medida PASSA sem
+            # medir nada -- e passa em falso.
+            onde = shutil.which("pdftotext") or "pdftotext"
+            raise SystemExit(
+                "medidas: 'pdftotext -bbox' nao devolveu palavra nenhuma na folha %d.\n"
+                "  pdftotext em uso: %s\n"
+                "  O -bbox e do poppler; o pdftotext do Xpdf (o do Git) nao o tem.\n"
+                "  Rode pelo PowerShell, ou ponha o poppler na frente do PATH."
+                % (pagina, onde))
         self._palavras[pagina] = saida
         return saida
 
