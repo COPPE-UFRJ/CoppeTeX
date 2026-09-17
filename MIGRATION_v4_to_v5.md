@@ -28,6 +28,7 @@ belongs to COPPE into the unit style `ufrj-coppe`. A thesis started with
 | Quer a forma nova, sem o aviso | Troque `\documentclass[...]{coppe}` por `\documentclass[...]{ufrj}` e acrescente `\usepackage{ufrj-coppe}` logo abaixo. Mais nada. |
 | Trabalho de outra unidade da UFRJ | Use a classe sem estilo e declare o seu Programa no preâmbulo (seção 6), até a sua unidade ter um estilo. |
 | Você escreveu um pacote de idioma | Renomeie os dois arquivos e o comando, e tire deles o que é institucional (seção 7). |
+| Você usava a opção `pdfa` | **Nada.** O PDF/A passou a ser o padrão (2.2d do Manual), e a opção continua aceita sem fazer nada. Para um PDF comum, use `sempdfa`. |
 
 ---
 

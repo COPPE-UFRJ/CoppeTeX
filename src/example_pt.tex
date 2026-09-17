@@ -68,12 +68,12 @@
 
   A classe usa a variante \textbf{PDF/A-2b}: a parte 2 admite transparência,
   que a parte 1 proíbe e que caixas coloridas e gráficos produzem, e o nível
-  \emph{b} garante a reprodução visual fiel. Basta a opção \texttt{pdfa} em
-  \verb|\documentclass[dsc,pdfa]{ufrj}|: a classe carrega o \texttt{pdfx},
-  monta os metadados a partir do título, do autor e das palavras-chave, e
-  embute o perfil de cor. Ligue-a cedo, como faz o \texttt{max-exemplo.tex}: um PDF
-  ou uma imagem incluídos fora da norma aparecem no dia em que entram, e não na
-  véspera do depósito. Para conferir, use o validador veraPDF, perfil PDF/A-2b.
+  \emph{b} garante a reprodução visual fiel. Não é preciso pedir: a classe
+  carrega o \texttt{pdfx}, monta os metadados a partir do título, do autor e
+  das palavras-chave, e embute o perfil de cor em todo documento. A opção
+  \texttt{sempdfa} desliga, para um rascunho ou para um pacote que o PDF/A não
+  aceite; se você desligar, lembre que um PDF ou uma imagem incluídos fora da
+  norma aparecem no dia em que entram, e não na véspera do depósito. Para conferir, use o validador veraPDF, perfil PDF/A-2b.
 
   \section{Fluxos de escrita}
   O \hologo{pdfLaTeX} mantém no máximo dezesseis arquivos abertos para escrita,

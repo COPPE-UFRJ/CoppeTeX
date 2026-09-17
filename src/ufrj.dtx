@@ -184,6 +184,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \changes{v5.0}{2026/09/15}{COPPE is the unit style ufrj-coppe, with its own source (ufrj-coppe.dtx and ufrj-coppe.ins), its own manual (ufrj-coppe.pdf) and every example document, which all load it. A work begun with the class coppe compiles as it is: coppe.cls is now a compatibility class that loads ufrj with the same options, loads ufrj-coppe and writes one warning, and the style keeps the old public names as aliases, the old colophon pieces answering renewcommand by the old name, the three internal names that auxiliary files written by the old class contain, the page style coppe and the bib field coppedegree.}
 % \changes{v5.0}{2026/09/15}{The colophon names the class and the project apart -- Foi utilizada a classe ufrj, do projeto CoppeTeX -- where it said a classe CoppeTeX, which is the name of the project and not of a class. The norm it cites is the one the unit declares with ufrjdeclarenorm, and the UFRJ/SiBI Manual when no unit declares one.}
 % \changes{v5.0}{2026/09/15}{The documentation follows the split: this manual (ufrj.pdf) describes the class and the interface a unit style uses; ufrj-coppe.pdf describes only what COPPE declares; manual.pdf, the norm, is written for UFRJ with COPPE as the example; and the migration guide from 4.x to 5.0 tells the author of a work begun with the class coppe what to change.}
+% \changes{v5.0}{2026/09/17}{PDF/A-2b is the default output, and the new option sempdfa turns it off. 2.2(d) of the Manual requires the final digital version to be PDF/A, the deposit has been digital only since Resolucao CEPG n. 246/2023, and the class already produced conformant PDF/A -- but only when asked, so a work written without reading the manual was deposited off the norm. The v4.1 option pdfa is still accepted and now does nothing.}
 % \changes{v5.0}{2026/09/17}{The logos are printed on the capa only. The folha de rosto repeated the capa's logo line; Annex B, which is the model of the folha de rosto, and the two sheets of the SiBI model carry no image there. Annex A puts the two logos on the CAPA and marks both as optional.}
 % \changes{v5.0}{2026/09/17}{The folha de rosto and the folha de aprovacao are written entirely in Portuguese, whatever the language of the work. The research-line label, the coadvisor label and the two approval labels followed the main language while the natureza and the advisor label did not, so an English or Spanish work came out with half of each sheet in each language. The class manual and section 7 of the Norma COPPE already stated the rule: these sheets are institutional identity. The four now read the Portuguese key through ufrj@unitstr, which still honours a text the unit declared.}
 % \changes{v5.0}{2026/09/17}{The reference above each abstract is composed like the references in the list: aligned to the left margin only, the title in bold and the subtitle out of it, and an em dash before the vinculacao academica. 4.2 asks for one presentation for every reference in the work; this one was justified, set the title flat and used an en dash, so the same reference had two shapes in the same work.}
@@ -1027,8 +1028,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \textbf{Se você usar a opção \texttt{numbers}}, acrescente
 % |ufrj-numeric.bbx| e |ufrj-numeric.cbx|.
 %
-% \textbf{No depósito}, acrescente a opção \texttt{pdfa} e inclua a ficha
-% catalográfica com |\fichacatalografica|.
+% \textbf{No depósito}, inclua a ficha catalográfica com
+% |\fichacatalografica|. O PDF/A que a 2.2(d) exige já é o padrão.
 %
 % \textbf{Francês e italiano} têm os arquivos prontos
 % (|ufrj-lang-french.def|, |french-ufrj.lbx| e os equivalentes em italiano), mas
@@ -1042,16 +1043,16 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % vírgula:
 %
 % \begin{verbatim}
-%   \documentclass[dsc,numbers,pdfa]{ufrj}
+%   \documentclass[dsc,numbers,comserifa]{ufrj}
 % \end{verbatim}
 %
 % \subsection{O que é padrão, numa tabela}
 %
 % Vale a pena começar por aqui, porque a lista abaixo é longa e quase tudo
 % nela já vem do jeito certo. \textbf{Uma única opção é
-% obrigatória} --- o tipo do trabalho --- e \textbf{uma única você tem de
-% lembrar de ligar na hora de depositar}, a |pdfa|. Todo o resto tem padrão, e
-% o padrão é o que o Manual pede:
+% obrigatória} --- o tipo do trabalho. Todo o resto tem padrão, e o padrão é o
+% que o Manual pede --- inclusive o PDF/A do depósito, que desde a v5.0 vem
+% ligado:
 %
 % \begin{center}\footnotesize
 % \begin{tabular}{@{}p{0.26\textwidth}p{0.28\textwidth}p{0.34\textwidth}@{}}
@@ -1073,7 +1074,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % Coorientador no resumo & fora dele & \texttt{coorientador} \\
 % Referência no resumo & \textbf{impressa} & \texttt{resumosemreferencia} \\
 % Ficha catalográfica & a que você fornecer & \texttt{rascunhoficha} \\
-% PDF/A & \textbf{desligado} & \texttt{pdfa} \\
+% PDF/A & \textbf{ligado} & \texttt{sempdfa} \\
 % \texttt{morewrites} & \textbf{carregado}, se instalado & \texttt{semmorewrites} \texttt{morewrites} \\
 % |makeindex| das listas e do índice & \textbf{rodado pela classe} & \texttt{semmakeindex} \\
 % \end{tabular}
@@ -1237,22 +1238,24 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \subsection{Arquivo de depósito}
 %
 % \begin{description}
-%   \item[\texttt{pdfa}] Produz o arquivo em \textbf{PDF/A-2b}, que é o que a
-%     2.2(d) do Manual exige da versão digital. A classe carrega o |pdfx| no
-%     nível |a-2b| e monta os metadados XMP a partir do próprio |\title|,
-%     |\author|, |\keyword| e |\department|. Escolheu-se |a-2b| e não |a-1b|
-%     porque |a-1b| proíbe transparência, que o |tcolorbox| e vários
-%     pacotes de gráficos produzem.
+%   \item[\texttt{sempdfa}] \textbf{Desligada por padrão}, isto é: o arquivo
+%     sai em \textbf{PDF/A-2b}, que é o que a 2.2(d) do Manual exige da versão
+%     digital. A classe carrega o |pdfx| no nível |a-2b| e monta os metadados
+%     XMP a partir do próprio |\title|, |\author|, |\keyword| e |\department|.
+%     Escolheu-se |a-2b| e não |a-1b| porque |a-1b| proíbe transparência, que o
+%     |tcolorbox| e vários pacotes de gráficos produzem.
 %
 %     Os metadados chegam ao PDF na \textbf{segunda} passada, porque o |pdfx| os
 %     lê de um arquivo que a classe escreve no fim da primeira --- o que não
 %     custa nada, já que são três passadas de qualquer jeito.
 %
-%     \textbf{Ligue esta opção cedo.} Ela fica desligada por padrão porque as
-%     restrições do PDF/A podem tropeçar num documento que carregue imagens ou
-%     pacotes arbitrários. Mas o |max-exemplo.tex| já a traz ligada, e é o que se
-%     recomenda: o problema aparece no dia em que a figura entra, e não na
-%     véspera do depósito. A seção~\ref{sec:pdfa} explica o porquê.
+%     Ligue |sempdfa| para \emph{desligar} o PDF/A: numa compilação de rascunho,
+%     ou num documento que carregue um pacote que o PDF/A não aceite. Mas
+%     desligue sabendo que o arquivo do depósito tem de voltar a ser PDF/A, e
+%     que o problema de um pacote incompatível aparece melhor no dia em que ele
+%     entra do que na véspera do depósito. A seção~\ref{sec:pdfa} explica o
+%     porquê. A opção |pdfa| da v4.1 continua aceita e não faz nada: liga o que
+%     já está ligado.
 % \end{description}
 %
 % \subsection{Por que PDF/A}\label{sec:pdfa}
@@ -2116,7 +2119,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %     metadados do PDF. \textbf{Nunca o carregue de novo}: a ordem entre ele, o
 %     |setspace| e o |biblatex| é delicada, e por isso a classe o carrega no
 %     fim, sozinha.
-%   \item[\texttt{pdfx} (\texttt{a-2b})] PDF/A, só com a opção \texttt{pdfa}.
+%   \item[\texttt{pdfx} (\texttt{a-2b})] PDF/A, salvo com a opção \texttt{sempdfa}.
 % \end{description}
 %
 % \subsection{Utilitários}
@@ -3269,7 +3272,7 @@ italian   & [italian,dsc]   & \pre & Italian. Same. \\
 \multicolumn{4}{@{}l@{}}{\normalfont\bfseries\small CLASS OPTIONS --- the
   rest}\\[2pt]
 numbers   & [dsc,numbers]   & \pre & Numeric citations \texttt{[1]} instead of author-date; list in citation order. \\
-pdfa      & [dsc,pdfa]      & \pre & PDF/A-2b output, required for deposit (2.2d): the deposit is digital only, and PDF/A (ISO 19005) keeps the file self-contained --- embedded fonts, sRGB colour, XMP metadata, nothing external. Off by default; \texttt{max-exemplo.tex} turns it on, and turning it on early is recommended. Check with veraPDF. \\
+sempdfa   & [dsc,sempdfa]   & \pre & TURNS OFF the PDF/A-2b output, which is ON by default since v5.0: 2.2(d) requires the deposited file to be PDF/A (ISO 19005), self-contained --- embedded fonts, sRGB colour, XMP metadata, nothing external. Use it for a draft run, or for a package PDF/A rejects; the deposited file has to be PDF/A. The v4.1 option \texttt{pdfa} is still accepted and does nothing. Check with veraPDF. \\
 comserifa & [dsc,comserifa] & \pre & Serif family. Sans is the default since v4.1. \\
 semserifa & ---             & \pre & Accepted, does nothing. What it asked for became the default. \\
 semlinks  & [dsc,semlinks]  & \pre & Accepted; confirms the default (links with no colour and no frame, still clickable). Wins over the two below. \\
@@ -4412,8 +4415,15 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % encryption, restricted transparency) can trip up a document that pulls in
 % arbitrary images or packages, and breaking existing theses to enforce it would
 % be worse than letting the author switch it on when depositing.
-\newif\if@ufrjpdfa \@ufrjpdfafalse
+% O PDF/A e o PADRAO desde a v5.0 (#124): a 2.2(d) do Manual exige a versao
+% digital final em PDF/A, e o deposito e digital e so. A opcao `pdfa' continua
+% valendo, e nao faz nada alem de ligar o que ja esta ligado, para que um
+% documento escrito para a 4.1 compile sem mudanca. `sempdfa' desliga -- para
+% uma compilacao de rascunho, ou para um documento que carregue um pacote que
+% o PDF/A nao aceite.
+\newif\if@ufrjpdfa \@ufrjpdfatrue
 \DeclareOption{pdfa}{\@ufrjpdfatrue}
+\DeclareOption{sempdfa}{\@ufrjpdfafalse}
 % A opcao `assinaturas' punha uma regua para assinatura a mao acima do nome de
 % cada membro da banca. Com a entrega so digital (Resolucao CEPG n. 246/2023)
 % nao ha o que assinar a mao, e a v4.1 tirou as reguas. A opcao continua aceita,

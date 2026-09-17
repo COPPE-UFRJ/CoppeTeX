@@ -231,9 +231,9 @@
 
   As opções mais usadas são \verb|numbers|, que troca as citações autor-data
   pelo sistema numérico; \verb|english| ou \verb|spanish|, para o idioma de
-  redação; \verb|pdfa|, que produz o arquivo no formato exigido para depósito;
-  e \verb|comserifa|, para quem prefere a fonte serifada à sem serifa que a
-  classe usa por padrão.
+  redação; e \verb|comserifa|, para quem prefere a fonte serifada à sem serifa
+  que a classe usa por padrão. O PDF/A que o depósito exige não precisa de
+  opção: é o padrão.
 
   A bibliografia usa BibLaTeX com o motor \texttt{biber}, e não BibTeX. Declare
   a base no preâmbulo com \verb|\addbibresource{arquivo.bib}| e imprima a lista
@@ -512,11 +512,12 @@
   produzem com frequência; o nível \emph{b} garante a reprodução visual fiel,
   que é o que o depósito pede. O Anexo I do Manual aceita 1b e 2b.
 
-  Na classe, é a opção \verb|pdfa|: ela carrega o pacote \verb|pdfx|, monta os
-  metadados a partir dos dados do próprio trabalho e embute o perfil de cor. A
-  opção fica desligada por padrão, mas o \verb|max-exemplo.tex| já a traz ligada, e é
-  o que se recomenda: um problema de PDF/A --- quase sempre um PDF ou uma imagem
-  incluídos que não obedecem à norma --- aparece no dia em que o arquivo entra no
+  Na classe, é o padrão: ela carrega o pacote \verb|pdfx|, monta os metadados a
+  partir dos dados do próprio trabalho e embute o perfil de cor em todo
+  documento, sem que você peça. A opção \verb|sempdfa| desliga, para uma
+  compilação de rascunho ou para um pacote que o PDF/A não aceite --- e quem
+  desligar deve lembrar que um problema de PDF/A, quase sempre um PDF ou uma
+  imagem incluídos fora da norma, aparece no dia em que o arquivo entra no
   trabalho, e não na véspera do depósito. Para conferir, use o validador
   gratuito veraPDF, no perfil PDF/A-2b.
 

@@ -212,7 +212,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %% !BIB program = biber
 %% Com o latexmk funcionando (no Windows ele pede o Perl), troque a primeira
 %% linha por: % !TeX program = latexmk -pdf -synctex=1
-\documentclass[dsc,pdfa,setavermelha]{ufrj}
+\documentclass[dsc,setavermelha]{ufrj}
 \usepackage{ufrj-coppe}
 %% max-exemplo.tex -- tudo o que a classe oferece e o Manual prevê, inclusive o
 %% opcional. Para só o obrigatório, veja o min-exemplo.tex.
@@ -227,9 +227,10 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %% simbolosalfabeticos, semmorewrites. O manual da classe descreve cada uma.
 %%
 %% Opções de classe que valem conhecer aqui:
-%%  - pdfa: gera o arquivo em PDF/A-2b, o formato que o depósito exige (Manual
-%%    2.2d). Este exemplo o liga desde a primeira linha; a razão está na seção
-%%    "O arquivo de depósito: PDF/A", no capítulo de regras da COPPE.
+%%  - sempdfa: DESLIGA o PDF/A-2b, que a classe produz por padrão porque é o
+%%    formato que o depósito exige (Manual 2.2d). Este exemplo não a usa, e por
+%%    isso sai em PDF/A; a razão está na seção "O arquivo de depósito: PDF/A",
+%%    no capítulo de regras da COPPE.
 %%  - setavermelha: nas listagens de programa, a linha longa demais quebra
 %%    sozinha e continua embaixo depois de uma seta curva; por padrão ela é
 %%    preta, e esta opção a deixa vermelha.
@@ -574,12 +575,12 @@ Texto da seção quinária, escrita com \verb|\paragraph|. Este é o único \ver
 \section{O arquivo de depósito: PDF/A}
 \label{sec:pdfa}
 
-Este exemplo é compilado com a opção \verb|pdfa| da classe, logo na primeira linha:
+Este exemplo sai em \textbf{PDF/A-2b} sem pedir nada: desde a v5.0 é o padrão da classe.
 \begin{verbatim}
-\documentclass[dsc,pdfa,setavermelha]{ufrj}
+\documentclass[dsc,setavermelha]{ufrj}
 \usepackage{ufrj-coppe}
 \end{verbatim}
-Com ela, o arquivo sai em \textbf{PDF/A-2b}. Esta seção explica o que isso é, por que a COPPE exige, o que a classe faz e o que pode dar errado.
+Quem precisar de um PDF comum --- numa compilação de rascunho, ou com um pacote que o PDF/A não aceite --- escreve \verb|sempdfa| entre as opções. Esta seção explica o que isso é, por que a COPPE exige, o que a classe faz e o que pode dar errado.
 
 \textbf{Por que é obrigatório.} Desde a Resolução CEPG n.~246/2023 o depósito de teses e dissertações na UFRJ é \emph{exclusivamente digital}: não há mais cópia impressa, e o arquivo é o documento. Por isso o Manual da UFRJ, na seção 2.2(d), diz que a versão digital final ``deve ser entregue em arquivo do tipo PDF/A (formato de arquivamento de longo prazo)''. Um PDF comum abre hoje, mas nada garante que abra igual daqui a trinta anos, em outro computador, sem as fontes e os programas que o produziram. O PDF/A garante.
 
@@ -1721,12 +1722,13 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor i
 %% !BIB program = biber
 %% Com o latexmk funcionando (no Windows ele pede o Perl), troque a primeira
 %% linha por: % !TeX program = latexmk -pdf -synctex=1
-\documentclass[dsc,pdfa]{ufrj}
+\documentclass[dsc]{ufrj}
 \usepackage{ufrj-coppe}
 %% min-exemplo.tex -- tudo o que a norma exige, e nada além disso.
 %%
 %% O que está aqui e por quê (Manual UFRJ/SiBI, 9.ª ed. rev., 2026):
-%%  - pdfa ................ o depósito é em PDF/A (2.2d);
+%%  - PDF/A ............... o depósito é em PDF/A (2.2d), e é o padrão da
+%%    classe: não se escreve opção nenhuma para ter;
 %%  - \maketitle .......... capa, folha de rosto (3.1.2.1.1) e folha adicional
 %%    com a Coleta CAPES e a ficha catalográfica (3.1.2.1.2);
 %%  - \frontmatter ........ folha de aprovação (3.1.2.1.3), com o orientador
@@ -2071,12 +2073,12 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor i
 
   A classe usa a variante \textbf{PDF/A-2b}: a parte 2 admite transparência,
   que a parte 1 proíbe e que caixas coloridas e gráficos produzem, e o nível
-  \emph{b} garante a reprodução visual fiel. Basta a opção \texttt{pdfa} em
-  \verb|\documentclass[dsc,pdfa]{ufrj}|: a classe carrega o \texttt{pdfx},
-  monta os metadados a partir do título, do autor e das palavras-chave, e
-  embute o perfil de cor. Ligue-a cedo, como faz o \texttt{max-exemplo.tex}: um PDF
-  ou uma imagem incluídos fora da norma aparecem no dia em que entram, e não na
-  véspera do depósito. Para conferir, use o validador veraPDF, perfil PDF/A-2b.
+  \emph{b} garante a reprodução visual fiel. Não é preciso pedir: a classe
+  carrega o \texttt{pdfx}, monta os metadados a partir do título, do autor e
+  das palavras-chave, e embute o perfil de cor em todo documento. A opção
+  \texttt{sempdfa} desliga, para um rascunho ou para um pacote que o PDF/A não
+  aceite; se você desligar, lembre que um PDF ou uma imagem incluídos fora da
+  norma aparecem no dia em que entram, e não na véspera do depósito. Para conferir, use o validador veraPDF, perfil PDF/A-2b.
 
   \section{Fluxos de escrita}
   O \hologo{pdfLaTeX} mantém no máximo dezesseis arquivos abertos para escrita,

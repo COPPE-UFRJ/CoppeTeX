@@ -20,7 +20,7 @@
 %% !BIB program = biber
 %% Com o latexmk funcionando (no Windows ele pede o Perl), troque a primeira
 %% linha por: % !TeX program = latexmk -pdf -synctex=1
-\documentclass[dsc,pdfa,setavermelha]{ufrj}
+\documentclass[dsc,setavermelha]{ufrj}
 \usepackage{ufrj-coppe}
 %% max-exemplo.tex -- tudo o que a classe oferece e o Manual prevê, inclusive o
 %% opcional. Para só o obrigatório, veja o min-exemplo.tex.
@@ -35,9 +35,10 @@
 %% simbolosalfabeticos, semmorewrites. O manual da classe descreve cada uma.
 %%
 %% Opções de classe que valem conhecer aqui:
-%%  - pdfa: gera o arquivo em PDF/A-2b, o formato que o depósito exige (Manual
-%%    2.2d). Este exemplo o liga desde a primeira linha; a razão está na seção
-%%    "O arquivo de depósito: PDF/A", no capítulo de regras da COPPE.
+%%  - sempdfa: DESLIGA o PDF/A-2b, que a classe produz por padrão porque é o
+%%    formato que o depósito exige (Manual 2.2d). Este exemplo não a usa, e por
+%%    isso sai em PDF/A; a razão está na seção "O arquivo de depósito: PDF/A",
+%%    no capítulo de regras da COPPE.
 %%  - setavermelha: nas listagens de programa, a linha longa demais quebra
 %%    sozinha e continua embaixo depois de uma seta curva; por padrão ela é
 %%    preta, e esta opção a deixa vermelha.
@@ -377,12 +378,12 @@ Texto da seção quinária, escrita com \verb|\paragraph|. Este é o único \ver
 \section{O arquivo de depósito: PDF/A}
 \label{sec:pdfa}
 
-Este exemplo é compilado com a opção \verb|pdfa| da classe, logo na primeira linha:
+Este exemplo sai em \textbf{PDF/A-2b} sem pedir nada: desde a v5.0 é o padrão da classe.
 \begin{verbatim}
-\documentclass[dsc,pdfa,setavermelha]{ufrj}
+\documentclass[dsc,setavermelha]{ufrj}
 \usepackage{ufrj-coppe}
 \end{verbatim}
-Com ela, o arquivo sai em \textbf{PDF/A-2b}. Esta seção explica o que isso é, por que a COPPE exige, o que a classe faz e o que pode dar errado.
+Quem precisar de um PDF comum --- numa compilação de rascunho, ou com um pacote que o PDF/A não aceite --- escreve \verb|sempdfa| entre as opções. Esta seção explica o que isso é, por que a COPPE exige, o que a classe faz e o que pode dar errado.
 
 \textbf{Por que é obrigatório.} Desde a Resolução CEPG n.~246/2023 o depósito de teses e dissertações na UFRJ é \emph{exclusivamente digital}: não há mais cópia impressa, e o arquivo é o documento. Por isso o Manual da UFRJ, na seção 2.2(d), diz que a versão digital final ``deve ser entregue em arquivo do tipo PDF/A (formato de arquivamento de longo prazo)''. Um PDF comum abre hoje, mas nada garante que abra igual daqui a trinta anos, em outro computador, sem as fontes e os programas que o produziram. O PDF/A garante.
 

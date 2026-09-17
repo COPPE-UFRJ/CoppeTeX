@@ -125,7 +125,7 @@ italian   & [italian,dsc]   & \pre & Italian. Same. \\
 \multicolumn{4}{@{}l@{}}{\normalfont\bfseries\small CLASS OPTIONS --- the
   rest}\\[2pt]
 numbers   & [dsc,numbers]   & \pre & Numeric citations \texttt{[1]} instead of author-date; list in citation order. \\
-pdfa      & [dsc,pdfa]      & \pre & PDF/A-2b output, required for deposit (2.2d): the deposit is digital only, and PDF/A (ISO 19005) keeps the file self-contained --- embedded fonts, sRGB colour, XMP metadata, nothing external. Off by default; \texttt{max-exemplo.tex} turns it on, and turning it on early is recommended. Check with veraPDF. \\
+sempdfa   & [dsc,sempdfa]   & \pre & TURNS OFF the PDF/A-2b output, which is ON by default since v5.0: 2.2(d) requires the deposited file to be PDF/A (ISO 19005), self-contained --- embedded fonts, sRGB colour, XMP metadata, nothing external. Use it for a draft run, or for a package PDF/A rejects; the deposited file has to be PDF/A. The v4.1 option \texttt{pdfa} is still accepted and does nothing. Check with veraPDF. \\
 comserifa & [dsc,comserifa] & \pre & Serif family. Sans is the default since v4.1. \\
 semserifa & ---             & \pre & Accepted, does nothing. What it asked for became the default. \\
 semlinks  & [dsc,semlinks]  & \pre & Accepted; confirms the default (links with no colour and no frame, still clickable). Wins over the two below. \\

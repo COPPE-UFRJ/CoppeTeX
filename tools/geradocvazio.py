@@ -163,7 +163,7 @@ CAMPOS = [
      None, "Vazio deixa a moldura reservada; a ficha vem do gerador do SiBI"),
     # --- Op\u00e7\u00f5es da classe -----------------------------------------------
     ("pdfa", "Op\u00e7\u00f5es", "PDF/A-2b (obrigat\u00f3rio no dep\u00f3sito)", "sim/nao",
-     False, None, "Ligue ao depositar; atrapalha durante a escrita"),
+     True, None, "Padr\u00e3o da classe; desligar gera `sempdfa' e sai da norma"),
     ("numbers", "Op\u00e7\u00f5es", "Cita\u00e7\u00f5es num\u00e9ricas [1]", "sim/nao", False, None,
      "Sem isto, autor-data"),
     ("comserifa", "Op\u00e7\u00f5es", "Com serifa", "sim/nao", False, None,
@@ -230,7 +230,7 @@ CAMPOS = [
 ABAS = ["Arquivos", "Trabalho", "Banca", "Folha adicional", "Op\u00e7\u00f5es",
         "Estrutura"]
 
-OPCOES_CLASSE = ["pdfa", "numbers", "comserifa", "linkscommoldura", "linkscoloridos", "setavermelha", "doublespacing",
+OPCOES_CLASSE = ["numbers", "comserifa", "linkscommoldura", "linkscoloridos", "setavermelha", "doublespacing",
                  "twoside", "coorientador", "semorientadornabanca",
                  "rascunhoficha", "listasnosumario", "resumosemreferencia",
                  "semmorewrites"]
@@ -282,6 +282,10 @@ def monta_tex(v, nome_bib):
     opcoes = [v["tipo"]]
     if v["idioma"] != "brazilian":
         opcoes.append(v["idioma"])
+    # O PDF/A e o padrao da classe desde a v5.0 (#124): o documento so escreve
+    # opcao quando o autor DESLIGA.
+    if not v.get("pdfa"):
+        opcoes.append("sempdfa")
     for o in OPCOES_CLASSE:
         if v.get(o):
             opcoes.append(o)

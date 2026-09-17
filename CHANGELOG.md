@@ -49,6 +49,15 @@ run it, and the fix removes the mark.
 
 ### Changed
 
+- **PDF/A-2b is the default output** (#124). 2.2(d) of the Manual requires the
+  final digital version to be PDF/A, and the deposit has been digital only
+  since Resolução CEPG n. 246/2023. The class already produced conformant
+  PDF/A-2b, but only when asked, so a work written without reading the manual
+  was deposited off the norm — and the empty-document generator shipped the
+  field off, with the hint "turn it on when you deposit". The new option
+  `sempdfa` turns it off, for a draft run or a package PDF/A rejects; the v4.1
+  option `pdfa` is still accepted and now does nothing. `min-exemplo.tex`, which
+  is the minimum the norm demands, no longer needs the option to be conformant.
 - **The Norma COPPE drops the acronym from the institute line of the capa**
   (#129). Section 2 asked for "Instituto Alberto Luiz Coimbra de
   Pós-Graduação e Pesquisa de Engenharia (COPPE)" and the class composed the

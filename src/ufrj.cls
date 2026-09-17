@@ -436,8 +436,9 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \DeclareOption{numeraisromanos}{\@ufrjromantrue}
 \newif\if@ufrjdoublespace\@ufrjdoublespacefalse
 \DeclareOption{doublespacing}{\@ufrjdoublespacetrue}
-\newif\if@ufrjpdfa \@ufrjpdfafalse
+\newif\if@ufrjpdfa \@ufrjpdfatrue
 \DeclareOption{pdfa}{\@ufrjpdfatrue}
+\DeclareOption{sempdfa}{\@ufrjpdfafalse}
 \newif\if@ufrjorientexam \@ufrjorientexamtrue
 \DeclareOption{orientadorexamina}{\@ufrjorientexamtrue}
 \DeclareOption{semorientadornabanca}{\@ufrjorientexamfalse}
