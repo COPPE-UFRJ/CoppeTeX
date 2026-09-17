@@ -234,10 +234,17 @@ def acao_prova(saida):
 
 
 def acao_conferir(saida):
-    """Os verificadores que nao compilam nada: so leem o que foi produzido."""
+    """Os verificadores que nao compilam nada: so leem o que foi produzido.
+
+    Os dois ultimos comparam o PDF pronto com o Manual -- conferir-norma mede
+    folha, folio, margem e sumario; conferir-referencias compara cada referencia
+    com o gabarito -- e, sem argumento, cada um sabe quais PDFs ler. Ficaram
+    fora daqui ate a 4.1, e a m-diss saiu errada com o verificador acusando a
+    divergencia para ninguem (#151).
+    """
     ok = True
     for script in ("conferir-referencias-cruzadas.py", "conferir-manual.py",
-                   "versao.py"):
+                   "versao.py", "conferir-norma.py", "conferir-referencias.py"):
         saida("")
         ok = roda([sys.executable, os.path.join(TOOLS, script)], RAIZ, saida) and ok
     return ok
@@ -395,7 +402,7 @@ ACOES = [
     ("pdfa", "Validar PDF/A", acao_pdfa,
      "veraPDF no perfil 2b; pulado se o veraPDF nao estiver instalado"),
     ("conferir", "Conferir sem compilar", acao_conferir,
-     "referencias cruzadas, cobertura do manual e versao sincronizada"),
+     "referencias cruzadas, cobertura do manual, versao, e os PDFs contra o Manual"),
     ("tudo", "TUDO, com veredito", acao_prova,
      "a prova completa; e o que tem de sair limpo antes de marcar uma versao"),
     ("dist", "Copiar para dist/", acao_dist,

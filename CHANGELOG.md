@@ -4,6 +4,121 @@ Project changes worth noting, newest first. Follows
 [Keep a Changelog](https://keepachangelog.com/) loosely; dates are
 ISO-8601.
 
+## [Unreleased] — Full check against the UFRJ/SiBI Manual (2026)
+
+On 2026-09-16, version 4.1 was checked in full against the Manual (9th ed.
+rev., 2026) and the CAPES additional-sheet model. Each defect found has one
+issue (#113–#152, umbrella #112) and a minimal test in `tests/regressivo/`
+(`rt33`–`rt70`, `rt89`) that fails until the fix lands. The fix plan is
+`CORRECOES_MANUAL_2026.md`. A test still waiting for its fix carries an
+`ABERTO: #<issue>` mark: the unfiltered regression run lists it but does not
+run it, and the fix removes the mark.
+
+### Verification
+
+- **The proof now runs the two checkers that compare the finished PDF with the
+  Manual** (#151). `conferir-norma.py` (sheet, folio, margins, sumário) and
+  `conferir-referencias.py` (each reference against the Manual's own
+  examples) were in neither `coppetex.bat --conferir` nor `build-check.ps1`,
+  so the m-diss reference shipped wrong in 4.1 while the checker reported the
+  divergence to no one. Both now run in `--conferir`, and in `build-check.ps1`
+  right after the examples and the adversarial documents are compiled.
+  Without arguments, each knows which PDFs to read. Each reads a document with
+  one `pdftotext` call instead of one per page, which cuts 174 s to about 20 s.
+  On their first run they found the m-diss divergence (#147) and a LuaLaTeX
+  defect (#152).
+- **The Portuguese field names are checked again** (#147). The 34 Manual
+  references exist in two databases: `exemplo.bib`, with English field names,
+  and the adversarial `referencias-manual.bib`, with the Portuguese synonyms
+  (`@livro`, `autor`, `curso`…). They shared their keys. Biber found every
+  citation in the first file and never opened the second, so the Portuguese
+  form was never composed. The keys are now `m-<item>` and `pt-<item>`, and
+  the Portuguese adversarial documents cite both. `conferir-referencias.py`
+  reads the expected text from both databases and ties each `[n]` to its key
+  through the `.bbl`, instead of guessing from the start of the text. The
+  result: 68 checks, no divergence, and the same three accepted ones in each
+  form.
+
+### Changed
+
+- **Headings are set in the body size** (#113). 2.2(b) of the UFRJ Manual fixes
+  size 12 for the work and allows only smaller sizes (long quotations, notes,
+  folio, captions and sources, catalogue card). 2.6 builds the gradual emphasis
+  from bold, italic and capitals, not from size. Chapters and unnumbered
+  headings (RESUMO, SUMÁRIO, REFERÊNCIAS…) were `\Large` (17.28 pt), sections
+  `\large` (14.4 pt), and the two headings of the CAPES additional sheet
+  `\large`. The gradation is unchanged: chapter bold capitals, section
+  capitals, subsection bold, subsubsection bold italic, paragraph italic.
+- **One blank line before and after section headings** (#122), as 2.4 asks,
+  for section, subsection, subsubsection and paragraph. titlesec's default
+  left 2.3 ex after the heading, about two thirds of a line at 1.5 spacing.
+  Documents get a little longer, and page breaks move.
+- **Post-textual entries line up with the titles in the sumário** (#115).
+  REFERÊNCIAS, APÊNDICE A – …, ANEXO A – …, the glossary, the index and, under
+  `listasnosumario`, the pre-textual lists started at the left margin. They now
+  start in the column of the numbered titles. 3.1.2.1.6 aligns titles by the
+  longest indicative, post-textual elements included, and the Manual's own
+  sumário does so. Section 14 of the COPPE norm already stated it as a rule.
+- **The em dash (—) between number and title, everywhere** (#150): captions
+  ("Figura 4.1 — Título"), algorithm captions, appendix and annex headings
+  ("APÊNDICE A — Título"), their sumário entries and the lists of
+  illustrations. The Manual calls the sign *travessão* (2.10, 3.1.2.2.4,
+  3.1.4.3, 3.1.4.4), and section 12 of the COPPE norm shows the em dash. The
+  class used the en dash almost everywhere and the em dash in the thesis
+  reference. This was a maintainer's decision recorded in the issue, and it is
+  easy to revert.
+- **Lists of illustrations and of tables name each item** (#116): "Figura 4.1
+  — Título ….. 27" instead of "4.1 Título ….. 27", as 3.1.2.2.4 and 3.1.2.2.5
+  ask, for figures, tables, quadros, programs, algorithms and every float made
+  with `\newufrjfloat`. A long title continues at the left margin, as in the
+  Manual's example.
+- **The lists come in the order of 3.1.2** (#148): every list of illustrations
+  (figures, quadros, maps, programs, algorithms) first, then the list of
+  tables. `max-exemplo.tex`, `manual.tex`, the document generator, the
+  adversarial documents, the class manual and the quick reference had the list
+  of tables second. Section 10 of the COPPE norm placed its three lists between
+  tables and abbreviations; it now places them with the other illustrations,
+  since 2.10 counts quadros, programs and algorithms as illustrations. The class
+  imposes no order, so an existing document keeps the order its author wrote.
+- **Abstract sheets have a heading** (#114): RESUMO, ABSTRACT or RESUMEN, in the
+  language of each sheet, centred in bold capitals like every heading without a
+  numeric indicative (2.6). The sheets used to open straight on "Resumo da Tese
+  apresentada à COPPE/UFRJ…". The heading cannot be switched off; the four
+  optional elements below it still can.
+
+### Fixed
+
+- **LuaLaTeX printed "nº" as "nž"** (#152). The class loaded `fontenc` with T1
+  under every engine. A Unicode engine sends each input character straight to
+  the font, and in T1 the slot of `º` holds `ž`. So under LuaLaTeX, `º ª § ° « »
+  ± × µ · ² ½ ¿ ¡` printed as other letters (`ž ł ğ ř ń ż ś Œ ţ ů š ¡ £ ą`), and
+  `— – “ ” ‘ ’ … € œ Ł ő` vanished, with only a "Missing character" line in the
+  log. Portuguese accented letters were right, because T1 matches Latin-1
+  there, so nobody saw it. Unicode engines now keep TU, LaTeX's default for
+  them, with the same Latin Modern in OpenType. The shape declarations that
+  keep substitution messages out of the log exist for TU too. The fixed
+  typewriter fonts of the language listing styles (`\pythonstyle`,
+  `\xmlstyle`…) use Latin Modern Mono under LuaLaTeX, because txtt has no
+  OpenType version. pdfLaTeX output does not change. The LuaLaTeX adversarial
+  twin now matches the Manual's references with no divergence and is still
+  PDF/A-2b.
+- **`exemplo.bib`: the master's dissertation example** (`m-diss`) printed
+  "1997. 203 f. Memória Social e Documento Centro de Ciências Humanas…",
+  without "Dissertação (Mestrado em …)" or the dash (4.2.1.1). The course was
+  in `type`, and the `mscdiss` type was missing (#147). The comments in
+  `exemplo.bib` and the class manual also said half the entries used the
+  Portuguese synonyms, but none has since the database moved to English names.
+
+### Documentation
+
+- **The abstract does not have to fit on one sheet** (#153). The class manual,
+  `manual.tex`, a regression test and section 8 of the COPPE norm said that
+  3.1.2.1.4 of the UFRJ Manual requires it. The 2026 Manual asks for 1.5
+  spacing, a single paragraph and 150 to 500 words, and says nothing about the
+  number of sheets. A 500-word abstract with all five elements takes more than
+  one A4 sheet anyway. `resumosemreferencia` and `\setupabstracts` remain for
+  whoever prefers a single sheet.
+
 ## [5.0] — 2026-09-15 — The UFRJ class and the COPPE unit style
 
 The class that was `coppe` is now **`ufrj`**, and implements the UFRJ/SiBI

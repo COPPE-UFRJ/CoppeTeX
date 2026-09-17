@@ -6,13 +6,31 @@ Le o PDF pronto e mede o que a norma fixa em centimetros e em ordem, que e o
 que nenhuma compilacao bem-sucedida garante: uma tese compila perfeitamente com
 a margem errada.
 
-Precisa de python3, poppler (pdftotext, pdftoppm, pdfinfo) e pypdf. Roda em
-qualquer sistema; no Windows, instale poppler e `pip install pypdf'.
+Precisa de python3 e poppler (pdftotext, pdftoppm, pdfinfo). Roda em qualquer
+sistema; no Windows, o poppler que vem com o MiKTeX serve.
 
+    python3 tools/conferir-norma.py
     python3 tools/conferir-norma.py tests/adversativa/adv_*.pdf
     python3 tools/conferir-norma.py src/max-exemplo.pdf
+
+Sem argumento, confere os dois exemplos de src/ e os documentos adversativos
+que ja tiverem sido compilados, nos dois motores -- e o que o `--conferir' do
+painel faz. O build-check.ps1 chama este script logo depois de compilar os
+exemplos e os adversativos, com os PDFs daquele escopo.
 """
-import sys, re, subprocess, os, tempfile, io
+import sys, re, subprocess, os, tempfile, io, glob
+
+# A saida vai por um cano para o painel e para o build-check.ps1, e no Windows o
+# Python escreve no cano na codificacao do console: o primeiro caractere que ela
+# nao tem -- uma ligadura que o pdftotext devolve, um hifen U+2010 -- derrubava o
+# verificador no meio do relato, e a prova registrava falha do DOCUMENTO.
+if hasattr(sys.stdout, "reconfigure"):
+    try:
+        sys.stdout.reconfigure(errors="replace")
+    except (ValueError, OSError):
+        pass
+
+RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 PT = 28.3464567          # pontos por centimetro
 A4 = (595.276, 841.89)
@@ -110,8 +128,21 @@ def texto_bbox(pdf):
         res.append(ws)
     return res
 
+_PAGINAS = {}
+
+
 def texto(pdf, p):
-    return _pdftotext(["-f", str(p), "-l", str(p), pdf, "-"])
+    """O texto da folha p (contando de 1).
+
+    Uma chamada do pdftotext para o documento inteiro, repartida nas quebras de
+    folha, e guardada. Chamar o programa folha a folha custava meio segundo por
+    folha no Windows: sete PDFs levavam tres minutos, e um verificador lento
+    fica fora da prova -- foi o que aconteceu com este (#151).
+    """
+    if pdf not in _PAGINAS:
+        _PAGINAS[pdf] = _pdftotext([pdf, "-"]).split("\f")
+    paginas = _PAGINAS[pdf]
+    return paginas[p - 1] if 0 < p <= len(paginas) else ""
 
 def tinta_folio(pdf, pagina, dpi=300):
     """Topo e borda direita do folio, em cm, medidos na tinta."""
@@ -334,8 +365,20 @@ def confere(pdf):
     if nres: ok("%d pagina(s) de resumo, com orientador e palavras-chave" % nres)
     return nome, npag, achados
 
+def alvos_padrao():
+    """Sem argumento: o que o aluno recebe e o que a prova compila.
+
+    Os dois exemplos da entrega e os adversativos ja compilados, pdfLaTeX e
+    LuaLaTeX. A sonda de fluxos (_writes_probe) fica de fora: estoura de
+    proposito e o PDF dela nao e documento.
+    """
+    alvos = [os.path.join(RAIZ, "src", n) for n in ("max-exemplo.pdf", "min-exemplo.pdf")]
+    alvos += sorted(glob.glob(os.path.join(RAIZ, "tests", "adversativa", "adv_*.pdf")))
+    return [a for a in alvos if os.path.exists(a)]
+
+
 if __name__ == "__main__":
-    alvos = sys.argv[1:]
+    alvos = sys.argv[1:] or alvos_padrao()
     if not alvos:
         print(__doc__); sys.exit(2)
     total_erros = 0

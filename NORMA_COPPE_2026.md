@@ -198,8 +198,8 @@ alguns Programas exigem: nenhum dos dois é depositado na biblioteca nem entra n
 acervo, e portanto nenhum dos dois é documento referenciável.
 
 A implementação de referência compõe a referência sozinha, com os dados que a
-folha de rosto já exige, e oferece uma opção para retirá-la — útil ao resumo que
-já esteja no limite das 500 palavras e não caiba em uma folha com ela.
+folha de rosto já exige, e oferece uma opção para retirá-la — útil a quem quer o
+resumo numa folha só, o que o Manual não exige.
 
 ## 9. Idioma principal do trabalho — *Escolha*
 
@@ -216,7 +216,9 @@ institucional (Seção 4).
 
 Em complemento às listas do item 3.1.2.2.4, a COPPE reconhece três listas
 próprias, cada uma presente quando houver ao menos uma ocorrência no corpo do
-trabalho, entre a Lista de Tabelas e a Lista de Abreviaturas:
+trabalho. Quadro, programa e algoritmo são ilustrações (2.10), e por isso as
+três vêm junto das demais listas de ilustrações, **antes** da Lista de Tabelas,
+na ordem do item 3.1.2:
 
 - **Lista de Quadros** — quadro é a ilustração bordada em todos os lados,
   distinta da tabela, que é delimitada apenas no topo e na base;

@@ -33,6 +33,16 @@ Diretivas aceitas no cabecalho do .tex (uma por linha, comecando com %%):
     %% ESPERA-ARQUIVO: <ext>::<texto>      (o .<ext> gerado contem o texto)
     %% NAO-ESPERA-ARQUIVO: <ext>::<texto>  (o .<ext> gerado NAO contem)
     %% ESPERA-BYTES: <texto>               (os bytes crus do PDF contem)
+    %% ABERTO: #<issue>                    (defeito ainda aberto; ver abaixo)
+
+ABERTO marca um teste que MOSTRA um defeito que ainda nao foi corrigido -- os da
+conferencia contra o Manual 2026 (r33 em diante) nasceram assim. Ele falha, e
+de proposito. Na rodada sem filtro ele NAO roda: a suite normal continua
+dizendo se algum defeito CORRIGIDO voltou, e nao se enche de falhas conhecidas
+nem do tempo delas. Rode-o pelo nome (`run-regressivo.py r38`), aos poucos,
+enquanto a correcao e feita; a correcao tira a linha ABERTO no mesmo commit, e
+dali em diante o teste entra na rodada normal. Nos .py a marca e uma linha
+`ABERTO: #<issue>` no docstring, logo depois da linha BUG.
 
 O texto do PDF sai do pdftotext, que vem com o MiKTeX e com o TeX Live. Sem ele
 as cobrancas de texto sao PULADAS, e o teste avisa -- nao passa calado.
@@ -289,6 +299,18 @@ def um_teste_python(caminho):
     return bug, ["saiu com codigo %d" % p.returncode] + saida[-6:], []
 
 
+def aberto(caminho):
+    """A issue de um teste que ainda mostra defeito aberto (marca ABERTO), ou None."""
+    with io.open(caminho, encoding="utf-8") as f:
+        for i, linha in enumerate(f):
+            if i > 40 or linha.startswith("\\documentclass"):
+                break
+            m = re.match(r"^(?:%%\s*)?ABERTO:\s*(.*?)\s*$", linha)
+            if m:
+                return m.group(1) or "?"
+    return None
+
+
 def main():
     argv = [a for a in sys.argv[1:] if not a.startswith("-")]
     manter = "--manter" in sys.argv
@@ -300,8 +322,18 @@ def main():
     # foi matar os processos na mao.
     testes = sorted(f for f in os.listdir(AQUI)
                     if RE_NOME.match(f))
+    abertos = []
     if argv:
         testes = [t for t in testes if any(a in t for a in argv)]
+    else:
+        # sem filtro, os testes de defeito ABERTO ficam de fora: ver o docstring
+        todos, testes = testes, []
+        for t in todos:
+            issue = aberto(os.path.join(AQUI, t))
+            if issue:
+                abertos.append((t, issue))
+            else:
+                testes.append(t)
     if not testes:
         print("nenhum teste casou com o filtro")
         return 1
@@ -330,6 +362,9 @@ def main():
             print("        aviso: %s" % a)
 
     print("")
+    if abertos:
+        print("%d teste(s) de defeito ABERTO fora desta rodada; rode pelo nome: %s"
+              % (len(abertos), " ".join("%s(%s)" % (t.split("-")[0], i) for t, i in abertos)))
     print("=== %d teste(s), %d falha(s), %d aviso(s) ===" % (len(testes), ruins, avisos))
     return 1 if ruins else 0
 

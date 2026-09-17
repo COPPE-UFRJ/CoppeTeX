@@ -14,7 +14,8 @@
 
 .PARAMETER Scope
     class    - só regenera ufrj.cls e companhia a partir de ufrj.ins (rápido)
-    example  - class + max-exemplo.tex e min-exemplo.tex
+    example  - class + max-exemplo.tex e min-exemplo.tex, e o conferir-norma
+               nos dois PDFs
     langs    - class + os cinco example_<lang>.tex
     tests    - class + a suíte tests/run-tests.ps1
     docs     - class + ufrj.pdf (manual), NORMA_COPPE_2026.pdf,
@@ -27,7 +28,9 @@
     adversativa - os 6 documentos de tests\adversativa\ (quatro em portugues,
                um em ingles e um em espanhol, cada um de um tipo diferente),
                com o ciclo completo: biber, makeindex das listas e do indice
-               remissivo, tres passadas, e veraPDF em cada um.
+               remissivo, tres passadas, e veraPDF em cada um; depois, o
+               conferir-norma em todos e o conferir-referencias nos que trazem
+               o gabarito.
     regressivo - a suite de regressao de tests\regressivo\: um teste minimo
                para cada defeito ja corrigido. NAO entra no `all'; rode-a
                antes de marcar uma versao.
@@ -118,6 +121,31 @@ function Invoke-Step {
             Add-Line "ok       $Name"
         }
     } finally { Pop-Location }
+}
+
+# Os verificadores que comparam o PDF pronto com o Manual: conferir-norma mede
+# folha, folio, margem e sumario; conferir-referencias compara cada referencia
+# com o gabarito. Rodam logo depois de o escopo compilar o que eles leem. Ficaram
+# fora da prova ate a 4.1, e a m-diss saiu errada com o verificador acusando a
+# divergencia para ninguem (#151). Sem python o passo e PULADO, como o
+# conferir-manual. Na falha, as linhas do que foi acusado vao para o
+# RESULTADO.txt: "exit 1" sozinho nao diz qual folha nem qual referencia.
+function Invoke-Conferir {
+    param([string]$Name, [string]$Script, [string[]]$Pdfs = @())
+    if (-not (Get-Command python -ErrorAction SilentlyContinue)) {
+        Add-Line "pulado   $Name (python nao encontrado)"
+        return
+    }
+    $py = Join-Path $root "tools\$Script"
+    $antes = $script:failed
+    Invoke-Step $Name $root { & python $py @Pdfs }
+    if ($script:failed -gt $antes) {
+        $log = Join-Path $logDir "$Name.log"
+        Get-Content $log -Encoding utf8 |
+            Select-String -Pattern '^\s*(ERRO|DIFERE|AUSENTE|manual:|classe:|=== )' |
+            Select-Object -First 15 |
+            ForEach-Object { Add-Line ("         " + $_.Line.Trim()) }
+    }
 }
 
 # Le o .log inteiro.
@@ -299,6 +327,8 @@ if (Test-Path $mkrcGen) {
 if ($Scope -in @("example", "all")) {
     Build-Tex -Stem "max-exemplo" -Dir $src -WithBiber
     Build-Tex -Stem "min-exemplo" -Dir $src -WithBiber
+    Invoke-Conferir "conferir-norma-exemplos" "conferir-norma.py" @(
+        (Join-Path $src "max-exemplo.pdf"), (Join-Path $src "min-exemplo.pdf"))
 }
 
 if ($Scope -in @("langs", "all")) {
@@ -443,6 +473,15 @@ if ($Scope -in @("adversativa", "all")) {
         }
     } else {
         Add-Line "pulado   adversativa/lualatex (lualatex nao encontrado)"
+    }
+
+    # Os PDFs que este escopo acabou de compilar, nos dois motores. O
+    # conferir-referencias escolhe sozinho os que trazem o gabarito.
+    $advPdfs = @(Get-ChildItem -Path $advDir -Filter "adv_*.pdf" -ErrorAction SilentlyContinue |
+        Sort-Object Name | ForEach-Object { $_.FullName })
+    if ($advPdfs.Count -gt 0) {
+        Invoke-Conferir "conferir-norma-adversativa" "conferir-norma.py" $advPdfs
+        Invoke-Conferir "conferir-referencias" "conferir-referencias.py"
     }
 }
 

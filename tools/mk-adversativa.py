@@ -127,7 +127,12 @@ SUB = {"pt":"tudo o que a classe oferece, ao mesmo tempo",
        "es":"todo lo que ofrece la clase, a la vez"}
 
 # As categorias de referencia da secao 4.2 do Manual UFRJ/SiBI 2026, na ordem
-# do Manual, e a chave da entrada correspondente em referencias-manual.bib.
+# do Manual, e a chave da entrada correspondente no exemplo.bib (m-<item>, com os
+# nomes de campo em ingles). A mesma entrada, com os sinonimos em portugues, esta
+# em referencias-manual.bib com a chave pt-<item>, e os documentos em portugues
+# citam as duas. As chaves ja foram iguais nos dois arquivos: o biber achava
+# todas no exemplo.bib, nem abria o referencias-manual.bib, e a forma em
+# portugues ficou sem conferencia sem que nada avisasse (#147).
 PROVA_REFS = [
     ("m-4211",  "4.2.1.1 monografia no todo"),
     ("m-4212",  "4.2.1.2 monografia em meio eletrônico"),
@@ -282,11 +287,12 @@ def doc(i, linha, tiponome):
         A("  %s" % L["pt"]["abs_"])
         A("  \\end{brazilianabstract}")
     A("")
+    # na ordem da 3.1.2: listas de ilustracao, depois a de tabelas (#148)
     A("  \\listoffigures")
-    A("  \\listoftables")
     A("  \\listofquadros")
     A("  \\listofprogramas")
     A("  \\listofalgorithms")
+    A("  \\listoftables")
     A("  \\printloabbreviations")
     A("  \\printlosymbols")
     A("  \\tableofcontents")
@@ -531,12 +537,14 @@ def doc(i, linha, tiponome):
         A("  \\chapter{Prova de referências}")
         A("  Um exemplo de cada categoria de referência da seção 4.2 do Manual")
         A("  UFRJ/SiBI, 9.\\textsuperscript{a} ed. rev. (2026), com os dados do")
-        A("  próprio Manual. A referência composta pela classe está na lista de")
-        A("  referências; o gabarito, como o Manual a imprime, está no comentário")
-        A("  de cada entrada de \\texttt{referencias-manual.bib}.")
+        A("  próprio Manual, em duas formas: com os nomes de campo em inglês, do")
+        A("  \\texttt{exemplo.bib}, e com os sinônimos em português, do")
+        A("  \\texttt{referencias-manual.bib}. A referência composta pela classe")
+        A("  está na lista de referências; o gabarito, como o Manual a imprime,")
+        A("  está no comentário de cada entrada dos dois arquivos.")
         A("  \\begin{itemize}")
         for chave, rot in PROVA_REFS:
-            A("    \\item %s \\citep{%s}" % (rot, chave))
+            A("    \\item %s \\citep{%s,%s}" % (rot, chave, "pt-" + chave[2:]))
         A("  \\end{itemize}")
         A("")
     A("  \\backmatter")

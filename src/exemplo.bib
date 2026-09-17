@@ -15,10 +15,9 @@
 %% License version 3 (see the COPYING.txt file).
 %% 
 @Comment{ exemplo.bib -- a base dos exemplos (min-exemplo.tex, max-exemplo.tex e
-  os exemplos por idioma). Primeira parte: entradas de demonstracao, muitas com
-  os sinonimos em portugues dos campos e tipos (autor, titulo, editora, local,
-  ano, organizador, ...). Segunda parte, mais abaixo: uma entrada de cada
-  categoria da secao 4.2 do Manual. }
+  os exemplos por idioma). Primeira parte: entradas de demonstracao. Segunda
+  parte, mais abaixo: uma entrada de cada categoria da secao 4.2 do Manual.
+  Todas usam os nomes de tipo e campo em ingles, os do biblatex. }
 
 @BOOK{book-example,
    author = "R. Abraham and J. E. Marsden and T. Ratiu",
@@ -241,11 +240,14 @@
   proprio Manual. O comentario %% acima de cada entrada e a referencia COMO O
   MANUAL A IMPRIME.
 
-  Metade das entradas usa os nomes de tipo e campo em INGLES e metade os
-  sinonimos em PORTUGUES, para mostrar as duas formas. PREFIRA A INGLESA: e a
-  do biblatex, e a que os gerenciadores de referencia exportam, e a que outra
-  pessoa reconhece. Os sinonimos em portugues existem para quem chega de uma
-  base antiga. }
+  As entradas usam os nomes de tipo e campo em INGLES. A classe aceita tambem
+  os sinonimos em PORTUGUES (@livro, autor, titulo, editora, local, ano,
+  curso...; a tabela esta no manual da classe), mas PREFIRA A INGLESA: e a do
+  biblatex, e a que os gerenciadores de referencia exportam, e a que outra
+  pessoa reconhece. Os sinonimos existem para quem chega de uma base antiga.
+
+  Dissertacao e tese levam o grau em type (mscdiss, dscthesis) e o curso em
+  course: e dai que sai "Dissertacao (Mestrado em <course>)". }
 
 @book{m-4211,
 %% CASTRO, C. M. A prática da pesquisa. São Paulo: Mc Graw-Hill do Brasil, 1978. 156 p.
@@ -660,7 +662,8 @@
 %% Universidade do Rio de Janeiro, Rio de Janeiro, 1997.
   author      = "Leite, Sonia",
   title       = "Memória da comunidade da Serrinha",
-  type        = "Memória Social e Documento",
+  type        = "mscdiss",
+  course      = "Memória Social e Documento",
   institution = "Centro de Ciências Humanas, Universidade do Rio de Janeiro",
   location    = "Rio de Janeiro",
   year        = 1997,

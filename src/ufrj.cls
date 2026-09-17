@@ -79,23 +79,48 @@
   \RequirePackage[utf8]{inputenc}
 \fi
 \RequirePackage{lmodern}
-\RequirePackage[T1]{fontenc}
+\ifPDFTeX
+  \RequirePackage[T1]{fontenc}
+\fi
 \begingroup
-  \fontencoding{T1}\fontfamily{lmss}\selectfont
+  \fontencoding{\encodingdefault}\fontfamily{lmss}\selectfont
   \fontfamily{lmtt}\selectfont
 \endgroup
-\DeclareFontShape{T1}{lmss}{m}{it}
-  {<-8.5> ec-lmsso8 <8.5-9.5> ec-lmsso9 <9.5-11> ec-lmsso10
-   <11-15.5> ec-lmsso12 <15.5-> ec-lmsso17}{}
-\DeclareFontShape{T1}{lmss}{bx}{it}{<-> ec-lmssbo10}{}
-\DeclareFontShape{T1}{lmss}{b}{n}{<-> ec-lmssbx10}{}
-\DeclareFontShape{T1}{lmss}{b}{sl}{<-> ec-lmssbo10}{}
-\DeclareFontShape{T1}{lmss}{b}{it}{<-> ec-lmssbo10}{}
-\DeclareFontShape{T1}{lmss}{sbc}{it}{<-> ec-lmssdo10}{}
-\DeclareFontShape{T1}{lmtt}{bx}{n}{<-> ec-lmtk10}{}
-\DeclareFontShape{T1}{lmtt}{bx}{sl}{<-> ec-lmtko10}{}
-\DeclareFontShape{T1}{lmtt}{bx}{it}{<-> ec-lmtko10}{}
-\DeclareFontShape{T1}{lmtt}{b}{it}{<-> ec-lmtko10}{}
+\ifPDFTeX
+  \DeclareFontShape{T1}{lmss}{m}{it}
+    {<-8.5> ec-lmsso8 <8.5-9.5> ec-lmsso9 <9.5-11> ec-lmsso10
+     <11-15.5> ec-lmsso12 <15.5-> ec-lmsso17}{}
+  \DeclareFontShape{T1}{lmss}{bx}{it}{<-> ec-lmssbo10}{}
+  \DeclareFontShape{T1}{lmss}{b}{n}{<-> ec-lmssbx10}{}
+  \DeclareFontShape{T1}{lmss}{b}{sl}{<-> ec-lmssbo10}{}
+  \DeclareFontShape{T1}{lmss}{b}{it}{<-> ec-lmssbo10}{}
+  \DeclareFontShape{T1}{lmss}{sbc}{it}{<-> ec-lmssdo10}{}
+  \DeclareFontShape{T1}{lmtt}{bx}{n}{<-> ec-lmtk10}{}
+  \DeclareFontShape{T1}{lmtt}{bx}{sl}{<-> ec-lmtko10}{}
+  \DeclareFontShape{T1}{lmtt}{bx}{it}{<-> ec-lmtko10}{}
+  \DeclareFontShape{T1}{lmtt}{b}{it}{<-> ec-lmtko10}{}
+\else
+  \DeclareFontShape{TU}{lmss}{m}{it}
+    {<-8.5> \UnicodeFontFile{lmsans8-oblique}{\UnicodeFontTeXLigatures}
+     <8.5-9.5> \UnicodeFontFile{lmsans9-oblique}{\UnicodeFontTeXLigatures}
+     <9.5-11> \UnicodeFontFile{lmsans10-oblique}{\UnicodeFontTeXLigatures}
+     <11-15.5> \UnicodeFontFile{lmsans12-oblique}{\UnicodeFontTeXLigatures}
+     <15.5-> \UnicodeFontFile{lmsans17-oblique}{\UnicodeFontTeXLigatures}}{}
+  \DeclareFontShape{TU}{lmss}{bx}{it}
+    {<-> \UnicodeFontFile{lmsans10-boldoblique}{\UnicodeFontTeXLigatures}}{}
+  \DeclareFontShape{TU}{lmss}{b}{n}
+    {<-> \UnicodeFontFile{lmsans10-bold}{\UnicodeFontTeXLigatures}}{}
+  \DeclareFontShape{TU}{lmss}{b}{sl}
+    {<-> \UnicodeFontFile{lmsans10-boldoblique}{\UnicodeFontTeXLigatures}}{}
+  \DeclareFontShape{TU}{lmss}{b}{it}
+    {<-> \UnicodeFontFile{lmsans10-boldoblique}{\UnicodeFontTeXLigatures}}{}
+  \DeclareFontShape{TU}{lmss}{sbc}{it}
+    {<-> \UnicodeFontFile{lmsansdemicond10-oblique}{\UnicodeFontTeXLigatures}}{}
+  \DeclareFontShape{TU}{lmtt}{bx}{n}{<-> \UnicodeFontFile{lmmonolt10-bold}{}}{}
+  \DeclareFontShape{TU}{lmtt}{bx}{sl}{<-> \UnicodeFontFile{lmmonolt10-boldoblique}{}}{}
+  \DeclareFontShape{TU}{lmtt}{bx}{it}{<-> \UnicodeFontFile{lmmonolt10-boldoblique}{}}{}
+  \DeclareFontShape{TU}{lmtt}{b}{it}{<-> \UnicodeFontFile{lmmonolt10-boldoblique}{}}{}
+\fi
 \RequirePackage{amsmath}
 \RequirePackage[a4paper,headheight=15pt,headsep=16.87pt,%
 top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
@@ -104,14 +129,14 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
 \RequirePackage{titlesec}
 \newif\if@ufrjappendix \@ufrjappendixfalse
 \titleformat{\chapter}[hang]
-  {\normalfont\Large\bfseries}
-  {\if@ufrjappendix\MakeUppercase{\appendixname}\ \thechapter\ \textendash\else\thechapter\fi}
+  {\normalfont\normalsize\bfseries}
+  {\if@ufrjappendix\MakeUppercase{\appendixname}\ \thechapter\ \textemdash\else\thechapter\fi}
   {1ex}{\MakeUppercase}
 \titlespacing*{\chapter}{0pt}{10pt}{1.5\baselineskip}
 \newcommand\ufrj@appendixheadings{%
   \titleformat{\chapter}[block]
-    {\normalfont\Large\bfseries\filcenter}
-    {\MakeUppercase{\appendixname}\ \thechapter\ \textendash}
+    {\normalfont\normalsize\bfseries\filcenter}
+    {\MakeUppercase{\appendixname}\ \thechapter\ \textemdash}
     {1ex}{\MakeUppercase}%
   \titlespacing*{\chapter}{0pt}{10pt}{1.5\baselineskip}}
 \let\ufrj@orig@appendix\appendix
@@ -120,10 +145,10 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
 \newif\if@ufrjannex \@ufrjannexfalse
 \newcommand\ufrj@tocapp[1]{%
   \MakeUppercase{\ufrjstring{appendix}}%
-  \nobreakspace#1\nobreakspace\textendash\nobreakspace}
+  \nobreakspace#1\nobreakspace\textemdash\nobreakspace}
 \newcommand\ufrj@tocanx[1]{%
   \MakeUppercase{\ufrjstring{annex}}%
-  \nobreakspace#1\nobreakspace\textendash\nobreakspace}
+  \nobreakspace#1\nobreakspace\textemdash\nobreakspace}
 \def\@chapter[#1]#2{%
   \ifnum \c@secnumdepth >\m@ne
     \if@mainmatter
@@ -131,18 +156,18 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
       \typeout{\@chapapp\space\thechapter.}%
       \if@ufrjappendix
         \if@ufrjannex
-          \addcontentsline{toc}{chapter}{\protect\ufrj@tocanx{\thechapter}#1}%
+          \addcontentsline{toc}{chapter}{\protect\numberline{}\protect\ufrj@tocanx{\thechapter}#1}%
         \else
-          \addcontentsline{toc}{chapter}{\protect\ufrj@tocapp{\thechapter}#1}%
+          \addcontentsline{toc}{chapter}{\protect\numberline{}\protect\ufrj@tocapp{\thechapter}#1}%
         \fi
       \else
         \addcontentsline{toc}{chapter}{\protect\numberline{\thechapter}#1}%
       \fi
     \else
-      \addcontentsline{toc}{chapter}{#1}%
+      \addcontentsline{toc}{chapter}{\protect\numberline{}#1}%
     \fi
   \else
-    \addcontentsline{toc}{chapter}{#1}%
+    \addcontentsline{toc}{chapter}{\protect\numberline{}#1}%
   \fi
   \chaptermark{#1}%
   \addtocontents{lof}{\protect\addvspace{10\p@}}%
@@ -154,17 +179,20 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
     \@afterheading
   \fi}
 \titleformat{name=\chapter,numberless}[hang]
-  {\normalfont\Large\bfseries\filcenter}{}{0pt}{\MakeUppercase}
+  {\normalfont\normalsize\bfseries\filcenter}{}{0pt}{\MakeUppercase}
 \titlespacing*{name=\chapter,numberless}{0pt}{10pt}{1.5\baselineskip}
 \titleformat{\section}
-  {\normalfont\large}{\thesection}{1ex}{\MakeUppercase}
+  {\normalfont\normalsize}{\thesection}{1ex}{\MakeUppercase}
 \titleformat{\subsection}
   {\normalfont\bfseries}{\thesubsection}{1ex}{}
 \titleformat{\subsubsection}
   {\normalfont\bfseries\itshape}{\thesubsubsection}{1ex}{}
+\titlespacing*{\section}{0pt}{\baselineskip}{\baselineskip}
+\titlespacing*{\subsection}{0pt}{\baselineskip}{\baselineskip}
+\titlespacing*{\subsubsection}{0pt}{\baselineskip}{\baselineskip}
 \titleformat{\paragraph}[hang]
   {\normalfont\itshape}{\theparagraph}{1ex}{}
-\titlespacing*{\paragraph}{0pt}{2.5ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+\titlespacing*{\paragraph}{0pt}{\baselineskip}{\baselineskip}
 \setcounter{secnumdepth}{4}
 \setcounter{tocdepth}{4}
 \newlength\ufrj@tocnumwidth
@@ -224,7 +252,8 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
 \renewcommand*\l@paragraph[2]{%
   \ufrj@tocline{4}{\normalfont\itshape}{#1}{#2}}
 \RequirePackage{caption}
-\captionsetup{font=footnotesize,labelsep=endash,justification=centering}
+\DeclareCaptionLabelSeparator{emdash}{\space\textemdash\space}
+\captionsetup{font=footnotesize,labelsep=emdash,justification=centering}
 \RequirePackage{subcaption}
 \RequirePackage{float}
 \floatstyle{plaintop}
@@ -252,6 +281,8 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
   \floatstyle{plaintop}\newfloat{#1}{htbp}{lo#1}[chapter]%
   \floatname{#1}{#2}%
   \expandafter\let\csname l@#1\endcsname\l@figure
+  \expandafter\def\csname coppe@listname@lo#1\endcsname{#2}%
+  \AtBeginDocument{\expandafter\let\csname l@#1\endcsname\l@figure}%
   \expandafter\providecommand\csname #1autorefname\endcsname{#2}%
   \expandafter\newcommand\csname listof#1s\endcsname{%
     \chapter*{#3}\ufrj@listtoc{#3}%
@@ -282,19 +313,39 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
         \fi}{}%
     \fi
   \fi}
+\newcommand\ufrj@listnumberline[1]{%
+  \ufrj@listname\nobreakspace#1\nobreakspace\textemdash\space}
+\def\ufrj@listname@lof{\figurename}
+\def\ufrj@listname@lot{\tablename}
+\def\ufrj@listname@loq{\quadroname}
+\def\ufrj@listname@lol{\lstlistingname}
+\def\ufrj@listname@loa{\algorithmcfname}
 \newcommand\ufrj@wrapstarttoc{%
   \let\ufrj@orig@starttoc\@starttoc
   \def\@starttoc##1{%
     \ufrj@checkwrites{##1}%
     \begingroup
       \def\ufrj@@ext{##1}\def\ufrj@@toc{toc}%
-      \ifx\ufrj@@ext\ufrj@@toc \let\numberline\ufrj@tocnumberline \fi
+      \ifx\ufrj@@ext\ufrj@@toc
+        \let\numberline\ufrj@tocnumberline
+      \else
+        \@ifundefined{ufrj@listname@##1}{}{%
+          \edef\ufrj@listname{\expandafter\noexpand
+            \csname ufrj@listname@##1\endcsname}%
+          \let\numberline\ufrj@listnumberline}%
+      \fi
       \ufrj@orig@starttoc{##1}%
     \endgroup}}
 \AtBeginDocument{\ufrj@wrapstarttoc}
+\AtBeginDocument{%
+  \renewcommand*\l@figure{\@dottedtocline{1}{0pt}{0pt}}%
+  \let\l@table\l@figure
+  \let\l@quadro\l@figure
+  \let\l@lstlisting\l@figure
+  \let\l@algocf\l@figure}
 \RequirePackage{fancyhdr}
 \newcommand\ufrj@listtoc[1]{%
-  \if@ufrjlistastoc\addcontentsline{toc}{chapter}{#1}\fi}
+  \if@ufrjlistastoc\addcontentsline{toc}{chapter}{\protect\numberline{}#1}\fi}
 \newif\if@ufrjglosspre \@ufrjglossprefalse
 \newcommand\ufrj@folio{{\footnotesize\thepage}}
 \newcommand\ufrj@foliohead{%
@@ -628,8 +679,13 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \RequirePackage{xcolor}
 \RequirePackage{listings}
 \RequirePackage{fancyvrb}
-\DeclareFixedFont{\ttb}{T1}{txtt}{bx}{n}{10}
-\DeclareFixedFont{\ttm}{T1}{txtt}{m}{n}{10}
+\ifPDFTeX
+  \DeclareFixedFont{\ttb}{T1}{txtt}{bx}{n}{10}
+  \DeclareFixedFont{\ttm}{T1}{txtt}{m}{n}{10}
+\else
+  \DeclareFixedFont{\ttb}{TU}{lmtt}{b}{n}{10}
+  \DeclareFixedFont{\ttm}{TU}{lmtt}{m}{n}{10}
+\fi
 \lstset{captionpos=t,extendedchars=true,basicstyle=\ttfamily,inputencoding=utf8,%
   breaklines=true,postbreak=\usebox\ufrj@lstarrow,%
   literate=%
@@ -709,7 +765,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   % PDF saia com "for" e "while" no meio do portugues.
   \expandafter\RequirePackage\expandafter[\ufrj@@algolang,onelanguage,linesnumbered,lined,algochapter,ruled]{algorithm2e}
 \fi
-\SetAlgoCaptionSeparator{\ \textendash}
+\SetAlgoCaptionSeparator{\ \textemdash}
 \SetAlCapFnt{\footnotesize}
 \SetAlCapNameFnt{\footnotesize}
 \SetAlCapSty{textnormal}
@@ -1412,7 +1468,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \ufrj@checatipo
   {\singlespacing
   \begin{center}
-    {\large\bfseries Informações Coleta CAPES}
+    {\bfseries Informações Coleta CAPES}
   \end{center}
   \vspace{7mm}
   \noindent\begin{tabular}{|@{\hspace{\tabcolsep}}p{\dimexpr\textwidth-2\tabcolsep-2\arrayrulewidth\relax}@{\hspace{\tabcolsep}}|}
@@ -1444,7 +1500,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \end{tabular}\par
   \vspace{9mm}
   \begin{center}
-    {\large\bfseries Ficha catalográfica}\par
+    {\bfseries Ficha catalográfica}\par
     \vspace{4mm}
     \ifthenelse{\equal{\ufrj@fichafile}{}}{%
       \if@ufrjrascunho
@@ -1459,22 +1515,22 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
       \includegraphics[page=\ufrj@fichapage,width=125mm]{\ufrj@fichafile}}%
   \end{center}
   \par}}
-\newcommand\dedication[1]{
-  \gdef\@dedic{#1}
-    \cleardoublepage
-    \vspace*{\fill}
-    \begin{flushright}
-      \begin{minipage}{60mm}
-        \raggedleft \it \normalsize \@dedic
-      \end{minipage}
-    \end{flushright}}
-\newcommand\epigrafe[2]{%
+\newcommand\dedication[1]{%
+  \gdef\@dedic{#1}%
   \cleardoublepage
-  \vspace*{\fill}
+  \vspace*{\fill}%
   \begin{flushright}
     \begin{minipage}{0.5\textwidth}
-      \raggedleft\itshape\normalsize #1\par
-      \vspace{1ex}\normalfont\small #2
+      \raggedright\itshape\normalsize \@dedic
+    \end{minipage}
+  \end{flushright}}
+\newcommand\epigrafe[2]{%
+  \cleardoublepage
+  \vspace*{\fill}%
+  \begin{flushright}
+    \begin{minipage}{0.5\textwidth}
+      \raggedright\itshape\normalsize #1\par
+      \vspace{1ex}{\raggedleft\normalfont\small #2\par}
     \end{minipage}
   \end{flushright}}
 
@@ -1542,7 +1598,13 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \ufrj@setresflag{restitulo}{#2}%
   \ufrj@setresflag{resorient}{#3}%
   \ufrj@setresflag{refresumo}{#4}}
+\newcommand\ufrj@res@heading[1]{%
+  \begin{center}
+    \bfseries\MakeUppercase{\@nameuse{ufrj@str@#1@abstractname}}%
+  \end{center}\par
+  \vspace*{4mm}}
 \newcommand\ufrj@resumocabeca{%
+  \ufrj@res@heading{\ufrj@reslang}%
   \if@ufrjresidpag
     \ufrj@toptext{\ufrj@reslang}\par
     \vspace*{6mm}
@@ -1962,7 +2024,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \if@ufrjglosspre
     \ufrj@listtoc{\glossaryname}%
   \else
-    \addcontentsline{toc}{chapter}{\glossaryname}%
+    \addcontentsline{toc}{chapter}{\protect\numberline{}\glossaryname}%
   \fi
   \list{}
   {\setlength{\listparindent}{0in}%
@@ -1984,7 +2046,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   {\MakeUppercase\indexname}%
   \thispagestyle{plain}\parindent\z@
   \ifdefined\phantomsection\phantomsection\fi
-  \addcontentsline{toc}{chapter}{\indexname}
+  \addcontentsline{toc}{chapter}{\protect\numberline{}\indexname}
   \parskip\z@ \@plus .3\p@\relax
   \columnseprule \z@
   \columnsep 35\p@
@@ -2139,7 +2201,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \fi
 \defbibheading{bibliography}{%
   \chapter*{\ufrjstring{references}}%
-  \addcontentsline{toc}{chapter}{\ufrjstring{references}}}
+  \addcontentsline{toc}{chapter}{\protect\numberline{}\ufrjstring{references}}}
 \AtBeginBibliography{\ufrj@bibBegin}
 \let\ufrj@orig@printbibliography\printbibliography
 \renewcommand\printbibliography[1][]{%

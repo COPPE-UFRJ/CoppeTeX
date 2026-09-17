@@ -123,6 +123,86 @@ sempre que o defeito for de uma folha só.
 | `r32-tipo-do-trabalho-obrigatorio` | A única opção sem padrão é o tipo do trabalho, e nada cobrava que ela viesse. Sem ela a classe carregava em silêncio e morria mais tarde, dentro do `\maketitle`, com `Undefined control sequence \local@doctype` apontando para uma linha da própria classe. Agora para com uma mensagem que nomeia as cinco opções, e o teste cobra também que a cascata de quarenta erros **não** volte. |
 | `r23-terceiro-resumo-com-titulo` | O terceiro resumo saía **sem título**. Ao fechar, o `foreignabstract` apagava `\local@title` — faxina de quando ele era a última folha pré-textual. Desde a v4.0 não é: o `brazilianabstract` vem depois e compõe o título com o que acabara de ser apagado. Só aparece em trabalho escrito em espanhol, e ia para o depósito assim. |
 
+### Conformidade com o Manual 2026 (conferência de 16/09/2026)
+
+Estes não guardam defeito já corrigido: **mostram** defeito aberto. Saíram da
+conferência completa da 4.1 contra o Manual UFRJ/SiBI, 9.ª ed. rev. (2026) —
+issue guarda-chuva #112, uma issue por teste —, e **falham até a correção**.
+O roteiro de correção está em [`CORRECOES_MANUAL_2026.md`](../../CORRECOES_MANUAL_2026.md).
+
+**A marca `ABERTO`.** Cada um traz, logo depois da linha `BUG:`, uma linha
+`ABERTO: #<issue>` (nos `.tex`, `%% ABERTO: #<issue>`). A rodada **sem filtro**
+não roda teste marcado — só lista quais ficaram de fora —, porque trinta e
+tantos testes que falham de propósito, e compilam cada um várias vezes, não
+dizem nada a cada rodada e custam minutos. Enquanto a correção é feita, roda-se
+**pelo nome, aos poucos**: `python tests/regressivo/run-regressivo.py rt38 rt50`.
+A correção tira a linha `ABERTO` no mesmo commit do `Fixes #<issue>`, e dali em
+diante o teste entra na rodada normal, como os de cima.
+
+Quase todos cobram TIPOGRAFIA — itálico, negrito, corpo, posição na folha —, que
+as diretivas de texto deste rodador não veem de propósito (tiram acento, caixa e
+largura de traço). Por isso são `.py`, e usam o apoio [`medidas.py`](./medidas.py):
+`pdftohtml -xml` dá a fonte e o corpo de cada pedaço de texto, `pdftotext -bbox`
+dá a caixa exata de cada palavra, em pontos. O `medidas.py` não é teste — o
+nome não casa com `r<número>-` — e compila numa pasta temporária. O
+`Documento.ok` dele exige o PDF **e** nenhuma linha `!` no `.log`: em
+`nonstopmode` o TeX produz o PDF mesmo depois de um erro, e um teste de medida
+reprovava (ou aprovava) um documento quebrado sem dizer que ele tinha erro.
+
+**Provar uma correção antes de levá-la ao `.dtx`.** `COPPE_SRC=<pasta>` faz os
+testes usarem a classe de outra pasta: copie `src/` para um rascunho, mexa nos
+arquivos gerados, e rode o teste contra a cópia. Os testes marcados com ✓ na
+tabela passaram assim, contra um protótipo da correção proposta na issue — ou
+seja, não são testes impossíveis de satisfazer.
+
+```powershell
+$env:COPPE_SRC = "C:\rascunho\src"; python tests/regressivo/rt38-referencias-alinhadas-a-esquerda.py
+```
+
+| Arquivo | Issue | O defeito | Prot. |
+|---|---|---|---|
+| `rt33-titulos-em-corpo-12` | #113 | Títulos de capítulo, seção e sem indicativo em `\Large`/`\large`; a 2.2(b) fixa corpo 12. | ✓ |
+| `rt34-resumo-com-titulo` | #114 | Folhas de resumo sem o título centralizado RESUMO/ABSTRACT (2.6). | ✓ |
+| `rt35-sumario-pos-textuais-na-coluna` | #115 | Referências, apêndices, anexos e índice na margem do sumário, e não na coluna dos títulos (3.1.2.1.6). | ✓ |
+| `rt36-listas-com-nome-e-travessao` | #116 | Listas de ilustrações e de tabelas sem o nome específico e o traço (3.1.2.2.4). | ✓ |
+| `rt37-notas-de-rodape` | #117 | Nota com a segunda linha na margem, número recuado, nota partida entre folhas (2.5, 4.1.2). | ✓ |
+| `rt38-referencias-alinhadas-a-esquerda` | #118 | Lista de referências justificada e hifenizada (4.2). | ✓ |
+| `rt39-referencia-do-resumo` | #119 | Referência do resumo justificada, título sem negrito, meia-risca (4.2, Anexo E). | ✓ |
+| `rt40-listagem-dentro-da-margem` | #120 | Números de linha das listagens dentro da margem esquerda (2.3). | ✓ |
+| `rt41-subalineas-com-hifen` | #121 | Subalínea com meia-risca e fora de posição (2.6). | ✓ |
+| `rt42-espaco-depois-do-titulo` | #122 | Menos de uma linha em branco depois do título de seção (2.4). | ✓ |
+| `rt43-dedicatoria-e-epigrafe-do-meio` | #123 | Dedicatória e epígrafe não começam no meio da mancha (3.1.2.2.1). | ✓ |
+| `rt44-pdfa-por-padrao` | #124 | PDF/A desligado por padrão, e o gerador também (2.2d). | |
+| `rt45-legenda-na-largura-da-ilustracao` | #125 | Legenda e fonte mais largas que a ilustração (2.10). API proposta: `\illustrationwidth`. | |
+| `rt46-volumes-numeracao-e-sumario` | #126 | Volumes sem numeração contínua nem sumário completo (2.7). API proposta: `\volumefiles`. | |
+| `rt47-letras-dobradas` | #127 | "Counter too large" depois do Z em apêndice, anexo e alínea (3.1.4.4). | |
+| `rt48-folhas-de-identidade-num-idioma` | #128 | Folha de rosto e aprovação com dois idiomas; cobra só um idioma por folha, qualquer que seja a decisão. | |
+| `rt49-capa-nome-do-instituto` | #129 | Capa diferente da §2 da Norma COPPE; lê a Norma e confere. | |
+| `rt50-subtitulo-nas-referencias` | #131 | Subtítulo depois de ponto, em negrito, e em caixa alta na entrada pelo título (4.3.3). | ✓ |
+| `rt51-expressoes-latinas-em-italico` | #132 | "In:", "et al.", "[S. l.]", "[s. n.]" em redondo (4.2.1.3c, 4.1.2.2). | ✓ |
+| `rt52-livro-edicao-volumes-serie` | #133 | "3ª ed.", "2 vol." antes da imprenta, série sem parênteses (4.3.4, 4.3.7). | |
+| `rt53-parte-de-monografia` | #134 | Parte de monografia sem `bookauthor` e `booksubtitle`; capítulo depois das páginas (4.2.1.3). | |
+| `rt54-tradutor-e-titulo-original` | #135 | Tradutor como autor ("Trad. por SOBRENOME, Nome"); sem título original (4.3.2.10). | |
+| `rt55-doi` | #136 | DOI em versalete, sem https://doi.org, e aviso de fonte (4.2.3.5). | |
+| `rt56-tese-e-dissertacao` | #137 | `@mastersthesis`/`@phdthesis` sem grau e sem travessão; "( em" com tipo digitado (4.3.8.3). | |
+| `rt57-citacao-pela-entrada-de-titulo` | #138 | Chamada pelo título em itálico e sem vírgula (4.1.1.1.2). | |
+| `rt58-mesmo-sobrenome-mesmo-ano` | #139 | "(Orlando Braga, 1987)" no lugar de "(Braga, Orlando, 1987)" (4.1.1.2b). | ✓ |
+| `rt59-sistema-numerico` | #140 | Chamada numérica entre colchetes; nenhum aviso com nota de rodapé (4.1.1.1.1). | ✓ |
+| `rt60-ordem-alfabetica-sem-artigo` | #141 | O artigo inicial conta na alfabetação (4.2). | ✓ |
+| `rt61-periodico-em-curso` | #142 | Periódico corrente "1950/." no lugar de "1950- ." (4.3.5.5.1). | ✓ |
+| `rt62-audiovisual-e-versao` | #143 | "Direção de Sobrenome, Nome"; versão depois da imprenta (4.2.9, 4.3.4). | |
+| `rt63-entidade-hierarquica` | #144 | Chamada de entidade com órgão subordinado repete a hierarquia em caixa alta (4.1.1.2). | |
+| `rt64-intervalo-de-paginas-com-hifen` | #145 | Intervalo de páginas com meia-risca (4.2.3.4). | ✓ |
+| `rt65-mes-no-idioma-da-publicacao` | #146 | Mês no idioma do trabalho, e não no da publicação (4.3.5.5.1). | |
+| `rt66-dissertacao-do-exemplo` (`.tex`) | #147 | A m-diss do `exemplo.bib` sem "Dissertação (Mestrado em …)" desde b14a5d6. Corrigida; a correção separou também as chaves das duas bases do gabarito (`m-` e `pt-`), porque com chaves iguais a forma em português nunca era composta. | |
+| `rt67-ordem-das-listas` | #148 | Listas de ilustração depois da lista de tabelas nos modelos e na Norma COPPE §10 (3.1.2). Sem compilar. | |
+| `rt68-conteudo-dos-exemplos` | #149 | Conteúdo dos exemplos contra o Manual: algoritmo sem fonte, acentos, palavras-chave, repetidas… Sem compilar. | |
+| `rt69-mesmo-traco` | #150 | Traço diferente na legenda, no apêndice, no sumário e na Norma COPPE §12; cobra só que seja o mesmo. | |
+| `rt70-lualatex-caracteres` | #152 | Achado ao ligar os verificadores à prova (#151): no LuaLaTeX, com `fontenc` T1, `º` saía `ž`, `§` saía `ğ`, e travessão, aspas curvas e reticências sumiam. Compila a mesma amostra nos dois motores. Corrigido: nos motores Unicode a classe fica em TU, com a Latin Modern em OpenType. | |
+| `rt89-prova-roda-as-conferencias` | A prova não rodava `conferir-referencias.py` nem `conferir-norma.py` (#151); a m-diss do `exemplo.bib` saiu errada na 4.1 com o verificador acusando a divergência, mas ninguém o chamava. Sem compilar: cobra que o painel ou o `build-check` chamem os dois. No primeiro dia ligados, os dois acharam o `nž` do LuaLaTeX (#152). |
+
+A issue #130 (logotipos na folha de rosto) não tem teste: depende de decisão.
+
 ### A classe da UFRJ e o estilo da unidade (`rtu`)
 
 Os testes da 5.0. Nenhum repara defeito antigo: guardam a separação entre a

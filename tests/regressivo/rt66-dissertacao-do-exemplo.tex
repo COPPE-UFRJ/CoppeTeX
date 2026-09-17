@@ -1,0 +1,35 @@
+%% Teste de conformidade da CoppeTeX.
+%% Rode com: python tests/regressivo/run-regressivo.py
+%% BUG: (base da entrega, 4.2.1.1) a entrada m-diss do exemplo.bib saia
+%% "1997. 203 f. Memoria Social e Documento Centro de Ciencias Humanas...", sem
+%% "Dissertacao (Mestrado em ...)" e sem o travessao. Quando a base ganhou a
+%% forma com os nomes de campo em ingles (b14a5d6), o curso -- que na forma em
+%% portugues e o campo curso -- foi para o campo type, e o tipo mscdiss nao veio.
+%% O tools/conferir-referencias.py acusava a divergencia, mas a prova nao rodava
+%% esse verificador, e a 4.1 saiu assim. (#147)
+%%
+%% O titulo do documento de teste nao repete nada da referencia cobrada.
+%% BIBER: sim
+%% PASSADAS: 2
+%% ESPERA-TEXTO: LEITE, Sonia. Memória da comunidade da Serrinha. 1997. 203 f. Dissertação (Mestrado em Memória Social e Documento) - Centro de Ciências Humanas, Universidade do Rio de Janeiro, Rio de Janeiro, 1997.
+\documentclass[dsc]{ufrj}
+\usepackage{ufrj-coppe}
+\addbibresource{exemplo.bib}
+\title{Base da entrega}
+\foreigntitle{Shipped database}
+\author{Nome}{Sobrenome}
+\advisor{Primeiro}{Orientador}{D.Sc.}{UFRJ}
+\examiner{Primeiro Examinador}{D.Sc.}{UFRJ}
+\department{PESC}
+\date{09}{2026}
+\keyword{regressao}
+\begin{document}
+  \maketitle
+  \frontmatter
+  \begin{abstract}Resumo.\end{abstract}
+  \tableofcontents
+  \mainmatter
+  \chapter{Um capitulo}
+  Texto.\nocite{m-diss}
+  \printbibliography
+\end{document}

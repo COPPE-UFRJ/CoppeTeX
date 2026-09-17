@@ -168,6 +168,17 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \changes{v4.1}{2026/09/12}{Two macrocode guards in the .dtx were written with three spaces instead of four. doc.sty only closes a code block on a percent sign followed by exactly four spaces, so sixty lines of documentation were printed as verbatim code in coppe.pdf, and had been for several versions. A dead @wrlab block commented out with four percent signs had the same effect, for the opposite reason: doc.sty ignores every percent sign in the documentation part, so that line opened a real code block. Both are fixed, and tools/conferir-manual.py now checks every guard.}
 % \changes{v4.1}{2026/09/12}{The options section opens with a table of what is default, and every entry states its own default. Three were wrong or missing: resumosemreferencia was described as on by default when it is the reference that is on and the option that is off, and rascunhoficha and the morewrites loading stated no default at all.}
 % \changes{v4.1}{2026/09/12}{The files section described the delivery as it was before the folders: the logos in the root, no logos/, no manuais/, no language folders, and an instruction not to copy coppe.dtx and coppe.ins, which the delivery now ships on purpose. The developer sections still said twelve adversarial documents (there are six), still placed them outside tests/, and did not know tests/regressivo/ or the panel existed.}
+% \changes{v4.1}{2026/09/16}{The m-diss entry of exemplo.bib printed "1997. 203 f. Memoria Social e Documento Centro de Ciencias Humanas", without "Dissertacao (Mestrado em ...)": when the base moved to English field names, the Portuguese field curso became type instead of course, and the mscdiss type was lost. The checker that compares every reference with the Manual reported it, but the proof did not run the checker. The 34 Manual references now have different keys in the two bases (m- in exemplo.bib, pt- in the adversarial referencias-manual.bib): with the same keys, biber found every citation in the first file and never opened the second, so the Portuguese field names had gone unchecked.}
+% \changes{v4.1}{2026/09/16}{Every heading is set in the body size. 2.2(b) of the UFRJ Manual fixes size 12 for the work and allows only SMALLER sizes (long quotations, notes, folio, captions and sources, catalogue card), and 2.6 builds the gradual emphasis from bold, italic, capitals and small capitals, not from size. Chapters and unnumbered headings were Large (17.28 pt), sections large (14.4 pt), and the two headings of the CAPES additional sheet large.}
+% \changes{v4.1}{2026/09/17}{Dedication and epigraph start at the middle of the text block, 11 cm from the edge, and run to the right margin at the foot of the sheet, as 2.6, 3.1.2.2.1 and 3.1.2.2.3 recommend. The dedication was a 60 mm block against the right margin with right-aligned text, starting near 13 cm; the epigraph had the half-width block but right-aligned text. The epigraph author stays right-aligned below.}
+% \changes{v4.1}{2026/09/17}{The documentation no longer says that 3.1.2.1.4 requires the abstract to fit on one sheet. The 2026 Manual asks for 1.5 spacing, a single paragraph and 150 to 500 words, and says nothing about the number of sheets; a 500-word abstract with the five elements does not fit on one A4 sheet anyway. resumosemreferencia and setupabstracts serve whoever prefers one sheet.}
+% \changes{v4.1}{2026/09/17}{Every abstract sheet opens with its heading -- RESUMO, ABSTRACT, RESUMEN, in the language of that abstract -- centred and in bold capitals like every heading without a numeric indicative (2.6). The sheets used to open straight on the sentence "Resumo da Tese apresentada a COPPE/UFRJ...". The heading has no switch in setupabstracts.}
+% \changes{v4.1}{2026/09/16}{Lists in the order of 3.1.2 in max-exemplo, manual.tex, the document generator, the adversarial documents, this manual and the quick reference: every list of illustrations (figures, quadros, maps, programs, algorithms) before the list of tables. Quadro, program and algorithm are illustrations (2.10), and section 10 of the COPPE norm, which placed its three lists between the list of tables and the list of abbreviations, now follows the Manual too. The class imposes no order; the models were teaching the wrong one.}
+% \changes{v4.1}{2026/09/16}{The sign between number and title is the em dash everywhere: captions (a new emdash caption label separator), algorithm captions, appendix and annex headings, their sumario entries and the lists of illustrations. The Manual calls it travessao (2.10, 3.1.2.2.4, 3.1.4.3, 3.1.4.4) and section 12 of the COPPE norm shows the em dash; the class used the en dash almost everywhere and the em dash in the thesis reference driver.}
+% \changes{v4.1}{2026/09/16}{Lists of illustrations and of tables name each item: "Figura 4.1 --- Titulo ..... 27" instead of "4.1 Titulo ..... 27" (3.1.2.2.4, 3.1.2.2.5). The name comes from a table keyed by list extension, extended by newufrjfloat; list entries have no indent, so a long title continues at the margin as in the Manual's example.}
+% \changes{v4.1}{2026/09/16}{In the sumario, References, appendices, annexes, glossary, index and (under listasnosumario) the pre-textual lists start in the column of the numbered titles instead of at the left margin. 3.1.2.1.6 aligns the titles by the longest indicative, post-textual elements included, and the Manual's own sumario does so; section 14 of the COPPE norm makes it a rule. Every chapter-level entry without a number now carries an empty numberline.}
+% \changes{v4.1}{2026/09/16}{One blank line before and after section, subsection, subsubsection and paragraph headings, as 2.4 asks. The titlesec default left 2.3 ex after the heading, about two thirds of a one-and-a-half line.}
+% \changes{v4.1}{2026/09/16}{Under LuaLaTeX the class no longer loads fontenc with T1. Unicode engines send each input character straight to the font, and in T1 the slot of the masculine ordinal holds z-caron: "no" with the ordinal printed as "nz" with a caron, and the section sign, degree sign, guillemets and the arithmetic signs came out as other letters, while the em and en dashes, curly quotes, ellipsis, euro sign and oe ligature vanished with only a Missing character line in the log. Portuguese accented letters were right, because T1 matches Latin-1 there, so nobody saw it. Unicode engines now keep TU, the LaTeX default for them, with Latin Modern in OpenType; the shape declarations that silence substitution messages exist for TU too, and the fixed typewriter fonts of the language listing styles use Latin Modern Mono instead of txtt, which has no OpenType version. pdfLaTeX output does not change.}
 % \changes{v5.0}{2026/09/15}{The class coppe is now the class ufrj, which implements the UFRJ/SiBI Manual and names no unit. Every file generated from the source, now ufrj.dtx, carries the new name -- ufrj.cls, ufrj.bbx, ufrj.cbx, ufrj.dbx, ufrj-numeric.bbx and .cbx, the five language packs such as brazilian-ufrj.lbx, the three ufrj-lang definition files, ufrj.ist, ufrj.bib and ufrj-quickref.tex -- and so does every name the class defines: the internal prefix coppe@ is ufrj@, copperdefstring is ufrjdefstring, newcoppefloat is newufrjfloat, coppetexfinalpage is ufrjfinalpage, the colophon pieces coppefinal... are ufrjfinal..., the page style coppe is ufrj and the bib field coppedegree is ufrjdegree.}
 % \changes{v5.0}{2026/09/15}{Everything that belongs to a unit and not to UFRJ -- the unit's name on the cover and in the work's reference, its Programas, the right-hand logo, the phrase that says to whom the work was presented, the name of the degree, the norm in the colophon -- is declared by a unit style through a generic interface: ufrjdeclareunit, ufrjdeclareprogram, ufrjdeclarelogos, ufrjdeclarenorm and ufrjdefunitstring, whose texts take precedence over the tables of the class and of the language packs, whichever was loaded first. The language packs carry no institutional string any more, and the four institutional keys that no code ever read are gone from every table. Without a unit style the class composes a work of UFRJ with the texts of UFRJ, and a Programa can be declared in the preamble. A department code that no unit declared is a class error instead of a cover without the Programa.}
 % \changes{v5.0}{2026/09/15}{COPPE is the unit style ufrj-coppe, with its own source (ufrj-coppe.dtx and ufrj-coppe.ins), its own manual (ufrj-coppe.pdf) and every example document, which all load it. A work begun with the class coppe compiles as it is: coppe.cls is now a compatibility class that loads ufrj with the same options, loads ufrj-coppe and writes one warning, and the style keeps the old public names as aliases, the old colophon pieces answering renewcommand by the old name, the three internal names that auxiliary files written by the old class contain, the page style coppe and the bib field coppedegree.}
@@ -925,6 +936,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % Matemática & |amssymb|, que você carrega. & |unicode-math|, que você
 %   carrega. \\
 % Acento no código & Precisa do |inputenc|, que a classe carrega. & Nativo. \\
+% Codificação da fonte & T1, Latin Modern Type~1. & TU, Latin Modern OpenType.
+%   A classe escolhe; não carregue |fontenc| no preâmbulo. \\
 % Fluxos de escrita & Dezesseis. A classe carrega o |morewrites| para passar
 %   disso. & Cento e vinte e oito. O problema não existe. \\
 % PDF/A & Funciona. & Funciona. \\
@@ -1617,12 +1630,13 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % folha de aprovação. Sem eles, a numeração das folhas sai errada.
 %
 % \DescribeMacro{\dedication}
-% A dedicatória, numa folha só para ela, alinhada embaixo à direita.
+% A dedicatória, numa folha só para ela, embaixo, num bloco que vai do meio da
+% mancha à margem direita, com o texto começando no meio da mancha (3.1.2.2.1).
 %
 % \DescribeMacro{\epigrafe}
 % |\epigrafe{citação}{autoria}| compõe a epígrafe (3.1.2.2.3), numa folha
-% própria, depois dos agradecimentos, embaixo e da metade da mancha à margem
-% direita. Opcional.
+% própria, depois dos agradecimentos, no mesmo lugar da dedicatória; a autoria
+% vai embaixo do texto, alinhada à direita. Opcional.
 %
 % \DescribeEnv{abstract}
 % \DescribeEnv{foreignabstract}
@@ -1648,7 +1662,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % continuam em português, qualquer que seja o idioma do trabalho: ali o texto
 % é identidade institucional, e não resumo.
 %
-% Cada resumo cabe em \textbf{uma folha} e a 3.1.2.1.4 pede um parágrafo só,
+% Cada resumo começa numa folha própria, e a 3.1.2.1.4 pede um parágrafo só,
 % em espaço 1,5, de \textbf{150 a 500 palavras}, de preferência na terceira
 % pessoa do singular e com o verbo na voz ativa.
 %
@@ -1673,8 +1687,10 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % |resumosemreferencia|.
 %
 % \DescribeMacro{\configuraresumos}
-% \par\textbf{Os cinco elementos da folha, e como desligar quatro.} Uma folha de
-% resumo tem cinco partes, nesta ordem:
+% \par\textbf{Os cinco elementos da folha, e como desligar quatro.} A folha abre
+% com o \textbf{título} --- RESUMO, ABSTRACT, RESUMEN, no idioma daquele resumo
+% ---, centralizado como todo título sem indicativo numérico (2.6). O título não
+% se desliga. Abaixo dele, uma folha de resumo tem cinco partes, nesta ordem:
 % \begin{enumerate}
 %   \item a \textbf{identificação da página}: a frase ``Resumo da
 %     Dissertação apresentada à COPPE/UFRJ como parte dos requisitos
@@ -1707,16 +1723,17 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % mesma coisa, e vale o comando, que fala depois.
 %
 % \textbf{O que a norma exige, e o que ela deixa a você.} A 3.1.2.1.4 exige
-% o resumo, o parágrafo único, o limite de palavras, a folha única e as
+% o resumo, o espaço 1,5, o parágrafo único, o limite de palavras e as
 % palavras-chave no fim. Os quatro elementos de cima são o modelo dos Anexos E
 % e F --- que o Manual apresenta como sugestão, e é por isso que dá para
 % desligar. Antes de desligar, pergunte na secretaria do seu Programa.
 %
-% O uso prático é um: o resumo de 500 palavras que não cabe na folha com
-% os cinco elementos. Na v4.1 os espaços entre os blocos encolheram de
-% 44\,mm para 30\,mm justamente por isso, e a folha é composta \textbf{a
-% partir do topo}; se ainda faltar espaço, desligue a referência primeiro,
-% que é o maior dos quatro.
+% O uso prático é um: quem quer o resumo numa folha só. O Manual \textbf{não}
+% exige isso, e um resumo de 500 palavras em espaço 1,5, com os cinco
+% elementos, passa de uma folha. Na v4.1 os espaços entre os blocos encolheram
+% de 44\,mm para 30\,mm, e a folha é composta \textbf{a partir do topo}; se
+% ainda faltar espaço, desligue a referência primeiro, que é o maior dos
+% quatro.
 %
 % \DescribeMacro{\ufrjfinalpage}
 % A folha de colófon, no fim de tudo: diz com que versão da classe, em que
@@ -1741,8 +1758,11 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \DescribeMacro{\printloabbreviations}
 % \DescribeMacro{\printlosiglas}
 % \DescribeMacro{\printlosymbols}
-% A ordem que a 3.1.2.1.6 pede é esta: as listas primeiro, o sumário por
-% último. As listas \textbf{não} entram no sumário, a não ser com a opção
+% A ordem é a da 3.1.2: primeiro as listas de \textbf{ilustração} --- figuras,
+% quadros, programas, algoritmos e as dos tipos criados com |\newufrjfloat|,
+% porque quadro, programa e algoritmo são ilustrações (2.10) ---, depois a de
+% tabelas, a de abreviaturas e siglas, a de símbolos, e o sumário por último.
+% As listas \textbf{não} entram no sumário, a não ser com a opção
 % |listasnosumario| --- que \textbf{contraria a norma}: a \mbox{NBR~6027} tira
 % os elementos pré-textuais do sumário, e o sumário modelo do Manual começa na
 % introdução. Ela existe para o Programa que exija o contrário.
@@ -1757,16 +1777,16 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \hline
 % Elemento & Comando & Situação \\
 % \hline
-% Sumário & |\tableofcontents| & \textbf{obrigatório} (3.1.2.1.6) \\
 % Lista de ilustrações (figuras) & |\listoffigures| & opcional (3.1.2.2.4) \\
-% Lista de tabelas & |\listoftables| & opcional (3.1.2.2.5) \\
 % Lista de quadros & |\listofquadros| & COPPE: se houver quadro (§10) \\
 % Lista de programas & |\listofprogramas| & COPPE: se houver programa (§10) \\
 % Lista de algoritmos & |\listofalgorithms| & COPPE: se houver algoritmo (§10) \\
 % Lista de outro tipo de ilustração & |\listof...| (|\newufrjfloat|) & opcional (3.1.2.2.4) \\
+% Lista de tabelas & |\listoftables| & opcional (3.1.2.2.5) \\
 % Lista de abreviaturas (e siglas) & |\printloabbreviations| & opcional (3.1.2.2.6) \\
 % Lista de siglas, separada & |\printlosiglas| & opcional; recomendada (3.1.2.2.6) \\
 % Lista de símbolos & |\printlosymbols| & opcional (3.1.2.2.7) \\
+% Sumário & |\tableofcontents| & \textbf{obrigatório} (3.1.2.1.6) \\
 % \hline
 % \end{tabular}
 % \end{center}
@@ -1999,7 +2019,10 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %     \hologo{pdfTeX}; os motores Unicode já leem UTF-8 nativamente.
 %   \item[\texttt{fontenc} (\texttt{T1})] codificação de saída com acentos como
 %     glifo único. Sem ela, palavra acentuada não hifeniza e não é
-%     pesquisável no PDF.
+%     pesquisável no PDF. Carregado \textbf{só} sob \hologo{pdfTeX}. Nos motores
+%     Unicode a codificação é a TU, a padrão do \LaTeX\ neles, com a mesma Latin
+%     Modern em OpenType: em T1, o \hologo{LuaLaTeX} imprimia ``nº'' como
+%     ``nž'' e perdia travessão, aspas curvas e reticências.
 %   \item[\texttt{lmodern}] a família Latin Modern, vetorial. Está aqui por
 %     causa do \textbf{PDF/A}: a Computer Modern padrão saía em Type~3, que é
 %     bitmap, e um PDF com Type~3 não é PDF/A.
@@ -2273,15 +2296,19 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \end{center}
 %
 % \textbf{Uma advertência.} Não misture as duas formas na MESMA entrada. Elas
-% funcionam juntas no mesmo arquivo --- o |exemplo.bib| que acompanha a classe faz
-% isso de propósito, metade em cada forma ---, mas dentro de uma entrada
-% escolha uma e fique nela, ou a leitura fica confusa para quem vier depois.
+% funcionam juntas no mesmo arquivo, mas dentro de uma entrada escolha uma e
+% fique nela, ou a leitura fica confusa para quem vier depois.
 %
-% Cada um desses tipos foi conferido, uma vez cada, contra o exemplo impresso no
-% próprio Manual. A base de conferência está em
-% |adversativa/referencias-manual.bib|, e a mesma base acompanha a classe como
-% segunda parte do |exemplo.bib|, citada por inteiro no |max-exemplo.tex|: cada entrada lá traz, em
-% comentário, a referência \textbf{como o Manual a imprime}.
+% Cada um desses tipos é conferido contra o exemplo impresso no próprio Manual,
+% \textbf{nas duas formas}. A base com os nomes em inglês acompanha a classe como
+% segunda parte do |exemplo.bib|, citada por inteiro no |max-exemplo.tex|, com as
+% chaves |m-|\meta{item}; a mesma base com os sinônimos em português está em
+% |tests/adversativa/referencias-manual.bib|, com as chaves |pt-|\meta{item}. Cada
+% entrada das duas traz, em comentário, a referência \textbf{como o Manual a
+% imprime}, e os documentos adversativos em português citam as duas. As chaves
+% são diferentes de propósito: com a mesma chave nos dois arquivos, o
+% \texttt{biber} achava tudo no primeiro e nem abria o segundo, e a forma em
+% português ficou sem conferência sem que nada avisasse.
 %
 % \subsection{Campos que as categorias da ABNT exigem}
 %
@@ -3313,12 +3340,12 @@ brazilianabstract & \textbackslash begin\{brazilianabstract\} ... & \doc & Third
 
 \multicolumn{4}{@{}p{\linewidth}@{}}{\normalfont\small Only the table of contents is mandatory (3.1.2.1.6). Every list is optional (3.1.2.2); the COPPE norm (\S10) adds the lists of \emph{quadros}, programs and algorithms whenever the work has one of them.}\\[2pt]
 \multicolumn{4}{@{}l@{}}{\normalfont\bfseries\small PRE-TEXTUAL LISTS ---
-  lists first, table of contents last (3.1.2.1.6)}\\[2pt]
+  illustrations, tables, abbreviations, symbols; contents last (3.1.2)}\\[2pt]
 \textbackslash listoffigures & \textbackslash listoffigures & \doc & List of figures. \\
-\textbackslash listoftables & \textbackslash listoftables & \doc & List of tables. \\
 \textbackslash listofquadros & \textbackslash listofquadros & \doc & List of \emph{quadros} (framed on all sides, unlike a table). \\
 \textbackslash listofprogramas & \textbackslash listofprogramas & \doc & List of code listings. \\
 \textbackslash listofalgorithms & \textbackslash listofalgorithms & \doc & List of algorithms. \\
+\textbackslash listoftables & \textbackslash listoftables & \doc & List of tables, after every list of illustrations (3.1.2). \\
 \textbackslash printloabbreviations & \textbackslash printloabbreviations & \doc & List of abbreviations and acronyms. No page numbers (4.1.1). \\
 \textbackslash printlosiglas & \textbackslash printlosiglas & \doc & List of acronyms, when \texttt{\textbackslash makelosiglas} is on. \\
 \textbackslash printlosymbols & \textbackslash printlosymbols & \doc & List of symbols, in order of first appearance (3.1.2.2.7). \\
@@ -3542,8 +3569,21 @@ Problems: \url{https://github.com/COPPE-UFRJ/CoppeTeX/issues}
 % Latin Modern is the vector successor of Computer Modern, metrically and
 % visually near-identical, and ships with every current distribution, so the
 % page layout does not move.
+%
+% T1 e SO do pdfTeX. Nos motores Unicode a entrada vai direto para a fonte, sem
+% o inputenc que faz a ponte no pdfTeX: com T1 carregado no LuaLaTeX, o
+% caractere U+00BA ia para a posicao 186 da fonte, que em T1 e o "z" com
+% caron, e "n." com o ordinal saia "nz" -- e o mesmo com o paragrafo, o grau,
+% as aspas angulares, os sinais de conta. Travessao, meia-risca, aspas curvas,
+% reticencias e o "oe" ligado nem existem em T1 e SUMIAM, so com um "Missing
+% character" no log. As letras acentuadas do portugues saiam certas, porque ali
+% o T1 coincide com o Latin-1, e por isso ninguem viu (#152). Nos motores
+% Unicode fica a codificacao TU, a padrao do LaTeX neles, com a mesma Latin
+% Modern em OpenType: os .fd do TU ja vem no LaTeX base.
 \RequirePackage{lmodern}
-\RequirePackage[T1]{fontenc}
+\ifPDFTeX
+  \RequirePackage[T1]{fontenc}
+\fi
 % A Latin Modern Sans nao tem italico, so obliquo, e o t1lmss.fd declara o
 % italico como substituicao (ssub) do obliquo. O resultado impresso e o mesmo,
 % mas cada uso -- a dedicatoria, qualquer \emph -- deixava no log "Font shape
@@ -3554,23 +3594,47 @@ Problems: \url{https://github.com/COPPE-UFRJ/CoppeTeX/issues}
 % A saida e declarar essas formas apontando DIRETO para os arquivos que a
 % substituicao ja escolhia: mesma fonte, mesmo PDF, sem substituicao e sem
 % mensagem. O .fd e lido primeiro -- ele e carregado sob demanda, e se viesse
-% depois desfaria estas declaracoes.
+% depois desfaria estas declaracoes. O tulmss.fd e o tulmtt.fd substituem as
+% mesmas formas, e no TU elas apontam para os mesmos desenhos em OpenType.
 \begingroup
-  \fontencoding{T1}\fontfamily{lmss}\selectfont
+  \fontencoding{\encodingdefault}\fontfamily{lmss}\selectfont
   \fontfamily{lmtt}\selectfont
 \endgroup
-\DeclareFontShape{T1}{lmss}{m}{it}
-  {<-8.5> ec-lmsso8 <8.5-9.5> ec-lmsso9 <9.5-11> ec-lmsso10
-   <11-15.5> ec-lmsso12 <15.5-> ec-lmsso17}{}
-\DeclareFontShape{T1}{lmss}{bx}{it}{<-> ec-lmssbo10}{}
-\DeclareFontShape{T1}{lmss}{b}{n}{<-> ec-lmssbx10}{}
-\DeclareFontShape{T1}{lmss}{b}{sl}{<-> ec-lmssbo10}{}
-\DeclareFontShape{T1}{lmss}{b}{it}{<-> ec-lmssbo10}{}
-\DeclareFontShape{T1}{lmss}{sbc}{it}{<-> ec-lmssdo10}{}
-\DeclareFontShape{T1}{lmtt}{bx}{n}{<-> ec-lmtk10}{}
-\DeclareFontShape{T1}{lmtt}{bx}{sl}{<-> ec-lmtko10}{}
-\DeclareFontShape{T1}{lmtt}{bx}{it}{<-> ec-lmtko10}{}
-\DeclareFontShape{T1}{lmtt}{b}{it}{<-> ec-lmtko10}{}
+\ifPDFTeX
+  \DeclareFontShape{T1}{lmss}{m}{it}
+    {<-8.5> ec-lmsso8 <8.5-9.5> ec-lmsso9 <9.5-11> ec-lmsso10
+     <11-15.5> ec-lmsso12 <15.5-> ec-lmsso17}{}
+  \DeclareFontShape{T1}{lmss}{bx}{it}{<-> ec-lmssbo10}{}
+  \DeclareFontShape{T1}{lmss}{b}{n}{<-> ec-lmssbx10}{}
+  \DeclareFontShape{T1}{lmss}{b}{sl}{<-> ec-lmssbo10}{}
+  \DeclareFontShape{T1}{lmss}{b}{it}{<-> ec-lmssbo10}{}
+  \DeclareFontShape{T1}{lmss}{sbc}{it}{<-> ec-lmssdo10}{}
+  \DeclareFontShape{T1}{lmtt}{bx}{n}{<-> ec-lmtk10}{}
+  \DeclareFontShape{T1}{lmtt}{bx}{sl}{<-> ec-lmtko10}{}
+  \DeclareFontShape{T1}{lmtt}{bx}{it}{<-> ec-lmtko10}{}
+  \DeclareFontShape{T1}{lmtt}{b}{it}{<-> ec-lmtko10}{}
+\else
+  \DeclareFontShape{TU}{lmss}{m}{it}
+    {<-8.5> \UnicodeFontFile{lmsans8-oblique}{\UnicodeFontTeXLigatures}
+     <8.5-9.5> \UnicodeFontFile{lmsans9-oblique}{\UnicodeFontTeXLigatures}
+     <9.5-11> \UnicodeFontFile{lmsans10-oblique}{\UnicodeFontTeXLigatures}
+     <11-15.5> \UnicodeFontFile{lmsans12-oblique}{\UnicodeFontTeXLigatures}
+     <15.5-> \UnicodeFontFile{lmsans17-oblique}{\UnicodeFontTeXLigatures}}{}
+  \DeclareFontShape{TU}{lmss}{bx}{it}
+    {<-> \UnicodeFontFile{lmsans10-boldoblique}{\UnicodeFontTeXLigatures}}{}
+  \DeclareFontShape{TU}{lmss}{b}{n}
+    {<-> \UnicodeFontFile{lmsans10-bold}{\UnicodeFontTeXLigatures}}{}
+  \DeclareFontShape{TU}{lmss}{b}{sl}
+    {<-> \UnicodeFontFile{lmsans10-boldoblique}{\UnicodeFontTeXLigatures}}{}
+  \DeclareFontShape{TU}{lmss}{b}{it}
+    {<-> \UnicodeFontFile{lmsans10-boldoblique}{\UnicodeFontTeXLigatures}}{}
+  \DeclareFontShape{TU}{lmss}{sbc}{it}
+    {<-> \UnicodeFontFile{lmsansdemicond10-oblique}{\UnicodeFontTeXLigatures}}{}
+  \DeclareFontShape{TU}{lmtt}{bx}{n}{<-> \UnicodeFontFile{lmmonolt10-bold}{}}{}
+  \DeclareFontShape{TU}{lmtt}{bx}{sl}{<-> \UnicodeFontFile{lmmonolt10-boldoblique}{}}{}
+  \DeclareFontShape{TU}{lmtt}{bx}{it}{<-> \UnicodeFontFile{lmmonolt10-boldoblique}{}}{}
+  \DeclareFontShape{TU}{lmtt}{b}{it}{<-> \UnicodeFontFile{lmmonolt10-boldoblique}{}}{}
+\fi
 % Math support. amsmath is structure, not typeface -- environments (align,
 % gather, cases) and commands (\text, \DeclareMathOperator) that work on every
 % engine -- so the class loads it (it must precede hyperref, loaded at the end
@@ -3682,9 +3746,15 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
 % APENDICE/ANEXO chapters print "APENDICE A -- Title" (R75/R76); normal chapters
 % keep "N Title". \appendix and \annex raise the flag (see below).
 \newif\if@ufrjappendix \@ufrjappendixfalse
+% Todo titulo em \normalsize, o corpo do texto. A 2.2(b) fixa a fonte tamanho 12
+% para o trabalho e so admite corpo MENOR (citacao longa, notas, paginacao,
+% legendas e fontes das ilustracoes e tabelas, ficha catalografica); e a 2.6
+% faz o destaque gradativo com negrito, italico, caixa alta e versal -- nao com
+% corpo. Ate a v4.1 o capitulo e os titulos sem indicativo saiam em \Large
+% (17,28 pt) e a secao em \large (14,4 pt) (#113).
 \titleformat{\chapter}[hang]
-  {\normalfont\Large\bfseries}
-  {\if@ufrjappendix\MakeUppercase{\appendixname}\ \thechapter\ \textendash\else\thechapter\fi}
+  {\normalfont\normalsize\bfseries}
+  {\if@ufrjappendix\MakeUppercase{\appendixname}\ \thechapter\ \textemdash\else\thechapter\fi}
   {1ex}{\MakeUppercase}
 \titlespacing*{\chapter}{0pt}{10pt}{1.5\baselineskip}
 % 2.6 says the numeric indicative of a section precedes its title flush left,
@@ -3696,8 +3766,8 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
 % are untouched -- they DO carry a numeric indicative and stay flush left.
 \newcommand\ufrj@appendixheadings{%
   \titleformat{\chapter}[block]
-    {\normalfont\Large\bfseries\filcenter}
-    {\MakeUppercase{\appendixname}\ \thechapter\ \textendash}
+    {\normalfont\normalsize\bfseries\filcenter}
+    {\MakeUppercase{\appendixname}\ \thechapter\ \textemdash}
     {1ex}{\MakeUppercase}%
   \titlespacing*{\chapter}{0pt}{10pt}{1.5\baselineskip}}
 \let\ufrj@orig@appendix\appendix
@@ -3710,10 +3780,17 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
 \newif\if@ufrjannex \@ufrjannexfalse
 \newcommand\ufrj@tocapp[1]{%
   \MakeUppercase{\ufrjstring{appendix}}%
-  \nobreakspace#1\nobreakspace\textendash\nobreakspace}
+  \nobreakspace#1\nobreakspace\textemdash\nobreakspace}
 \newcommand\ufrj@tocanx[1]{%
   \MakeUppercase{\ufrjstring{annex}}%
-  \nobreakspace#1\nobreakspace\textendash\nobreakspace}
+  \nobreakspace#1\nobreakspace\textemdash\nobreakspace}
+% Toda entrada de nivel capitulo SEM indicativo numerico leva um \numberline
+% vazio: o titulo comeca na coluna dos titulos numerados, e nao na margem. A
+% 3.1.2.1.6 manda alinhar os titulos "pela margem do titulo do indicativo mais
+% extenso", inclusive os pos-textuais, e o sumario do proprio Manual faz assim;
+% a Norma COPPE (secao 14) fez disso regra. Referencias, apendices, anexos,
+% glossario e indice saiam na margem (#115). O \ufrj@tocnumberline mede a
+% largura do numero, e um numero vazio nao alarga a coluna.
 \def\@chapter[#1]#2{%
   \ifnum \c@secnumdepth >\m@ne
     \if@mainmatter
@@ -3721,18 +3798,18 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
       \typeout{\@chapapp\space\thechapter.}%
       \if@ufrjappendix
         \if@ufrjannex
-          \addcontentsline{toc}{chapter}{\protect\ufrj@tocanx{\thechapter}#1}%
+          \addcontentsline{toc}{chapter}{\protect\numberline{}\protect\ufrj@tocanx{\thechapter}#1}%
         \else
-          \addcontentsline{toc}{chapter}{\protect\ufrj@tocapp{\thechapter}#1}%
+          \addcontentsline{toc}{chapter}{\protect\numberline{}\protect\ufrj@tocapp{\thechapter}#1}%
         \fi
       \else
         \addcontentsline{toc}{chapter}{\protect\numberline{\thechapter}#1}%
       \fi
     \else
-      \addcontentsline{toc}{chapter}{#1}%
+      \addcontentsline{toc}{chapter}{\protect\numberline{}#1}%
     \fi
   \else
-    \addcontentsline{toc}{chapter}{#1}%
+    \addcontentsline{toc}{chapter}{\protect\numberline{}#1}%
   \fi
   \chaptermark{#1}%
   \addtocontents{lof}{\protect\addvspace{10\p@}}%
@@ -3746,7 +3823,7 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
 % chapter (unnumbered): centred ALL CAPS bold (errata, lists, resumo, sumario,
 % referencias, glossario, ... -- unnumbered headings are centred, P29-P30).
 \titleformat{name=\chapter,numberless}[hang]
-  {\normalfont\Large\bfseries\filcenter}{}{0pt}{\MakeUppercase}
+  {\normalfont\normalsize\bfseries\filcenter}{}{0pt}{\MakeUppercase}
 \titlespacing*{name=\chapter,numberless}{0pt}{10pt}{1.5\baselineskip}
 % section: ALL CAPS, normal weight -- the \bfseries here contradicted this very
 % comment until v4.1, and made the secondary level as heavy as the primary one,
@@ -3754,13 +3831,24 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
 % chapter = ALL CAPS bold, section = ALL CAPS regular, subsection = Title Case
 % bold, subsubsection = Title Case bold italic, as read from the manual.
 \titleformat{\section}
-  {\normalfont\large}{\thesection}{1ex}{\MakeUppercase}
+  {\normalfont\normalsize}{\thesection}{1ex}{\MakeUppercase}
 % subsection: bold (author writes Title Case).
 \titleformat{\subsection}
   {\normalfont\bfseries}{\thesubsection}{1ex}{}
 % subsubsection: bold italic.
 \titleformat{\subsubsection}
   {\normalfont\bfseries\itshape}{\thesubsubsection}{1ex}{}
+% A 2.4 separa os titulos das secoes do texto que os precede e do que os sucede
+% por um espaco de 1,5 -- uma linha em branco na entrelinha do texto. O padrao do
+% titlesec deixava 3,5 ex antes e 2,3 ex depois, e 2,3 ex sao uns dois tercos de
+% linha (#122). \baselineskip e medido no uso, ja na entrelinha do documento.
+% Sem "plus": o titlesec entrega o valor ao \setlength do calc, que nao aceita
+% elastico depois de um registro -- com "\baselineskip plus .2\baselineskip" o
+% TeX reclamava "Missing number", imprimia "plus .2" na folha, e o espaco depois
+% do titulo caia para menos de uma entrelinha.
+\titlespacing*{\section}{0pt}{\baselineskip}{\baselineskip}
+\titlespacing*{\subsection}{0pt}{\baselineskip}{\baselineskip}
+\titlespacing*{\subsubsection}{0pt}{\baselineskip}{\baselineskip}
 % paragraph = quinary section: italic, the author capitalising only the first
 % word. 2.6 recommends going as deep as the quinary, and the annotation on the
 % 2025 manual (specs/ANOTACOES.md) describes exactly this shape.
@@ -3770,7 +3858,7 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
 % "after" spacing in \titlespacing turns it into a displayed heading.
 \titleformat{\paragraph}[hang]
   {\normalfont\itshape}{\theparagraph}{1ex}{}
-\titlespacing*{\paragraph}{0pt}{2.5ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+\titlespacing*{\paragraph}{0pt}{\baselineskip}{\baselineskip}
 % book defaults secnumdepth to 2, so \subsubsection and \paragraph came out
 % UNNUMBERED however carefully \titleformat named \thesubsubsection. 2.6 has
 % the numbering following the whole chain down to the quinary, and the manual's
@@ -3913,7 +4001,14 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
 % a couple of tables looked left-aligned while the rest looked centred -- which
 % is what a recent review noticed about tables 5.1 and 5.2. 2.10 does not
 % prescribe the alignment; it does not tolerate two alignments either.
-\captionsetup{font=footnotesize,labelsep=endash,justification=centering}
+% O sinal entre o numero e o titulo e o TRAVESSAO (U+2014), em toda parte: na
+% legenda, na lista de ilustracoes, no titulo de apendice e de anexo e no
+% sumario. E o nome que o Manual da ao sinal (2.10, 3.1.2.2.4, 3.1.4.3 e
+% 3.1.4.4) e o que a Norma COPPE mostra (secao 12). Ate a v4.1 a classe usava a
+% meia-risca em quase tudo e o travessao no driver de tese (#150). O caption nao
+% traz separador de travessao; este e o endash dele com o outro sinal.
+\DeclareCaptionLabelSeparator{emdash}{\space\textemdash\space}
+\captionsetup{font=footnotesize,labelsep=emdash,justification=centering}
 % subcaption (NÃO subfig/subfigure) for subfigures / subtables; load right after
 % caption so it picks up the ABNT captionsetup above.
 \RequirePackage{subcaption}
@@ -3967,6 +4062,8 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
   \floatstyle{plaintop}\newfloat{#1}{htbp}{lo#1}[chapter]%
   \floatname{#1}{#2}%
   \expandafter\let\csname l@#1\endcsname\l@figure
+  \expandafter\def\csname ufrj@listname@lo#1\endcsname{#2}%
+  \AtBeginDocument{\expandafter\let\csname l@#1\endcsname\l@figure}%
   \expandafter\providecommand\csname #1autorefname\endcsname{#2}%
   \expandafter\newcommand\csname listof#1s\endcsname{%
     \chapter*{#3}\ufrj@listtoc{#3}%
@@ -4021,6 +4118,19 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
 % there does not survive it -- the document died with "Parameters must be
 % numbered consecutively" at \begin{document}. One level of nesting, one
 % doubling, and the hook only has to call it.
+% Nas listas de ilustracoes e de tabelas, cada item traz o NOME ESPECIFICO, o
+% numero, o travessao e o titulo: "Figura 4.1 -- Titulo ..... 27" (3.1.2.2.4 e
+% 3.1.2.2.5). As linhas saiam "4.1 Titulo ..... 27", com o numero numa caixa de
+% 2,3 em e sem nome (#116). O nome vem de uma tabela por extensao de lista; o
+% \newufrjfloat acrescenta a do flutuante que cria. Um titulo longo continua
+% na margem, como no exemplo do Manual: por isso o \l@figure sem recuo.
+\newcommand\ufrj@listnumberline[1]{%
+  \ufrj@listname\nobreakspace#1\nobreakspace\textemdash\space}
+\def\ufrj@listname@lof{\figurename}
+\def\ufrj@listname@lot{\tablename}
+\def\ufrj@listname@loq{\quadroname}
+\def\ufrj@listname@lol{\lstlistingname}
+\def\ufrj@listname@loa{\algorithmcfname}
 \newcommand\ufrj@wrapstarttoc{%
   \let\ufrj@orig@starttoc\@starttoc
 % \numberline mede o indicativo (ver \ufrj@tocnumberline) apenas no sumario:
@@ -4030,10 +4140,26 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
     \ufrj@checkwrites{##1}%
     \begingroup
       \def\ufrj@@ext{##1}\def\ufrj@@toc{toc}%
-      \ifx\ufrj@@ext\ufrj@@toc \let\numberline\ufrj@tocnumberline \fi
+      \ifx\ufrj@@ext\ufrj@@toc
+        \let\numberline\ufrj@tocnumberline
+      \else
+        \@ifundefined{ufrj@listname@##1}{}{%
+          \edef\ufrj@listname{\expandafter\noexpand
+            \csname ufrj@listname@##1\endcsname}%
+          \let\numberline\ufrj@listnumberline}%
+      \fi
       \ufrj@orig@starttoc{##1}%
     \endgroup}}
 \AtBeginDocument{\ufrj@wrapstarttoc}
+% As entradas de lista de todos os flutuantes com o mesmo leiaute, sem recuo:
+% so aqui, porque o listings e o algorithm2e declaram o \l@ deles ao carregar,
+% e o hyperref, depois da classe.
+\AtBeginDocument{%
+  \renewcommand*\l@figure{\@dottedtocline{1}{0pt}{0pt}}%
+  \let\l@table\l@figure
+  \let\l@quadro\l@figure
+  \let\l@lstlisting\l@figure
+  \let\l@algocf\l@figure}
 %    \end{macrocode}
 %
 % \subsubsection{Paginação}
@@ -4060,7 +4186,7 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
 % (see the option's declaration for the reason). Post-textual material calls
 % \addcontentsline directly and is unaffected.
 \newcommand\ufrj@listtoc[1]{%
-  \if@ufrjlistastoc\addcontentsline{toc}{chapter}{#1}\fi}
+  \if@ufrjlistastoc\addcontentsline{toc}{chapter}{\protect\numberline{}#1}\fi}
 % \ufrj@glosspre marks the two PRE-textual uses of the glossary environment --
 % the list of abbreviations and the list of symbols -- apart from the genuine
 % post-textual Glossario, which shares the same environment but must appear in
@@ -4328,9 +4454,9 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % a quiser pede `resumosemreferencia'.
 %
 % ACOPLAMENTO: a referencia cresce a pagina do resumo em tres ou quatro linhas.
-% O resumo tem de caber em UMA folha (3.1.2.1.4), entao um resumo ja no limite
-% das 500 palavras pode passar para a folha seguinte; e para esse caso que a
-% opcao existe.
+% O Manual nao pede folha unica -- a 3.1.2.1.4 fixa espaco 1,5 e ate 500
+% palavras, e nao o numero de folhas --, mas ha quem prefira o resumo numa
+% folha so, e e para esse caso que a opcao existe (#153).
 \newif\if@ufrjrefresumo \@ufrjrefresumotrue
 \DeclareOption{resumosemreferencia}{\@ufrjrefresumofalse}
 % A folha de resumo tem CINCO elementos, e quatro deles sao opcionais:
@@ -4821,8 +4947,17 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \RequirePackage{xcolor}
 \RequirePackage{listings}
 \RequirePackage{fancyvrb}
-\DeclareFixedFont{\ttb}{T1}{txtt}{bx}{n}{10}
-\DeclareFixedFont{\ttm}{T1}{txtt}{m}{n}{10}
+% As duas fontes fixas dos estilos de linguagem. No pdfTeX, a txtt em T1. Nos
+% motores Unicode nao ha T1 (#152, no bloco das fontes) nem txtt em OpenType, e
+% o codigo sai na maquina de escrever do documento, a Latin Modern Mono: e a
+% unica que tem os caracteres que um comentario de codigo traz.
+\ifPDFTeX
+  \DeclareFixedFont{\ttb}{T1}{txtt}{bx}{n}{10}
+  \DeclareFixedFont{\ttm}{T1}{txtt}{m}{n}{10}
+\else
+  \DeclareFixedFont{\ttb}{TU}{lmtt}{b}{n}{10}
+  \DeclareFixedFont{\ttm}{TU}{lmtt}{m}{n}{10}
+\fi
 % breaklines vale para TODA listagem, e nao so para as dos estilos de
 % linguagem abaixo: um lstlisting sem estilo, com uma linha mais larga que a
 % mancha, estourava a margem. A linha quebrada continua embaixo, depois da
@@ -4942,7 +5077,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \expandafter\RequirePackage\expandafter[\ufrj@@algolang,onelanguage,linesnumbered,lined,algochapter,ruled]{algorithm2e}
 \fi
 % algorithm2e composes its own caption and therefore ignores the class-wide
-% \captionsetup{font=footnotesize,labelsep=endash}. Left alone it printed
+% \captionsetup{font=footnotesize,labelsep=emdash}. Left alone it printed
 % "Algoritmo 6.1:Titulo" in bold at body size, while every other illustration
 % printed "Figura 6.1 -- Titulo" in footnotesize -- 2.10 asks for the
 % designating word, the number, a TRAVESSAO and the title, uniformly.
@@ -4951,7 +5086,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % layout (rules above and below) is kept: 2.10 prescribes where the caption and
 % the source go, not whether the float is delimited, and the rules read here
 % like the top-and-bottom delimitation a table carries.
-\SetAlgoCaptionSeparator{\ \textendash}
+\SetAlgoCaptionSeparator{\ \textemdash}
 \SetAlCapFnt{\footnotesize}
 \SetAlCapNameFnt{\footnotesize}
 \SetAlCapSty{textnormal}
@@ -6211,7 +6346,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \ufrj@checatipo
   {\singlespacing
   \begin{center}
-    {\large\bfseries Informações Coleta CAPES}
+    {\bfseries Informações Coleta CAPES}
   \end{center}
   \vspace{7mm}
   \noindent\begin{tabular}{|@{\hspace{\tabcolsep}}p{\dimexpr\textwidth-2\tabcolsep-2\arrayrulewidth\relax}@{\hspace{\tabcolsep}}|}
@@ -6243,7 +6378,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \end{tabular}\par
   \vspace{9mm}
   \begin{center}
-    {\large\bfseries Ficha catalográfica}\par
+    {\bfseries Ficha catalográfica}\par
     \vspace{4mm}
     \ifthenelse{\equal{\ufrj@fichafile}{}}{%
       \if@ufrjrascunho
@@ -6264,15 +6399,22 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %
 % \begin{macro}{\dedication}
 %    \begin{macrocode}
-\newcommand\dedication[1]{
-  \gdef\@dedic{#1}
-    \cleardoublepage
-    \vspace*{\fill}
-    \begin{flushright}
-      \begin{minipage}{60mm}
-        \raggedleft \it \normalsize \@dedic
-      \end{minipage}
-    \end{flushright}}
+% A 2.6, a 3.1.2.2.1 e a 3.1.2.2.3 recomendam dedicatoria e epigrafe com
+% alinhamento do MEIO da mancha grafica ate a margem direita, na parte inferior
+% da folha: o bloco ocupa a metade direita da mancha, e o texto, alinhado a
+% esquerda, comeca no meio dela, a 11 cm da borda. A dedicatoria saia num bloco
+% de 60 mm encostado na margem direita, com o texto alinhado a direita, e
+% comecava perto de 13 cm; a epigrafe ja tinha a meia mancha, mas tambem com o
+% texto alinhado a direita (#123).
+\newcommand\dedication[1]{%
+  \gdef\@dedic{#1}%
+  \cleardoublepage
+  \vspace*{\fill}%
+  \begin{flushright}
+    \begin{minipage}{0.5\textwidth}
+      \raggedright\itshape\normalsize \@dedic
+    \end{minipage}
+  \end{flushright}}
 %    \end{macrocode}
 % \end{macro}
 %
@@ -6281,15 +6423,16 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % depois dos agradecimentos, "com alinhamento no meio da pagina ou folha ate a
 % margem direita, na parte inferior" -- o mesmo lugar da dedicatoria. Na parte
 % pre-textual "nao e necessario seguir a norma de citacao", entao a autoria vai
-% so abaixo do texto, alinhada a direita.
+% so abaixo do texto, alinhada a direita. O texto em si comeca no meio da
+% mancha, como o da dedicatoria (#123).
 %    \begin{macrocode}
 \newcommand\epigrafe[2]{%
   \cleardoublepage
-  \vspace*{\fill}
+  \vspace*{\fill}%
   \begin{flushright}
     \begin{minipage}{0.5\textwidth}
-      \raggedleft\itshape\normalsize #1\par
-      \vspace{1ex}\normalfont\small #2
+      \raggedright\itshape\normalsize #1\par
+      \vspace{1ex}{\raggedleft\normalfont\small #2\par}
     \end{minipage}
   \end{flushright}}
 %    \end{macrocode}
@@ -6451,12 +6594,26 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % explicada em |\ufrj@refresumo|.
 %
 % Os espaços verticais encolheram na v4.1. Eram 8,6\,mm, 13,2\,mm, 7\,mm,
-% 1,5\,cm, 2\,mm, 7\,mm e 5\,mm, que somam 44\,mm de branco antes do texto; um
-% resumo de 500 palavras, que é o limite da 3.1.2.1.4, não cabia na folha
-% com os cinco elementos ligados. Agora somam 30\,mm. O Manual não prescreve
-% nenhuma dessas medidas -- prescreve que o resumo caiba em UMA folha.
+% 1,5\,cm, 2\,mm, 7\,mm e 5\,mm, que somam 44\,mm de branco antes do texto.
+% Agora somam 30\,mm, mais o título. O Manual não prescreve nenhuma dessas
+% medidas, e também não prescreve folha única: um resumo de 500 palavras, o
+% limite da 3.1.2.1.4, em espaço 1,5 e com os cinco elementos, passa de uma
+% folha com ou sem os 14\,mm economizados (issue~\#153).
 %    \begin{macrocode}
+% O TITULO da folha -- RESUMO, ABSTRACT, RESUMEN --, no idioma daquele resumo,
+% vem antes de tudo e nao tem interruptor. A 2.6 poe o resumo entre os titulos
+% sem indicativo numerico, que sao centralizados, na mesma lista de
+% agradecimentos, sumario e referencias; ate a v4.1 a folha abria direto na
+% frase "Resumo da Tese apresentada a COPPE/UFRJ...", alinhada a esquerda
+% (#114). O titulo e o que diz ao leitor o que a folha e; a frase de abertura
+% (Norma COPPE, secoes 6 a 8) continua, abaixo dele, sob o seu interruptor.
+\newcommand\ufrj@res@heading[1]{%
+  \begin{center}
+    \bfseries\MakeUppercase{\@nameuse{ufrj@str@#1@abstractname}}%
+  \end{center}\par
+  \vspace*{4mm}}
 \newcommand\ufrj@resumocabeca{%
+  \ufrj@res@heading{\ufrj@reslang}%
   \if@ufrjresidpag
     \ufrj@toptext{\ufrj@reslang}\par
     \vspace*{6mm}
@@ -7104,7 +7261,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \if@ufrjglosspre
     \ufrj@listtoc{\glossaryname}%
   \else
-    \addcontentsline{toc}{chapter}{\glossaryname}%
+    \addcontentsline{toc}{chapter}{\protect\numberline{}\glossaryname}%
   \fi
   \list{}
   {\setlength{\listparindent}{0in}%
@@ -7130,7 +7287,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % entrada do indice no sumario apontava para a ultima ancora que existia --
 % a do ultimo anexo: clicar em Indice Remissivo levava ao Anexo B.
   \ifdefined\phantomsection\phantomsection\fi
-  \addcontentsline{toc}{chapter}{\indexname}
+  \addcontentsline{toc}{chapter}{\protect\numberline{}\indexname}
   \parskip\z@ \@plus .3\p@\relax
   \columnseprule \z@
   \columnsep 35\p@
@@ -7456,7 +7613,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % the .toc write, and babel's \bibname caption override was equally fragile).
 \defbibheading{bibliography}{%
   \chapter*{\ufrjstring{references}}%
-  \addcontentsline{toc}{chapter}{\ufrjstring{references}}}
+  \addcontentsline{toc}{chapter}{\protect\numberline{}\ufrjstring{references}}}
 % The catalog page range (bib:begin/bib:end) was written by the old
 % thebibliography redefinition, which biblatex's \printbibliography does not
 % use. biblatex offers \AtBeginBibliography but no end counterpart, so the
@@ -8738,10 +8895,9 @@ postamble
 % \iffalse
 %<*examplebib>
 @Comment{ exemplo.bib -- a base dos exemplos (min-exemplo.tex, max-exemplo.tex e
-  os exemplos por idioma). Primeira parte: entradas de demonstracao, muitas com
-  os sinonimos em portugues dos campos e tipos (autor, titulo, editora, local,
-  ano, organizador, ...). Segunda parte, mais abaixo: uma entrada de cada
-  categoria da secao 4.2 do Manual. }
+  os exemplos por idioma). Primeira parte: entradas de demonstracao. Segunda
+  parte, mais abaixo: uma entrada de cada categoria da secao 4.2 do Manual.
+  Todas usam os nomes de tipo e campo em ingles, os do biblatex. }
 
 @BOOK{book-example,
    author = "R. Abraham and J. E. Marsden and T. Ratiu",
@@ -9037,11 +9193,14 @@ postamble
   proprio Manual. O comentario %% acima de cada entrada e a referencia COMO O
   MANUAL A IMPRIME.
 
-  Metade das entradas usa os nomes de tipo e campo em INGLES e metade os
-  sinonimos em PORTUGUES, para mostrar as duas formas. PREFIRA A INGLESA: e a
-  do biblatex, e a que os gerenciadores de referencia exportam, e a que outra
-  pessoa reconhece. Os sinonimos em portugues existem para quem chega de uma
-  base antiga. }
+  As entradas usam os nomes de tipo e campo em INGLES. A classe aceita tambem
+  os sinonimos em PORTUGUES (@livro, autor, titulo, editora, local, ano,
+  curso...; a tabela esta no manual da classe), mas PREFIRA A INGLESA: e a do
+  biblatex, e a que os gerenciadores de referencia exportam, e a que outra
+  pessoa reconhece. Os sinonimos existem para quem chega de uma base antiga.
+
+  Dissertacao e tese levam o grau em type (mscdiss, dscthesis) e o curso em
+  course: e dai que sai "Dissertacao (Mestrado em <course>)". }
 
 @book{m-4211,
 %% CASTRO, C. M. A prática da pesquisa. São Paulo: Mc Graw-Hill do Brasil, 1978. 156 p.
@@ -9456,7 +9615,8 @@ postamble
 %% Universidade do Rio de Janeiro, Rio de Janeiro, 1997.
   author      = "Leite, Sonia",
   title       = "Memória da comunidade da Serrinha",
-  type        = "Memória Social e Documento",
+  type        = "mscdiss",
+  course      = "Memória Social e Documento",
   institution = "Centro de Ciências Humanas, Universidade do Rio de Janeiro",
   location    = "Rio de Janeiro",
   year        = 1997,

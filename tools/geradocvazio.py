@@ -235,11 +235,13 @@ OPCOES_CLASSE = ["pdfa", "numbers", "comserifa", "linkscommoldura", "linkscolori
                  "rascunhoficha", "listasnosumario", "resumosemreferencia",
                  "semmorewrites"]
 
+# Na ordem da 3.1.2 do Manual: as listas de ILUSTRACAO primeiro -- quadro,
+# programa e algoritmo sao ilustracoes (2.10) --, depois a de tabelas (#148).
 LISTAS = [("listoffigures", "\\listoffigures"),
-          ("listoftables", "\\listoftables"),
           ("listofquadros", "\\listofframes"),
           ("listofprogramas", "\\listofprograms"),
           ("listofalgorithms", "\\listofalgorithms"),
+          ("listoftables", "\\listoftables"),
           ("abreviaturas", "\\printloabbreviations"),
           ("siglas", "\\printloacronyms"),
           ("simbolos", "\\printlosymbols")]
