@@ -229,27 +229,27 @@
   % se o seu Programa exigir. Referências, glossário, apêndices, anexos e
   % índice, que são pós-textuais, entram no sumário de qualquer forma.
   %
-  % O que é obrigatório e o que é opcional:
-  %  - \tableofcontents ........ OBRIGATÓRIO (Manual 3.1.2.1.6);
+  % Obrigatório e opcional, na ordem da 3.1.2 (ilustrações antes de tabelas):
   %  - \listoffigures .......... opcional (3.1.2.2.4, lista de ilustrações);
-  %  - \listoftables ........... opcional (3.1.2.2.5);
   %  - \listofframes, \listofprograms, \listofalgorithms: acréscimo da
-  %    Norma COPPE (§10), presentes quando o trabalho tem ao menos um quadro,
-  %    programa ou algoritmo;
+  %    Norma COPPE (§10), quando há quadro, programa ou algoritmo -- que são
+  %    ilustrações (2.10), e por isso vêm antes da lista de tabelas;
   %  - \listofmapas ............ opcional; o Manual admite uma lista por tipo
   %    de ilustração (3.1.2.2.4), e \newcoppefloat cria o tipo;
+  %  - \listoftables ........... opcional (3.1.2.2.5);
   %  - \printloabbreviations ... opcional (3.1.2.2.6);
   %  - \printloacronyms .......... opcional; a 3.1.2.2.6 recomenda separar as
   %    siglas das abreviaturas (exige \makeloacronyms no preâmbulo);
-  %  - \printlosymbols ......... opcional (3.1.2.2.7), na ordem de aparição.
+  %  - \printlosymbols ......... opcional (3.1.2.2.7), na ordem de aparição;
+  %  - \tableofcontents ........ OBRIGATÓRIO (Manual 3.1.2.1.6), por último.
   % Este exemplo imprime todas para mostrá-las. No seu trabalho, apague a linha
   % da lista que você não usa: deixada, ela sai como folha só com o título.
   \listoffigures
-  \listoftables
   \listofframes
   \listofmapas
   \listofprograms
   \listofalgorithms
+  \listoftables
   \printloabbreviations
   \printloacronyms
   \printlosymbols

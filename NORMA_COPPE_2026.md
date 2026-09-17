@@ -216,7 +216,9 @@ institucional (Seção 4).
 
 Em complemento às listas do item 3.1.2.2.4, a COPPE reconhece três listas
 próprias, cada uma presente quando houver ao menos uma ocorrência no corpo do
-trabalho, entre a Lista de Tabelas e a Lista de Abreviaturas:
+trabalho. Quadro, programa e algoritmo são ilustrações (2.10), e por isso as
+três vêm junto das demais listas de ilustrações, **antes** da Lista de Tabelas,
+na ordem do item 3.1.2:
 
 - **Lista de Quadros** — quadro é a ilustração bordada em todos os lados,
   distinta da tabela, que é delimitada apenas no topo e na base;

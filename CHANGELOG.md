@@ -72,6 +72,14 @@ run it, and the fix removes the mark.
   ask, for figures, tables, quadros, programs, algorithms and every float made
   with `\newcoppefloat`. A long title continues at the left margin, as in the
   Manual's example.
+- **The lists come in the order of 3.1.2** (#148): every list of illustrations
+  (figures, quadros, maps, programs, algorithms) first, then the list of
+  tables. `max-exemplo.tex`, `manual.tex`, the document generator, the
+  adversarial documents, the class manual and the quick reference had the list
+  of tables second. Section 10 of the COPPE norm placed its three lists between
+  tables and abbreviations; it now places them with the other illustrations,
+  since 2.10 counts quadros, programs and algorithms as illustrations. The class
+  imposes no order, so an existing document keeps the order its author wrote.
 
 ### Fixed
 

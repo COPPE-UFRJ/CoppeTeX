@@ -215,13 +215,19 @@ prototipada; conferir com cuidado.
   `\coppe@appendixheadings`; `\coppe@tocapp`/`\coppe@tocanx`; a lista (#116).
 - A referência do resumo (`--` no `\coppe@refresumo`) fica para a #119.
 
-### #148 — ordem das listas · `r67` · proposta
-- `max-exemplo` (módulo `maxexemplo`): mover `\listoftables` para depois de
-  `\listofalgorithms`; o comentário que explica as listas também.
-- `src/manual.tex` l. 124–128 e `tools/geradocvazio.py` `LISTAS`: a mesma ordem.
-- Norma §10 (`.md` e `.tex`): "entre a Lista de Figuras e a Lista de Tabelas" —
-  ou reescrever sem posição e dizer que seguem a 3.1.2.
-- Conferir a tabela de listas da documentação (`coppe.dtx` l. ~1716) e do quickref.
+### #148 — ordem das listas · `r67` · FEITA
+- `max-exemplo` (módulo `maxexemplo`), `src/manual.tex`, `tools/geradocvazio.py`
+  (`LISTAS`), `tools/mk-adversativa.py` (e os seis `adv_*.tex` regerados), a
+  tabela de listas do manual da classe e o quickref: todas as listas de
+  ilustração antes de `\listoftables`.
+- Norma §10 (`.md` e `.tex`): as três listas da COPPE "junto das demais listas de
+  ilustrações, antes da Lista de Tabelas, na ordem do item 3.1.2".
+- **Armadilha:** a tabela "onde ver" do manual guarda NÚMEROS DE LINHA do
+  `max-exemplo.tex`, e o `conferir-manual.py` confere. Acrescentar linha de
+  comentário no bloco das listas deslocou 16 entradas; o comentário foi
+  reescrito com a mesma contagem de linhas. A entrada do `\tableofcontents`
+  apontava para a linha do COMENTÁRIO; agora aponta para o comando (256).
+- Provado: `r67`; `r26` (gerador compila); `conferir-manual` limpo.
 
 ### #114 — título RESUMO/ABSTRACT · `r34` · validada
 - No começo de `\coppe@resumocabeca`: `\begin{center}\bfseries\MakeUppercase{\@nameuse{coppe@str@\coppe@reslang @abstractname}}\end{center}` e um respiro.

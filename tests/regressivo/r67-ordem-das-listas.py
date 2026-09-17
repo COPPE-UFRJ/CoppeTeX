@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
-"""Teste de conformidade da CoppeTeX. NAO roda na suite normal.
+"""Teste de conformidade da CoppeTeX.
 
 BUG: (desconformidade, 3.1.2) as listas de quadros, mapas, programas e algoritmos -- que sao listas de ILUSTRACOES -- vinham DEPOIS da lista de tabelas no max-exemplo, no manual.tex e no gerador de documento, e a Norma COPPE (secao 10) mandava poe-las entre a lista de tabelas e a de abreviaturas (#148).
-ABERTO: #148
 
 A 3.1.2 do Manual UFRJ/SiBI da a ordem dos elementos pre-textuais: lista de
 ilustracoes, lista de tabelas, lista de abreviaturas e siglas, lista de

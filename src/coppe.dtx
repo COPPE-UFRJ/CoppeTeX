@@ -169,6 +169,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \changes{v4.1}{2026/09/12}{The files section described the delivery as it was before the folders: the logos in the root, no logos/, no manuais/, no language folders, and an instruction not to copy coppe.dtx and coppe.ins, which the delivery now ships on purpose. The developer sections still said twelve adversarial documents (there are six), still placed them outside tests/, and did not know tests/regressivo/ or the panel existed.}
 % \changes{v4.1}{2026/09/16}{The m-diss entry of exemplo.bib printed "1997. 203 f. Memoria Social e Documento Centro de Ciencias Humanas", without "Dissertacao (Mestrado em ...)": when the base moved to English field names, the Portuguese field curso became type instead of course, and the mscdiss type was lost. The checker that compares every reference with the Manual reported it, but the proof did not run the checker. The 34 Manual references now have different keys in the two bases (m- in exemplo.bib, pt- in the adversarial referencias-manual.bib): with the same keys, biber found every citation in the first file and never opened the second, so the Portuguese field names had gone unchecked.}
 % \changes{v4.1}{2026/09/16}{Every heading is set in the body size. 2.2(b) of the UFRJ Manual fixes size 12 for the work and allows only SMALLER sizes (long quotations, notes, folio, captions and sources, catalogue card), and 2.6 builds the gradual emphasis from bold, italic, capitals and small capitals, not from size. Chapters and unnumbered headings were Large (17.28 pt), sections large (14.4 pt), and the two headings of the CAPES additional sheet large.}
+% \changes{v4.1}{2026/09/16}{Lists in the order of 3.1.2 in max-exemplo, manual.tex, the document generator, the adversarial documents, this manual and the quick reference: every list of illustrations (figures, quadros, maps, programs, algorithms) before the list of tables. Quadro, program and algorithm are illustrations (2.10), and section 10 of the COPPE norm, which placed its three lists between the list of tables and the list of abbreviations, now follows the Manual too. The class imposes no order; the models were teaching the wrong one.}
 % \changes{v4.1}{2026/09/16}{The sign between number and title is the em dash everywhere: captions (a new emdash caption label separator), algorithm captions, appendix and annex headings, their sumario entries and the lists of illustrations. The Manual calls it travessao (2.10, 3.1.2.2.4, 3.1.4.3, 3.1.4.4) and section 12 of the COPPE norm shows the em dash; the class used the en dash almost everywhere and the em dash in the thesis reference driver.}
 % \changes{v4.1}{2026/09/16}{Lists of illustrations and of tables name each item: "Figura 4.1 --- Titulo ..... 27" instead of "4.1 Titulo ..... 27" (3.1.2.2.4, 3.1.2.2.5). The name comes from a table keyed by list extension, extended by newcoppefloat; list entries have no indent, so a long title continues at the margin as in the Manual's example.}
 % \changes{v4.1}{2026/09/16}{In the sumario, References, appendices, annexes, glossary, index and (under listasnosumario) the pre-textual lists start in the column of the numbered titles instead of at the left margin. 3.1.2.1.6 aligns the titles by the longest indicative, post-textual elements included, and the Manual's own sumario does so; section 14 of the COPPE norm makes it a rule. Every chapter-level entry without a number now carries an empty numberline.}
@@ -1705,8 +1706,11 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \DescribeMacro{\printloabbreviations}
 % \DescribeMacro{\printlosiglas}
 % \DescribeMacro{\printlosymbols}
-% A ordem que a 3.1.2.1.6 pede é esta: as listas primeiro, o sumário por
-% último. As listas \textbf{não} entram no sumário, a não ser com a opção
+% A ordem é a da 3.1.2: primeiro as listas de \textbf{ilustração} --- figuras,
+% quadros, programas, algoritmos e as dos tipos criados com |\newcoppefloat|,
+% porque quadro, programa e algoritmo são ilustrações (2.10) ---, depois a de
+% tabelas, a de abreviaturas e siglas, a de símbolos, e o sumário por último.
+% As listas \textbf{não} entram no sumário, a não ser com a opção
 % |listasnosumario| --- que \textbf{contraria a norma}: a \mbox{NBR~6027} tira
 % os elementos pré-textuais do sumário, e o sumário modelo do Manual começa na
 % introdução. Ela existe para o Programa que exija o contrário.
@@ -1721,16 +1725,16 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \hline
 % Elemento & Comando & Situação \\
 % \hline
-% Sumário & |\tableofcontents| & \textbf{obrigatório} (3.1.2.1.6) \\
 % Lista de ilustrações (figuras) & |\listoffigures| & opcional (3.1.2.2.4) \\
-% Lista de tabelas & |\listoftables| & opcional (3.1.2.2.5) \\
 % Lista de quadros & |\listofquadros| & COPPE: se houver quadro (§10) \\
 % Lista de programas & |\listofprogramas| & COPPE: se houver programa (§10) \\
 % Lista de algoritmos & |\listofalgorithms| & COPPE: se houver algoritmo (§10) \\
 % Lista de outro tipo de ilustração & |\listof...| (|\newcoppefloat|) & opcional (3.1.2.2.4) \\
+% Lista de tabelas & |\listoftables| & opcional (3.1.2.2.5) \\
 % Lista de abreviaturas (e siglas) & |\printloabbreviations| & opcional (3.1.2.2.6) \\
 % Lista de siglas, separada & |\printlosiglas| & opcional; recomendada (3.1.2.2.6) \\
 % Lista de símbolos & |\printlosymbols| & opcional (3.1.2.2.7) \\
+% Sumário & |\tableofcontents| & \textbf{obrigatório} (3.1.2.1.6) \\
 % \hline
 % \end{tabular}
 % \end{center}
@@ -2609,7 +2613,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % Resumo                       & |abstract|              & 112 \\
 % Abstract                     & |foreignabstract|       & 128 \\
 % Listas pré-textuais        & |\listoffigures| \dots  & 146 \\
-% Sumário                    & |\tableofcontents|      & 233 \\
+% Sumário                    & |\tableofcontents|      & 256 \\
 % Parte textual                & |\mainmatter|           & 258 \\
 % Símbolo                    & |\symbl|                & 326 \\
 % Citação longa           & |longquote|             & 236 \\
@@ -3255,12 +3259,12 @@ brazilianabstract & \textbackslash begin\{brazilianabstract\} ... & \doc & Third
 
 \multicolumn{4}{@{}p{\linewidth}@{}}{\normalfont\small Only the table of contents is mandatory (3.1.2.1.6). Every list is optional (3.1.2.2); the COPPE norm (\S10) adds the lists of \emph{quadros}, programs and algorithms whenever the work has one of them.}\\[2pt]
 \multicolumn{4}{@{}l@{}}{\normalfont\bfseries\small PRE-TEXTUAL LISTS ---
-  lists first, table of contents last (3.1.2.1.6)}\\[2pt]
+  illustrations, tables, abbreviations, symbols; contents last (3.1.2)}\\[2pt]
 \textbackslash listoffigures & \textbackslash listoffigures & \doc & List of figures. \\
-\textbackslash listoftables & \textbackslash listoftables & \doc & List of tables. \\
 \textbackslash listofquadros & \textbackslash listofquadros & \doc & List of \emph{quadros} (framed on all sides, unlike a table). \\
 \textbackslash listofprogramas & \textbackslash listofprogramas & \doc & List of code listings. \\
 \textbackslash listofalgorithms & \textbackslash listofalgorithms & \doc & List of algorithms. \\
+\textbackslash listoftables & \textbackslash listoftables & \doc & List of tables, after every list of illustrations (3.1.2). \\
 \textbackslash printloabbreviations & \textbackslash printloabbreviations & \doc & List of abbreviations and acronyms. No page numbers (4.1.1). \\
 \textbackslash printlosiglas & \textbackslash printlosiglas & \doc & List of acronyms, when \texttt{\textbackslash makelosiglas} is on. \\
 \textbackslash printlosymbols & \textbackslash printlosymbols & \doc & List of symbols, in order of first appearance (3.1.2.2.7). \\
@@ -3548,27 +3552,27 @@ Problems: \url{https://github.com/COPPE-UFRJ/CoppeTeX/issues}
   % se o seu Programa exigir. Referências, glossário, apêndices, anexos e
   % índice, que são pós-textuais, entram no sumário de qualquer forma.
   %
-  % O que é obrigatório e o que é opcional:
-  %  - \tableofcontents ........ OBRIGATÓRIO (Manual 3.1.2.1.6);
+  % Obrigatório e opcional, na ordem da 3.1.2 (ilustrações antes de tabelas):
   %  - \listoffigures .......... opcional (3.1.2.2.4, lista de ilustrações);
-  %  - \listoftables ........... opcional (3.1.2.2.5);
   %  - \listofframes, \listofprograms, \listofalgorithms: acréscimo da
-  %    Norma COPPE (§10), presentes quando o trabalho tem ao menos um quadro,
-  %    programa ou algoritmo;
+  %    Norma COPPE (§10), quando há quadro, programa ou algoritmo -- que são
+  %    ilustrações (2.10), e por isso vêm antes da lista de tabelas;
   %  - \listofmapas ............ opcional; o Manual admite uma lista por tipo
   %    de ilustração (3.1.2.2.4), e \newcoppefloat cria o tipo;
+  %  - \listoftables ........... opcional (3.1.2.2.5);
   %  - \printloabbreviations ... opcional (3.1.2.2.6);
   %  - \printloacronyms .......... opcional; a 3.1.2.2.6 recomenda separar as
   %    siglas das abreviaturas (exige \makeloacronyms no preâmbulo);
-  %  - \printlosymbols ......... opcional (3.1.2.2.7), na ordem de aparição.
+  %  - \printlosymbols ......... opcional (3.1.2.2.7), na ordem de aparição;
+  %  - \tableofcontents ........ OBRIGATÓRIO (Manual 3.1.2.1.6), por último.
   % Este exemplo imprime todas para mostrá-las. No seu trabalho, apague a linha
   % da lista que você não usa: deixada, ela sai como folha só com o título.
   \listoffigures
-  \listoftables
   \listofframes
   \listofmapas
   \listofprograms
   \listofalgorithms
+  \listoftables
   \printloabbreviations
   \printloacronyms
   \printlosymbols
