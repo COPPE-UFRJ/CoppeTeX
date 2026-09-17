@@ -16,6 +16,14 @@ run it, and the fix removes the mark.
 
 ### Verification
 
+- **A measurement test can no longer pass without measuring** (#156).
+  `medidas.palavras()` reads `pdftotext -bbox`, a poppler option; the Xpdf
+  `pdftotext` that Git for Windows installs does not have it and returns no
+  words at all, so every test of position on the sheet passed with nothing
+  measured. It now stops with a message naming the `pdftotext` in use, the
+  runner prints the versions of `pdftotext`, `pdftohtml` and `pdfinfo` before
+  the first test and warns when they are not poppler's, and the README says to
+  run the suite from PowerShell on Windows.
 - **The proof now runs the two checkers that compare the finished PDF with the
   Manual** (#151). `conferir-norma.py` (sheet, folio, margins, sumário) and
   `conferir-referencias.py` (each reference against the Manual's own
@@ -99,6 +107,14 @@ run it, and the fix removes the mark.
 
 ### Fixed
 
+- **The reference above each abstract is composed like the references in the
+  list** (#119). 4.2 asks for one presentation for every reference in the work,
+  and Annex E shows it aligned to the left margin with the title highlighted.
+  This one was justified, set the title flat and separated the vinculação
+  acadêmica with an en dash, while the `thesis` driver of `ufrj.bbx` sets a
+  thesis title in bold and separates with an em dash: the same reference came
+  out in two shapes in the same work. It is now left-aligned, with the title in
+  bold, the subtitle out of the bold, and the em dash.
 - **LuaLaTeX printed "nº" as "nž"** (#152). The class loaded `fontenc` with T1
   under every engine. A Unicode engine sends each input character straight to
   the font, and in T1 the slot of `º` holds `ž`. So under LuaLaTeX, `º ª § ° « »

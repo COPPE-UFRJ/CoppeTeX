@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
-"""Teste de conformidade da CoppeTeX. NAO roda na suite normal.
+"""Teste de conformidade da CoppeTeX.
 
 BUG: (desconformidade, 4.2 e Anexo E) a referencia do trabalho no alto do resumo saia JUSTIFICADA, com o TITULO SEM DESTAQUE e com meia-risca antes da vinculacao academica, diferente da mesma referencia na lista de referencias (#119).
-ABERTO: #119
 
 O Anexo E do Manual UFRJ/SiBI mostra a referencia do resumo com o titulo em
 negrito, alinhada a esquerda. A 4.2 manda alinhar as referencias so a margem

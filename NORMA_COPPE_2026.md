@@ -186,7 +186,7 @@ página de resumo abre pela referência do próprio trabalho, logo acima do text
 
 A referência segue o Anexo E e a NBR 6023:
 
-> SOBRENOME, Nome. Título: subtítulo. Rio de Janeiro, 2026. Tese (Doutorado em
+> SOBRENOME, Nome. **Título**: subtítulo. Rio de Janeiro, 2026. Tese (Doutorado em
 > Engenharia de Sistemas e Computação) — Instituto Alberto Luiz Coimbra de
 > Pós-Graduação e Pesquisa de Engenharia, Universidade Federal do Rio de
 > Janeiro, Rio de Janeiro, 2026.

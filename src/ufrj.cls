@@ -1565,14 +1565,15 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \newcommand\ufrj@refresumo{%
   \if@ufrjrefresumo
     \if@ufrjexame\else
-      {\singlespacing\noindent\sloppy
+      {\singlespacing\noindent\raggedright\sloppy
         \nohyphens{%
           \MakeUppercase{\@authsurn}, \@authname.
-          \ufrj@selecttitle
+          \textbf{\ufrj@selecttitle}%
           \@ifundefined{ufrj@subtitle@\ufrj@mainlang}{}{%
             : \ufrj@selectsubtitle}.
           \local@cityname, \ufrj@docyear.
-          \local@doctype\ (\@degreename\ em \local@deptname) --
+          \local@doctype\ (\@degreename\ em \local@deptname)
+          \textemdash{}
           \ifx\local@instname\@empty\else\local@instname, \fi
           \local@universityname,
           \local@cityname, \ufrj@docyear.}\par}%
