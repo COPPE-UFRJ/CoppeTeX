@@ -9,8 +9,10 @@ histórico, como o `REVISAO_SIBI.md`).
 - **Base:** `master` em `b8103c7` (v4.1). O trabalho vai num **ramo novo**.
 - **Norma:** `specs/Manual para elaboração e normalização de trabalhos acadêmicos 2024.pdf`
   (é a 9.ª ed. rev., 2026 — ver `specs/README.md`) e o modelo da folha adicional.
-- **Issues:** guarda-chuva **#112**; uma por problema, **#113 a #151**, e
-  **#152** (LuaLaTeX, achada ao corrigir #151; teste `r70`).
+- **Issues:** guarda-chuva **#112**; uma por problema, **#113 a #151**, e as
+  achadas no caminho: **#152** (LuaLaTeX, ao corrigir #151; teste `r70`) e
+  **#153** (a documentação atribuía ao Manual a folha única do resumo, ao
+  corrigir #114; sem teste, é texto).
 - **Testes:** `tests/regressivo/r33` a `r69` e `r89` — **todos falham hoje**
   (`38 teste(s), 38 falha(s)`); o apoio `tests/regressivo/medidas.py`; a tabela
   está no `tests/regressivo/README.md`. Cada um traz a marca `ABERTO: #<issue>`,
@@ -237,8 +239,9 @@ prototipada; conferir com cuidado.
   nem antes do título (sonda com a classe do commit anterior, `COPPE_SRC`). E o
   Manual 2026 não pede folha única: a 3.1.2.1.4 diz "digitado em espaço 1,5 …
   no máximo, 500 palavras". A documentação da classe (seção do resumo), o
-  `manual.tex` ("cabe em uma folha"), o `r16` e a Norma §8 afirmam a folha única
-  como regra do Manual — issue própria.
+  `manual.tex` ("cabe em uma folha"), o `r16` e a Norma §8 afirmavam a folha única
+  como regra do Manual — #153, corrigida na documentação pela recomendação (A)
+  da issue (sem resposta até 17/09/2026).
 
 ### #119 — referência do resumo · `r39` · validada
 - `\coppe@refresumo`: `\raggedright`; `\textbf{\coppe@selecttitle}` e o subtítulo

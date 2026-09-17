@@ -109,6 +109,16 @@ run it, and the fix removes the mark.
   `exemplo.bib` and the class manual also said half the entries used the
   Portuguese synonyms, but none has since the database moved to English names.
 
+### Documentation
+
+- **The abstract does not have to fit on one sheet** (#153). The class manual,
+  `manual.tex`, a regression test and section 8 of the COPPE norm said that
+  3.1.2.1.4 of the UFRJ Manual requires it. The 2026 Manual asks for 1.5
+  spacing, a single paragraph and 150 to 500 words, and says nothing about the
+  number of sheets. A 500-word abstract with all five elements takes more than
+  one A4 sheet anyway. `resumosemreferencia` and `\setupabstracts` remain for
+  whoever prefers a single sheet.
+
 ## [4.1] — 2026-09-14 — Revision of the 4.1 release
 
 Still version 4.1: these are corrections to the release published on

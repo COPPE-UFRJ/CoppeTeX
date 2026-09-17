@@ -198,8 +198,8 @@ alguns Programas exigem: nenhum dos dois é depositado na biblioteca nem entra n
 acervo, e portanto nenhum dos dois é documento referenciável.
 
 A implementação de referência compõe a referência sozinha, com os dados que a
-folha de rosto já exige, e oferece uma opção para retirá-la — útil ao resumo que
-já esteja no limite das 500 palavras e não caiba em uma folha com ela.
+folha de rosto já exige, e oferece uma opção para retirá-la — útil a quem quer o
+resumo numa folha só, o que o Manual não exige.
 
 ## 9. Idioma principal do trabalho — *Escolha*
 
