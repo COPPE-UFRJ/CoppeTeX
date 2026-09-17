@@ -41,6 +41,20 @@ run it, and the fix removes the mark.
 
 ### Fixed
 
+- **LuaLaTeX printed "nº" as "nž"** (#152). The class loaded `fontenc` with T1
+  under every engine. A Unicode engine sends each input character straight to
+  the font, and in T1 the slot of `º` holds `ž`. So under LuaLaTeX, `º ª § ° « »
+  ± × µ · ² ½ ¿ ¡` printed as other letters (`ž ł ğ ř ń ż ś Œ ţ ů š ¡ £ ą`), and
+  `— – “ ” ‘ ’ … € œ Ł ő` vanished, with only a "Missing character" line in the
+  log. Portuguese accented letters were right, because T1 matches Latin-1
+  there, so nobody saw it. Unicode engines now keep TU, LaTeX's default for
+  them, with the same Latin Modern in OpenType. The shape declarations that
+  keep substitution messages out of the log exist for TU too. The fixed
+  typewriter fonts of the language listing styles (`\pythonstyle`,
+  `\xmlstyle`…) use Latin Modern Mono under LuaLaTeX, because txtt has no
+  OpenType version. pdfLaTeX output does not change. The LuaLaTeX adversarial
+  twin now matches the Manual's references with no divergence and is still
+  PDF/A-2b.
 - **`exemplo.bib`: the master's dissertation example** (`m-diss`) printed
   "1997. 203 f. Memória Social e Documento Centro de Ciências Humanas…",
   without "Dissertação (Mestrado em …)" or the dash (4.2.1.1). The course was

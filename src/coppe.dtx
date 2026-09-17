@@ -168,6 +168,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \changes{v4.1}{2026/09/12}{The options section opens with a table of what is default, and every entry states its own default. Three were wrong or missing: resumosemreferencia was described as on by default when it is the reference that is on and the option that is off, and rascunhoficha and the morewrites loading stated no default at all.}
 % \changes{v4.1}{2026/09/12}{The files section described the delivery as it was before the folders: the logos in the root, no logos/, no manuais/, no language folders, and an instruction not to copy coppe.dtx and coppe.ins, which the delivery now ships on purpose. The developer sections still said twelve adversarial documents (there are six), still placed them outside tests/, and did not know tests/regressivo/ or the panel existed.}
 % \changes{v4.1}{2026/09/16}{The m-diss entry of exemplo.bib printed "1997. 203 f. Memoria Social e Documento Centro de Ciencias Humanas", without "Dissertacao (Mestrado em ...)": when the base moved to English field names, the Portuguese field curso became type instead of course, and the mscdiss type was lost. The checker that compares every reference with the Manual reported it, but the proof did not run the checker. The 34 Manual references now have different keys in the two bases (m- in exemplo.bib, pt- in the adversarial referencias-manual.bib): with the same keys, biber found every citation in the first file and never opened the second, so the Portuguese field names had gone unchecked.}
+% \changes{v4.1}{2026/09/16}{Under LuaLaTeX the class no longer loads fontenc with T1. Unicode engines send each input character straight to the font, and in T1 the slot of the masculine ordinal holds z-caron: "no" with the ordinal printed as "nz" with a caron, and the section sign, degree sign, guillemets and the arithmetic signs came out as other letters, while the em and en dashes, curly quotes, ellipsis, euro sign and oe ligature vanished with only a Missing character line in the log. Portuguese accented letters were right, because T1 matches Latin-1 there, so nobody saw it. Unicode engines now keep TU, the LaTeX default for them, with Latin Modern in OpenType; the shape declarations that silence substitution messages exist for TU too, and the fixed typewriter fonts of the language listing styles use Latin Modern Mono instead of txtt, which has no OpenType version. pdfLaTeX output does not change.}
 % \changes{v4.0}{2026/05/30}{Catalog-label writers (coppe@mainBegin, coppe@bibBegin, coppe@bibEnd, coppe@hasLof) made language-agnostic: detokenize wrap on label names protects ':' and '.' from babel shorthand activation, and the raw etex primitives romannumeral/number replace LaTeX's roman/arabic to bypass spanish-babel's small-caps @roman redefinition that would otherwise crash pdftex with "Unbalanced write command" on every es-main document.}
 %
 % \DoNotIndex{\!,\',\.,\>,\^,\`,\',\=,\\}
@@ -885,6 +886,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % Matemática & |amssymb|, que você carrega. & |unicode-math|, que você
 %   carrega. \\
 % Acento no código & Precisa do |inputenc|, que a classe carrega. & Nativo. \\
+% Codificação da fonte & T1, Latin Modern Type~1. & TU, Latin Modern OpenType.
+%   A classe escolhe; não carregue |fontenc| no preâmbulo. \\
 % Fluxos de escrita & Dezesseis. A classe carrega o |morewrites| para passar
 %   disso. & Cento e vinte e oito. O problema não existe. \\
 % PDF/A & Funciona. & Funciona. \\
@@ -1955,7 +1958,10 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %     \hologo{pdfTeX}; os motores Unicode já leem UTF-8 nativamente.
 %   \item[\texttt{fontenc} (\texttt{T1})] codificação de saída com acentos como
 %     glifo único. Sem ela, palavra acentuada não hifeniza e não é
-%     pesquisável no PDF.
+%     pesquisável no PDF. Carregado \textbf{só} sob \hologo{pdfTeX}. Nos motores
+%     Unicode a codificação é a TU, a padrão do \LaTeX\ neles, com a mesma Latin
+%     Modern em OpenType: em T1, o \hologo{LuaLaTeX} imprimia ``nº'' como
+%     ``nž'' e perdia travessão, aspas curvas e reticências.
 %   \item[\texttt{lmodern}] a família Latin Modern, vetorial. Está aqui por
 %     causa do \textbf{PDF/A}: a Computer Modern padrão saía em Type~3, que é
 %     bitmap, e um PDF com Type~3 não é PDF/A.
@@ -5091,8 +5097,21 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor i
 % Latin Modern is the vector successor of Computer Modern, metrically and
 % visually near-identical, and ships with every current distribution, so the
 % page layout does not move.
+%
+% T1 e SO do pdfTeX. Nos motores Unicode a entrada vai direto para a fonte, sem
+% o inputenc que faz a ponte no pdfTeX: com T1 carregado no LuaLaTeX, o
+% caractere U+00BA ia para a posicao 186 da fonte, que em T1 e o "z" com
+% caron, e "n." com o ordinal saia "nz" -- e o mesmo com o paragrafo, o grau,
+% as aspas angulares, os sinais de conta. Travessao, meia-risca, aspas curvas,
+% reticencias e o "oe" ligado nem existem em T1 e SUMIAM, so com um "Missing
+% character" no log. As letras acentuadas do portugues saiam certas, porque ali
+% o T1 coincide com o Latin-1, e por isso ninguem viu (#152). Nos motores
+% Unicode fica a codificacao TU, a padrao do LaTeX neles, com a mesma Latin
+% Modern em OpenType: os .fd do TU ja vem no LaTeX base.
 \RequirePackage{lmodern}
-\RequirePackage[T1]{fontenc}
+\ifPDFTeX
+  \RequirePackage[T1]{fontenc}
+\fi
 % A Latin Modern Sans nao tem italico, so obliquo, e o t1lmss.fd declara o
 % italico como substituicao (ssub) do obliquo. O resultado impresso e o mesmo,
 % mas cada uso -- a dedicatoria, qualquer \emph -- deixava no log "Font shape
@@ -5103,23 +5122,47 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor i
 % A saida e declarar essas formas apontando DIRETO para os arquivos que a
 % substituicao ja escolhia: mesma fonte, mesmo PDF, sem substituicao e sem
 % mensagem. O .fd e lido primeiro -- ele e carregado sob demanda, e se viesse
-% depois desfaria estas declaracoes.
+% depois desfaria estas declaracoes. O tulmss.fd e o tulmtt.fd substituem as
+% mesmas formas, e no TU elas apontam para os mesmos desenhos em OpenType.
 \begingroup
-  \fontencoding{T1}\fontfamily{lmss}\selectfont
+  \fontencoding{\encodingdefault}\fontfamily{lmss}\selectfont
   \fontfamily{lmtt}\selectfont
 \endgroup
-\DeclareFontShape{T1}{lmss}{m}{it}
-  {<-8.5> ec-lmsso8 <8.5-9.5> ec-lmsso9 <9.5-11> ec-lmsso10
-   <11-15.5> ec-lmsso12 <15.5-> ec-lmsso17}{}
-\DeclareFontShape{T1}{lmss}{bx}{it}{<-> ec-lmssbo10}{}
-\DeclareFontShape{T1}{lmss}{b}{n}{<-> ec-lmssbx10}{}
-\DeclareFontShape{T1}{lmss}{b}{sl}{<-> ec-lmssbo10}{}
-\DeclareFontShape{T1}{lmss}{b}{it}{<-> ec-lmssbo10}{}
-\DeclareFontShape{T1}{lmss}{sbc}{it}{<-> ec-lmssdo10}{}
-\DeclareFontShape{T1}{lmtt}{bx}{n}{<-> ec-lmtk10}{}
-\DeclareFontShape{T1}{lmtt}{bx}{sl}{<-> ec-lmtko10}{}
-\DeclareFontShape{T1}{lmtt}{bx}{it}{<-> ec-lmtko10}{}
-\DeclareFontShape{T1}{lmtt}{b}{it}{<-> ec-lmtko10}{}
+\ifPDFTeX
+  \DeclareFontShape{T1}{lmss}{m}{it}
+    {<-8.5> ec-lmsso8 <8.5-9.5> ec-lmsso9 <9.5-11> ec-lmsso10
+     <11-15.5> ec-lmsso12 <15.5-> ec-lmsso17}{}
+  \DeclareFontShape{T1}{lmss}{bx}{it}{<-> ec-lmssbo10}{}
+  \DeclareFontShape{T1}{lmss}{b}{n}{<-> ec-lmssbx10}{}
+  \DeclareFontShape{T1}{lmss}{b}{sl}{<-> ec-lmssbo10}{}
+  \DeclareFontShape{T1}{lmss}{b}{it}{<-> ec-lmssbo10}{}
+  \DeclareFontShape{T1}{lmss}{sbc}{it}{<-> ec-lmssdo10}{}
+  \DeclareFontShape{T1}{lmtt}{bx}{n}{<-> ec-lmtk10}{}
+  \DeclareFontShape{T1}{lmtt}{bx}{sl}{<-> ec-lmtko10}{}
+  \DeclareFontShape{T1}{lmtt}{bx}{it}{<-> ec-lmtko10}{}
+  \DeclareFontShape{T1}{lmtt}{b}{it}{<-> ec-lmtko10}{}
+\else
+  \DeclareFontShape{TU}{lmss}{m}{it}
+    {<-8.5> \UnicodeFontFile{lmsans8-oblique}{\UnicodeFontTeXLigatures}
+     <8.5-9.5> \UnicodeFontFile{lmsans9-oblique}{\UnicodeFontTeXLigatures}
+     <9.5-11> \UnicodeFontFile{lmsans10-oblique}{\UnicodeFontTeXLigatures}
+     <11-15.5> \UnicodeFontFile{lmsans12-oblique}{\UnicodeFontTeXLigatures}
+     <15.5-> \UnicodeFontFile{lmsans17-oblique}{\UnicodeFontTeXLigatures}}{}
+  \DeclareFontShape{TU}{lmss}{bx}{it}
+    {<-> \UnicodeFontFile{lmsans10-boldoblique}{\UnicodeFontTeXLigatures}}{}
+  \DeclareFontShape{TU}{lmss}{b}{n}
+    {<-> \UnicodeFontFile{lmsans10-bold}{\UnicodeFontTeXLigatures}}{}
+  \DeclareFontShape{TU}{lmss}{b}{sl}
+    {<-> \UnicodeFontFile{lmsans10-boldoblique}{\UnicodeFontTeXLigatures}}{}
+  \DeclareFontShape{TU}{lmss}{b}{it}
+    {<-> \UnicodeFontFile{lmsans10-boldoblique}{\UnicodeFontTeXLigatures}}{}
+  \DeclareFontShape{TU}{lmss}{sbc}{it}
+    {<-> \UnicodeFontFile{lmsansdemicond10-oblique}{\UnicodeFontTeXLigatures}}{}
+  \DeclareFontShape{TU}{lmtt}{bx}{n}{<-> \UnicodeFontFile{lmmonolt10-bold}{}}{}
+  \DeclareFontShape{TU}{lmtt}{bx}{sl}{<-> \UnicodeFontFile{lmmonolt10-boldoblique}{}}{}
+  \DeclareFontShape{TU}{lmtt}{bx}{it}{<-> \UnicodeFontFile{lmmonolt10-boldoblique}{}}{}
+  \DeclareFontShape{TU}{lmtt}{b}{it}{<-> \UnicodeFontFile{lmmonolt10-boldoblique}{}}{}
+\fi
 % Math support. amsmath is structure, not typeface -- environments (align,
 % gather, cases) and commands (\text, \DeclareMathOperator) that work on every
 % engine -- so the class loads it (it must precede hyperref, loaded at the end
@@ -6365,8 +6408,17 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \RequirePackage{xcolor}
 \RequirePackage{listings}
 \RequirePackage{fancyvrb}
-\DeclareFixedFont{\ttb}{T1}{txtt}{bx}{n}{10}
-\DeclareFixedFont{\ttm}{T1}{txtt}{m}{n}{10}
+% As duas fontes fixas dos estilos de linguagem. No pdfTeX, a txtt em T1. Nos
+% motores Unicode nao ha T1 (#152, no bloco das fontes) nem txtt em OpenType, e
+% o codigo sai na maquina de escrever do documento, a Latin Modern Mono: e a
+% unica que tem os caracteres que um comentario de codigo traz.
+\ifPDFTeX
+  \DeclareFixedFont{\ttb}{T1}{txtt}{bx}{n}{10}
+  \DeclareFixedFont{\ttm}{T1}{txtt}{m}{n}{10}
+\else
+  \DeclareFixedFont{\ttb}{TU}{lmtt}{b}{n}{10}
+  \DeclareFixedFont{\ttm}{TU}{lmtt}{m}{n}{10}
+\fi
 % breaklines vale para TODA listagem, e nao so para as dos estilos de
 % linguagem abaixo: um lstlisting sem estilo, com uma linha mais larga que a
 % mancha, estourava a margem. A linha quebrada continua embaixo, depois da

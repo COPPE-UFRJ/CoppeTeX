@@ -80,23 +80,48 @@
   \RequirePackage[utf8]{inputenc}
 \fi
 \RequirePackage{lmodern}
-\RequirePackage[T1]{fontenc}
+\ifPDFTeX
+  \RequirePackage[T1]{fontenc}
+\fi
 \begingroup
-  \fontencoding{T1}\fontfamily{lmss}\selectfont
+  \fontencoding{\encodingdefault}\fontfamily{lmss}\selectfont
   \fontfamily{lmtt}\selectfont
 \endgroup
-\DeclareFontShape{T1}{lmss}{m}{it}
-  {<-8.5> ec-lmsso8 <8.5-9.5> ec-lmsso9 <9.5-11> ec-lmsso10
-   <11-15.5> ec-lmsso12 <15.5-> ec-lmsso17}{}
-\DeclareFontShape{T1}{lmss}{bx}{it}{<-> ec-lmssbo10}{}
-\DeclareFontShape{T1}{lmss}{b}{n}{<-> ec-lmssbx10}{}
-\DeclareFontShape{T1}{lmss}{b}{sl}{<-> ec-lmssbo10}{}
-\DeclareFontShape{T1}{lmss}{b}{it}{<-> ec-lmssbo10}{}
-\DeclareFontShape{T1}{lmss}{sbc}{it}{<-> ec-lmssdo10}{}
-\DeclareFontShape{T1}{lmtt}{bx}{n}{<-> ec-lmtk10}{}
-\DeclareFontShape{T1}{lmtt}{bx}{sl}{<-> ec-lmtko10}{}
-\DeclareFontShape{T1}{lmtt}{bx}{it}{<-> ec-lmtko10}{}
-\DeclareFontShape{T1}{lmtt}{b}{it}{<-> ec-lmtko10}{}
+\ifPDFTeX
+  \DeclareFontShape{T1}{lmss}{m}{it}
+    {<-8.5> ec-lmsso8 <8.5-9.5> ec-lmsso9 <9.5-11> ec-lmsso10
+     <11-15.5> ec-lmsso12 <15.5-> ec-lmsso17}{}
+  \DeclareFontShape{T1}{lmss}{bx}{it}{<-> ec-lmssbo10}{}
+  \DeclareFontShape{T1}{lmss}{b}{n}{<-> ec-lmssbx10}{}
+  \DeclareFontShape{T1}{lmss}{b}{sl}{<-> ec-lmssbo10}{}
+  \DeclareFontShape{T1}{lmss}{b}{it}{<-> ec-lmssbo10}{}
+  \DeclareFontShape{T1}{lmss}{sbc}{it}{<-> ec-lmssdo10}{}
+  \DeclareFontShape{T1}{lmtt}{bx}{n}{<-> ec-lmtk10}{}
+  \DeclareFontShape{T1}{lmtt}{bx}{sl}{<-> ec-lmtko10}{}
+  \DeclareFontShape{T1}{lmtt}{bx}{it}{<-> ec-lmtko10}{}
+  \DeclareFontShape{T1}{lmtt}{b}{it}{<-> ec-lmtko10}{}
+\else
+  \DeclareFontShape{TU}{lmss}{m}{it}
+    {<-8.5> \UnicodeFontFile{lmsans8-oblique}{\UnicodeFontTeXLigatures}
+     <8.5-9.5> \UnicodeFontFile{lmsans9-oblique}{\UnicodeFontTeXLigatures}
+     <9.5-11> \UnicodeFontFile{lmsans10-oblique}{\UnicodeFontTeXLigatures}
+     <11-15.5> \UnicodeFontFile{lmsans12-oblique}{\UnicodeFontTeXLigatures}
+     <15.5-> \UnicodeFontFile{lmsans17-oblique}{\UnicodeFontTeXLigatures}}{}
+  \DeclareFontShape{TU}{lmss}{bx}{it}
+    {<-> \UnicodeFontFile{lmsans10-boldoblique}{\UnicodeFontTeXLigatures}}{}
+  \DeclareFontShape{TU}{lmss}{b}{n}
+    {<-> \UnicodeFontFile{lmsans10-bold}{\UnicodeFontTeXLigatures}}{}
+  \DeclareFontShape{TU}{lmss}{b}{sl}
+    {<-> \UnicodeFontFile{lmsans10-boldoblique}{\UnicodeFontTeXLigatures}}{}
+  \DeclareFontShape{TU}{lmss}{b}{it}
+    {<-> \UnicodeFontFile{lmsans10-boldoblique}{\UnicodeFontTeXLigatures}}{}
+  \DeclareFontShape{TU}{lmss}{sbc}{it}
+    {<-> \UnicodeFontFile{lmsansdemicond10-oblique}{\UnicodeFontTeXLigatures}}{}
+  \DeclareFontShape{TU}{lmtt}{bx}{n}{<-> \UnicodeFontFile{lmmonolt10-bold}{}}{}
+  \DeclareFontShape{TU}{lmtt}{bx}{sl}{<-> \UnicodeFontFile{lmmonolt10-boldoblique}{}}{}
+  \DeclareFontShape{TU}{lmtt}{bx}{it}{<-> \UnicodeFontFile{lmmonolt10-boldoblique}{}}{}
+  \DeclareFontShape{TU}{lmtt}{b}{it}{<-> \UnicodeFontFile{lmmonolt10-boldoblique}{}}{}
+\fi
 \RequirePackage{amsmath}
 \RequirePackage[a4paper,headheight=15pt,headsep=16.87pt,%
 top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
@@ -637,8 +662,13 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \RequirePackage{xcolor}
 \RequirePackage{listings}
 \RequirePackage{fancyvrb}
-\DeclareFixedFont{\ttb}{T1}{txtt}{bx}{n}{10}
-\DeclareFixedFont{\ttm}{T1}{txtt}{m}{n}{10}
+\ifPDFTeX
+  \DeclareFixedFont{\ttb}{T1}{txtt}{bx}{n}{10}
+  \DeclareFixedFont{\ttm}{T1}{txtt}{m}{n}{10}
+\else
+  \DeclareFixedFont{\ttb}{TU}{lmtt}{b}{n}{10}
+  \DeclareFixedFont{\ttm}{TU}{lmtt}{m}{n}{10}
+\fi
 \lstset{captionpos=t,extendedchars=true,basicstyle=\ttfamily,inputencoding=utf8,%
   breaklines=true,postbreak=\usebox\coppe@lstarrow,%
   literate=%

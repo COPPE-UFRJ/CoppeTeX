@@ -184,7 +184,7 @@ $env:COPPE_SRC = "C:\rascunho\src"; python tests/regressivo/r38-referencias-alin
 | `r67-ordem-das-listas` | #148 | Listas de ilustração depois da lista de tabelas nos modelos e na Norma COPPE §10 (3.1.2). Sem compilar. | |
 | `r68-conteudo-dos-exemplos` | #149 | Conteúdo dos exemplos contra o Manual: algoritmo sem fonte, acentos, palavras-chave, repetidas… Sem compilar. | |
 | `r69-mesmo-traco` | #150 | Traço diferente na legenda, no apêndice, no sumário e na Norma COPPE §12; cobra só que seja o mesmo. | |
-| `r70-lualatex-caracteres` | #152 | Achado ao ligar os verificadores à prova (#151): no LuaLaTeX, com `fontenc` T1, `º` saía `ž`, `§` saía `ğ`, e travessão, aspas curvas e reticências sumiam. Compila a mesma amostra nos dois motores. | |
+| `r70-lualatex-caracteres` | #152 | Achado ao ligar os verificadores à prova (#151): no LuaLaTeX, com `fontenc` T1, `º` saía `ž`, `§` saía `ğ`, e travessão, aspas curvas e reticências sumiam. Compila a mesma amostra nos dois motores. Corrigido: nos motores Unicode a classe fica em TU, com a Latin Modern em OpenType. | |
 
 A issue #130 (logotipos na folha de rosto) não tem teste: depende de decisão.
 

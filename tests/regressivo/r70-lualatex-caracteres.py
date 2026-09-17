@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
-"""Teste de regressao da CoppeTeX (LuaLaTeX). NAO roda na suite normal.
+"""Teste de regressao da CoppeTeX (LuaLaTeX).
 
 BUG: (LuaLaTeX) a classe carregava fontenc T1 tambem no LuaLaTeX, e todo caractere digitado fora do ASCII e das letras acentuadas do Latin-1 saia TROCADO ou SUMIA: "nº" saia "nž", "§" saia "ğ", "°" saia "ř", "«»" saia "ńż"; travessao, meia-risca, aspas curvas, reticencias e "œ" sumiam, com um "Missing character" no .log e nada no terminal (#152).
-ABERTO: #152
 
 No LuaLaTeX o texto de entrada e Unicode e vai direto para a fonte: o caractere
 U+00BA ocupa a posicao 186, e na codificacao T1 a posicao 186 e o "ž". O

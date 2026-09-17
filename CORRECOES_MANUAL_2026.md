@@ -456,15 +456,19 @@ prototipada; conferir com cuidado.
 - Continua aberta a discussão: estender `conferir-norma.py` com as medidas de
   r33–r43, ou confiar na suíte de regressão.
 
-### #152 — LuaLaTeX com `fontenc` T1 · `r70` · proposta
-- No ramo dos motores Unicode (`\ifPDFTeX ... \else`), não carregar `fontenc` T1:
-  fica a codificação TU do kernel, com a Latin Modern em OpenType
-  (`tulmr.fd`, `tulmss.fd`, `tulmtt.fd` já vêm no LaTeX base).
-- Refazer para TU as substituições de forma que a classe declara para `T1/lmss`;
-  conferir o `\begingroup\fontencoding{T1}...` de pré-carga; colofão (`r30`),
-  `comserifa`, `listings`/`\texttt`, `r14` (id no LuaLaTeX).
-- `r70` pelo nome; depois os gêmeos `_lua` da adversativa pelo
-  `conferir-referencias.py` (0 divergências) e pelo veraPDF.
+### #152 — LuaLaTeX com `fontenc` T1 · `r70` · FEITA
+- `fontenc` T1 só dentro de `\ifPDFTeX`; nos motores Unicode fica a TU do kernel,
+  com a Latin Modern em OpenType (os `tulm*.fd` vêm no LaTeX base).
+- As formas que a classe declara para calar substituição (`lmss` it/b/sbc,
+  `lmtt` bx/b-it) ganharam a versão TU, com `\UnicodeFontFile`; a pré-carga dos
+  `.fd` usa `\encodingdefault`.
+- `\ttb`/`\ttm` (estilos de linguagem das listagens) eram `T1/txtt` fixas: no
+  LuaLaTeX passaram a `TU/lmtt`, porque a txtt não existe em OpenType.
+- Provado: `r70`, `r14`, `r30` pelo nome; sonda com `\emph`, negrito itálico,
+  `\texttt` em negrito, semicondensado, logotipo e `\pythonstyle` nos dois
+  motores, sem mensagem de forma nem "Missing character";
+  `adv_dscexam_pt_lua`: 0 divergências no `conferir-referencias` (eram 5) e
+  PDF/A-2b pelo veraPDF.
 
 ### #124 — `pdfa` por padrão · `r44` · proposta (decisão na fase 0)
 - `\@coppepdfatrue` por padrão, `\DeclareOption{sempdfa}{\@coppepdfafalse}`, manter
