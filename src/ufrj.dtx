@@ -184,6 +184,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \changes{v5.0}{2026/09/15}{COPPE is the unit style ufrj-coppe, with its own source (ufrj-coppe.dtx and ufrj-coppe.ins), its own manual (ufrj-coppe.pdf) and every example document, which all load it. A work begun with the class coppe compiles as it is: coppe.cls is now a compatibility class that loads ufrj with the same options, loads ufrj-coppe and writes one warning, and the style keeps the old public names as aliases, the old colophon pieces answering renewcommand by the old name, the three internal names that auxiliary files written by the old class contain, the page style coppe and the bib field coppedegree.}
 % \changes{v5.0}{2026/09/15}{The colophon names the class and the project apart -- Foi utilizada a classe ufrj, do projeto CoppeTeX -- where it said a classe CoppeTeX, which is the name of the project and not of a class. The norm it cites is the one the unit declares with ufrjdeclarenorm, and the UFRJ/SiBI Manual when no unit declares one.}
 % \changes{v5.0}{2026/09/15}{The documentation follows the split: this manual (ufrj.pdf) describes the class and the interface a unit style uses; ufrj-coppe.pdf describes only what COPPE declares; manual.pdf, the norm, is written for UFRJ with COPPE as the example; and the migration guide from 4.x to 5.0 tells the author of a work begun with the class coppe what to change.}
+% \changes{v5.0}{2026/09/17}{The logos are printed on the capa only. The folha de rosto repeated the capa's logo line; Annex B, which is the model of the folha de rosto, and the two sheets of the SiBI model carry no image there. Annex A puts the two logos on the CAPA and marks both as optional.}
 % \changes{v5.0}{2026/09/17}{The folha de rosto and the folha de aprovacao are written entirely in Portuguese, whatever the language of the work. The research-line label, the coadvisor label and the two approval labels followed the main language while the natureza and the advisor label did not, so an English or Spanish work came out with half of each sheet in each language. The class manual and section 7 of the Norma COPPE already stated the rule: these sheets are institutional identity. The four now read the Portuguese key through ufrj@unitstr, which still honours a text the unit declared.}
 % \changes{v5.0}{2026/09/17}{The reference above each abstract is composed like the references in the list: aligned to the left margin only, the title in bold and the subtitle out of it, and an em dash before the vinculacao academica. 4.2 asks for one presentation for every reference in the work; this one was justified, set the title flat and used an en dash, so the same reference had two shapes in the same work.}
 % \changes{v5.0}{2026/09/17}{The area de concentracao leaves the natureza block of the folha de rosto and of the folha de aprovacao, and the new option areanafolhaderosto brings it back. The SiBI model that 3.1.2.1.2 links to carries it on the folha adicional, as a Coleta CAPES field, and Annexes B and D end the natureza block at the degree; only the prose of 3.1.2.1.1(e) and 3.1.2.1.3(c) lists it among the elements of the two sheets. The data is untouched: areaconcentracao still feeds the folha adicional, where it is mandatory.}
@@ -5944,13 +5945,13 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % que transborde.
   \pagestyle{empty}%
   \singlespacing
-  \begin{flushleft}
-  \vspace*{1.5mm}
-  \setlength\baselineskip{0pt}
-  \setlength\parskip{1mm}
-  \ufrj@logoline
-  \end{flushleft}
-  \vspace{1.05cm}
+% Sem logotipo (#130). O Anexo A poe os dois no alto da CAPA, e marca ambos como
+% opcionais; o Anexo B, que e o modelo da folha de rosto, e as duas folhas do
+% modelo do SiBI nao trazem imagem nenhuma aqui. Ate a v5.0 a classe repetia a
+% linha de logotipos da capa, seguindo a secao 1 da Norma COPPE, que se apoiava
+% no Anexo A -- que e sobre a capa. Fica o espaco de cima, para o nome do autor
+% nao encostar na margem.
+  \vspace*{1.5cm}
   \begin{center}
 	  \nohyphens{\@authname\ \@authsurn}\par
 	  \vspace*{3cm}

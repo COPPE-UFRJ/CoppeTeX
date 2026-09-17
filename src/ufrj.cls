@@ -1171,13 +1171,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \begin{titlepage}
   \pagestyle{empty}%
   \singlespacing
-  \begin{flushleft}
-  \vspace*{1.5mm}
-  \setlength\baselineskip{0pt}
-  \setlength\parskip{1mm}
-  \ufrj@logoline
-  \end{flushleft}
-  \vspace{1.05cm}
+  \vspace*{1.5cm}
   \begin{center}
   \nohyphens{\@authname\ \@authsurn}\par
   \vspace*{3cm}

@@ -68,8 +68,11 @@ direita.
 **A COPPE adota os dois**, e especializa o da direita: no lugar do logotipo do
 Programa vai o do **Instituto (COPPE)**, que é comum a todos os Programas.
 
-- Ambos figuram no alto da capa e da folha de rosto, na mesma linha, o da UFRJ
-  alinhado à margem esquerda e o da COPPE à margem direita;
+- Ambos figuram no alto da **capa**, na mesma linha, o da UFRJ alinhado à
+  margem esquerda e o da COPPE à margem direita. **Não figuram na folha de
+  rosto**: o Anexo A é o modelo da capa, e o Anexo B — o da folha de rosto —
+  não traz imagem nenhuma, como não traz o modelo da folha de rosto que o SiBI
+  distribui;
 - Ambos com **2 cm de altura**, preservada a proporção original;
 - Nenhum outro logotipo é admitido — nem de Programa, nem de laboratório, nem
   de agência de fomento. O vínculo com a agência é declarado na folha adicional

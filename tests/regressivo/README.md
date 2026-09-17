@@ -210,7 +210,7 @@ $env:COPPE_SRC = "C:\rascunho\src"; python tests/regressivo/rt38-referencias-ali
 | `rt70-lualatex-caracteres` | #152 | Achado ao ligar os verificadores à prova (#151): no LuaLaTeX, com `fontenc` T1, `º` saía `ž`, `§` saía `ğ`, e travessão, aspas curvas e reticências sumiam. Compila a mesma amostra nos dois motores. Corrigido: nos motores Unicode a classe fica em TU, com a Latin Modern em OpenType. | |
 | `rt89-prova-roda-as-conferencias` | A prova não rodava `conferir-referencias.py` nem `conferir-norma.py` (#151); a m-diss do `exemplo.bib` saiu errada na 4.1 com o verificador acusando a divergência, mas ninguém o chamava. Sem compilar: cobra que o painel ou o `build-check` chamem os dois. No primeiro dia ligados, os dois acharam o `nž` do LuaLaTeX (#152). |
 
-A issue #130 (logotipos na folha de rosto) não tem teste: depende de decisão.
+| `rt71-logotipos-so-na-capa` | #130 | A folha de rosto repetia a linha de logotipos da capa; o Anexo A põe os dois na **capa** e o Anexo B, modelo da folha de rosto, não traz imagem nenhuma. Mede **tinta** na faixa de cima de cada folha, porque os logotipos são vetoriais e o `pdfimages` não os vê. | |
 
 ### A classe da UFRJ e o estilo da unidade (`rtu`)
 

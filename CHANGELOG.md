@@ -49,6 +49,15 @@ run it, and the fix removes the mark.
 
 ### Changed
 
+- **The logos are printed on the capa only** (#130). The folha de rosto
+  repeated the capa's logo line. Annex A of the Manual puts "Logo da UFRJ" and
+  "Logo do Programa" at the top of the **capa**, and marks both as optional;
+  Annex B, which is the model of the folha de rosto, begins at the author's
+  name, and so do the two sheets of the SiBI model. Section 1 of the Norma
+  COPPE put both logos on both sheets and cited Annex A for it, which is about
+  the capa; it now says the capa. The new test `rt71` measures ink in the top
+  band of each sheet, because the logos are vector art and `pdfimages` does not
+  see them.
 - **The folha de rosto and the folha de aprovação are written entirely in
   Portuguese** (#128). The research-line label, the coadvisor label and the two
   approval labels followed the main language, while the natureza and the
