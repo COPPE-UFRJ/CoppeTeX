@@ -167,6 +167,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \changes{v4.1}{2026/09/12}{Two macrocode guards in the .dtx were written with three spaces instead of four. doc.sty only closes a code block on a percent sign followed by exactly four spaces, so sixty lines of documentation were printed as verbatim code in coppe.pdf, and had been for several versions. A dead @wrlab block commented out with four percent signs had the same effect, for the opposite reason: doc.sty ignores every percent sign in the documentation part, so that line opened a real code block. Both are fixed, and tools/conferir-manual.py now checks every guard.}
 % \changes{v4.1}{2026/09/12}{The options section opens with a table of what is default, and every entry states its own default. Three were wrong or missing: resumosemreferencia was described as on by default when it is the reference that is on and the option that is off, and rascunhoficha and the morewrites loading stated no default at all.}
 % \changes{v4.1}{2026/09/12}{The files section described the delivery as it was before the folders: the logos in the root, no logos/, no manuais/, no language folders, and an instruction not to copy coppe.dtx and coppe.ins, which the delivery now ships on purpose. The developer sections still said twelve adversarial documents (there are six), still placed them outside tests/, and did not know tests/regressivo/ or the panel existed.}
+% \changes{v4.1}{2026/09/16}{The m-diss entry of exemplo.bib printed "1997. 203 f. Memoria Social e Documento Centro de Ciencias Humanas", without "Dissertacao (Mestrado em ...)": when the base moved to English field names, the Portuguese field curso became type instead of course, and the mscdiss type was lost. The checker that compares every reference with the Manual reported it, but the proof did not run the checker. The 34 Manual references now have different keys in the two bases (m- in exemplo.bib, pt- in the adversarial referencias-manual.bib): with the same keys, biber found every citation in the first file and never opened the second, so the Portuguese field names had gone unchecked.}
 % \changes{v4.0}{2026/05/30}{Catalog-label writers (coppe@mainBegin, coppe@bibBegin, coppe@bibEnd, coppe@hasLof) made language-agnostic: detokenize wrap on label names protects ':' and '.' from babel shorthand activation, and the raw etex primitives romannumeral/number replace LaTeX's roman/arabic to bypass spanish-babel's small-caps @roman redefinition that would otherwise crash pdftex with "Unbalanced write command" on every es-main document.}
 %
 % \DoNotIndex{\!,\',\.,\>,\^,\`,\',\=,\\}
@@ -2228,15 +2229,19 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \end{center}
 %
 % \textbf{Uma advertência.} Não misture as duas formas na MESMA entrada. Elas
-% funcionam juntas no mesmo arquivo --- o |exemplo.bib| que acompanha a classe faz
-% isso de propósito, metade em cada forma ---, mas dentro de uma entrada
-% escolha uma e fique nela, ou a leitura fica confusa para quem vier depois.
+% funcionam juntas no mesmo arquivo, mas dentro de uma entrada escolha uma e
+% fique nela, ou a leitura fica confusa para quem vier depois.
 %
-% Cada um desses tipos foi conferido, uma vez cada, contra o exemplo impresso no
-% próprio Manual. A base de conferência está em
-% |adversativa/referencias-manual.bib|, e a mesma base acompanha a classe como
-% segunda parte do |exemplo.bib|, citada por inteiro no |max-exemplo.tex|: cada entrada lá traz, em
-% comentário, a referência \textbf{como o Manual a imprime}.
+% Cada um desses tipos é conferido contra o exemplo impresso no próprio Manual,
+% \textbf{nas duas formas}. A base com os nomes em inglês acompanha a classe como
+% segunda parte do |exemplo.bib|, citada por inteiro no |max-exemplo.tex|, com as
+% chaves |m-|\meta{item}; a mesma base com os sinônimos em português está em
+% |tests/adversativa/referencias-manual.bib|, com as chaves |pt-|\meta{item}. Cada
+% entrada das duas traz, em comentário, a referência \textbf{como o Manual a
+% imprime}, e os documentos adversativos em português citam as duas. As chaves
+% são diferentes de propósito: com a mesma chave nos dois arquivos, o
+% \texttt{biber} achava tudo no primeiro e nem abria o segundo, e a forma em
+% português ficou sem conferência sem que nada avisasse.
 %
 % \subsection{Campos que as categorias da ABNT exigem}
 %
@@ -10200,10 +10205,9 @@ postamble
 % \iffalse
 %<*examplebib>
 @Comment{ exemplo.bib -- a base dos exemplos (min-exemplo.tex, max-exemplo.tex e
-  os exemplos por idioma). Primeira parte: entradas de demonstracao, muitas com
-  os sinonimos em portugues dos campos e tipos (autor, titulo, editora, local,
-  ano, organizador, ...). Segunda parte, mais abaixo: uma entrada de cada
-  categoria da secao 4.2 do Manual. }
+  os exemplos por idioma). Primeira parte: entradas de demonstracao. Segunda
+  parte, mais abaixo: uma entrada de cada categoria da secao 4.2 do Manual.
+  Todas usam os nomes de tipo e campo em ingles, os do biblatex. }
 
 @BOOK{book-example,
    author = "R. Abraham and J. E. Marsden and T. Ratiu",
@@ -10499,11 +10503,14 @@ postamble
   proprio Manual. O comentario %% acima de cada entrada e a referencia COMO O
   MANUAL A IMPRIME.
 
-  Metade das entradas usa os nomes de tipo e campo em INGLES e metade os
-  sinonimos em PORTUGUES, para mostrar as duas formas. PREFIRA A INGLESA: e a
-  do biblatex, e a que os gerenciadores de referencia exportam, e a que outra
-  pessoa reconhece. Os sinonimos em portugues existem para quem chega de uma
-  base antiga. }
+  As entradas usam os nomes de tipo e campo em INGLES. A classe aceita tambem
+  os sinonimos em PORTUGUES (@livro, autor, titulo, editora, local, ano,
+  curso...; a tabela esta no manual da classe), mas PREFIRA A INGLESA: e a do
+  biblatex, e a que os gerenciadores de referencia exportam, e a que outra
+  pessoa reconhece. Os sinonimos existem para quem chega de uma base antiga.
+
+  Dissertacao e tese levam o grau em type (mscdiss, dscthesis) e o curso em
+  course: e dai que sai "Dissertacao (Mestrado em <course>)". }
 
 @book{m-4211,
 %% CASTRO, C. M. A prática da pesquisa. São Paulo: Mc Graw-Hill do Brasil, 1978. 156 p.
@@ -10918,7 +10925,8 @@ postamble
 %% Universidade do Rio de Janeiro, Rio de Janeiro, 1997.
   author      = "Leite, Sonia",
   title       = "Memória da comunidade da Serrinha",
-  type        = "Memória Social e Documento",
+  type        = "mscdiss",
+  course      = "Memória Social e Documento",
   institution = "Centro de Ciências Humanas, Universidade do Rio de Janeiro",
   location    = "Rio de Janeiro",
   year        = 1997,

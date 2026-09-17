@@ -1,14 +1,14 @@
-%% Teste de conformidade da CoppeTeX. NAO roda na suite normal.
+%% Teste de conformidade da CoppeTeX.
 %% Rode com: python tests/regressivo/run-regressivo.py
-%% BUG: (regressao na base da entrega, 4.2.1.1) a entrada m-diss do exemplo.bib
-%% saia "1997. 203 f. Memoria Social e Documento Centro de Ciencias Humanas...",
-%% sem "Dissertacao (Mestrado em ...)" e sem o travessao. Na conversao da base
-%% para os nomes de campo em ingles (commit e5a561b), o curso foi parar no campo
-%% type e o tipo mscdiss sumiu. O tools/conferir-referencias.py acusa a
-%% divergencia, mas a prova nao roda esse verificador, e a 4.1 saiu assim. (#147)
+%% BUG: (base da entrega, 4.2.1.1) a entrada m-diss do exemplo.bib saia
+%% "1997. 203 f. Memoria Social e Documento Centro de Ciencias Humanas...", sem
+%% "Dissertacao (Mestrado em ...)" e sem o travessao. Quando a base ganhou a
+%% forma com os nomes de campo em ingles (b14a5d6), o curso -- que na forma em
+%% portugues e o campo curso -- foi para o campo type, e o tipo mscdiss nao veio.
+%% O tools/conferir-referencias.py acusava a divergencia, mas a prova nao rodava
+%% esse verificador, e a 4.1 saiu assim. (#147)
 %%
 %% O titulo do documento de teste nao repete nada da referencia cobrada.
-%% ABERTO: #147
 %% BIBER: sim
 %% PASSADAS: 2
 %% ESPERA-TEXTO: LEITE, Sonia. Memória da comunidade da Serrinha. 1997. 203 f. Dissertação (Mestrado em Memória Social e Documento) - Centro de Ciências Humanas, Universidade do Rio de Janeiro, Rio de Janeiro, 1997.

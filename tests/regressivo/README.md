@@ -180,7 +180,7 @@ $env:COPPE_SRC = "C:\rascunho\src"; python tests/regressivo/r38-referencias-alin
 | `r63-entidade-hierarquica` | #144 | Chamada de entidade com órgão subordinado repete a hierarquia em caixa alta (4.1.1.2). | |
 | `r64-intervalo-de-paginas-com-hifen` | #145 | Intervalo de páginas com meia-risca (4.2.3.4). | ✓ |
 | `r65-mes-no-idioma-da-publicacao` | #146 | Mês no idioma do trabalho, e não no da publicação (4.3.5.5.1). | |
-| `r66-dissertacao-do-exemplo` (`.tex`) | #147 | A m-diss do `exemplo.bib` sem "Dissertação (Mestrado em …)" desde e5a561b. | |
+| `r66-dissertacao-do-exemplo` (`.tex`) | #147 | A m-diss do `exemplo.bib` sem "Dissertação (Mestrado em …)" desde b14a5d6. Corrigida; a correção separou também as chaves das duas bases do gabarito (`m-` e `pt-`), porque com chaves iguais a forma em português nunca era composta. | |
 | `r67-ordem-das-listas` | #148 | Listas de ilustração depois da lista de tabelas nos modelos e na Norma COPPE §10 (3.1.2). Sem compilar. | |
 | `r68-conteudo-dos-exemplos` | #149 | Conteúdo dos exemplos contra o Manual: algoritmo sem fonte, acentos, palavras-chave, repetidas… Sem compilar. | |
 | `r69-mesmo-traco` | #150 | Traço diferente na legenda, no apêndice, no sumário e na Norma COPPE §12; cobra só que seja o mesmo. | |

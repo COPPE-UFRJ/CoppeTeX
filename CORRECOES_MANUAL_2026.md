@@ -134,7 +134,7 @@ escopo `prova` (l. 250 e 551) e `conferir-manual` (l. 333); `tools/geradocvazio.
 campo `pdfa` (l. 165), `LISTAS` (l. 238), palavras-chave (l. 353);
 `NORMA_COPPE_2026.md` §2 (l. 81), §10 (l. 215), §12 (l. 233), §14 (l. 261), e a
 mesma coisa em `src/NORMA_COPPE_2026.tex`; `tests/adversativa/referencias-manual.bib`
-m-4231 (l. 74) e m-diss (l. 415).
+pt-4231 e pt-diss (as chaves eram `m-` até a #147).
 
 ---
 
@@ -348,8 +348,12 @@ prototipada; conferir com cuidado.
 
 ### #142 — periódico corrente · `r61` · validada
 - `\renewcommand*{\bibdaterangesep}{\iffieldequalstr{endyear}{}{\mbox{-}\space}{/}}`
-- Tirar os `%%!` de m-4231 em `tests/adversativa/referencias-manual.bib` e no
-  módulo `tiposbib` (a mesma nota está no `exemplo.bib`).
+- Tirar os `%%!` de pt-4231 em `tests/adversativa/referencias-manual.bib` e de
+  m-4231 no módulo `tiposbib` (a mesma nota está nos dois).
+- Conferir a CHAMADA com data aberta e letra de desempate: desde que os
+  adversativos em português citam `m-4231` e `pt-4231` juntos, o autor-data
+  (`adv_msc_pt`) compõe "(São Paulo Medical Journal 1941a/a; ... 1941b/b)". A
+  letra vai no ano inicial, e não também depois da barra.
 
 ### #145 — hífen no intervalo · `r64` · validada
 - `\renewcommand*{\bibrangedash}{-}` no `\AtBeginBibliography`; nas chamadas,
@@ -409,11 +413,20 @@ prototipada; conferir com cuidado.
     ou a documentação ensina `shortauthor = {Brasil}`. Decidir na issue antes de
     implementar; o `r63` cobra o resultado, não o caminho.
 
-### #147 — m-diss · `r66` · proposta (trivial)
+### #147 — m-diss · `r66` · FEITA
 - Módulo `tiposbib`: `type = {mscdiss}`, `course = {Memória Social e Documento}`.
-- Resolver a colisão de chaves entre `exemplo.bib` e `referencias-manual.bib`
-  (os adversativos carregam os dois; o biber fica com a primeira).
-- Rodar `conferir-referencias.py` nos adversativos com `numbers`: 0 divergências.
+  O defeito vinha de `b14a5d6`, quando a base ganhou a forma em inglês.
+- A colisão de chaves era pior do que parecia: o biber achava todas as citações
+  no `exemplo.bib` e **nem abria** o `referencias-manual.bib` (o `.blg` não o
+  menciona), e as 34 entradas com os sinônimos em português nunca eram compostas.
+  Agora são `m-<item>` no `exemplo.bib` e `pt-<item>` no `referencias-manual.bib`;
+  o `mk-adversativa.py` cita as duas.
+- `conferir-referencias.py` lê o gabarito das duas bases (o bloco `%%` colado à
+  chave) e liga cada `[n]` à chave pelo `.bbl`, em vez de casar pelo começo do
+  texto. `adv_dscexam_pt`: 68 gabaritos, 0 divergências, 6 aceitas (as mesmas
+  três em cada forma).
+- Os comentários do `exemplo.bib` diziam "metade das entradas em português" —
+  não há nenhuma desde a conversão —, e o manual repetia isso. Corrigidos.
 
 ### #149 — conteúdo dos exemplos · `r68` · proposta
 - Checklist na issue. Palavras-chave em minúscula no max-exemplo, min-exemplo,

@@ -89,6 +89,15 @@ referências**, com as 34 categorias da seção 4.2 do Manual, porque os dados s
 os exemplos do próprio Manual e são em português — e os quatro cobrem os dois
 sistemas de chamada, autor-data e numérico, sobre a mesma base.
 
+Cada categoria entra **duas vezes**: com os nomes de campo em inglês, do
+`exemplo.bib` que acompanha a classe (chave `m-<item>`), e com os sinônimos em
+português, de `referencias-manual.bib` (chave `pt-<item>`). As chaves já foram
+iguais nos dois arquivos, e então o `biber` achava todas as citações no
+`exemplo.bib` e nem abria o outro: a forma em português ficou sem prova sem que
+nada avisasse. O `tools/conferir-referencias.py` compara as duas com o gabarito,
+ligando cada `[n]` à chave pelo `.bbl`. No autor-data, as duas entradas iguais
+ganham letra de desempate ("Castro, 1978a,b") — o que também é prova.
+
 ## `_writes_probe.tex`
 
 Não é um dos seis: é uma sonda. Compila com `semmorewrites` só para registrar,

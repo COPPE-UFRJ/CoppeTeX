@@ -27,6 +27,26 @@ run it, and the fix removes the mark.
   one `pdftotext` call instead of one per page, which cuts 174 s to about 20 s.
   On their first run they found the m-diss divergence (#147) and a LuaLaTeX
   defect (#152).
+- **The Portuguese field names are checked again** (#147). The 34 Manual
+  references exist in two databases: `exemplo.bib`, with English field names,
+  and the adversarial `referencias-manual.bib`, with the Portuguese synonyms
+  (`@livro`, `autor`, `curso`…). They shared their keys. Biber found every
+  citation in the first file and never opened the second, so the Portuguese
+  form was never composed. The keys are now `m-<item>` and `pt-<item>`, and
+  the Portuguese adversarial documents cite both. `conferir-referencias.py`
+  reads the expected text from both databases and ties each `[n]` to its key
+  through the `.bbl`, instead of guessing from the start of the text. The
+  result: 68 checks, no divergence, and the same three accepted ones in each
+  form.
+
+### Fixed
+
+- **`exemplo.bib`: the master's dissertation example** (`m-diss`) printed
+  "1997. 203 f. Memória Social e Documento Centro de Ciências Humanas…",
+  without "Dissertação (Mestrado em …)" or the dash (4.2.1.1). The course was
+  in `type`, and the `mscdiss` type was missing (#147). The comments in
+  `exemplo.bib` and the class manual also said half the entries used the
+  Portuguese synonyms, but none has since the database moved to English names.
 
 ## [4.1] — 2026-09-14 — Revision of the 4.1 release
 

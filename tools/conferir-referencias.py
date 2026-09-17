@@ -2,11 +2,13 @@
 # -*- coding: utf-8 -*-
 """Confere a lista de referencias contra os exemplos do Manual UFRJ/SiBI 2026.
 
-O gabarito nao e inventado: cada entrada de
-`tests/adversativa/referencias-manual.bib'
-traz, num comentario `%%' logo abaixo da chave, a referencia EXATAMENTE como a
-secao 4.2 do Manual a imprime. Este script compoe o que a classe produziu, o
-compara com esse gabarito e diz onde diverge.
+O gabarito nao e inventado: as 34 categorias da secao 4.2 estao em duas bases,
+`src/exemplo.bib' (nomes de campo em ingles, chaves m-<item>) e
+`tests/adversativa/referencias-manual.bib' (sinonimos em portugues, chaves
+pt-<item>), e cada entrada traz, num comentario `%%' logo abaixo da chave, a
+referencia EXATAMENTE como o Manual a imprime. Este script le o que a classe
+compos, liga cada [n] a sua chave pelo .bbl ao lado do PDF, compara com o
+gabarito daquela chave e diz onde diverge.
 
 A comparacao ignora o que nao e da norma: quebras de linha e de hifenizacao do
 pdftotext, os espacos que o biblatex mete dentro de URLs longas, e a diferenca
@@ -17,8 +19,9 @@ entre hifen, meia-risca e travessao. O resto conta.
     CONFERIR=-v python3 tools/conferir-referencias.py tests/adversativa/adv_dscexam_pt.pdf
 
 Precisa de python3 e poppler (pdftotext). O documento tem de ter sido
-compilado com a opcao de classe `numbers': e a marca [n] que separa uma
-referencia da seguinte no texto extraido.
+compilado com a opcao de classe `numbers' -- e a marca [n] que separa uma
+referencia da seguinte no texto extraido --, e o .bbl daquela compilacao tem de
+estar ao lado do PDF.
 
 Sem argumento, confere os documentos adversativos ja compilados que carregam o
 gabarito com a opcao `numbers', nos dois motores. E assim que o `--conferir' do
@@ -36,9 +39,12 @@ if hasattr(sys.stdout, "reconfigure"):
     except (ValueError, OSError):
         pass
 
-ADVERSATIVA = os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                           "..", "tests", "adversativa")
+RAIZ = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
+ADVERSATIVA = os.path.join(RAIZ, "tests", "adversativa")
 BIB = os.path.join(ADVERSATIVA, "referencias-manual.bib")
+# As duas bases com gabarito: a que acompanha a classe, com os nomes de campo em
+# ingles (chaves m-<item>), e a da prova, com os sinonimos em portugues (pt-<item>).
+BASES = [os.path.join(RAIZ, "src", "exemplo.bib"), BIB]
 
 
 def alvos_padrao():
@@ -58,28 +64,69 @@ def alvos_padrao():
 def gabaritos(caminho):
     """{chave: (referencia do Manual, motivo aceito ou None)}.
 
-    O gabarito vem das linhas `%%'. Uma linha `%%!' registra uma divergencia
-    ACEITA, com o motivo -- o Manual tem erratas, e ha coisas que ele imprime
-    de um jeito que a norma nao exige; onde o certo e divergir, isso fica
-    escrito ao lado da entrada, e nao escondido no numero final.
+    O gabarito vem das linhas `%%' LOGO ABAIXO da linha da chave; o bloco acaba
+    na primeira linha que nao comeca por `%%'. Uma linha `%%!' registra uma
+    divergencia ACEITA, com o motivo -- o Manual tem erratas, e ha coisas que
+    ele imprime de um jeito que a norma nao exige; onde o certo e divergir, isso
+    fica escrito ao lado da entrada, e nao escondido no numero final.
+
+    So o bloco colado a chave, porque o exemplo.bib tambem e lido, e nele ha
+    entradas sem gabarito e comentarios `%%' que nao sao gabarito de ninguem.
     """
     texto = open(caminho, encoding="utf-8").read()
     saida, chave, buf, mot = {}, None, [], []
     def fecha():
-        if chave and buf:
+        if chave is not None and buf:
             saida[chave] = (" ".join(buf), " ".join(mot) if mot else None)
     for linha in texto.split("\n"):
-        m = re.match(r"^@\w+\{([^,]+),", linha)
+        linha = linha.rstrip("\r")
+        m = re.match(r"^@\w+\{\s*([^,\s]+)\s*,", linha)
         if m:
             fecha()
-            chave, buf, mot = m.group(1).strip(), [], []
+            chave, buf, mot = m.group(1), [], []
             continue
         if chave is not None and linha.startswith("%%!"):
             mot.append(linha[3:].strip())
-        elif chave is not None and linha.startswith("%%"):
+            continue
+        if chave is not None and linha.startswith("%%"):
             buf.append(linha[2:].strip())
+            continue
+        fecha()
+        chave, buf, mot = None, [], []
     fecha()
     return saida
+
+
+def bases_do_documento(pdf):
+    """As bases com gabarito que o documento carrega, pelo \\addbibresource do
+    .tex ao lado do PDF. Sem o .tex, as duas."""
+    base = os.path.splitext(pdf)[0]
+    if base.endswith("_lua"):
+        base = base[:-4]                     # o gemeo LuaLaTeX usa o mesmo .tex
+    try:
+        fonte = open(base + ".tex", encoding="utf-8", errors="replace").read()
+    except OSError:
+        return list(BASES)
+    recursos = [os.path.basename(r) for r in re.findall(r"\\addbibresource\{([^}]+)\}", fonte)]
+    return [b for b in BASES if os.path.basename(b) in recursos]
+
+
+def chaves_do_bbl(pdf):
+    """As chaves na ordem da lista de referencias, lidas do .bbl ao lado do PDF.
+
+    No sistema numerico a marca [n] e a posicao da entrada na lista que o biber
+    ordenou, e o .bbl traz essa lista. E isso que liga cada referencia composta
+    a sua entrada. O casamento antigo, pelo comeco do texto, ja tinha emparelhado
+    gabarito com a entrada errada, e com a mesma referencia em duas bases -- uma
+    com os campos em ingles, outra em portugues -- nem teria como acertar.
+    """
+    try:
+        texto = open(os.path.splitext(pdf)[0] + ".bbl", encoding="utf-8",
+                     errors="replace").read()
+    except OSError:
+        return None
+    m = re.search(r"\\datalist\[entry\]\{[^}]*\}(.*?)\\enddatalist", texto, re.S)
+    return re.findall(r"\\entry\{([^}]+)\}", m.group(1)) if m else None
 
 
 def normaliza(s):
@@ -135,39 +182,6 @@ def referencias_do_pdf(pdf):
     return saida
 
 
-def casa(gab, compostas):
-    """Liga cada gabarito a referencia composta, pelo comeco do titulo."""
-    usados, pares = set(), []
-    for chave, (esperado, motivo) in gab.items():
-        # a primeira sequencia de 12+ letras do gabarito que nao seja o autor
-        alvo = so_letras(esperado)[:40]
-        achou = None
-        for num, texto in compostas:
-            if num in usados: continue
-            t = so_letras(texto)[:40].lower()
-            # o casamento e pelo INICIO, e so pelo inicio: um "esta contido em"
-            # ja emparelhou gabarito com a entrada errada.
-            n = min(len(t), len(alvo), 24)
-            if t[:n] == alvo.lower()[:n]:
-                achou = (num, texto); break
-        if achou is None:
-            # Segunda tentativa, pelo titulo: quando o Manual abrevia a autoria
-            # com "et al." e a classe lista todos, o inicio nunca bate, mas a
-            # entrada e a mesma. Casa-se pela palavra mais longa do gabarito.
-            palavras = sorted(re.findall(r"\w{9,}", esperado), key=len, reverse=True)
-            for pal in palavras[:3]:
-                for num, texto in compostas:
-                    if num in usados: continue
-                    if pal.lower() in so_letras(texto).lower():
-                        achou = (num, texto); break
-                if achou: break
-        if achou:
-            usados.add(achou[0]); pares.append((chave, esperado, achou[1], motivo))
-        else:
-            pares.append((chave, esperado, None, motivo))
-    return pares
-
-
 def diferenca(esperado, obtido):
     """O primeiro ponto em que as duas divergem, com um trecho de cada lado."""
     a, b = so_letras(esperado), so_letras(obtido)
@@ -187,26 +201,47 @@ if __name__ == "__main__":
             print("=== pulado: nenhum documento adversativo com o gabarito foi "
                   "compilado (coppetex.bat --adversativo)")
             sys.exit(0)
-    gab = gabaritos(BIB)
     verboso = "-v" in os.environ.get("CONFERIR", "")
     total_dif = 0
     for pdf in alvos:
+        nome = os.path.basename(pdf)
+        gab = {}
+        for b in bases_do_documento(pdf):
+            gab.update(gabaritos(b))
         compostas = referencias_do_pdf(pdf)
-        if len(compostas) < len(gab):
+        if not gab:
+            print("\n=== %s -- pulado (o documento nao carrega base com gabarito)" % nome)
+            continue
+        if not compostas:
             # Sem a opcao de classe `numbers' nao ha marca [n], e no estilo
             # autor-data nao ha fronteira confiavel entre uma entrada e a
             # seguinte no texto extraido. Nao e perda: os drivers do .bbx sao
             # os mesmos nos dois sistemas de chamada -- o que muda e a chamada
             # no texto, que e do .cbx --, entao conferir os numericos confere
             # a composicao das referencias.
-            print("\n=== %s -- pulado (compile com a opcao `numbers')"
-                  % os.path.basename(pdf))
+            print("\n=== %s -- pulado (compile com a opcao `numbers')" % nome)
             continue
-        pares = casa(gab, compostas)
+        chaves = chaves_do_bbl(pdf)
+        # Sem o .bbl, ou com um .bbl de outra compilacao, nao ha como saber qual
+        # entrada e cada [n]. Isso conta como divergencia: conferencia que nao
+        # pode ser feita nao pode sair como aprovada.
+        if chaves is None:
+            print("\n=== %s -- sem o .bbl ao lado do PDF: nao ha como ligar [n] a chave"
+                  % nome)
+            total_dif += 1
+            continue
+        if len(chaves) != len(compostas):
+            print("\n=== %s -- o .bbl lista %d entradas e o PDF compoe %d referencias: "
+                  "os dois sao de compilacoes diferentes?" % (nome, len(chaves), len(compostas)))
+            total_dif += 1
+            continue
+        por_chave = dict((chaves[num - 1], texto) for num, texto in compostas
+                         if 0 < num <= len(chaves))
         dif, aceitas = 0, 0
         print("\n=== %s -- %d referencias no gabarito, %d compostas"
-              % (os.path.basename(pdf), len(gab), len(compostas)))
-        for chave, esperado, obtido, motivo in pares:
+              % (nome, len(gab), len(compostas)))
+        for chave, (esperado, motivo) in gab.items():
+            obtido = por_chave.get(chave)
             if obtido is None:
                 print("   AUSENTE  %s" % chave); dif += 1; continue
             d = diferenca(esperado, obtido)
