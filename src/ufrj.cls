@@ -299,7 +299,10 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
 \RequirePackage{enumitem}
 \newlist{alineas}{enumerate}{2}
 \setlist[alineas,1]{label=\alph*),leftmargin=1.8em,itemsep=0pt}
-\setlist[alineas,2]{label=--,leftmargin=1.8em,itemsep=0pt}
+\newlength\ufrj@hifen
+\settowidth\ufrj@hifen{-}
+\setlist[alineas,2]{label=-,labelindent=0pt,labelwidth=\ufrj@hifen,%
+  labelsep=0.333em,leftmargin=!,align=left,itemsep=0pt}
 \newcommand\ufrj@checkwrites[1]{%
   \ifdefined\directlua\else
     \if@ufrjmorewrites\else

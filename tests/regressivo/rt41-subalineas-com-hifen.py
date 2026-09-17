@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
-"""Teste de conformidade da CoppeTeX. NAO roda na suite normal.
+"""Teste de conformidade da CoppeTeX.
 
 BUG: (desconformidade, 2.6) no ambiente alineas, a subalinea saia marcada com MEIA-RISCA, e o marcador ficava a direita da primeira letra do texto da alinea, e nao embaixo dela (#121).
-ABERTO: #121
 
 A 2.6 do Manual UFRJ/SiBI pede a subalinea caracterizada apenas pelo HIFEN,
 colocado sob a primeira letra do texto da alinea correspondente e separado do

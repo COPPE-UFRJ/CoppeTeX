@@ -145,6 +145,12 @@ run it, and the fix removes the mark.
 
 ### Fixed
 
+- **A subalinea is marked with a hyphen, under the first letter of its alinea**
+  (#121). 2.6 asks for three things: the hyphen and nothing else; the hyphen
+  under the first letter of the text of the corresponding alinea, one space
+  from the text; and the following lines of the subalinea under its own first
+  letter. The class used an en dash and a fixed 1.8 em indent, which falls
+  under no letter.
 - **The line numbers of a listing stay inside the margin** (#120). The five
   language styles (`python`, `java`, `xml`, `html`, `prolog`) number the lines
   on the left; without `xleftmargin` the `listings` package indents the code
