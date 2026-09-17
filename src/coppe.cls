@@ -157,18 +157,18 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
       \typeout{\@chapapp\space\thechapter.}%
       \if@coppeappendix
         \if@coppeannex
-          \addcontentsline{toc}{chapter}{\protect\coppe@tocanx{\thechapter}#1}%
+          \addcontentsline{toc}{chapter}{\protect\numberline{}\protect\coppe@tocanx{\thechapter}#1}%
         \else
-          \addcontentsline{toc}{chapter}{\protect\coppe@tocapp{\thechapter}#1}%
+          \addcontentsline{toc}{chapter}{\protect\numberline{}\protect\coppe@tocapp{\thechapter}#1}%
         \fi
       \else
         \addcontentsline{toc}{chapter}{\protect\numberline{\thechapter}#1}%
       \fi
     \else
-      \addcontentsline{toc}{chapter}{#1}%
+      \addcontentsline{toc}{chapter}{\protect\numberline{}#1}%
     \fi
   \else
-    \addcontentsline{toc}{chapter}{#1}%
+    \addcontentsline{toc}{chapter}{\protect\numberline{}#1}%
   \fi
   \chaptermark{#1}%
   \addtocontents{lof}{\protect\addvspace{10\p@}}%
@@ -323,7 +323,7 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
 \AtBeginDocument{\coppe@wrapstarttoc}
 \RequirePackage{fancyhdr}
 \newcommand\coppe@listtoc[1]{%
-  \if@coppelistastoc\addcontentsline{toc}{chapter}{#1}\fi}
+  \if@coppelistastoc\addcontentsline{toc}{chapter}{\protect\numberline{}#1}\fi}
 \newif\if@coppeglosspre \@coppeglossprefalse
 \newcommand\coppe@folio{{\footnotesize\thepage}}
 \newcommand\coppe@foliohead{%
@@ -1989,7 +1989,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \if@coppeglosspre
     \coppe@listtoc{\glossaryname}%
   \else
-    \addcontentsline{toc}{chapter}{\glossaryname}%
+    \addcontentsline{toc}{chapter}{\protect\numberline{}\glossaryname}%
   \fi
   \list{}
   {\setlength{\listparindent}{0in}%
@@ -2011,7 +2011,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   {\MakeUppercase\indexname}%
   \thispagestyle{plain}\parindent\z@
   \ifdefined\phantomsection\phantomsection\fi
-  \addcontentsline{toc}{chapter}{\indexname}
+  \addcontentsline{toc}{chapter}{\protect\numberline{}\indexname}
   \parskip\z@ \@plus .3\p@\relax
   \columnseprule \z@
   \columnsep 35\p@
@@ -2188,7 +2188,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \fi
 \defbibheading{bibliography}{%
   \chapter*{\coppestring{references}}%
-  \addcontentsline{toc}{chapter}{\coppestring{references}}}
+  \addcontentsline{toc}{chapter}{\protect\numberline{}\coppestring{references}}}
 \AtBeginBibliography{\coppe@bibBegin}
 \let\coppe@orig@printbibliography\printbibliography
 \renewcommand\printbibliography[1][]{%

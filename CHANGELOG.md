@@ -53,6 +53,12 @@ run it, and the fix removes the mark.
   for section, subsection, subsubsection and paragraph. titlesec's default
   left 2.3 ex after the heading, about two thirds of a line at 1.5 spacing.
   Documents get a little longer, and page breaks move.
+- **Post-textual entries line up with the titles in the sumário** (#115).
+  REFERÊNCIAS, APÊNDICE A – …, ANEXO A – …, the glossary, the index and, under
+  `listasnosumario`, the pre-textual lists started at the left margin. They now
+  start in the column of the numbered titles. 3.1.2.1.6 aligns titles by the
+  longest indicative, post-textual elements included, and the Manual's own
+  sumário does so. Section 14 of the COPPE norm already stated it as a rule.
 
 ### Fixed
 

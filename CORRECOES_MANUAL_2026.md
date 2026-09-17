@@ -184,12 +184,14 @@ prototipada; conferir com cuidado.
   `Documento.ok` do `medidas.py` olhava só se o PDF existia — agora exige também
   nenhuma linha `!` no `.log`.
 
-### #115 — pós-textuais na coluna do sumário · `r35` · validada
+### #115 — pós-textuais na coluna do sumário · `r35` · FEITA
 - `\protect\numberline{}` antes do título nas entradas: `\@chapter` (ramos de
-  apêndice e anexo, antes de `\protect\coppe@tocapp`/`\coppe@tocanx`),
-  `\defbibheading{bibliography}`, `theindex`, `theglossary` e `\coppe@listtoc`.
+  apêndice e anexo, e também os dois ramos sem número — capítulo fora da parte
+  textual), `\defbibheading{bibliography}`, `theindex`, `theglossary` e
+  `\coppe@listtoc`.
 - O `\coppe@tocnumberline` mede a largura do número; com `{}` vazio não altera a
-  coluna. Rodar `r04`, `r95` (estabilidade do `.aux`), `r98` (listasnosumario).
+  coluna. Os marcadores do PDF não ganham espaço na frente.
+- Provado: `r35`; `r04`, `r05`, `r07`, `r08`, `r95`, `r97`, `r98`.
 
 ### #116 — nome específico e traço nas listas · `r36` · validada
 - No `\coppe@wrapstarttoc`: se a extensão não é `toc` e existe

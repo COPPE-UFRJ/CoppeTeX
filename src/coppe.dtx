@@ -169,6 +169,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \changes{v4.1}{2026/09/12}{The files section described the delivery as it was before the folders: the logos in the root, no logos/, no manuais/, no language folders, and an instruction not to copy coppe.dtx and coppe.ins, which the delivery now ships on purpose. The developer sections still said twelve adversarial documents (there are six), still placed them outside tests/, and did not know tests/regressivo/ or the panel existed.}
 % \changes{v4.1}{2026/09/16}{The m-diss entry of exemplo.bib printed "1997. 203 f. Memoria Social e Documento Centro de Ciencias Humanas", without "Dissertacao (Mestrado em ...)": when the base moved to English field names, the Portuguese field curso became type instead of course, and the mscdiss type was lost. The checker that compares every reference with the Manual reported it, but the proof did not run the checker. The 34 Manual references now have different keys in the two bases (m- in exemplo.bib, pt- in the adversarial referencias-manual.bib): with the same keys, biber found every citation in the first file and never opened the second, so the Portuguese field names had gone unchecked.}
 % \changes{v4.1}{2026/09/16}{Every heading is set in the body size. 2.2(b) of the UFRJ Manual fixes size 12 for the work and allows only SMALLER sizes (long quotations, notes, folio, captions and sources, catalogue card), and 2.6 builds the gradual emphasis from bold, italic, capitals and small capitals, not from size. Chapters and unnumbered headings were Large (17.28 pt), sections large (14.4 pt), and the two headings of the CAPES additional sheet large.}
+% \changes{v4.1}{2026/09/16}{In the sumario, References, appendices, annexes, glossary, index and (under listasnosumario) the pre-textual lists start in the column of the numbered titles instead of at the left margin. 3.1.2.1.6 aligns the titles by the longest indicative, post-textual elements included, and the Manual's own sumario does so; section 14 of the COPPE norm makes it a rule. Every chapter-level entry without a number now carries an empty numberline.}
 % \changes{v4.1}{2026/09/16}{One blank line before and after section, subsection, subsubsection and paragraph headings, as 2.4 asks. The titlesec default left 2.3 ex after the heading, about two thirds of a one-and-a-half line.}
 % \changes{v4.1}{2026/09/16}{Under LuaLaTeX the class no longer loads fontenc with T1. Unicode engines send each input character straight to the font, and in T1 the slot of the masculine ordinal holds z-caron: "no" with the ordinal printed as "nz" with a caron, and the section sign, degree sign, guillemets and the arithmetic signs came out as other letters, while the em and en dashes, curly quotes, ellipsis, euro sign and oe ligature vanished with only a Missing character line in the log. Portuguese accented letters were right, because T1 matches Latin-1 there, so nobody saw it. Unicode engines now keep TU, the LaTeX default for them, with Latin Modern in OpenType; the shape declarations that silence substitution messages exist for TU too, and the fixed typewriter fonts of the language listing styles use Latin Modern Mono instead of txtt, which has no OpenType version. pdfLaTeX output does not change.}
 % \changes{v4.0}{2026/05/30}{Catalog-label writers (coppe@mainBegin, coppe@bibBegin, coppe@bibEnd, coppe@hasLof) made language-agnostic: detokenize wrap on label names protects ':' and '.' from babel shorthand activation, and the raw etex primitives romannumeral/number replace LaTeX's roman/arabic to bypass spanish-babel's small-caps @roman redefinition that would otherwise crash pdftex with "Unbalanced write command" on every es-main document.}
@@ -5314,6 +5315,13 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
 \newcommand\coppe@tocanx[1]{%
   \MakeUppercase{\coppestring{annex}}%
   \nobreakspace#1\nobreakspace\textendash\nobreakspace}
+% Toda entrada de nivel capitulo SEM indicativo numerico leva um \numberline
+% vazio: o titulo comeca na coluna dos titulos numerados, e nao na margem. A
+% 3.1.2.1.6 manda alinhar os titulos "pela margem do titulo do indicativo mais
+% extenso", inclusive os pos-textuais, e o sumario do proprio Manual faz assim;
+% a Norma COPPE (secao 14) fez disso regra. Referencias, apendices, anexos,
+% glossario e indice saiam na margem (#115). O \coppe@tocnumberline mede a
+% largura do numero, e um numero vazio nao alarga a coluna.
 \def\@chapter[#1]#2{%
   \ifnum \c@secnumdepth >\m@ne
     \if@mainmatter
@@ -5321,18 +5329,18 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
       \typeout{\@chapapp\space\thechapter.}%
       \if@coppeappendix
         \if@coppeannex
-          \addcontentsline{toc}{chapter}{\protect\coppe@tocanx{\thechapter}#1}%
+          \addcontentsline{toc}{chapter}{\protect\numberline{}\protect\coppe@tocanx{\thechapter}#1}%
         \else
-          \addcontentsline{toc}{chapter}{\protect\coppe@tocapp{\thechapter}#1}%
+          \addcontentsline{toc}{chapter}{\protect\numberline{}\protect\coppe@tocapp{\thechapter}#1}%
         \fi
       \else
         \addcontentsline{toc}{chapter}{\protect\numberline{\thechapter}#1}%
       \fi
     \else
-      \addcontentsline{toc}{chapter}{#1}%
+      \addcontentsline{toc}{chapter}{\protect\numberline{}#1}%
     \fi
   \else
-    \addcontentsline{toc}{chapter}{#1}%
+    \addcontentsline{toc}{chapter}{\protect\numberline{}#1}%
   \fi
   \chaptermark{#1}%
   \addtocontents{lof}{\protect\addvspace{10\p@}}%
@@ -5671,7 +5679,7 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
 % (see the option's declaration for the reason). Post-textual material calls
 % \addcontentsline directly and is unaffected.
 \newcommand\coppe@listtoc[1]{%
-  \if@coppelistastoc\addcontentsline{toc}{chapter}{#1}\fi}
+  \if@coppelistastoc\addcontentsline{toc}{chapter}{\protect\numberline{}#1}\fi}
 % \coppe@glosspre marks the two PRE-textual uses of the glossary environment --
 % the list of abbreviations and the list of symbols -- apart from the genuine
 % post-textual Glossario, which shares the same environment but must appear in
@@ -8614,7 +8622,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \if@coppeglosspre
     \coppe@listtoc{\glossaryname}%
   \else
-    \addcontentsline{toc}{chapter}{\glossaryname}%
+    \addcontentsline{toc}{chapter}{\protect\numberline{}\glossaryname}%
   \fi
   \list{}
   {\setlength{\listparindent}{0in}%
@@ -8640,7 +8648,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % entrada do indice no sumario apontava para a ultima ancora que existia --
 % a do ultimo anexo: clicar em Indice Remissivo levava ao Anexo B.
   \ifdefined\phantomsection\phantomsection\fi
-  \addcontentsline{toc}{chapter}{\indexname}
+  \addcontentsline{toc}{chapter}{\protect\numberline{}\indexname}
   \parskip\z@ \@plus .3\p@\relax
   \columnseprule \z@
   \columnsep 35\p@
@@ -8983,7 +8991,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % the .toc write, and babel's \bibname caption override was equally fragile).
 \defbibheading{bibliography}{%
   \chapter*{\coppestring{references}}%
-  \addcontentsline{toc}{chapter}{\coppestring{references}}}
+  \addcontentsline{toc}{chapter}{\protect\numberline{}\coppestring{references}}}
 % The catalog page range (bib:begin/bib:end) was written by the old
 % thebibliography redefinition, which biblatex's \printbibliography does not
 % use. biblatex offers \AtBeginBibliography but no end counterpart, so the

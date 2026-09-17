@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
-"""Teste de conformidade da CoppeTeX. NAO roda na suite normal.
+"""Teste de conformidade da CoppeTeX.
 
 BUG: (desconformidade, 3.1.2.1.6 e Norma COPPE 14) no sumario, Referencias, Apendices, Anexos e Indice comecavam na MARGEM ESQUERDA, e nao na coluna em que comecam os titulos das secoes numeradas (#115).
-ABERTO: #115
 
 A 3.1.2.1.6 do Manual UFRJ/SiBI recomenda alinhar os titulos pela margem do
 titulo do indicativo mais extenso, e diz que isso vale inclusive para os
