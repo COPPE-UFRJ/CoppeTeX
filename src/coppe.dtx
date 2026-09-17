@@ -169,6 +169,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \changes{v4.1}{2026/09/12}{The files section described the delivery as it was before the folders: the logos in the root, no logos/, no manuais/, no language folders, and an instruction not to copy coppe.dtx and coppe.ins, which the delivery now ships on purpose. The developer sections still said twelve adversarial documents (there are six), still placed them outside tests/, and did not know tests/regressivo/ or the panel existed.}
 % \changes{v4.1}{2026/09/16}{The m-diss entry of exemplo.bib printed "1997. 203 f. Memoria Social e Documento Centro de Ciencias Humanas", without "Dissertacao (Mestrado em ...)": when the base moved to English field names, the Portuguese field curso became type instead of course, and the mscdiss type was lost. The checker that compares every reference with the Manual reported it, but the proof did not run the checker. The 34 Manual references now have different keys in the two bases (m- in exemplo.bib, pt- in the adversarial referencias-manual.bib): with the same keys, biber found every citation in the first file and never opened the second, so the Portuguese field names had gone unchecked.}
 % \changes{v4.1}{2026/09/16}{Every heading is set in the body size. 2.2(b) of the UFRJ Manual fixes size 12 for the work and allows only SMALLER sizes (long quotations, notes, folio, captions and sources, catalogue card), and 2.6 builds the gradual emphasis from bold, italic, capitals and small capitals, not from size. Chapters and unnumbered headings were Large (17.28 pt), sections large (14.4 pt), and the two headings of the CAPES additional sheet large.}
+% \changes{v4.1}{2026/09/16}{The sign between number and title is the em dash everywhere: captions (a new emdash caption label separator), algorithm captions, appendix and annex headings, their sumario entries and the lists of illustrations. The Manual calls it travessao (2.10, 3.1.2.2.4, 3.1.4.3, 3.1.4.4) and section 12 of the COPPE norm shows the em dash; the class used the en dash almost everywhere and the em dash in the thesis reference driver.}
+% \changes{v4.1}{2026/09/16}{Lists of illustrations and of tables name each item: "Figura 4.1 --- Titulo ..... 27" instead of "4.1 Titulo ..... 27" (3.1.2.2.4, 3.1.2.2.5). The name comes from a table keyed by list extension, extended by newcoppefloat; list entries have no indent, so a long title continues at the margin as in the Manual's example.}
 % \changes{v4.1}{2026/09/16}{In the sumario, References, appendices, annexes, glossary, index and (under listasnosumario) the pre-textual lists start in the column of the numbered titles instead of at the left margin. 3.1.2.1.6 aligns the titles by the longest indicative, post-textual elements included, and the Manual's own sumario does so; section 14 of the COPPE norm makes it a rule. Every chapter-level entry without a number now carries an empty numberline.}
 % \changes{v4.1}{2026/09/16}{One blank line before and after section, subsection, subsubsection and paragraph headings, as 2.4 asks. The titlesec default left 2.3 ex after the heading, about two thirds of a one-and-a-half line.}
 % \changes{v4.1}{2026/09/16}{Under LuaLaTeX the class no longer loads fontenc with T1. Unicode engines send each input character straight to the font, and in T1 the slot of the masculine ordinal holds z-caron: "no" with the ordinal printed as "nz" with a caron, and the section sign, degree sign, guillemets and the arithmetic signs came out as other letters, while the em and en dashes, curly quotes, ellipsis, euro sign and oe ligature vanished with only a Missing character line in the log. Portuguese accented letters were right, because T1 matches Latin-1 there, so nobody saw it. Unicode engines now keep TU, the LaTeX default for them, with Latin Modern in OpenType; the shape declarations that silence substitution messages exist for TU too, and the fixed typewriter fonts of the language listing styles use Latin Modern Mono instead of txtt, which has no OpenType version. pdfLaTeX output does not change.}
@@ -5285,7 +5287,7 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
 % (17,28 pt) e a secao em \large (14,4 pt) (#113).
 \titleformat{\chapter}[hang]
   {\normalfont\normalsize\bfseries}
-  {\if@coppeappendix\MakeUppercase{\appendixname}\ \thechapter\ \textendash\else\thechapter\fi}
+  {\if@coppeappendix\MakeUppercase{\appendixname}\ \thechapter\ \textemdash\else\thechapter\fi}
   {1ex}{\MakeUppercase}
 \titlespacing*{\chapter}{0pt}{10pt}{1.5\baselineskip}
 % 2.6 says the numeric indicative of a section precedes its title flush left,
@@ -5298,7 +5300,7 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
 \newcommand\coppe@appendixheadings{%
   \titleformat{\chapter}[block]
     {\normalfont\normalsize\bfseries\filcenter}
-    {\MakeUppercase{\appendixname}\ \thechapter\ \textendash}
+    {\MakeUppercase{\appendixname}\ \thechapter\ \textemdash}
     {1ex}{\MakeUppercase}%
   \titlespacing*{\chapter}{0pt}{10pt}{1.5\baselineskip}}
 \let\coppe@orig@appendix\appendix
@@ -5311,10 +5313,10 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
 \newif\if@coppeannex \@coppeannexfalse
 \newcommand\coppe@tocapp[1]{%
   \MakeUppercase{\coppestring{appendix}}%
-  \nobreakspace#1\nobreakspace\textendash\nobreakspace}
+  \nobreakspace#1\nobreakspace\textemdash\nobreakspace}
 \newcommand\coppe@tocanx[1]{%
   \MakeUppercase{\coppestring{annex}}%
-  \nobreakspace#1\nobreakspace\textendash\nobreakspace}
+  \nobreakspace#1\nobreakspace\textemdash\nobreakspace}
 % Toda entrada de nivel capitulo SEM indicativo numerico leva um \numberline
 % vazio: o titulo comeca na coluna dos titulos numerados, e nao na margem. A
 % 3.1.2.1.6 manda alinhar os titulos "pela margem do titulo do indicativo mais
@@ -5532,7 +5534,14 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
 % a couple of tables looked left-aligned while the rest looked centred -- which
 % is what a recent review noticed about tables 5.1 and 5.2. 2.10 does not
 % prescribe the alignment; it does not tolerate two alignments either.
-\captionsetup{font=footnotesize,labelsep=endash,justification=centering}
+% O sinal entre o numero e o titulo e o TRAVESSAO (U+2014), em toda parte: na
+% legenda, na lista de ilustracoes, no titulo de apendice e de anexo e no
+% sumario. E o nome que o Manual da ao sinal (2.10, 3.1.2.2.4, 3.1.4.3 e
+% 3.1.4.4) e o que a Norma COPPE mostra (secao 12). Ate a v4.1 a classe usava a
+% meia-risca em quase tudo e o travessao no driver de tese (#150). O caption nao
+% traz separador de travessao; este e o endash dele com o outro sinal.
+\DeclareCaptionLabelSeparator{emdash}{\space\textemdash\space}
+\captionsetup{font=footnotesize,labelsep=emdash,justification=centering}
 % subcaption (NÃO subfig/subfigure) for subfigures / subtables; load right after
 % caption so it picks up the ABNT captionsetup above.
 \RequirePackage{subcaption}
@@ -5586,6 +5595,8 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
   \floatstyle{plaintop}\newfloat{#1}{htbp}{lo#1}[chapter]%
   \floatname{#1}{#2}%
   \expandafter\let\csname l@#1\endcsname\l@figure
+  \expandafter\def\csname coppe@listname@lo#1\endcsname{#2}%
+  \AtBeginDocument{\expandafter\let\csname l@#1\endcsname\l@figure}%
   \expandafter\providecommand\csname #1autorefname\endcsname{#2}%
   \expandafter\newcommand\csname listof#1s\endcsname{%
     \chapter*{#3}\coppe@listtoc{#3}%
@@ -5640,6 +5651,19 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
 % there does not survive it -- the document died with "Parameters must be
 % numbered consecutively" at \begin{document}. One level of nesting, one
 % doubling, and the hook only has to call it.
+% Nas listas de ilustracoes e de tabelas, cada item traz o NOME ESPECIFICO, o
+% numero, o travessao e o titulo: "Figura 4.1 -- Titulo ..... 27" (3.1.2.2.4 e
+% 3.1.2.2.5). As linhas saiam "4.1 Titulo ..... 27", com o numero numa caixa de
+% 2,3 em e sem nome (#116). O nome vem de uma tabela por extensao de lista; o
+% \newcoppefloat acrescenta a do flutuante que cria. Um titulo longo continua
+% na margem, como no exemplo do Manual: por isso o \l@figure sem recuo.
+\newcommand\coppe@listnumberline[1]{%
+  \coppe@listname\nobreakspace#1\nobreakspace\textemdash\space}
+\def\coppe@listname@lof{\figurename}
+\def\coppe@listname@lot{\tablename}
+\def\coppe@listname@loq{\quadroname}
+\def\coppe@listname@lol{\lstlistingname}
+\def\coppe@listname@loa{\algorithmcfname}
 \newcommand\coppe@wrapstarttoc{%
   \let\coppe@orig@starttoc\@starttoc
 % \numberline mede o indicativo (ver \coppe@tocnumberline) apenas no sumario:
@@ -5649,10 +5673,26 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
     \coppe@checkwrites{##1}%
     \begingroup
       \def\coppe@@ext{##1}\def\coppe@@toc{toc}%
-      \ifx\coppe@@ext\coppe@@toc \let\numberline\coppe@tocnumberline \fi
+      \ifx\coppe@@ext\coppe@@toc
+        \let\numberline\coppe@tocnumberline
+      \else
+        \@ifundefined{coppe@listname@##1}{}{%
+          \edef\coppe@listname{\expandafter\noexpand
+            \csname coppe@listname@##1\endcsname}%
+          \let\numberline\coppe@listnumberline}%
+      \fi
       \coppe@orig@starttoc{##1}%
     \endgroup}}
 \AtBeginDocument{\coppe@wrapstarttoc}
+% As entradas de lista de todos os flutuantes com o mesmo leiaute, sem recuo:
+% so aqui, porque o listings e o algorithm2e declaram o \l@ deles ao carregar,
+% e o hyperref, depois da classe.
+\AtBeginDocument{%
+  \renewcommand*\l@figure{\@dottedtocline{1}{0pt}{0pt}}%
+  \let\l@table\l@figure
+  \let\l@quadro\l@figure
+  \let\l@lstlisting\l@figure
+  \let\l@algocf\l@figure}
 %    \end{macrocode}
 %
 % \subsubsection{Paginação}
@@ -6565,7 +6605,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \expandafter\RequirePackage\expandafter[\coppe@@algolang,onelanguage,linesnumbered,lined,algochapter,ruled]{algorithm2e}
 \fi
 % algorithm2e composes its own caption and therefore ignores the class-wide
-% \captionsetup{font=footnotesize,labelsep=endash}. Left alone it printed
+% \captionsetup{font=footnotesize,labelsep=emdash}. Left alone it printed
 % "Algoritmo 6.1:Titulo" in bold at body size, while every other illustration
 % printed "Figura 6.1 -- Titulo" in footnotesize -- 2.10 asks for the
 % designating word, the number, a TRAVESSAO and the title, uniformly.
@@ -6574,7 +6614,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % layout (rules above and below) is kept: 2.10 prescribes where the caption and
 % the source go, not whether the float is delimited, and the rules read here
 % like the top-and-bottom delimitation a table carries.
-\SetAlgoCaptionSeparator{\ \textendash}
+\SetAlgoCaptionSeparator{\ \textemdash}
 \SetAlCapFnt{\footnotesize}
 \SetAlCapNameFnt{\footnotesize}
 \SetAlCapSty{textnormal}

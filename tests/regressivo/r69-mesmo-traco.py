@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
-"""Teste de conformidade da CoppeTeX. NAO roda na suite normal.
+"""Teste de conformidade da CoppeTeX.
 
 BUG: (inconsistencia, 2.10, 3.1.4.3, 3.1.4.4 e Norma COPPE 12) o sinal entre o numero e o titulo nao era o mesmo em toda parte: meia-risca (U+2013) na legenda, no titulo de apendice e no sumario, e travessao (U+2014) no exemplo da secao 12 da Norma COPPE (#150).
-ABERTO: #150
 
 O Manual UFRJ/SiBI chama esse sinal de travessao nas ilustracoes (2.10), nas
 listas (3.1.2.2.4) e em apendices e anexos (3.1.4.3 e 3.1.4.4), embora os

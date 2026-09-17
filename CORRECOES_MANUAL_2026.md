@@ -193,7 +193,7 @@ prototipada; conferir com cuidado.
   coluna. Os marcadores do PDF não ganham espaço na frente.
 - Provado: `r35`; `r04`, `r05`, `r07`, `r08`, `r95`, `r97`, `r98`.
 
-### #116 — nome específico e traço nas listas · `r36` · validada
+### #116 — nome específico e traço nas listas · `r36` · FEITA (com #150)
 - No `\coppe@wrapstarttoc`: se a extensão não é `toc` e existe
   `\coppe@listname@<ext>`, `\let\numberline\coppe@listnumberline`, que escreve
   `\coppe@listname\nobreakspace#1\nobreakspace<traço>\space`.
@@ -203,8 +203,17 @@ prototipada; conferir com cuidado.
 - `\l@figure`, `\l@table`, `\l@quadro`, `\l@lstlisting`, `\l@algocf` e o
   `\l@<float>` do `\newcoppefloat` → `\@dottedtocline{1}{0pt}{0pt}` (no
   `\AtBeginDocument`, porque `listings` e `algorithm2e` definem os seus depois).
-- O traço é o decidido em #150 (hoje as legendas usam `\textendash`).
-- Rodar `r01`, `r08`, `r09`.
+- O traço é o de #150: travessão.
+- Provado: `r36`, `r69`; `r01`, `r08`, `r09`, `r18`.
+
+### #150 — travessão · `r69` · FEITA (decisão: travessão)
+- Decidido pela recomendação da issue, sem resposta do usuário até 16/09/2026:
+  travessão (U+2014), o nome do Manual e o sinal da Norma COPPE §12. Reverter é
+  trocar `\textemdash` por `\textendash` nos pontos abaixo.
+- `\DeclareCaptionLabelSeparator{emdash}` e `labelsep=emdash`;
+  `\SetAlgoCaptionSeparator{\ \textemdash}`; `\titleformat{\chapter}` e
+  `\coppe@appendixheadings`; `\coppe@tocapp`/`\coppe@tocanx`; a lista (#116).
+- A referência do resumo (`--` no `\coppe@refresumo`) fica para a #119.
 
 ### #148 — ordem das listas · `r67` · proposta
 - `max-exemplo` (módulo `maxexemplo`): mover `\listoftables` para depois de
@@ -501,8 +510,9 @@ prototipada; conferir com cuidado.
   `\thechapter` no `\appendix`/`\annex`; `\AddEnumerateCounter` no enumitem para o
   rótulo das alíneas. Conferir `\theHchapter` e os bookmarks.
 
-### #128, #129, #130, #150 — decisões
-- Implementar só depois da resposta registrada na issue. `r48`, `r49`, `r69` já
+### #128, #129, #130 — decisões
+- #150 já saiu (travessão, ver acima). Para as outras, a recomendação da issue
+  vale como decisão se não houver resposta; registrar no commit. `r48`, `r49`
   são neutros quanto à decisão. `r19` muda se #128 for "tudo em português".
 - #130 não tem teste: se sair o logotipo da folha de rosto, criar `r71` (o `r70`
   ficou com o #152). Os

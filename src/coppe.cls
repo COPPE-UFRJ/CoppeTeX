@@ -131,13 +131,13 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
 \newif\if@coppeappendix \@coppeappendixfalse
 \titleformat{\chapter}[hang]
   {\normalfont\normalsize\bfseries}
-  {\if@coppeappendix\MakeUppercase{\appendixname}\ \thechapter\ \textendash\else\thechapter\fi}
+  {\if@coppeappendix\MakeUppercase{\appendixname}\ \thechapter\ \textemdash\else\thechapter\fi}
   {1ex}{\MakeUppercase}
 \titlespacing*{\chapter}{0pt}{10pt}{1.5\baselineskip}
 \newcommand\coppe@appendixheadings{%
   \titleformat{\chapter}[block]
     {\normalfont\normalsize\bfseries\filcenter}
-    {\MakeUppercase{\appendixname}\ \thechapter\ \textendash}
+    {\MakeUppercase{\appendixname}\ \thechapter\ \textemdash}
     {1ex}{\MakeUppercase}%
   \titlespacing*{\chapter}{0pt}{10pt}{1.5\baselineskip}}
 \let\coppe@orig@appendix\appendix
@@ -146,10 +146,10 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
 \newif\if@coppeannex \@coppeannexfalse
 \newcommand\coppe@tocapp[1]{%
   \MakeUppercase{\coppestring{appendix}}%
-  \nobreakspace#1\nobreakspace\textendash\nobreakspace}
+  \nobreakspace#1\nobreakspace\textemdash\nobreakspace}
 \newcommand\coppe@tocanx[1]{%
   \MakeUppercase{\coppestring{annex}}%
-  \nobreakspace#1\nobreakspace\textendash\nobreakspace}
+  \nobreakspace#1\nobreakspace\textemdash\nobreakspace}
 \def\@chapter[#1]#2{%
   \ifnum \c@secnumdepth >\m@ne
     \if@mainmatter
@@ -253,7 +253,8 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
 \renewcommand*\l@paragraph[2]{%
   \coppe@tocline{4}{\normalfont\itshape}{#1}{#2}}
 \RequirePackage{caption}
-\captionsetup{font=footnotesize,labelsep=endash,justification=centering}
+\DeclareCaptionLabelSeparator{emdash}{\space\textemdash\space}
+\captionsetup{font=footnotesize,labelsep=emdash,justification=centering}
 \RequirePackage{subcaption}
 \RequirePackage{float}
 \floatstyle{plaintop}
@@ -281,6 +282,8 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
   \floatstyle{plaintop}\newfloat{#1}{htbp}{lo#1}[chapter]%
   \floatname{#1}{#2}%
   \expandafter\let\csname l@#1\endcsname\l@figure
+  \expandafter\def\csname coppe@listname@lo#1\endcsname{#2}%
+  \AtBeginDocument{\expandafter\let\csname l@#1\endcsname\l@figure}%
   \expandafter\providecommand\csname #1autorefname\endcsname{#2}%
   \expandafter\newcommand\csname listof#1s\endcsname{%
     \chapter*{#3}\coppe@listtoc{#3}%
@@ -311,16 +314,36 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
         \fi}{}%
     \fi
   \fi}
+\newcommand\coppe@listnumberline[1]{%
+  \coppe@listname\nobreakspace#1\nobreakspace\textemdash\space}
+\def\coppe@listname@lof{\figurename}
+\def\coppe@listname@lot{\tablename}
+\def\coppe@listname@loq{\quadroname}
+\def\coppe@listname@lol{\lstlistingname}
+\def\coppe@listname@loa{\algorithmcfname}
 \newcommand\coppe@wrapstarttoc{%
   \let\coppe@orig@starttoc\@starttoc
   \def\@starttoc##1{%
     \coppe@checkwrites{##1}%
     \begingroup
       \def\coppe@@ext{##1}\def\coppe@@toc{toc}%
-      \ifx\coppe@@ext\coppe@@toc \let\numberline\coppe@tocnumberline \fi
+      \ifx\coppe@@ext\coppe@@toc
+        \let\numberline\coppe@tocnumberline
+      \else
+        \@ifundefined{coppe@listname@##1}{}{%
+          \edef\coppe@listname{\expandafter\noexpand
+            \csname coppe@listname@##1\endcsname}%
+          \let\numberline\coppe@listnumberline}%
+      \fi
       \coppe@orig@starttoc{##1}%
     \endgroup}}
 \AtBeginDocument{\coppe@wrapstarttoc}
+\AtBeginDocument{%
+  \renewcommand*\l@figure{\@dottedtocline{1}{0pt}{0pt}}%
+  \let\l@table\l@figure
+  \let\l@quadro\l@figure
+  \let\l@lstlisting\l@figure
+  \let\l@algocf\l@figure}
 \RequirePackage{fancyhdr}
 \newcommand\coppe@listtoc[1]{%
   \if@coppelistastoc\addcontentsline{toc}{chapter}{\protect\numberline{}#1}\fi}
@@ -751,7 +774,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   % PDF saia com "for" e "while" no meio do portugues.
   \expandafter\RequirePackage\expandafter[\coppe@@algolang,onelanguage,linesnumbered,lined,algochapter,ruled]{algorithm2e}
 \fi
-\SetAlgoCaptionSeparator{\ \textendash}
+\SetAlgoCaptionSeparator{\ \textemdash}
 \SetAlCapFnt{\footnotesize}
 \SetAlCapNameFnt{\footnotesize}
 \SetAlCapSty{textnormal}

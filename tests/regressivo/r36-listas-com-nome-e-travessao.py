@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
-"""Teste de conformidade da CoppeTeX. NAO roda na suite normal.
+"""Teste de conformidade da CoppeTeX.
 
 BUG: (desconformidade, 3.1.2.2.4 e 3.1.2.2.5) as entradas das listas pre-textuais de ilustracoes e de tabelas traziam so o numero e o titulo ("4.1 Titulo ..... 27"), sem o nome especifico da ilustracao e sem o travessao (#116).
-ABERTO: #116
 
 A 3.1.2.2.4 do Manual UFRJ/SiBI pede, em cada item da lista de ilustracoes, o
 nome especifico, o travessao, o titulo e o numero da folha -- "Figura 4.1 -

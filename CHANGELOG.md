@@ -59,6 +59,19 @@ run it, and the fix removes the mark.
   start in the column of the numbered titles. 3.1.2.1.6 aligns titles by the
   longest indicative, post-textual elements included, and the Manual's own
   sumário does so. Section 14 of the COPPE norm already stated it as a rule.
+- **The em dash (—) between number and title, everywhere** (#150): captions
+  ("Figura 4.1 — Título"), algorithm captions, appendix and annex headings
+  ("APÊNDICE A — Título"), their sumário entries and the lists of
+  illustrations. The Manual calls the sign *travessão* (2.10, 3.1.2.2.4,
+  3.1.4.3, 3.1.4.4), and section 12 of the COPPE norm shows the em dash. The
+  class used the en dash almost everywhere and the em dash in the thesis
+  reference. This was a maintainer's decision recorded in the issue, and it is
+  easy to revert.
+- **Lists of illustrations and of tables name each item** (#116): "Figura 4.1
+  — Título ….. 27" instead of "4.1 Título ….. 27", as 3.1.2.2.4 and 3.1.2.2.5
+  ask, for figures, tables, quadros, programs, algorithms and every float made
+  with `\newcoppefloat`. A long title continues at the left margin, as in the
+  Manual's example.
 
 ### Fixed
 
