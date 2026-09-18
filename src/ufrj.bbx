@@ -183,13 +183,35 @@
 \protected\def\ufrjUCtitleB#1 #2\ufrjUCstop{%
   \MakeUppercase{#1}\ifblank{#2}{}{\space\ufrjUCkeep#2\ufrjUCstop}}
 \protected\def\ufrjUCkeep#1 \ufrjUCstop{#1}
-\protected\def\ufrjUCifart#1{%
-  \begingroup
-  \lowercase{\def\ufrjUC@w{#1}}%
-  \edef\ufrjUC@w{,\ufrjUC@w,}%
-  \expandafter\in@\expandafter{\ufrjUC@w}{,a,o,as,os,um,uma,uns,umas,the,an,}%
-  \ifin@\aftergroup\@firstoftwo\else\aftergroup\@secondoftwo\fi
-  \endgroup}
+\ExplSyntaxOn
+\clist_const:Nn \c_ufrj_naosignificativas_clist
+  {
+    o, a, os, as, um, uma, uns, umas, à, às, ao, aos, com, da, das, de, do,
+    dos, em, na, nas, no, nos, num, nuns, por, sem, sob, e, mas, nem, ou, que,
+    se,
+    the, an, of, in, on, at, to, for, by, and, or, from, with,
+    el, la, los, las, un, una, unos, unas, del, al, en, con, sin, y,
+    le, les, une, des, du, au, aux, et, par, sur, dans, pour,
+    il, lo, gli, uno, di, ai, per, su
+  }
+\str_new:N \l__ufrj_palavra_str
+\bool_new:N \l__ufrj_naosig_bool
+\prg_new_protected_conditional:Npnn \ufrj_se_nao_significativa:n #1 { T , F , TF }
+  {
+    \str_set:Nx \l__ufrj_palavra_str { \text_lowercase:n {#1} }
+    \bool_set_false:N \l__ufrj_naosig_bool
+    \clist_map_inline:Nn \c_ufrj_naosignificativas_clist
+      {
+        \str_if_eq:VnT \l__ufrj_palavra_str {##1}
+          { \bool_set_true:N \l__ufrj_naosig_bool \clist_map_break: }
+      }
+    \bool_if:NTF \l__ufrj_naosig_bool
+      { \prg_return_true: }
+      { \prg_return_false: }
+  }
+\prg_generate_conditional_variant:Nnn \ufrj_se_nao_significativa:n { V } { T , F , TF }
+\cs_set_eq:NN \ufrjUCifart \ufrj_se_nao_significativa:nTF
+\ExplSyntaxOff
 \DeclareFieldFormat{title}{%
   \ifboolexpr{ test {\ifnameundef{labelname}} }
     {#1}%
@@ -235,7 +257,7 @@
                match=\regexp{\[s\.\s*n\.\]},
                replace={[\\emph{s. n.}]}]}
     \map{\step[fieldsource=title,
-               match=\regexp{\A(O|A|Os|As|Um|Uma|Uns|Umas|The|An|El|La|Los|Las|Le|Les|Il|Lo|Gli)\s+(.+)\Z},
+               matchi=\regexp{\A(o|a|os|as|um|uma|uns|umas|à|às|ao|aos|com|da|das|de|do|dos|em|na|nas|no|nos|num|nuns|por|sem|sob|e|mas|nem|ou|que|se|the|an|of|in|on|at|to|for|by|and|or|from|with|el|la|los|las|un|una|unos|unas|del|al|en|con|sin|y|le|les|une|des|du|au|aux|et|par|sur|dans|pour|il|lo|gli|uno|di|ai|per|su)\s+(.+)\Z},
                final]
          \step[fieldset=sorttitle, fieldvalue={$2}]}
   }%

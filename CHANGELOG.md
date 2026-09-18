@@ -187,16 +187,20 @@ top of `CORRECOES_MANUAL_2026.md`.
   2026-09-17, kept the old typing rule and converted the capitals back in the
   citation, which turned "IBGE" into "Ibge"; the maintainer reversed the rule
   on 2026-09-18.
-- **A citation by title entry reads "(Inglês, 2012, p. 7)"** (#138). 4.1.1.1.2
-  indicates "pelo título de entrada, seguido do ano de publicação do documento,
-  separados por vírgula e entre parênteses", 4.1.1.2(a) writes it with the
-  initial capital only, and its example is "(Inglês, 2012, p. 7)" for "INGLÊS:
-  guia de conversação". `authoryear-comp` set the title in italics (or quotes,
-  by entry type) and separated it from the year with a space: "(Guia 2012, p.
-  7)". `citetitle` is now plain for every type, and `nonameyeardelim` is a
-  comma. The citation uses the title without the subtitle, as in the example;
-  whether a long title is cut at its first word is a question of NBR
-  10520:2023, which is not in `specs/`, and the class leaves it whole.
+- **A citation by title entry reads "(Inglês, 2012, p. 7)", and a long title is
+  cut** (#138). 4.1.1.1.2 indicates "pelo título de entrada, seguido do ano de
+  publicação do documento, separados por vírgula e entre parênteses", 4.1.1.2(a)
+  writes it with the initial capital only, and its example is "(Inglês, 2012,
+  p. 7)" for "INGLÊS: guia de conversação". `authoryear-comp` set the title in
+  italics (or quotes, by entry type) and separated it from the year with a
+  space: "(Guia 2012, p. 7)". `citetitle` is now plain for every type, and
+  `nonameyeardelim` is a comma. The title is cut as NBR 10520:2023 — the edition
+  the Manual adopts — requires in 6.1.1.4: the only word of a one-word title;
+  the first word and "[...]" of a longer one, "(Anteprojeto [...], 1987)"; and
+  an initial article or monosyllable with the next word and "[...]", "(A flor
+  [...], 1995)", "(Nos canaviais [...], 1995)". The subtitle never enters, in
+  the `subtitle` field or typed after ": " in the title, and `shorttitle` wins.
+  `\citetitle` still prints the whole title.
 - **The month is abbreviated in the language of the publication** (#146).
   4.3.5.5.1: months "devem ser abreviados no idioma original da publicação, de
   acordo com o Anexo A da NBR 6023", and 4.3.2.2 shows "Sept. 2021" for an
@@ -281,13 +285,18 @@ top of `CORRECOES_MANUAL_2026.md`.
   The option now lives in `ufrj.cbx` as `minyearfull` — disambiguate only when
   the year coincides too — with a `labelname` format that writes the surname,
   a comma and the initial or the full given name.
-- **An initial article does not count in the alphabetical order** (#141).
-  4.2: "os artigos e palavras monossilábicas não são considerados para efeito
-  de alfabetação", with the example "O PERFIL administrativo brasileiro". The
-  list sorted by the whole title, and that entry fell among the surnames in O,
-  before OLIVEIRA. A style source map stores the title without its initial
-  article in `sorttitle` (Portuguese, English, Spanish, French and Italian
-  articles); the printed title does not change.
+- **An initial article or monosyllable does not count in the alphabetical
+  order, and goes to capitals with the next word** (#141). 4.2: "os artigos e
+  palavras monossilábicas não são considerados para efeito de alfabetação",
+  with the example "O PERFIL administrativo brasileiro". The list sorted by the
+  whole title, and that entry fell among the surnames in O, before OLIVEIRA. A
+  style source map stores the title without its initial article or
+  monosyllable — the prepositions, contractions and conjunctions of one
+  syllable — in `sorttitle`, in the five languages of the class; the printed
+  title does not change. The same list now decides the capitals of an entry by
+  title (4.3.2.14; NBR 6023:2025), "NOS CANAVIAIS, mutilações...", where only
+  Portuguese and English articles counted, and the cut of the title in the
+  citation (#138). A monosyllable that is a full word, such as "Sol", counts.
 - **The subtitle follows the title after a colon, out of the highlight**
   (#131). 4.3.3: "o título deve ser separado do subtítulo por dois pontos. Os
   títulos dos documentos referenciados devem ser destacados" — the highlight

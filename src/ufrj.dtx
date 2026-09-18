@@ -187,6 +187,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \changes{v5.0}{2026/09/17}{The citation of a corporate author with a subordinate body uses only the first segment, with initial capitals -- (Brasil, 1995) for BRASIL. Ministerio da Educacao -- as 4.1.1.2 shows and 4.4.1 requires; it repeated the whole hierarchy in capitals. The list keeps the name as typed.}
 % \changes{v5.0}{2026/09/18}{A corporate author is typed as it is written -- Brasil. Ministerio da Educacao -- and the class sets the capitals: in the list only the entry element, up to the first full stop and without the qualifier in parentheses, goes to capitals (BRASIL. Ministerio da Educacao; RIO DE JANEIRO (Estado). Secretaria...), and the citation uses the entry element as typed, so an acronym stays one -- (Brasil, 1995), (IBGE, 2011). Until now the author typed the entry in capitals and the citation had to convert it back.}
 % \changes{v5.0}{2026/09/17}{A citation by title entry reads (Ingles, 2012, p. 7): the title without subtitle, no italics, a comma before the year (4.1.1.1.2, 4.1.1.2a). authoryear-comp set it in italics and separated it from the year by a space.}
+% \changes{v5.0}{2026/09/18}{A citation by title is cut as NBR 10520:2023 (6.1.1.4) requires: the only word of a one-word title, the first word and [...] of a longer one -- (Anteprojeto [...], 1987) --, and an initial article or monosyllable with the next word and [...] -- (A flor [...], 1995), (Nos canaviais [...], 1995). An initial monosyllable also goes to capitals with the next word in the list (NOS CANAVIAIS) and is ignored in the alphabetical order, as articles already were (4.2, 4.3.2.14).}
 % \changes{v5.0}{2026/09/17}{The month of a date is abbreviated in the language of the publication, given by the langid of the entry, from the tables of NBR 6023 Annex A -- Sept. 2021 for an English article (4.3.5.5.1); it followed the document's language. The rest of the entry stays in the document's language.}
 % \changes{v5.0}{2026/09/17}{Film and game: director and producer are names, printed in direct order after a colon -- Direcao: Walter Sales Junior -- as in the examples of 4.2.9, and the version takes the place of the edition, before the imprint (4.3.4). They were literal lists, printed as typed, and the version closed the entry.}
 % \changes{v5.0}{2026/09/17}{A part of a monograph carries the book's author and subtitle after In:, and the chapter before the pages -- cap. 1, p. 23-64 (4.2.1.3); bookauthor and booksubtitle vanished, and the chapter came after the pages.}
@@ -2457,17 +2458,31 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \begin{tabular}{@{}lll@{}}
 % \textbf{Comando} & \textbf{Autor-data} & \textbf{Com \texttt{numbers}} \\
 % \hline
-% |\cite{x}|        & (SOBRENOME, 2026)          & (1) \\
-% |\citet{x}|       & SOBRENOME (2026)           & SOBRENOME (1) \\
-% |\citep{x}|       & (SOBRENOME, 2026)          & (1) \\
-% |\textcite{x}|    & SOBRENOME (2026)           & SOBRENOME (1) \\
-% |\parencite{x}|   & (SOBRENOME, 2026)          & (1) \\
-% |\citeauthor{x}|  & SOBRENOME                  & SOBRENOME \\
+% |\cite{x}|        & (Sobrenome, 2026)          & (1) \\
+% |\citet{x}|       & Sobrenome (2026)           & Sobrenome (1) \\
+% |\citep{x}|       & (Sobrenome, 2026)          & (1) \\
+% |\textcite{x}|    & Sobrenome (2026)           & Sobrenome (1) \\
+% |\parencite{x}|   & (Sobrenome, 2026)          & (1) \\
+% |\citeauthor{x}|  & Sobrenome                  & Sobrenome \\
 % |\citeyear{x}|    & 2026                       & 2026 \\
 % |\citetitle{x}|   & o título da obra         & o título da obra \\
 % |\nocite{x}|      & nada; só entra na lista  & idem \\
 % \end{tabular}
 % \end{center}
+%
+% Na chamada, o nome vai em maiúsculas e minúsculas, como você o escreveu ---
+% ``(Castro, 1978)'' ---; a caixa alta é só da lista (4.1.1.2a; NBR
+% 10520:2023).
+%
+% \textbf{Obra sem autor.} A chamada vai pelo título, cortado como a NBR
+% 10520:2023 manda (6.1.1.4): a palavra só, num título de uma palavra ---
+% ``(Inglês, 2012)'' ---; a primeira palavra e \texttt{[...]}, num título mais
+% longo --- ``(Anteprojeto [...], 1987)'' ---; e, num título que começa por
+% artigo ou monossílabo, ele, a palavra seguinte e \texttt{[...]} --- ``(A flor
+% [...], 1995)'', ``(Nos canaviais [...], 1995)''. O subtítulo não entra. Na
+% lista, a mesma palavra vai em caixa alta, com o artigo ou o monossílabo que a
+% preceder --- ``A FLOR prometida'' ---, e a ordem alfabética os ignora (4.2).
+% Se quiser outra forma na chamada, |shorttitle = {...}| vence.
 %
 % \subsection{Página citada, tradução nossa, e \emph{apud}}
 %
@@ -8470,11 +8485,14 @@ postamble
 
 % --- Titles: bold for whole-document types; plain for parts; entry-by-title
 %     (no author/editor) -> not bold, first word in CAPS (ABNT 4.2). ---
-% \ufrjUCtitle uppercases the first SIGNIFICANT word of the title (ABNT 4.2).
-% If the title starts with an article (o/a/os/as/um/uma/uns/umas, the/an), the
-% article AND the next word are uppercased; otherwise just the first word. The
-% delimited macros split off words; \ufrjUCkeep strips the trailing-space
-% sentinel so no spurious space is left before the following punctuation.
+% \ufrjUCtitle poe em caixa alta a primeira palavra SIGNIFICATIVA do titulo
+% (4.2 e 4.3.2.14 do Manual; NBR 6023:2025). Se o titulo comeca por artigo ou
+% por monossilabo -- preposicao, contracao ou conjuncao de uma silaba --, ele
+% e a palavra seguinte vao para caixa alta: "A FLOR prometida", "NOS
+% CANAVIAIS, mutilacoes..."; senao, so a primeira: "ANTEPROJETO de lei". Ate
+% 18/09/2026 so o artigo contava, e so em portugues e ingles. As macros
+% delimitadas separam as palavras; \ufrjUCkeep tira o espaco sentinela do fim,
+% para nao sobrar espaco antes da pontuacao seguinte.
 \protected\def\ufrjUCtitle#1{\ufrjUCtitleA#1 \ufrjUCstop}
 \protected\def\ufrjUCtitleA#1 #2\ufrjUCstop{%
   \ufrjUCifart{#1}
@@ -8483,14 +8501,48 @@ postamble
 \protected\def\ufrjUCtitleB#1 #2\ufrjUCstop{%
   \MakeUppercase{#1}\ifblank{#2}{}{\space\ufrjUCkeep#2\ufrjUCstop}}
 \protected\def\ufrjUCkeep#1 \ufrjUCstop{#1}
-% \ufrjUCifart{word}{if-article}{if-not}: case-insensitive membership test.
-\protected\def\ufrjUCifart#1{%
-  \begingroup
-  \lowercase{\def\ufrjUC@w{#1}}%
-  \edef\ufrjUC@w{,\ufrjUC@w,}%
-  \expandafter\in@\expandafter{\ufrjUC@w}{,a,o,as,os,um,uma,uns,umas,the,an,}%
-  \ifin@\aftergroup\@firstoftwo\else\aftergroup\@secondoftwo\fi
-  \endgroup}
+% As palavras que nao contam (#138, #141): os artigos e os monossilabos --
+% preposicoes, contracoes e conjuncoes de uma silaba -- dos cinco idiomas da
+% classe. A mesma lista serve a caixa alta da entrada pelo titulo (aqui), a
+% ordem alfabetica, que a 4.2 manda fazer sem elas (o mapa de sorttitle, mais
+% abaixo, que tem de trazer as MESMAS palavras -- o rt60 confere), e o corte do
+% titulo na chamada (\ufrj@titulochamada, no ufrj.cbx). Um monossilabo que e
+% palavra plena, como "Sol" ou "Paz", conta: a regra e das palavras que nao sao
+% significativas.
+%
+% \ufrjUCifart{palavra}{se nao conta}{se conta} compara sem caixa. A troca de
+% caixa e a do l3text, que baixa "A" com crase no pdfLaTeX (o \lowercase nao
+% baixa letra acentuada), e a comparacao e de cadeia, que nao depende da
+% categoria dos caracteres.
+\ExplSyntaxOn
+\clist_const:Nn \c_ufrj_naosignificativas_clist
+  {
+    o, a, os, as, um, uma, uns, umas, à, às, ao, aos, com, da, das, de, do,
+    dos, em, na, nas, no, nos, num, nuns, por, sem, sob, e, mas, nem, ou, que,
+    se,
+    the, an, of, in, on, at, to, for, by, and, or, from, with,
+    el, la, los, las, un, una, unos, unas, del, al, en, con, sin, y,
+    le, les, une, des, du, au, aux, et, par, sur, dans, pour,
+    il, lo, gli, uno, di, ai, per, su
+  }
+\str_new:N \l__ufrj_palavra_str
+\bool_new:N \l__ufrj_naosig_bool
+\prg_new_protected_conditional:Npnn \ufrj_se_nao_significativa:n #1 { T , F , TF }
+  {
+    \str_set:Nx \l__ufrj_palavra_str { \text_lowercase:n {#1} }
+    \bool_set_false:N \l__ufrj_naosig_bool
+    \clist_map_inline:Nn \c_ufrj_naosignificativas_clist
+      {
+        \str_if_eq:VnT \l__ufrj_palavra_str {##1}
+          { \bool_set_true:N \l__ufrj_naosig_bool \clist_map_break: }
+      }
+    \bool_if:NTF \l__ufrj_naosig_bool
+      { \prg_return_true: }
+      { \prg_return_false: }
+  }
+\prg_generate_conditional_variant:Nnn \ufrj_se_nao_significativa:n { V } { T , F , TF }
+\cs_set_eq:NN \ufrjUCifart \ufrj_se_nao_significativa:nTF
+\ExplSyntaxOff
 \DeclareFieldFormat{title}{%
   \ifboolexpr{ test {\ifnameundef{labelname}} }
     {#1}%
@@ -8563,11 +8615,14 @@ postamble
                replace={[\\emph{s. n.}]}]}
 % A 4.2: "Os artigos e palavras monossilabicas nao sao considerados para
 % efeito de alfabetacao" -- "O PERFIL administrativo brasileiro" alfabeta por
-% PERFIL (#141). O sorting=nyt ordenava pelo titulo inteiro, e a entrada ficava
-% entre os sobrenomes com O. O mapa guarda em sorttitle o titulo sem o artigo
-% inicial, nos idiomas da classe; o titulo impresso nao muda.
+% PERFIL, e "NOS CANAVIAIS" por CANAVIAIS (#141). O sorting=nyt ordenava pelo
+% titulo inteiro, e a entrada ficava entre os sobrenomes com O. O mapa guarda
+% em sorttitle o titulo sem o artigo ou o monossilabo inicial; o titulo
+% impresso nao muda. As palavras sao as de \c_ufrj_naosignificativas_clist,
+% acima, na mesma ordem (o \regexp so detokeniza, e nao expandiria a lista; o
+% rt60 confere que as duas sao iguais), e o matchi nao distingue caixa.
     \map{\step[fieldsource=title,
-               match=\regexp{\A(O|A|Os|As|Um|Uma|Uns|Umas|The|An|El|La|Los|Las|Le|Les|Il|Lo|Gli)\s+(.+)\Z},
+               matchi=\regexp{\A(o|a|os|as|um|uma|uns|umas|à|às|ao|aos|com|da|das|de|do|dos|em|na|nas|no|nos|num|nuns|por|sem|sob|e|mas|nem|ou|que|se|the|an|of|in|on|at|to|for|by|and|or|from|with|el|la|los|las|un|una|unos|unas|del|al|en|con|sin|y|le|les|une|des|du|au|aux|et|par|sur|dans|pour|il|lo|gli|uno|di|ai|per|su)\s+(.+)\Z},
                final]
          \step[fieldset=sorttitle, fieldvalue={$2}]}
   }%
@@ -9281,11 +9336,64 @@ postamble
 % para "INGLES: guia de conversacao". O authoryear-comp poe o titulo em italico
 % (ou entre aspas, conforme o tipo da entrada) e o separa do ano por espaco:
 % "(Guia 2012, p. 7)". O formato com asterisco limpa os formatos por tipo, e o
-% delimitador entre titulo e ano passa a virgula. O labeltitle e o titulo sem o
-% subtitulo, como no exemplo; a caixa alta da primeira palavra e coisa da LISTA
-% (o formato titlecase), e nao chega a chamada.
+% delimitador entre titulo e ano passa a virgula. A caixa alta da primeira
+% palavra e coisa da LISTA (o formato titlecase), e nao chega a chamada.
 \DeclareFieldFormat*{citetitle}{#1}
 \DeclareDelimFormat{nonameyeardelim}{\addcomma\space}
+% O corte do titulo (NBR 10520:2023, 6.1.1.4, a edicao que o Manual adota).
+% A chamada pelo titulo se faz pela unica palavra, se o titulo tem uma --
+% "(Ingles, 2012, p. 7)" --; pela primeira palavra seguida de [...], se tem
+% mais -- "(Anteprojeto [...], 1987, p. 55)" para "ANTEPROJETO de lei" --; e,
+% se comeca por artigo ou monossilabo, por ele, pela palavra seguinte e por
+% [...]: "(A flor [...], 1995, p. 4)", "(Nos canaviais [...], 1995, p. 12)".
+% O Manual so diz "pelo titulo de entrada", e a classe deixava o titulo
+% inteiro. O titulo e o que vem antes do subtitulo -- que esta no campo
+% subtitle ou, digitado junto, depois de ": " no proprio title --, e a
+% pontuacao que fecha a palavra cortada sai. As palavras que nao contam sao as
+% do ufrj.bbx (\c_ufrj_naosignificativas_clist). O shorttitle, quando o autor o
+% da, vence. So a chamada muda: o \citetitle continua com o titulo inteiro.
+% O \@ depois do [...] devolve o fator de espaco neutro: o rastreador de
+% pontuacao do biblatex le o fator de espaco, o "]" nao o muda, e os pontos do
+% [...] passavam por fim de frase -- a virgula antes do ano sumia.
+\ExplSyntaxOn
+\seq_new:N \l__ufrj_tit_seq
+\tl_new:N \l__ufrj_tit_tl
+\tl_new:N \l__ufrj_pal_tl
+\tl_const:Nx \c__ufrj_doispontos_tl { \c_colon_str \c_space_tl }
+\cs_generate_variant:Nn \seq_set_split:Nnn { NV }
+\cs_new_protected:Npn \__ufrj_sem_pontuacao:N #1
+  { \regex_replace_once:nnN { [,.;\x{3A}]+ \Z } { } #1 }
+\cs_new_protected:Npn \ufrj_titulo_chamada:n #1
+  {
+    \seq_set_split:NVn \l__ufrj_tit_seq \c__ufrj_doispontos_tl {#1}
+    \tl_set:Nx \l__ufrj_tit_tl { \seq_item:Nn \l__ufrj_tit_seq { 1 } }
+    \seq_set_split:NnV \l__ufrj_tit_seq { ~ } \l__ufrj_tit_tl
+    \seq_remove_all:Nn \l__ufrj_tit_seq { }
+    \int_compare:nNnTF { \seq_count:N \l__ufrj_tit_seq } < { 2 }
+      {
+        \__ufrj_sem_pontuacao:N \l__ufrj_tit_tl
+        \l__ufrj_tit_tl
+      }
+      {
+        \seq_pop_left:NN \l__ufrj_tit_seq \l__ufrj_pal_tl
+        \ufrj_se_nao_significativa:VT \l__ufrj_pal_tl
+          {
+            \l__ufrj_pal_tl \c_space_tl
+            \seq_pop_left:NN \l__ufrj_tit_seq \l__ufrj_pal_tl
+          }
+        \__ufrj_sem_pontuacao:N \l__ufrj_pal_tl
+        \l__ufrj_pal_tl
+        \seq_if_empty:NF \l__ufrj_tit_seq { \c_space_tl [...] \@ }
+      }
+  }
+\cs_set_eq:NN \ufrj@titulochamada \ufrj_titulo_chamada:n
+\ExplSyntaxOff
+\DeclareFieldFormat{ufrj:titulochamada}{%
+  \iffieldundef{shorttitle}{\ufrj@titulochamada{#1}}{#1}}
+\renewbibmacro*{cite:label}{%
+  \iffieldundef{label}
+    {\printtext[bibhyperref]{\printfield[ufrj:titulochamada]{labeltitle}}}
+    {\printtext[bibhyperref]{\printfield{label}}}}
 
 % --- Entidade com orgao subordinado na chamada (4.1.1.2 e 4.4.1, #144) ---------
 % A 4.1.1.2 cita a obra de entidade pela ENTRADA, com as iniciais maiusculas e
