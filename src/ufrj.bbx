@@ -169,6 +169,10 @@
     \map{\step[fieldsource=publisher,
                match=\regexp{\[s\.\s*n\.\]},
                replace={[\\emph{s. n.}]}]}
+    \map{\step[fieldsource=title,
+               match=\regexp{\A(O|A|Os|As|Um|Uma|Uns|Umas|The|An|El|La|Los|Las|Le|Les|Il|Lo|Gli)\s+(.+)\Z},
+               final]
+         \step[fieldset=sorttitle, fieldvalue={$2}]}
   }%
 }
 

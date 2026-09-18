@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
-"""Teste de conformidade da CoppeTeX. NAO roda na suite normal.
+"""Teste de conformidade da CoppeTeX.
 
 BUG: (desconformidade, 4.2) na ordem alfabetica da lista de referencias, o artigo inicial de uma entrada pelo titulo contava: "O PERFIL do engenheiro" ficava entre os sobrenomes com O, antes de OLIVEIRA (#141).
-ABERTO: #141
 
 A 4.2 do Manual UFRJ/SiBI diz que artigos e palavras monossilabicas nao sao
 considerados para efeito de alfabetacao -- "O PERFIL" alfabeta por PERFIL. O

@@ -167,6 +167,13 @@ run it, and the fix removes the mark.
 
 ### Fixed
 
+- **An initial article does not count in the alphabetical order** (#141).
+  4.2: "os artigos e palavras monossilábicas não são considerados para efeito
+  de alfabetação", with the example "O PERFIL administrativo brasileiro". The
+  list sorted by the whole title, and that entry fell among the surnames in O,
+  before OLIVEIRA. A style source map stores the title without its initial
+  article in `sorttitle` (Portuguese, English, Spanish, French and Italian
+  articles); the printed title does not change.
 - **The subtitle follows the title after a colon, out of the highlight**
   (#131). 4.3.3: "o título deve ser separado do subtítulo por dois pontos. Os
   títulos dos documentos referenciados devem ser destacados" — the highlight
