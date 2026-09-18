@@ -184,6 +184,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \changes{v5.0}{2026/09/15}{COPPE is the unit style ufrj-coppe, with its own source (ufrj-coppe.dtx and ufrj-coppe.ins), its own manual (ufrj-coppe.pdf) and every example document, which all load it. A work begun with the class coppe compiles as it is: coppe.cls is now a compatibility class that loads ufrj with the same options, loads ufrj-coppe and writes one warning, and the style keeps the old public names as aliases, the old colophon pieces answering renewcommand by the old name, the three internal names that auxiliary files written by the old class contain, the page style coppe and the bib field coppedegree.}
 % \changes{v5.0}{2026/09/15}{The colophon names the class and the project apart -- Foi utilizada a classe ufrj, do projeto CoppeTeX -- where it said a classe CoppeTeX, which is the name of the project and not of a class. The norm it cites is the one the unit declares with ufrjdeclarenorm, and the UFRJ/SiBI Manual when no unit declares one.}
 % \changes{v5.0}{2026/09/15}{The documentation follows the split: this manual (ufrj.pdf) describes the class and the interface a unit style uses; ufrj-coppe.pdf describes only what COPPE declares; manual.pdf, the norm, is written for UFRJ with COPPE as the example; and the migration guide from 4.x to 5.0 tells the author of a work begun with the class coppe what to change.}
+% \changes{v5.0}{2026/09/17}{mastersthesis and phdthesis entries -- the ones Google Scholar, Zotero and JabRef export -- read Dissertacao (Mestrado) and Tese (Doutorado), with the em dash before the institution; a literal type with a course no longer prints "( em ...)" (4.3.8.3).}
 % \changes{v5.0}{2026/09/17}{Book and report follow the ABNT order: the edition as number, full stop and abbreviation (3. ed.), the volumes in the physical description after the imprint (2 v.), and the series at the end in parentheses with a comma before its number -- (Colecao Saber, 13) -- per 4.3.4, 4.3.6.1 and 4.3.7. biblatex's drivers put volumes and series before the imprint, and brazilian.lbx wrote the edition as an ordinal.}
 % \changes{v5.0}{2026/09/17}{The translator is written in direct order after the title -- Traducao de Julia Almeida -- and the original title closes the reference in a note, Traducao de: <origtitle> (4.3.2.10, 4.3.8.1). The translator took the author's name format, inverted and in capitals, and no driver printed origtitle.}
 % \changes{v5.0}{2026/09/17}{The DOI reads DOI: https://doi.org/<doi>, as the examples of 4.2.3.5 and 4.2.4.3 show; biblatex set the acronym in small caps, which Latin Modern Sans lacks, and printed the bare identifier.}
@@ -8727,12 +8728,40 @@ postamble
 \newcommand*\ufrj@degword{%
   \iffieldundef{ufrjdegree}
     {\iffieldequalstr{type}{mscdiss}{\bibstring{ufrjmscdeg}}{%
+     \iffieldequalstr{type}{mathesis}{\bibstring{ufrjmscdeg}}{%
      \iffieldequalstr{type}{dscthesis}{\bibstring{ufrjdscdeg}}{%
      \iffieldequalstr{type}{phdthesis}{\bibstring{ufrjphddeg}}{%
-     \iffieldequalstr{type}{tcc}{\bibstring{ufrjtccdeg}}{}}}}}
+     \iffieldequalstr{type}{tcc}{\bibstring{ufrjtccdeg}}{}}}}}}
     {\printfield{ufrjdegree}}}
-\DeclareFieldFormat{course}{%
-  \mkbibparens{\ufrj@degword\addspace\ufrjstring{in:}\addspace#1}}
+% O grupo entre parenteses da 4.3.8.3, "grau (...) e curso entre parenteses"
+% (#137). Tres casos, e nenhum deles e "( em Engenharia...)", que era o que saia
+% quando o tipo era digitado por extenso e o grau, portanto, nao era conhecido:
+%   grau conhecido e curso  -> "(Mestrado em Engenharia Civil)"
+%   grau conhecido, sem curso -> "(Mestrado)"   -- o @mastersthesis do JabRef
+%   so o curso              -> "(Engenharia Metalurgica e de Materiais)"
+% O grau e conhecido quando a entrada traz ufrjdegree, ou quando o tipo e um dos
+% que a classe reconhece -- os dela (mscdiss, dscthesis, tcc) e os dois do
+% BibTeX (mathesis e phdthesis, que o biber poe no lugar de @mastersthesis e
+% @phdthesis).
+\newcommand*\ufrj@ifdegknown[2]{%
+  \iffieldundef{ufrjdegree}
+    {\ifboolexpr{ test {\iffieldequalstr{type}{mscdiss}}
+                  or test {\iffieldequalstr{type}{mathesis}}
+                  or test {\iffieldequalstr{type}{dscthesis}}
+                  or test {\iffieldequalstr{type}{phdthesis}}
+                  or test {\iffieldequalstr{type}{tcc}} }
+       {#1}{#2}}
+    {#1}}
+\newbibmacro*{ufrj:degree+course}{%
+  \ufrj@ifdegknown
+    {\printtext[parens]{%
+       \ufrj@degword
+       \iffieldundef{course}
+         {}
+         {\addspace\ufrjstring{in:}\addspace\printfield[noformat]{course}}}}
+    {\iffieldundef{course}
+       {}
+       {\printtext[parens]{\printfield[noformat]{course}}}}}
 % A ordem da 4.2.1.1 para tese e dissertacao:
 %   AUTOR. Titulo. ano. NNN f. Tipo (Grau em Curso) -- Instituicao, Local, ano.
 % A data aparece duas vezes de proposito, como nos exemplos do manual: uma
@@ -8747,10 +8776,14 @@ postamble
   \newunit\newblock
   \printfield{pagetotal}%
   \newunit\newblock
-  \printfield{type}\setunit*{\addspace}\printfield{course}%
+  \printfield{type}%
+  \setunit{\addspace}\usebibmacro{ufrj:degree+course}%
+% O travessao antes da vinculacao academica vai com \setunit, e nao com
+% \setunit*: o asterisco so dispara se o campo anterior imprimiu alguma coisa,
+% e sem curso a instituicao colava no tipo -- "Tese Universidade...".
   \iflistundef{institution}
     {}
-    {\setunit*{\addspace\textemdash\addspace}\printlist{institution}}%
+    {\setunit{\addspace\textemdash\addspace}\printlist{institution}}%
   \setunit*{\addcomma\space}\printlist{location}%
   \setunit*{\addcomma\space}\printdate%
   \newunit\newblock
@@ -9191,6 +9224,7 @@ postamble
   depositor     = {{Depositante}{Depositante}},
   ufrjscale    = {{Escala}{Escala}},
   mscdiss       = {{Dissertação}{Dissertação}},
+  mathesis      = {{Dissertação}{Dissertação}},
   dscthesis     = {{Tese}{Tese}},
   phdthesis     = {{Tese}{Tese}},
   tcc           = {{Trabalho de Conclusão de Curso}{Trabalho de Conclusão de Curso}},
@@ -9219,6 +9253,7 @@ postamble
   depositor     = {{Depositor}{Depositor}},
   ufrjscale    = {{Scale}{Scale}},
   mscdiss       = {{M\adddot Sc\adddot\ Dissertation}{M\adddot Sc\adddot\ Diss\adddot}},
+  mathesis      = {{M\adddot Sc\adddot\ Dissertation}{M\adddot Sc\adddot\ Diss\adddot}},
   dscthesis     = {{D\adddot Sc\adddot\ Thesis}{D\adddot Sc\adddot\ Thesis}},
   phdthesis     = {{Ph\adddot D\adddot\ Thesis}{Ph\adddot D\adddot\ Thesis}},
   tcc           = {{Undergraduate Thesis}{Undergraduate Thesis}},
@@ -9247,6 +9282,7 @@ postamble
   depositor     = {{Solicitante}{Solicitante}},
   ufrjscale    = {{Escala}{Escala}},
   mscdiss       = {{Tesis de Maestría}{Tesis de Maestría}},
+  mathesis      = {{Tesis de Maestría}{Tesis de Maestría}},
   dscthesis     = {{Tesis Doctoral}{Tesis Doctoral}},
   phdthesis     = {{Tesis Doctoral}{Tesis Doctoral}},
   tcc           = {{Trabajo de Fin de Carrera}{Trabajo de Fin de Carrera}},
@@ -9275,6 +9311,7 @@ postamble
   depositor     = {{Déposant}{Déposant}},
   ufrjscale    = {{Échelle}{Échelle}},
   mscdiss       = {{Mémoire de Master}{Mémoire de Master}},
+  mathesis      = {{Mémoire de Master}{Mémoire de Master}},
   dscthesis     = {{Thèse de Doctorat}{Thèse de Doctorat}},
   phdthesis     = {{Thèse de Doctorat}{Thèse de Doctorat}},
   tcc           = {{Mémoire de fin d'études}{Mémoire de fin d'études}},
@@ -9297,6 +9334,7 @@ postamble
   depositor     = {{Depositante}{Depositante}},
   ufrjscale    = {{Scala}{Scala}},
   mscdiss       = {{Tesi di Laurea Magistrale}{Tesi di Laurea Magistrale}},
+  mathesis      = {{Tesi di Laurea Magistrale}{Tesi di Laurea Magistrale}},
   dscthesis     = {{Tesi di Dottorato}{Tesi di Dottorato}},
   phdthesis     = {{Tesi di Dottorato}{Tesi di Dottorato}},
   tcc           = {{Tesi di Laurea Triennale}{Tesi di Laurea Triennale}},

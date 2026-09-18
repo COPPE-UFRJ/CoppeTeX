@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
-"""Teste de conformidade da CoppeTeX. NAO roda na suite normal.
+"""Teste de conformidade da CoppeTeX.
 
 BUG: (desconformidade, 4.2.1.1e e 4.3.8.3) as entradas @mastersthesis e @phdthesis -- as que o Google Academico, o Zotero e o JabRef exportam -- saiam como "2016. Diss. de mestr. COPPE/UFRJ, Rio de Janeiro, 2016." e "Tese Universidade...", sem o grau entre parenteses e sem o travessao antes da vinculacao academica; e um tipo digitado por extenso com curso saia "( em Engenharia ...)" (#137).
-ABERTO: #137
 
 A 4.3.8.3 do Manual UFRJ/SiBI pede, no trabalho academico: tipo do trabalho,
 grau e curso entre parenteses, vinculacao academica, local e data; os exemplos

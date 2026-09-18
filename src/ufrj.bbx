@@ -386,12 +386,30 @@
 \newcommand*\ufrj@degword{%
   \iffieldundef{ufrjdegree}
     {\iffieldequalstr{type}{mscdiss}{\bibstring{ufrjmscdeg}}{%
+     \iffieldequalstr{type}{mathesis}{\bibstring{ufrjmscdeg}}{%
      \iffieldequalstr{type}{dscthesis}{\bibstring{ufrjdscdeg}}{%
      \iffieldequalstr{type}{phdthesis}{\bibstring{ufrjphddeg}}{%
-     \iffieldequalstr{type}{tcc}{\bibstring{ufrjtccdeg}}{}}}}}
+     \iffieldequalstr{type}{tcc}{\bibstring{ufrjtccdeg}}{}}}}}}
     {\printfield{ufrjdegree}}}
-\DeclareFieldFormat{course}{%
-  \mkbibparens{\ufrj@degword\addspace\ufrjstring{in:}\addspace#1}}
+\newcommand*\ufrj@ifdegknown[2]{%
+  \iffieldundef{ufrjdegree}
+    {\ifboolexpr{ test {\iffieldequalstr{type}{mscdiss}}
+                  or test {\iffieldequalstr{type}{mathesis}}
+                  or test {\iffieldequalstr{type}{dscthesis}}
+                  or test {\iffieldequalstr{type}{phdthesis}}
+                  or test {\iffieldequalstr{type}{tcc}} }
+       {#1}{#2}}
+    {#1}}
+\newbibmacro*{ufrj:degree+course}{%
+  \ufrj@ifdegknown
+    {\printtext[parens]{%
+       \ufrj@degword
+       \iffieldundef{course}
+         {}
+         {\addspace\ufrjstring{in:}\addspace\printfield[noformat]{course}}}}
+    {\iffieldundef{course}
+       {}
+       {\printtext[parens]{\printfield[noformat]{course}}}}}
 \DeclareBibliographyDriver{thesis}{%
   \usebibmacro{bibindex}\usebibmacro{begentry}%
   \usebibmacro{author}%
@@ -402,10 +420,11 @@
   \newunit\newblock
   \printfield{pagetotal}%
   \newunit\newblock
-  \printfield{type}\setunit*{\addspace}\printfield{course}%
+  \printfield{type}%
+  \setunit{\addspace}\usebibmacro{ufrj:degree+course}%
   \iflistundef{institution}
     {}
-    {\setunit*{\addspace\textemdash\addspace}\printlist{institution}}%
+    {\setunit{\addspace\textemdash\addspace}\printlist{institution}}%
   \setunit*{\addcomma\space}\printlist{location}%
   \setunit*{\addcomma\space}\printdate%
   \newunit\newblock

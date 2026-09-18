@@ -167,6 +167,18 @@ run it, and the fix removes the mark.
 
 ### Fixed
 
+- **Theses and dissertations from the standard BibTeX types** (#137).
+  4.3.8.3 asks for the type of work, the degree and course in parentheses, the
+  academic affiliation, place and date — "Dissertação (Mestrado em …) —
+  Vinculação, Local, ano". The `@mastersthesis` and `@phdthesis` entries that
+  Google Scholar, Zotero and JabRef export came out as "Diss. de mestr.
+  COPPE/UFRJ…" and "Tese Universidade…": no degree, no dash; and a type typed
+  in full with a course printed "( em Engenharia …)". Now `mathesis` reads
+  "Dissertação" with the degree "Mestrado" in the five languages; the
+  parenthetical is built by one macro with three cases — degree and course,
+  degree alone ("(Mestrado)"), course alone — and never "( em"; and the em dash
+  before the institution uses `\setunit`, since the starred form only fired
+  when the course had printed something.
 - **Book and report in the ABNT order** (#133): the edition as number, full
   stop and abbreviation ("3. ed.", 4.3.4; a literal such as "2. ed. rev." is
   printed as typed), the number of volumes in the physical description after
