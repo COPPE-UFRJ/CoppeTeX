@@ -142,6 +142,16 @@
 \DeclareFieldFormat{journaltitle}{\mkbibbold{#1}}
 \DeclareFieldFormat{booktitle}{\mkbibbold{#1}}
 \DeclareFieldFormat{maintitle}{\mkbibbold{#1}}
+\renewcommand*{\subtitlepunct}{\addcolon\space}
+\DeclareFieldFormat{subtitlecase}{#1}
+\renewbibmacro*{title}{%
+  \ifboolexpr{ test {\iffieldundef{title}} and test {\iffieldundef{subtitle}} }
+    {}
+    {\printtext[title]{\printfield[titlecase]{title}}%
+     \setunit{\subtitlepunct}%
+     \printfield[subtitlecase]{subtitle}%
+     \newunit}%
+  \printfield{titleaddon}}
 
 \DeclareFieldFormat{pagetotal}{#1\addnbspace p\adddot}
 \DeclareFieldFormat[thesis]{pagetotal}{#1\addnbspace f\adddot}

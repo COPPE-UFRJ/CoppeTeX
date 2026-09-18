@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
-"""Teste de conformidade da CoppeTeX. NAO roda na suite normal.
+"""Teste de conformidade da CoppeTeX.
 
 BUG: (desconformidade, 4.3.3 e 4.2) com o campo subtitle, a referencia separava titulo e subtitulo por PONTO ("Titulo. subtitulo"), punha o subtitulo em NEGRITO junto com o titulo, e na entrada pelo titulo passava a primeira palavra do subtitulo para caixa alta ("GUIA. PARA desenvolver") (#131).
-ABERTO: #131
 
 A 4.3.3 do Manual UFRJ/SiBI separa titulo e subtitulo por dois pontos, e os
 exemplos da 4.2 destacam so o titulo -- o subtitulo fica sem destaque. Na

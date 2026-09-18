@@ -167,6 +167,15 @@ run it, and the fix removes the mark.
 
 ### Fixed
 
+- **The subtitle follows the title after a colon, out of the highlight**
+  (#131). 4.3.3: "o título deve ser separado do subtítulo por dois pontos. Os
+  títulos dos documentos referenciados devem ser destacados" — the highlight
+  belongs to the title. biblatex's `title` macro separated them with a full
+  stop and printed both inside the title format, which is where the bold and,
+  in an entry by title, the capitals of the first word are applied: the
+  subtitle came out after a full stop, in bold, and in an entry by title in
+  capitals too ("GUIA. PARA desenvolver"). The title now goes alone into its
+  format, and the subtitle follows with `\subtitlepunct` = colon.
 - **"In:", "et al.", "[S. l.]" and "[s. n.]" are set in italics** (#132).
   4.1.2.2: "todas as expressões latinas e suas abreviaturas devem ser colocadas
   em itálico"; 4.2.1.3(c) says it of "In:" in particular. All four came out
