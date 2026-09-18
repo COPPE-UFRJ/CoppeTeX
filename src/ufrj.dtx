@@ -184,6 +184,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \changes{v5.0}{2026/09/15}{COPPE is the unit style ufrj-coppe, with its own source (ufrj-coppe.dtx and ufrj-coppe.ins), its own manual (ufrj-coppe.pdf) and every example document, which all load it. A work begun with the class coppe compiles as it is: coppe.cls is now a compatibility class that loads ufrj with the same options, loads ufrj-coppe and writes one warning, and the style keeps the old public names as aliases, the old colophon pieces answering renewcommand by the old name, the three internal names that auxiliary files written by the old class contain, the page style coppe and the bib field coppedegree.}
 % \changes{v5.0}{2026/09/15}{The colophon names the class and the project apart -- Foi utilizada a classe ufrj, do projeto CoppeTeX -- where it said a classe CoppeTeX, which is the name of the project and not of a class. The norm it cites is the one the unit declares with ufrjdeclarenorm, and the UFRJ/SiBI Manual when no unit declares one.}
 % \changes{v5.0}{2026/09/15}{The documentation follows the split: this manual (ufrj.pdf) describes the class and the interface a unit style uses; ufrj-coppe.pdf describes only what COPPE declares; manual.pdf, the norm, is written for UFRJ with COPPE as the example; and the migration guide from 4.x to 5.0 tells the author of a work begun with the class coppe what to change.}
+% \changes{v5.0}{2026/09/17}{Date ranges are separated by what they join: a slash between months of the same year (jan./jun. 1981), a hyphen between years (1969-1973), and a current periodical reads 1935- . (4.3.5.5.1). The class had one separator, the slash, and printed 1935/.}
 % \changes{v5.0}{2026/09/17}{Page ranges take a hyphen, in the list and in the citations, as every example of the Manual writes them (p. 7-16); biblatex used an en dash.}
 % \changes{v5.0}{2026/09/17}{The list of references is aligned to the left margin only and not hyphenated, as 4.2 requires: it was justified, and hyphenated to justify.}
 % \changes{v5.0}{2026/09/17}{autoref to an algorithm uses the caption name, Algoritmo; algorithm2e defines algorithmautorefname in lower case, so the text read "como no algoritmo 6.1" under a caption saying "Algoritmo".}
@@ -8264,9 +8265,22 @@ postamble
     {#3}}
 \protected\def\ufrj@ucscanp#1(#2\ufrj@ucstop#3{%
   \ifblank{#2}{\MakeUppercase{#3}}{#3}}
-% A 4.3 separa os meses de um intervalo por barra -- "jan./jun. 1991" --, e o
-% biblatex usa travessao.
-\renewcommand*{\bibdaterangesep}{/}
+% O separador de um intervalo de datas depende do que o intervalo junta
+% (#142). A 4.3 separa os MESES do mesmo ano por barra -- "jan./jun. 1981" --;
+% a 4.3.5.5.1 separa os ANOS de uma publicacao encerrada por hifen --
+% "1969-1973" --, e a publicacao ainda corrente leva "o ano de inicio de
+% publicacao seguida de hifen, um espaco e ponto": "1935- .". O biblatex usa
+% um separador so, e a classe punha barra em todos: o periodico corrente saia
+% "1935/.".
+%
+% Os tres casos se distinguem pelos campos: o intervalo aberto tem endyear
+% DEFINIDO e VAZIO; o de meses tem o mesmo ano nas duas pontas; o resto e de
+% anos.
+\newcommand*\ufrj@abntdaterangesep{%
+  \iffieldequalstr{endyear}{}
+    {\mbox{-}\space}%
+    {\iffieldsequal{year}{endyear}{/}{\mbox{-}}}}
+\renewcommand*{\bibdaterangesep}{\ufrj@abntdaterangesep}
 % Intervalo de paginas com HIFEN (#145): o Manual escreve assim na referencia
 % ("p. 7-16", "Ex.: p. 7-8.") e na chamada ("HANSEN, 1992, p. 347-361"), e o
 % biblatex usa meia-risca. O \mbox segura o intervalo numa linha so.
@@ -8276,7 +8290,9 @@ postamble
 % de idioma -- no comeco da lista e em cada chamada -- e apagariam a definicao.
 % O \DefineBibliographyExtras acrescenta aos extras, e o acrescimo roda depois
 % do que o idioma define.
-\newcommand*\ufrj@abntrangedash{\protected\def\bibrangedash{\mbox{-}}}
+\newcommand*\ufrj@abntrangedash{%
+  \protected\def\bibrangedash{\mbox{-}}%
+  \renewcommand*{\bibdaterangesep}{\ufrj@abntdaterangesep}}
 \ufrj@abntrangedash
 \DefineBibliographyExtras{brazilian}{\ufrj@abntrangedash}
 \DefineBibliographyExtras{english}{\ufrj@abntrangedash}
@@ -9661,9 +9677,6 @@ postamble
 
 @periodical{m-4231,
 %% SÃO PAULO MEDICAL JOURNAL. São Paulo: Associação Paulista de Medicina, 1941- .
-%%! intervalo aberto: a classe fecha com "1941/" porque a 4.3 separa por barra
-%%! o intervalo de MESES ("jan./jun."), e o biblatex usa o mesmo separador
-%%! para os dois. Escolheu-se acertar o caso frequente, o do artigo.
   title  = "São Paulo Medical Journal",
   location   = "São Paulo",
   publisher = "Associação Paulista de Medicina",

@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
-"""Teste de conformidade da CoppeTeX. NAO roda na suite normal.
+"""Teste de conformidade da CoppeTeX.
 
 BUG: (desconformidade, 4.3.5.5.1) a publicacao periodica ainda corrente, com data em aberto (date = {1950/}), saia "1950/." -- e o gabarito da propria classe registrava isso como divergencia ACEITA em tests/adversativa/referencias-manual.bib (#142).
-ABERTO: #142
 
 A 4.3.5.5.1 do Manual UFRJ/SiBI: quando a publicacao e corrente, indica-se o ano
 de inicio seguido de HIFEN, um espaco e ponto ("1950- ."). A classe troca o

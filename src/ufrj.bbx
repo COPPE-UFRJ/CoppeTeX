@@ -80,8 +80,14 @@
     {#3}}
 \protected\def\ufrj@ucscanp#1(#2\ufrj@ucstop#3{%
   \ifblank{#2}{\MakeUppercase{#3}}{#3}}
-\renewcommand*{\bibdaterangesep}{/}
-\newcommand*\ufrj@abntrangedash{\protected\def\bibrangedash{\mbox{-}}}
+\newcommand*\ufrj@abntdaterangesep{%
+  \iffieldequalstr{endyear}{}
+    {\mbox{-}\space}%
+    {\iffieldsequal{year}{endyear}{/}{\mbox{-}}}}
+\renewcommand*{\bibdaterangesep}{\ufrj@abntdaterangesep}
+\newcommand*\ufrj@abntrangedash{%
+  \protected\def\bibrangedash{\mbox{-}}%
+  \renewcommand*{\bibdaterangesep}{\ufrj@abntdaterangesep}}
 \ufrj@abntrangedash
 \DefineBibliographyExtras{brazilian}{\ufrj@abntrangedash}
 \DefineBibliographyExtras{english}{\ufrj@abntrangedash}

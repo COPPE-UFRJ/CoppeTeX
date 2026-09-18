@@ -167,6 +167,15 @@ run it, and the fix removes the mark.
 
 ### Fixed
 
+- **Date ranges are separated by what they join** (#142): a slash between
+  months of the same year ("jan./jun. 1981", 4.3), a hyphen between years
+  ("1969-1973"), and a current periodical reads "1935- ." — "o ano de início de
+  publicação seguida de hífen, um espaço e ponto" (4.3.5.5.1). The class had a
+  single separator, the slash, and printed "1935/."; its own reference answer
+  key recorded that as an accepted divergence, a mark now removed from
+  `exemplo.bib` and from the adversarial base so the checker enforces the
+  norm. The three cases are told apart by the fields: an open range has
+  `endyear` defined and empty.
 - **Page ranges take a hyphen** (#145), in the list and in the citations, as
   every example of the Manual writes them ("p. 7-16"; "HANSEN, 1992, p.
   347-361"). biblatex used an en dash, and redefining `\bibrangedash` in the
