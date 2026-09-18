@@ -184,6 +184,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \changes{v5.0}{2026/09/15}{COPPE is the unit style ufrj-coppe, with its own source (ufrj-coppe.dtx and ufrj-coppe.ins), its own manual (ufrj-coppe.pdf) and every example document, which all load it. A work begun with the class coppe compiles as it is: coppe.cls is now a compatibility class that loads ufrj with the same options, loads ufrj-coppe and writes one warning, and the style keeps the old public names as aliases, the old colophon pieces answering renewcommand by the old name, the three internal names that auxiliary files written by the old class contain, the page style coppe and the bib field coppedegree.}
 % \changes{v5.0}{2026/09/15}{The colophon names the class and the project apart -- Foi utilizada a classe ufrj, do projeto CoppeTeX -- where it said a classe CoppeTeX, which is the name of the project and not of a class. The norm it cites is the one the unit declares with ufrjdeclarenorm, and the UFRJ/SiBI Manual when no unit declares one.}
 % \changes{v5.0}{2026/09/15}{The documentation follows the split: this manual (ufrj.pdf) describes the class and the interface a unit style uses; ufrj-coppe.pdf describes only what COPPE declares; manual.pdf, the norm, is written for UFRJ with COPPE as the example; and the migration guide from 4.x to 5.0 tells the author of a work begun with the class coppe what to change.}
+% \changes{v5.0}{2026/09/17}{A part of a monograph carries the book's author and subtitle after In:, and the chapter before the pages -- cap. 1, p. 23-64 (4.2.1.3); bookauthor and booksubtitle vanished, and the chapter came after the pages.}
 % \changes{v5.0}{2026/09/17}{mastersthesis and phdthesis entries -- the ones Google Scholar, Zotero and JabRef export -- read Dissertacao (Mestrado) and Tese (Doutorado), with the em dash before the institution; a literal type with a course no longer prints "( em ...)" (4.3.8.3).}
 % \changes{v5.0}{2026/09/17}{Book and report follow the ABNT order: the edition as number, full stop and abbreviation (3. ed.), the volumes in the physical description after the imprint (2 v.), and the series at the end in parentheses with a comma before its number -- (Colecao Saber, 13) -- per 4.3.4, 4.3.6.1 and 4.3.7. biblatex's drivers put volumes and series before the imprint, and brazilian.lbx wrote the edition as an ordinal.}
 % \changes{v5.0}{2026/09/17}{The translator is written in direct order after the title -- Traducao de Julia Almeida -- and the original title closes the reference in a note, Traducao de: <origtitle> (4.3.2.10, 4.3.8.1). The translator took the author's name format, inverted and in capitals, and no driver printed origtitle.}
@@ -8689,6 +8690,24 @@ postamble
      \setunit*{\addspace}\printtext{\mkbibparens{\usebibmacro{editorstrg}}}%
      \clearname{editor}%
      \setunit{\adddot\space}}}
+% A 4.2.1.3 pede, depois de "In:", a referencia completa da monografia --
+% autor, titulo e subtitulo -- "repetindo o autor quando e o mesmo da parte", e
+% os exemplos poem o capitulo antes das paginas, depois de ponto: "cap. 1, p.
+% 23-64" (#134). O driver imprimia so o organizador e o booktitle -- o
+% bookauthor e o booksubtitle sumiam -- e o capitulo vinha depois das paginas,
+% colado na data por virgula ("1994, cap. 3").
+%
+% O titulo do livro vai como o titulo da entrada (#131): destaque so no titulo,
+% e o subtitulo depois de dois pontos. O fim da entrada passa pelo
+% doi+eprint+url, que imprime DOI (#136) e endereco -- antes o driver ia direto
+% ao endereco, e o DOI de um capitulo nao saia.
+\newbibmacro*{ufrj:booktitle}{%
+  \ifboolexpr{ test {\iffieldundef{booktitle}} and test {\iffieldundef{booksubtitle}} }
+    {}
+    {\printtext[booktitle]{\printfield[titlecase]{booktitle}}%
+     \setunit{\subtitlepunct}%
+     \printfield[subtitlecase]{booksubtitle}}}
+\DeclareFieldFormat{chapter}{\bibncpstring{chapter}\addnbspace#1}
 \newbibmacro*{ufrj:partdriver}{%
   \usebibmacro{bibindex}\usebibmacro{begentry}%
   \usebibmacro{author/translator+others}%
@@ -8696,8 +8715,11 @@ postamble
   \usebibmacro{title}%
   \newunit\newblock
   \usebibmacro{in:}%
-  \usebibmacro{ufrj:bookeditor}%
-  \printfield{booktitle}%
+  \ifnameundef{bookauthor}
+    {\usebibmacro{ufrj:bookeditor}}
+    {\printnames{bookauthor}%
+     \setunit{\adddot\space}}%
+  \usebibmacro{ufrj:booktitle}%
   \newunit\newblock
   \printfield{edition}%
   \newunit\newblock
@@ -8705,10 +8727,10 @@ postamble
   \setunit*{\addcolon\space}\printlist{publisher}%
   \setunit*{\addcomma\space}\printdate%
   \newunit\newblock
-  \printfield{pages}%
-  \setunit{\addcomma\space}\printfield{chapter}%
+  \printfield{chapter}%
+  \setunit{\addcomma\space}\printfield{pages}%
   \newunit\newblock
-  \usebibmacro{url+urldate}%
+  \usebibmacro{doi+eprint+url}%
   \usebibmacro{finentry}}
 \DeclareBibliographyDriver{incollection}{\usebibmacro{ufrj:partdriver}}
 \DeclareBibliographyDriver{inbook}{\usebibmacro{ufrj:partdriver}}
@@ -9203,7 +9225,8 @@ postamble
   inherit       = {brazilian},
   ufrjtranslationof = {{Tradução de}{Tradução de}},
   bytranslator  = {{Tradução de}{Tradução de}},
-% A 4.3.4 e a 4.3.6.1 abreviam sempre: "3. ed.", "5 v.".
+% A 4.3.4 e a 4.3.6.1 abreviam sempre: "3. ed.", "5 v."; e a 4.2.1.3, "cap. 1".
+  chapter       = {{cap\adddot}{cap\adddot}},
   edition       = {{ed\adddot}{ed\adddot}},
   volumes       = {{v\adddot}{v\adddot}},
   andothers     = {{\mkbibemph{et al\adddot}}{\mkbibemph{et al\adddot}}},

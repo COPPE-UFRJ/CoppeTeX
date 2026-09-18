@@ -357,6 +357,13 @@
      \setunit*{\addspace}\printtext{\mkbibparens{\usebibmacro{editorstrg}}}%
      \clearname{editor}%
      \setunit{\adddot\space}}}
+\newbibmacro*{ufrj:booktitle}{%
+  \ifboolexpr{ test {\iffieldundef{booktitle}} and test {\iffieldundef{booksubtitle}} }
+    {}
+    {\printtext[booktitle]{\printfield[titlecase]{booktitle}}%
+     \setunit{\subtitlepunct}%
+     \printfield[subtitlecase]{booksubtitle}}}
+\DeclareFieldFormat{chapter}{\bibncpstring{chapter}\addnbspace#1}
 \newbibmacro*{ufrj:partdriver}{%
   \usebibmacro{bibindex}\usebibmacro{begentry}%
   \usebibmacro{author/translator+others}%
@@ -364,8 +371,11 @@
   \usebibmacro{title}%
   \newunit\newblock
   \usebibmacro{in:}%
-  \usebibmacro{ufrj:bookeditor}%
-  \printfield{booktitle}%
+  \ifnameundef{bookauthor}
+    {\usebibmacro{ufrj:bookeditor}}
+    {\printnames{bookauthor}%
+     \setunit{\adddot\space}}%
+  \usebibmacro{ufrj:booktitle}%
   \newunit\newblock
   \printfield{edition}%
   \newunit\newblock
@@ -373,10 +383,10 @@
   \setunit*{\addcolon\space}\printlist{publisher}%
   \setunit*{\addcomma\space}\printdate%
   \newunit\newblock
-  \printfield{pages}%
-  \setunit{\addcomma\space}\printfield{chapter}%
+  \printfield{chapter}%
+  \setunit{\addcomma\space}\printfield{pages}%
   \newunit\newblock
-  \usebibmacro{url+urldate}%
+  \usebibmacro{doi+eprint+url}%
   \usebibmacro{finentry}}
 \DeclareBibliographyDriver{incollection}{\usebibmacro{ufrj:partdriver}}
 \DeclareBibliographyDriver{inbook}{\usebibmacro{ufrj:partdriver}}

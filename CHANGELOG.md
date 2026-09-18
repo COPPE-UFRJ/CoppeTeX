@@ -167,6 +167,15 @@ run it, and the fix removes the mark.
 
 ### Fixed
 
+- **A part of a monograph carries the whole book after "In:"** (#134).
+  4.2.1.3 asks for the complete reference of the monograph — author, title and
+  subtitle, repeating the author when it is the same as the part's — and its
+  examples put the chapter before the pages, after a full stop: "cap. 1, p.
+  23-64". `ufrj:partdriver` printed only the organizer and `booktitle`, so
+  `bookauthor` and `booksubtitle` vanished, and the chapter came after the
+  pages ("1994, cap. 3"). The book title follows the rule of #131 (highlight on
+  the title only, subtitle after a colon), "cap." is lower case, and the entry
+  now ends through `doi+eprint+url`, so a chapter's DOI is printed too.
 - **Theses and dissertations from the standard BibTeX types** (#137).
   4.3.8.3 asks for the type of work, the degree and course in parentheses, the
   academic affiliation, place and date — "Dissertação (Mestrado em …) —

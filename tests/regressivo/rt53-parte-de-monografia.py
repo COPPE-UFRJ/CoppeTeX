@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
-"""Teste de conformidade da CoppeTeX. NAO roda na suite normal.
+"""Teste de conformidade da CoppeTeX.
 
 BUG: (desconformidade, 4.2.1.3) na parte de monografia (incollection, inbook), o autor do livro (bookauthor) e o subtitulo do livro (booksubtitle) SUMIAM, e o capitulo saia depois das paginas e separado da data por virgula ("1996. p. 23-64, cap. 1"; "1994, cap. 3") (#134).
-ABERTO: #134
 
 A 4.2.1.3 do Manual UFRJ/SiBI pede, depois de "In:", a referencia completa da
 monografia -- autor, titulo e subtitulo --, repetindo o autor quando e o mesmo
