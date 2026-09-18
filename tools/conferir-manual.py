@@ -58,8 +58,10 @@ PADRAO_LATEX = {
     "lstlistlistingname", "quadroname", "listquadroname",
     "quadroautorefname", "cpsourcename",
     # redefinidos localmente: \PackageWarning so durante o carregamento do
-    # pdfx, \thepage so na folha adicional, \theHchapter so nos anexos
-    "PackageWarning", "thepage", "theHchapter",
+    # pdfx, \thepage so na folha adicional, \theHchapter so nos anexos, e o
+    # \contentsline so na leitura do .toc de OUTRO volume, para a linha sair
+    # sem o destino do hyperref (#126)
+    "PackageWarning", "thepage", "theHchapter", "contentsline",
     # nomes do babel: "ver"/"ver tambem" nas remissivas do indice (NBR 6034)
     "seename", "alsoname",
 }

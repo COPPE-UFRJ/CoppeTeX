@@ -372,8 +372,42 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
             \csname ufrj@listname@##1\endcsname}%
           \let\numberline\ufrj@listnumberline}%
       \fi
-      \ufrj@orig@starttoc{##1}%
+      \ifx\ufrj@@ext\ufrj@@toc
+        \ifx\ufrj@volfiles\@empty
+          \ufrj@orig@starttoc{##1}%
+        \else
+          \ufrj@tocdosvolumes
+        \fi
+      \else
+        \ufrj@orig@starttoc{##1}%
+      \fi
     \endgroup}}
+\def\ufrj@foreigncontentsline#1#2#3#4{%
+  \ufrj@real@contentsline{#1}{#2}{#3}{}}
+\newcommand\ufrj@tocdosvolumes{%
+  \ufrj@forvolumes{\ufrj@tocdeumvolume}}
+\newcommand\ufrj@tocdeumvolume[2]{%
+  \ufrj@tocvolumehead{#2}%
+  \ufrj@setthis{#1}%
+  \ifx\ufrj@@this\ufrj@jobname
+    \ufrj@orig@starttoc{toc}%
+  \else
+    \edef\ufrj@@file{\ufrj@@this.toc}%
+    \IfFileExists{\ufrj@@file}%
+      {\begingroup
+         \makeatletter
+         \let\ufrj@real@contentsline\contentsline
+         \let\contentsline\ufrj@foreigncontentsline
+         \expandafter\@input\expandafter{\ufrj@@file}%
+       \endgroup}%
+      {\ClassWarningNoLine{ufrj}{O volume \ufrj@@this\space ainda nao foi
+        compilado: o sumario sai sem os capitulos dele. Compile os volumes de
+        novo, na ordem}}%
+  \fi}
+\newcommand\ufrj@tocvolumehead[1]{%
+  \par\addvspace{1em}%
+  {\noindent\bfseries\ufrjmainstring{volumename}\nobreakspace#1}\par
+  \addvspace{0.5em}}
 \AtBeginDocument{\ufrj@wrapstarttoc}
 \AtBeginDocument{%
   \renewcommand*\l@figure{\@dottedtocline{1}{0pt}{0pt}}%
@@ -942,6 +976,54 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \newcommand\ufrj@thisvolume{1}
 \newcommand\volumes[1]{\gdef\ufrj@nvolumes{#1}}
 \newcommand\volume[1]{\gdef\ufrj@thisvolume{#1}}
+\newcommand\ufrj@volfiles{}
+\newcommand\volumefiles[1]{\gdef\ufrj@volfiles{#1}}
+\let\arquivosdosvolumes\volumefiles
+\newcommand\ufrj@volstart{0}
+\newcommand\ufrj@setvolstart[1]{\gdef\ufrj@volstart{#1}}
+\newcommand\ufrj@forvolumes[1]{%
+  \begingroup
+    \count@\z@
+    \edef\ufrj@@list{\ufrj@volfiles}%
+    \expandafter\@for\expandafter\ufrj@@stem\expandafter:\expandafter
+      =\ufrj@@list\do{%
+      \advance\count@\@ne
+      \edef\ufrj@@n{\the\count@}%
+      #1{\ufrj@@stem}{\ufrj@@n}}%
+  \endgroup}
+\AtBeginDocument{%
+  \ifx\ufrj@volfiles\@empty\else
+    \ufrj@forvolumes{\ufrj@readprev}%
+  \fi}
+\newcommand\ufrj@prevstem{}
+\newcommand\ufrj@readprev[2]{%
+  \ufrj@setthis{#1}%
+  \ifx\ufrj@@this\ufrj@jobname
+    \ifx\ufrj@prevstem\@empty\else
+      \edef\ufrj@@file{\ufrj@prevstem.vol}%
+      \IfFileExists{\ufrj@@file}%
+        {\begingroup\makeatletter
+           \expandafter\@input\expandafter{\ufrj@@file}%
+         \endgroup}%
+        {\ClassWarningNoLine{ufrj}{O volume anterior (\ufrj@prevstem) ainda nao
+          foi compilado: a numeracao das folhas deste volume comeca em 1.
+          Compile os volumes de novo, na ordem}}%
+    \fi
+  \else
+    \xdef\ufrj@prevstem{#1}%
+  \fi}
+\edef\ufrj@jobname{\detokenize\expandafter{\jobname}}
+\newcommand\ufrj@setthis[1]{%
+  \edef\ufrj@@this{#1}%
+  \edef\ufrj@@this{\detokenize\expandafter{\ufrj@@this}}}
+\newwrite\ufrj@volout
+\AtEndDocument{%
+  \ifx\ufrj@volfiles\@empty\else
+    \clearpage
+    \immediate\openout\ufrj@volout=\jobname.vol
+    \immediate\write\ufrj@volout{\string\ufrj@setvolstart{\the\c@page}}%
+    \immediate\closeout\ufrj@volout
+  \fi}
 \newcommand\ufrj@volumeline{%
   \ifnum\ufrj@nvolumes>1
     \par\vspace*{4mm}%
@@ -1284,7 +1366,11 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   % rosto, ahead of the approval sheet produced by \frontmatter. Until the 2026
   % edition this content lived on the VERSO of the folha de rosto (NBR 14724,
   % R57); the verso is gone with the printed copy.
-  \setcounter{page}{2}%
+  \ifnum\ufrj@volstart>\z@
+    \setcounter{page}{\numexpr\ufrj@volstart+1\relax}%
+  \else
+    \setcounter{page}{2}%
+  \fi
   \if@ufrjexame\else
     \begingroup
       \def\thepage{\arabic{page}-folhaadicional}%

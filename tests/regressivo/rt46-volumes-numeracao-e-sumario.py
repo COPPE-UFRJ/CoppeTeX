@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
-"""Teste de conformidade da CoppeTeX. NAO roda na suite normal.
+"""Teste de conformidade da CoppeTeX.
 
 BUG: (falta, 2.7 e 3.1.2.1.6) um trabalho em mais de um volume nao tinha como manter UMA sequencia de folhas do primeiro ao ultimo volume, nem como trazer o SUMARIO COMPLETO em cada volume; \\volumes e \\volume so imprimiam "Volume 1 de 2" (#126).
-ABERTO: #126
 
 A 2.7 do Manual UFRJ/SiBI manda manter uma unica sequencia de numeracao das
 folhas do primeiro ao ultimo volume; a 3.1.2.1.6 manda o sumario completo em

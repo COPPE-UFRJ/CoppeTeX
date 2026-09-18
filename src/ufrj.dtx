@@ -184,6 +184,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \changes{v5.0}{2026/09/15}{COPPE is the unit style ufrj-coppe, with its own source (ufrj-coppe.dtx and ufrj-coppe.ins), its own manual (ufrj-coppe.pdf) and every example document, which all load it. A work begun with the class coppe compiles as it is: coppe.cls is now a compatibility class that loads ufrj with the same options, loads ufrj-coppe and writes one warning, and the style keeps the old public names as aliases, the old colophon pieces answering renewcommand by the old name, the three internal names that auxiliary files written by the old class contain, the page style coppe and the bib field coppedegree.}
 % \changes{v5.0}{2026/09/15}{The colophon names the class and the project apart -- Foi utilizada a classe ufrj, do projeto CoppeTeX -- where it said a classe CoppeTeX, which is the name of the project and not of a class. The norm it cites is the one the unit declares with ufrjdeclarenorm, and the UFRJ/SiBI Manual when no unit declares one.}
 % \changes{v5.0}{2026/09/15}{The documentation follows the split: this manual (ufrj.pdf) describes the class and the interface a unit style uses; ufrj-coppe.pdf describes only what COPPE declares; manual.pdf, the norm, is written for UFRJ with COPPE as the example; and the migration guide from 4.x to 5.0 tells the author of a work begun with the class coppe what to change.}
+% \changes{v5.0}{2026/09/17}{New volumefiles (arquivosdosvolumes): a work in more than one volume keeps one sequence of sheets from the first volume to the last (2.7) and carries the complete sumario in every volume (3.1.2.1.6). Each volume writes a .vol file with the sheet where the next one starts, and reads the .toc of the others; volumes and volume only printed "Volume 1 de 2" before.}
 % \changes{v5.0}{2026/09/17}{New illustrationwidth (largurailustracao): the caption and the source line of a narrow illustration are set to the width of the illustration, as 2.10 requires -- the caption comes before the content, so the class cannot know that width and the author gives it once, inside the float.}
 % \changes{v5.0}{2026/09/17}{Appendices, annexes and alineas go past Z with doubled letters -- AA, BB, ZZ -- as 3.1.4.4 and 2.6(f) require. The 27th of any of them stopped the compilation with LaTeX's "Counter too large", because the letter came from Alph and alph.}
 % \changes{v5.0}{2026/09/17}{A subalinea is marked with a hyphen placed under the first letter of the text of its alinea, one space from the text, and its continuation lines start under its own first letter -- the three things 2.6 asks for. The class used an en dash and a fixed 1.8 em indent, which falls under no letter.}
@@ -1595,8 +1596,32 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \DescribeMacro{\volumes}
 % \DescribeMacro{\volume}
 % |\volumes{3}| e |\volume{1}| para um trabalho em mais de um volume. Com um
-% volume só, nada é impresso. A 2.7 manda manter uma única sequência de
-% numeração do primeiro ao último volume.
+% volume só, nada é impresso.
+%
+% \DescribeMacro{\volumefiles}
+% \DescribeMacro{\arquivosdosvolumes}
+% Os nomes dos arquivos |.tex| dos volumes, na ordem, escritos no preâmbulo de
+% \textbf{todos} eles:
+%
+% \begin{verbatim}
+%   \volumefiles{tese-vol1,tese-vol2}
+% \end{verbatim}
+%
+% Dois pedidos da norma precisam disso, e nenhum dos dois se resolve dentro de
+% um volume só: a 2.7 manda \textbf{manter uma única sequência de numeração das
+% folhas do primeiro ao último volume}, e a 3.1.2.1.6 quer o \textbf{sumário
+% completo em cada volume}.
+%
+% Com o comando, cada volume continua a contagem de folhas onde o anterior
+% parou, e o sumário de qualquer um deles traz os capítulos de todos, cada
+% bloco sob o nome do seu volume.
+%
+% \textbf{Como compilar.} Como sempre, duas ou três passadas --- só que
+% alternando os volumes: |vol1|, |vol2|, |vol1|, |vol2|. Na primeira rodada os
+% arquivos do vizinho ainda não existem, a classe avisa e segue; na segunda
+% tudo está no lugar. O que passa de um volume para o outro são o |.toc|, que o
+% \LaTeX\ já escreve, e um |.vol|, que a classe escreve com um número só: a
+% folha em que o próximo volume começa.
 %
 % \subsection{Folha de rosto e folha da Coleta CAPES}\label{sec:folha-adicional}
 %
@@ -3352,6 +3377,7 @@ semmorewrites & [dsc,semmorewrites] & \pre & Do not load \texttt{morewrites}. Sa
 \textbackslash foreignkeyword & \textbackslash foreignkeyword\{Métodos formais\} & \doc & One call per keyword, foreign language. \\
 \textbackslash braziliankeyword & \textbackslash braziliankeyword\{Métodos formais\} & \doc & Portuguese keywords when the work is not in Portuguese. \\
 \textbackslash volumes & \textbackslash volumes\{3\} & \doc & How many volumes. Nothing is printed when there is one. \\
+\textbackslash volumefiles & \textbackslash volumefiles\{v1,v2\} & \pre & The .tex names of every volume, in order, in the preamble of all of them: the sheet count runs from the first volume to the last (2.7) and every volume carries the complete sumario (3.1.2.1.6). Compile them alternately, twice. Alias: \texttt{\textbackslash arquivosdosvolumes}. \\
 \textbackslash volume & \textbackslash volume\{1\} & \doc & Which volume this is. \\
 \midrule
 
@@ -4298,8 +4324,55 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
             \csname ufrj@listname@##1\endcsname}%
           \let\numberline\ufrj@listnumberline}%
       \fi
-      \ufrj@orig@starttoc{##1}%
+      \ifx\ufrj@@ext\ufrj@@toc
+        \ifx\ufrj@volfiles\@empty
+          \ufrj@orig@starttoc{##1}%
+        \else
+          \ufrj@tocdosvolumes
+        \fi
+      \else
+        \ufrj@orig@starttoc{##1}%
+      \fi
     \endgroup}}
+% O sumario de um trabalho em varios volumes traz os capitulos de TODOS eles
+% (3.1.2.1.6), cada bloco sob o nome do seu volume. O bloco deste volume sai
+% pelo caminho normal -- e a chamada que abre o fluxo de escrita do .toc --, e
+% os outros sao lidos dos .toc que eles deixaram.
+%
+% O quarto argumento do \contentsline e o destino do hyperref. Numa entrada de
+% outro volume ele aponta para um lugar que nao existe neste PDF, e por isso e
+% apagado: a linha sai com o folio certo e sem link quebrado.
+% A linha de sumario de OUTRO volume: o quarto argumento, o destino do
+% hyperref, fica vazio, porque aponta para um lugar que nao existe neste PDF.
+\def\ufrj@foreigncontentsline#1#2#3#4{%
+  \ufrj@real@contentsline{#1}{#2}{#3}{}}
+\newcommand\ufrj@tocdosvolumes{%
+  \ufrj@forvolumes{\ufrj@tocdeumvolume}}
+\newcommand\ufrj@tocdeumvolume[2]{%
+  \ufrj@tocvolumehead{#2}%
+  \ufrj@setthis{#1}%
+  \ifx\ufrj@@this\ufrj@jobname
+    \ufrj@orig@starttoc{toc}%
+  \else
+    \edef\ufrj@@file{\ufrj@@this.toc}%
+    \IfFileExists{\ufrj@@file}%
+      {\begingroup
+% O .toc do outro volume tambem tem nomes com arroba -- o \babel@toc, para
+% comecar --, e o sumario e composto no corpo do documento.
+         \makeatletter
+         \let\ufrj@real@contentsline\contentsline
+         \let\contentsline\ufrj@foreigncontentsline
+         \expandafter\@input\expandafter{\ufrj@@file}%
+       \endgroup}%
+      {\ClassWarningNoLine{ufrj}{O volume \ufrj@@this\space ainda nao foi
+        compilado: o sumario sai sem os capitulos dele. Compile os volumes de
+        novo, na ordem}}%
+  \fi}
+% O nome do volume entre os blocos, e nada quando ha um volume so na lista.
+\newcommand\ufrj@tocvolumehead[1]{%
+  \par\addvspace{1em}%
+  {\noindent\bfseries\ufrjmainstring{volumename}\nobreakspace#1}\par
+  \addvspace{0.5em}}
 \AtBeginDocument{\ufrj@wrapstarttoc}
 % As entradas de lista de todos os flutuantes com o mesmo leiaute, sem recuo:
 % so aqui, porque o listings e o algorithm2e declaram o \l@ deles ao carregar,
@@ -5552,6 +5625,84 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \newcommand\ufrj@thisvolume{1}
 \newcommand\volumes[1]{\gdef\ufrj@nvolumes{#1}}
 \newcommand\volume[1]{\gdef\ufrj@thisvolume{#1}}
+% \volumefiles{vol1,vol2,vol3}: os nomes dos .tex dos volumes, na ordem, no
+% preambulo de TODOS eles (#126). Dois pedidos da norma dependem de um volume
+% saber dos outros, e cada volume e um arquivo compilado a parte:
+%
+%  - a 2.7 manda "manter uma unica sequencia de numeracao das folhas do
+%    primeiro ao ultimo volume": o volume n comeca a contar onde o n-1 parou;
+%  - a 3.1.2.1.6 quer o sumario completo em cada volume: o sumario de um volume
+%    traz tambem os capitulos dos outros.
+%
+% O que passa de um volume para o outro sao dois arquivos. O .toc, que o LaTeX
+% ja escreve, da as entradas do sumario. E um .vol, que a classe escreve no fim
+% de cada volume com UM numero: a folha em que o proximo volume comeca. Ler o
+% .aux do outro volume seria pior -- ele traz rotulos, citacoes e escritas que
+% nao sao deste documento.
+%
+% A ordem de compilacao e a de sempre, duas ou tres vezes cada, alternando os
+% volumes: na primeira rodada os arquivos do vizinho ainda nao existem, e a
+% classe avisa e segue; na segunda tudo esta no lugar.
+\newcommand\ufrj@volfiles{}
+\newcommand\volumefiles[1]{\gdef\ufrj@volfiles{#1}}
+\let\arquivosdosvolumes\volumefiles
+% A folha em que ESTE volume comeca, lida do .vol do volume anterior.
+\newcommand\ufrj@volstart{0}
+\newcommand\ufrj@setvolstart[1]{\gdef\ufrj@volstart{#1}}
+% Percorre a lista de volumes chamando #1{<nome>}{<posicao>}.
+\newcommand\ufrj@forvolumes[1]{%
+  \begingroup
+    \count@\z@
+    \edef\ufrj@@list{\ufrj@volfiles}%
+    \expandafter\@for\expandafter\ufrj@@stem\expandafter:\expandafter
+      =\ufrj@@list\do{%
+      \advance\count@\@ne
+      \edef\ufrj@@n{\the\count@}%
+      #1{\ufrj@@stem}{\ufrj@@n}}%
+  \endgroup}
+% No inicio do documento, o volume anterior ao nosso diz onde paramos.
+\AtBeginDocument{%
+  \ifx\ufrj@volfiles\@empty\else
+    \ufrj@forvolumes{\ufrj@readprev}%
+  \fi}
+\newcommand\ufrj@prevstem{}
+\newcommand\ufrj@readprev[2]{%
+  \ufrj@setthis{#1}%
+  \ifx\ufrj@@this\ufrj@jobname
+    \ifx\ufrj@prevstem\@empty\else
+      \edef\ufrj@@file{\ufrj@prevstem.vol}%
+% O .vol traz \ufrj@setvolstart, com arroba: lido aqui, no comeco do
+% documento, o arroba nao e letra e o nome se parte em dois.
+      \IfFileExists{\ufrj@@file}%
+        {\begingroup\makeatletter
+           \expandafter\@input\expandafter{\ufrj@@file}%
+         \endgroup}%
+        {\ClassWarningNoLine{ufrj}{O volume anterior (\ufrj@prevstem) ainda nao
+          foi compilado: a numeracao das folhas deste volume comeca em 1.
+          Compile os volumes de novo, na ordem}}%
+    \fi
+  \else
+    \xdef\ufrj@prevstem{#1}%
+  \fi}
+% O nosso proprio nome, para comparar com a lista. O \jobname devolve os
+% caracteres com categoria 12, e o nome que vem da lista chega com as letras na
+% categoria 11: sem por os dois na mesma categoria, o \ifx falha sempre -- e
+% cada volume acha que nem ele mesmo esta na lista.
+\edef\ufrj@jobname{\detokenize\expandafter{\jobname}}
+\newcommand\ufrj@setthis[1]{%
+  \edef\ufrj@@this{#1}%
+  \edef\ufrj@@this{\detokenize\expandafter{\ufrj@@this}}}
+% No fim, escrevemos a folha em que o PROXIMO volume comeca. Depois do
+% \clearpage a ultima folha ja foi composta, e o contador aponta a seguinte --
+% que e exatamente o numero procurado.
+\newwrite\ufrj@volout
+\AtEndDocument{%
+  \ifx\ufrj@volfiles\@empty\else
+    \clearpage
+    \immediate\openout\ufrj@volout=\jobname.vol
+    \immediate\write\ufrj@volout{\string\ufrj@setvolstart{\the\c@page}}%
+    \immediate\closeout\ufrj@volout
+  \fi}
 \newcommand\ufrj@volumeline{%
   \ifnum\ufrj@nvolumes>1
     \par\vspace*{4mm}%
@@ -6188,7 +6339,16 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % the folha de rosto from the count, putting the folha de aprovacao at 1 instead
 % of 2. The count is therefore restated here: the folha de rosto WAS folha 1, so
 % whatever follows it is folha 2.
-  \setcounter{page}{2}%
+% A folha de rosto foi a folha 1 -- o titlepage zera o contador ao fechar --, e
+% a proxima e a 2. Numa obra em varios volumes a conta e outra: a 2.7 quer uma
+% sequencia so do primeiro ao ultimo volume, e o volume anterior disse, no .vol
+% dele, em que folha este comeca (#126). A folha de rosto e essa, e a proxima e
+% a seguinte.
+  \ifnum\ufrj@volstart>\z@
+    \setcounter{page}{\numexpr\ufrj@volstart+1\relax}%
+  \else
+    \setcounter{page}{2}%
+  \fi
 % The page carrying the ficha catalografica is explicitly excluded from the
 % count -- 2.7 of the 2026 manual ("a folha adicional que contem a ficha
 % catalografica nao pode ser contada ou numerada"), and the 2025 edition said

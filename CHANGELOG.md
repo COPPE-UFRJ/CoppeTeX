@@ -49,6 +49,18 @@ run it, and the fix removes the mark.
 
 ### Added
 
+- **`\volumefiles` (`\arquivosdosvolumes`)** (#126): the `.tex` names of every
+  volume, in order, in the preamble of all of them. 2.7 requires one sequence
+  of sheets from the first volume to the last, and 3.1.2.1.6 the complete
+  sumário in every volume; each volume is compiled on its own, and
+  `\volumes`/`\volume` only printed "Volume 1 de 2". Now each volume writes a
+  `.vol` file with the sheet where the next one starts and reads the `.toc` of
+  the others, whose lines come out with the right folio and no dangling link.
+  Compile the volumes alternately, twice. Four traps are recorded in the code:
+  `titlepage` resets the page counter when it ends, so the offset goes after
+  the folha de rosto; `\jobname` returns category-12 characters, so file names
+  are compared after `\detokenize`; and both neighbour files hold names with
+  `@`, so they are read under `\makeatletter`.
 - **`\illustrationwidth` (`\largurailustracao`)** (#125): inside a float, it
   sets the caption and the source line to the width of the illustration. 2.10
   ends by requiring that "tipo, número de ordem, título, fonte, legenda e notas
