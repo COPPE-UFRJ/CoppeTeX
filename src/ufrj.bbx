@@ -150,7 +150,17 @@
 \DeclareFieldFormat[article]{volume}{v\adddot\addnbspace#1}
 \DeclareFieldFormat[article]{number}{n\adddot\addnbspace#1}
 
-\renewbibmacro*{in:}{\printtext{\bibstring{in}\addcolon\space}}
+\renewbibmacro*{in:}{\printtext{\mkbibemph{\bibstring{in}}\addcolon\space}}
+\DeclareStyleSourcemap{%
+  \maps[datatype=bibtex]{%
+    \map{\step[fieldsource=location,
+               match=\regexp{\[S\.\s*l\.\]},
+               replace={[\\emph{S. l.}]}]}
+    \map{\step[fieldsource=publisher,
+               match=\regexp{\[s\.\s*n\.\]},
+               replace={[\\emph{s. n.}]}]}
+  }%
+}
 
 \DeclareFieldFormat{url}{\bibstring{availablefrom}\addcolon\space\url{#1}}
 \DeclareFieldFormat{urldate}{\bibstring{urlseen}\addcolon\space#1}

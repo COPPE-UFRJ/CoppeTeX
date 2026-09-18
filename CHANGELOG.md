@@ -167,6 +167,14 @@ run it, and the fix removes the mark.
 
 ### Fixed
 
+- **"In:", "et al.", "[S. l.]" and "[s. n.]" are set in italics** (#132).
+  4.1.2.2: "todas as expressões latinas e suas abreviaturas devem ser colocadas
+  em itálico"; 4.2.1.3(c) says it of "In:" in particular. All four came out
+  upright. "In:" is the `in:` macro, "et al." the `andothers` string of the
+  five language files, and "[S. l.]"/"[s. n.]" — which the author types in the
+  `.bib` as location and publisher — are wrapped by a
+  `\DeclareStyleSourcemap`, so a map the author declares in the preamble does
+  not interfere.
 - **Date ranges are separated by what they join** (#142): a slash between
   months of the same year ("jan./jun. 1981", 4.3), a hyphen between years
   ("1969-1973"), and a current periodical reads "1935- ." — "o ano de início de

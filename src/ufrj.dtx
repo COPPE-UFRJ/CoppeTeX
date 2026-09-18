@@ -184,6 +184,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \changes{v5.0}{2026/09/15}{COPPE is the unit style ufrj-coppe, with its own source (ufrj-coppe.dtx and ufrj-coppe.ins), its own manual (ufrj-coppe.pdf) and every example document, which all load it. A work begun with the class coppe compiles as it is: coppe.cls is now a compatibility class that loads ufrj with the same options, loads ufrj-coppe and writes one warning, and the style keeps the old public names as aliases, the old colophon pieces answering renewcommand by the old name, the three internal names that auxiliary files written by the old class contain, the page style coppe and the bib field coppedegree.}
 % \changes{v5.0}{2026/09/15}{The colophon names the class and the project apart -- Foi utilizada a classe ufrj, do projeto CoppeTeX -- where it said a classe CoppeTeX, which is the name of the project and not of a class. The norm it cites is the one the unit declares with ufrjdeclarenorm, and the UFRJ/SiBI Manual when no unit declares one.}
 % \changes{v5.0}{2026/09/15}{The documentation follows the split: this manual (ufrj.pdf) describes the class and the interface a unit style uses; ufrj-coppe.pdf describes only what COPPE declares; manual.pdf, the norm, is written for UFRJ with COPPE as the example; and the migration guide from 4.x to 5.0 tells the author of a work begun with the class coppe what to change.}
+% \changes{v5.0}{2026/09/17}{In:, et al., [S. l.] and [s. n.] are set in italics: 4.1.2.2 wants every Latin expression and abbreviation in italics, and 4.2.1.3(c) says In: in particular.}
 % \changes{v5.0}{2026/09/17}{Date ranges are separated by what they join: a slash between months of the same year (jan./jun. 1981), a hyphen between years (1969-1973), and a current periodical reads 1935- . (4.3.5.5.1). The class had one separator, the slash, and printed 1935/.}
 % \changes{v5.0}{2026/09/17}{Page ranges take a hyphen, in the list and in the citations, as every example of the Manual writes them (p. 7-16); biblatex used an en dash.}
 % \changes{v5.0}{2026/09/17}{The list of references is aligned to the left margin only and not hyphenated, as 4.2 requires: it was justified, and hyphenated to justify.}
@@ -8381,7 +8382,24 @@ postamble
 \DeclareFieldFormat[article]{number}{n\adddot\addnbspace#1}
 
 % --- "In:" before host title (incollection/inproceedings/inbook) ---
-\renewbibmacro*{in:}{\printtext{\bibstring{in}\addcolon\space}}
+% Em italico: a 4.2.1.3(c) pede "a expressao: 'In:' em italico", e a 4.1.2.2
+% quer TODA expressao latina em italico (#132).
+\renewbibmacro*{in:}{\printtext{\mkbibemph{\bibstring{in}}\addcolon\space}}
+% "[S. l.]" (sine loco) e "[s. n.]" (sine nomine) sao abreviaturas latinas, e
+% quem as escreve e o autor, no .bib, como local e editora. O mapa de estilo as
+% poe em italico ao ler a base -- \DeclareStyleSourcemap, e nao
+% \DeclareSourcemap, para nao se misturar com o mapa que o aluno declarar no
+% preambulo. "et al." esta nos .lbx, na cadeia andothers.
+\DeclareStyleSourcemap{%
+  \maps[datatype=bibtex]{%
+    \map{\step[fieldsource=location,
+               match=\regexp{\[S\.\s*l\.\]},
+               replace={[\\emph{S. l.}]}]}
+    \map{\step[fieldsource=publisher,
+               match=\regexp{\[s\.\s*n\.\]},
+               replace={[\\emph{s. n.}]}]}
+  }%
+}
 
 % --- Online: "Disponível em: <url>." + "Acesso em: <date>." via lbx strings ---
 \DeclareFieldFormat{url}{\bibstring{availablefrom}\addcolon\space\url{#1}}
@@ -8904,6 +8922,7 @@ postamble
   ufrjmscdeg,ufrjdscdeg,ufrjphddeg,ufrjtccdeg,ufrjfiling,ufrjgrant}
 \DeclareBibliographyStrings{%
   inherit       = {brazilian},
+  andothers     = {{\mkbibemph{et al\adddot}}{\mkbibemph{et al\adddot}}},
   availablefrom = {{Disponível em}{Disponível em}},
   ufrjmscdeg   = {{Mestrado}{Mestrado}},
   ufrjdscdeg   = {{Doutorado}{Doutorado}},
@@ -8933,6 +8952,7 @@ postamble
   ufrjmscdeg,ufrjdscdeg,ufrjphddeg,ufrjtccdeg,ufrjfiling,ufrjgrant}
 \DeclareBibliographyStrings{%
   inherit       = {english},
+  andothers     = {{\mkbibemph{et al\adddot}}{\mkbibemph{et al\adddot}}},
   availablefrom = {{Available from}{Available from}},
   ufrjmscdeg   = {{M\adddot Sc\adddot}{M\adddot Sc\adddot}},
   ufrjdscdeg   = {{D\adddot Sc\adddot}{D\adddot Sc\adddot}},
@@ -8959,6 +8979,7 @@ postamble
   ufrjmscdeg,ufrjdscdeg,ufrjphddeg,ufrjtccdeg,ufrjfiling,ufrjgrant}
 \DeclareBibliographyStrings{%
   inherit       = {spanish},
+  andothers     = {{\mkbibemph{et al\adddot}}{\mkbibemph{et al\adddot}}},
   availablefrom = {{Disponible en}{Disponible en}},
   ufrjmscdeg   = {{Maestría}{Maestría}},
   ufrjdscdeg   = {{Doctorado}{Doctorado}},
@@ -8985,6 +9006,7 @@ postamble
   ufrjmscdeg,ufrjdscdeg,ufrjphddeg,ufrjtccdeg,ufrjfiling,ufrjgrant}
 \DeclareBibliographyStrings{%
   inherit       = {french},
+  andothers     = {{\mkbibemph{et al\adddot}}{\mkbibemph{et al\adddot}}},
   availablefrom = {{Disponible à}{Disponible à}},
   ufrjmscdeg   = {{Master}{Master}},
   ufrjdscdeg   = {{Doctorat}{Doctorat}},
@@ -9011,6 +9033,7 @@ postamble
   ufrjmscdeg,ufrjdscdeg,ufrjphddeg,ufrjtccdeg,ufrjfiling,ufrjgrant}
 \DeclareBibliographyStrings{%
   inherit       = {italian},
+  andothers     = {{\mkbibemph{et al\adddot}}{\mkbibemph{et al\adddot}}},
   availablefrom = {{Disponibile da}{Disponibile da}},
   urlseen       = {{Consultato il}{Consultato il}},
   in            = {{In}{In}},

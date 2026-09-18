@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
-"""Teste de conformidade da CoppeTeX. NAO roda na suite normal.
+"""Teste de conformidade da CoppeTeX.
 
 BUG: (desconformidade, 4.2.1.3c e 4.1.2.2) nas referencias, "In:", "et al.", "S. l." e "s. n." saiam em redondo (#132).
-ABERTO: #132
 
 A 4.2.1.3(c) do Manual UFRJ/SiBI pede a expressao "In:" em italico; a 4.1.2.2
 pede em italico todas as expressoes latinas e suas abreviaturas; e os exemplos
