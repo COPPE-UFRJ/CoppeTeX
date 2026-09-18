@@ -184,6 +184,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \changes{v5.0}{2026/09/15}{COPPE is the unit style ufrj-coppe, with its own source (ufrj-coppe.dtx and ufrj-coppe.ins), its own manual (ufrj-coppe.pdf) and every example document, which all load it. A work begun with the class coppe compiles as it is: coppe.cls is now a compatibility class that loads ufrj with the same options, loads ufrj-coppe and writes one warning, and the style keeps the old public names as aliases, the old colophon pieces answering renewcommand by the old name, the three internal names that auxiliary files written by the old class contain, the page style coppe and the bib field coppedegree.}
 % \changes{v5.0}{2026/09/15}{The colophon names the class and the project apart -- Foi utilizada a classe ufrj, do projeto CoppeTeX -- where it said a classe CoppeTeX, which is the name of the project and not of a class. The norm it cites is the one the unit declares with ufrjdeclarenorm, and the UFRJ/SiBI Manual when no unit declares one.}
 % \changes{v5.0}{2026/09/15}{The documentation follows the split: this manual (ufrj.pdf) describes the class and the interface a unit style uses; ufrj-coppe.pdf describes only what COPPE declares; manual.pdf, the norm, is written for UFRJ with COPPE as the example; and the migration guide from 4.x to 5.0 tells the author of a work begun with the class coppe what to change.}
+% \changes{v5.0}{2026/09/17}{The citation of a corporate author with a subordinate body uses only the first segment, with initial capitals -- (Brasil, 1995) for BRASIL. Ministerio da Educacao -- as 4.1.1.2 shows and 4.4.1 requires; it repeated the whole hierarchy in capitals. The list keeps the name as typed.}
 % \changes{v5.0}{2026/09/17}{A citation by title entry reads (Ingles, 2012, p. 7): the title without subtitle, no italics, a comma before the year (4.1.1.1.2, 4.1.1.2a). authoryear-comp set it in italics and separated it from the year by a space.}
 % \changes{v5.0}{2026/09/17}{The month of a date is abbreviated in the language of the publication, given by the langid of the entry, from the tables of NBR 6023 Annex A -- Sept. 2021 for an English article (4.3.5.5.1); it followed the document's language. The rest of the entry stays in the document's language.}
 % \changes{v5.0}{2026/09/17}{Film and game: director and producer are names, printed in direct order after a colon -- Direcao: Walter Sales Junior -- as in the examples of 4.2.9, and the version takes the place of the edition, before the imprint (4.3.4). They were literal lists, printed as typed, and the version closed the entry.}
@@ -2413,6 +2414,26 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %   \item[\texttt{organization}, \texttt{institution}] a entidade responsável, para norma
 %     técnica e documento institucional.
 % \end{description}
+%
+% \textbf{Autor que é entidade.} Entre chaves duplas, para o \texttt{biber} não
+% o tratar como sobrenome e prenome. Quando a entidade tem um órgão
+% subordinado, a superior --- o país, o estado, a universidade --- vai
+% \textbf{digitada em caixa alta} por você, e o resto como se escreve:
+%
+% \begin{verbatim}
+%   author = {{BRASIL. Ministério da Educação}},
+%   author = {{RIO DE JANEIRO (Estado). Secretaria de Saúde}},
+%   author = {{UNIVERSIDADE FEDERAL DO RIO DE JANEIRO. Sistema de
+%              Bibliotecas e Informação}},
+% \end{verbatim}
+%
+% A classe não converte o nome na lista: um nome com ponto sai exatamente como
+% foi digitado, porque só você sabe onde termina a entidade superior (4.3.2.13).
+% Na \emph{chamada}, sim: a 4.1.1.2 cita só a entrada, com as iniciais
+% maiúsculas, e a classe escreve ``(Brasil, 1995)'' e ``(Universidade Federal do
+% Rio de Janeiro, 1998)'' a partir do mesmo |.bib|. Um nome sem hierarquia, como
+% |{{IBGE}}|, sai na chamada como foi digitado. Se quiser outra forma na
+% chamada, |shortauthor = {...}| vence sempre.
 %
 % \subsection{Como citar}
 %
@@ -9239,6 +9260,67 @@ postamble
 \DeclareFieldFormat*{citetitle}{#1}
 \DeclareDelimFormat{nonameyeardelim}{\addcomma\space}
 
+% --- Entidade com orgao subordinado na chamada (4.1.1.2 e 4.4.1, #144) ---------
+% Na LISTA, o nome com ponto sai como o autor digitou, e o autor digita a
+% entidade superior em caixa alta: "BRASIL. Ministerio da Educacao" (4.3.2.13;
+% decisao de 16/09/2026, junto do \ufrj@ucfamily no ufrj.bbx). Na CHAMADA, a
+% 4.1.1.2 cita so a entrada, com as iniciais maiusculas -- "(Brasil, 1995)" --,
+% e a 4.4.1 manda a chamada seguir a entrada da referencia, "mas nao quanto a
+% grafia". A chamada saia "(BRASIL. Ministerio da Educacao, 1995)".
+%
+% Para um nome de entidade (sem prenome) com hierarquia -- um ". " no meio --,
+% a chamada usa so o primeiro segmento, e cada palavra dele que esta INTEIRA em
+% caixa alta passa a inicial maiuscula e o resto minusculo; as particulas (de,
+% da, do, e...) ficam em minuscula. "UNIVERSIDADE FEDERAL DO RIO DE JANEIRO.
+% Sistema..." vira "Universidade Federal do Rio de Janeiro"; uma palavra que
+% nao esta toda em caixa alta, como o qualificador "(Estado)", fica como veio;
+% e um nome sem ". ", como "IBGE", nao e tocado. O shortauthor, quando o autor
+% o da, vence sempre: e ele que vira o labelname. A troca de caixa e a do
+% l3text, que sabe as letras acentuadas em todos os motores.
+\ExplSyntaxOn
+\clist_const:Nn \c__ufrj_particulas_clist
+  { a, as, o, os, de, da, do, das, dos, e, em, na, no, nas, nos, para, por }
+\tl_new:N \l__ufrj_seg_tl
+\tl_new:N \l__ufrj_min_tl
+\tl_new:N \l__ufrj_mai_tl
+\seq_new:N \l__ufrj_seg_seq
+\seq_new:N \l__ufrj_pal_seq
+\int_new:N \l__ufrj_n_int
+\cs_generate_variant:Nn \text_titlecase_first:n { V }
+\cs_generate_variant:Nn \clist_if_in:NnTF { NV }
+\cs_new_protected:Npn \ufrj_entidade_chamada:n #1
+  {
+    \seq_set_split:Nnn \l__ufrj_seg_seq { .~ } { #1 }
+    \tl_set:Nx \l__ufrj_seg_tl { \seq_item:Nn \l__ufrj_seg_seq { 1 } }
+    \seq_set_split:NnV \l__ufrj_pal_seq { ~ } \l__ufrj_seg_tl
+    \int_zero:N \l__ufrj_n_int
+    \seq_map_inline:Nn \l__ufrj_pal_seq
+      {
+        \int_incr:N \l__ufrj_n_int
+        \int_compare:nNnT { \l__ufrj_n_int } > { 1 } { ~ }
+        \tl_set:Nx \l__ufrj_mai_tl { \text_uppercase:n { ##1 } }
+        \tl_set:Nn \l__ufrj_seg_tl { ##1 }
+        \tl_if_eq:NNTF \l__ufrj_mai_tl \l__ufrj_seg_tl
+          {
+            \tl_set:Nx \l__ufrj_min_tl { \text_lowercase:n { ##1 } }
+            \int_compare:nNnTF { \l__ufrj_n_int } > { 1 }
+              {
+                \clist_if_in:NVTF \c__ufrj_particulas_clist \l__ufrj_min_tl
+                  { \l__ufrj_min_tl }
+                  { \text_titlecase_first:V \l__ufrj_min_tl }
+              }
+              { \text_titlecase_first:V \l__ufrj_min_tl }
+          }
+          { ##1 }
+      }
+  }
+\cs_generate_variant:Nn \ufrj_entidade_chamada:n { V }
+\cs_new_protected:Npn \ufrj_se_hierarquia:NTF #1#2#3
+  { \tl_if_in:NnTF #1 { .~ } {#2} {#3} }
+\cs_set_eq:NN \ufrj@entidadechamada \ufrj_entidade_chamada:V
+\cs_set_eq:NN \ufrj@sehierarquia \ufrj_se_hierarquia:NTF
+\ExplSyntaxOff
+
 % --- Mesmo sobrenome e mesmo ano (4.1.1.2b, #139) ------------------------------
 % "Quando houver autores com o mesmo sobrenome e data da obra coincidindo,
 % acrescentam-se as iniciais de seus prenomes; se mesmo assim persistir a
@@ -9255,7 +9337,12 @@ postamble
 \ExecuteBibliographyOptions{uniquename=minyearfull}
 \DeclareNameFormat{labelname}{%
   \nameparts{#1}%
-  \usebibmacro{name:family}{\namepartfamily}{\namepartgiven}{\namepartprefix}{\namepartsuffix}%
+  \ifdefvoid{\namepartgiven}
+    {\ufrj@sehierarquia\namepartfamily
+       {\usebibmacro{name:family}{\ufrj@entidadechamada\namepartfamily}%
+          {\namepartgiven}{\namepartprefix}{\namepartsuffix}}%
+       {\usebibmacro{name:family}{\namepartfamily}{\namepartgiven}{\namepartprefix}{\namepartsuffix}}}%
+    {\usebibmacro{name:family}{\namepartfamily}{\namepartgiven}{\namepartprefix}{\namepartsuffix}}%
   \ifcase\value{uniquename}%
   \or
     \addcomma\space\namepartgiveni

@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
-"""Teste de conformidade da CoppeTeX. NAO roda na suite normal.
+"""Teste de conformidade da CoppeTeX.
 
 BUG: (desconformidade, 4.1.1.2 e 4.4.1) a chamada de obra de entidade com orgao subordinado repetia a hierarquia inteira, e em caixa alta: "(BRASIL. Ministerio da Educacao, 1995)" (#144).
-ABERTO: #144
 
 A classe tem uma regra deliberada para o nome da entidade na LISTA (comentario
 junto de \\ufrj@ucfamily no ufrj.dtx): nome com ponto sai exatamente como o

@@ -167,6 +167,20 @@ run it, and the fix removes the mark.
 
 ### Fixed
 
+- **The citation of a corporate author with a subordinate body reads
+  "(Brasil, 1995)"** (#144). In the list, a name with a full stop is printed
+  as typed, and the author types the superior entity in capitals — "BRASIL.
+  Ministério da Educação" (4.3.2.13; decision of 16/09/2026). The citation
+  repeated all of it: "(BRASIL. Ministério da Educação, 1995)". 4.1.1.2 cites
+  only the entry, with initial capitals — "(Brasil, 1995)" — and 4.4.1 says the
+  citation follows the entry of the reference "mas não quanto à grafia". For a
+  corporate name with a hierarchy (". "), the citation now takes the first
+  segment and turns each all-capitals word into initial capital and lower
+  case, with the particles (de, da, do, e…) in lower case; a word not wholly in
+  capitals, such as "(Estado)", and a name without a hierarchy, such as
+  "IBGE", are left as typed, and `shortauthor` still wins. The case change is
+  l3text's, which knows accented letters in every engine. The class manual now
+  teaches how to type such authors.
 - **A citation by title entry reads "(Inglês, 2012, p. 7)"** (#138). 4.1.1.1.2
   indicates "pelo título de entrada, seguido do ano de publicação do documento,
   separados por vírgula e entre parênteses", 4.1.1.2(a) writes it with the
