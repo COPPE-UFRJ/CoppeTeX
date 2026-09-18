@@ -320,8 +320,20 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
     \@starttoc{lo#1}}}
 \let\ufrj@orig@footnotetext\@footnotetext
 \long\def\@footnotetext#1{\ufrj@orig@footnotetext{\singlespacing#1}}
+\newif\if@ufrjfnwarned \@ufrjfnwarnedfalse
+\newcommand\ufrj@numfnwarn{%
+  \if@ufrjnumeric
+    \if@ufrjfnwarned\else
+      \global\@ufrjfnwarnedtrue
+      \ClassWarningNoLine{ufrj}{O documento usa a opcao `numbers' e tem nota de
+        rodape. A secao 4.1.1.1.1 do Manual UFRJ/SiBI diz que o sistema
+        numerico nao deve ser utilizado quando ha notas de rodape: tire a opcao
+        numbers (o autor-data e o padrao) ou as notas}%
+    \fi
+  \fi}
 \renewcommand\footnoterule{\kern-3\p@\hrule\@width 5cm\kern 2.6\p@}
 \renewcommand\@makefntext[1]{%
+  \ufrj@numfnwarn
   \setbox\@tempboxa\hbox{\@makefnmark}%
   \noindent\hangindent\wd\@tempboxa\hangafter\@ne
   \box\@tempboxa #1}

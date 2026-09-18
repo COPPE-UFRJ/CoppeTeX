@@ -124,7 +124,7 @@ italian   & [italian,dsc]   & \pre & Italian. Same. \\
 
 \multicolumn{4}{@{}l@{}}{\normalfont\bfseries\small CLASS OPTIONS --- the
   rest}\\[2pt]
-numbers   & [dsc,numbers]   & \pre & Numeric citations \texttt{[1]} instead of author-date; list in citation order. \\
+numbers   & [dsc,numbers]   & \pre & Numeric citations \texttt{(1)} instead of author-date (4.1.1.1.1: parentheses or superscript, \texttt{\textbackslash supercite}); list in citation order. Not with footnotes: the class warns. \\
 sempdfa   & [dsc,sempdfa]   & \pre & TURNS OFF the PDF/A-2b output, which is ON by default since v5.0: 2.2(d) requires the deposited file to be PDF/A (ISO 19005), self-contained --- embedded fonts, sRGB colour, XMP metadata, nothing external. Use it for a draft run, or for a package PDF/A rejects; the deposited file has to be PDF/A. The v4.1 option \texttt{pdfa} is still accepted and does nothing. Check with veraPDF. \\
 comserifa & [dsc,comserifa] & \pre & Serif family. Sans is the default since v4.1. \\
 semserifa & ---             & \pre & Accepted, does nothing. What it asked for became the default. \\
@@ -259,7 +259,7 @@ longquote & \textbackslash begin\{longquote\} ... & \doc & Quotation over three 
 
 \multicolumn{4}{@{}l@{}}{\normalfont\bfseries\small CITATIONS --- biblatex,
   with the natbib layer on}\\[2pt]
-\textbackslash cite & \textbackslash cite\{key\} & \doc & (SURNAME, 2026), or [1] with \texttt{numbers}. \\
+\textbackslash cite & \textbackslash cite\{key\} & \doc & (SURNAME, 2026), or (1) with \texttt{numbers}. \\
 \textbackslash citet & \textbackslash citet\{key\} & \doc & SURNAME (2026). \\
 \textbackslash citep & \textbackslash citep\{key\} & \doc & (SURNAME, 2026). \\
 \textbackslash textcite & \textbackslash textcite\{key\} & \doc & Same as \texttt{\textbackslash citet}, biblatex spelling. \\

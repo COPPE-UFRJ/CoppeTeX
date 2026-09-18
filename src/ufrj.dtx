@@ -184,6 +184,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \changes{v5.0}{2026/09/15}{COPPE is the unit style ufrj-coppe, with its own source (ufrj-coppe.dtx and ufrj-coppe.ins), its own manual (ufrj-coppe.pdf) and every example document, which all load it. A work begun with the class coppe compiles as it is: coppe.cls is now a compatibility class that loads ufrj with the same options, loads ufrj-coppe and writes one warning, and the style keeps the old public names as aliases, the old colophon pieces answering renewcommand by the old name, the three internal names that auxiliary files written by the old class contain, the page style coppe and the bib field coppedegree.}
 % \changes{v5.0}{2026/09/15}{The colophon names the class and the project apart -- Foi utilizada a classe ufrj, do projeto CoppeTeX -- where it said a classe CoppeTeX, which is the name of the project and not of a class. The norm it cites is the one the unit declares with ufrjdeclarenorm, and the UFRJ/SiBI Manual when no unit declares one.}
 % \changes{v5.0}{2026/09/15}{The documentation follows the split: this manual (ufrj.pdf) describes the class and the interface a unit style uses; ufrj-coppe.pdf describes only what COPPE declares; manual.pdf, the norm, is written for UFRJ with COPPE as the example; and the migration guide from 4.x to 5.0 tells the author of a work begun with the class coppe what to change.}
+% \changes{v5.0}{2026/09/17}{Numeric system: citations in parentheses -- (1, p. 30) -- and list labels without brackets, as 4.1.1.1.1 gives the number either in parentheses or superscript; and a warning, once, when a document under numbers has a footnote, which the same section forbids.}
 % \changes{v5.0}{2026/09/17}{Authors with the same surname and the same year are told apart in the citation by the initials, then by the full given name, after the surname -- (Braga, Orlando, 1987) -- as 4.1.1.2(b) shows. The uniquename=false of the bbx never took effect, because authoryear-comp.cbx, loaded later, turns uniquename back on.}
 % \changes{v5.0}{2026/09/17}{An initial article does not count in the alphabetical order of the list (4.2): O PERFIL sorts by PERFIL, and no longer among the surnames in O.}
 % \changes{v5.0}{2026/09/17}{The subtitle follows the title after a colon and out of the title's bold, as 4.3.3 requires; biblatex put it after a full stop, inside the bold, and in capitals with the title in an entry by title.}
@@ -1149,10 +1150,14 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %
 % \begin{description}
 %   \item[\texttt{numbers}] Troca o sistema autor-data pelo numérico: no texto
-%     sai |[1]| em vez de |(SOBRENOME, 2026)|, e a lista de referências sai na
-%     ordem de citação. Exige |ufrj-numeric.bbx| e |ufrj-numeric.cbx| na
-%     pasta. A NBR 10520 admite os dois sistemas; a escolha é do Programa ou do
-%     orientador.
+%     sai |(1)| em vez de |(SOBRENOME, 2026)| --- entre parênteses, como a
+%     4.1.1.1.1 manda, ou sobrescrito com |\supercite| ---, e a lista de
+%     referências sai na ordem de citação, numerada sem colchetes. Exige
+%     |ufrj-numeric.bbx| e |ufrj-numeric.cbx| na pasta. A NBR 10520 admite os
+%     dois sistemas; a escolha é do Programa ou do orientador. \textbf{Não use
+%     o numérico num trabalho com notas de rodapé}: a mesma 4.1.1.1.1 o proíbe,
+%     porque o número da chamada e o da nota se confundem, e a classe avisa no
+%     |.log| na primeira nota.
 % \end{description}
 %
 % \subsection{Aparência da página}
@@ -2418,11 +2423,11 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \begin{tabular}{@{}lll@{}}
 % \textbf{Comando} & \textbf{Autor-data} & \textbf{Com \texttt{numbers}} \\
 % \hline
-% |\cite{x}|        & (SOBRENOME, 2026)          & [1] \\
-% |\citet{x}|       & SOBRENOME (2026)           & SOBRENOME [1] \\
-% |\citep{x}|       & (SOBRENOME, 2026)          & [1] \\
-% |\textcite{x}|    & SOBRENOME (2026)           & SOBRENOME [1] \\
-% |\parencite{x}|   & (SOBRENOME, 2026)          & [1] \\
+% |\cite{x}|        & (SOBRENOME, 2026)          & (1) \\
+% |\citet{x}|       & SOBRENOME (2026)           & SOBRENOME (1) \\
+% |\citep{x}|       & (SOBRENOME, 2026)          & (1) \\
+% |\textcite{x}|    & SOBRENOME (2026)           & SOBRENOME (1) \\
+% |\parencite{x}|   & (SOBRENOME, 2026)          & (1) \\
 % |\citeauthor{x}|  & SOBRENOME                  & SOBRENOME \\
 % |\citeyear{x}|    & 2026                       & 2026 \\
 % |\citetitle{x}|   & o título da obra         & o título da obra \\
@@ -3329,7 +3334,7 @@ italian   & [italian,dsc]   & \pre & Italian. Same. \\
 
 \multicolumn{4}{@{}l@{}}{\normalfont\bfseries\small CLASS OPTIONS --- the
   rest}\\[2pt]
-numbers   & [dsc,numbers]   & \pre & Numeric citations \texttt{[1]} instead of author-date; list in citation order. \\
+numbers   & [dsc,numbers]   & \pre & Numeric citations \texttt{(1)} instead of author-date (4.1.1.1.1: parentheses or superscript, \texttt{\textbackslash supercite}); list in citation order. Not with footnotes: the class warns. \\
 sempdfa   & [dsc,sempdfa]   & \pre & TURNS OFF the PDF/A-2b output, which is ON by default since v5.0: 2.2(d) requires the deposited file to be PDF/A (ISO 19005), self-contained --- embedded fonts, sRGB colour, XMP metadata, nothing external. Use it for a draft run, or for a package PDF/A rejects; the deposited file has to be PDF/A. The v4.1 option \texttt{pdfa} is still accepted and does nothing. Check with veraPDF. \\
 comserifa & [dsc,comserifa] & \pre & Serif family. Sans is the default since v4.1. \\
 semserifa & ---             & \pre & Accepted, does nothing. What it asked for became the default. \\
@@ -3464,7 +3469,7 @@ longquote & \textbackslash begin\{longquote\} ... & \doc & Quotation over three 
 
 \multicolumn{4}{@{}l@{}}{\normalfont\bfseries\small CITATIONS --- biblatex,
   with the natbib layer on}\\[2pt]
-\textbackslash cite & \textbackslash cite\{key\} & \doc & (SURNAME, 2026), or [1] with \texttt{numbers}. \\
+\textbackslash cite & \textbackslash cite\{key\} & \doc & (SURNAME, 2026), or (1) with \texttt{numbers}. \\
 \textbackslash citet & \textbackslash citet\{key\} & \doc & SURNAME (2026). \\
 \textbackslash citep & \textbackslash citep\{key\} & \doc & (SURNAME, 2026). \\
 \textbackslash textcite & \textbackslash textcite\{key\} & \doc & Same as \texttt{\textbackslash citet}, biblatex spelling. \\
@@ -4215,6 +4220,24 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
 %     (filete) from the left margin; footnotesize is the book default. --------
 \let\ufrj@orig@footnotetext\@footnotetext
 \long\def\@footnotetext#1{\ufrj@orig@footnotetext{\singlespacing#1}}
+% A 4.1.1.1.1 (e a 4.4.2): "O sistema numerico nao deve ser utilizado quando ha
+% notas de rodape" -- o numero da chamada e o da nota se confundem (#140). A
+% classe nao proibe, porque o autor pode ter uma razao do Programa, mas avisa,
+% UMA vez, na primeira nota de um documento com a opcao numbers. O aviso sai do
+% \@makefntext, logo abaixo, e nao do \@footnotetext: o setspace troca o
+% \@footnotetext pelo dele, e e esse que o hyperref guarda -- o de cima nunca
+% chega a rodar. O \@makefntext e chamado por todas as variantes.
+\newif\if@ufrjfnwarned \@ufrjfnwarnedfalse
+\newcommand\ufrj@numfnwarn{%
+  \if@ufrjnumeric
+    \if@ufrjfnwarned\else
+      \global\@ufrjfnwarnedtrue
+      \ClassWarningNoLine{ufrj}{O documento usa a opcao `numbers' e tem nota de
+        rodape. A secao 4.1.1.1.1 do Manual UFRJ/SiBI diz que o sistema
+        numerico nao deve ser utilizado quando ha notas de rodape: tire a opcao
+        numbers (o autor-data e o padrao) ou as notas}%
+    \fi
+  \fi}
 \renewcommand\footnoterule{\kern-3\p@\hrule\@width 5cm\kern 2.6\p@}
 % A nota comeca NA MARGEM, e da segunda linha em diante o texto se alinha sob a
 % primeira letra -- nao sob o expoente (#117). A 4.2 diz isso da referencia em
@@ -4230,6 +4253,7 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
 % segundo comeca sem recuo -- e o que se quer, porque o recuo aqui e do
 % expoente, e nao de paragrafo.
 \renewcommand\@makefntext[1]{%
+  \ufrj@numfnwarn
   \setbox\@tempboxa\hbox{\@makefnmark}%
   \noindent\hangindent\wd\@tempboxa\hangafter\@ne
   \box\@tempboxa #1}
@@ -9349,9 +9373,11 @@ postamble
 % numbered list. 'labelnumber' generates the [n] field.
 \ExecuteBibliographyOptions{labelnumber,sorting=none}
 
-% Bracketed labels, both in the list and for any shorthand entries.
-\DeclareFieldFormat{labelnumberwidth}{\mkbibbrackets{#1}}
-\DeclareFieldFormat{shorthandwidth}{\mkbibbrackets{#1}}
+% O numero da lista SEM colchetes (#140). A 4.1.1.1.1 da ao numero duas
+% formas, entre parenteses ou sobrescrito, e nenhuma delas e colchete; a lista
+% repete o numero da chamada, e a 4.4.2 a numera na ordem de citacao.
+\DeclareFieldFormat{labelnumberwidth}{#1}
+\DeclareFieldFormat{shorthandwidth}{#1}
 
 % Reference list driven by the [n] label (copied from biblatex's numeric.bbx),
 % keeping the ABNT blank line between entries via \bibitemsep set in ufrj.bbx.
@@ -9373,12 +9399,76 @@ postamble
 %</numbbx>
 %<*numcbx>
 \ProvidesFile{ufrj-numeric.cbx}[2026/09/15 v5.0 CoppeTeX ABNT numeric citations]
-% Numeric citation system (ABNT NBR 10520): in-text references are bracketed
-% numbers [1], compressed and sorted within a single cite group. This is the
+% Numeric citation system (ABNT NBR 10520): in-text references are numbers in
+% PARENTHESES (1), compressed and sorted within a single cite group -- see the
+% definitions below, which replace numeric-comp's brackets (#140). This is the
 % opt-in alternative to the author-date default (ufrj.cbx); it pairs with
 % bibstyle=ufrj-numeric. With the biblatex natbib option, \citep -> [1] and
 % \citet -> Author [1].
 \RequireCitationStyle{numeric-comp}
+% Entre PARENTESES, e nao entre colchetes (#140). A 4.1.1.1.1: a indicacao
+% numerica pode ser "entre parenteses (alinhadas ao texto)" ou "um pouco acima
+% do texto (sobrescrito)" -- "(15)" --, e o numero da pagina vem depois, com
+% virgula: "(1, p. 30)". O numeric-comp usa colchetes. As definicoes abaixo sao
+% as dele, com \mkbibparens no lugar de \mkbibbrackets; a forma sobrescrita e o
+% \supercite, que o numeric-comp ja da. No \textcite, os parenteses entram pelo
+% \bibopenparen e o \bibcloseparen nas duas macros que abrem e fecham o grupo.
+\DeclareCiteCommand{\cite}[\mkbibparens]
+  {\usebibmacro{cite:init}%
+   \usebibmacro{prenote}}
+  {\usebibmacro{citeindex}%
+   \usebibmacro{cite:comp}}
+  {}
+  {\usebibmacro{cite:dump}%
+   \usebibmacro{postnote}}
+\DeclareCiteCommand{\parencite}[\mkbibparens]
+  {\usebibmacro{cite:init}%
+   \usebibmacro{prenote}}
+  {\usebibmacro{citeindex}%
+   \usebibmacro{cite:comp}}
+  {}
+  {\usebibmacro{cite:dump}%
+   \usebibmacro{postnote}}
+\DeclareCiteCommand{\smartcite}[\iffootnote\mkbibparens\mkbibfootnote]
+  {\usebibmacro{cite:init}%
+   \usebibmacro{prenote}}
+  {\usebibmacro{citeindex}%
+   \usebibmacro{cite:comp}}
+  {}
+  {\usebibmacro{cite:dump}%
+   \usebibmacro{postnote}}
+\renewbibmacro*{textcite}{%
+  \iffieldequals{namehash}{\cbx@lasthash}
+    {\usebibmacro{cite:comp}}
+    {\usebibmacro{cite:dump}%
+     \ifbool{cbx:parens}
+       {\printtext{\bibcloseparen}\global\boolfalse{cbx:parens}}
+       {}%
+     \iffirstcitekey
+       {}
+       {\setunit{\textcitedelim}}%
+     \usebibmacro{cite:init}%
+     \ifnameundef{labelname}
+       {\printfield[citetitle]{labeltitle}}
+       {\printnames{labelname}}%
+     \setunit*{\printdelim{namelabeldelim}}%
+     \printtext{\bibopenparen}\global\booltrue{cbx:parens}%
+     \ifnumequal{\value{citecount}}{1}
+       {\usebibmacro{prenote}}
+       {}%
+     \usebibmacro{cite:comp}%
+     \stepcounter{textcitecount}%
+     \savefield{namehash}{\cbx@lasthash}}}
+\DeclareCiteCommand{\cbx@textcite}
+  {\usebibmacro{cite:init}}
+  {\usebibmacro{citeindex}%
+   \usebibmacro{textcite}}
+  {}
+  {\usebibmacro{cite:dump}%
+   \usebibmacro{postnote}%
+   \ifbool{cbx:parens}
+     {\bibcloseparen\global\boolfalse{cbx:parens}}
+     {}}
 %</numcbx>
 %    \end{macrocode}
 %

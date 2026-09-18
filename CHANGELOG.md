@@ -167,6 +167,17 @@ run it, and the fix removes the mark.
 
 ### Fixed
 
+- **Numeric system: parentheses, unbracketed list, and a warning with
+  footnotes** (#140). 4.1.1.1.1 gives the number two forms — "entre parênteses
+  (alinhadas ao texto)" or superscript — with the page after a comma, "(1, p.
+  30)"; `ufrj-numeric` inherited `numeric-comp`'s brackets in the citation and
+  in the list labels. `\cite`, `\parencite`, `\smartcite` and `\textcite` now
+  use parentheses (`\supercite` is the superscript form), and the list numbers
+  carry no brackets. The same section says the numeric system "não deve ser
+  utilizado quando há notas de rodapé": under `numbers`, the first footnote
+  raises a class warning citing 4.1.1.1.1. The warning lives in
+  `\@makefntext`, because the class's own `\@footnotetext` never runs —
+  `setspace` replaces it, and that is the one `hyperref` wraps.
 - **Same surname, same year: initials, then the full given name, after the
   surname** (#139). 4.1.1.2(b) shows "(Braga, O., 1966)" and "(Braga, Orlando,
   1987)"; the class wrote "(Orlando Braga, 1987)", and disambiguated even when

@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
-"""Teste de conformidade da CoppeTeX. NAO roda na suite normal.
+"""Teste de conformidade da CoppeTeX.
 
 BUG: (desconformidade, 4.1.1.1.1 e 4.4.2) com a opcao numbers, a chamada saia entre COLCHETES ("[1, p. 30]"), a lista de referencias numerava com colchetes ("[1] SOBRENOME..."), e nada avisava que o sistema numerico estava sendo usado junto com notas de rodape (#140).
-ABERTO: #140
 
 A 4.1.1.1.1 do Manual UFRJ/SiBI admite duas formas de indicar o numero: entre
 PARENTESES, alinhado ao texto, ou sobrescrito -- e o numero da pagina vem depois,
