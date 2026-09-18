@@ -12,15 +12,16 @@ a classe; não falta documento normativo.
 
 ---
 
-## 0. Juntar a conferência de 16/09 e corrigir o que ela achou
+## 0. Levar o `V05-unificada` ao `master`
 
-- **A conferência contra o Manual UFRJ/SiBI 2026 (#112) foi feita no `master`
-  da 4.1, e o `goufrj` é a 5.0.** Ela abriu 41 issues (#113 a #153), com um
-  teste regressivo cada, que falha até a correção. O passo a passo para
-  juntar os dois, a estratégia recomendada e a conferência de cada issue
-  contra o `goufrj` — onde corrigir, e se o erro é de programa, de dados ou
-  de documentação — estão em [`JUNTAR_MASTER_GOUFRJ.md`](./JUNTAR_MASTER_GOUFRJ.md).
-  A ferramenta é `tools/juntar-master.py`.
+- **A conferência de 16/09 (#112) está junta com a 5.0 e corrigida**, no ramo
+  `V05-unificada`: o `goufrj` mais o `conformidade-manual-2026`, com as issues
+  #113 a #153 fechadas uma por commit, e as achadas no caminho (#155, #156).
+  Nenhum teste `rt` está marcado `ABERTO`. Falta publicar o ramo, abrir o PR
+  para o `master` e decidir se a 5.0 vai à CPGP (item do fim da seção 3).
+- **Testes: uma compilação para muitos testes** (#154) — o principal que
+  descobre os testes, agrupa os documentos compatíveis e injeta o documento já
+  compilado, para a suíte rodar inteira em uma fração do tempo.
 
 ## 1. Trabalho humano
 
@@ -46,29 +47,18 @@ a classe; não falta documento normativo.
   o `latexmk` do exemplo completo foi de 75 s com erro para 58 s limpo. Faltam as
   decisões das propostas do issue #95 — sobretudo documentar para o aluno
   `\includeonly` e o modo *draft* do Overleaf.
-- **Tornar `pdfa` o padrão da classe?** Os dois exemplos já compilam com ela, é
-  PDF/A-2b conforme pelo veraPDF e o custo de tempo é desprezível. Falta decidir
-  se a classe liga por padrão, com uma opção `sempdfa` para desligar. Issue #124,
-  que acrescenta: o gerador vem com o campo desligado.
 - **Palavras-chave no dicionário de informação do PDF sob `pdfa`.** Com a opção,
   `pdfinfo` mostra título, autor e assunto, mas não *Keywords* (sem a opção,
   mostra). Conferir se elas estão no XMP e, se não estiverem, fazê-las chegar.
-- **A natureza da folha de rosto no idioma principal?** A seção 4 da Norma COPPE
-  diz que a natureza acompanha o idioma principal; a classe a escreve em
-  português em qualquer idioma (conferido no `example_en.pdf`). Decidido na 5.0
-  deixar para depois. O texto já está pronto para isso: a natureza é a chave
-  `natureza`, lida no idioma principal e, na falta, em português. Seguir a
-  Norma é escrever a chave em inglês e em espanhol, com teste regressivo;
-  manter é corrigir a seção 4. A conferência de 16/09 achou o mesmo, e mais:
-  os rótulos das folhas também misturam idiomas. Issue #128.
 - **Escolhas de comportamento por unidade.** Na 5.0 o estilo de unidade traz só
   identidade — nomes, Programas, logotipos, frases. As escolhas da Norma COPPE
   que são comportamento (orientador e Programa no resumo, referência no alto do
   resumo, orientador na banca) continuam padrão da classe. Uma unidade que
   precise de outro padrão pede um mecanismo novo: o `\usepackage` do estilo roda
   depois das opções da classe, e a classe teria de distinguir o que o autor
-  pediu explicitamente para o estilo não passar por cima. Os logotipos na folha
-  de rosto (#130) podem virar o primeiro caso.
+  pediu explicitamente para o estilo não passar por cima. A área de concentração
+  na folha de rosto (#155) é hoje uma opção de classe, `areanafolhaderosto`, e
+  viraria uma chave da unidade quando o mecanismo existir.
 - **O gerador de documento só conhece a COPPE.** `tools/geradocvazio.py`
   escreve `\usepackage{ufrj-coppe}` e tem a própria lista dos treze Programas,
   cópia da que está no `ufrj-coppe.dtx`. Com uma segunda unidade, ele tem de
@@ -108,4 +98,4 @@ O trabalho acontece no `master`. O manual do painel é o
 `RESULTADO: tudo passou`. Não vêm pelo git as pastas locais `ABNT/`, `LIXO/`,
 `LaTeXManuals/` e `_scratch/`.
 
-*Última atualização: 17 de setembro de 2026.*
+*Última atualização: 18 de setembro de 2026.*

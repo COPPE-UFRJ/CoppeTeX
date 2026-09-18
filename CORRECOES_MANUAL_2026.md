@@ -1,5 +1,57 @@
 # Roteiro de correção — conformidade com o Manual UFRJ/SiBI 2026
 
+> **Histórico.** Tudo o que este roteiro descreve foi feito no ramo
+> `V05-unificada` (a 5.0 com a conferência junta), em 17 e 18/09/2026: as 28
+> issues com teste aberto, a #130, que não tinha teste, e as duas achadas no
+> caminho, #155 e #156 — um commit por issue, com a linha `Fecha #NNN`. Nenhum
+> teste `rt` está marcado `ABERTO`. O que segue é o roteiro como foi escrito,
+> com os nomes da 4.1 (`coppe.dtx`, `r33`...): na 5.0 eles são `ufrj.dtx`,
+> `ufrj-coppe.dtx` e `rt33`...
+
+## Estado em 18/09/2026
+
+| Issue | Commit | O que mudou |
+|---|---|---|
+| #117 | `3736741` | notas de rodape: recuo pendente a partir da marca, e nota inteira na folha |
+| #118 | `49cf6ad` | referencias: a lista alinhada so a esquerda, sem hifenizar |
+| #119 | `e9f198d` | resumo: a referencia do alto sai como as da lista de referencias |
+| #120 | `09b8cf5` | listagens: o numero da linha para de invadir a margem |
+| #121 | `d1ef23e` | alineas: a subalinea leva hifen, sob a primeira letra da alinea |
+| #124 | `fa815a0` | pdfa: o PDF/A passa a ser o padrao, e sempdfa desliga |
+| #125 | `1029c0b` | ilustracoes: \illustrationwidth poe legenda e fonte na largura da figura |
+| #126 | `e7ad566` | volumes: uma sequencia de folhas e o sumario completo em cada volume |
+| #127 | `44f899f` | letras dobradas: apendice, anexo e alinea passam do Z |
+| #128 | `6d97d98` | folhas de identidade: a folha de rosto e a de aprovacao ficam em portugues |
+| #129 | `ab714af` | capa: a Norma COPPE tira a sigla da linha do Instituto |
+| #130 | `8e7a9fb` | folha de rosto: os logotipos ficam so na capa |
+| #131 | `a127a7a` | referencias: subtitulo depois de dois pontos, fora do destaque do titulo |
+| #132 | `b77a48e` | referencias: In:, et al., [S. l.] e [s. n.] em italico |
+| #133 | `6548b48` | referencias: livro e relatorio na ordem da ABNT |
+| #134 | `a123b9f` | referencias: parte de monografia com o livro inteiro depois do In: |
+| #135 | `609e9d1` | referencias: tradutor em ordem direta, e o titulo original em nota |
+| #136 | `2dbde3d` | referencias: DOI como "DOI: https://doi.org/<doi>" |
+| #137 | `dcf325e` | referencias: tese e dissertacao dos tipos padrao do BibTeX |
+| #138 | `eba93cf` | chamadas: pela entrada de titulo, "(Ingles, 2012, p. 7)" |
+| #139 | `7db2649` | chamadas: mesmo sobrenome e ano, com a inicial e depois o prenome |
+| #140 | `4e8baad` | numerico: chamada entre parenteses, lista sem colchetes, aviso com nota |
+| #141 | `511b26b` | referencias: o artigo inicial nao conta na ordem alfabetica |
+| #142 | `fb5e0e6` | referencias: periodico corrente "1941- .", anos com hifen, meses com barra |
+| #143 | `f95da83` | referencias: filme e jogo com "Direcao: Nome", e a versao como edicao |
+| #144 | `57ba088` | chamadas: entidade com orgao subordinado sai "(Brasil, 1995)" |
+| #145 | `ca49fc5` | referencias: intervalo de paginas com hifen, na lista e nas chamadas |
+| #146 | `71dc216` | referencias: o mes no idioma da publicacao, pelo langid |
+| #149 | `510316a` | exemplos: o conteudo dos modelos passa a seguir o Manual |
+| #155 | `49b7c7f` | folha de rosto: a area de concentracao sai do bloco da natureza |
+| #156 | `12eca65` | testes: medida sem pdftotext do poppler para de passar em falso |
+
+As decisões que o roteiro deixava em aberto foram tomadas assim: #124, PDF/A
+por padrão, `sempdfa` desliga; #128, (A), as folhas de identidade inteiras em
+português; #129, a Norma tira a sigla da linha do Instituto (Anexo A); #130, os
+logotipos só na capa (Anexo B e modelo do SiBI); #140, parênteses na chamada e
+aviso com nota de rodapé; #144, a classe converte o primeiro segmento na
+chamada, e o `shortauthor` vence; #150 já estava decidida (travessão).
+
+
 Documento de trabalho **para o Claude** (ou quem retomar), escrito ao fim da
 conferência completa de 16/09/2026. Diz como achar e como corrigir cada defeito
 aberto, em que ordem, e o que não pode ser esquecido. Não é documentação do

@@ -1,5 +1,15 @@
 # Como juntar o `master` ao `goufrj` e chegar à 5.0
 
+> **Histórico.** Este guia foi seguido em 17/09/2026, com a estratégia **B**: o
+> ramo novo `V05-unificada`, saído do `goufrj`, recebeu o
+> `conformidade-manual-2026` (que era onde a conferência estava, e não o
+> `master`) pelo `tools/juntar-master.py`. O merge é o commit `233b2b6`. Dos
+> seis conflitos, o `resolver` fechou quatro, e dois ficaram à mão, como o
+> guia previa; o `sobras` achou três nomes da 4.1 que entraram sem conflito. As
+> issues da seção 4 foram corrigidas em seguida no mesmo ramo — o estado de
+> cada uma está no topo do `CORRECOES_MANUAL_2026.md`.
+
+
 *Escrito em 17/09/2026, para ser seguido em casa. Tudo o que está citado aqui
 foi conferido no `goufrj` publicado nesse dia.*
 
