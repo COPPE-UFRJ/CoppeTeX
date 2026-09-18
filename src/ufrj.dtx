@@ -184,6 +184,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \changes{v5.0}{2026/09/15}{COPPE is the unit style ufrj-coppe, with its own source (ufrj-coppe.dtx and ufrj-coppe.ins), its own manual (ufrj-coppe.pdf) and every example document, which all load it. A work begun with the class coppe compiles as it is: coppe.cls is now a compatibility class that loads ufrj with the same options, loads ufrj-coppe and writes one warning, and the style keeps the old public names as aliases, the old colophon pieces answering renewcommand by the old name, the three internal names that auxiliary files written by the old class contain, the page style coppe and the bib field coppedegree.}
 % \changes{v5.0}{2026/09/15}{The colophon names the class and the project apart -- Foi utilizada a classe ufrj, do projeto CoppeTeX -- where it said a classe CoppeTeX, which is the name of the project and not of a class. The norm it cites is the one the unit declares with ufrjdeclarenorm, and the UFRJ/SiBI Manual when no unit declares one.}
 % \changes{v5.0}{2026/09/15}{The documentation follows the split: this manual (ufrj.pdf) describes the class and the interface a unit style uses; ufrj-coppe.pdf describes only what COPPE declares; manual.pdf, the norm, is written for UFRJ with COPPE as the example; and the migration guide from 4.x to 5.0 tells the author of a work begun with the class coppe what to change.}
+% \changes{v5.0}{2026/09/17}{autoref to an algorithm uses the caption name, Algoritmo; algorithm2e defines algorithmautorefname in lower case, so the text read "como no algoritmo 6.1" under a caption saying "Algoritmo".}
 % \changes{v5.0}{2026/09/17}{New volumefiles (arquivosdosvolumes): a work in more than one volume keeps one sequence of sheets from the first volume to the last (2.7) and carries the complete sumario in every volume (3.1.2.1.6). Each volume writes a .vol file with the sheet where the next one starts, and reads the .toc of the others; volumes and volume only printed "Volume 1 de 2" before.}
 % \changes{v5.0}{2026/09/17}{New illustrationwidth (largurailustracao): the caption and the source line of a narrow illustration are set to the width of the illustration, as 2.10 requires -- the caption comes before the content, so the class cannot know that width and the author gives it once, inside the float.}
 % \changes{v5.0}{2026/09/17}{Appendices, annexes and alineas go past Z with doubled letters -- AA, BB, ZZ -- as 3.1.4.4 and 2.6(f) require. The 27th of any of them stopped the compilation with LaTeX's "Counter too large", because the letter came from Alph and alph.}
@@ -2754,18 +2755,18 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % Bibliografia                 & |\printbibliography|    & 910 \\
 % Código no texto            & |\pythoninline|         & 1058 \\
 % Código Java no texto       & |\javainline|           & 1095 \\
-% Sigla declarada              & |\defineacronym|             & 1434 \\
-% Sigla usada                  & |\useacronym|                & 1437 \\
-% Abreviatura                  & |\abbrev|               & 1426 \\
-% Parte pós-textual          & |\backmatter|           & 1443 \\
-% Apêndices                  & |\appendix|             & 1459 \\
-% Anexos                       & |\annex|                & 1471 \\
+% Sigla declarada              & |\defineacronym|             & 1431 \\
+% Sigla usada                  & |\useacronym|                & 1434 \\
+% Abreviatura                  & |\abbrev|               & 1428 \\
+% Parte pós-textual          & |\backmatter|           & 1440 \\
+% Apêndices                  & |\appendix|             & 1456 \\
+% Anexos                       & |\annex|                & 1468 \\
 % Glossário automático        & |\makeglossarylist|     & 59 \\
 % Termo do glossário          & |\glossaryterm|         & 55 \\
 % Glossário                    & |\printglossarylist|    & 56 \\
 % Entrada do índice            & |\index|                & 372 \\
-% Índice                       & |\printindex|           & 1332 \\
-% Colófon                    & |\ufrjfinalpage|    & 1490 \\
+% Índice                       & |\printindex|           & 1334 \\
+% Colófon                    & |\ufrjfinalpage|    & 1487 \\
 % \end{tabular}
 % \end{center}
 %
@@ -5328,6 +5329,12 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % the source go, not whether the float is delimited, and the rules read here
 % like the top-and-bottom delimitation a table carries.
 \SetAlgoCaptionSeparator{\ \textemdash}
+% O \autoref de um algoritmo leva o nome da legenda (#149). O algorithm2e define
+% \algorithmautorefname em minusculas, e o texto lia "como no algoritmo 6.1"
+% enquanto a legenda dizia "Algoritmo" e o \autoref de uma figura, "Figura".
+% O \algorithmcfname ja segue o idioma, e vale no inicio do documento, depois
+% do hyperref.
+\AtBeginDocument{\def\algorithmautorefname{\algorithmcfname}}
 \SetAlCapFnt{\footnotesize}
 \SetAlCapNameFnt{\footnotesize}
 \SetAlCapSty{textnormal}
@@ -9402,13 +9409,6 @@ postamble
    year = 1998,
 }
 
-@standard{norma-example,
-   author = "{Associação Brasileira de Normas Técnicas}",
-   title = "{NBR} 6023: informação e documentação: referências: elaboração",
-   location = "Rio de Janeiro",
-   year = 2018,
-}
-
 @map{mapa-example,
    author = "{Instituto Brasileiro de Geografia e Estatística}",
    title = "Mapa político do Brasil",
@@ -9435,18 +9435,9 @@ postamble
    year = 2019,
 }
 
-@Comment{ Artigo/materia de jornal (NBR 6023 4.2.3.6). Com caderno/secao: a
-  data precede o caderno e a pagina vem por ultimo. }
-@article{jornalcaderno-example,
-   author = "J. Byrne",
-   title = "A explosão de cursos para executivos nos EUA",
-   journaltitle = "Gazeta Mercantil",
-   location = "São Paulo",
-   date = "1992-02-04",
-   newspapersection = "Administração e Serviços",
-   pages = "28",
-  entrysubtype = {newspaper},
-}
+@Comment{ Artigo/materia de jornal com caderno/secao (NBR 6023 4.2.3.6): a data
+  precede o caderno e a pagina vem por ultimo. O exemplo e a m-4236, do
+  gabarito do Manual, mais abaixo. }
 
 @Comment{ Artigo de jornal sem caderno/secao: a paginacao precede a data. }
 @article{jornal-example,
@@ -9462,7 +9453,7 @@ postamble
 @Comment{ Jurisprudencia / decisao judicial (NBR 6023 4.2.6.2): jurisdicao +
   orgao (autor, CAIXA ALTA), titulo da decisao, Relator, local e data. }
 @jurisdiction{jurisprudencia-example,
-   author = "{Brasil. Supremo Tribunal Federal}",
+   author = "{BRASIL. Supremo Tribunal Federal}",
    title = "Habeas Corpus 12.345",
    relator = "Min. Fulano de Tal",
    location = "Brasília, DF",
@@ -9481,10 +9472,10 @@ postamble
 @manual{manualbib,
    editor = "Sousa, Amanda Moura de and Oliveira, Lidia da Costa and Arias, Luiza Coutinho",
    title = "Manual para elaboração e normalização de trabalhos acadêmicos",
-   edition = 9,
+   edition = "9. ed. rev.",
    publisher = "UFRJ/SiBI",
    location = "Rio de Janeiro",
-   date = 2025,
+   date = 2026,
    pagetotal = 121,
    url = "https://drive.google.com/file/d/1IfNy51_qMf8cXEabOlm1U6zMXcH10FWL/view",
    urldate = "2026-05-30",
@@ -9551,10 +9542,10 @@ postamble
 @manual{manualbib,
   editor    = {Sousa, Amanda Moura de and Oliveira, Lidia da Costa and Arias, Luiza Coutinho},
   title     = {Manual para elaboração e normalização de trabalhos acadêmicos},
-  edition   = {9},
+  edition   = {9. ed. rev.},
   publisher = {UFRJ/SiBI},
   location  = {Rio de Janeiro},
-  date      = {2025},
+  date      = {2026},
   pagetotal = {121},
   url       = {https://drive.google.com/file/d/1IfNy51_qMf8cXEabOlm1U6zMXcH10FWL/view},
   urldate   = {2026-05-30},

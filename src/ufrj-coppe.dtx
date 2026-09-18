@@ -346,9 +346,9 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   % examinadores, como manda a 3.1.2.1.3(e). A opcao de classe
   % `semorientadornabanca' deixa so os examinadores.
 
-  \keyword{Primeira palavra-chave}
-  \keyword{Segunda palavra-chave}
-  \keyword{Terceira palavra-chave}
+  \keyword{primeira palavra-chave}
+  \keyword{segunda palavra-chave}
+  \keyword{terceira palavra-chave}
   % Palavras-chave do resumo em língua estrangeira (3.1.2.1.5).
   \foreignkeyword{First keyword}
   \foreignkeyword{Second keyword}
@@ -361,9 +361,9 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \productiontype{bibliographic}   % bibliografica | artistica | tecnologica | tecnica
   \linkedproject{yes}         % sim | nao
   \projectname{Nome do Projeto de Pesquisa ao qual o trabalho se vincula}
-  \fundingagency{Conselho Nacional de Desenvolvimento Cientifico e
-                  Tecnologico}{CNPq}
-  \fundingagency{Fundacao Carlos Chagas Filho de Amparo a Pesquisa do
+  \fundingagency{Conselho Nacional de Desenvolvimento Científico e
+                  Tecnológico}{CNPq}
+  \fundingagency{Fundação Carlos Chagas Filho de Amparo à Pesquisa do
                   Estado do Rio de Janeiro}{FAPERJ}
   % A ficha oficial vem de fichacatalografica.sibi.ufrj.br; tendo o arquivo,
   % descomente a linha abaixo e a moldura vazia da folha adicional some.
@@ -502,9 +502,9 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 
   Há uma grande discussão entre usuário de Word e \LaTeX, principalmente, quanto ao uso desses sistemas. Não é importante. Consideramos que ambos tem vantagens e desvantagens, e analisamos algumas em uma palestra introdutória que pode ser encontrada na rede.
 
-  Nós escolhemos o \LaTeX por alguns motivos: grande facilidade de seguir um estilo sem se preocupar como, capacidade de gerenciar versões com software como git e sites como GitHub, funcionar em qualquer sistema operacional e  ser gratuito. Mais recentemente, o aparecimento de ferramentas de uso na rede permitiu o trabalho cooperativo muito facilitado.
+  Nós escolhemos o \LaTeX{} por alguns motivos: grande facilidade de seguir um estilo sem se preocupar como, capacidade de gerenciar versões com software como git e sites como GitHub, funcionar em qualquer sistema operacional e  ser gratuito. Mais recentemente, o aparecimento de ferramentas de uso na rede permitiu o trabalho cooperativo muito facilitado.
 
-  As principais desvantagens são: idiossincrasias que podem gastar tempo, pouco controle sobre algumas coisas sem se embrenhar nos detalhes da linguagem e ausência de um verdadeiro WYSIWYG \footnote{What you see is what you get, lembramos que o princípio do \LaTeX criticava esse conceito chamando de What you see is all you got}.
+  As principais desvantagens são: idiossincrasias que podem gastar tempo, pouco controle sobre algumas coisas sem se embrenhar nos detalhes da linguagem e ausência de um verdadeiro WYSIWYG \footnote{What you see is what you get, lembramos que o princípio do \LaTeX{} criticava esse conceito chamando de What you see is all you got}.
 
 \section{Como e onde usar o \LaTeX}
 
@@ -519,7 +519,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 
 \chapter{Algumas Regras da COPPE}
 
-  Todas abreviaturas e símbolos devem ser definida antes de utilizada. Isso é facilmente feito usando os comandos para isso dedicados, tanto ativando a construção das listas de símbolos e abreviatura, como especificamente as declarando. Porém, muitos alunos não conseguem gerar a lista porque não sabem que é necessário rodar o comando \verb*|makeindex| de uma forma específica. Tudo está descrito no manual, porém é importante notar que isso pode ser feito automaticamente, inclusive no \textit{Overleaf}, usando o arquivo \verb*|latexmkrc|. Esse arquivo é pouco usado pelos usuários de \LaTeX, mas muito útil, e pode ser usado diretamente no Overleaf, ou rodando o comando \verb|latexmk| em uma linha de comando, ou mesmo rodando direto do menu no \TeX Studio.
+  Todas abreviaturas e símbolos devem ser definida antes de utilizada. Isso é facilmente feito usando os comandos para isso dedicados, tanto ativando a construção das listas de símbolos e abreviatura, como especificamente as declarando. Porém, muitos alunos não conseguem gerar a lista porque não sabem que é necessário rodar o comando \verb*|makeindex| de uma forma específica. Tudo está descrito no manual, porém é importante notar que isso pode ser feito automaticamente, inclusive no \textit{Overleaf}, usando o arquivo \verb*|latexmkrc|. Esse arquivo é pouco usado pelos usuários de \LaTeX, mas muito útil, e pode ser usado diretamente no Overleaf, ou rodando o comando \verb|latexmk| em uma linha de comando, ou mesmo rodando direto do menu no TeXstudio.
 
   É imprescindível definir os símbolos, tal como o
   conjunto dos números reais $\mathbb{R}$ e o conjunto vazio $\emptyset$.
@@ -610,7 +610,7 @@ Refaça a figura (exportar de novo para PDF com as fontes embutidas costuma bast
 
 \chapter{Floats}
 
-Grande parte dos problemas de iniciantes, e veteranos, em \LaTeX é da localização dos \textit{floats}, como figuras e tabelas. Para o bom comportamente é importante que sempre que usar um comando do tipo \verb*|\begin{figure}[hbt]| não sejam esquecidas as opções de posicionamento.
+Grande parte dos problemas de iniciantes, e veteranos, em \LaTeX{} é da localização dos \textit{floats}, como figuras e tabelas. Para o bom comportamente é importante que sempre que usar um comando do tipo \verb*|\begin{figure}[hbt]| não sejam esquecidas as opções de posicionamento.
 
 A regra geral de posicionamento é que uma figura ou quadro só pode aparecer a partir da mesma página onde é citado pela primeira vez, nunca antes. Normalmente eu sigo a ordem de preferência aqui, fim da página, topo da página, isto é \verb*|hbt|. Se desejado, pode ser usado o \verb*|p|, que coloca os floats em uma página única. Para forçar mais o posicionamento, é possível usar o pacote \verb*|float| e usar a opção \verb*|H|. Além disso é possível usar o pacote \verb*|placeins| que permite tanto definir que \textit{floats} devem sempre ser colocados na mesma seção ou outra regra, quanto usar o comando \verb*|FlaotBarrier|, que obriga a todos os \textit{floats} aparecerem.
 
@@ -1031,7 +1031,7 @@ Três ideias bastam para começar: \textbf{nós} (\verb|\node|) são caixas de t
 
 Colocar a tabela ou imagem dentro de \verb|figure|/\verb|table| (um \emph{float}) deixa o \LaTeX\ posicioná-la onde melhor couber (topo ou base da página), numerá-la e incluí-la na lista; em troca, a posição exata não é garantida. Colocá-la \emph{diretamente} no texto fixa a posição, mas perde a numeração, a legenda e a entrada na lista, além de poder gerar quebras de página ruins. Para teses, prefira sempre o float, com \verb|\caption| e \verb|\source|.
 
-  \chapter{Using BibLaTeX}
+  \chapter{Usando o BibLaTeX}
   \label{cap:biblatex}
 
   Esta classe gera as referências com BibLaTeX e o \emph{backend} \texttt{biber}, no padrão ABNT (NBR~6023 para as referências e NBR~10520 para as citações), seguindo as normas da CPGP da COPPE. O antigo \hologo{BibTeX} e os arquivos \texttt{.bst} foram aposentados.
@@ -1207,7 +1207,7 @@ Colocar a tabela ou imagem dentro de \verb|figure|/\verb|table| (um \emph{float}
 
   Se alguma dessas referências sair diferente do que o Manual imprime, é defeito da classe, e o lugar de relatar é o repositório do projeto. O gabarito de cada uma está no próprio \verb|exemplo.bib|, em comentário acima da entrada.
 
-\chapter{Alguns outros exemplo úteis}
+\chapter{Alguns outros exemplos úteis}
 
 \begin{tcolorbox}[title=Meu Textbox]
 Este é o conteúdo do meu textbox. Você pode adicionar qualquer texto aqui, bem como incluir fórmulas matemáticas, listas e outros elementos que desejar. A caixa ajustará automaticamente o tamanho para acomodar seu conteúdo.
@@ -1310,6 +1310,7 @@ $s \leftarrow 0$\;
 }
 \KwRet $s$\;
 \end{algorithm}
+\source{Elaboração própria.}
 
 O \autoref{alg:busca} é o segundo algoritmo, e usa \verb|\While|. Como no caso das listagens, ele existe para mostrar a numeração andando e a lista de algoritmos com duas entradas.
 
@@ -1325,6 +1326,7 @@ $i \leftarrow 1$\;
 \If{$i > n$}{\KwRet $0$\;}
 \KwRet $i$\;
 \end{algorithm}
+\source{Elaboração própria.}
 
   \chapter{Escrevendo matemática}
 
@@ -1565,7 +1567,7 @@ use \verb|\href{https://exemplo.org}{texto}|. Evite digitar URLs como texto comu
 
   Ao citar um trecho que você mesmo traduziu, coloque a tradução no corpo do texto e escreva ``tradução nossa'' na chamada; se a precisão do original importar, ponha-o em nota de rodapé. Segundo \citet[p.~45]{article-example}, a interpretação depende das práticas (tradução nossa).\footnote{Original: ``the interpretation depends on the practices''.} Veja também o parâmetro opcional de \verb|\citep| no Capítulo~\ref{cap:biblatex}.
 
-  \chapter{Truques de \LaTeX}
+  \chapter{Truques de \texorpdfstring{\LaTeX}{LaTeX}}
 
   \section{Comentários mágicos (\texttt{\% !TeX})}
   Linhas \verb|% !TeX| no topo do arquivo dizem ao editor (\hologo{TeX}studio, \hologo{TeX}Shop) como compilar; o Overleaf não as lê e usa o compilador escolhido no menu. O padrão recomendado nesta classe:
@@ -1627,13 +1629,8 @@ use \verb|\href{https://exemplo.org}{texto}|. Evite digitar URLs como texto comu
   \symbl[marco]{Marco}{A palavra Marco corrigida}
 
   A Lista de Abreviaturas é alfabética, e nela a chave entre colchetes decide a posição de siglas de caixa mista. Alguns exemplos:
-  \abbrev{GoT}{Game of Thrones}
-  \abbrev[GOT]{GoT}{Game of Thrones ordenado como GOT}
-  \abbrev[iot]{IoT}{IoT ordenado como iot}
-  \abbrev[IoT]{IoT}{IoT ordenado como IoT}
-  \abbrev[IOT]{IoT}{IoT ordenado como IOT}
-  \abbrev{IoT}{IoT com ordenação default}
-  \abbrev[ITU]{ITU}{ITU mesmo}
+  \abbrev[IOT]{IoT}{Internet das Coisas}
+  \abbrev[ITU]{ITU}{União Internacional de Telecomunicações}
 
   \defineacronym{ufrj}{UFRJ}{Universidade Federal do Rio de Janeiro}
   \defineacronym{cpgp}{CPGP}{Comissão de Pós-Graduação e Pesquisa de Engenharia}
@@ -1651,10 +1648,10 @@ use \verb|\href{https://exemplo.org}{texto}|. Evite digitar URLs como texto comu
 
   % Tipos exóticos da ABNT (NBR 6023): patente, legislação, norma, mapa,
   % partitura --- declarados via sinônimos em português em exemplo.bib.
-  \nocite{patente-example,legislacao-example,norma-example,mapa-example,partitura-example}
+  \nocite{patente-example,legislacao-example,m-norma,mapa-example,partitura-example}
   \nocite{jurisprudencia-example}
   \nocite{videogame-example,filme-example,semautor-example,semautorart-example}
-  \nocite{jornalcaderno-example,jornal-example}
+  \nocite{m-4236,jornal-example}
   \printbibliography
 
   % Glossário (3.1.4.2), depois das referências: os termos de \glossaryterm,
@@ -1686,7 +1683,7 @@ Segundo a norma da ABNT (Associação Brasileira de Normas Técnicas), a defini�
 
 Anexo: O anexo, por sua vez, consiste em um texto ou documento não elaborado pelo autor, que serve de fundamentação, comprovação e ilustração. O uso de anexos é apropriado para materiais como cópias de artigos, legislação, documentos históricos, fotografias, mapas, entre outros, que tenham relevância para o entendimento do trabalho do autor. Assim como os apêndices, os anexos são identificados por letras maiúsculas consecutivas, travessão e pelos respectivos títulos. Eles são utilizados para enriquecer o trabalho com informações de suporte, garantindo que o leitor tenha acesso a documentos complementares importantes para a validação dos argumentos apresentados no texto principal.
 
-No modelo \CoppeTeX os anexos devem obrigtoriamente vir depois dos apêndices e usam o comando novo (versão 3.5 em diante) \verb|\annex|
+No modelo \CoppeTeX{} os anexos devem obrigatoriamente vir depois dos apêndices e usam o comando novo (versão 3.5 em diante) \verb|\annex|
 
 
 \chapter{Outro Anexo}
@@ -1764,9 +1761,9 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor i
   \approvaldate{15 de setembro de 2026}
 
   % Palavras-chave, ao final de cada resumo (3.1.2.1.4 e 3.1.2.1.5).
-  \keyword{Primeira palavra-chave}
-  \keyword{Segunda palavra-chave}
-  \keyword{Terceira palavra-chave}
+  \keyword{primeira palavra-chave}
+  \keyword{segunda palavra-chave}
+  \keyword{terceira palavra-chave}
   \foreignkeyword{First keyword}
   \foreignkeyword{Second keyword}
   \foreignkeyword{Third keyword}
@@ -2034,8 +2031,8 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor i
   \examiner{Segundo Examinador}{D.Sc.}{UFRJ}
   \department{PESC}
   \date{05}{2026}
-  \keyword{Multilíngue}
-  \keyword{Demonstração}
+  \keyword{multilíngue}
+  \keyword{demonstração}
   %% palavras-chave do resumo em idioma estrangeiro (3.1.2.1.5, Anexo F)
   \foreignkeyword{Multilingual}
   \foreignkeyword{Demonstration}
@@ -2113,8 +2110,8 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor i
   \keyword{Multilingual}
   \keyword{Demonstration}
   %% palavras-chave do resumo em idioma estrangeiro (3.1.2.1.5, Anexo F)
-  \foreignkeyword{Multilíngue}
-  \foreignkeyword{Demonstração}
+  \foreignkeyword{multilíngue}
+  \foreignkeyword{demonstração}
   \maketitle
   \frontmatter
   \begin{abstract}
@@ -2196,8 +2193,8 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor i
   \foreignkeyword{Multilingual}
   \foreignkeyword{Demonstration}
   %% palavras-chave do terceiro resumo, em português (Norma COPPE, secao 3)
-  \braziliankeyword{Multilíngue}
-  \braziliankeyword{Demonstração}
+  \braziliankeyword{multilíngue}
+  \braziliankeyword{demonstração}
   \maketitle
   \frontmatter
   \begin{abstract}
@@ -2286,8 +2283,8 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor i
   \foreignkeyword{Multilingual}
   \foreignkeyword{Demonstration}
   %% palavras-chave do terceiro resumo, em português (Norma COPPE, secao 3)
-  \braziliankeyword{Multilíngue}
-  \braziliankeyword{Demonstração}
+  \braziliankeyword{multilíngue}
+  \braziliankeyword{demonstração}
   \maketitle
   \frontmatter
   \begin{abstract}
@@ -2378,8 +2375,8 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor i
   \foreignkeyword{Multilingual}
   \foreignkeyword{Demonstration}
   %% palavras-chave do terceiro resumo, em português (Norma COPPE, secao 3)
-  \braziliankeyword{Multilíngue}
-  \braziliankeyword{Demonstração}
+  \braziliankeyword{multilíngue}
+  \braziliankeyword{demonstração}
   \maketitle
   \frontmatter
   \begin{abstract}

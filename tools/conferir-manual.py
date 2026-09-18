@@ -57,6 +57,8 @@ PADRAO_LATEX = {
     "listabbreviationname", "listsymbolname", "listsiglaname", "lstlistingname",
     "lstlistlistingname", "quadroname", "listquadroname",
     "quadroautorefname", "cpsourcename",
+    # o do algorithm2e, com o nome da legenda no lugar do minusculo (#149)
+    "algorithmautorefname",
     # redefinidos localmente: \PackageWarning so durante o carregamento do
     # pdfx, \thepage so na folha adicional, \theHchapter so nos anexos, e o
     # \contentsline so na leitura do .toc de OUTRO volume, para a linha sair

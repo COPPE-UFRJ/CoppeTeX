@@ -167,6 +167,22 @@ run it, and the fix removes the mark.
 
 ### Fixed
 
+- **The examples follow the Manual in their content, too** (#149). The two
+  algorithms of `max-exemplo` had no source line (2.10); the funding agencies
+  on the additional sheet had no accents; a Portuguese work had a chapter
+  "Using BibLaTeX" and another "Alguns outros exemplo úteis"; the keywords of
+  `max-exemplo`, `min-exemplo`, `example_pt` and the generator began with a
+  capital, and 3.1.2.1.4 asks for lower case except proper and scientific
+  names (Annex E shows capitals; the text wins); `exemplo.bib` listed two
+  references twice under different keys; `\TeX Studio`, `\CoppeTeX os` and
+  friends swallowed the space after the logo; the list of abbreviations carried
+  test entries ("IoT ordenado como iot"); the jurisprudence example typed
+  "Brasil." where the jurisdiction as author goes in capitals (the decision of
+  #144); and both `exemplo.bib` and `ufrj.bib` cited the SiBI Manual as the 9th
+  edition of 2025, while the edition in force is the 9th revised, 2026. One
+  item was the class's: `\autoref` to an algorithm read "algoritmo 6.1" under
+  a caption saying "Algoritmo", because `algorithm2e` defines its autoref name
+  in lower case; it now takes the caption name.
 - **Appendices, annexes and alineas go past Z with doubled letters** (#127).
   3.1.4.4 says that when the alphabet runs out the annexes take doubled capital
   letters, and 2.6(f) says the same of the alineas; the 27th of any of them

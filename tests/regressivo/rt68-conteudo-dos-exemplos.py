@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
-"""Teste de conformidade da CoppeTeX. NAO roda na suite normal.
+"""Teste de conformidade da CoppeTeX.
 
 BUG: (conteudo dos exemplos) o max-exemplo.tex e o exemplo.bib -- os modelos que o aluno copia -- contrariavam o Manual em pontos de conteudo: algoritmos sem fonte, nomes de agencia sem acento, capitulo com titulo em ingles, palavras-chave com inicial maiuscula, edicao digitada como ordinal, referencias repetidas e o proprio Manual citado na edicao de 2025 (#149).
-ABERTO: #149
 
 Um por um, com a regra:
   * 2.10 -- a fonte e obrigatoria abaixo de TODA ilustracao; os dois algoritmos
