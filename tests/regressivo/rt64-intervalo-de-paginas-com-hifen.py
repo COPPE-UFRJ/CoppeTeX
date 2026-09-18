@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
-"""Teste de conformidade da CoppeTeX. NAO roda na suite normal.
+"""Teste de conformidade da CoppeTeX.
 
 BUG: (desconformidade, 4.2.3.4) o intervalo de paginas saia com MEIA-RISCA ("p. 37–44"), e o Manual usa hifen ("p. 37-44") (#145).
-ABERTO: #145
 
 A 4.2.3.4 do Manual UFRJ/SiBI diz que o hifen assinala a pagina inicial e a
 final das partes de documentos, e todos os exemplos de referencia do Manual

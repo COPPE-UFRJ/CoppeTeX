@@ -81,6 +81,13 @@
 \protected\def\ufrj@ucscanp#1(#2\ufrj@ucstop#3{%
   \ifblank{#2}{\MakeUppercase{#3}}{#3}}
 \renewcommand*{\bibdaterangesep}{/}
+\newcommand*\ufrj@abntrangedash{\protected\def\bibrangedash{\mbox{-}}}
+\ufrj@abntrangedash
+\DefineBibliographyExtras{brazilian}{\ufrj@abntrangedash}
+\DefineBibliographyExtras{english}{\ufrj@abntrangedash}
+\DefineBibliographyExtras{spanish}{\ufrj@abntrangedash}
+\DefineBibliographyExtras{french}{\ufrj@abntrangedash}
+\DefineBibliographyExtras{italian}{\ufrj@abntrangedash}
 \protected\def\ufrj@abntdate#1#2#3{%
   \iffieldundef{#3}{}{\stripzeros{\thefield{#3}}\nobreakspace}%
   \iffieldundef{#2}{}{\mkbibmonth{\thefield{#2}}\iffieldundef{#1}{}{\space}}%

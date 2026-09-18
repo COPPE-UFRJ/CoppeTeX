@@ -167,6 +167,13 @@ run it, and the fix removes the mark.
 
 ### Fixed
 
+- **Page ranges take a hyphen** (#145), in the list and in the citations, as
+  every example of the Manual writes them ("p. 7-16"; "HANSEN, 1992, p.
+  347-361"). biblatex used an en dash, and redefining `\bibrangedash` in the
+  style was not enough: each biblatex language file sets the en dash in the
+  language's *extras*, which run at every language switch — at the start of the
+  list and in each citation. The hyphen now goes through
+  `\DefineBibliographyExtras`, which runs after them, for the five languages.
 - **The list of references is aligned to the left margin only** (#118). 4.2:
   "as referências são alinhadas somente à margem esquerda (não utilize o
   recurso justificar do editor do texto), possibilitando a identificação de
