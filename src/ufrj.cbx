@@ -40,6 +40,9 @@
 \DeclareDelimFormat[textcite]{multinamedelim}{\addcomma\space}
 \DeclareDelimFormat[textcite]{finalnamedelim}{\addspace\bibstring{and}\space}
 
+\DeclareFieldFormat*{citetitle}{#1}
+\DeclareDelimFormat{nonameyeardelim}{\addcomma\space}
+
 \ExecuteBibliographyOptions{uniquename=minyearfull}
 \DeclareNameFormat{labelname}{%
   \nameparts{#1}%

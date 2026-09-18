@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
-"""Teste de conformidade da CoppeTeX. NAO roda na suite normal.
+"""Teste de conformidade da CoppeTeX.
 
 BUG: (desconformidade, 4.1.1.1.2 e 4.1.1.2a) a citacao de obra que entra pelo titulo saia com o titulo INTEIRO em ITALICO e sem virgula antes do ano: "(Guia 2012, p. 7)", "(O perfil do engenheiro 1990)" (#138).
-ABERTO: #138
 
 O sistema autor-data do Manual UFRJ/SiBI (4.1.1.1.2) indica o titulo de entrada
 seguido do ano, SEPARADOS POR VIRGULA; a 4.1.1.2(a) grafa a chamada so com a

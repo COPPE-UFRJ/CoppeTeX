@@ -167,6 +167,16 @@ run it, and the fix removes the mark.
 
 ### Fixed
 
+- **A citation by title entry reads "(Inglês, 2012, p. 7)"** (#138). 4.1.1.1.2
+  indicates "pelo título de entrada, seguido do ano de publicação do documento,
+  separados por vírgula e entre parênteses", 4.1.1.2(a) writes it with the
+  initial capital only, and its example is "(Inglês, 2012, p. 7)" for "INGLÊS:
+  guia de conversação". `authoryear-comp` set the title in italics (or quotes,
+  by entry type) and separated it from the year with a space: "(Guia 2012, p.
+  7)". `citetitle` is now plain for every type, and `nonameyeardelim` is a
+  comma. The citation uses the title without the subtitle, as in the example;
+  whether a long title is cut at its first word is a question of NBR
+  10520:2023, which is not in `specs/`, and the class leaves it whole.
 - **The month is abbreviated in the language of the publication** (#146).
   4.3.5.5.1: months "devem ser abreviados no idioma original da publicação, de
   acordo com o Anexo A da NBR 6023", and 4.3.2.2 shows "Sept. 2021" for an

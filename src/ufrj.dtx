@@ -184,6 +184,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \changes{v5.0}{2026/09/15}{COPPE is the unit style ufrj-coppe, with its own source (ufrj-coppe.dtx and ufrj-coppe.ins), its own manual (ufrj-coppe.pdf) and every example document, which all load it. A work begun with the class coppe compiles as it is: coppe.cls is now a compatibility class that loads ufrj with the same options, loads ufrj-coppe and writes one warning, and the style keeps the old public names as aliases, the old colophon pieces answering renewcommand by the old name, the three internal names that auxiliary files written by the old class contain, the page style coppe and the bib field coppedegree.}
 % \changes{v5.0}{2026/09/15}{The colophon names the class and the project apart -- Foi utilizada a classe ufrj, do projeto CoppeTeX -- where it said a classe CoppeTeX, which is the name of the project and not of a class. The norm it cites is the one the unit declares with ufrjdeclarenorm, and the UFRJ/SiBI Manual when no unit declares one.}
 % \changes{v5.0}{2026/09/15}{The documentation follows the split: this manual (ufrj.pdf) describes the class and the interface a unit style uses; ufrj-coppe.pdf describes only what COPPE declares; manual.pdf, the norm, is written for UFRJ with COPPE as the example; and the migration guide from 4.x to 5.0 tells the author of a work begun with the class coppe what to change.}
+% \changes{v5.0}{2026/09/17}{A citation by title entry reads (Ingles, 2012, p. 7): the title without subtitle, no italics, a comma before the year (4.1.1.1.2, 4.1.1.2a). authoryear-comp set it in italics and separated it from the year by a space.}
 % \changes{v5.0}{2026/09/17}{The month of a date is abbreviated in the language of the publication, given by the langid of the entry, from the tables of NBR 6023 Annex A -- Sept. 2021 for an English article (4.3.5.5.1); it followed the document's language. The rest of the entry stays in the document's language.}
 % \changes{v5.0}{2026/09/17}{Film and game: director and producer are names, printed in direct order after a colon -- Direcao: Walter Sales Junior -- as in the examples of 4.2.9, and the version takes the place of the edition, before the imprint (4.3.4). They were literal lists, printed as typed, and the version closed the entry.}
 % \changes{v5.0}{2026/09/17}{A part of a monograph carries the book's author and subtitle after In:, and the chapter before the pages -- cap. 1, p. 23-64 (4.2.1.3); bookauthor and booksubtitle vanished, and the chapter came after the pages.}
@@ -9224,6 +9225,19 @@ postamble
 \DeclareDelimFormat{finalnamedelim}{\addsemicolon\space}
 \DeclareDelimFormat[textcite]{multinamedelim}{\addcomma\space}
 \DeclareDelimFormat[textcite]{finalnamedelim}{\addspace\bibstring{and}\space}
+
+% --- Chamada pela entrada de titulo (4.1.1.1.2 e 4.1.1.2a, #138) --------------
+% "A indicacao e feita [...] pelo titulo de entrada, seguido do ano de publicacao
+% do documento, separados por virgula e entre parenteses", com "letras iniciais
+% maiusculas e o restante em minuscula" -- e o exemplo e "(Ingles, 2012, p. 7)"
+% para "INGLES: guia de conversacao". O authoryear-comp poe o titulo em italico
+% (ou entre aspas, conforme o tipo da entrada) e o separa do ano por espaco:
+% "(Guia 2012, p. 7)". O formato com asterisco limpa os formatos por tipo, e o
+% delimitador entre titulo e ano passa a virgula. O labeltitle e o titulo sem o
+% subtitulo, como no exemplo; a caixa alta da primeira palavra e coisa da LISTA
+% (o formato titlecase), e nao chega a chamada.
+\DeclareFieldFormat*{citetitle}{#1}
+\DeclareDelimFormat{nonameyeardelim}{\addcomma\space}
 
 % --- Mesmo sobrenome e mesmo ano (4.1.1.2b, #139) ------------------------------
 % "Quando houver autores com o mesmo sobrenome e data da obra coincidindo,
