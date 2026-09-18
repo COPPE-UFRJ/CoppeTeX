@@ -80,16 +80,41 @@
      \clearname{editor}}
     {}}
 
-\protected\def\ufrj@ucfamily#1{%
-  \protected@edef\ufrj@uctmp{#1}%
-  \edef\ufrj@ucstr{\detokenize\expandafter{\ufrj@uctmp}}%
-  \expandafter\ufrj@ucscan\ufrj@ucstr.\ufrj@ucstop{#1}}
-\protected\def\ufrj@ucscan#1.#2\ufrj@ucstop#3{%
-  \ifblank{#2}
-    {\expandafter\ufrj@ucscanp\ufrj@ucstr(\ufrj@ucstop{#3}}
-    {#3}}
-\protected\def\ufrj@ucscanp#1(#2\ufrj@ucstop#3{%
-  \ifblank{#2}{\MakeUppercase{#3}}{#3}}
+\ExplSyntaxOn
+\seq_new:N \l__ufrj_nome_seq
+\seq_new:N \l__ufrj_entrada_seq
+\tl_new:N \l__ufrj_nome_tl
+\tl_new:N \l__ufrj_entrada_tl
+\cs_new_protected:Npn \__ufrj_nome_segmentos:n #1
+  {
+    \seq_set_split:Nnn \l__ufrj_nome_seq { .~ } {#1}
+    \int_compare:nNnT { \seq_count:N \l__ufrj_nome_seq } = { 1 }
+      {
+        \tl_set:Nx \l__ufrj_nome_tl { \seq_item:Nn \l__ufrj_nome_seq { 1 } }
+        \seq_set_split:NnV \l__ufrj_nome_seq { .~ } \l__ufrj_nome_tl
+      }
+  }
+\cs_generate_variant:Nn \__ufrj_nome_segmentos:n { o }
+\cs_new_protected:Npn \ufrj_nome_lista:n #1
+  {
+    \bool_lazy_or:nnTF
+      { ! \cs_if_exist_p:N \namepartgiven }
+      { \tl_if_blank_p:V \namepartgiven }
+      {
+        \__ufrj_nome_segmentos:o {#1}
+        \seq_pop_left:NN \l__ufrj_nome_seq \l__ufrj_entrada_tl
+        \seq_set_split:NnV \l__ufrj_entrada_seq { ~( } \l__ufrj_entrada_tl
+        \seq_pop_left:NN \l__ufrj_entrada_seq \l__ufrj_entrada_tl
+        \MakeUppercase { \l__ufrj_entrada_tl }
+        \seq_if_empty:NF \l__ufrj_entrada_seq
+          { ~( \seq_use:Nn \l__ufrj_entrada_seq { ~( } }
+        \seq_if_empty:NF \l__ufrj_nome_seq
+          { .~ \seq_use:Nn \l__ufrj_nome_seq { .~ } }
+      }
+      { \MakeUppercase {#1} }
+  }
+\cs_set_eq:NN \ufrj@ucfamily \ufrj_nome_lista:n
+\ExplSyntaxOff
 \newcommand*\ufrj@abntdaterangesep{%
   \iffieldequalstr{endyear}{}
     {\mbox{-}\space}%

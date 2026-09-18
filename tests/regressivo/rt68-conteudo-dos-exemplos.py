@@ -135,17 +135,19 @@ for tipo, chave, corpo in entradas_do_bib(bib):
     else:
         vistas[ident] = chave
 
-# 4.3.2.13 e a regra da classe (\ufrj@ucfamily): entidade com orgao subordinado
-# e digitada com a entidade superior em caixa alta -- a classe nao converte nome
-# que tenha ponto
+# 4.3.2.13 e a regra da classe (\ufrj@ucfamily, #144): o autor-entidade e
+# digitado como se escreve, e a classe poe a ENTRADA em caixa alta na lista. Um
+# exemplo com a entrada digitada em caixa alta ensina a regra antiga, e a
+# chamada sairia "(BRASIL, 1995)". Sigla curta (IBGE, ABNT) e sigla mesmo.
 for tipo, chave, corpo in entradas_do_bib(bib):
     for m in re.finditer(r"\b(author|autor)\s*=\s*\"\{([^{}]*)\}\"", corpo):
         nome = m.group(2)
-        if ". " in nome:
-            superior = nome.split(". ", 1)[0]
-            if superior != superior.upper():
-                problemas.append("exemplo.bib: %s: entidade %r com a superior fora da caixa alta"
-                                 % (chave, nome[:45]))
+        entrada = nome.split(". ", 1)[0].split(" (", 1)[0]
+        letras = [c for c in entrada if c.isalpha()]
+        if len(letras) > 4 and all(c.isupper() for c in letras):
+            problemas.append("exemplo.bib: %s: entidade %r digitada em caixa alta; "
+                             "escreva como se escreve, a classe poe a caixa alta"
+                             % (chave, nome[:45]))
 
 # o Manual na edicao vigente
 m = re.search(r"@\w+\{manualbib,(.*?)\n\}", bib, re.S)

@@ -44,46 +44,19 @@
 \DeclareDelimFormat{nonameyeardelim}{\addcomma\space}
 
 \ExplSyntaxOn
-\clist_const:Nn \c__ufrj_particulas_clist
-  { a, as, o, os, de, da, do, das, dos, e, em, na, no, nas, nos, para, por }
-\tl_new:N \l__ufrj_seg_tl
-\tl_new:N \l__ufrj_min_tl
-\tl_new:N \l__ufrj_mai_tl
-\seq_new:N \l__ufrj_seg_seq
-\seq_new:N \l__ufrj_pal_seq
-\int_new:N \l__ufrj_n_int
-\cs_generate_variant:Nn \text_titlecase_first:n { V }
-\cs_generate_variant:Nn \clist_if_in:NnTF { NV }
 \cs_new_protected:Npn \ufrj_entidade_chamada:n #1
   {
-    \seq_set_split:Nnn \l__ufrj_seg_seq { .~ } { #1 }
-    \tl_set:Nx \l__ufrj_seg_tl { \seq_item:Nn \l__ufrj_seg_seq { 1 } }
-    \seq_set_split:NnV \l__ufrj_pal_seq { ~ } \l__ufrj_seg_tl
-    \int_zero:N \l__ufrj_n_int
-    \seq_map_inline:Nn \l__ufrj_pal_seq
-      {
-        \int_incr:N \l__ufrj_n_int
-        \int_compare:nNnT { \l__ufrj_n_int } > { 1 } { ~ }
-        \tl_set:Nx \l__ufrj_mai_tl { \text_uppercase:n { ##1 } }
-        \tl_set:Nn \l__ufrj_seg_tl { ##1 }
-        \tl_if_eq:NNTF \l__ufrj_mai_tl \l__ufrj_seg_tl
-          {
-            \tl_set:Nx \l__ufrj_min_tl { \text_lowercase:n { ##1 } }
-            \int_compare:nNnTF { \l__ufrj_n_int } > { 1 }
-              {
-                \clist_if_in:NVTF \c__ufrj_particulas_clist \l__ufrj_min_tl
-                  { \l__ufrj_min_tl }
-                  { \text_titlecase_first:V \l__ufrj_min_tl }
-              }
-              { \text_titlecase_first:V \l__ufrj_min_tl }
-          }
-          { ##1 }
-      }
+    \__ufrj_nome_segmentos:o {#1}
+    \seq_item:Nn \l__ufrj_nome_seq { 1 }
   }
-\cs_generate_variant:Nn \ufrj_entidade_chamada:n { V }
-\cs_new_protected:Npn \ufrj_se_hierarquia:NTF #1#2#3
-  { \tl_if_in:NnTF #1 { .~ } {#2} {#3} }
-\cs_set_eq:NN \ufrj@entidadechamada \ufrj_entidade_chamada:V
+\prg_new_protected_conditional:Npnn \ufrj_se_hierarquia:N #1 { TF }
+  {
+    \__ufrj_nome_segmentos:o {#1}
+    \int_compare:nNnTF { \seq_count:N \l__ufrj_nome_seq } > { 1 }
+      { \prg_return_true: }
+      { \prg_return_false: }
+  }
+\cs_set_eq:NN \ufrj@entidadechamada \ufrj_entidade_chamada:n
 \cs_set_eq:NN \ufrj@sehierarquia \ufrj_se_hierarquia:NTF
 \ExplSyntaxOff
 

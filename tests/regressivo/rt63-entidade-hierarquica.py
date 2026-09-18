@@ -1,53 +1,112 @@
 # -*- coding: utf-8 -*-
 """Teste de conformidade da CoppeTeX.
 
-BUG: (desconformidade, 4.1.1.2 e 4.4.1) a chamada de obra de entidade com orgao subordinado repetia a hierarquia inteira, e em caixa alta: "(BRASIL. Ministerio da Educacao, 1995)" (#144).
+BUG: (desconformidade, 4.1.1.2, 4.3.2.13 e 4.4.1) a chamada de obra de entidade com orgao subordinado repetia a hierarquia inteira, e em caixa alta: "(BRASIL. Ministerio da Educacao, 1995)" (#144).
 
-A classe tem uma regra deliberada para o nome da entidade na LISTA (comentario
-junto de \\ufrj@ucfamily no ufrj.dtx): nome com ponto sai exatamente como o
-autor digitou, e o autor digita a entidade superior em caixa alta --
-"BRASIL. Ministerio da Educacao" --, como pede a 4.3.2.13 do Manual UFRJ/SiBI.
-A lista sai certa. A CHAMADA nao: o exemplo de entidade governamental da
-4.1.1.2 cita so a entrada, com inicial maiuscula -- "(Brasil, 1995)" --, e a
-4.4.1 diz que a chamada segue a entrada da referencia, mas nao a grafia dela.
-Nada na documentacao ensina a usar shortauthor, e o max-exemplo nao mostra.
+Historia. A primeira correcao (17/09/2026) partiu de uma regra que a classe
+tinha: o autor digitava a entrada da entidade em caixa alta -- "BRASIL.
+Ministerio da Educacao" --, a lista deixava todo nome com ponto como viera, e a
+chamada convertia a caixa alta de volta, errando em sigla ("IBGE" virava
+"Ibge"). Em 18/09/2026 a regra foi invertida, como pede o Manual: a caixa alta
+e trabalho do estilo. O autor digita o nome como ele se escreve, a LISTA poe em
+caixa alta a entrada -- o nome ate o primeiro ". ", sem o qualificador entre
+parenteses, como nos exemplos da 4.3.2.13 --, e a CHAMADA usa a entrada como
+foi digitada (4.1.1.2; NBR 10520:2023, 6.1.1.2 e 6.1.1.3).
 
-Cobra-se, com o .bib digitado como a classe pede:
-  1. na lista, "BRASIL. Ministerio da Educacao." e
-     "UNIVERSIDADE FEDERAL DO RIO DE JANEIRO. Sistema de Bibliotecas e Informacao." (ja passa);
-  2. nas chamadas, "(Brasil, 1995)" e "(Universidade Federal do Rio de Janeiro, 1998)".
+Cobra-se, com o .bib digitado como se escreve:
+  1. na lista, a entrada em caixa alta e o resto como foi digitado --
+     "BRASIL. Ministerio da Educacao.", "RIO DE JANEIRO (Estado). Secretaria do
+     Meio Ambiente.", "BIBLIOTECA NACIONAL (Brasil).", "IBGE. Coordenacao de
+     Geografia.", "ASSOCIACAO BRASILEIRA DE NORMAS TECNICAS." -- e o autor
+     pessoal com o sobrenome inteiro em caixa alta, "SOUZA, Maria.";
+  2. nas chamadas, a entrada como foi digitada -- "(Brasil, 1995)",
+     "(Universidade Federal do Rio de Janeiro, 1998)", "(Rio de Janeiro
+     (Estado), 2000)", "(IBGE, 2011)" -- e nenhum resto da hierarquia.
 """
 from medidas import Documento, relatar, compacta
 
 BIB = r"""@book{gov,
-  author = {{BRASIL. Ministério da Educação}},
+  author = {{Brasil. Ministério da Educação}},
   title = {Plano de teste},
   location = {Brasília},
   publisher = {Editora Exemplo},
   year = {1995},
 }
 @online{ufrj,
-  author = {{UNIVERSIDADE FEDERAL DO RIO DE JANEIRO. Sistema de Bibliotecas e Informação}},
+  author = {{Universidade Federal do Rio de Janeiro. Sistema de Bibliotecas e Informação}},
   title = {Base de teste},
   location = {Rio de Janeiro},
   year = {1998},
   url = {http://exemplo.ufrj.br},
   urldate = {2022-03-30},
 }
+@book{estado,
+  author = {{Rio de Janeiro (Estado). Secretaria do Meio Ambiente}},
+  title = {Relatório de teste},
+  location = {Rio de Janeiro},
+  publisher = {Secretaria do Meio Ambiente},
+  year = {2000},
+}
+@book{bn,
+  author = {{Biblioteca Nacional (Brasil)}},
+  title = {Catálogo de teste},
+  location = {Rio de Janeiro},
+  publisher = {Biblioteca Nacional},
+  year = {2001},
+}
+@book{ibge,
+  author = {{IBGE. Coordenação de Geografia}},
+  title = {Atlas de teste},
+  location = {Rio de Janeiro},
+  publisher = {IBGE},
+  year = {2011},
+}
+@book{abnt,
+  author = {{Associação Brasileira de Normas Técnicas}},
+  title = {Norma de teste},
+  location = {Rio de Janeiro},
+  publisher = {ABNT},
+  year = {2018},
+}
+@book{pessoa,
+  author = {Souza, Maria},
+  title = {Livro de teste},
+  location = {Rio de Janeiro},
+  publisher = {Editora Exemplo},
+  year = {2003},
+}
 """
 
+CORPO = (r"\chapter{Um}Chamadas: \citep{gov}, \citep{ufrj}, \citep{estado}, "
+         r"\citep{bn}, \citep{ibge}, \citep{abnt} e \citep{pessoa}. Fim das chamadas."
+         r"\printbibliography")
+
 problemas = []
-with Documento(corpo=r"\chapter{Um}Chamadas: \citep{gov} e \citep{ufrj}.\printbibliography", bib=BIB) as d:
+with Documento(corpo=CORPO, bib=BIB) as d:
     if not d.ok:
         relatar(["nao compilou: %s" % d.erros_do_log()])
     texto = compacta(d.texto())
-    for esperado in ("BRASIL. Ministério da Educação.",
-                     "UNIVERSIDADE FEDERAL DO RIO DE JANEIRO. Sistema de Bibliotecas e Informação."):
-        if esperado not in texto:
-            problemas.append("na lista, esperava %r" % esperado)
     i = texto.find("Chamadas:")
-    for esperado in ("(Brasil, 1995)", "(Universidade Federal do Rio de Janeiro, 1998)"):
-        if esperado not in texto:
-            problemas.append("na chamada, esperava %r; saiu %r" % (esperado, texto[i:i + 130]))
+    j = texto.find("Fim das chamadas.")
+    chamadas = texto[i:j]
+    lista = texto[j:]
+    for esperado in ("BRASIL. Ministério da Educação.",
+                     "UNIVERSIDADE FEDERAL DO RIO DE JANEIRO. Sistema de Bibliotecas e Informação.",
+                     "RIO DE JANEIRO (Estado). Secretaria do Meio Ambiente.",
+                     "BIBLIOTECA NACIONAL (Brasil).",
+                     "IBGE. Coordenação de Geografia.",
+                     "ASSOCIAÇÃO BRASILEIRA DE NORMAS TÉCNICAS.",
+                     "SOUZA, Maria."):
+        if esperado not in lista:
+            problemas.append("na lista, esperava %r" % esperado)
+    for esperado in ("(Brasil, 1995)", "(Universidade Federal do Rio de Janeiro, 1998)",
+                     "(Rio de Janeiro (Estado), 2000)", "(Biblioteca Nacional (Brasil), 2001)",
+                     "(IBGE, 2011)", "(Associação Brasileira de Normas Técnicas, 2018)",
+                     "(Souza, 2003)"):
+        if esperado not in chamadas:
+            problemas.append("na chamada, esperava %r; saiu %r" % (esperado, chamadas[:400]))
+    for resto in ("Ministério", "Sistema de Bibliotecas", "Secretaria", "Coordenação"):
+        if resto in chamadas:
+            problemas.append("a chamada traz %r, da hierarquia, que so vai na lista" % resto)
 
 relatar(problemas)

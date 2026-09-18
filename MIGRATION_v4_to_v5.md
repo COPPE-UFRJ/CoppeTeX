@@ -29,6 +29,7 @@ belongs to COPPE into the unit style `ufrj-coppe`. A thesis started with
 | Trabalho de outra unidade da UFRJ | Use a classe sem estilo e declare o seu Programa no preâmbulo (seção 6), até a sua unidade ter um estilo. |
 | Você escreveu um pacote de idioma | Renomeie os dois arquivos e o comando, e tire deles o que é institucional (seção 7). |
 | Você usava a opção `pdfa` | **Nada.** O PDF/A passou a ser o padrão (2.2d do Manual), e a opção continua aceita sem fazer nada. Para um PDF comum, use `sempdfa`. |
+| Seu `.bib` tem autor-entidade com a entrada em caixa alta (`{{BRASIL. Ministério da Educação}}`) | **Reescreva como se escreve:** `{{Brasil. Ministério da Educação}}`. A lista sai igual — a classe põe a entrada em caixa alta sozinha —, e a chamada passa a sair "(Brasil, 1995)"; com a caixa alta digitada, sairia "(BRASIL, 1995)". |
 
 ---
 
