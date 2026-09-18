@@ -212,6 +212,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \changes{v5.0}{2026/09/17}{The line numbers of a listing stay inside the margin. The five language styles number the lines on the left, and without xleftmargin the listings package indents the code and leaves the number outside the 3 cm margin of 2.3.}
 % \changes{v5.0}{2026/09/17}{Footnotes start at the left margin and hang: from the second line the text aligns under the first letter, not under the mark, as 4.2 asks of a reference in a note -- the class used book's makefntext, which indented the mark by parindent and returned the second line to the margin. A footnote no longer splits across sheets either.}
 % \changes{v5.0}{2026/09/17}{PDF/A-2b is the default output, and the new option sempdfa turns it off. 2.2(d) of the Manual requires the final digital version to be PDF/A, the deposit has been digital only since Resolucao CEPG n. 246/2023, and the class already produced conformant PDF/A -- but only when asked, so a work written without reading the manual was deposited off the norm. The v4.1 option pdfa is still accepted and now does nothing.}
+% \changes{v5.0}{2026/09/18}{The class checks the order of the pre-textual elements of 3.1.2 between maketitle and mainmatter: the folha de aprovacao, dedication, epigraph, lists and sumario each have their place, and one out of place is a compilation error that names what to move and where. mainmatter warns when there is no tableofcontents, the one mandatory element the author has to ask for.}
 % \changes{v5.0}{2026/09/17}{The logos are printed on the capa only. The folha de rosto repeated the capa's logo line; Annex B, which is the model of the folha de rosto, and the two sheets of the SiBI model carry no image there. Annex A puts the two logos on the CAPA and marks both as optional.}
 % \changes{v5.0}{2026/09/17}{The folha de rosto and the folha de aprovacao are written entirely in Portuguese, whatever the language of the work. The research-line label, the coadvisor label and the two approval labels followed the main language while the natureza and the advisor label did not, so an English or Spanish work came out with half of each sheet in each language. The class manual and section 7 of the Norma COPPE already stated the rule: these sheets are institutional identity. The four now read the Portuguese key through ufrj@unitstr, which still honours a text the unit declared.}
 % \changes{v5.0}{2026/09/17}{The reference above each abstract is composed like the references in the list: aligned to the left margin only, the title in bold and the subtitle out of it, and an em dash before the vinculacao academica. 4.2 asks for one presentation for every reference in the work; this one was justified, set the title flat and used an en dash, so the same reference had two shapes in the same work.}
@@ -1837,6 +1838,23 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % quadros, programas, algoritmos e as dos tipos criados com |\newufrjfloat|,
 % porque quadro, programa e algoritmo são ilustrações (2.10) ---, depois a de
 % tabelas, a de abreviaturas e siglas, a de símbolos, e o sumário por último.
+%
+% \textbf{A classe confere a ordem.} Entre o |\maketitle| e o |\mainmatter|,
+% cada elemento pré-textual que a classe compõe --- a folha de aprovação, a
+% dedicatória, a epígrafe, as listas e o sumário --- tem o seu lugar na ordem
+% da 3.1.2, e um elemento fora dele é \textbf{erro de compilação}, com a
+% mensagem dizendo o que mover para onde:
+% \begin{verbatim}
+% ! Class ufrj Error: Fora da ordem da 3.1.2 do Manual: \listoftables
+% (ufrj)              (lista de tabelas) depois de \tableofcontents (sumario).
+% \end{verbatim}
+% A errata e os agradecimentos não entram na conferência, porque não têm
+% comando: são o seu |\chapter*|. Listas do mesmo lugar --- as de ilustração
+% entre si, a de abreviaturas e a de siglas --- vão em qualquer ordem. Sem o
+% |\tableofcontents|, o |\mainmatter| avisa que falta o sumário, o único
+% elemento pré-textual obrigatório que você mesmo tem de pedir. A classe
+% confere, e não reordena sozinha: o que você escrevesse entre duas listas
+% mudaria de lugar sem aviso, e o |.tex| continuaria errado.
 % As listas \textbf{não} entram no sumário, a não ser com a opção
 % |listasnosumario| --- que \textbf{contraria a norma}: a \mbox{NBR~6027} tira
 % os elementos pré-textuais do sumário, e o sumário modelo do Manual começa na
@@ -4209,6 +4227,7 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
 % (float's own \l@quadro lays the number/title out incorrectly).
 \let\l@quadro\l@figure
 \newcommand\listofquadros{%
+  \ufrj@ordem{9}{lista de ilustracoes}{\string\listofquadros}%
   \chapter*{\listquadroname}%
   \ufrj@listtoc{\listquadroname}%
   \@mkboth{\MakeUppercase\listquadroname}{\MakeUppercase\listquadroname}%
@@ -4263,6 +4282,7 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
   \AtBeginDocument{\expandafter\let\csname l@#1\endcsname\l@figure}%
   \expandafter\providecommand\csname #1autorefname\endcsname{#2}%
   \expandafter\newcommand\csname listof#1s\endcsname{%
+    \ufrj@ordem{9}{lista de ilustracoes}{\expandafter\string\csname listof#1s\endcsname}%
     \chapter*{#3}\ufrj@listtoc{#3}%
     \@mkboth{\MakeUppercase{#3}}{\MakeUppercase{#3}}%
     \@starttoc{lo#1}}}
@@ -5297,6 +5317,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \renewcommand\lstlistlistingname{\ufrjstring{listprogram}}}
 % \listofprogramas in the ufrj list style (heading + ToC + running head).
 \newcommand\listofprogramas{%
+  \ufrj@ordem{9}{lista de ilustracoes}{\string\listofprogramas}%
   \chapter*{\lstlistlistingname}%
   \ufrj@listtoc{\lstlistlistingname}%
   \@mkboth{\MakeUppercase\lstlistlistingname}{\MakeUppercase\lstlistlistingname}%
@@ -6008,12 +6029,97 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %
 % \subsubsection{As três partes do documento}
 %
+% \subsubsection{A ordem dos elementos pré-textuais}
+%
+% A 3.1.2 do Manual dá a ordem dos elementos pré-textuais, e a classe a
+% confere (\#148). Cada elemento que ela compõe tem um posto nessa ordem;
+% entre o |\maketitle| e o |\mainmatter|, um elemento de posto menor que o de
+% um já composto é erro, e a mensagem diz o que mover.
+%    \begin{macrocode}
+% A ordem da 3.1.2: folha de rosto, folha adicional, errata, folha de
+% aprovacao, dedicatoria, agradecimentos, epigrafe, resumo em lingua
+% vernacula, resumo em lingua estrangeira, lista de ilustracoes, lista de
+% tabelas, lista de abreviaturas e siglas, lista de simbolos e sumario. Os
+% postos: 1 \maketitle (capa, folha de rosto, folha adicional), 3
+% \frontmatter (folha de aprovacao), 4 \dedication, 6 \epigrafe, 7 e 8 os
+% resumos, 9 as listas de ilustracao, 10 a de tabelas, 11 as de abreviaturas
+% e de siglas, 12 a de simbolos, 13 o sumario. Errata e agradecimentos nao tem
+% comando -- sao \chapter* do autor -- e ficam fora da conferencia. Listas do
+% mesmo posto -- as de ilustracao entre si, abreviaturas e siglas -- vao em
+% qualquer ordem.
+%
+% Por que conferir, e nao reordenar. A classe poderia guardar as listas e
+% compo-las todas no \mainmatter, na ordem certa, mas: os resumos e os
+% agradecimentos tem texto do autor e nao se guardam assim; um documento sem
+% \mainmatter perderia as listas; e o que o autor escrevesse entre duas listas
+% mudaria de lugar sem aviso. O erro diz o que esta fora e para onde vai, e o
+% .tex fica certo -- que e o que o aluno leva para o proximo trabalho.
+%
+% Depois do \mainmatter a conferencia para: a 3.1.2.2.3 admite epigrafe na
+% abertura das secoes primarias. E no \mainmatter, se o sumario nao veio, um
+% aviso: e o unico elemento pre-textual que a 3.1.2.1.6 exige alem das folhas
+% que a classe ja compoe.
+\newif\if@ufrjordem
+\newcount\ufrj@ordemposto
+\newcommand*\ufrj@ordemnome{}
+\newcommand*\ufrj@ordemcmd{}
+% #1 o posto, #2 o nome do elemento, #3 o comando (ja com \string)
+\newcommand\ufrj@ordem[3]{%
+  \if@ufrjordem
+    \ifnum#1<\ufrj@ordemposto
+      \ClassError{ufrj}{Fora da ordem da 3.1.2 do Manual: #3 (#2)\MessageBreak
+        depois de \ufrj@ordemcmd\space(\ufrj@ordemnome)}{%
+        A 3.1.2 do Manual poe os elementos pre-textuais nesta ordem:\MessageBreak
+        folha de rosto, folha adicional, errata, folha de aprovacao,\MessageBreak
+        dedicatoria, agradecimentos, epigrafe, resumo em portugues,\MessageBreak
+        resumo em lingua estrangeira, listas de ilustracoes, lista de\MessageBreak
+        tabelas, lista de abreviaturas e siglas, lista de simbolos\MessageBreak
+        e sumario. Mova #3 para antes de \ufrj@ordemcmd.}%
+    \else
+      \global\ufrj@ordemposto=#1\relax
+      \xdef\ufrj@ordemnome{#2}%
+      \xdef\ufrj@ordemcmd{#3}%
+    \fi
+  \fi}
+\newcommand\ufrj@ordeminicio{%
+  \global\@ufrjordemtrue
+  \global\ufrj@ordemposto=\@ne
+  \gdef\ufrj@ordemnome{folha de rosto}%
+  \xdef\ufrj@ordemcmd{\string\maketitle}}
+\newcommand\ufrj@ordemfim{%
+  \if@ufrjordem
+    \ifnum\ufrj@ordemposto<13
+      \ClassWarningNoLine{ufrj}{Falta o sumario (\string\tableofcontents),
+        que a 3.1.2.1.6\MessageBreak do Manual exige, antes do
+        \string\mainmatter}%
+    \fi
+    \global\@ufrjordemfalse
+  \fi}
+% O sumario e do book.cls, e a lista de algoritmos do algorithm2e. Nenhum dos
+% dois tem parametro, e o \pretocmd de um comando sem parametro nao retokeniza:
+% pode ficar para o \AtBeginDocument, depois de qualquer pacote que os redefina.
+% (Os comandos da classe que tem parametro -- \dedication, \epigrafe -- levam a
+% conferencia na propria definicao: no \AtBeginDocument o @ ja nao e letra, e a
+% retokenizacao os quebraria.)
+\AtBeginDocument{%
+  \pretocmd\tableofcontents
+    {\ufrj@ordem{13}{sumario}{\string\tableofcontents}}{}%
+    {\ClassWarningNoLine{ufrj}{Nao consegui conferir a ordem do sumario}}%
+  \ifdefined\listofalgorithms
+    \pretocmd\listofalgorithms
+      {\ufrj@ordem{9}{lista de ilustracoes}{\string\listofalgorithms}}{}%
+      {\ClassWarningNoLine{ufrj}{Nao consegui conferir a ordem da lista de
+        algoritmos}}%
+  \fi}
+%    \end{macrocode}
+%
 % \begin{macro}{\frontmatter}
 % The number of pages for both frontmatter and mainmatter printed
 % in the cataloging details page is computed by means of simple
 % \LaTeX\ labels.
 %    \begin{macrocode}
 \renewcommand\frontmatter{%
+  \ufrj@ordem{3}{folha de aprovacao}{\string\frontmatter}%
   \cleardoublepage
   \@mainmatterfalse
 % The count already started at the folha de rosto (see \maketitle) and simply
@@ -6060,6 +6166,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \begin{macro}{\mainmatter}
 %    \begin{macrocode}
 \renewcommand\mainmatter{%
+  \ufrj@ordemfim
   \ufrj@mainBegin
   \cleardoublepage
   \@mainmattertrue
@@ -6321,6 +6428,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % count begins. Nothing is printed here: \frontmatter keeps \pagestyle{empty}
 % until the textual part starts.
   \pagenumbering{alph}
+  \ufrj@ordeminicio
   \ltx@ifpackageloaded{hyperref}{\ufrj@hypersetup}{}%
   \makecover
   \pagenumbering{arabic}
@@ -6833,6 +6941,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % comecava perto de 13 cm; a epigrafe ja tinha a meia mancha, mas tambem com o
 % texto alinhado a direita (#123).
 \newcommand\dedication[1]{%
+  \ufrj@ordem{4}{dedicatoria}{\string\dedication}%
   \gdef\@dedic{#1}%
   \cleardoublepage
   \vspace*{\fill}%
@@ -6853,6 +6962,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % mancha, como o da dedicatoria (\#123).
 %    \begin{macrocode}
 \newcommand\epigrafe[2]{%
+  \ufrj@ordem{6}{epigrafe}{\string\epigrafe}%
   \cleardoublepage
   \vspace*{\fill}%
   \begin{flushright}
@@ -7184,6 +7294,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \begin{macro}{\listoffigures}
 %    \begin{macrocode}
 \renewcommand\listoffigures{%
+    \ufrj@ordem{9}{lista de ilustracoes}{\string\listoffigures}%
     \ufrj@hasLof
     \if@twocolumn
       \@restonecoltrue\onecolumn
@@ -7203,6 +7314,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \begin{macro}{\listoftables}
 %    \begin{macrocode}
 \renewcommand\listoftables{%
+    \ufrj@ordem{10}{lista de tabelas}{\string\listoftables}%
     \if@twocolumn
       \@restonecoltrue\onecolumn
     \else
@@ -7229,6 +7341,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % documento, e o Glossario pos-textual da 3.1.4.2 saia com o titulo errado --
 % no sumario tambem. Dentro do grupo, a troca dura o que tem de durar.
 \newcommand\printlosymbols{%
+\ufrj@ordem{12}{lista de simbolos}{\string\printlosymbols}%
 \begingroup\@ufrjglosspretrue
 \renewcommand\glossaryname{\listsymbolname}%
 \@input@{\jobname.los}\endgroup}
@@ -7299,6 +7412,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \begin{macro}{\printloabbreviations}
 %    \begin{macrocode}
 \newcommand\printloabbreviations{%
+\ufrj@ordem{11}{lista de abreviaturas e siglas}{\string\printloabbreviations}%
 \begingroup\@ufrjglosspretrue
 \renewcommand\glossaryname{\listabbreviationname}%
 \@input@{\jobname.lab}\endgroup}
@@ -7369,6 +7483,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \@ifundefined{abbrev}{}{\abbrev[#1]{#2}{#3}}%
   \fi}
 \newcommand\printlosiglas{%
+\ufrj@ordem{11}{lista de abreviaturas e siglas}{\string\printlosiglas}%
 \begingroup\@ufrjglosspretrue
 \renewcommand\glossaryname{\listsiglaname}%
 \@input@{\jobname.lsg}\endgroup}

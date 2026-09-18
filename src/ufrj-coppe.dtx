@@ -369,6 +369,20 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   % descomente a linha abaixo e a moldura vazia da folha adicional some.
   % \catalogcard{ficha.pdf}
 
+  % ORDEM DOS ELEMENTOS PRÉ-TEXTUAIS (Manual 3.1.2). A classe confere esta
+  % ordem: um elemento fora dela é erro de compilação, e a mensagem diz o que
+  % mover. Os obrigatórios estão em MAIÚSCULAS; os outros são opcionais.
+  %   \maketitle ......... CAPA, FOLHA DE ROSTO e FOLHA ADICIONAL
+  %   errata ............. se houver, antes da folha de aprovação
+  %   \frontmatter ....... FOLHA DE APROVAÇÃO
+  %   \dedication ........ dedicatória
+  %   agradecimentos ..... \chapter*{Agradecimentos}
+  %   \epigraph .......... epígrafe
+  %   resumos ............ RESUMO EM PORTUGUÊS, sempre o primeiro, e depois
+  %                        o RESUMO EM LÍNGUA ESTRANGEIRA
+  %   listas ............. de ilustrações, de tabelas, de abreviaturas e
+  %                        siglas e de símbolos, nessa ordem
+  %   \tableofcontents ... SUMÁRIO, sempre o último
   \maketitle
 
   \frontmatter
@@ -1777,6 +1791,13 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor i
   \linkedproject{no}
   % \catalogcard{ficha.pdf}
 
+  % A ordem dos elementos pré-textuais é a da 3.1.2 do Manual, e a classe a
+  % confere: um elemento fora dela é erro de compilação, e a mensagem diz o
+  % que mover. Os obrigatórios são estes, nesta ordem: \maketitle (capa,
+  % folha de rosto e folha adicional), \frontmatter (folha de aprovação), o
+  % resumo em português, o resumo em língua estrangeira e \tableofcontents
+  % (sumário), sempre o último. O max-exemplo.tex mostra onde entram os
+  % opcionais: errata, dedicatória, agradecimentos, epígrafe e as listas.
   \maketitle
 
   \frontmatter
@@ -2036,6 +2057,9 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor i
   %% palavras-chave do resumo em idioma estrangeiro (3.1.2.1.5, Anexo F)
   \foreignkeyword{Multilingual}
   \foreignkeyword{Demonstration}
+  % Ordem dos pré-textuais (Manual 3.1.2), que a classe confere: \maketitle,
+  % \frontmatter, o resumo em português, o resumo em língua estrangeira, as
+  % listas e \tableofcontents, sempre o último.
   \maketitle
   \frontmatter
   \begin{abstract}

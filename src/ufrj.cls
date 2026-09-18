@@ -286,6 +286,7 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
 \providecommand{\quadroautorefname}{\quadroname}
 \let\l@quadro\l@figure
 \newcommand\listofquadros{%
+  \ufrj@ordem{9}{lista de ilustracoes}{\string\listofquadros}%
   \chapter*{\listquadroname}%
   \ufrj@listtoc{\listquadroname}%
   \@mkboth{\MakeUppercase\listquadroname}{\MakeUppercase\listquadroname}%
@@ -315,6 +316,7 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
   \AtBeginDocument{\expandafter\let\csname l@#1\endcsname\l@figure}%
   \expandafter\providecommand\csname #1autorefname\endcsname{#2}%
   \expandafter\newcommand\csname listof#1s\endcsname{%
+    \ufrj@ordem{9}{lista de ilustracoes}{\expandafter\string\csname listof#1s\endcsname}%
     \chapter*{#3}\ufrj@listtoc{#3}%
     \@mkboth{\MakeUppercase{#3}}{\MakeUppercase{#3}}%
     \@starttoc{lo#1}}}
@@ -787,6 +789,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \renewcommand\lstlistingname{\ufrjstring{program}}%
   \renewcommand\lstlistlistingname{\ufrjstring{listprogram}}}
 \newcommand\listofprogramas{%
+  \ufrj@ordem{9}{lista de ilustracoes}{\string\listofprogramas}%
   \chapter*{\lstlistlistingname}%
   \ufrj@listtoc{\lstlistlistingname}%
   \@mkboth{\MakeUppercase\lstlistlistingname}{\MakeUppercase\lstlistlistingname}%
@@ -1136,7 +1139,53 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \providecommand\foreign@doctype{}
 \renewcommand\foreign@doctype{#6}%
 }
+\newif\if@ufrjordem
+\newcount\ufrj@ordemposto
+\newcommand*\ufrj@ordemnome{}
+\newcommand*\ufrj@ordemcmd{}
+\newcommand\ufrj@ordem[3]{%
+  \if@ufrjordem
+    \ifnum#1<\ufrj@ordemposto
+      \ClassError{ufrj}{Fora da ordem da 3.1.2 do Manual: #3 (#2)\MessageBreak
+        depois de \ufrj@ordemcmd\space(\ufrj@ordemnome)}{%
+        A 3.1.2 do Manual poe os elementos pre-textuais nesta ordem:\MessageBreak
+        folha de rosto, folha adicional, errata, folha de aprovacao,\MessageBreak
+        dedicatoria, agradecimentos, epigrafe, resumo em portugues,\MessageBreak
+        resumo em lingua estrangeira, listas de ilustracoes, lista de\MessageBreak
+        tabelas, lista de abreviaturas e siglas, lista de simbolos\MessageBreak
+        e sumario. Mova #3 para antes de \ufrj@ordemcmd.}%
+    \else
+      \global\ufrj@ordemposto=#1\relax
+      \xdef\ufrj@ordemnome{#2}%
+      \xdef\ufrj@ordemcmd{#3}%
+    \fi
+  \fi}
+\newcommand\ufrj@ordeminicio{%
+  \global\@ufrjordemtrue
+  \global\ufrj@ordemposto=\@ne
+  \gdef\ufrj@ordemnome{folha de rosto}%
+  \xdef\ufrj@ordemcmd{\string\maketitle}}
+\newcommand\ufrj@ordemfim{%
+  \if@ufrjordem
+    \ifnum\ufrj@ordemposto<13
+      \ClassWarningNoLine{ufrj}{Falta o sumario (\string\tableofcontents),
+        que a 3.1.2.1.6\MessageBreak do Manual exige, antes do
+        \string\mainmatter}%
+    \fi
+    \global\@ufrjordemfalse
+  \fi}
+\AtBeginDocument{%
+  \pretocmd\tableofcontents
+    {\ufrj@ordem{13}{sumario}{\string\tableofcontents}}{}%
+    {\ClassWarningNoLine{ufrj}{Nao consegui conferir a ordem do sumario}}%
+  \ifdefined\listofalgorithms
+    \pretocmd\listofalgorithms
+      {\ufrj@ordem{9}{lista de ilustracoes}{\string\listofalgorithms}}{}%
+      {\ClassWarningNoLine{ufrj}{Nao consegui conferir a ordem da lista de
+        algoritmos}}%
+  \fi}
 \renewcommand\frontmatter{%
+  \ufrj@ordem{3}{folha de aprovacao}{\string\frontmatter}%
   \cleardoublepage
   \@mainmatterfalse
   \if@ufrjroman
@@ -1163,6 +1212,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \fi
 }
 \renewcommand\mainmatter{%
+  \ufrj@ordemfim
   \ufrj@mainBegin
   \cleardoublepage
   \@mainmattertrue
@@ -1299,6 +1349,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 }
 \renewcommand\maketitle{%
   \pagenumbering{alph}
+  \ufrj@ordeminicio
   \ltx@ifpackageloaded{hyperref}{\ufrj@hypersetup}{}%
   \makecover
   \pagenumbering{arabic}
@@ -1656,6 +1707,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \end{center}
   \par}}
 \newcommand\dedication[1]{%
+  \ufrj@ordem{4}{dedicatoria}{\string\dedication}%
   \gdef\@dedic{#1}%
   \cleardoublepage
   \vspace*{\fill}%
@@ -1665,6 +1717,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \end{minipage}
   \end{flushright}}
 \newcommand\epigrafe[2]{%
+  \ufrj@ordem{6}{epigrafe}{\string\epigrafe}%
   \cleardoublepage
   \vspace*{\fill}%
   \begin{flushright}
@@ -1829,6 +1882,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \end{otherlanguage}
   \vspace*{\fill}}
 \renewcommand\listoffigures{%
+    \ufrj@ordem{9}{lista de ilustracoes}{\string\listoffigures}%
     \ufrj@hasLof
     \if@twocolumn
       \@restonecoltrue\onecolumn
@@ -1843,6 +1897,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \if@restonecol\twocolumn\fi
     }
 \renewcommand\listoftables{%
+    \ufrj@ordem{10}{lista de tabelas}{\string\listoftables}%
     \if@twocolumn
       \@restonecoltrue\onecolumn
     \else
@@ -1857,6 +1912,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \if@restonecol\twocolumn\fi
     }
 \newcommand\printlosymbols{%
+\ufrj@ordem{12}{lista de simbolos}{\string\printlosymbols}%
 \begingroup\@ufrjglosspretrue
 \renewcommand\glossaryname{\listsymbolname}%
 \@input@{\jobname.los}\endgroup}
@@ -1893,6 +1949,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \endgroup%
   \@esphack}
 \newcommand\printloabbreviations{%
+\ufrj@ordem{11}{lista de abreviaturas e siglas}{\string\printloabbreviations}%
 \begingroup\@ufrjglosspretrue
 \renewcommand\glossaryname{\listabbreviationname}%
 \@input@{\jobname.lab}\endgroup}
@@ -1935,6 +1992,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \@ifundefined{abbrev}{}{\abbrev[#1]{#2}{#3}}%
   \fi}
 \newcommand\printlosiglas{%
+\ufrj@ordem{11}{lista de abreviaturas e siglas}{\string\printlosiglas}%
 \begingroup\@ufrjglosspretrue
 \renewcommand\glossaryname{\listsiglaname}%
 \@input@{\jobname.lsg}\endgroup}

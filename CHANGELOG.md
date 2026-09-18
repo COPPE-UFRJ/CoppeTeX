@@ -162,7 +162,14 @@ top of `CORRECOES_MANUAL_2026.md`.
   of tables second. Section 10 of the COPPE norm placed its three lists between
   tables and abbreviations; it now places them with the other illustrations,
   since 2.10 counts quadros, programs and algorithms as illustrations. The class
-  imposes no order, so an existing document keeps the order its author wrote.
+  now **checks the order**: between `\maketitle` and `\mainmatter`, the
+  folha de aprovação, the dedication, the epigraph, the lists and the sumário
+  each have their place in 3.1.2, and one out of place is a compilation error
+  that names what to move and where; `\mainmatter` warns when there is no
+  `\tableofcontents`. The class checks rather than reorders: whatever the author
+  wrote between two lists would move without notice. Every model — the
+  examples, `manual.tex` and the document generator — now states the mandatory
+  order in a comment above `\maketitle`. The new test `rt72` covers it.
 - **Abstract sheets have a heading** (#114): RESUMO, ABSTRACT or RESUMEN, in the
   language of each sheet, centred in bold capitals like every heading without a
   numeric indicative (2.6). The sheets used to open straight on "Resumo da Tese
