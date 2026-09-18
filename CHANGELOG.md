@@ -167,6 +167,14 @@ run it, and the fix removes the mark.
 
 ### Fixed
 
+- **Same surname, same year: initials, then the full given name, after the
+  surname** (#139). 4.1.1.2(b) shows "(Braga, O., 1966)" and "(Braga, Orlando,
+  1987)"; the class wrote "(Orlando Braga, 1987)", and disambiguated even when
+  the years differed. The `uniquename=false` of `ufrj.bbx` never took effect,
+  because `authoryear-comp.cbx`, loaded after it, turns `uniquename` back on.
+  The option now lives in `ufrj.cbx` as `minyearfull` — disambiguate only when
+  the year coincides too — with a `labelname` format that writes the surname,
+  a comma and the initial or the full given name.
 - **An initial article does not count in the alphabetical order** (#141).
   4.2: "os artigos e palavras monossilábicas não são considerados para efeito
   de alfabetação", with the example "O PERFIL administrativo brasileiro". The

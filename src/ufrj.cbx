@@ -40,6 +40,18 @@
 \DeclareDelimFormat[textcite]{multinamedelim}{\addcomma\space}
 \DeclareDelimFormat[textcite]{finalnamedelim}{\addspace\bibstring{and}\space}
 
+\ExecuteBibliographyOptions{uniquename=minyearfull}
+\DeclareNameFormat{labelname}{%
+  \nameparts{#1}%
+  \usebibmacro{name:family}{\namepartfamily}{\namepartgiven}{\namepartprefix}{\namepartsuffix}%
+  \ifcase\value{uniquename}%
+  \or
+    \addcomma\space\namepartgiveni
+  \or
+    \addcomma\space\namepartgiven
+  \fi
+  \usebibmacro{name:andothers}}
+
 \DeclareRobustCommand{\citetapud}[4][]{%
   #2\space(#3)\space\mkbibemph{apud}\space\textcite[#1]{#4}}
 \DeclareRobustCommand{\citepapud}[4][]{%

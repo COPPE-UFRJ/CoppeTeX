@@ -184,6 +184,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \changes{v5.0}{2026/09/15}{COPPE is the unit style ufrj-coppe, with its own source (ufrj-coppe.dtx and ufrj-coppe.ins), its own manual (ufrj-coppe.pdf) and every example document, which all load it. A work begun with the class coppe compiles as it is: coppe.cls is now a compatibility class that loads ufrj with the same options, loads ufrj-coppe and writes one warning, and the style keeps the old public names as aliases, the old colophon pieces answering renewcommand by the old name, the three internal names that auxiliary files written by the old class contain, the page style coppe and the bib field coppedegree.}
 % \changes{v5.0}{2026/09/15}{The colophon names the class and the project apart -- Foi utilizada a classe ufrj, do projeto CoppeTeX -- where it said a classe CoppeTeX, which is the name of the project and not of a class. The norm it cites is the one the unit declares with ufrjdeclarenorm, and the UFRJ/SiBI Manual when no unit declares one.}
 % \changes{v5.0}{2026/09/15}{The documentation follows the split: this manual (ufrj.pdf) describes the class and the interface a unit style uses; ufrj-coppe.pdf describes only what COPPE declares; manual.pdf, the norm, is written for UFRJ with COPPE as the example; and the migration guide from 4.x to 5.0 tells the author of a work begun with the class coppe what to change.}
+% \changes{v5.0}{2026/09/17}{Authors with the same surname and the same year are told apart in the citation by the initials, then by the full given name, after the surname -- (Braga, Orlando, 1987) -- as 4.1.1.2(b) shows. The uniquename=false of the bbx never took effect, because authoryear-comp.cbx, loaded later, turns uniquename back on.}
 % \changes{v5.0}{2026/09/17}{An initial article does not count in the alphabetical order of the list (4.2): O PERFIL sorts by PERFIL, and no longer among the surnames in O.}
 % \changes{v5.0}{2026/09/17}{The subtitle follows the title after a colon and out of the title's bold, as 4.3.3 requires; biblatex put it after a full stop, inside the bold, and in capitals with the title in an entry by title.}
 % \changes{v5.0}{2026/09/17}{In:, et al., [S. l.] and [s. n.] are set in italics: 4.1.2.2 wants every Latin expression and abbreviation in italics, and 4.2.1.3(c) says In: in particular.}
@@ -8926,6 +8927,31 @@ postamble
 \DeclareDelimFormat{finalnamedelim}{\addsemicolon\space}
 \DeclareDelimFormat[textcite]{multinamedelim}{\addcomma\space}
 \DeclareDelimFormat[textcite]{finalnamedelim}{\addspace\bibstring{and}\space}
+
+% --- Mesmo sobrenome e mesmo ano (4.1.1.2b, #139) ------------------------------
+% "Quando houver autores com o mesmo sobrenome e data da obra coincidindo,
+% acrescentam-se as iniciais de seus prenomes; se mesmo assim persistir a
+% coincidencia, coloca-se o prenome por extenso": (Braga, O., 1966) e
+% (Braga, Orlando, 1987). A chamada saia "(Orlando Braga, 1987)".
+%
+% Duas coisas erradas somavam. O uniquename=false do ufrj.bbx nunca valeu: o
+% authoryear-comp.cbx e carregado DEPOIS dele e liga o uniquename de novo -- por
+% isso a opcao e o formato ficam aqui, no .cbx. E o formato padrao do
+% labelname poe o prenome antes do sobrenome. O minyearfull desambigua so
+% quando o ano tambem coincide, que e o que a norma pede, e o formato abaixo
+% escreve o sobrenome, a virgula e a inicial (uniquename=1) ou o prenome
+% inteiro (uniquename=2).
+\ExecuteBibliographyOptions{uniquename=minyearfull}
+\DeclareNameFormat{labelname}{%
+  \nameparts{#1}%
+  \usebibmacro{name:family}{\namepartfamily}{\namepartgiven}{\namepartprefix}{\namepartsuffix}%
+  \ifcase\value{uniquename}%
+  \or
+    \addcomma\space\namepartgiveni
+  \or
+    \addcomma\space\namepartgiven
+  \fi
+  \usebibmacro{name:andothers}}
 
 % --- apud: citation of a citation (ABNT NBR 6023 §4.1.2.2 / NBR 10520) ---------
 % ABNT lists only the work actually CONSULTED. So only the consulted work (#4, a

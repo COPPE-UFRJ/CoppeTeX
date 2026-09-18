@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
-"""Teste de conformidade da CoppeTeX. NAO roda na suite normal.
+"""Teste de conformidade da CoppeTeX.
 
 BUG: (desconformidade, 4.1.1.2b) autores com o mesmo sobrenome saiam desambiguados com o prenome ANTES do sobrenome ("Orlando Braga, 1987"), e a desambiguacao valia para o documento inteiro, mesmo quando os anos eram diferentes (#139).
-ABERTO: #139
 
 A 4.1.1.2(b) do Manual UFRJ/SiBI: quando houver autores com o mesmo sobrenome e
 a MESMA data, acrescentam-se as iniciais dos prenomes, e se a coincidencia
