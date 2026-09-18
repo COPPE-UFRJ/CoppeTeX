@@ -167,6 +167,17 @@ run it, and the fix removes the mark.
 
 ### Fixed
 
+- **The month is abbreviated in the language of the publication** (#146).
+  4.3.5.5.1: months "devem ser abreviados no idioma original da publicação, de
+  acordo com o Anexo A da NBR 6023", and 4.3.2.2 shows "Sept. 2021" for an
+  English article; the class used `\mkbibmonth` in the document's language
+  ("set. 2021"). The month now comes from the tables of NBR 6023 Annex A for
+  Portuguese, English, Spanish, French and Italian, chosen by the entry's
+  `langid`. Only the month changes — biblatex's `autolang` would also switch
+  "Disponível em" and "Acesso em", which belong to the work, not to the cited
+  document. Without `langid` the document's language applies, as before. The
+  Spanish, French and Italian tables were transcribed from the Annex A table
+  as usually reproduced; the NBR itself is not in `specs/` to check against.
 - **Film and game: "Direção: Walter Sales Júnior", and the version in place
   of the edition** (#143). The examples of 4.2.9 write "Direção: Ridley Scott.
   Produção: Michael Deeley." in direct order, and 4.3.4 treats the version of

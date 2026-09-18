@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
-"""Teste de conformidade da CoppeTeX. NAO roda na suite normal.
+"""Teste de conformidade da CoppeTeX.
 
 BUG: (desconformidade, 4.3.5.5.1) o mes da publicacao saia sempre abreviado no idioma do TRABALHO: um artigo de periodico em ingles de setembro saia "set. 2021" (#146).
-ABERTO: #146
 
 A 4.3.5.5.1 do Manual UFRJ/SiBI manda abreviar os meses no idioma ORIGINAL da
 publicacao (Anexo A da NBR 6023), e o exemplo da 4.3.2.2 traz "Sept. 2021" num

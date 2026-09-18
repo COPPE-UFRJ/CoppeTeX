@@ -104,9 +104,39 @@
 \DefineBibliographyExtras{spanish}{\ufrj@abntrangedash}
 \DefineBibliographyExtras{french}{\ufrj@abntrangedash}
 \DefineBibliographyExtras{italian}{\ufrj@abntrangedash}
+\def\ufrj@mes@brazilian#1{\ifcase#1\or jan\adddot\or fev\adddot\or mar\adddot
+  \or abr\adddot\or maio\or jun\adddot\or jul\adddot\or ago\adddot\or set\adddot
+  \or out\adddot\or nov\adddot\or dez\adddot\fi}
+\def\ufrj@mes@english#1{\ifcase#1\or Jan\adddot\or Feb\adddot\or Mar\adddot
+  \or Apr\adddot\or May\or June\or July\or Aug\adddot\or Sept\adddot
+  \or Oct\adddot\or Nov\adddot\or Dec\adddot\fi}
+\def\ufrj@mes@spanish#1{\ifcase#1\or enero\or feb\adddot\or marzo\or abr\adddot
+  \or mayo\or jun\adddot\or jul\adddot\or agosto\or sept\adddot\or oct\adddot
+  \or nov\adddot\or dic\adddot\fi}
+\def\ufrj@mes@french#1{\ifcase#1\or janv\adddot\or févr\adddot\or mars\or avril
+  \or mai\or juin\or juil\adddot\or août\or sept\adddot\or oct\adddot
+  \or nov\adddot\or déc\adddot\fi}
+\def\ufrj@mes@italian#1{\ifcase#1\or genn\adddot\or febbr\adddot\or mar\adddot
+  \or apr\adddot\or magg\adddot\or giugno\or luglio\or ag\adddot\or sett\adddot
+  \or ott\adddot\or nov\adddot\or dic\adddot\fi}
+\let\ufrj@mes@portuguese\ufrj@mes@brazilian
+\let\ufrj@mes@portuges\ufrj@mes@brazilian
+\let\ufrj@mes@brazil\ufrj@mes@brazilian
+\let\ufrj@mes@american\ufrj@mes@english
+\let\ufrj@mes@british\ufrj@mes@english
+\let\ufrj@mes@USenglish\ufrj@mes@english
+\let\ufrj@mes@UKenglish\ufrj@mes@english
+\newcommand*\ufrj@monthlang{}
+\protected\def\ufrj@abntmonth#1{%
+  \iffieldundef{langid}
+    {\mkbibmonth{#1}}
+    {\edef\ufrj@monthlang{\thefield{langid}}%
+     \ifcsdef{ufrj@mes@\ufrj@monthlang}
+       {\csname ufrj@mes@\ufrj@monthlang\endcsname{#1}}
+       {\mkbibmonth{#1}}}}
 \protected\def\ufrj@abntdate#1#2#3{%
   \iffieldundef{#3}{}{\stripzeros{\thefield{#3}}\nobreakspace}%
-  \iffieldundef{#2}{}{\mkbibmonth{\thefield{#2}}\iffieldundef{#1}{}{\space}}%
+  \iffieldundef{#2}{}{\ufrj@abntmonth{\thefield{#2}}\iffieldundef{#1}{}{\space}}%
   \iffieldundef{#1}{}{\stripzeros{\thefield{#1}}}}
 \AtBeginBibliography{%
   \raggedright

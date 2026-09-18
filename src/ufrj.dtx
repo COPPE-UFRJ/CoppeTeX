@@ -184,6 +184,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \changes{v5.0}{2026/09/15}{COPPE is the unit style ufrj-coppe, with its own source (ufrj-coppe.dtx and ufrj-coppe.ins), its own manual (ufrj-coppe.pdf) and every example document, which all load it. A work begun with the class coppe compiles as it is: coppe.cls is now a compatibility class that loads ufrj with the same options, loads ufrj-coppe and writes one warning, and the style keeps the old public names as aliases, the old colophon pieces answering renewcommand by the old name, the three internal names that auxiliary files written by the old class contain, the page style coppe and the bib field coppedegree.}
 % \changes{v5.0}{2026/09/15}{The colophon names the class and the project apart -- Foi utilizada a classe ufrj, do projeto CoppeTeX -- where it said a classe CoppeTeX, which is the name of the project and not of a class. The norm it cites is the one the unit declares with ufrjdeclarenorm, and the UFRJ/SiBI Manual when no unit declares one.}
 % \changes{v5.0}{2026/09/15}{The documentation follows the split: this manual (ufrj.pdf) describes the class and the interface a unit style uses; ufrj-coppe.pdf describes only what COPPE declares; manual.pdf, the norm, is written for UFRJ with COPPE as the example; and the migration guide from 4.x to 5.0 tells the author of a work begun with the class coppe what to change.}
+% \changes{v5.0}{2026/09/17}{The month of a date is abbreviated in the language of the publication, given by the langid of the entry, from the tables of NBR 6023 Annex A -- Sept. 2021 for an English article (4.3.5.5.1); it followed the document's language. The rest of the entry stays in the document's language.}
 % \changes{v5.0}{2026/09/17}{Film and game: director and producer are names, printed in direct order after a colon -- Direcao: Walter Sales Junior -- as in the examples of 4.2.9, and the version takes the place of the edition, before the imprint (4.3.4). They were literal lists, printed as typed, and the version closed the entry.}
 % \changes{v5.0}{2026/09/17}{A part of a monograph carries the book's author and subtitle after In:, and the chapter before the pages -- cap. 1, p. 23-64 (4.2.1.3); bookauthor and booksubtitle vanished, and the chapter came after the pages.}
 % \changes{v5.0}{2026/09/17}{mastersthesis and phdthesis entries -- the ones Google Scholar, Zotero and JabRef export -- read Dissertacao (Mestrado) and Tese (Doutorado), with the em dash before the institution; a literal type with a course no longer prints "( em ...)" (4.3.8.3).}
@@ -8354,9 +8355,50 @@ postamble
 \DefineBibliographyExtras{spanish}{\ufrj@abntrangedash}
 \DefineBibliographyExtras{french}{\ufrj@abntrangedash}
 \DefineBibliographyExtras{italian}{\ufrj@abntrangedash}
+% O mes no idioma da PUBLICACAO (#146). A 4.3.5.5.1: os meses "devem ser
+% abreviados no idioma original da publicacao, de acordo com o Anexo A da NBR
+% 6023 da ABNT. Nao se abrevia meses com quatro letras ou menos" -- e o exemplo
+% da 4.3.2.2 traz "Sept. 2021" num artigo em ingles. O \mkbibmonth do biblatex
+% usa o idioma do DOCUMENTO, e o artigo saia "set. 2021".
+%
+% O idioma da publicacao e o campo langid da entrada. So o mes muda: ligar o
+% autolang do biblatex trocaria tambem "Disponivel em" e "Acesso em", que sao do
+% trabalho, e nao da obra citada. As tabelas sao as do Anexo A da NBR 6023; sem
+% langid, ou num idioma fora delas, vale o mes do idioma do documento, como
+% antes.
+\def\ufrj@mes@brazilian#1{\ifcase#1\or jan\adddot\or fev\adddot\or mar\adddot
+  \or abr\adddot\or maio\or jun\adddot\or jul\adddot\or ago\adddot\or set\adddot
+  \or out\adddot\or nov\adddot\or dez\adddot\fi}
+\def\ufrj@mes@english#1{\ifcase#1\or Jan\adddot\or Feb\adddot\or Mar\adddot
+  \or Apr\adddot\or May\or June\or July\or Aug\adddot\or Sept\adddot
+  \or Oct\adddot\or Nov\adddot\or Dec\adddot\fi}
+\def\ufrj@mes@spanish#1{\ifcase#1\or enero\or feb\adddot\or marzo\or abr\adddot
+  \or mayo\or jun\adddot\or jul\adddot\or agosto\or sept\adddot\or oct\adddot
+  \or nov\adddot\or dic\adddot\fi}
+\def\ufrj@mes@french#1{\ifcase#1\or janv\adddot\or févr\adddot\or mars\or avril
+  \or mai\or juin\or juil\adddot\or août\or sept\adddot\or oct\adddot
+  \or nov\adddot\or déc\adddot\fi}
+\def\ufrj@mes@italian#1{\ifcase#1\or genn\adddot\or febbr\adddot\or mar\adddot
+  \or apr\adddot\or magg\adddot\or giugno\or luglio\or ag\adddot\or sett\adddot
+  \or ott\adddot\or nov\adddot\or dic\adddot\fi}
+\let\ufrj@mes@portuguese\ufrj@mes@brazilian
+\let\ufrj@mes@portuges\ufrj@mes@brazilian
+\let\ufrj@mes@brazil\ufrj@mes@brazilian
+\let\ufrj@mes@american\ufrj@mes@english
+\let\ufrj@mes@british\ufrj@mes@english
+\let\ufrj@mes@USenglish\ufrj@mes@english
+\let\ufrj@mes@UKenglish\ufrj@mes@english
+\newcommand*\ufrj@monthlang{}
+\protected\def\ufrj@abntmonth#1{%
+  \iffieldundef{langid}
+    {\mkbibmonth{#1}}
+    {\edef\ufrj@monthlang{\thefield{langid}}%
+     \ifcsdef{ufrj@mes@\ufrj@monthlang}
+       {\csname ufrj@mes@\ufrj@monthlang\endcsname{#1}}
+       {\mkbibmonth{#1}}}}
 \protected\def\ufrj@abntdate#1#2#3{%
   \iffieldundef{#3}{}{\stripzeros{\thefield{#3}}\nobreakspace}%
-  \iffieldundef{#2}{}{\mkbibmonth{\thefield{#2}}\iffieldundef{#1}{}{\space}}%
+  \iffieldundef{#2}{}{\ufrj@abntmonth{\thefield{#2}}\iffieldundef{#1}{}{\space}}%
   \iffieldundef{#1}{}{\stripzeros{\thefield{#1}}}}
 % A 4.2: "as referencias sao alinhadas somente a margem esquerda (nao utilize
 % o recurso justificar do editor do texto), possibilitando a identificacao de
