@@ -8,11 +8,15 @@ ISO-8601.
 
 On 2026-09-16, version 4.1 was checked in full against the Manual (9th ed.
 rev., 2026) and the CAPES additional-sheet model. Each defect found has one
-issue (#113–#152, umbrella #112) and a minimal test in `tests/regressivo/`
-(`rt33`–`rt70`, `rt89`) that fails until the fix lands. The fix plan is
-`CORRECOES_MANUAL_2026.md`. A test still waiting for its fix carries an
-`ABERTO: #<issue>` mark: the unfiltered regression run lists it but does not
-run it, and the fix removes the mark.
+issue (#113–#153, umbrella #112) and a minimal test in `tests/regressivo/`
+(`rt33`–`rt71`, `rt89`). The check was merged into 5.0 on 2026-09-17, on the
+branch `V05-unificada`, and every issue was fixed there, one commit each —
+together with #155 (the área de concentração, from the SiBI model) and #156
+(measurement tests that passed without measuring), found on the way. Where the
+Manual's prose and its examples disagree, the prose wins, except for the two
+sheets of the SiBI model, which win over the Manual's examples. No test is
+marked `ABERTO` any more; the status of each issue, with its commit, is at the
+top of `CORRECOES_MANUAL_2026.md`.
 
 ### Verification
 
