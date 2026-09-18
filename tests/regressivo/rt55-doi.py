@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
-"""Teste de conformidade da CoppeTeX. NAO roda na suite normal.
+"""Teste de conformidade da CoppeTeX.
 
 BUG: (desconformidade, 4.2.3.5) o DOI saia como "doi: 10.1234/..." em versalete -- que a Latin Modern Sans nao tem, e o LaTeX avisava "Font shape T1/lmss/m/sc not available" --, sem o endereco https://doi.org/ (#136).
-ABERTO: #136
 
 Os exemplos da 4.2.3.5 e da 4.2.4.3 do Manual UFRJ/SiBI registram o DOI como
 "DOI: https://doi.org/<doi>", antes do "Disponivel em:". O ufrj.bbx usa o

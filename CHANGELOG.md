@@ -167,6 +167,12 @@ run it, and the fix removes the mark.
 
 ### Fixed
 
+- **The DOI reads "DOI: https://doi.org/<doi>"** (#136), before "Disponível
+  em:", as the examples of 4.2.3.5 and 4.2.4.3 write it. biblatex's format set
+  the acronym with `\mkbibacro` — small caps, which Latin Modern Sans does not
+  have, so the log warned "Font shape T1/lmss/m/sc not available" — and printed
+  only the identifier. A value that already carries the full address is
+  printed as it came.
 - **Numeric system: parentheses, unbracketed list, and a warning with
   footnotes** (#140). 4.1.1.1.1 gives the number two forms — "entre parênteses
   (alinhadas ao texto)" or superscript — with the page after a comma, "(1, p.

@@ -184,6 +184,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \changes{v5.0}{2026/09/15}{COPPE is the unit style ufrj-coppe, with its own source (ufrj-coppe.dtx and ufrj-coppe.ins), its own manual (ufrj-coppe.pdf) and every example document, which all load it. A work begun with the class coppe compiles as it is: coppe.cls is now a compatibility class that loads ufrj with the same options, loads ufrj-coppe and writes one warning, and the style keeps the old public names as aliases, the old colophon pieces answering renewcommand by the old name, the three internal names that auxiliary files written by the old class contain, the page style coppe and the bib field coppedegree.}
 % \changes{v5.0}{2026/09/15}{The colophon names the class and the project apart -- Foi utilizada a classe ufrj, do projeto CoppeTeX -- where it said a classe CoppeTeX, which is the name of the project and not of a class. The norm it cites is the one the unit declares with ufrjdeclarenorm, and the UFRJ/SiBI Manual when no unit declares one.}
 % \changes{v5.0}{2026/09/15}{The documentation follows the split: this manual (ufrj.pdf) describes the class and the interface a unit style uses; ufrj-coppe.pdf describes only what COPPE declares; manual.pdf, the norm, is written for UFRJ with COPPE as the example; and the migration guide from 4.x to 5.0 tells the author of a work begun with the class coppe what to change.}
+% \changes{v5.0}{2026/09/17}{The DOI reads DOI: https://doi.org/<doi>, as the examples of 4.2.3.5 and 4.2.4.3 show; biblatex set the acronym in small caps, which Latin Modern Sans lacks, and printed the bare identifier.}
 % \changes{v5.0}{2026/09/17}{Numeric system: citations in parentheses -- (1, p. 30) -- and list labels without brackets, as 4.1.1.1.1 gives the number either in parentheses or superscript; and a warning, once, when a document under numbers has a footnote, which the same section forbids.}
 % \changes{v5.0}{2026/09/17}{Authors with the same surname and the same year are told apart in the citation by the initials, then by the full given name, after the surname -- (Braga, Orlando, 1987) -- as 4.1.1.2(b) shows. The uniquename=false of the bbx never took effect, because authoryear-comp.cbx, loaded later, turns uniquename back on.}
 % \changes{v5.0}{2026/09/17}{An initial article does not count in the alphabetical order of the list (4.2): O PERFIL sorts by PERFIL, and no longer among the surnames in O.}
@@ -8454,6 +8455,22 @@ postamble
          \step[fieldset=sorttitle, fieldvalue={$2}]}
   }%
 }
+
+% --- DOI (#136): "DOI: https://doi.org/<doi>", antes do "Disponivel em:", como
+%     nos exemplos da 4.2.3.5 e da 4.2.4.3. O formato do biblatex punha a sigla
+%     em \mkbibacro -- versalete, que a Latin Modern Sans nao tem, e o LaTeX
+%     avisava "Font shape T1/lmss/m/sc not available" -- e so o identificador.
+%     Um valor que ja traz o endereco inteiro (quem copiou o link) sai como veio.
+\DeclareFieldFormat{doi}{%
+  DOI\addcolon\space
+  \in@{http}{#1}%
+  \ifin@
+    \ifhyperref{\href{#1}{\nolinkurl{#1}}}{\nolinkurl{#1}}%
+  \else
+    \ifhyperref
+      {\href{https://doi.org/#1}{\nolinkurl{https://doi.org/#1}}}
+      {\nolinkurl{https://doi.org/#1}}%
+  \fi}
 
 % --- Online: "Disponível em: <url>." + "Acesso em: <date>." via lbx strings ---
 \DeclareFieldFormat{url}{\bibstring{availablefrom}\addcolon\space\url{#1}}

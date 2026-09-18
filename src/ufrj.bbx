@@ -176,6 +176,17 @@
   }%
 }
 
+\DeclareFieldFormat{doi}{%
+  DOI\addcolon\space
+  \in@{http}{#1}%
+  \ifin@
+    \ifhyperref{\href{#1}{\nolinkurl{#1}}}{\nolinkurl{#1}}%
+  \else
+    \ifhyperref
+      {\href{https://doi.org/#1}{\nolinkurl{https://doi.org/#1}}}
+      {\nolinkurl{https://doi.org/#1}}%
+  \fi}
+
 \DeclareFieldFormat{url}{\bibstring{availablefrom}\addcolon\space\url{#1}}
 \DeclareFieldFormat{urldate}{\bibstring{urlseen}\addcolon\space#1}
 \renewbibmacro*{url+urldate}{%
