@@ -167,6 +167,15 @@ run it, and the fix removes the mark.
 
 ### Fixed
 
+- **Film and game: "Direção: Walter Sales Júnior", and the version in place
+  of the edition** (#143). The examples of 4.2.9 write "Direção: Ridley Scott.
+  Produção: Michael Deeley." in direct order, and 4.3.4 treats the version of
+  an electronic document as its edition, before the imprint. `director` and
+  `producer` were literal lists, printed as typed ("Direção de Sales Júnior,
+  Walter"), and the version closed the entry. The two fields are now name
+  lists, printed in direct order after the label and a colon, with the labels
+  shortened accordingly in the five languages; the version moves before the
+  imprint.
 - **A part of a monograph carries the whole book after "In:"** (#134).
   4.2.1.3 asks for the complete reference of the monograph — author, title and
   subtitle, repeating the author when it is the same as the part's — and its

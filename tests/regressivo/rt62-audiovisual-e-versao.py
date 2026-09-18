@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
-"""Teste de conformidade da CoppeTeX. NAO roda na suite normal.
+"""Teste de conformidade da CoppeTeX.
 
 BUG: (desconformidade, 4.2.9 e 4.3.4) no filme, a direcao saia "Direcao de Sales Junior, Walter" -- nome invertido --, e no jogo eletronico a versao saia no FIM, depois da imprenta (#143).
-ABERTO: #143
 
 Os exemplos da 4.2.9 do Manual UFRJ/SiBI escrevem "Direcao: Nome Sobrenome", em
 ordem direta. A 4.3.4 diz que a versao de documento eletronico equivale a edicao

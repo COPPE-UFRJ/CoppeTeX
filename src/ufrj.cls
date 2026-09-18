@@ -653,10 +653,10 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \ufrjdefstring{english}  {art}          {Art}
 \ufrjdefstring{brazilian}{platform}     {Plataforma}
 \ufrjdefstring{english}  {platform}     {Platform}
-\ufrjdefstring{brazilian}{directedby}   {Direção de}
-\ufrjdefstring{english}  {directedby}   {Directed by}
-\ufrjdefstring{brazilian}{producedby}   {Produção de}
-\ufrjdefstring{english}  {producedby}   {Produced by}
+\ufrjdefstring{brazilian}{directedby}   {Direção}
+\ufrjdefstring{english}  {directedby}   {Direction}
+\ufrjdefstring{brazilian}{producedby}   {Produção}
+\ufrjdefstring{english}  {producedby}   {Production}
 \ufrjdefstring{brazilian}{listabbreviation}{Lista de Abreviaturas e Siglas}
 \ufrjdefstring{english}  {listabbreviation}{List of Abbreviations and Acronyms}
 \ufrjdefstring{brazilian}{listabbreviationonly}{Lista de Abreviaturas}

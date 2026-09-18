@@ -184,6 +184,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \changes{v5.0}{2026/09/15}{COPPE is the unit style ufrj-coppe, with its own source (ufrj-coppe.dtx and ufrj-coppe.ins), its own manual (ufrj-coppe.pdf) and every example document, which all load it. A work begun with the class coppe compiles as it is: coppe.cls is now a compatibility class that loads ufrj with the same options, loads ufrj-coppe and writes one warning, and the style keeps the old public names as aliases, the old colophon pieces answering renewcommand by the old name, the three internal names that auxiliary files written by the old class contain, the page style coppe and the bib field coppedegree.}
 % \changes{v5.0}{2026/09/15}{The colophon names the class and the project apart -- Foi utilizada a classe ufrj, do projeto CoppeTeX -- where it said a classe CoppeTeX, which is the name of the project and not of a class. The norm it cites is the one the unit declares with ufrjdeclarenorm, and the UFRJ/SiBI Manual when no unit declares one.}
 % \changes{v5.0}{2026/09/15}{The documentation follows the split: this manual (ufrj.pdf) describes the class and the interface a unit style uses; ufrj-coppe.pdf describes only what COPPE declares; manual.pdf, the norm, is written for UFRJ with COPPE as the example; and the migration guide from 4.x to 5.0 tells the author of a work begun with the class coppe what to change.}
+% \changes{v5.0}{2026/09/17}{Film and game: director and producer are names, printed in direct order after a colon -- Direcao: Walter Sales Junior -- as in the examples of 4.2.9, and the version takes the place of the edition, before the imprint (4.3.4). They were literal lists, printed as typed, and the version closed the entry.}
 % \changes{v5.0}{2026/09/17}{A part of a monograph carries the book's author and subtitle after In:, and the chapter before the pages -- cap. 1, p. 23-64 (4.2.1.3); bookauthor and booksubtitle vanished, and the chapter came after the pages.}
 % \changes{v5.0}{2026/09/17}{mastersthesis and phdthesis entries -- the ones Google Scholar, Zotero and JabRef export -- read Dissertacao (Mestrado) and Tese (Doutorado), with the em dash before the institution; a literal type with a course no longer prints "( em ...)" (4.3.8.3).}
 % \changes{v5.0}{2026/09/17}{Book and report follow the ABNT order: the edition as number, full stop and abbreviation (3. ed.), the volumes in the physical description after the imprint (2 v.), and the series at the end in parentheses with a comma before its number -- (Colecao Saber, 13) -- per 4.3.4, 4.3.6.1 and 4.3.7. biblatex's drivers put volumes and series before the imprint, and brazilian.lbx wrote the edition as an ordinal.}
@@ -5028,10 +5029,10 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \ufrjdefstring{english}  {art}          {Art}
 \ufrjdefstring{brazilian}{platform}     {Plataforma}
 \ufrjdefstring{english}  {platform}     {Platform}
-\ufrjdefstring{brazilian}{directedby}   {Direção de}
-\ufrjdefstring{english}  {directedby}   {Directed by}
-\ufrjdefstring{brazilian}{producedby}   {Produção de}
-\ufrjdefstring{english}  {producedby}   {Produced by}
+\ufrjdefstring{brazilian}{directedby}   {Direção}
+\ufrjdefstring{english}  {directedby}   {Direction}
+\ufrjdefstring{brazilian}{producedby}   {Produção}
+\ufrjdefstring{english}  {producedby}   {Production}
 \ufrjdefstring{brazilian}{listabbreviation}{Lista de Abreviaturas e Siglas}
 \ufrjdefstring{english}  {listabbreviation}{List of Abbreviations and Acronyms}
 \ufrjdefstring{brazilian}{listabbreviationonly}{Lista de Abreviaturas}
@@ -8179,8 +8180,12 @@ postamble
 \DeclareDatamodelFields[type=field,datatype=literal]{platform}    % videogame platform
 \DeclareDatamodelFields[type=field,datatype=literal]{scale}       % map scale (escala)
 \DeclareDatamodelFields[type=list,datatype=literal]{artist}       % game/illustration art
-\DeclareDatamodelFields[type=list,datatype=literal]{director}     % movie/tvshow/video
-\DeclareDatamodelFields[type=list,datatype=literal]{producer}
+% Diretor e produtor sao NOMES (#143): o biber os separa em prenome e sobrenome,
+% e a lista os escreve em ordem direta, como os exemplos da 4.2.9 -- "Direcao:
+% Walter Sales Junior". Como lista literal, saiam como foram digitados, e quem
+% digitava "Sales Junior, Walter" via a referencia com o nome invertido.
+\DeclareDatamodelFields[type=list,datatype=name]{director}     % movie/tvshow/video
+\DeclareDatamodelFields[type=list,datatype=name]{producer}
 \DeclareDatamodelFields[type=field,datatype=literal]{caderno}     % newspaper section
 \DeclareDatamodelFields[type=field,datatype=literal]{relator}     % jurisprudence rapporteur
 \DeclareDatamodelFields[type=field,datatype=literal]{filingdate}  % patente: deposito
@@ -8820,10 +8825,12 @@ postamble
     \printtext{\ufrjstring{art}\addcolon\space}\printlist{artist}}%
   \iffieldundef{platform}{}{\setunit{\addperiod\space}%
     \printtext{\ufrjstring{platform}\addcolon\space}\printfield{platform}}%
-  \iflistundef{director}{}{\setunit{\addperiod\space}%
-    \printtext{\ufrjstring{directedby}\addspace}\printlist{director}}%
-  \iflistundef{producer}{}{\setunit{\addperiod\space}%
-    \printtext{\ufrjstring{producedby}\addspace}\printlist{producer}}}
+  \ifnameundef{director}{}{\setunit{\addperiod\space}%
+    \printtext{\ufrjstring{directedby}\addcolon\space}%
+    \printnames[ufrj:direta]{director}}%
+  \ifnameundef{producer}{}{\setunit{\addperiod\space}%
+    \printtext{\ufrjstring{producedby}\addcolon\space}%
+    \printnames[ufrj:direta]{producer}}}
 \newbibmacro*{ufrj:mediadriver}{%
   \usebibmacro{bibindex}\usebibmacro{begentry}%
   \usebibmacro{author/translator+others}%
@@ -8831,10 +8838,12 @@ postamble
   \usebibmacro{title}%
   \newunit\newblock
   \usebibmacro{ufrj:media}%
-  \newunit\newblock
-  \usebibmacro{ufrj:imprenta}%
+% A 4.3.4 trata a versao de documento eletronico como a edicao, e ela vai no
+% lugar da edicao: antes da imprenta (#143). Saia no fim.
   \newunit\newblock
   \printfield{version}%
+  \newunit\newblock
+  \usebibmacro{ufrj:imprenta}%
   \newunit\newblock
   \printfield{note}%
   \newunit\newblock
@@ -9483,8 +9492,8 @@ postamble
 \ufrjdefstring{french}{in:}             {dans}
 \ufrjdefstring{french}{art}             {Illustration}
 \ufrjdefstring{french}{platform}        {Plateforme}
-\ufrjdefstring{french}{directedby}      {Réalisé par}
-\ufrjdefstring{french}{producedby}      {Produit par}
+\ufrjdefstring{french}{directedby}      {Réalisation}
+\ufrjdefstring{french}{producedby}      {Production}
 \ufrjdefstring{french}{listabbreviation}{Liste des abréviations et acronymes}
 \ufrjdefstring{french}{listabbreviationonly}{Liste des abréviations}
 \ufrjdefstring{french}{listsigla}       {Liste des sigles}
@@ -9560,8 +9569,8 @@ postamble
 \ufrjdefstring{italian}{in:}             {in}
 \ufrjdefstring{italian}{art}             {Illustrazione}
 \ufrjdefstring{italian}{platform}        {Piattaforma}
-\ufrjdefstring{italian}{directedby}      {Regia di}
-\ufrjdefstring{italian}{producedby}      {Prodotto da}
+\ufrjdefstring{italian}{directedby}      {Regia}
+\ufrjdefstring{italian}{producedby}      {Produzione}
 \ufrjdefstring{italian}{listabbreviation}{Elenco di abbreviazioni e sigle}
 \ufrjdefstring{italian}{listabbreviationonly}{Elenco delle abbreviazioni}
 \ufrjdefstring{italian}{listsigla}       {Elenco delle sigle}

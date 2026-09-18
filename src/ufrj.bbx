@@ -447,10 +447,12 @@
     \printtext{\ufrjstring{art}\addcolon\space}\printlist{artist}}%
   \iffieldundef{platform}{}{\setunit{\addperiod\space}%
     \printtext{\ufrjstring{platform}\addcolon\space}\printfield{platform}}%
-  \iflistundef{director}{}{\setunit{\addperiod\space}%
-    \printtext{\ufrjstring{directedby}\addspace}\printlist{director}}%
-  \iflistundef{producer}{}{\setunit{\addperiod\space}%
-    \printtext{\ufrjstring{producedby}\addspace}\printlist{producer}}}
+  \ifnameundef{director}{}{\setunit{\addperiod\space}%
+    \printtext{\ufrjstring{directedby}\addcolon\space}%
+    \printnames[ufrj:direta]{director}}%
+  \ifnameundef{producer}{}{\setunit{\addperiod\space}%
+    \printtext{\ufrjstring{producedby}\addcolon\space}%
+    \printnames[ufrj:direta]{producer}}}
 \newbibmacro*{ufrj:mediadriver}{%
   \usebibmacro{bibindex}\usebibmacro{begentry}%
   \usebibmacro{author/translator+others}%
@@ -459,9 +461,9 @@
   \newunit\newblock
   \usebibmacro{ufrj:media}%
   \newunit\newblock
-  \usebibmacro{ufrj:imprenta}%
-  \newunit\newblock
   \printfield{version}%
+  \newunit\newblock
+  \usebibmacro{ufrj:imprenta}%
   \newunit\newblock
   \printfield{note}%
   \newunit\newblock
