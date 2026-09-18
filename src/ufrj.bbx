@@ -144,6 +144,9 @@
 \def\ufrj@mes@italian#1{\ifcase#1\or genn\adddot\or febbr\adddot\or mar\adddot
   \or apr\adddot\or magg\adddot\or giugno\or luglio\or ag\adddot\or sett\adddot
   \or ott\adddot\or nov\adddot\or dic\adddot\fi}
+\def\ufrj@mes@german#1{\ifcase#1\or Jan\adddot\or Feb\adddot\or März
+  \or Apr\adddot\or Mai\or Juni\or Juli\or Aug\adddot\or Sept\adddot
+  \or Okt\adddot\or Nov\adddot\or Dez\adddot\fi}
 \let\ufrj@mes@portuguese\ufrj@mes@brazilian
 \let\ufrj@mes@portuges\ufrj@mes@brazilian
 \let\ufrj@mes@brazil\ufrj@mes@brazilian
@@ -151,6 +154,11 @@
 \let\ufrj@mes@british\ufrj@mes@english
 \let\ufrj@mes@USenglish\ufrj@mes@english
 \let\ufrj@mes@UKenglish\ufrj@mes@english
+\let\ufrj@mes@ngerman\ufrj@mes@german
+\let\ufrj@mes@austrian\ufrj@mes@german
+\let\ufrj@mes@naustrian\ufrj@mes@german
+\let\ufrj@mes@swissgerman\ufrj@mes@german
+\let\ufrj@mes@nswissgerman\ufrj@mes@german
 \newcommand*\ufrj@monthlang{}
 \protected\def\ufrj@abntmonth#1{%
   \iffieldundef{langid}

@@ -210,8 +210,9 @@ top of `CORRECOES_MANUAL_2026.md`.
   `langid`. Only the month changes — biblatex's `autolang` would also switch
   "Disponível em" and "Acesso em", which belong to the work, not to the cited
   document. Without `langid` the document's language applies, as before. The
-  Spanish, French and Italian tables were transcribed from the Annex A table
-  as usually reproduced; the NBR itself is not in `specs/` to check against.
+  tables were checked letter by letter against Annex A of NBR 6023:2025, the
+  edition the Manual cites, and the annex's German table was added, for a
+  cited work in German (`langid = {ngerman}`): "März 2021".
 - **Film and game: "Direção: Walter Sales Júnior", and the version in place
   of the edition** (#143). The examples of 4.2.9 write "Direção: Ridley Scott.
   Produção: Michael Deeley." in direct order, and 4.3.4 treats the version of
