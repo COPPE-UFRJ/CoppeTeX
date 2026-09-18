@@ -51,6 +51,16 @@
 \DeclareNameAlias{author}{family-given}
 \DeclareNameAlias{editor}{family-given}
 \DeclareNameAlias{translator}{family-given}
+\DeclareNameFormat{ufrj:direta}{%
+  \nameparts{#1}%
+  \usebibmacro{name:delim}{\namepartgiven\namepartfamily}%
+  \usebibmacro{name:hook}{\namepartgiven\namepartfamily}%
+  \ifdefvoid{\namepartgiven}{}{\namepartgiven\space}%
+  \ifdefvoid{\namepartprefix}{}{\namepartprefix\space}%
+  \namepartfamily
+  \ifdefvoid{\namepartsuffix}{}{\space\namepartsuffix}%
+  \usebibmacro{name:andothers}}
+\DeclareNameAlias{bytranslator}{ufrj:direta}
 \DeclareNameAlias{default}{family-given}
 \DeclareDelimFormat[bib,biblist]{multinamedelim}{\addsemicolon\space}
 \DeclareDelimFormat[bib,biblist]{finalnamedelim}{\addsemicolon\space}
@@ -175,6 +185,17 @@
          \step[fieldset=sorttitle, fieldvalue={$2}]}
   }%
 }
+
+\newbibmacro*{ufrj:origtitle}{%
+  \iffieldundef{origtitle}
+    {}
+    {\newunit\newblock
+     \printtext{\bibstring{ufrjtranslationof}\addcolon\space}%
+     \printfield[noformat]{origtitle}}}
+\letbibmacro{ufrj:orig:doi+eprint+url}{doi+eprint+url}
+\renewbibmacro*{doi+eprint+url}{%
+  \usebibmacro{ufrj:origtitle}%
+  \usebibmacro{ufrj:orig:doi+eprint+url}}
 
 \DeclareFieldFormat{doi}{%
   DOI\addcolon\space

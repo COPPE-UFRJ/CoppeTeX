@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
-"""Teste de conformidade da CoppeTeX. NAO roda na suite normal.
+"""Teste de conformidade da CoppeTeX.
 
 BUG: (desconformidade, 4.3.2.10 e 4.3.8.1) o tradutor saia como "Trad. por ALMEIDA, Julia" -- nome invertido e sobrenome em caixa alta, como se fosse autor --, e o titulo original (origtitle) nao saia (#135).
-ABERTO: #135
 
 A 4.3.2.10 do Manual UFRJ/SiBI poe os outros tipos de responsabilidade depois
 do titulo, respeitando o texto da folha de rosto: "Traducao de Nome Sobrenome",

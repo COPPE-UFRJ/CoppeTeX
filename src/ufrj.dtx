@@ -184,6 +184,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \changes{v5.0}{2026/09/15}{COPPE is the unit style ufrj-coppe, with its own source (ufrj-coppe.dtx and ufrj-coppe.ins), its own manual (ufrj-coppe.pdf) and every example document, which all load it. A work begun with the class coppe compiles as it is: coppe.cls is now a compatibility class that loads ufrj with the same options, loads ufrj-coppe and writes one warning, and the style keeps the old public names as aliases, the old colophon pieces answering renewcommand by the old name, the three internal names that auxiliary files written by the old class contain, the page style coppe and the bib field coppedegree.}
 % \changes{v5.0}{2026/09/15}{The colophon names the class and the project apart -- Foi utilizada a classe ufrj, do projeto CoppeTeX -- where it said a classe CoppeTeX, which is the name of the project and not of a class. The norm it cites is the one the unit declares with ufrjdeclarenorm, and the UFRJ/SiBI Manual when no unit declares one.}
 % \changes{v5.0}{2026/09/15}{The documentation follows the split: this manual (ufrj.pdf) describes the class and the interface a unit style uses; ufrj-coppe.pdf describes only what COPPE declares; manual.pdf, the norm, is written for UFRJ with COPPE as the example; and the migration guide from 4.x to 5.0 tells the author of a work begun with the class coppe what to change.}
+% \changes{v5.0}{2026/09/17}{The translator is written in direct order after the title -- Traducao de Julia Almeida -- and the original title closes the reference in a note, Traducao de: <origtitle> (4.3.2.10, 4.3.8.1). The translator took the author's name format, inverted and in capitals, and no driver printed origtitle.}
 % \changes{v5.0}{2026/09/17}{The DOI reads DOI: https://doi.org/<doi>, as the examples of 4.2.3.5 and 4.2.4.3 show; biblatex set the acronym in small caps, which Latin Modern Sans lacks, and printed the bare identifier.}
 % \changes{v5.0}{2026/09/17}{Numeric system: citations in parentheses -- (1, p. 30) -- and list labels without brackets, as 4.1.1.1.1 gives the number either in parentheses or superscript; and a warning, once, when a document under numbers has a footnote, which the same section forbids.}
 % \changes{v5.0}{2026/09/17}{Authors with the same surname and the same year are told apart in the citation by the initials, then by the full given name, after the surname -- (Braga, Orlando, 1987) -- as 4.1.1.2(b) shows. The uniquename=false of the bbx never took effect, because authoryear-comp.cbx, loaded later, turns uniquename back on.}
@@ -8219,6 +8220,23 @@ postamble
 \DeclareNameAlias{author}{family-given}
 \DeclareNameAlias{editor}{family-given}
 \DeclareNameAlias{translator}{family-given}
+% O tradutor em ORDEM DIRETA e sem caixa alta (#135): a 4.3.2.10 transcreve as
+% outras responsabilidades como estao na folha de rosto, depois do titulo --
+% "Traducao Ruth Rocha", "Traducao de Aurelio Buarque de Holanda". O biblatex o
+% imprime pelo formato bytranslator, que herdava o do autor, e o sobrenome saia
+% invertido e em versal: "Trad. por ALMEIDA, Julia". O formato abaixo escreve
+% as partes do nome sem passar pelo \mkbibnamefamily, que e quem poe a caixa
+% alta na lista.
+\DeclareNameFormat{ufrj:direta}{%
+  \nameparts{#1}%
+  \usebibmacro{name:delim}{\namepartgiven\namepartfamily}%
+  \usebibmacro{name:hook}{\namepartgiven\namepartfamily}%
+  \ifdefvoid{\namepartgiven}{}{\namepartgiven\space}%
+  \ifdefvoid{\namepartprefix}{}{\namepartprefix\space}%
+  \namepartfamily
+  \ifdefvoid{\namepartsuffix}{}{\space\namepartsuffix}%
+  \usebibmacro{name:andothers}}
+\DeclareNameAlias{bytranslator}{ufrj:direta}
 \DeclareNameAlias{default}{family-given}
 \DeclareDelimFormat[bib,biblist]{multinamedelim}{\addsemicolon\space}
 \DeclareDelimFormat[bib,biblist]{finalnamedelim}{\addsemicolon\space}
@@ -8455,6 +8473,21 @@ postamble
          \step[fieldset=sorttitle, fieldvalue={$2}]}
   }%
 }
+
+% --- Titulo original (#135): a 4.3.8.1 manda indicar "o titulo ou o idioma
+%     original, se mencionado na obra", em nota no fim -- "Traducao de: Moving
+%     house." --, e nenhum driver imprimia o campo origtitle. A nota entra antes
+%     do DOI e do endereco, pelo bibmacro que todo driver padrao chama ali.
+\newbibmacro*{ufrj:origtitle}{%
+  \iffieldundef{origtitle}
+    {}
+    {\newunit\newblock
+     \printtext{\bibstring{ufrjtranslationof}\addcolon\space}%
+     \printfield[noformat]{origtitle}}}
+\letbibmacro{ufrj:orig:doi+eprint+url}{doi+eprint+url}
+\renewbibmacro*{doi+eprint+url}{%
+  \usebibmacro{ufrj:origtitle}%
+  \usebibmacro{ufrj:orig:doi+eprint+url}}
 
 % --- DOI (#136): "DOI: https://doi.org/<doi>", antes do "Disponivel em:", como
 %     nos exemplos da 4.2.3.5 e da 4.2.4.3. O formato do biblatex punha a sigla
@@ -9014,10 +9047,12 @@ postamble
 %<*lbxbr>
 \ProvidesFile{brazilian-ufrj.lbx}[2026/09/15 v5.0 CoppeTeX brazilian strings]
 \InheritBibliographyExtras{brazilian}
-\NewBibliographyString{availablefrom,mscdiss,dscthesis,tcc,depositor,ufrjscale,
+\NewBibliographyString{availablefrom,ufrjtranslationof,mscdiss,dscthesis,tcc,depositor,ufrjscale,
   ufrjmscdeg,ufrjdscdeg,ufrjphddeg,ufrjtccdeg,ufrjfiling,ufrjgrant}
 \DeclareBibliographyStrings{%
   inherit       = {brazilian},
+  ufrjtranslationof = {{Tradução de}{Tradução de}},
+  bytranslator  = {{Tradução de}{Tradução de}},
   andothers     = {{\mkbibemph{et al\adddot}}{\mkbibemph{et al\adddot}}},
   availablefrom = {{Disponível em}{Disponível em}},
   ufrjmscdeg   = {{Mestrado}{Mestrado}},
@@ -9044,10 +9079,11 @@ postamble
 %<*lbxen>
 \ProvidesFile{english-ufrj.lbx}[2026/09/15 v5.0 CoppeTeX english strings]
 \InheritBibliographyExtras{english}
-\NewBibliographyString{availablefrom,mscdiss,dscthesis,tcc,depositor,ufrjscale,
+\NewBibliographyString{availablefrom,ufrjtranslationof,mscdiss,dscthesis,tcc,depositor,ufrjscale,
   ufrjmscdeg,ufrjdscdeg,ufrjphddeg,ufrjtccdeg,ufrjfiling,ufrjgrant}
 \DeclareBibliographyStrings{%
   inherit       = {english},
+  ufrjtranslationof = {{Translation of}{Translation of}},
   andothers     = {{\mkbibemph{et al\adddot}}{\mkbibemph{et al\adddot}}},
   availablefrom = {{Available from}{Available from}},
   ufrjmscdeg   = {{M\adddot Sc\adddot}{M\adddot Sc\adddot}},
@@ -9071,10 +9107,11 @@ postamble
 %<*lbxes>
 \ProvidesFile{spanish-ufrj.lbx}[2026/09/15 v5.0 CoppeTeX spanish strings]
 \InheritBibliographyExtras{spanish}
-\NewBibliographyString{availablefrom,mscdiss,dscthesis,tcc,depositor,ufrjscale,
+\NewBibliographyString{availablefrom,ufrjtranslationof,mscdiss,dscthesis,tcc,depositor,ufrjscale,
   ufrjmscdeg,ufrjdscdeg,ufrjphddeg,ufrjtccdeg,ufrjfiling,ufrjgrant}
 \DeclareBibliographyStrings{%
   inherit       = {spanish},
+  ufrjtranslationof = {{Traducción de}{Traducción de}},
   andothers     = {{\mkbibemph{et al\adddot}}{\mkbibemph{et al\adddot}}},
   availablefrom = {{Disponible en}{Disponible en}},
   ufrjmscdeg   = {{Maestría}{Maestría}},
@@ -9098,10 +9135,11 @@ postamble
 %<*lbxfr>
 \ProvidesFile{french-ufrj.lbx}[2026/09/15 v5.0 CoppeTeX french strings]
 \InheritBibliographyExtras{french}
-\NewBibliographyString{availablefrom,mscdiss,dscthesis,tcc,depositor,ufrjscale,
+\NewBibliographyString{availablefrom,ufrjtranslationof,mscdiss,dscthesis,tcc,depositor,ufrjscale,
   ufrjmscdeg,ufrjdscdeg,ufrjphddeg,ufrjtccdeg,ufrjfiling,ufrjgrant}
 \DeclareBibliographyStrings{%
   inherit       = {french},
+  ufrjtranslationof = {{Traduction de}{Traduction de}},
   andothers     = {{\mkbibemph{et al\adddot}}{\mkbibemph{et al\adddot}}},
   availablefrom = {{Disponible à}{Disponible à}},
   ufrjmscdeg   = {{Master}{Master}},
@@ -9125,10 +9163,11 @@ postamble
 %<*lbxit>
 \ProvidesFile{italian-ufrj.lbx}[2026/09/15 v5.0 CoppeTeX italian strings]
 \InheritBibliographyExtras{italian}
-\NewBibliographyString{availablefrom,mscdiss,dscthesis,tcc,depositor,ufrjscale,
+\NewBibliographyString{availablefrom,ufrjtranslationof,mscdiss,dscthesis,tcc,depositor,ufrjscale,
   ufrjmscdeg,ufrjdscdeg,ufrjphddeg,ufrjtccdeg,ufrjfiling,ufrjgrant}
 \DeclareBibliographyStrings{%
   inherit       = {italian},
+  ufrjtranslationof = {{Traduzione di}{Traduzione di}},
   andothers     = {{\mkbibemph{et al\adddot}}{\mkbibemph{et al\adddot}}},
   availablefrom = {{Disponibile da}{Disponibile da}},
   urlseen       = {{Consultato il}{Consultato il}},

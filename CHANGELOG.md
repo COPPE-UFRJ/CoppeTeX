@@ -167,6 +167,15 @@ run it, and the fix removes the mark.
 
 ### Fixed
 
+- **The translator in direct order, and the original title in a note**
+  (#135). 4.3.2.10 transcribes other responsibilities after the title as the
+  title page has them — "Tradução Ruth Rocha", "Tradução de Aurélio Buarque de
+  Holanda" — and 4.3.8.1 closes the reference with the original title,
+  "Tradução de: Moving house.". The translator used the author's name format
+  ("Trad. por ALMEIDA, Julia"), and no driver printed `origtitle`. A name
+  format without the list's capitals serves `bytranslator`, the Portuguese
+  string is "Tradução de", and the `origtitle` note enters before the DOI and
+  the address in the five languages.
 - **The DOI reads "DOI: https://doi.org/<doi>"** (#136), before "Disponível
   em:", as the examples of 4.2.3.5 and 4.2.4.3 write it. biblatex's format set
   the acronym with `\mkbibacro` — small caps, which Latin Modern Sans does not
