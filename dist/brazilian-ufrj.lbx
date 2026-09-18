@@ -34,10 +34,16 @@
 %% 
 \ProvidesFile{brazilian-ufrj.lbx}[2026/09/15 v5.0 CoppeTeX brazilian strings]
 \InheritBibliographyExtras{brazilian}
-\NewBibliographyString{availablefrom,mscdiss,dscthesis,tcc,depositor,ufrjscale,
+\NewBibliographyString{availablefrom,ufrjtranslationof,mscdiss,dscthesis,tcc,depositor,ufrjscale,
   ufrjmscdeg,ufrjdscdeg,ufrjphddeg,ufrjtccdeg,ufrjfiling,ufrjgrant}
 \DeclareBibliographyStrings{%
   inherit       = {brazilian},
+  ufrjtranslationof = {{Tradução de}{Tradução de}},
+  bytranslator  = {{Tradução de}{Tradução de}},
+  chapter       = {{cap\adddot}{cap\adddot}},
+  edition       = {{ed\adddot}{ed\adddot}},
+  volumes       = {{v\adddot}{v\adddot}},
+  andothers     = {{\mkbibemph{et al\adddot}}{\mkbibemph{et al\adddot}}},
   availablefrom = {{Disponível em}{Disponível em}},
   ufrjmscdeg   = {{Mestrado}{Mestrado}},
   ufrjdscdeg   = {{Doutorado}{Doutorado}},
@@ -53,6 +59,7 @@
   depositor     = {{Depositante}{Depositante}},
   ufrjscale    = {{Escala}{Escala}},
   mscdiss       = {{Dissertação}{Dissertação}},
+  mathesis      = {{Dissertação}{Dissertação}},
   dscthesis     = {{Tese}{Tese}},
   phdthesis     = {{Tese}{Tese}},
   tcc           = {{Trabalho de Conclusão de Curso}{Trabalho de Conclusão de Curso}},

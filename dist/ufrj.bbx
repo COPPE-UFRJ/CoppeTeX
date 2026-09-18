@@ -51,6 +51,16 @@
 \DeclareNameAlias{author}{family-given}
 \DeclareNameAlias{editor}{family-given}
 \DeclareNameAlias{translator}{family-given}
+\DeclareNameFormat{ufrj:direta}{%
+  \nameparts{#1}%
+  \usebibmacro{name:delim}{\namepartgiven\namepartfamily}%
+  \usebibmacro{name:hook}{\namepartgiven\namepartfamily}%
+  \ifdefvoid{\namepartgiven}{}{\namepartgiven\space}%
+  \ifdefvoid{\namepartprefix}{}{\namepartprefix\space}%
+  \namepartfamily
+  \ifdefvoid{\namepartsuffix}{}{\space\namepartsuffix}%
+  \usebibmacro{name:andothers}}
+\DeclareNameAlias{bytranslator}{ufrj:direta}
 \DeclareNameAlias{default}{family-given}
 \DeclareDelimFormat[bib,biblist]{multinamedelim}{\addsemicolon\space}
 \DeclareDelimFormat[bib,biblist]{finalnamedelim}{\addsemicolon\space}
@@ -80,12 +90,58 @@
     {#3}}
 \protected\def\ufrj@ucscanp#1(#2\ufrj@ucstop#3{%
   \ifblank{#2}{\MakeUppercase{#3}}{#3}}
-\renewcommand*{\bibdaterangesep}{/}
+\newcommand*\ufrj@abntdaterangesep{%
+  \iffieldequalstr{endyear}{}
+    {\mbox{-}\space}%
+    {\iffieldsequal{year}{endyear}{/}{\mbox{-}}}}
+\renewcommand*{\bibdaterangesep}{\ufrj@abntdaterangesep}
+\newcommand*\ufrj@abntrangedash{%
+  \protected\def\bibrangedash{\mbox{-}}%
+  \renewcommand*{\bibdaterangesep}{\ufrj@abntdaterangesep}}
+\ufrj@abntrangedash
+\DefineBibliographyExtras{brazilian}{\ufrj@abntrangedash}
+\DefineBibliographyExtras{english}{\ufrj@abntrangedash}
+\DefineBibliographyExtras{spanish}{\ufrj@abntrangedash}
+\DefineBibliographyExtras{french}{\ufrj@abntrangedash}
+\DefineBibliographyExtras{italian}{\ufrj@abntrangedash}
+\def\ufrj@mes@brazilian#1{\ifcase#1\or jan\adddot\or fev\adddot\or mar\adddot
+  \or abr\adddot\or maio\or jun\adddot\or jul\adddot\or ago\adddot\or set\adddot
+  \or out\adddot\or nov\adddot\or dez\adddot\fi}
+\def\ufrj@mes@english#1{\ifcase#1\or Jan\adddot\or Feb\adddot\or Mar\adddot
+  \or Apr\adddot\or May\or June\or July\or Aug\adddot\or Sept\adddot
+  \or Oct\adddot\or Nov\adddot\or Dec\adddot\fi}
+\def\ufrj@mes@spanish#1{\ifcase#1\or enero\or feb\adddot\or marzo\or abr\adddot
+  \or mayo\or jun\adddot\or jul\adddot\or agosto\or sept\adddot\or oct\adddot
+  \or nov\adddot\or dic\adddot\fi}
+\def\ufrj@mes@french#1{\ifcase#1\or janv\adddot\or févr\adddot\or mars\or avril
+  \or mai\or juin\or juil\adddot\or août\or sept\adddot\or oct\adddot
+  \or nov\adddot\or déc\adddot\fi}
+\def\ufrj@mes@italian#1{\ifcase#1\or genn\adddot\or febbr\adddot\or mar\adddot
+  \or apr\adddot\or magg\adddot\or giugno\or luglio\or ag\adddot\or sett\adddot
+  \or ott\adddot\or nov\adddot\or dic\adddot\fi}
+\let\ufrj@mes@portuguese\ufrj@mes@brazilian
+\let\ufrj@mes@portuges\ufrj@mes@brazilian
+\let\ufrj@mes@brazil\ufrj@mes@brazilian
+\let\ufrj@mes@american\ufrj@mes@english
+\let\ufrj@mes@british\ufrj@mes@english
+\let\ufrj@mes@USenglish\ufrj@mes@english
+\let\ufrj@mes@UKenglish\ufrj@mes@english
+\newcommand*\ufrj@monthlang{}
+\protected\def\ufrj@abntmonth#1{%
+  \iffieldundef{langid}
+    {\mkbibmonth{#1}}
+    {\edef\ufrj@monthlang{\thefield{langid}}%
+     \ifcsdef{ufrj@mes@\ufrj@monthlang}
+       {\csname ufrj@mes@\ufrj@monthlang\endcsname{#1}}
+       {\mkbibmonth{#1}}}}
 \protected\def\ufrj@abntdate#1#2#3{%
   \iffieldundef{#3}{}{\stripzeros{\thefield{#3}}\nobreakspace}%
-  \iffieldundef{#2}{}{\mkbibmonth{\thefield{#2}}\iffieldundef{#1}{}{\space}}%
+  \iffieldundef{#2}{}{\ufrj@abntmonth{\thefield{#2}}\iffieldundef{#1}{}{\space}}%
   \iffieldundef{#1}{}{\stripzeros{\thefield{#1}}}}
 \AtBeginBibliography{%
+  \raggedright
+  \hyphenpenalty=\@M
+  \exhyphenpenalty=\@M
   \singlespacing                        % entries single-spaced internally (2.4)
   \setlength{\bibitemsep}{\baselineskip}% one blank line between entries (2.4)
   \renewcommand*{\mkbibnamefamily}[1]{\ufrj@ucfamily{#1}}%
@@ -126,6 +182,16 @@
 \DeclareFieldFormat{journaltitle}{\mkbibbold{#1}}
 \DeclareFieldFormat{booktitle}{\mkbibbold{#1}}
 \DeclareFieldFormat{maintitle}{\mkbibbold{#1}}
+\renewcommand*{\subtitlepunct}{\addcolon\space}
+\DeclareFieldFormat{subtitlecase}{#1}
+\renewbibmacro*{title}{%
+  \ifboolexpr{ test {\iffieldundef{title}} and test {\iffieldundef{subtitle}} }
+    {}
+    {\printtext[title]{\printfield[titlecase]{title}}%
+     \setunit{\subtitlepunct}%
+     \printfield[subtitlecase]{subtitle}%
+     \newunit}%
+  \printfield{titleaddon}}
 
 \DeclareFieldFormat{pagetotal}{#1\addnbspace p\adddot}
 \DeclareFieldFormat[thesis]{pagetotal}{#1\addnbspace f\adddot}
@@ -134,7 +200,43 @@
 \DeclareFieldFormat[article]{volume}{v\adddot\addnbspace#1}
 \DeclareFieldFormat[article]{number}{n\adddot\addnbspace#1}
 
-\renewbibmacro*{in:}{\printtext{\bibstring{in}\addcolon\space}}
+\renewbibmacro*{in:}{\printtext{\mkbibemph{\bibstring{in}}\addcolon\space}}
+\DeclareStyleSourcemap{%
+  \maps[datatype=bibtex]{%
+    \map{\step[fieldsource=location,
+               match=\regexp{\[S\.\s*l\.\]},
+               replace={[\\emph{S. l.}]}]}
+    \map{\step[fieldsource=publisher,
+               match=\regexp{\[s\.\s*n\.\]},
+               replace={[\\emph{s. n.}]}]}
+    \map{\step[fieldsource=title,
+               match=\regexp{\A(O|A|Os|As|Um|Uma|Uns|Umas|The|An|El|La|Los|Las|Le|Les|Il|Lo|Gli)\s+(.+)\Z},
+               final]
+         \step[fieldset=sorttitle, fieldvalue={$2}]}
+  }%
+}
+
+\newbibmacro*{ufrj:origtitle}{%
+  \iffieldundef{origtitle}
+    {}
+    {\newunit\newblock
+     \printtext{\bibstring{ufrjtranslationof}\addcolon\space}%
+     \printfield[noformat]{origtitle}}}
+\letbibmacro{ufrj:orig:doi+eprint+url}{doi+eprint+url}
+\renewbibmacro*{doi+eprint+url}{%
+  \usebibmacro{ufrj:origtitle}%
+  \usebibmacro{ufrj:orig:doi+eprint+url}}
+
+\DeclareFieldFormat{doi}{%
+  DOI\addcolon\space
+  \in@{http}{#1}%
+  \ifin@
+    \ifhyperref{\href{#1}{\nolinkurl{#1}}}{\nolinkurl{#1}}%
+  \else
+    \ifhyperref
+      {\href{https://doi.org/#1}{\nolinkurl{https://doi.org/#1}}}
+      {\nolinkurl{https://doi.org/#1}}%
+  \fi}
 
 \DeclareFieldFormat{url}{\bibstring{availablefrom}\addcolon\space\url{#1}}
 \DeclareFieldFormat{urldate}{\bibstring{urlseen}\addcolon\space#1}
@@ -174,6 +276,110 @@
   \usebibmacro{url+urldate}%
   \usebibmacro{finentry}}
 
+\DeclareFieldFormat{edition}{%
+  \ifinteger{#1}
+    {#1\adddot\addnbspace\bibstring{edition}}
+    {#1\isdot}}
+\DeclareFieldFormat{volumes}{#1\addnbspace\bibstring{volumes}}
+\newbibmacro*{ufrj:series+number}{%
+  \iffieldundef{series}
+    {}
+    {\printtext[parens]{%
+       \printfield{series}%
+       \setunit*{\addcomma\space}%
+       \printfield{number}}}}
+\DeclareBibliographyDriver{book}{%
+  \usebibmacro{bibindex}%
+  \usebibmacro{begentry}%
+  \usebibmacro{author/editor+others/translator+others}%
+  \setunit{\printdelim{nametitledelim}}\newblock
+  \usebibmacro{maintitle+title}%
+  \newunit
+  \printlist{language}%
+  \newunit\newblock
+  \usebibmacro{byauthor}%
+  \newunit\newblock
+  \usebibmacro{byeditor+others}%
+  \newunit\newblock
+  \printfield{edition}%
+  \newunit
+  \iffieldundef{maintitle}
+    {\printfield{volume}%
+     \printfield{part}}
+    {}%
+  \newunit\newblock
+  \usebibmacro{publisher+location+date}%
+  \newunit\newblock
+  \usebibmacro{chapter+pages}%
+  \newunit
+  \printfield{pagetotal}%
+  \newunit
+  \printfield{volumes}%
+  \newunit\newblock
+  \usebibmacro{ufrj:series+number}%
+  \newunit\newblock
+  \printfield{note}%
+  \newunit\newblock
+  \iftoggle{bbx:isbn}
+    {\printfield{isbn}}
+    {}%
+  \newunit\newblock
+  \usebibmacro{doi+eprint+url}%
+  \newunit\newblock
+  \usebibmacro{addendum+pubstate}%
+  \setunit{\bibpagerefpunct}\newblock
+  \usebibmacro{pageref}%
+  \newunit\newblock
+  \iftoggle{bbx:related}
+    {\usebibmacro{related:init}%
+     \usebibmacro{related}}
+    {}%
+  \usebibmacro{finentry}}
+\DeclareBibliographyDriver{report}{%
+  \usebibmacro{bibindex}%
+  \usebibmacro{begentry}%
+  \usebibmacro{author}%
+  \setunit{\printdelim{nametitledelim}}\newblock
+  \usebibmacro{title}%
+  \newunit
+  \printlist{language}%
+  \newunit\newblock
+  \usebibmacro{byauthor}%
+  \newunit\newblock
+  \printfield{type}%
+  \iffieldundef{series}
+    {\setunit*{\addspace}%
+     \printfield{number}}
+    {}%
+  \newunit\newblock
+  \printfield{version}%
+  \newunit\newblock
+  \usebibmacro{institution+location+date}%
+  \newunit\newblock
+  \usebibmacro{chapter+pages}%
+  \newunit
+  \printfield{pagetotal}%
+  \newunit\newblock
+  \usebibmacro{ufrj:series+number}%
+  \newunit\newblock
+  \printfield{note}%
+  \newunit\newblock
+  \iftoggle{bbx:isbn}
+    {\printfield{isrn}}
+    {}%
+  \newunit\newblock
+  \usebibmacro{doi+eprint+url}%
+  \newunit\newblock
+  \usebibmacro{addendum+pubstate}%
+  \setunit{\bibpagerefpunct}\newblock
+  \usebibmacro{pageref}%
+  \newunit\newblock
+  \iftoggle{bbx:related}
+    {\usebibmacro{related:init}%
+     \usebibmacro{related}}
+    {}%
+  \usebibmacro{finentry}}
+
 \newbibmacro*{ufrj:bookeditor}{%
   \ifnameundef{editor}
     {}
@@ -181,6 +387,13 @@
      \setunit*{\addspace}\printtext{\mkbibparens{\usebibmacro{editorstrg}}}%
      \clearname{editor}%
      \setunit{\adddot\space}}}
+\newbibmacro*{ufrj:booktitle}{%
+  \ifboolexpr{ test {\iffieldundef{booktitle}} and test {\iffieldundef{booksubtitle}} }
+    {}
+    {\printtext[booktitle]{\printfield[titlecase]{booktitle}}%
+     \setunit{\subtitlepunct}%
+     \printfield[subtitlecase]{booksubtitle}}}
+\DeclareFieldFormat{chapter}{\bibncpstring{chapter}\addnbspace#1}
 \newbibmacro*{ufrj:partdriver}{%
   \usebibmacro{bibindex}\usebibmacro{begentry}%
   \usebibmacro{author/translator+others}%
@@ -188,8 +401,11 @@
   \usebibmacro{title}%
   \newunit\newblock
   \usebibmacro{in:}%
-  \usebibmacro{ufrj:bookeditor}%
-  \printfield{booktitle}%
+  \ifnameundef{bookauthor}
+    {\usebibmacro{ufrj:bookeditor}}
+    {\printnames{bookauthor}%
+     \setunit{\adddot\space}}%
+  \usebibmacro{ufrj:booktitle}%
   \newunit\newblock
   \printfield{edition}%
   \newunit\newblock
@@ -197,10 +413,10 @@
   \setunit*{\addcolon\space}\printlist{publisher}%
   \setunit*{\addcomma\space}\printdate%
   \newunit\newblock
-  \printfield{pages}%
-  \setunit{\addcomma\space}\printfield{chapter}%
+  \printfield{chapter}%
+  \setunit{\addcomma\space}\printfield{pages}%
   \newunit\newblock
-  \usebibmacro{url+urldate}%
+  \usebibmacro{doi+eprint+url}%
   \usebibmacro{finentry}}
 \DeclareBibliographyDriver{incollection}{\usebibmacro{ufrj:partdriver}}
 \DeclareBibliographyDriver{inbook}{\usebibmacro{ufrj:partdriver}}
@@ -210,12 +426,30 @@
 \newcommand*\ufrj@degword{%
   \iffieldundef{ufrjdegree}
     {\iffieldequalstr{type}{mscdiss}{\bibstring{ufrjmscdeg}}{%
+     \iffieldequalstr{type}{mathesis}{\bibstring{ufrjmscdeg}}{%
      \iffieldequalstr{type}{dscthesis}{\bibstring{ufrjdscdeg}}{%
      \iffieldequalstr{type}{phdthesis}{\bibstring{ufrjphddeg}}{%
-     \iffieldequalstr{type}{tcc}{\bibstring{ufrjtccdeg}}{}}}}}
+     \iffieldequalstr{type}{tcc}{\bibstring{ufrjtccdeg}}{}}}}}}
     {\printfield{ufrjdegree}}}
-\DeclareFieldFormat{course}{%
-  \mkbibparens{\ufrj@degword\addspace\ufrjstring{in:}\addspace#1}}
+\newcommand*\ufrj@ifdegknown[2]{%
+  \iffieldundef{ufrjdegree}
+    {\ifboolexpr{ test {\iffieldequalstr{type}{mscdiss}}
+                  or test {\iffieldequalstr{type}{mathesis}}
+                  or test {\iffieldequalstr{type}{dscthesis}}
+                  or test {\iffieldequalstr{type}{phdthesis}}
+                  or test {\iffieldequalstr{type}{tcc}} }
+       {#1}{#2}}
+    {#1}}
+\newbibmacro*{ufrj:degree+course}{%
+  \ufrj@ifdegknown
+    {\printtext[parens]{%
+       \ufrj@degword
+       \iffieldundef{course}
+         {}
+         {\addspace\ufrjstring{in:}\addspace\printfield[noformat]{course}}}}
+    {\iffieldundef{course}
+       {}
+       {\printtext[parens]{\printfield[noformat]{course}}}}}
 \DeclareBibliographyDriver{thesis}{%
   \usebibmacro{bibindex}\usebibmacro{begentry}%
   \usebibmacro{author}%
@@ -226,10 +460,11 @@
   \newunit\newblock
   \printfield{pagetotal}%
   \newunit\newblock
-  \printfield{type}\setunit*{\addspace}\printfield{course}%
+  \printfield{type}%
+  \setunit{\addspace}\usebibmacro{ufrj:degree+course}%
   \iflistundef{institution}
     {}
-    {\setunit*{\addspace\textemdash\addspace}\printlist{institution}}%
+    {\setunit{\addspace\textemdash\addspace}\printlist{institution}}%
   \setunit*{\addcomma\space}\printlist{location}%
   \setunit*{\addcomma\space}\printdate%
   \newunit\newblock
@@ -242,10 +477,12 @@
     \printtext{\ufrjstring{art}\addcolon\space}\printlist{artist}}%
   \iffieldundef{platform}{}{\setunit{\addperiod\space}%
     \printtext{\ufrjstring{platform}\addcolon\space}\printfield{platform}}%
-  \iflistundef{director}{}{\setunit{\addperiod\space}%
-    \printtext{\ufrjstring{directedby}\addspace}\printlist{director}}%
-  \iflistundef{producer}{}{\setunit{\addperiod\space}%
-    \printtext{\ufrjstring{producedby}\addspace}\printlist{producer}}}
+  \ifnameundef{director}{}{\setunit{\addperiod\space}%
+    \printtext{\ufrjstring{directedby}\addcolon\space}%
+    \printnames[ufrj:direta]{director}}%
+  \ifnameundef{producer}{}{\setunit{\addperiod\space}%
+    \printtext{\ufrjstring{producedby}\addcolon\space}%
+    \printnames[ufrj:direta]{producer}}}
 \newbibmacro*{ufrj:mediadriver}{%
   \usebibmacro{bibindex}\usebibmacro{begentry}%
   \usebibmacro{author/translator+others}%
@@ -254,9 +491,9 @@
   \newunit\newblock
   \usebibmacro{ufrj:media}%
   \newunit\newblock
-  \usebibmacro{ufrj:imprenta}%
-  \newunit\newblock
   \printfield{version}%
+  \newunit\newblock
+  \usebibmacro{ufrj:imprenta}%
   \newunit\newblock
   \printfield{note}%
   \newunit\newblock

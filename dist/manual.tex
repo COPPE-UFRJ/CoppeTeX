@@ -131,10 +131,10 @@
   \end{foreignabstract}
 
   \listoffigures
-  \listoftables
   \listofframes
   \listofprograms
   \listofalgorithms
+  \listoftables
   \printloabbreviations
   \printlosymbols
   \tableofcontents
@@ -231,9 +231,9 @@
 
   As opções mais usadas são \verb|numbers|, que troca as citações autor-data
   pelo sistema numérico; \verb|english| ou \verb|spanish|, para o idioma de
-  redação; \verb|pdfa|, que produz o arquivo no formato exigido para depósito;
-  e \verb|comserifa|, para quem prefere a fonte serifada à sem serifa que a
-  classe usa por padrão.
+  redação; e \verb|comserifa|, para quem prefere a fonte serifada à sem serifa
+  que a classe usa por padrão. O PDF/A que o depósito exige não precisa de
+  opção: é o padrão.
 
   A bibliografia usa BibLaTeX com o motor \texttt{biber}, e não BibTeX. Declare
   a base no preâmbulo com \verb|\addbibresource{arquivo.bib}| e imprima a lista
@@ -461,12 +461,14 @@
   \section{Os resumos}
 
   São dois, no mínimo: um no idioma do trabalho e um em idioma estrangeiro. Cada
-  um cabe em \textbf{uma folha}, em espaço 1,5, num parágrafo só, de
+  um começa numa folha própria e vem em espaço 1,5, num parágrafo só, de
   \textbf{150 a 500 palavras}, de preferência na terceira pessoa do singular e
   com o verbo na voz ativa.
 
-  Cada resumo começa pela \textbf{referência do próprio trabalho} e termina com
-  as \textbf{palavras-chave}.
+  Cada folha abre com o título centralizado --- \textbf{RESUMO}, ou
+  \textbf{ABSTRACT} na folha em inglês ---, como todo título sem indicativo
+  numérico (2.6). O resumo começa pela \textbf{referência do próprio trabalho} e
+  termina com as \textbf{palavras-chave}.
 
   A referência é a mesma que apareceria numa bibliografia que citasse a tese:
 
@@ -486,8 +488,8 @@
 
   Na classe, você não escreve nada: ela monta a referência com o que a folha de
   rosto já exige. A opção \verb|resumosemreferencia| a retira, e serve a quem
-  tem um resumo no limite das 500 palavras e não quer empurrá-lo para uma
-  segunda folha.
+  quer o resumo numa folha só. O Manual não exige isso, e um resumo de 500
+  palavras em espaço 1,5, com todos os elementos da folha, passa de uma folha.
 
   Num trabalho redigido em espanhol, são \textbf{três}: o espanhol, o inglês e um
   em português, para a banca da \useacronym{ufrj}.
@@ -510,11 +512,12 @@
   produzem com frequência; o nível \emph{b} garante a reprodução visual fiel,
   que é o que o depósito pede. O Anexo I do Manual aceita 1b e 2b.
 
-  Na classe, é a opção \verb|pdfa|: ela carrega o pacote \verb|pdfx|, monta os
-  metadados a partir dos dados do próprio trabalho e embute o perfil de cor. A
-  opção fica desligada por padrão, mas o \verb|max-exemplo.tex| já a traz ligada, e é
-  o que se recomenda: um problema de PDF/A --- quase sempre um PDF ou uma imagem
-  incluídos que não obedecem à norma --- aparece no dia em que o arquivo entra no
+  Na classe, é o padrão: ela carrega o pacote \verb|pdfx|, monta os metadados a
+  partir dos dados do próprio trabalho e embute o perfil de cor em todo
+  documento, sem que você peça. A opção \verb|sempdfa| desliga, para uma
+  compilação de rascunho ou para um pacote que o PDF/A não aceite --- e quem
+  desligar deve lembrar que um problema de PDF/A, quase sempre um PDF ou uma
+  imagem incluídos fora da norma, aparece no dia em que o arquivo entra no
   trabalho, e não na véspera do depósito. Para conferir, use o validador
   gratuito veraPDF, no perfil PDF/A-2b.
 

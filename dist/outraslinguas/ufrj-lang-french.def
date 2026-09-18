@@ -69,8 +69,8 @@
 \ufrjdefstring{french}{in:}             {dans}
 \ufrjdefstring{french}{art}             {Illustration}
 \ufrjdefstring{french}{platform}        {Plateforme}
-\ufrjdefstring{french}{directedby}      {Réalisé par}
-\ufrjdefstring{french}{producedby}      {Produit par}
+\ufrjdefstring{french}{directedby}      {Réalisation}
+\ufrjdefstring{french}{producedby}      {Production}
 \ufrjdefstring{french}{listabbreviation}{Liste des abréviations et acronymes}
 \ufrjdefstring{french}{listabbreviationonly}{Liste des abréviations}
 \ufrjdefstring{french}{listsigla}       {Liste des sigles}

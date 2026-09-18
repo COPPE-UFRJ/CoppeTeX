@@ -71,8 +71,8 @@
 \ufrjdefstring{italian}{in:}             {in}
 \ufrjdefstring{italian}{art}             {Illustrazione}
 \ufrjdefstring{italian}{platform}        {Piattaforma}
-\ufrjdefstring{italian}{directedby}      {Regia di}
-\ufrjdefstring{italian}{producedby}      {Prodotto da}
+\ufrjdefstring{italian}{directedby}      {Regia}
+\ufrjdefstring{italian}{producedby}      {Produzione}
 \ufrjdefstring{italian}{listabbreviation}{Elenco di abbreviazioni e sigle}
 \ufrjdefstring{italian}{listabbreviationonly}{Elenco delle abbreviazioni}
 \ufrjdefstring{italian}{listsigla}       {Elenco delle sigle}

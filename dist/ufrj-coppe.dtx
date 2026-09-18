@@ -1,19 +1,211 @@
-%%
-%% This is file `max-exemplo.tex',
-%% generated with the docstrip utility.
-%%
-%% The original source files were:
-%%
-%% ufrj-coppe.dtx  (with options: `maxexemplo')
-%% 
-%% This is a sample monograph which illustrates the use of the `ufrj' document
-%% class with the `ufrj-coppe' unit style and its biblatex/biber bibliography
-%% style. It is generated from ufrj-coppe.dtx by docstrip.
-%% 
-%% Copyright (C) 2008-2026 Vicente Helano F. Batista, George O. Ainsworth Jr.,
-%% Geraldo Xexéo and Eduardo Mangeli. Released under the GNU General Public
-%% License version 3 (see the COPYING.txt file).
-%% 
+% \iffalse meta-comment
+%
+% This is file `ufrj-coppe.dtx'.
+%
+% It uses the doc utility to document the `ufrj-coppe' unit style of the
+% `ufrj' document class, and docstrip to generate the style, the `coppe'
+% compatibility class and the example documents.
+%
+% Copyright (C) 2008-2026 Vicente Helano F. Batista, George O. Ainsworth Jr.,
+%                         Geraldo Xexéo and Eduardo Mangeli.
+% CoppeTeX 5.0.
+%
+% This program is free software; you can redistribute it and/or modify
+% it under the terms of the GNU General Public License version 3 as
+% published by the Free Software Foundation.
+%
+% This program is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+% GNU General Public License version 3 for more details.
+%
+% You should have received a copy of the GNU General Public License
+% version 3 along with this package (see the COPYING.txt file).
+% If not, see <http://www.gnu.org/licenses/>.
+%
+% Author(s): Vicente Helano F. Batista
+%            George O. Ainsworth Jr.
+%            Geraldo Xexéo
+%            Eduardo Mangeli
+%
+% The split of the COPPE unit out of the class (September 2026) was developed
+% with the support of Claude Opus 5 (Anthropic); every change was reviewed by
+% the maintainer.
+%
+% \fi
+%
+% \iffalse
+%<*driver>
+\documentclass[a4paper]{ltxdoc}
+\usepackage[T1]{fontenc}
+\usepackage[colorlinks={true},breaklinks={true}]{hyperref}
+\usepackage{hologo}
+\def\TeX{\hologo{TeX}}
+\def\LaTeX{\hologo{LaTeX}}
+\def\CoppeTeX{{\rmfamily C\kern-.05em{\scshape o\kern-.025em p\kern-.025em
+p\kern-.025em e}}\kern-.08em
+T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
+\setcounter{tocdepth}{2}
+\EnableCrossrefs \CodelineIndex \RecordChanges
+\begin{document}
+  \DocInput{ufrj-coppe.dtx}
+\end{document}
+%</driver> \fi
+%
+% \iffalse
+% Este arquivo segue as mesmas regras do ufrj.dtx: linha comecada por um sinal
+% de porcentagem e documentacao, linha sem ele e codigo, e os guardas de modulo
+% dizem para qual arquivo gerado cada trecho vai. O ufrj-coppe.ins diz o resto.
+% \fi
+% \changes{v5.0}{2026/09/15}{First version of the COPPE unit style, split out of the class: the institute, the thirteen Programas, the right-hand logo, the COPPE phrases of the abstract header and the COPPE norm in the colophon, plus the names the class had until v4.1, the coppe compatibility class and the example documents, which all use this style.}
+%
+% \ProvidesFile{ufrj-coppe.dtx}[2026/09/15 v5.0 CoppeTeX]
+% \GetFileInfo{ufrj-coppe.dtx}
+%
+% \title{O estilo \texttt{ufrj-coppe}\\
+%   \large A COPPE na classe \texttt{ufrj} --- versão \fileversion, \filedate}
+% \author{Geraldo Xexéo \and Vicente H. F. Batista \and George O. Ainsworth Jr.
+%   \and Eduardo Mangeli}
+%
+% \maketitle
+%
+% \begin{abstract}
+% \noindent
+% A classe |ufrj| compõe teses, dissertações e exames de qualificação da
+% Universidade Federal do Rio de Janeiro segundo o \emph{Manual para elaboração e
+% normalização de trabalhos acadêmicos} da UFRJ/SiBI. O que é próprio de cada
+% unidade acadêmica ela não sabe: recebe de um \emph{estilo de unidade}. Este
+% documento é o do estilo da COPPE, o |ufrj-coppe|, que traz o que a
+% \emph{Norma para a Elaboração Gráfica de Teses e Dissertações da COPPE/UFRJ}
+% fixa como dado e como texto --- o nome do Instituto, os Programas, o logotipo,
+% as frases --- e os documentos de exemplo da distribuição.
+%
+% \medskip\noindent
+% Como usar a classe, com todas as opções e todos os comandos, está no manual
+% dela, o |ufrj.pdf|. Aqui está só o que é da COPPE.
+% \end{abstract}
+%
+% \tableofcontents
+%
+% \section{Como usar}
+%
+% Um trabalho da COPPE começa assim:
+% \begin{verbatim}
+% \documentclass[dsc]{ufrj}
+% \usepackage{ufrj-coppe}
+% \end{verbatim}
+% e escolhe o Programa com |\department|, pela sigla da tabela da
+% seção~\ref{sec:programas}. O tipo do trabalho, o idioma, as folhas e todo o
+% resto são da classe.
+%
+% O |ufrj-coppe.sty| fica onde fica o |ufrj.cls|: na pasta do trabalho, ou na
+% árvore do \TeX. O logotipo da COPPE, |coppe-logo.pdf|, fica na pasta |logos/|,
+% ao lado do da UFRJ.
+%
+% O estilo vem logo depois da classe, e antes de tudo o mais. Não há opção a
+% passar a ele.
+%
+% \section{O que o estilo declara}
+%
+% A Norma COPPE diz, ponto a ponto, onde a COPPE especializa o Manual do SiBI.
+% Os pontos que são dado ou texto estão neste estilo; os que são comportamento
+% --- a orientação e o Programa nas folhas de resumo, o terceiro resumo, a
+% referência no alto do resumo, as listas de quadros, de programas e de
+% algoritmos, a fonte das ilustrações, o formato dos apêndices e do sumário ---
+% estão na classe, como padrão, porque servem a qualquer unidade.
+%
+% \begin{description}
+%   \item[Seção 1 da Norma, logomarcas.] O logotipo da UFRJ à esquerda e o da
+%     COPPE à direita, os dois com 2\,cm de altura, no alto da capa e da folha de
+%     rosto.
+%   \item[Seção 2, o nome da instituição na capa.] Três linhas: a universidade,
+%     o Instituto e o Programa. O nome do Instituto vai quebrado em duas linhas
+%     na capa e inteiro na referência do trabalho, que abre as folhas de resumo.
+%     A linha do Programa é o nome oficial dele --- ``Programa de Engenharia
+%     Civil'' ---, e não ``Programa de Pós-Graduação em''.
+%   \item[Seção 3, os Programas.] Os treze da tabela abaixo, com o nome em
+%     português e em inglês.
+%   \item[Seção 16, a implementação de referência.] O colofão diz que o documento
+%     está em conformidade com a Norma COPPE.
+%   \item[A abertura da folha de resumo.] ``Resumo da Tese apresentada
+%     \emph{à COPPE/UFRJ} como parte dos requisitos necessários para a obtenção
+%     do grau de Doutor \emph{em Ciências} (D.Sc.)'': o estilo diz a quem o
+%     trabalho foi apresentado, com a contração de cada idioma (à, to, a la, à
+%     la, alla), e o nome que a COPPE dá ao grau.
+% \end{description}
+%
+% \subsection{Os Programas}\label{sec:programas}
+%
+% O nome em inglês só aparece na folha do \emph{abstract}. Em todo o resto, e
+% nas folhas de resumo em espanhol, francês e italiano, vai o nome em português,
+% que é o nome próprio do Programa (seção 4 da Norma).
+%
+% \begin{center}\small
+% \begin{tabular}{@{}lll@{}}
+% \textbf{Sigla} & \textbf{Programa de\ldots} & \textbf{Em inglês}\\
+% \hline
+% PEB  & Engenharia Biomédica & Biomedical Engineering \\
+% PEC  & Engenharia Civil & Civil Engineering \\
+% PEE  & Engenharia Elétrica & Electrical Engineering \\
+% PEM  & Engenharia Mecânica & Mechanical Engineering \\
+% PEMM & Engenharia Metalúrgica e de Materiais & Metallurgical and Materials Engineering \\
+% PEN  & Engenharia Nuclear & Nuclear Engineering \\
+% PENO & Engenharia Oceânica & Ocean Engineering \\
+% PENT & Engenharia de Nanotecnologia & Nanotechnology Engineering \\
+% PEP  & Engenharia de Produção & Production Engineering \\
+% PEQ  & Engenharia Química & Chemical Engineering \\
+% PESC & Engenharia de Sistemas e Computação & Systems Engineering and Computer Science \\
+% PET  & Engenharia de Transportes & Transportation Engineering \\
+% PPE  & Planejamento Energético & Energy Planning \\
+% \end{tabular}
+% \end{center}
+%
+% Um Programa novo, ou um que mude de nome, entra aqui e na implementação,
+% seção~\ref{sec:implementacao}. A classe não muda.
+%
+% \section{Trabalhos escritos com a classe \texttt{coppe}}\label{sec:antigos}
+%
+% Até a versão~4.1 a classe se chamava |coppe|, e trazia a COPPE dentro dela.
+% Um trabalho começado assim continua compilando sem mudança nenhuma:
+% \begin{itemize}
+%   \item |\documentclass[dsc]{coppe}| carrega a classe |coppe.cls| que vem com
+%     este estilo, e que não faz mais nada além de carregar a |ufrj| com as mesmas
+%     opções e o |ufrj-coppe| logo depois --- e de avisar, no |.log|, que vale
+%     trocar as duas linhas;
+%   \item os comandos que levavam o nome da classe --- |\coppestring| e seus
+%     irmãos, |\usecoppelanguage|, |\newcoppefloat|, |\coppetexfinalpage| e as
+%     peças do colofão --- continuam valendo, com o nome antigo;
+%   \item o campo |coppedegree| de um |.bib| é lido como |ufrjdegree|;
+%   \item os arquivos auxiliares de uma compilação anterior à troca não travam a
+%     primeira compilação depois dela.
+% \end{itemize}
+%
+% A troca recomendada é de duas linhas, e mais nada:
+% \begin{verbatim}
+% \documentclass[dsc]{ufrj}
+% \usepackage{ufrj-coppe}
+% \end{verbatim}
+%
+% \section{Uma unidade nova}
+%
+% Este arquivo é o modelo de um estilo de unidade. Para a Escola Politécnica,
+% por exemplo, copie |ufrj-coppe.dtx| e |ufrj-coppe.ins| para |ufrj-poli.dtx| e
+% |ufrj-poli.ins|, troque os dados da seção~\ref{sec:implementacao}, tire os
+% nomes antigos e a classe de compatibilidade, que só a COPPE tem, e troque os
+% exemplos pelos da unidade. A interface que o estilo usa --- |\ufrjdeclareunit|,
+% |\ufrjdeclareprogram|, |\ufrjdeclarelogos|, |\ufrjdeclarenorm| e
+% |\ufrjdefunitstring| --- está no manual da classe, na seção ``A instituição e a
+% unidade''. Um trabalho de uma unidade que ainda não tem estilo pode usar as
+% mesmas declarações no preâmbulo.
+%
+% \section{O exemplo máximo}
+%
+% \label{COPPE:SAMPLE}
+% O |max-exemplo.tex| mostra tudo o que a classe oferece e o Manual prevê,
+% inclusive o opcional. O |min-exemplo.tex|, na seção seguinte, é o contrário:
+% só o que é obrigatório.
+%    \begin{macrocode}
+%<*maxexemplo>
 %% !TeX program = pdflatex
 %% !TeX encoding = UTF-8
 %% !TeX spellcheck = pt_BR
@@ -111,6 +303,7 @@
 %% Para uma sem serifa diferente da Latin Modern, carregue o pacote da fonte e
 %% troque a família:
 %%\usepackage{helvet}\renewcommand{\familydefault}{\sfdefault}
+
 
 \begin{document}
   \title{Título do Trabalho}
@@ -265,15 +458,15 @@
 
   A classe \verb|ufrj| foi criada originalmente por Vicente Helano e George Ainsworth, com o nome \verb|coppe|, porém, em 2024, passou a ser mantida por Geraldo Xexéo e Eduardo Mangeli.
   Em 2026, Geraldo Xexéo fez modificações de alta monta para suportar o novo \citetitle{manualbib}, que implementa normas recentes da ABNT: a versão 4.0, em maio, com apoio do Claude Opus 4.7 e do Claude Opus 4.8, e a versão 4.1, em setembro, com apoio do Claude Opus 5, ambos da Anthropic.
-
+  
    Provavelmente Geraldo Xexéo, professor do Programa de Engenharia de Sistemas e Computação, deve continuar mantendo ou apoiando a manutenção por alguns anos. Se você quiser particiar do grupo de manutenção, é só entrar em contato via github.
 
   A versão mais atual dessa classe é mantida no GitHub, no repositório \url{https://github.com/COPPE-UFRJ/CoppeTeX}. De maneira arbitrária o prof. Geraldo Xexéo criou a organização COPPE-UFRJ no GitHub, e também está disposto a compartilhar com outras iniciativas semelhantes.
 
   Esse documento segue a norma de formatação de teses e dissertações da COPPE. Ele também pode ser usado para exames de qualificação. As principais instruções estão no documento que explica a classe, ``The \verb|ufrj| document class'', que fica disponível no GitHub.
-
+  
   Há um grupo de WhatsApp para perguntas e discussões do estilo: \href{https://github.com/COPPE-UFRJ/CoppeTeX/wiki}{here}.
-
+  
   Bugs devem ser reportados na \href{https://github.com/COPPE-UFRJ/CoppeTeX/issues}{página de \textit{issues} do GitHub do CoppeTeX}.
 
   Esse documento é usado como exemplo de coisas que podem ser feitas. Ele está configurado para usar citações do tipo author-data. Para usar citações do tipo numérica é necessário colocar, entre as opções de \verb|documentclass|, a opção \verb|numbers|.
@@ -281,8 +474,10 @@
   É importante de notar que essa classe não foi construída sobre a classe \LaTeX \  para a ABNT, e que segue de forma geral as regras da ABNT, mas não necessariamente de forma exata, já que o foco foi seguir as regras da Coppe. Essas mesmas regras da Coppe não especificam tudo que realmente seria necessário, então algumas coisas são decisões arbitrárias.
 
   Essa classe implementa citações ABNT modernas e vários tipos de entrada descritos na norma.
-
+    
   Este documento não substitui, mas complementa, o documento que descreve a classe.
+
+
 
 \chapter{Configurações Iniciais}
 
@@ -302,6 +497,7 @@
 
   A variação de linguagem, em inglês ou português apenas, já é suportada pela classe \verb|ufrj| com o pacote Babel. Não é necessário incluí-lo.
 
+
 \section{Por que usar o \LaTeX}
 
   Há uma grande discussão entre usuário de Word e \LaTeX, principalmente, quanto ao uso desses sistemas. Não é importante. Consideramos que ambos tem vantagens e desvantagens, e analisamos algumas em uma palestra introdutória que pode ser encontrada na rede.
@@ -319,6 +515,7 @@
   \end{enumerate}
 
   Em todo caso, recomendo fortemente que, ao mesmo tempo, mantenha versões no Git e faça o backup em sites como GitHub e GitLab. Isso pode ser feito em ambos os casos. Eu uso o GitHub sincronizado no Overleaf e na minha máquina com o GitHub Desktop. Muitas vezes troco quase que de forma transparente de um ambiente local para o da web sem nenhum problema.
+
 
 \chapter{Algumas Regras da COPPE}
 
@@ -421,6 +618,7 @@ A regra geral de posicionamento é que uma figura ou quadro só pode aparecer a 
 
 Quadros são ilustrações cujos dados são delimitados por linhas em \emph{todas} as bordas (ao contrário das tabelas, com linhas só no topo e na base). O CoppeTeX oferece o float \verb|quadro| (sinônimo em inglês: \verb|frame|) e o comando \verb|\listofframes| para a lista correspondente. Para criar outros floats com a mesma regra (legenda acima, \verb|\source| abaixo e uma \verb|\listof...|), use \verb|\newufrjfloat{nome}{Nome}{Título da Lista}|.
 
+
 \section{Tabelas e Figuras Padrão}
 
 Vamos ver uma tabela padrão, como a \autoref{tab:exemplo_numeros}.
@@ -444,6 +642,8 @@ Vamos ver uma tabela padrão, como a \autoref{tab:exemplo_numeros}.
 \end{tabular}
 \source{Elaboração própria.} % fonte obrigatoria, abaixo do float
 \end{table}
+
+
 
 Já a \autoref{fig:exemplo_figura} é uma figura padrão, com controle da largura.
 
@@ -521,6 +721,7 @@ Fonte & Abaixo da ilustração. \\
 \source{Elaboração própria.}
 \end{mapa}
 
+
 \section{Tabelas mais elegantes}
 
 Atualmente a tendência é usar tabelas mais leves, como \autoref{tab:exemplo_numerosbom}. Isso exige o pacote \verb*|booktabs|.
@@ -551,6 +752,7 @@ Se sua tabela é muito longa ou larga, existem várias opções.
     \item rodar a tabela, fazendo ela em \textit{landscape}
     \item fazer a tabela dentro de um minibox
 \end{itemize}
+
 
 \subsection{Tabelas largas demais}
 
@@ -593,6 +795,7 @@ Dados 5 & Dados 6 & Dados 7 & Dados 8 \\
 }
 \source{Elaboração própria.}
 \end{table}
+
 
 Para rodar uma tabela muito larga em 90 graus no LaTeX, você pode usar o pacote \verb*|rotating|. Este pacote fornece o ambiente \verb*|sidewaystable|, que automaticamente gira a tabela, incluindo sua legenda, em 90 graus. Isso é especialmente útil para acomodar tabelas largas em documentos, garantindo que elas caibam na página sem comprometer a legibilidade.
 
@@ -1032,6 +1235,7 @@ Este é o conteúdo do meu textbox sem título. Você pode adicionar qualquer te
     \source{Elaboração própria.}
 \end{figure}
 
+
 \begin{figure}[ht]
     \centering
  \begin{tcolorbox}
@@ -1433,6 +1637,9 @@ use \verb|\href{https://exemplo.org}{texto}|. Evite digitar URLs como texto comu
 
   As siglas (Manual, seção 2.8) são expandidas na primeira ocorrência e registradas automaticamente na Lista de Siglas, que este exemplo mantém separada da de abreviaturas com \verb|\makeloacronyms|. Uma sigla que não se usa com \verb|\useacronym| entra na lista com \verb|\acron|, que não imprime nada no texto: é assim que a ABNT, citada neste capítulo sem \verb|\useacronym|, está na lista.\acron{ABNT}{Associação Brasileira de Normas Técnicas} Declaradas com \verb|\defineacronym|, basta usá-las: a \useacronym{ufrj} oferece vários cursos de pós-graduação, e este programa segue as normas da \useacronym{cpgp}. Em menções seguintes aparecem apenas as siglas, como \useacronym{ufrj} e \useacronym{cpgp}; use \verb|\useacronym*| para forçar a forma extensa.
 
+
+
+
   \chapter{Conclusões}
 
   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
@@ -1461,18 +1668,23 @@ Segundo a norma da ABNT (Associação Brasileira de Normas Técnicas), a defini�
 
 Apêndice: O apêndice é um texto ou documento elaborado pelo autor do trabalho com o objetivo de complementar sua argumentação, sem que seja essencial para a compreensão do conteúdo principal do documento. O uso de apêndices é indicado para incluir dados detalhados como questionários, modelos de formulários utilizados na pesquisa, descrições extensas de métodos ou técnicas, entre outros. Os apêndices são identificados por letras maiúsculas consecutivas, travessão e pelos respectivos títulos. A inclusão de apêndices visa a fornecer informações adicionais que possam ajudar na compreensão do estudo, mas cuja presença no texto principal poderia distrair ou desviar a atenção do leitor dos argumentos principais.
 
+
 \chapter{Outro apêndice}
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
 \annex
 
+
 \chapter{Um Anexo}
 Segundo a norma da ABNT (Associação Brasileira de Normas Técnicas), a definição e utilização de apêndices e anexos seguem critérios específicos para a organização de documentos acadêmicos e técnicos.
+
+
 
 Anexo: O anexo, por sua vez, consiste em um texto ou documento não elaborado pelo autor, que serve de fundamentação, comprovação e ilustração. O uso de anexos é apropriado para materiais como cópias de artigos, legislação, documentos históricos, fotografias, mapas, entre outros, que tenham relevância para o entendimento do trabalho do autor. Assim como os apêndices, os anexos são identificados por letras maiúsculas consecutivas, travessão e pelos respectivos títulos. Eles são utilizados para enriquecer o trabalho com informações de suporte, garantindo que o leitor tenha acesso a documentos complementares importantes para a validação dos argumentos apresentados no texto principal.
 
 No modelo \CoppeTeX{} os anexos devem obrigatoriamente vir depois dos apêndices e usam o comando novo (versão 3.5 em diante) \verb|\annex|
+
 
 \chapter{Outro Anexo}
 
@@ -1488,6 +1700,819 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor i
 
 \end{document}
 
-%% 
+%</maxexemplo>
+%    \end{macrocode}
+%
+% \section{O exemplo mínimo}
+%
+% \label{COPPE:MIN}
+% O |min-exemplo.tex| traz \textbf{tudo o que é obrigatório e apenas isso}:
+% as folhas que o Manual UFRJ/SiBI chama de elementos essenciais (3.1.2.1), a
+% parte textual com introdução, desenvolvimento e conclusão (3.1.3) e as
+% referências, único pós-textual obrigatório (3.1.4). É o ponto de partida
+% para quem prefere acrescentar a apagar.
+%    \begin{macrocode}
+%<*minexemplo>
+%% !TeX program = pdflatex
+%% !TeX encoding = UTF-8
+%% !TeX spellcheck = pt_BR
+%% !BIB program = biber
+%% Com o latexmk funcionando (no Windows ele pede o Perl), troque a primeira
+%% linha por: % !TeX program = latexmk -pdf -synctex=1
+\documentclass[dsc]{ufrj}
+\usepackage{ufrj-coppe}
+%% min-exemplo.tex -- tudo o que a norma exige, e nada além disso.
 %%
-%% End of file `max-exemplo.tex'.
+%% O que está aqui e por quê (Manual UFRJ/SiBI, 9.ª ed. rev., 2026):
+%%  - PDF/A ............... o depósito é em PDF/A (2.2d), e é o padrão da
+%%    classe: não se escreve opção nenhuma para ter;
+%%  - \maketitle .......... capa, folha de rosto (3.1.2.1.1) e folha adicional
+%%    com a Coleta CAPES e a ficha catalográfica (3.1.2.1.2);
+%%  - \frontmatter ........ folha de aprovação (3.1.2.1.3), com o orientador
+%%    em primeiro lugar na banca, como presidente;
+%%  - abstract ............ resumo na língua do trabalho (3.1.2.1.4);
+%%  - foreignabstract ..... resumo em língua estrangeira (3.1.2.1.5);
+%%  - \tableofcontents .... sumário (3.1.2.1.6), o único obrigatório das listas;
+%%  - introdução, desenvolvimento e conclusão (3.1.3);
+%%  - \printbibliography .. referências, o único pós-textual obrigatório (3.1.4).
+%%
+%% O que NÃO está, por ser opcional: dedicatória, agradecimentos, epígrafe,
+%% todas as listas além do sumário, coorientador, linha de pesquisa,
+%% glossário, apêndices, anexos e índice. Tudo isso está no max-exemplo.tex.
+
+\addbibresource{exemplo.bib}% a base de referências
+
+\begin{document}
+  \title{Título do Trabalho}
+  \foreigntitle{Title of the Work}
+  % O subtítulo é opcional (3.1.2.1.1c); está aqui só para dar nome ao exemplo.
+  % Sai depois do título, com dois-pontos, e sem as maiúsculas do título.
+  \subtitle{um exemplo mínimo de uso do CoppeTeX}
+  \foreignsubtitle{a minimal example of use of CoppeTeX}
+  \author{Nome do Autor}{Sobrenome}
+  \advisor{Nome do Orientador}{Sobrenome}{D.Sc.}{UFRJ}
+  % A composição da banca é regra do Programa, não da formatação.
+  \examiner{Nome do Primeiro Examinador Sobrenome}{D.Sc.}{UFRJ}
+  \examiner{Nome do Segundo Examinador Sobrenome}{D.Sc.}{UFRJ}
+  \examiner{Nome do Terceiro Examinador Sobrenome}{D.Sc.}{UFF}
+  \department{PESC}
+  \date{09}{2026}
+  % Data da aprovação: obrigatória na folha de aprovação (3.1.2.1.3d).
+  \approvaldate{15 de setembro de 2026}
+
+  % Palavras-chave, ao final de cada resumo (3.1.2.1.4 e 3.1.2.1.5).
+  \keyword{primeira palavra-chave}
+  \keyword{segunda palavra-chave}
+  \keyword{terceira palavra-chave}
+  \foreignkeyword{First keyword}
+  \foreignkeyword{Second keyword}
+  \foreignkeyword{Third keyword}
+
+  % Folha adicional: a área de concentração e os demais campos da Coleta CAPES
+  % (3.1.2.1.2). A área não sai na folha de rosto -- é o modelo do SiBI, e a
+  % COPPE não liga a opção areanafolhaderosto. A ficha catalográfica vem do
+  % gerador do SiBI; com o arquivo em mãos, descomente a linha \catalogcard.
+  \concentrationarea{Engenharia de Sistemas e Computação}
+  \productiontype{bibliographic}
+  \linkedproject{no}
+  % \catalogcard{ficha.pdf}
+
+  \maketitle
+
+  \frontmatter
+
+  \begin{abstract}
+  Resumo do trabalho, de 150 a 500 palavras, num só parágrafo (3.1.2.1.4).
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+  tempor incididunt ut labore et dolore magna aliqua.
+  \end{abstract}
+
+  \begin{foreignabstract}
+  Abstract of the work, in English (3.1.2.1.5). Lorem ipsum dolor sit amet,
+  consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+  dolore magna aliqua.
+  \end{foreignabstract}
+
+  \tableofcontents
+
+  \mainmatter
+
+  \chapter{Introdução}
+
+  A introdução apresenta o tema, o problema e os objetivos do trabalho, e
+  anuncia como o texto está organizado. Toda afirmação que venha de outro
+  trabalho é citada, como em \citet{book-example}.
+
+  \chapter{Desenvolvimento}
+
+  O desenvolvimento pode ocupar quantos capítulos o trabalho pedir: revisão
+  da literatura, métodos, resultados e discussão \citep{article-example}.
+
+  \chapter{Conclusão}
+
+  A conclusão responde aos objetivos postos na introdução.
+
+  \backmatter
+
+  \printbibliography
+
+\end{document}
+%</minexemplo>
+%    \end{macrocode}
+%
+% \StopEventually{\PrintIndex}
+%
+% \section{Implementação}\label{sec:implementacao}
+%
+% Daqui em diante é o código, com a documentação intercalada. Quem vai
+% escrever uma tese não precisa ler; quem vai mexer no estilo, ou copiá-lo
+% para outra unidade, deve ler antes a seção ``A instituição e a unidade'' do
+% manual da classe, que descreve a interface.
+%
+% \subsection{O arquivo \texttt{ufrj-coppe.sty}}
+%
+% O estilo é carregado depois da classe inteira, inclusive do |hyperref| e do
+% |biblatex|. Nada do que ele declara é lido na hora: a classe consulta cada
+% dado quando compõe a folha que precisa dele. Por isso a ordem entre o estilo e
+% o resto do preâmbulo não importa, desde que ele venha depois da classe.
+%
+% \DescribeMacro{\copperdefstring}
+% \DescribeMacro{\coppestring}
+% \DescribeMacro{\coppemainstring}
+% \DescribeMacro{\coppeforeignstring}
+% \DescribeMacro{\usecoppelanguage}
+% \DescribeMacro{\newcoppefloat}
+% \DescribeMacro{\coppetexfinalpage}
+% \DescribeMacro{\coppefinalengine}
+% \DescribeMacro{\coppefinaltexsystem}
+% \DescribeMacro{\coppefinalfont}
+% \DescribeMacro{\coppefinalsystem}
+% \DescribeMacro{\coppefinaltime}
+% \DescribeMacro{\coppefinalmanual}
+% Os nomes antigos da seção~\ref{sec:antigos} ficam no fim do estilo:
+% |\copperdefstring|, |\coppestring|, |\coppemainstring|,
+% |\coppeforeignstring|, |\usecoppelanguage|, |\newcoppefloat| e
+% |\coppetexfinalpage| são apelidos de |\ufrjdefstring|, |\ufrjstring|,
+% |\ufrjmainstring|, |\ufrjforeignstring|, |\useufrjlanguage|, |\newufrjfloat| e
+% |\ufrjfinalpage|; |\coppefinalengine| e as outras cinco peças do colofão
+% continuam atendendo a um |\renewcommand| pelo nome antigo. Ficam com a COPPE
+% porque só um trabalho da COPPE pode ter sido escrito com eles.
+%
+%    \begin{macrocode}
+%<*package>
+\NeedsTeXFormat{LaTeX2e}[2020/10/01]
+\ProvidesPackage{ufrj-coppe}[2026/09/15 v5.0 CoppeTeX COPPE/UFRJ unit style]
+% O estilo so faz sentido com a classe: o que ele declara, e a classe que le.
+% Sem ela os comandos de declaracao nem existem, e o erro seria um "Undefined
+% control sequence" na primeira declaracao, sem dizer o que falta.
+\@ifclassloaded{ufrj}{}{%
+  \PackageError{ufrj-coppe}{O estilo ufrj-coppe precisa da classe ufrj}{%
+    Escreva \string\documentclass[...]{ufrj} antes de\MessageBreak
+    \string\usepackage{ufrj-coppe}.}%
+  \endinput}
+% Norma COPPE, secao 2: o nome da instituicao na capa, em tres linhas -- a
+% universidade, o Instituto e o Programa. O nome do Instituto vai inteiro na
+% referencia do trabalho, e quebrado em duas linhas na capa.
+\ufrjdeclareunit
+  {Instituto Alberto Luiz Coimbra de Pós-Graduação e Pesquisa de Engenharia}
+  {Instituto Alberto Luiz Coimbra de \\
+     Pós-Graduação e Pesquisa de Engenharia}
+  {COPPE}
+% Secao 1: o logotipo da UFRJ a esquerda e o da COPPE a direita, os dois com
+% 2 cm de altura.
+\ufrjdeclarelogos[2cm]{ufrj-logo}{coppe-logo}
+% Secao 3: os treze Programas, com o nome em portugues e em ingles. O nome em
+% ingles so aparece na folha do abstract.
+\ufrjdeclareprogram{PEB} {Engenharia Biomédica}{Biomedical Engineering}
+\ufrjdeclareprogram{PEC} {Engenharia Civil}{Civil Engineering}
+\ufrjdeclareprogram{PEE} {Engenharia Elétrica}{Electrical Engineering}
+\ufrjdeclareprogram{PEM} {Engenharia Mecânica}{Mechanical Engineering}
+\ufrjdeclareprogram{PEMM}{Engenharia Metalúrgica e de Materiais}
+                          {Metallurgical and Materials Engineering}
+\ufrjdeclareprogram{PEN} {Engenharia Nuclear}{Nuclear Engineering}
+\ufrjdeclareprogram{PENO}{Engenharia Oceânica}{Ocean Engineering}
+\ufrjdeclareprogram{PENT}{Engenharia de Nanotecnologia}{Nanotechnology Engineering}
+\ufrjdeclareprogram{PEP} {Engenharia de Produção}{Production Engineering}
+\ufrjdeclareprogram{PEQ} {Engenharia Química}{Chemical Engineering}
+\ufrjdeclareprogram{PESC}{Engenharia de Sistemas e Computação}
+                          {Systems Engineering and Computer Science}
+\ufrjdeclareprogram{PET} {Engenharia de Transportes}{Transportation Engineering}
+\ufrjdeclareprogram{PPE} {Planejamento Energético}{Energy Planning}
+% Na capa, a linha do Programa e o nome oficial dele: os Programas da COPPE se
+% chamam "Programa de Engenharia Civil", e nao "Programa de Pos-Graduacao em".
+\ufrjdefunitstring{brazilian}{coverprogram}{Programa de \local@deptname}
+% A abertura da folha de resumo: a quem o trabalho foi apresentado, com a
+% contracao de cada idioma, e o nome que a COPPE da ao grau, M.Sc. e D.Sc.
+\ufrjdefunitstring{brazilian}{tounit}{à COPPE/UFRJ}
+\ufrjdefunitstring{english}  {tounit}{to COPPE/UFRJ}
+\ufrjdefunitstring{spanish}  {tounit}{a la COPPE/UFRJ}
+\ufrjdefunitstring{french}   {tounit}{à la COPPE/UFRJ}
+\ufrjdefunitstring{italian}  {tounit}{alla COPPE/UFRJ}
+\ufrjdefunitstring{brazilian}{sciencename}{em Ciências}
+\ufrjdefunitstring{english}  {sciencename}{of Science}
+\ufrjdefunitstring{spanish}  {sciencename}{en Ciencias}
+\ufrjdefunitstring{french}   {sciencename}{en Sciences}
+\ufrjdefunitstring{italian}  {sciencename}{in Scienze}
+% Secao 16: a norma que o colofao diz seguir.
+\ufrjdeclarenorm{a}{\emph{Norma para a Elaboração Gráfica de Teses e Dissertações
+  da COPPE/UFRJ}}
+% Os nomes da classe coppe, ate a v4.1. Apelidos, e nao copias: o comando e um so.
+\let\copperdefstring\ufrjdefstring
+\let\coppestring\ufrjstring
+\let\coppemainstring\ufrjmainstring
+\let\coppeforeignstring\ufrjforeignstring
+\let\usecoppelanguage\useufrjlanguage
+\let\newcoppefloat\newufrjfloat
+\let\coppetexfinalpage\ufrjfinalpage
+% As pecas do colofao existem para o autor redefinir com \renewcommand, e um
+% \renewcommand do nome velho tem de continuar mudando o colofao. Por isso o nome
+% velho guarda a peca, e o nome novo, que e o que a classe le, passa a ler o
+% velho.
+\let\coppefinalengine\ufrjfinalengine
+\def\ufrjfinalengine{\coppefinalengine}
+\let\coppefinaltexsystem\ufrjfinaltexsystem
+\def\ufrjfinaltexsystem{\coppefinaltexsystem}
+\let\coppefinalfont\ufrjfinalfont
+\def\ufrjfinalfont{\coppefinalfont}
+\let\coppefinalsystem\ufrjfinalsystem
+\def\ufrjfinalsystem{\coppefinalsystem}
+\let\coppefinaltime\ufrjfinaltime
+\def\ufrjfinaltime{\coppefinaltime}
+\let\coppefinalmanual\ufrjfinalmanual
+\def\ufrjfinalmanual{\coppefinalmanual}
+% Os auxiliares de uma compilacao feita com a classe coppe (.toc, .lab, .los,
+% .lsg, .lgs) trazem estes tres nomes internos antigos, escritos ali pela propria
+% classe. Sem os apelidos, a primeira compilacao depois da troca para com
+% "Undefined control sequence" antes de reescrever o auxiliar -- e, com
+% -halt-on-error, para de novo na seguinte, e em todas.
+\let\coppe@tocapp\ufrj@tocapp
+\let\coppe@tocanx\ufrj@tocanx
+\let\coppe@semfolio\ufrj@semfolio
+% O estilo de pagina da classe tambem se chamava coppe, e um documento pode ter
+% pedido \pagestyle{coppe} ou \thispagestyle{coppe} pelo nome.
+\def\ps@coppe{\ps@ufrj}
+% O campo que o autor preenchia a mao no .bib. O \DeclareSourcemap do biblatex
+% acumula, e nao substitui: o mapa do estilo e o de um autor que tenha o seu
+% continuam valendo.
+\DeclareSourcemap{\maps[datatype=bibtex]{\map{%
+  \step[fieldsource=coppedegree, fieldtarget=ufrjdegree]}}}
+% Legado. A folha de aprovacao anterior a v4.1 abria com a natureza em caixa alta
+% e fechava com cidade, estado, pais, mes e ano. A classe nao usa mais nenhuma
+% das duas macros; ficam definidas para quem as chamar diretamente, e ficam aqui
+% porque escrevem o nome da COPPE com todas as letras.
+\newcommand\frontpage@maintext{
+  \noindent {\MakeUppercase\local@doctype}
+  \ifthenelse{\boolean{maledoc}}{SUBMETIDO}{SUBMETIDA}
+  \sloppy\nohyphens{AO CORPO DOCENTE DO INSTITUTO ALBERTO LUIZ COIMBRA
+  DE PÓS-GRADUAÇÃO E PESQUISA DE ENGENHARIA DA
+  UNIVERSIDADE FEDERAL DO RIO DE JANEIRO COMO PARTE DOS REQUISITOS
+  NECESSÁRIOS PARA A OBTENÇÃO DO GRAU DE
+  {\MakeUppercase\local@degname} EM CIÊNCIAS EM
+  {\MakeUppercase\local@deptname.\par}}%
+}
+\newcommand\frontpage@bottomtext{%
+  \begin{center}
+  {\MakeUppercase{\local@cityname, \local@statename\ -- \local@countryname}}\par
+  {\MakeUppercase\local@monthname\ DE \ufrj@docyear}
+  \end{center}%
+}
+%</package>
+%    \end{macrocode}
+%
+% \subsection{A classe \texttt{coppe}, de compatibilidade}
+%
+% Um trabalho escrito até a versão~4.1 diz |\documentclass[...]{coppe}|. Esta
+% classe atende a esse nome: carrega a |ufrj| com as mesmas opções, carrega o
+% estilo da COPPE, e avisa. O aviso vai para o |.log| uma vez por compilação e
+% não interrompe nada; o documento sai igual ao que sairia com as duas linhas
+% trocadas.
+%
+%    \begin{macrocode}
+%<*compat>
+\NeedsTeXFormat{LaTeX2e}[2020/10/01]
+\ProvidesClass{coppe}[2026/09/15 v5.0 CoppeTeX compatibility class: ufrj with ufrj-coppe]
+\ClassWarningNoLine{coppe}{A classe coppe agora e a classe ufrj com o estilo\MessageBreak
+  ufrj-coppe. Este documento compila como esta, mas troque\MessageBreak
+  \string\documentclass[...]{coppe} por\MessageBreak
+  \string\documentclass[...]{ufrj} e acrescente\MessageBreak
+  \string\usepackage{ufrj-coppe} logo abaixo}
+\LoadClassWithOptions{ufrj}
+\RequirePackage{ufrj-coppe}
+%</compat>
+%    \end{macrocode}
+%
+% \section{Os exemplos por idioma e a montagem das capas}
+%
+% Os cinco exemplos curtos, um por idioma principal, e a folha que junta as
+% cinco capas lado a lado. Como todo exemplo da distribuição, usam o estilo
+% da COPPE. Cada um fica num bloco que o manual não compõe e que só o
+% |ufrj-coppe.ins| extrai.
+%
+% \subsubsection{\texttt{example\_pt.tex --- pt-main demo}}
+%
+% example\_pt.tex -- CoppeTeX 4.1 multilingual demo, main language: brazilian.
+% Short demonstration document (cover + folha + abstracts + 1 chapter) used
+% by the CPGP submission package. The full pt-main example with bibliography
+% and lists is max-exemplo.tex.
+%
+% \iffalse
+%<*examplept>
+\documentclass[dsc]{ufrj}
+\usepackage{ufrj-coppe}
+\addbibresource{exemplo.bib}
+\begin{document}
+  \title{Título do Trabalho}
+  \subtitle{um exemplo de uso do CoppeTeX em português}
+  \foreigntitle{Title of the Work}
+  \foreignsubtitle{an example of use of CoppeTeX in Portuguese}
+  \author{Nome do}{Autor}
+  \advisor{Primeiro}{Orientador}{D.Sc.}{UFRJ}
+  \examiner{Primeiro Examinador}{D.Sc.}{UFRJ}
+  \examiner{Segundo Examinador}{D.Sc.}{UFRJ}
+  \department{PESC}
+  \date{05}{2026}
+  \keyword{multilíngue}
+  \keyword{demonstração}
+  %% palavras-chave do resumo em idioma estrangeiro (3.1.2.1.5, Anexo F)
+  \foreignkeyword{Multilingual}
+  \foreignkeyword{Demonstration}
+  \maketitle
+  \frontmatter
+  \begin{abstract}
+    Este é o resumo principal em português, idioma escolhido por padrão
+    quando nenhuma opção de idioma é passada para a classe \texttt{ufrj}.
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+  \end{abstract}
+  \begin{foreignabstract}
+    This is the foreign abstract in English. With a Brazilian-Portuguese
+    main language, \texttt{foreignabstract} defaults to English by class
+    convention.
+  \end{foreignabstract}
+  % Listas pré-textuais: só o sumário é obrigatório (Manual 3.1.2.1.6).
+  % As listas de figuras, tabelas, abreviaturas e siglas e símbolos são
+  % opcionais (3.1.2.2); as de quadros, programas e algoritmos entram quando
+  % o trabalho tem um deles (Norma COPPE, §10). Esta demonstração não tem
+  % ilustrações, por isso só imprime o sumário.
+  \tableofcontents
+  \mainmatter
+  \chapter{Introdução}
+  Este capítulo demonstra que o corpo do trabalho é composto em português,
+  com legendas, citações e referências automaticamente em português.
+  \section{O arquivo de depósito: PDF/A}
+  O depósito na UFRJ é exclusivamente digital desde a Resolução CEPG
+  n.~246/2023, e o Manual (2.2d) exige o arquivo final em \textbf{PDF/A}, o
+  formato de arquivamento de longo prazo. PDF/A é o PDF restrito pela norma
+  ISO~19005 para preservação: todas as fontes vão embutidas, as cores declaram
+  um perfil (sRGB) que as torna independentes do equipamento, os metadados vão
+  num bloco XMP que os repositórios leem, e nada depende de fora --- sem
+  conteúdo externo, JavaScript ou criptografia. Assim o arquivo abre igual daqui
+  a décadas, em qualquer computador.
+
+  A classe usa a variante \textbf{PDF/A-2b}: a parte 2 admite transparência,
+  que a parte 1 proíbe e que caixas coloridas e gráficos produzem, e o nível
+  \emph{b} garante a reprodução visual fiel. Não é preciso pedir: a classe
+  carrega o \texttt{pdfx}, monta os metadados a partir do título, do autor e
+  das palavras-chave, e embute o perfil de cor em todo documento. A opção
+  \texttt{sempdfa} desliga, para um rascunho ou para um pacote que o PDF/A não
+  aceite; se você desligar, lembre que um PDF ou uma imagem incluídos fora da
+  norma aparecem no dia em que entram, e não na véspera do depósito. Para conferir, use o validador veraPDF, perfil PDF/A-2b.
+
+  \section{Fluxos de escrita}
+  O \hologo{pdfLaTeX} mantém no máximo dezesseis arquivos abertos para escrita,
+  e cada lista, índice ou glossário ocupa um. Por isso a classe carrega o
+  \texttt{morewrites}. A opção \texttt{semmorewrites} o desliga e poupa cerca de
+  meio segundo por passada, mas só serve a trabalho sem índice remissivo, sem
+  vários índices e sem glossário.
+\end{document}
+%</examplept>
+% \fi
+%
+% \subsubsection{\texttt{example\_en.tex --- en-main demo}}
+%
+% example\_en.tex -- CoppeTeX 4.1 multilingual demo, main language: english.
+%
+% \iffalse
+%<*exampleen>
+\documentclass[english,dsc]{ufrj}
+\usepackage{ufrj-coppe}
+\addbibresource{exemplo.bib}
+\begin{document}
+  \title{Título do Trabalho}
+  \subtitle{um exemplo de uso do CoppeTeX em inglês}
+  \foreigntitle{Title of the Work}
+  \foreignsubtitle{an example of use of CoppeTeX in English}
+  \author{Author's}{Name}
+  \advisor{First}{Advisor}{D.Sc.}{UFRJ}
+  \examiner{First Examiner}{D.Sc.}{UFRJ}
+  \examiner{Second Examiner}{D.Sc.}{UFRJ}
+  \department{PESC}
+  \date{05}{2026}
+  \keyword{Multilingual}
+  \keyword{Demonstration}
+  %% palavras-chave do resumo em idioma estrangeiro (3.1.2.1.5, Anexo F)
+  \foreignkeyword{multilíngue}
+  \foreignkeyword{demonstração}
+  \maketitle
+  \frontmatter
+  \begin{abstract}
+    This is the main abstract in English, used when the class is loaded
+    with the \texttt{english} option. Lorem ipsum dolor sit amet,
+    consectetur adipiscing elit.
+  \end{abstract}
+  \begin{foreignabstract}
+    Este é o resumo em língua estrangeira, que aqui é o português. Quem o
+    produz é o ambiente \texttt{foreignabstract}, quando o idioma principal
+    do trabalho é o inglês.
+  \end{foreignabstract}
+  % Front-matter lists: only the table of contents is mandatory (UFRJ
+  % Manual 3.1.2.1.6). The lists of figures, tables, abbreviations and
+  % symbols are optional (3.1.2.2); the lists of quadros, programs and
+  % algorithms appear when the work has one (COPPE norm, §10). This demo
+  % has no illustrations, so it prints only the table of contents.
+  \tableofcontents
+  \mainmatter
+  \chapter{Introduction}
+  This chapter shows that the body is composed in English while the
+  cover and folha-de-rosto remain in Portuguese (the UFRJ institutional
+  template).
+  \section{The deposit file: PDF/A}
+  Deposit at UFRJ has been digital only since CEPG Resolution 246/2023, and the
+  UFRJ Manual (2.2d) requires the final file in \textbf{PDF/A}, the long-term
+  archiving format. PDF/A is PDF restricted by ISO~19005 for preservation: every
+  font is embedded, colours declare a profile (sRGB) that makes them device
+  independent, metadata go in an XMP packet that repositories read, and nothing
+  depends on the outside --- no external content, JavaScript or encryption. The
+  file then opens the same way decades from now, on any computer.
+
+  The class uses \textbf{PDF/A-2b}: part 2 allows transparency, which part 1
+  forbids and which coloured boxes and graphics often produce, and level
+  \emph{b} guarantees faithful visual reproduction. The \texttt{pdfa} option in
+  \verb|\documentclass[english,dsc,pdfa]{ufrj}| is all it takes: the class
+  loads \texttt{pdfx}, builds the metadata from the title, author and keywords,
+  and embeds the colour profile. Turn it on early, as \texttt{max-exemplo.tex}
+  does: a non-conforming PDF or image shows up the day it is added, not the day
+  before the deposit. To check, use the veraPDF validator, PDF/A-2b profile.
+
+  \section{Write streams}
+  pdf\LaTeX{} keeps at most sixteen files open for writing, and each list,
+  index or glossary takes one. That is why the class loads
+  \texttt{morewrites}. The \texttt{semmorewrites} option turns it off and saves
+  about half a second per pass, but only suits a work with no index, no
+  multiple indexes and no glossary.
+\end{document}
+%</exampleen>
+% \fi
+%
+% \subsubsection{\texttt{example\_es.tex --- es-main demo}}
+%
+% example\_es.tex -- CoppeTeX 4.1 multilingual demo, main language: spanish.
+% Requires the language pack files ufrj-lang-spanish.def and
+% spanish-ufrj.lbx to be installed alongside ufrj.cls.
+%
+% \iffalse
+%<*examplees>
+\documentclass[spanish,dsc]{ufrj}
+\usepackage{ufrj-coppe}
+\addbibresource{exemplo.bib}
+\begin{document}
+  \title{Título do Trabalho}
+  \subtitle{um exemplo de uso do CoppeTeX em espanhol}
+  \foreigntitle{Title of the Work}
+  \foreignsubtitle{an example of use of CoppeTeX in Spanish}
+  \titlein{spanish}{Título del Trabajo}
+  \subtitlein{spanish}{un ejemplo de uso de CoppeTeX en español}
+  \author{Nombre del}{Autor}
+  \advisor{Primer}{Director}{D.Sc.}{UFRJ}
+  \examiner{Primer Examinador}{D.Sc.}{UFRJ}
+  \examiner{Segundo Examinador}{D.Sc.}{UFRJ}
+  \department{PESC}
+  \date{05}{2026}
+  \keyword{Multilenguaje}
+  \keyword{Demostración}
+  %% palavras-chave do resumo em idioma estrangeiro (3.1.2.1.5, Anexo F)
+  \foreignkeyword{Multilingual}
+  \foreignkeyword{Demonstration}
+  %% palavras-chave do terceiro resumo, em português (Norma COPPE, secao 3)
+  \braziliankeyword{multilíngue}
+  \braziliankeyword{demonstração}
+  \maketitle
+  \frontmatter
+  \begin{abstract}
+    Este es el resumen principal en español. La tesis está escrita
+    en español como idioma principal, con la portada conservada en
+    portugués por convención institucional de la UFRJ. Lorem ipsum
+    dolor sit amet, consectetur adipiscing elit.
+  \end{abstract}
+  \begin{foreignabstract}
+    This is the English foreign abstract. Mandatory in CoppeTeX whichever
+    the main language is, for international readability.
+  \end{foreignabstract}
+  \begin{brazilianabstract}
+    Este é o resumo em português, oferecido pelo ambiente
+    \texttt{brazilianabstract} para a leitura da banca brasileira quando o
+    idioma principal não é o português.
+  \end{brazilianabstract}
+  % Listas pretextuales: solo el sumario es obligatorio (Manual UFRJ
+  % 3.1.2.1.6). Las listas de figuras, tablas, abreviaturas y símbolos son
+  % opcionales (3.1.2.2); las de cuadros, programas y algoritmos aparecen
+  % cuando el trabajo tiene uno (Norma COPPE, §10). Esta demostración no
+  % tiene ilustraciones, por eso solo imprime el sumario.
+  \tableofcontents
+  \mainmatter
+  \chapter{Introducción}
+  Este capítulo demuestra el cuerpo en español, mientras la portada
+  y la folha-de-rosto permanecen en portugués (plantilla institucional
+  UFRJ).
+  \section{El archivo de depósito: PDF/A}
+  El depósito en la UFRJ es exclusivamente digital desde la Resolución CEPG
+  n.~246/2023, y el Manual de la UFRJ (2.2d) exige el archivo final en
+  \textbf{PDF/A}, el formato de archivo a largo plazo. PDF/A es el PDF
+  restringido por la norma ISO~19005 para la preservación: todas las fuentes van
+  incrustadas, los colores declaran un perfil (sRGB) que los hace independientes
+  del equipo, los metadatos van en un bloque XMP que los repositorios leen, y
+  nada depende del exterior --- sin contenido externo, JavaScript ni cifrado.
+  Así el archivo se abre igual dentro de décadas, en cualquier computadora.
+
+  La clase usa la variante \textbf{PDF/A-2b}: la parte 2 admite transparencia,
+  que la parte 1 prohíbe y que producen las cajas de color y los gráficos, y el
+  nivel \emph{b} garantiza la reproducción visual fiel. Basta la opción
+  \texttt{pdfa} en \verb|\documentclass[spanish,dsc,pdfa]{ufrj}|: la clase carga
+  \texttt{pdfx}, arma los metadatos a partir del título, el autor y las palabras
+  clave, e incrusta el perfil de color. Actívela temprano, como hace
+  \texttt{max-exemplo.tex}: un PDF o una imagen fuera de la norma aparecen el día en
+  que entran, y no la víspera del depósito. Para verificar, use el validador
+  veraPDF, perfil PDF/A-2b.
+
+  \section{Flujos de escritura}
+  pdf\LaTeX{} mantiene como máximo dieciséis archivos abiertos para escritura,
+  y cada lista, índice o glosario ocupa uno. Por eso la clase carga
+  \texttt{morewrites}. La opción \texttt{semmorewrites} lo desactiva y ahorra
+  cerca de medio segundo por pasada, pero solo sirve para un trabajo sin índice
+  alfabético, sin varios índices y sin glosario.
+\end{document}
+%</examplees>
+% \fi
+%
+% \subsubsection{\texttt{example\_fr.tex --- fr-main demo}}
+%
+% example\_fr.tex -- CoppeTeX 4.1 multilingual demo, main language: french.
+% Requires the language pack files ufrj-lang-french.def and
+% french-ufrj.lbx to be installed alongside ufrj.cls.
+%
+% \iffalse
+%<*examplefr>
+\documentclass[french,dsc]{ufrj}
+\usepackage{ufrj-coppe}
+\addbibresource{exemplo.bib}
+\begin{document}
+  \title{Título do Trabalho}
+  \subtitle{um exemplo de uso do CoppeTeX em francês}
+  \foreigntitle{Title of the Work}
+  \foreignsubtitle{an example of use of CoppeTeX in French}
+  \titlein{french}{Titre du Travail}
+  \subtitlein{french}{un exemple d'utilisation de CoppeTeX en français}
+  \author{Prénom de}{l'Auteur}
+  \advisor{Premier}{Directeur}{D.Sc.}{UFRJ}
+  \examiner{Premier Examinateur}{D.Sc.}{UFRJ}
+  \examiner{Deuxième Examinateur}{D.Sc.}{UFRJ}
+  \department{PESC}
+  \date{05}{2026}
+  \keyword{Multilingue}
+  \keyword{Démonstration}
+  %% palavras-chave do resumo em idioma estrangeiro (3.1.2.1.5, Anexo F)
+  \foreignkeyword{Multilingual}
+  \foreignkeyword{Demonstration}
+  %% palavras-chave do terceiro resumo, em português (Norma COPPE, secao 3)
+  \braziliankeyword{multilíngue}
+  \braziliankeyword{demonstração}
+  \maketitle
+  \frontmatter
+  \begin{abstract}
+    Ceci est le résumé principal en français. La thèse est
+    rédigée en français comme langue principale, avec la
+    couverture conservée en portugais selon la convention
+    institutionnelle de l'UFRJ. Lorem ipsum dolor sit amet, consectetur
+    adipiscing elit.
+  \end{abstract}
+  \begin{foreignabstract}
+    This is the English foreign abstract. Required in CoppeTeX whichever
+    the main language is, for international readability.
+  \end{foreignabstract}
+  \begin{brazilianabstract}
+    Este é o resumo em português, oferecido pelo ambiente
+    \texttt{brazilianabstract} para a leitura da banca brasileira quando
+    o idioma principal não é o português.
+  \end{brazilianabstract}
+  % Listes pré-textuelles : seule la table des matières est obligatoire
+  % (Manuel UFRJ 3.1.2.1.6). Les listes des figures, des tableaux, des
+  % abréviations et des symboles sont facultatives (3.1.2.2) ; celles des
+  % quadros, programmes et algorithmes apparaissent quand le travail en
+  % contient (norme COPPE, §10). Cette démonstration n'imprime que la table.
+  \tableofcontents
+  \mainmatter
+  \chapter{Introduction}
+  Ce chapitre démontre le corps rédigé en français, tandis que
+  la couverture et la folha-de-rosto restent en portugais (modèle
+  institutionnel UFRJ).
+  \section{Le fichier de dépôt : PDF/A}
+  Le dépôt à l'UFRJ est exclusivement numérique depuis la résolution CEPG
+  n.~246/2023, et le Manuel de l'UFRJ (2.2d) exige le fichier final en
+  \textbf{PDF/A}, le format d'archivage à long terme. Le PDF/A est le PDF
+  restreint par la norme ISO~19005 pour la conservation : toutes les polices
+  sont incorporées, les couleurs déclarent un profil (sRGB) qui les rend
+  indépendantes du matériel, les métadonnées sont dans un bloc XMP que lisent
+  les dépôts, et rien ne dépend de l'extérieur --- ni contenu externe, ni
+  JavaScript, ni chiffrement. Le fichier s'ouvre ainsi de la même façon dans
+  plusieurs décennies, sur n'importe quel ordinateur.
+
+  La classe utilise le \textbf{PDF/A-2b} : la partie 2 admet la transparence,
+  que la partie 1 interdit et que produisent souvent les boîtes colorées et les
+  graphiques, et le niveau \emph{b} garantit une reproduction visuelle fidèle.
+  L'option \texttt{pdfa} suffit : la classe charge \texttt{pdfx}, construit les
+  métadonnées à partir du titre, de l'auteur et des mots-clés, et incorpore le
+  profil de couleur. Activez-la tôt, comme le fait \texttt{max-exemplo.tex}. Pour
+  vérifier, utilisez le validateur veraPDF, profil PDF/A-2b. Le français n'est
+  pas une langue de rédaction admise pour une thèse de la COPPE (résolution
+  CEPG n.~302/2024, art.~57) : ce document ne fait que démontrer le mécanisme.
+
+  \section{Flux d'écriture}
+  pdf\LaTeX{} garde au plus seize fichiers ouverts en écriture, et chaque liste,
+  index ou glossaire en occupe un. C'est pourquoi la classe charge
+  \texttt{morewrites}. L'option \texttt{semmorewrites} le désactive et gagne
+  environ une demi-seconde par passe, mais seulement pour un travail sans index,
+  sans index multiples et sans glossaire.
+\end{document}
+%</examplefr>
+% \fi
+%
+% \subsubsection{\texttt{example\_it.tex --- it-main demo}}
+%
+% example\_it.tex -- CoppeTeX 4.1 multilingual demo, main language: italian.
+% Requires the language pack files ufrj-lang-italian.def and
+% italian-ufrj.lbx to be installed alongside ufrj.cls.
+%
+% \iffalse
+%<*exampleit>
+\documentclass[italian,dsc]{ufrj}
+\usepackage{ufrj-coppe}
+\addbibresource{exemplo.bib}
+\begin{document}
+  \title{Título do Trabalho}
+  \subtitle{um exemplo de uso do CoppeTeX em italiano}
+  \foreigntitle{Title of the Work}
+  \foreignsubtitle{an example of use of CoppeTeX in Italian}
+  \titlein{italian}{Titolo del Lavoro}
+  \subtitlein{italian}{un esempio d'uso di CoppeTeX in italiano}
+  \author{Nome dell'}{Autore}
+  \advisor{Primo}{Relatore}{D.Sc.}{UFRJ}
+  \examiner{Primo Esaminatore}{D.Sc.}{UFRJ}
+  \examiner{Secondo Esaminatore}{D.Sc.}{UFRJ}
+  \department{PESC}
+  \date{05}{2026}
+  \keyword{Multilingue}
+  \keyword{Dimostrazione}
+  %% palavras-chave do resumo em idioma estrangeiro (3.1.2.1.5, Anexo F)
+  \foreignkeyword{Multilingual}
+  \foreignkeyword{Demonstration}
+  %% palavras-chave do terceiro resumo, em português (Norma COPPE, secao 3)
+  \braziliankeyword{multilíngue}
+  \braziliankeyword{demonstração}
+  \maketitle
+  \frontmatter
+  \begin{abstract}
+    Questo è il riassunto principale in italiano. La tesi è redatta
+    in italiano come lingua principale, con la copertina conservata in
+    portoghese per convenzione istituzionale dell'UFRJ. Lorem ipsum dolor
+    sit amet, consectetur adipiscing elit.
+  \end{abstract}
+  \begin{foreignabstract}
+    This is the English foreign abstract. Required in CoppeTeX whichever
+    the main language is, for international readability.
+  \end{foreignabstract}
+  \begin{brazilianabstract}
+    Este é o resumo em português, oferecido pelo ambiente
+    \texttt{brazilianabstract} para a leitura da banca brasileira quando
+    o idioma principal não é o português.
+  \end{brazilianabstract}
+  % Elenchi pre-testuali: solo l'indice generale è obbligatorio (Manuale
+  % UFRJ 3.1.2.1.6). Gli elenchi di figure, tabelle, abbreviazioni e simboli
+  % sono facoltativi (3.1.2.2); quelli di quadros, programmi e algoritmi
+  % compaiono quando il lavoro ne contiene (norma COPPE, §10). Questa
+  % dimostrazione stampa solo l'indice.
+  \tableofcontents
+  \mainmatter
+  \chapter{Introduzione}
+  Questo capitolo dimostra il corpo redatto in italiano, mentre la
+  copertina e la folha-de-rosto rimangono in portoghese (modello
+  istituzionale UFRJ).
+  \section{Il file di deposito: PDF/A}
+  Il deposito all'UFRJ è esclusivamente digitale dalla risoluzione CEPG
+  n.~246/2023, e il Manuale dell'UFRJ (2.2d) richiede il file finale in
+  \textbf{PDF/A}, il formato di archiviazione a lungo termine. Il PDF/A è il PDF
+  ristretto dalla norma ISO~19005 per la conservazione: tutti i font sono
+  incorporati, i colori dichiarano un profilo (sRGB) che li rende indipendenti
+  dal dispositivo, i metadati stanno in un blocco XMP letto dai repository, e
+  nulla dipende dall'esterno --- niente contenuti esterni, JavaScript o
+  cifratura. Così il file si apre allo stesso modo tra decenni, su qualsiasi
+  computer.
+
+  La classe usa il \textbf{PDF/A-2b}: la parte 2 ammette la trasparenza, che la
+  parte 1 vieta e che riquadri colorati e grafici producono spesso, e il livello
+  \emph{b} garantisce una riproduzione visiva fedele. Basta l'opzione
+  \texttt{pdfa}: la classe carica \texttt{pdfx}, costruisce i metadati da
+  titolo, autore e parole chiave, e incorpora il profilo colore. Attivatela
+  presto, come fa \texttt{max-exemplo.tex}. Per verificare, usate il validatore
+  veraPDF, profilo PDF/A-2b. L'italiano non è una lingua ammessa per una tesi
+  della COPPE (risoluzione CEPG n.~302/2024, art.~57): questo documento
+  dimostra soltanto il meccanismo.
+
+  \section{Flussi di scrittura}
+  pdf\LaTeX{} tiene al massimo sedici file aperti in scrittura, e ogni elenco,
+  indice o glossario ne occupa uno. Per questo la classe carica
+  \texttt{morewrites}. L'opzione \texttt{semmorewrites} lo disattiva e fa
+  risparmiare circa mezzo secondo per passata, ma solo per un lavoro senza
+  indice analitico, senza più indici e senza glossario.
+\end{document}
+%</exampleit>
+% \fi
+%
+% \subsubsection{\texttt{covers\_5languages.tex --- the five covers side by side}}
+%
+% covers\_5languages.tex -- One-page visual demonstration of the CoppeTeX 4.1
+% multilingual model: the five built-in main languages side by side, all
+% sharing the same Portuguese institutional template, differing only in
+% the title (and the body language, not visible on the cover).
+% 
+% This file uses the article class deliberately -- it is a meta-document
+% about the ufrj class, not a thesis. It expects the five cover PNGs
+% cover\_pt.png, cover\_en.png, cover\_es.png, cover\_fr.png,
+% cover\_it.png to live in the same directory (generated by pdftoppm
+% from the example\_<lang>.pdf demos).
+%
+% \iffalse
+%<*covers>
+\documentclass[a4paper,landscape,10pt]{article}
+\usepackage[margin=1cm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{caption}
+\captionsetup{font=small,labelfont=bf}
+\pagestyle{empty}
+\begin{document}
+\begin{center}
+  {\Large\bfseries CoppeTeX 4.1 -- modelo multilíngue\par}
+  \vspace{1mm}
+  {\small As cinco línguas principais embutidas, com a mesma identidade institucional UFRJ/COPPE.\par}
+\end{center}
+\vspace{2mm}
+\noindent
+\begin{minipage}[t]{0.195\linewidth}\centering
+  \includegraphics[width=\linewidth]{cover_pt.png}\\[1mm]
+  \textbf{brazilian}\\[-0.2em]
+  {\scriptsize \texttt{\textbackslash documentclass[dsc]\{ufrj\}}}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.195\linewidth}\centering
+  \includegraphics[width=\linewidth]{cover_en.png}\\[1mm]
+  \textbf{english}\\[-0.2em]
+  {\scriptsize \texttt{[english,dsc]}}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.195\linewidth}\centering
+  \includegraphics[width=\linewidth]{cover_es.png}\\[1mm]
+  \textbf{spanish}\\[-0.2em]
+  {\scriptsize \texttt{[spanish,dsc]}}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.195\linewidth}\centering
+  \includegraphics[width=\linewidth]{cover_fr.png}\\[1mm]
+  \textbf{french}\\[-0.2em]
+  {\scriptsize \texttt{[french,dsc]}}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.195\linewidth}\centering
+  \includegraphics[width=\linewidth]{cover_it.png}\\[1mm]
+  \textbf{italian}\\[-0.2em]
+  {\scriptsize \texttt{[italian,dsc]}}
+\end{minipage}
+
+\vfill
+\noindent\footnotesize
+\textbf{Observe que:} (1) o bloco institucional no topo
+(\emph{Universidade Federal do Rio de Janeiro}, \emph{Instituto Alberto
+Luiz Coimbra de Pós-Graduação e Pesquisa de Engenharia (COPPE)},
+\emph{Programa de Engenharia de Sistemas e Computação}) permanece em
+português em todas as capas, por se tratar de identidade institucional
+da UFRJ;
+(2) o título do trabalho acompanha o idioma principal escolhido na opção
+da classe;
+(3) a cidade e o ano no rodapé também ficam em português.
+
+\hfill\textit{Imagens geradas a partir dos arquivos \texttt{example\_\{pt,en,es,fr,it\}.tex} em \texttt{dist/}.}
+\end{document}
+%</covers>
+% \fi
+%
+% \Finale
+% \clearpage
+% \PrintChanges
+% \clearpage
+% \PrintIndex
+\endinput

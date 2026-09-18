@@ -15,10 +15,9 @@
 %% License version 3 (see the COPYING.txt file).
 %% 
 @Comment{ exemplo.bib -- a base dos exemplos (min-exemplo.tex, max-exemplo.tex e
-  os exemplos por idioma). Primeira parte: entradas de demonstracao, muitas com
-  os sinonimos em portugues dos campos e tipos (autor, titulo, editora, local,
-  ano, organizador, ...). Segunda parte, mais abaixo: uma entrada de cada
-  categoria da secao 4.2 do Manual. }
+  os exemplos por idioma). Primeira parte: entradas de demonstracao. Segunda
+  parte, mais abaixo: uma entrada de cada categoria da secao 4.2 do Manual.
+  Todas usam os nomes de tipo e campo em ingles, os do biblatex. }
 
 @BOOK{book-example,
    author = "R. Abraham and J. E. Marsden and T. Ratiu",
@@ -148,13 +147,6 @@
    year = 1998,
 }
 
-@standard{norma-example,
-   author = "{Associação Brasileira de Normas Técnicas}",
-   title = "{NBR} 6023: informação e documentação: referências: elaboração",
-   location = "Rio de Janeiro",
-   year = 2018,
-}
-
 @map{mapa-example,
    author = "{Instituto Brasileiro de Geografia e Estatística}",
    title = "Mapa político do Brasil",
@@ -181,18 +173,9 @@
    year = 2019,
 }
 
-@Comment{ Artigo/materia de jornal (NBR 6023 4.2.3.6). Com caderno/secao: a
-  data precede o caderno e a pagina vem por ultimo. }
-@article{jornalcaderno-example,
-   author = "J. Byrne",
-   title = "A explosão de cursos para executivos nos EUA",
-   journaltitle = "Gazeta Mercantil",
-   location = "São Paulo",
-   date = "1992-02-04",
-   newspapersection = "Administração e Serviços",
-   pages = "28",
-  entrysubtype = {newspaper},
-}
+@Comment{ Artigo/materia de jornal com caderno/secao (NBR 6023 4.2.3.6): a data
+  precede o caderno e a pagina vem por ultimo. O exemplo e a m-4236, do
+  gabarito do Manual, mais abaixo. }
 
 @Comment{ Artigo de jornal sem caderno/secao: a paginacao precede a data. }
 @article{jornal-example,
@@ -208,7 +191,7 @@
 @Comment{ Jurisprudencia / decisao judicial (NBR 6023 4.2.6.2): jurisdicao +
   orgao (autor, CAIXA ALTA), titulo da decisao, Relator, local e data. }
 @jurisdiction{jurisprudencia-example,
-   author = "{Brasil. Supremo Tribunal Federal}",
+   author = "{BRASIL. Supremo Tribunal Federal}",
    title = "Habeas Corpus 12.345",
    relator = "Min. Fulano de Tal",
    location = "Brasília, DF",
@@ -227,10 +210,10 @@
 @manual{manualbib,
    editor = "Sousa, Amanda Moura de and Oliveira, Lidia da Costa and Arias, Luiza Coutinho",
    title = "Manual para elaboração e normalização de trabalhos acadêmicos",
-   edition = 9,
+   edition = "9. ed. rev.",
    publisher = "UFRJ/SiBI",
    location = "Rio de Janeiro",
-   date = 2025,
+   date = 2026,
    pagetotal = 121,
    url = "https://drive.google.com/file/d/1IfNy51_qMf8cXEabOlm1U6zMXcH10FWL/view",
    urldate = "2026-05-30",
