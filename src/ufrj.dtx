@@ -184,6 +184,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \changes{v5.0}{2026/09/15}{COPPE is the unit style ufrj-coppe, with its own source (ufrj-coppe.dtx and ufrj-coppe.ins), its own manual (ufrj-coppe.pdf) and every example document, which all load it. A work begun with the class coppe compiles as it is: coppe.cls is now a compatibility class that loads ufrj with the same options, loads ufrj-coppe and writes one warning, and the style keeps the old public names as aliases, the old colophon pieces answering renewcommand by the old name, the three internal names that auxiliary files written by the old class contain, the page style coppe and the bib field coppedegree.}
 % \changes{v5.0}{2026/09/15}{The colophon names the class and the project apart -- Foi utilizada a classe ufrj, do projeto CoppeTeX -- where it said a classe CoppeTeX, which is the name of the project and not of a class. The norm it cites is the one the unit declares with ufrjdeclarenorm, and the UFRJ/SiBI Manual when no unit declares one.}
 % \changes{v5.0}{2026/09/15}{The documentation follows the split: this manual (ufrj.pdf) describes the class and the interface a unit style uses; ufrj-coppe.pdf describes only what COPPE declares; manual.pdf, the norm, is written for UFRJ with COPPE as the example; and the migration guide from 4.x to 5.0 tells the author of a work begun with the class coppe what to change.}
+% \changes{v5.0}{2026/09/17}{Book and report follow the ABNT order: the edition as number, full stop and abbreviation (3. ed.), the volumes in the physical description after the imprint (2 v.), and the series at the end in parentheses with a comma before its number -- (Colecao Saber, 13) -- per 4.3.4, 4.3.6.1 and 4.3.7. biblatex's drivers put volumes and series before the imprint, and brazilian.lbx wrote the edition as an ordinal.}
 % \changes{v5.0}{2026/09/17}{The translator is written in direct order after the title -- Traducao de Julia Almeida -- and the original title closes the reference in a note, Traducao de: <origtitle> (4.3.2.10, 4.3.8.1). The translator took the author's name format, inverted and in capitals, and no driver printed origtitle.}
 % \changes{v5.0}{2026/09/17}{The DOI reads DOI: https://doi.org/<doi>, as the examples of 4.2.3.5 and 4.2.4.3 show; biblatex set the acronym in small caps, which Latin Modern Sans lacks, and printed the bare identifier.}
 % \changes{v5.0}{2026/09/17}{Numeric system: citations in parentheses -- (1, p. 30) -- and list labels without brackets, as 4.1.1.1.1 gives the number either in parentheses or superscript; and a warning, once, when a document under numbers has a footnote, which the same section forbids.}
@@ -8561,6 +8562,122 @@ postamble
   \usebibmacro{url+urldate}%
   \usebibmacro{finentry}}
 
+% --- Livro e relatorio (#133). A ordem da ABNT e: responsabilidade. titulo.
+%     edicao. Local: Editora, data. descricao fisica (paginas ou volumes).
+%     (Serie, numero). notas. Os drivers book e report do biblatex poem os
+%     volumes e a serie ANTES da imprenta; estes sao os deles, reordenados.
+%     A 4.3.4 escreve a edicao como numero, ponto e abreviatura ("2. ed.
+%     rev."), e o brazilian.lbx a compunha como ordinal ("3ª ed."); um valor
+%     que nao e numero -- "2. ed. rev." -- sai como foi digitado. A 4.3.6.1 poe
+%     o numero de volumes na descricao fisica ("5 v."). A 4.3.7 poe a serie
+%     "apos todas as indicacoes da descricao fisica [...] entre parenteses",
+%     com a numeracao "separada por virgula": "(Colecao Saber, 13)".
+\DeclareFieldFormat{edition}{%
+  \ifinteger{#1}
+    {#1\adddot\addnbspace\bibstring{edition}}
+    {#1\isdot}}
+\DeclareFieldFormat{volumes}{#1\addnbspace\bibstring{volumes}}
+\newbibmacro*{ufrj:series+number}{%
+  \iffieldundef{series}
+    {}
+    {\printtext[parens]{%
+       \printfield{series}%
+       \setunit*{\addcomma\space}%
+       \printfield{number}}}}
+\DeclareBibliographyDriver{book}{%
+  \usebibmacro{bibindex}%
+  \usebibmacro{begentry}%
+  \usebibmacro{author/editor+others/translator+others}%
+  \setunit{\printdelim{nametitledelim}}\newblock
+  \usebibmacro{maintitle+title}%
+  \newunit
+  \printlist{language}%
+  \newunit\newblock
+  \usebibmacro{byauthor}%
+  \newunit\newblock
+  \usebibmacro{byeditor+others}%
+  \newunit\newblock
+  \printfield{edition}%
+  \newunit
+  \iffieldundef{maintitle}
+    {\printfield{volume}%
+     \printfield{part}}
+    {}%
+  \newunit\newblock
+  \usebibmacro{publisher+location+date}%
+  \newunit\newblock
+  \usebibmacro{chapter+pages}%
+  \newunit
+  \printfield{pagetotal}%
+  \newunit
+  \printfield{volumes}%
+  \newunit\newblock
+  \usebibmacro{ufrj:series+number}%
+  \newunit\newblock
+  \printfield{note}%
+  \newunit\newblock
+  \iftoggle{bbx:isbn}
+    {\printfield{isbn}}
+    {}%
+  \newunit\newblock
+  \usebibmacro{doi+eprint+url}%
+  \newunit\newblock
+  \usebibmacro{addendum+pubstate}%
+  \setunit{\bibpagerefpunct}\newblock
+  \usebibmacro{pageref}%
+  \newunit\newblock
+  \iftoggle{bbx:related}
+    {\usebibmacro{related:init}%
+     \usebibmacro{related}}
+    {}%
+  \usebibmacro{finentry}}
+% No relatorio, o numero vai com a serie quando ha serie -- "(Relatorios
+% Tecnicos, 12)" --, e com o tipo quando nao ha.
+\DeclareBibliographyDriver{report}{%
+  \usebibmacro{bibindex}%
+  \usebibmacro{begentry}%
+  \usebibmacro{author}%
+  \setunit{\printdelim{nametitledelim}}\newblock
+  \usebibmacro{title}%
+  \newunit
+  \printlist{language}%
+  \newunit\newblock
+  \usebibmacro{byauthor}%
+  \newunit\newblock
+  \printfield{type}%
+  \iffieldundef{series}
+    {\setunit*{\addspace}%
+     \printfield{number}}
+    {}%
+  \newunit\newblock
+  \printfield{version}%
+  \newunit\newblock
+  \usebibmacro{institution+location+date}%
+  \newunit\newblock
+  \usebibmacro{chapter+pages}%
+  \newunit
+  \printfield{pagetotal}%
+  \newunit\newblock
+  \usebibmacro{ufrj:series+number}%
+  \newunit\newblock
+  \printfield{note}%
+  \newunit\newblock
+  \iftoggle{bbx:isbn}
+    {\printfield{isrn}}
+    {}%
+  \newunit\newblock
+  \usebibmacro{doi+eprint+url}%
+  \newunit\newblock
+  \usebibmacro{addendum+pubstate}%
+  \setunit{\bibpagerefpunct}\newblock
+  \usebibmacro{pageref}%
+  \newunit\newblock
+  \iftoggle{bbx:related}
+    {\usebibmacro{related:init}%
+     \usebibmacro{related}}
+    {}%
+  \usebibmacro{finentry}}
+
 % --- incollection: ABNT puts the host organizer before the booktitle, as
 %     "AUTOR. Parte. In: ORGANIZADOR (Org.). Booktitle. Local: Editora, ano,
 %     p. X-Y." The organizer role string is "Org./Orgs." (see the .lbx). ---
@@ -9053,6 +9170,9 @@ postamble
   inherit       = {brazilian},
   ufrjtranslationof = {{Tradução de}{Tradução de}},
   bytranslator  = {{Tradução de}{Tradução de}},
+% A 4.3.4 e a 4.3.6.1 abreviam sempre: "3. ed.", "5 v.".
+  edition       = {{ed\adddot}{ed\adddot}},
+  volumes       = {{v\adddot}{v\adddot}},
   andothers     = {{\mkbibemph{et al\adddot}}{\mkbibemph{et al\adddot}}},
   availablefrom = {{Disponível em}{Disponível em}},
   ufrjmscdeg   = {{Mestrado}{Mestrado}},

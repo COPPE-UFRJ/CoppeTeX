@@ -167,6 +167,15 @@ run it, and the fix removes the mark.
 
 ### Fixed
 
+- **Book and report in the ABNT order** (#133): the edition as number, full
+  stop and abbreviation ("3. ed.", 4.3.4; a literal such as "2. ed. rev." is
+  printed as typed), the number of volumes in the physical description after
+  the imprint ("2 v.", 4.3.6.1), and the series at the end, in parentheses,
+  with a comma before its number ("(Coleção Saber, 13)", 4.3.7). The class used
+  biblatex's `book` and `report` drivers, which put volumes and series before
+  the imprint, and `brazilian.lbx` wrote the edition as an ordinal ("3ª ed.").
+  The two drivers are biblatex's own, reordered; in a report the number goes
+  with the series when there is one, and with the type otherwise.
 - **The translator in direct order, and the original title in a note**
   (#135). 4.3.2.10 transcribes other responsibilities after the title as the
   title page has them — "Tradução Ruth Rocha", "Tradução de Aurélio Buarque de

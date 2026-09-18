@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
-"""Teste de conformidade da CoppeTeX. NAO roda na suite normal.
+"""Teste de conformidade da CoppeTeX.
 
 BUG: (desconformidade, 4.3.4, 4.3.6.1 e 4.3.7) no livro (e no relatorio), o campo edition numerico saia como ordinal ("3ª ed."), volumes saia como "2 vol." ANTES da imprenta, e a serie saia antes da imprenta, sem parenteses e sem virgula antes do numero (#133).
-ABERTO: #133
 
 Pelo Manual UFRJ/SiBI: a edicao e o numero seguido de ponto e da abreviatura
 ("3. ed.", 4.3.4); o numero de volumes vai na descricao fisica, depois da
