@@ -167,6 +167,14 @@ run it, and the fix removes the mark.
 
 ### Fixed
 
+- **The list of references is aligned to the left margin only** (#118). 4.2:
+  "as referências são alinhadas somente à margem esquerda (não utilize o
+  recurso justificar do editor do texto), possibilitando a identificação de
+  cada documento individualmente". The list was justified, and TeX hyphenated
+  to justify — a surname or a title broken at the end of a line hinders exactly
+  the identification the norm asks for. `\AtBeginBibliography` now sets
+  `\raggedright` and infinite hyphenation penalties; long URLs still break
+  where the `url` package lets them.
 - **The examples follow the Manual in their content, too** (#149). The two
   algorithms of `max-exemplo` had no source line (2.10); the funding agencies
   on the additional sheet had no accents; a Portuguese work had a chapter

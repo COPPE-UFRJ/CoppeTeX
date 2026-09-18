@@ -184,6 +184,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \changes{v5.0}{2026/09/15}{COPPE is the unit style ufrj-coppe, with its own source (ufrj-coppe.dtx and ufrj-coppe.ins), its own manual (ufrj-coppe.pdf) and every example document, which all load it. A work begun with the class coppe compiles as it is: coppe.cls is now a compatibility class that loads ufrj with the same options, loads ufrj-coppe and writes one warning, and the style keeps the old public names as aliases, the old colophon pieces answering renewcommand by the old name, the three internal names that auxiliary files written by the old class contain, the page style coppe and the bib field coppedegree.}
 % \changes{v5.0}{2026/09/15}{The colophon names the class and the project apart -- Foi utilizada a classe ufrj, do projeto CoppeTeX -- where it said a classe CoppeTeX, which is the name of the project and not of a class. The norm it cites is the one the unit declares with ufrjdeclarenorm, and the UFRJ/SiBI Manual when no unit declares one.}
 % \changes{v5.0}{2026/09/15}{The documentation follows the split: this manual (ufrj.pdf) describes the class and the interface a unit style uses; ufrj-coppe.pdf describes only what COPPE declares; manual.pdf, the norm, is written for UFRJ with COPPE as the example; and the migration guide from 4.x to 5.0 tells the author of a work begun with the class coppe what to change.}
+% \changes{v5.0}{2026/09/17}{The list of references is aligned to the left margin only and not hyphenated, as 4.2 requires: it was justified, and hyphenated to justify.}
 % \changes{v5.0}{2026/09/17}{autoref to an algorithm uses the caption name, Algoritmo; algorithm2e defines algorithmautorefname in lower case, so the text read "como no algoritmo 6.1" under a caption saying "Algoritmo".}
 % \changes{v5.0}{2026/09/17}{New volumefiles (arquivosdosvolumes): a work in more than one volume keeps one sequence of sheets from the first volume to the last (2.7) and carries the complete sumario in every volume (3.1.2.1.6). Each volume writes a .vol file with the sheet where the next one starts, and reads the .toc of the others; volumes and volume only printed "Volume 1 de 2" before.}
 % \changes{v5.0}{2026/09/17}{New illustrationwidth (largurailustracao): the caption and the source line of a narrow illustration are set to the width of the illustration, as 2.10 requires -- the caption comes before the content, so the class cannot know that width and the author gives it once, inside the float.}
@@ -8269,7 +8270,17 @@ postamble
   \iffieldundef{#3}{}{\stripzeros{\thefield{#3}}\nobreakspace}%
   \iffieldundef{#2}{}{\mkbibmonth{\thefield{#2}}\iffieldundef{#1}{}{\space}}%
   \iffieldundef{#1}{}{\stripzeros{\thefield{#1}}}}
+% A 4.2: "as referencias sao alinhadas somente a margem esquerda (nao utilize
+% o recurso justificar do editor do texto), possibilitando a identificacao de
+% cada documento individualmente" (#118). A lista saia justificada, e o TeX
+% hifenizava para justificar -- um sobrenome ou um titulo partido no fim da
+% linha atrapalha justamente a identificacao que a norma quer. \raggedright
+% alinha a esquerda, e as duas penalidades infinitas desligam a hifenizacao; um
+% URL longo continua quebrando, pelo pacote url, nos pontos que ele escolhe.
 \AtBeginBibliography{%
+  \raggedright
+  \hyphenpenalty=\@M
+  \exhyphenpenalty=\@M
   \singlespacing                        % entries single-spaced internally (2.4)
   \setlength{\bibitemsep}{\baselineskip}% one blank line between entries (2.4)
   \renewcommand*{\mkbibnamefamily}[1]{\ufrj@ucfamily{#1}}%

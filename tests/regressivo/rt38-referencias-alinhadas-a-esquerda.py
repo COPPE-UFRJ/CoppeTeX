@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
-"""Teste de conformidade da CoppeTeX. NAO roda na suite normal.
+"""Teste de conformidade da CoppeTeX.
 
 BUG: (desconformidade, 4.2) a lista de referencias saia JUSTIFICADA e com palavras hifenizadas no fim da linha: toda linha que nao era a ultima de uma entrada terminava exatamente na margem direita (#118).
-ABERTO: #118
 
 A 4.2 do Manual UFRJ/SiBI diz que as referencias sao alinhadas somente a margem
 esquerda, e pede expressamente que nao se use o recurso de justificar. O
