@@ -189,7 +189,7 @@ $env:COPPE_SRC = "C:\rascunho\src"; python tests/regressivo/rt38-referencias-ali
 | `rt44-pdfa-por-padrao` | #124 | PDF/A desligado por padrão, e o gerador também (2.2d). | |
 | `rt45-legenda-na-largura-da-ilustracao` | #125 | Legenda e fonte mais largas que a ilustração (2.10). API proposta: `\illustrationwidth`. | |
 | `rt46-volumes-numeracao-e-sumario` | #126 | Volumes sem numeração contínua nem sumário completo (2.7). API proposta: `\volumefiles`. | |
-| `rt47-letras-dobradas` | #127 | "Counter too large" depois do Z em apêndice, anexo e alínea (3.1.4.4). | |
+| `rt47-letras-dobradas` | #127 | "Counter too large" depois do Z em apêndice, anexo e alínea (3.1.4.4). A letra dobrada é a mesma letra repetida — AA, BB, CC —, e não a contagem do Excel (AA, AB); o 27.º sai igual nas duas leituras, e por isso o teste cobra também o 28.º. | |
 | `rt48-folhas-de-identidade-num-idioma` | #128 | Folha de rosto e aprovação com dois idiomas; cobra só um idioma por folha, qualquer que seja a decisão. | |
 | `rt49-capa-nome-do-instituto` | #129 | Capa diferente da §2 da Norma COPPE; lê a Norma e confere. | |
 | `rt50-subtitulo-nas-referencias` | #131 | Subtítulo depois de ponto, em negrito, e em caixa alta na entrada pelo título (4.3.3). | ✓ |
