@@ -2756,13 +2756,21 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \subsection{Quem manda, quando as fontes divergem}\label{sec:quemmanda}
 %
 % A ordem é esta, e vale a pena fixá-la porque as fontes \emph{de fato}
-% divergem em pelo menos um ponto:
+% divergem:
 %
 % \begin{enumerate}
-%   \item o \textbf{Manual do SiBI}, edição vigente;
-%   \item as \textbf{decisões próprias da unidade} sobre ele, registradas na
-%     norma da unidade --- na COPPE, a Norma da COPPE;
-%   \item onde nenhum dos dois manda nada, a \textbf{escolha do autor}, que na
+%   \item o \textbf{Manual do SiBI}, edição vigente. Quando o texto e um
+%     exemplo dele divergem, vale o texto. As duas folhas do modelo que o SiBI
+%     distribui --- a folha de rosto e a folha adicional, em |specs/| --- valem
+%     como \textbf{errata} sobre os exemplos do Manual;
+%   \item as \textbf{normas da ABNT}, nas edições que o Manual cita (a lista
+%     está na seção seguinte) e por meio dele: quando uma delas diverge do
+%     Manual, vale o Manual, e a divergência fica registrada como
+%     \textbf{aviso} --- não se resolve em silêncio;
+%   \item a \textbf{norma da unidade} --- na COPPE, a Norma da COPPE ---, que
+%     não contraria o Manual, decide só onde ele não obriga e, ao decidir,
+%     fica com o que os exemplos dele mostram;
+%   \item onde nenhum deles manda nada, a \textbf{escolha do autor}, que na
 %     classe vira opção e nunca decisão embutida.
 % \end{enumerate}
 %
@@ -2814,9 +2822,38 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \subsection{Normas da ABNT, por intermédio do Manual}
 %
 % O Manual do SiBI é que aplica as normas da ABNT; a classe segue o Manual, e
-% não as normas diretamente. As que aparecem são a NBR~14724 (trabalhos
-% acadêmicos), a NBR~6023 (referências), a NBR~6024 (numeração progressiva),
-% a NBR~6027 (sumário) e a NBR~10520:2023 (citações).
+% não as normas diretamente. Valem as \textbf{edições que o Manual cita} na sua
+% lista de referências, e não ``as vigentes'', que podem mudar sem o Manual
+% mudar: NBR~6023:2025 (referências), NBR~10520:2023 (citações),
+% NBR~14724:2024 (trabalhos acadêmicos), NBR~6028:2021 (resumos),
+% NBR~6027:2012 (sumário) e NBR~6024:2012 (numeração progressiva). As três
+% primeiras estão em |specs/ABNT/|, fora do repositório: são publicações da
+% ABNT, com todos os direitos reservados.
+%
+% Onde o Manual é menos específico que a norma, a classe segue a norma: a
+% chamada pelo título é cortada como a 6.1.1.4 da NBR~10520:2023 manda
+% (``(Anteprojeto [...], 1987)''), e os meses das obras em outro idioma vêm do
+% Anexo~A da NBR~6023:2025. \textbf{Onde a norma e o Manual divergem, vale o
+% Manual}, e a divergência é registrada aqui, como aviso. As conhecidas:
+% \begin{description}
+%   \item[Mês de quatro letras] a 4.3.5.5.1 manda abreviar ``de acordo com o
+%     Anexo~A da NBR~6023'' e não abreviar mês de quatro letras ou menos; o
+%     exemplo da mesma seção traz ``Jul.'', e o Anexo~A, ``July''. É o
+%     exemplo que diverge do texto, e a classe segue o texto.
+%   \item[Palavras-chave com maiúscula] a 3.1.2.1.4 e a NBR~6028:2021 começam
+%     a palavra-chave por minúscula; o Anexo~E do Manual mostra maiúsculas. Vale
+%     o texto.
+%   \item[Erratas do gabarito] as divergências aceitas do gabarito das
+%     referências --- a abreviatura ``LEVI, G;'' sem o ponto, e as demais ---
+%     estão escritas no próprio |exemplo.bib|, num
+%     |@comment{Divergencia aceita: ...}| antes de cada entrada, com a forma
+%     exata que a classe compõe em
+%     |@comment{Classe: ...}|, e o |tools/conferir-referencias.py| as confere a
+%     cada rodada (\#167).
+% \end{description}
+% Nenhuma divergência encontrada até aqui pôs a norma da ABNT contra o
+% \emph{texto} do Manual; se aparecer uma, vale o Manual, e ela entra nesta
+% lista.
 %
 % \subsection{Ficha catalográfica}
 %

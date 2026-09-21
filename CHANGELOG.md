@@ -115,6 +115,17 @@ top of `CORRECOES_MANUAL_2026.md`.
 
 ### Changed
 
+- **What the COPPE norm may decide, and which ABNT editions apply** (#161,
+  #163). The COPPE norm does not contradict the Manual: it decides only where
+  the Manual does not oblige, and then sides with the Manual's examples; the
+  two SiBI model sheets are an errata over those examples. The ABNT norms apply
+  in the editions the Manual cites in its own reference list — NBR 6023:2025,
+  NBR 10520:2023, NBR 14724:2024 — and not "the current ones"; where one of
+  them differs from the Manual, the Manual wins and the difference is recorded
+  as a warning in the class manual ("Quem manda, quando as fontes divergem").
+  Section 15 of the COPPE norm, the class manual and `specs/README.md` (which
+  now explains `specs/ABNT/`, kept out of git because the norms are ABNT's
+  copyright) say so.
 - **The UFRJ logo belongs to the class** (#162). It always heads the capa on
   the left, and a unit style can neither swap it nor remove it. The unit
   declares only its own logo, on the right, with the new

@@ -41,6 +41,28 @@ comunidade da universidade. Não trazem declaração de licença. O repositório
 inclui como documentação de referência da norma implementada; se o SiBI pedir a
 retirada, basta apagar os arquivos e voltar a ignorá-los no `.gitignore`.
 
+## `specs/ABNT/` — as normas da ABNT, fora do git
+
+As normas da ABNT que o Manual cita, **nas edições que ele cita** na sua lista
+de referências. Ficam nesta pasta para consulta e **não são versionadas**: são
+publicações da ABNT, com todos os direitos reservados, e o repositório é
+público. O `.gitignore` ignora tudo em `specs/` que não seja `.md` ou `.pdf` da
+raiz, e por isso a subpasta fica de fora. Quem precisar delas pede ao
+mantenedor, ou consulta pela biblioteca (a UFRJ assina o acesso às normas).
+
+| Norma | Arquivo | Uso |
+|---|---|---|
+| NBR 6023:2025 (3.ª ed., 21/05/2025) | `Referencias-NBR-6023-2025.pdf` | Referências. O Anexo A (meses) conferido contra a classe (#146). O texto extraído perde letras de algumas fontes: leia como imagem. |
+| NBR 10520:2023 | `ABNT NBR 10520 2023.pdf` | Citações. Digitalizada, sem camada de texto: leia como imagem. A 6.1.1.4 (chamada pelo título) decidiu a #138; a 6.1.1.2 e a 6.1.1.3 (entidade), a #144. |
+| NBR 14724:2024 | `ABNT_NBR_14724_2024-1.pdf` | Trabalhos acadêmicos. |
+| NBR 10520:2023, resumo | `NBR-10520-de-2023.pptx.pdf` | Apresentação de uma biblioteca (UFMS) sobre a norma; material secundário. |
+| NBR 6023:2018 | `2020ABNT60232018VersoCorrigida - Unknown.pdf` | **Superada**: o Manual cita a de 2025. Fica só para comparar. |
+
+**A regra (18/09/2026).** Vale sempre a norma da UFRJ. As normas da ABNT valem
+nas edições que o Manual cita e por meio dele; onde uma delas diverge do Manual,
+vale o Manual, e a divergência é registrada como aviso — a lista das conhecidas
+está no manual da classe, na seção "Quem manda, quando as fontes divergem".
+
 ## Também nesta pasta
 
 - `ANOTACOES.md` — anotações de Geraldo Xexéo feitas na 9.ª ed. (2025) do
