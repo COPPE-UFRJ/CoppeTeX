@@ -1,19 +1,10 @@
-%%
-%% This is file `manual.bib',
-%% generated with the docstrip utility.
-%%
-%% The original source files were:
-%%
-%% ufrj.dtx  (with options: `examplebib')
-%% 
-%% This is a BibLaTeX/biber bibliographic database for the `ufrj' document
-%% class.  It is generated from ufrj.dtx by docstrip; edit the .dtx source,
-%% not this file.
-%% 
-%% Copyright (C) 2008-2026 Vicente Helano F. Batista, George O. Ainsworth Jr.,
-%% Geraldo Xexéo and Eduardo Mangeli. Released under the GNU General Public
-%% License version 3 (see the COPYING.txt file).
-%% 
+@Comment{ Gerado de ufrj.dtx pelo docstrip: edite o .dtx, e nao este arquivo.
+  Copyright (C) 2008-2026 Vicente Helano F. Batista, George O. Ainsworth Jr.,
+  Geraldo Xexeo e Eduardo Mangeli. Distribuido sob a GNU General Public
+  License, versao 3 (veja o COPYING.txt). Os comentarios desta base sao
+  entradas Comment, e nao linhas comecadas por um sinal de porcentagem:
+  gerenciadores de referencias como o JabRef nao o entendem como comentario. }
+
 @Comment{ exemplo.bib -- a base dos exemplos (min-exemplo.tex, max-exemplo.tex e
   os exemplos por idioma). Primeira parte: entradas de demonstracao. Segunda
   parte, mais abaixo: uma entrada de cada categoria da secao 4.2 do Manual.
@@ -189,9 +180,10 @@
 }
 
 @Comment{ Jurisprudencia / decisao judicial (NBR 6023 4.2.6.2): jurisdicao +
-  orgao (autor, CAIXA ALTA), titulo da decisao, Relator, local e data. }
+  orgao (autor, escrito como se escreve: a classe poe a jurisdicao em caixa
+  alta na lista), titulo da decisao, Relator, local e data. }
 @jurisdiction{jurisprudencia-example,
-   author = "{BRASIL. Supremo Tribunal Federal}",
+   author = "{Brasil. Supremo Tribunal Federal}",
    title = "Habeas Corpus 12.345",
    relator = "Min. Fulano de Tal",
    location = "Brasília, DF",
@@ -219,6 +211,3 @@
    urldate = "2026-05-30",
 }
 
-%% 
-%%
-%% End of file `manual.bib'.

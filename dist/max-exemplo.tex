@@ -31,7 +31,7 @@
 %% doublespacing, twoside, numeraisromanos, linkscommoldura, linkscoloridos
 %% (contra a 2.1b), listasnosumario (contra
 %% a norma: veja o comentário antes das listas),
-%% semorientadornabanca, coorientador, resumosemreferencia, rascunhoficha,
+%% orientadorexamina, coorientador, resumosemreferencia, rascunhoficha,
 %% simbolosalfabeticos, semmorewrites. O manual da classe descreve cada uma.
 %%
 %% Opções de classe que valem conhecer aqui:
@@ -127,31 +127,29 @@
   % O segundo orientador vai com tratamento, so para mostrar o argumento
   % opcional funcionando; a norma nao pede tratamento nenhum.
   \advisor[Prof.]{Nome do Segundo Orientador}{Sobrenome}{Ph.D.}{UFRJ}
-  % Coorientador: mesmos quatro argumentos de \advisor. Aparece na folha de
-  % rosto e na folha de aprovacao; para ve-lo tambem nas paginas de resumo,
-  % passe a opcao de classe `coorientador'.
-  \coadvisor{Nome do Coorientador}{Sobrenome}{D.Sc.}{UFF}
+  % Coorientador: a COPPE nao tem -- so orientadores, um ou mais --, e por
+  % isso este exemplo nao usa \coadvisor. A classe o oferece, com os mesmos
+  % quatro argumentos de \advisor, para as unidades que tem coorientador.
   % A classe aceita de um a tres \advisor; se houver apenas um, o rotulo na
   % capa e na folha de rosto sai como "Orientador" (singular), com dois ou
   % mais sai como "Orientadores" (plural). Para o caso 1/3 orientadores,
   % veja tests/test_brazilian_one_advisor.tex e tests/test_brazilian_three_advisors.tex.
 
-  \examiner{Nome do Primeiro Examinador Sobrenome}{D.Sc.}{UFRJ}
-  \examiner{Nome do Segundo Examinador Sobrenome}{Ph.D.}{UFRJ}
-  \examiner{Nome do Terceiro Examinador Sobrenome}{D.Sc.}{UFF}
-  \examiner{Nome do Quarto Examinador Sobrenome}{Ph.D.}{UNICAMP}
-  % Instituicao vazia: o argumento e obrigatorio, mas aceita ficar em branco e
-  % entao nada e impresso no lugar dela.
-  \examiner{Nome do Quinto Examinador Sobrenome}{Ph.D.}{}
+  % A banca da folha de aprovacao e o que se declara aqui, na ordem: nome,
+  % titulacao e instituicao de cada membro (3.1.2.1.3e). O orientador, que
+  % preside a banca, e o primeiro membro. A instituicao e obrigatoria, mas pode
+  % ficar vazia: \examiner{Nome}{D.Sc.}{} compila sem erro.
+  \examiner{Nome do Primeiro membro da banca Sobrenome}{D.Sc.}{UFRJ}
+  \examiner{Nome do Segundo membro da banca Sobrenome}{Ph.D.}{UFRJ}
+  \examiner{Nome do Terceiro membro da banca Sobrenome}{D.Sc.}{UFF}
+  \examiner{Nome do Quarto membro da banca Sobrenome}{D.Sc.}{UNICAMP}
+  \examiner{Nome do Quinto membro da banca Sobrenome}{D.Sc.}{PUC-Rio}
   \department{PESC}
   \date{06}{2026}
   % Data da defesa, na folha de aprovacao. Sem esta linha a folha sai com
   % "a ser determinada", que e o que se quer enquanto a data nao existe.
   % \approvaldate{15 de setembro de 2026}
   %
-  % A folha de aprovacao abre a banca com os orientadores, na frente dos
-  % examinadores, como manda a 3.1.2.1.3(e). A opcao de classe
-  % `semorientadornabanca' deixa so os examinadores.
 
   \keyword{primeira palavra-chave}
   \keyword{segunda palavra-chave}
@@ -167,7 +165,7 @@
   \researchline{Engenharia de Dados e Conhecimento}
   \productiontype{bibliographic}   % bibliografica | artistica | tecnologica | tecnica
   \linkedproject{yes}         % sim | nao
-  \projectname{Nome do Projeto de Pesquisa ao qual o trabalho se vincula}
+  \projectname{Nome do Projeto de Pesquisa ao qual o trabalho se vincula (caso haja)}
   \fundingagency{Conselho Nacional de Desenvolvimento Científico e
                   Tecnológico}{CNPq}
   \fundingagency{Fundação Carlos Chagas Filho de Amparo à Pesquisa do
@@ -176,6 +174,20 @@
   % descomente a linha abaixo e a moldura vazia da folha adicional some.
   % \catalogcard{ficha.pdf}
 
+  % ORDEM DOS ELEMENTOS PRÉ-TEXTUAIS (Manual 3.1.2). A classe confere esta
+  % ordem: um elemento fora dela é erro de compilação, e a mensagem diz o que
+  % mover. Os obrigatórios estão em MAIÚSCULAS; os outros são opcionais.
+  %   \maketitle ......... CAPA, FOLHA DE ROSTO e FOLHA ADICIONAL
+  %   errata ............. se houver, antes da folha de aprovação
+  %   \frontmatter ....... FOLHA DE APROVAÇÃO
+  %   \dedication ........ dedicatória
+  %   agradecimentos ..... \chapter*{Agradecimentos}
+  %   \epigraph .......... epígrafe
+  %   resumos ............ RESUMO EM PORTUGUÊS, sempre o primeiro, e depois
+  %                        o RESUMO EM LÍNGUA ESTRANGEIRA
+  %   listas ............. de ilustrações, de tabelas, de abreviaturas e
+  %                        siglas e de símbolos, nessa ordem
+  %   \tableofcontents ... SUMÁRIO, sempre o último
   \maketitle
 
   \frontmatter
@@ -191,7 +203,7 @@
   % Epígrafe (3.1.2.2.3), depois dos agradecimentos: citação e autoria.
   \epigraph{A imaginação é mais importante que o conhecimento.}{Albert Einstein}
 
-  \begin{abstract}% 5 elementos; \setupabstracts, no preambulo, desliga 4
+  \begin{abstract}% a folha do Anexo E; \setupabstracts liga os outros 3
 
   Apresenta-se, nesta tese, um exemplo de resumo. Lorem ipsum dolor sit amet,
   consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et

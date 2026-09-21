@@ -193,7 +193,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % |ufrj-poli.ins|, troque os dados da seção~\ref{sec:implementacao}, tire os
 % nomes antigos e a classe de compatibilidade, que só a COPPE tem, e troque os
 % exemplos pelos da unidade. A interface que o estilo usa --- |\ufrjdeclareunit|,
-% |\ufrjdeclareprogram|, |\ufrjdeclarelogos|, |\ufrjdeclarenorm| e
+% |\ufrjdeclareprogram|, |\ufrjdeclarelogo|, |\ufrjdeclarenorm| e
 % |\ufrjdefunitstring| --- está no manual da classe, na seção ``A instituição e a
 % unidade''. Um trabalho de uma unidade que ainda não tem estilo pode usar as
 % mesmas declarações no preâmbulo.
@@ -223,7 +223,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %% doublespacing, twoside, numeraisromanos, linkscommoldura, linkscoloridos
 %% (contra a 2.1b), listasnosumario (contra
 %% a norma: veja o comentário antes das listas),
-%% semorientadornabanca, coorientador, resumosemreferencia, rascunhoficha,
+%% orientadorexamina, coorientador, resumosemreferencia, rascunhoficha,
 %% simbolosalfabeticos, semmorewrites. O manual da classe descreve cada uma.
 %%
 %% Opções de classe que valem conhecer aqui:
@@ -320,31 +320,29 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   % O segundo orientador vai com tratamento, so para mostrar o argumento
   % opcional funcionando; a norma nao pede tratamento nenhum.
   \advisor[Prof.]{Nome do Segundo Orientador}{Sobrenome}{Ph.D.}{UFRJ}
-  % Coorientador: mesmos quatro argumentos de \advisor. Aparece na folha de
-  % rosto e na folha de aprovacao; para ve-lo tambem nas paginas de resumo,
-  % passe a opcao de classe `coorientador'.
-  \coadvisor{Nome do Coorientador}{Sobrenome}{D.Sc.}{UFF}
+  % Coorientador: a COPPE nao tem -- so orientadores, um ou mais --, e por
+  % isso este exemplo nao usa \coadvisor. A classe o oferece, com os mesmos
+  % quatro argumentos de \advisor, para as unidades que tem coorientador.
   % A classe aceita de um a tres \advisor; se houver apenas um, o rotulo na
   % capa e na folha de rosto sai como "Orientador" (singular), com dois ou
   % mais sai como "Orientadores" (plural). Para o caso 1/3 orientadores,
   % veja tests/test_brazilian_one_advisor.tex e tests/test_brazilian_three_advisors.tex.
 
-  \examiner{Nome do Primeiro Examinador Sobrenome}{D.Sc.}{UFRJ}
-  \examiner{Nome do Segundo Examinador Sobrenome}{Ph.D.}{UFRJ}
-  \examiner{Nome do Terceiro Examinador Sobrenome}{D.Sc.}{UFF}
-  \examiner{Nome do Quarto Examinador Sobrenome}{Ph.D.}{UNICAMP}
-  % Instituicao vazia: o argumento e obrigatorio, mas aceita ficar em branco e
-  % entao nada e impresso no lugar dela.
-  \examiner{Nome do Quinto Examinador Sobrenome}{Ph.D.}{}
+  % A banca da folha de aprovacao e o que se declara aqui, na ordem: nome,
+  % titulacao e instituicao de cada membro (3.1.2.1.3e). O orientador, que
+  % preside a banca, e o primeiro membro. A instituicao e obrigatoria, mas pode
+  % ficar vazia: \examiner{Nome}{D.Sc.}{} compila sem erro.
+  \examiner{Nome do Primeiro membro da banca Sobrenome}{D.Sc.}{UFRJ}
+  \examiner{Nome do Segundo membro da banca Sobrenome}{Ph.D.}{UFRJ}
+  \examiner{Nome do Terceiro membro da banca Sobrenome}{D.Sc.}{UFF}
+  \examiner{Nome do Quarto membro da banca Sobrenome}{D.Sc.}{UNICAMP}
+  \examiner{Nome do Quinto membro da banca Sobrenome}{D.Sc.}{PUC-Rio}
   \department{PESC}
   \date{06}{2026}
   % Data da defesa, na folha de aprovacao. Sem esta linha a folha sai com
   % "a ser determinada", que e o que se quer enquanto a data nao existe.
   % \approvaldate{15 de setembro de 2026}
   %
-  % A folha de aprovacao abre a banca com os orientadores, na frente dos
-  % examinadores, como manda a 3.1.2.1.3(e). A opcao de classe
-  % `semorientadornabanca' deixa so os examinadores.
 
   \keyword{primeira palavra-chave}
   \keyword{segunda palavra-chave}
@@ -360,7 +358,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \researchline{Engenharia de Dados e Conhecimento}
   \productiontype{bibliographic}   % bibliografica | artistica | tecnologica | tecnica
   \linkedproject{yes}         % sim | nao
-  \projectname{Nome do Projeto de Pesquisa ao qual o trabalho se vincula}
+  \projectname{Nome do Projeto de Pesquisa ao qual o trabalho se vincula (caso haja)}
   \fundingagency{Conselho Nacional de Desenvolvimento Científico e
                   Tecnológico}{CNPq}
   \fundingagency{Fundação Carlos Chagas Filho de Amparo à Pesquisa do
@@ -369,6 +367,20 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   % descomente a linha abaixo e a moldura vazia da folha adicional some.
   % \catalogcard{ficha.pdf}
 
+  % ORDEM DOS ELEMENTOS PRÉ-TEXTUAIS (Manual 3.1.2). A classe confere esta
+  % ordem: um elemento fora dela é erro de compilação, e a mensagem diz o que
+  % mover. Os obrigatórios estão em MAIÚSCULAS; os outros são opcionais.
+  %   \maketitle ......... CAPA, FOLHA DE ROSTO e FOLHA ADICIONAL
+  %   errata ............. se houver, antes da folha de aprovação
+  %   \frontmatter ....... FOLHA DE APROVAÇÃO
+  %   \dedication ........ dedicatória
+  %   agradecimentos ..... \chapter*{Agradecimentos}
+  %   \epigraph .......... epígrafe
+  %   resumos ............ RESUMO EM PORTUGUÊS, sempre o primeiro, e depois
+  %                        o RESUMO EM LÍNGUA ESTRANGEIRA
+  %   listas ............. de ilustrações, de tabelas, de abreviaturas e
+  %                        siglas e de símbolos, nessa ordem
+  %   \tableofcontents ... SUMÁRIO, sempre o último
   \maketitle
 
   \frontmatter
@@ -384,7 +396,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   % Epígrafe (3.1.2.2.3), depois dos agradecimentos: citação e autoria.
   \epigraph{A imaginação é mais importante que o conhecimento.}{Albert Einstein}
 
-  \begin{abstract}% 5 elementos; \setupabstracts, no preambulo, desliga 4
+  \begin{abstract}% a folha do Anexo E; \setupabstracts liga os outros 3
 
   Apresenta-se, nesta tese, um exemplo de resumo. Lorem ipsum dolor sit amet,
   consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
@@ -1751,7 +1763,10 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor i
   \foreignsubtitle{a minimal example of use of CoppeTeX}
   \author{Nome do Autor}{Sobrenome}
   \advisor{Nome do Orientador}{Sobrenome}{D.Sc.}{UFRJ}
-  % A composição da banca é regra do Programa, não da formatação.
+  % A composição da banca é regra do Programa, não da formatação. A folha de
+  % aprovação lista o que você declara aqui, na ordem: o orientador, que
+  % preside a banca, é o primeiro (3.1.2.1.3e).
+  \examiner{Nome do Orientador Sobrenome}{D.Sc.}{UFRJ}
   \examiner{Nome do Primeiro Examinador Sobrenome}{D.Sc.}{UFRJ}
   \examiner{Nome do Segundo Examinador Sobrenome}{D.Sc.}{UFRJ}
   \examiner{Nome do Terceiro Examinador Sobrenome}{D.Sc.}{UFF}
@@ -1777,6 +1792,13 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor i
   \linkedproject{no}
   % \catalogcard{ficha.pdf}
 
+  % A ordem dos elementos pré-textuais é a da 3.1.2 do Manual, e a classe a
+  % confere: um elemento fora dela é erro de compilação, e a mensagem diz o
+  % que mover. Os obrigatórios são estes, nesta ordem: \maketitle (capa,
+  % folha de rosto e folha adicional), \frontmatter (folha de aprovação), o
+  % resumo em português, o resumo em língua estrangeira e \tableofcontents
+  % (sumário), sempre o último. O max-exemplo.tex mostra onde entram os
+  % opcionais: errata, dedicatória, agradecimentos, epígrafe e as listas.
   \maketitle
 
   \frontmatter
@@ -1880,7 +1902,10 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor i
   {COPPE}
 % Secao 1: o logotipo da UFRJ a esquerda e o da COPPE a direita, os dois com
 % 2 cm de altura.
-\ufrjdeclarelogos[2cm]{ufrj-logo}{coppe-logo}
+% O logotipo da COPPE, a direita da capa: o unificado do Instituto, e nao o de
+% cada Programa -- nem todo Programa tem logotipo (Norma COPPE, secao 1; #162).
+% O da UFRJ, a esquerda, e da classe.
+\ufrjdeclarelogo[2cm]{coppe-logo}
 % Secao 3: os treze Programas, com o nome em portugues e em ingles. O nome em
 % ingles so aparece na folha do abstract.
 \ufrjdeclareprogram{PEB} {Engenharia Biomédica}{Biomedical Engineering}
@@ -1997,6 +2022,10 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor i
   \string\documentclass[...]{ufrj} e acrescente\MessageBreak
   \string\usepackage{ufrj-coppe} logo abaixo}
 \LoadClassWithOptions{ufrj}
+% A ordem dos pre-textuais fora da 3.1.2 e erro na classe ufrj; aqui, aviso: os
+% modelos da 4.x ensinavam outra ordem, e o trabalho antigo tem de compilar
+% como esta (#148).
+\@ufrjordemavisotrue
 \RequirePackage{ufrj-coppe}
 %</compat>
 %    \end{macrocode}
@@ -2036,6 +2065,9 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor i
   %% palavras-chave do resumo em idioma estrangeiro (3.1.2.1.5, Anexo F)
   \foreignkeyword{Multilingual}
   \foreignkeyword{Demonstration}
+  % Ordem dos pré-textuais (Manual 3.1.2), que a classe confere: \maketitle,
+  % \frontmatter, o resumo em português, o resumo em língua estrangeira, as
+  % listas e \tableofcontents, sempre o último.
   \maketitle
   \frontmatter
   \begin{abstract}
@@ -2109,21 +2141,26 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor i
   \date{05}{2026}
   \keyword{Multilingual}
   \keyword{Demonstration}
-  %% palavras-chave do resumo em idioma estrangeiro (3.1.2.1.5, Anexo F)
+  %% palavras-chave do resumo em português, a língua vernácula (3.1.2.1.4)
   \foreignkeyword{multilíngue}
   \foreignkeyword{demonstração}
+  % Pre-textual order (UFRJ Manual 3.1.2), checked by the class: \maketitle,
+  % \frontmatter, the abstract in Portuguese -- the vernacular language,
+  % always the first one; here it is foreignabstract --, the abstract in
+  % English (abstract), the lists and \tableofcontents, always the last.
   \maketitle
   \frontmatter
-  \begin{abstract}
-    This is the main abstract in English, used when the class is loaded
-    with the \texttt{english} option. Lorem ipsum dolor sit amet,
-    consectetur adipiscing elit.
-  \end{abstract}
   \begin{foreignabstract}
-    Este é o resumo em língua estrangeira, que aqui é o português. Quem o
-    produz é o ambiente \texttt{foreignabstract}, quando o idioma principal
-    do trabalho é o inglês.
+    Este é o resumo em português, a língua vernácula, que vem antes do
+    abstract qualquer que seja o idioma do trabalho (Manual 3.1.2). Num
+    trabalho em inglês, quem o produz é o ambiente \texttt{foreignabstract}.
   \end{foreignabstract}
+  \begin{abstract}
+    This is the abstract in English, the main language of this work, used
+    when the class is loaded with the \texttt{english} option. It comes after
+    the abstract in Portuguese. Lorem ipsum dolor sit amet, consectetur
+    adipiscing elit.
+  \end{abstract}
   % Front-matter lists: only the table of contents is mandatory (UFRJ
   % Manual 3.1.2.1.6). The lists of figures, tables, abbreviations and
   % symbols are optional (3.1.2.2); the lists of quadros, programs and
@@ -2192,26 +2229,32 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor i
   %% palavras-chave do resumo em idioma estrangeiro (3.1.2.1.5, Anexo F)
   \foreignkeyword{Multilingual}
   \foreignkeyword{Demonstration}
-  %% palavras-chave do terceiro resumo, em português (Norma COPPE, secao 3)
+  %% palavras-chave do resumo em português, a língua vernácula (3.1.2.1.4)
   \braziliankeyword{multilíngue}
   \braziliankeyword{demonstração}
+  % Orden de los elementos pretextuales (Manual UFRJ 3.1.2), que la clase
+  % verifica: \maketitle, \frontmatter, el resumen en portugués -- la lengua
+  % vernácula, siempre el primero; aquí es brazilianabstract --, el resumen
+  % en inglés (foreignabstract), el resumen en español (abstract, adición de
+  % la norma COPPE), las listas y \tableofcontents, siempre el último.
   \maketitle
   \frontmatter
-  \begin{abstract}
-    Este es el resumen principal en español. La tesis está escrita
-    en español como idioma principal, con la portada conservada en
-    portugués por convención institucional de la UFRJ. Lorem ipsum
-    dolor sit amet, consectetur adipiscing elit.
-  \end{abstract}
+  \begin{brazilianabstract}
+    Este é o resumo em português, a língua vernácula, que abre os resumos
+    qualquer que seja o idioma do trabalho (Manual 3.1.2). Quem o produz é o
+    ambiente \texttt{brazilianabstract}, quando o idioma principal não é nem
+    o português nem o inglês.
+  \end{brazilianabstract}
   \begin{foreignabstract}
     This is the English foreign abstract. Mandatory in CoppeTeX whichever
     the main language is, for international readability.
   \end{foreignabstract}
-  \begin{brazilianabstract}
-    Este é o resumo em português, oferecido pelo ambiente
-    \texttt{brazilianabstract} para a leitura da banca brasileira quando o
-    idioma principal não é o português.
-  \end{brazilianabstract}
+  \begin{abstract}
+    Este es el resumen en español, idioma principal de la tesis, que viene
+    después de los resúmenes en portugués y en inglés; la portada se conserva
+    en portugués por convención institucional de la UFRJ. Lorem ipsum dolor
+    sit amet, consectetur adipiscing elit.
+  \end{abstract}
   % Listas pretextuales: solo el sumario es obligatorio (Manual UFRJ
   % 3.1.2.1.6). Las listas de figuras, tablas, abreviaturas y símbolos son
   % opcionales (3.1.2.2); las de cuadros, programas y algoritmos aparecen
@@ -2282,27 +2325,32 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor i
   %% palavras-chave do resumo em idioma estrangeiro (3.1.2.1.5, Anexo F)
   \foreignkeyword{Multilingual}
   \foreignkeyword{Demonstration}
-  %% palavras-chave do terceiro resumo, em português (Norma COPPE, secao 3)
+  %% palavras-chave do resumo em português, a língua vernácula (3.1.2.1.4)
   \braziliankeyword{multilíngue}
   \braziliankeyword{demonstração}
+  % Ordre des éléments pré-textuels (Manuel UFRJ 3.1.2), vérifié par la
+  % classe : \maketitle, \frontmatter, le résumé en portugais -- la langue
+  % vernaculaire, toujours le premier ; ici brazilianabstract --, le résumé
+  % en anglais (foreignabstract), le résumé en français (abstract), les
+  % listes et \tableofcontents, toujours le dernier.
   \maketitle
   \frontmatter
-  \begin{abstract}
-    Ceci est le résumé principal en français. La thèse est
-    rédigée en français comme langue principale, avec la
-    couverture conservée en portugais selon la convention
-    institutionnelle de l'UFRJ. Lorem ipsum dolor sit amet, consectetur
-    adipiscing elit.
-  \end{abstract}
+  \begin{brazilianabstract}
+    Este é o resumo em português, a língua vernácula, que abre os resumos
+    qualquer que seja o idioma do trabalho (Manual 3.1.2). Quem o produz é o
+    ambiente \texttt{brazilianabstract}, quando o idioma principal não é nem
+    o português nem o inglês.
+  \end{brazilianabstract}
   \begin{foreignabstract}
     This is the English foreign abstract. Required in CoppeTeX whichever
     the main language is, for international readability.
   \end{foreignabstract}
-  \begin{brazilianabstract}
-    Este é o resumo em português, oferecido pelo ambiente
-    \texttt{brazilianabstract} para a leitura da banca brasileira quando
-    o idioma principal não é o português.
-  \end{brazilianabstract}
+  \begin{abstract}
+    Ceci est le résumé en français, langue principale de la thèse, qui vient
+    après les résumés en portugais et en anglais ; la couverture est
+    conservée en portugais selon la convention institutionnelle de l'UFRJ.
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+  \end{abstract}
   % Listes pré-textuelles : seule la table des matières est obligatoire
   % (Manuel UFRJ 3.1.2.1.6). Les listes des figures, des tableaux, des
   % abréviations et des symboles sont facultatives (3.1.2.2) ; celles des
@@ -2374,26 +2422,32 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor i
   %% palavras-chave do resumo em idioma estrangeiro (3.1.2.1.5, Anexo F)
   \foreignkeyword{Multilingual}
   \foreignkeyword{Demonstration}
-  %% palavras-chave do terceiro resumo, em português (Norma COPPE, secao 3)
+  %% palavras-chave do resumo em português, a língua vernácula (3.1.2.1.4)
   \braziliankeyword{multilíngue}
   \braziliankeyword{demonstração}
+  % Ordine degli elementi pre-testuali (Manuale UFRJ 3.1.2), verificato dalla
+  % classe: \maketitle, \frontmatter, il riassunto in portoghese -- la lingua
+  % vernacola, sempre il primo; qui brazilianabstract --, il riassunto in
+  % inglese (foreignabstract), il riassunto in italiano (abstract), gli
+  % elenchi e \tableofcontents, sempre l'ultimo.
   \maketitle
   \frontmatter
-  \begin{abstract}
-    Questo è il riassunto principale in italiano. La tesi è redatta
-    in italiano come lingua principale, con la copertina conservata in
-    portoghese per convenzione istituzionale dell'UFRJ. Lorem ipsum dolor
-    sit amet, consectetur adipiscing elit.
-  \end{abstract}
+  \begin{brazilianabstract}
+    Este é o resumo em português, a língua vernácula, que abre os resumos
+    qualquer que seja o idioma do trabalho (Manual 3.1.2). Quem o produz é o
+    ambiente \texttt{brazilianabstract}, quando o idioma principal não é nem
+    o português nem o inglês.
+  \end{brazilianabstract}
   \begin{foreignabstract}
     This is the English foreign abstract. Required in CoppeTeX whichever
     the main language is, for international readability.
   \end{foreignabstract}
-  \begin{brazilianabstract}
-    Este é o resumo em português, oferecido pelo ambiente
-    \texttt{brazilianabstract} para a leitura da banca brasileira quando
-    o idioma principal não é o português.
-  \end{brazilianabstract}
+  \begin{abstract}
+    Questo è il riassunto in italiano, lingua principale della tesi, che
+    viene dopo i riassunti in portoghese e in inglese; la copertina è
+    conservata in portoghese per convenzione istituzionale dell'UFRJ. Lorem
+    ipsum dolor sit amet, consectetur adipiscing elit.
+  \end{abstract}
   % Elenchi pre-testuali: solo l'indice generale è obbligatorio (Manuale
   % UFRJ 3.1.2.1.6). Gli elenchi di figure, tabelle, abbreviazioni e simboli
   % sono facoltativi (3.1.2.2); quelli di quadros, programmi e algoritmi

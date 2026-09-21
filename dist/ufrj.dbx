@@ -45,13 +45,14 @@
 \DeclareDatamodelFields[type=field,datatype=literal]{relator}     % jurisprudence rapporteur
 \DeclareDatamodelFields[type=field,datatype=literal]{filingdate}  % patente: deposito
 \DeclareDatamodelFields[type=field,datatype=literal]{grantdate}   % patente: concessao
+\DeclareDatamodelFields[type=list,datatype=name]{attorney}      % patente: procurador
 \DeclareDatamodelEntryfields{course,ufrjdegree}
 \DeclareDatamodelEntryfields[game,videogame,boardgame,software,movie,tvshow,video]%
   {artist,platform,director,producer,version}
 \DeclareDatamodelEntryfields[map]{scale}
 \DeclareDatamodelEntryfields[article]{caderno}
 \DeclareDatamodelEntryfields[jurisdiction]{relator}
-\DeclareDatamodelEntryfields[patent]{filingdate,grantdate}
+\DeclareDatamodelEntryfields[patent]{filingdate,grantdate,attorney}
 
 %% 
 %%

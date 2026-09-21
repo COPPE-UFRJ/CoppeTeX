@@ -36,26 +36,32 @@
   %% palavras-chave do resumo em idioma estrangeiro (3.1.2.1.5, Anexo F)
   \foreignkeyword{Multilingual}
   \foreignkeyword{Demonstration}
-  %% palavras-chave do terceiro resumo, em português (Norma COPPE, secao 3)
+  %% palavras-chave do resumo em português, a língua vernácula (3.1.2.1.4)
   \braziliankeyword{multilíngue}
   \braziliankeyword{demonstração}
+  % Orden de los elementos pretextuales (Manual UFRJ 3.1.2), que la clase
+  % verifica: \maketitle, \frontmatter, el resumen en portugués -- la lengua
+  % vernácula, siempre el primero; aquí es brazilianabstract --, el resumen
+  % en inglés (foreignabstract), el resumen en español (abstract, adición de
+  % la norma COPPE), las listas y \tableofcontents, siempre el último.
   \maketitle
   \frontmatter
-  \begin{abstract}
-    Este es el resumen principal en español. La tesis está escrita
-    en español como idioma principal, con la portada conservada en
-    portugués por convención institucional de la UFRJ. Lorem ipsum
-    dolor sit amet, consectetur adipiscing elit.
-  \end{abstract}
+  \begin{brazilianabstract}
+    Este é o resumo em português, a língua vernácula, que abre os resumos
+    qualquer que seja o idioma do trabalho (Manual 3.1.2). Quem o produz é o
+    ambiente \texttt{brazilianabstract}, quando o idioma principal não é nem
+    o português nem o inglês.
+  \end{brazilianabstract}
   \begin{foreignabstract}
     This is the English foreign abstract. Mandatory in CoppeTeX whichever
     the main language is, for international readability.
   \end{foreignabstract}
-  \begin{brazilianabstract}
-    Este é o resumo em português, oferecido pelo ambiente
-    \texttt{brazilianabstract} para a leitura da banca brasileira quando o
-    idioma principal não é o português.
-  \end{brazilianabstract}
+  \begin{abstract}
+    Este es el resumen en español, idioma principal de la tesis, que viene
+    después de los resúmenes en portugués y en inglés; la portada se conserva
+    en portugués por convención institucional de la UFRJ. Lorem ipsum dolor
+    sit amet, consectetur adipiscing elit.
+  \end{abstract}
   % Listas pretextuales: solo el sumario es obligatorio (Manual UFRJ
   % 3.1.2.1.6). Las listas de figuras, tablas, abreviaturas y símbolos son
   % opcionales (3.1.2.2); las de cuadros, programas y algoritmos aparecen

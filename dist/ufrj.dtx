@@ -185,8 +185,11 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \changes{v5.0}{2026/09/15}{The colophon names the class and the project apart -- Foi utilizada a classe ufrj, do projeto CoppeTeX -- where it said a classe CoppeTeX, which is the name of the project and not of a class. The norm it cites is the one the unit declares with ufrjdeclarenorm, and the UFRJ/SiBI Manual when no unit declares one.}
 % \changes{v5.0}{2026/09/15}{The documentation follows the split: this manual (ufrj.pdf) describes the class and the interface a unit style uses; ufrj-coppe.pdf describes only what COPPE declares; manual.pdf, the norm, is written for UFRJ with COPPE as the example; and the migration guide from 4.x to 5.0 tells the author of a work begun with the class coppe what to change.}
 % \changes{v5.0}{2026/09/17}{The citation of a corporate author with a subordinate body uses only the first segment, with initial capitals -- (Brasil, 1995) for BRASIL. Ministerio da Educacao -- as 4.1.1.2 shows and 4.4.1 requires; it repeated the whole hierarchy in capitals. The list keeps the name as typed.}
+% \changes{v5.0}{2026/09/18}{A corporate author is typed as it is written -- Brasil. Ministerio da Educacao -- and the class sets the capitals: in the list only the entry element, up to the first full stop and without the qualifier in parentheses, goes to capitals (BRASIL. Ministerio da Educacao; RIO DE JANEIRO (Estado). Secretaria...), and the citation uses the entry element as typed, so an acronym stays one -- (Brasil, 1995), (IBGE, 2011). Until now the author typed the entry in capitals and the citation had to convert it back.}
 % \changes{v5.0}{2026/09/17}{A citation by title entry reads (Ingles, 2012, p. 7): the title without subtitle, no italics, a comma before the year (4.1.1.1.2, 4.1.1.2a). authoryear-comp set it in italics and separated it from the year by a space.}
+% \changes{v5.0}{2026/09/18}{A citation by title is cut as NBR 10520:2023 (6.1.1.4) requires: the only word of a one-word title, the first word and [...] of a longer one -- (Anteprojeto [...], 1987) --, and an initial article or monosyllable with the next word and [...] -- (A flor [...], 1995), (Nos canaviais [...], 1995). An initial monosyllable also goes to capitals with the next word in the list (NOS CANAVIAIS) and is ignored in the alphabetical order, as articles already were (4.2, 4.3.2.14).}
 % \changes{v5.0}{2026/09/17}{The month of a date is abbreviated in the language of the publication, given by the langid of the entry, from the tables of NBR 6023 Annex A -- Sept. 2021 for an English article (4.3.5.5.1); it followed the document's language. The rest of the entry stays in the document's language.}
+% \changes{v5.0}{2026/09/18}{The month tables were checked letter by letter against Annex A of NBR 6023:2025, the edition the Manual adopts, and the German table of the same annex was added (Jan., Feb., Marz, ..., Okt., Dez.).}
 % \changes{v5.0}{2026/09/17}{Film and game: director and producer are names, printed in direct order after a colon -- Direcao: Walter Sales Junior -- as in the examples of 4.2.9, and the version takes the place of the edition, before the imprint (4.3.4). They were literal lists, printed as typed, and the version closed the entry.}
 % \changes{v5.0}{2026/09/17}{A part of a monograph carries the book's author and subtitle after In:, and the chapter before the pages -- cap. 1, p. 23-64 (4.2.1.3); bookauthor and booksubtitle vanished, and the chapter came after the pages.}
 % \changes{v5.0}{2026/09/17}{mastersthesis and phdthesis entries -- the ones Google Scholar, Zotero and JabRef export -- read Dissertacao (Mestrado) and Tese (Doutorado), with the em dash before the institution; a literal type with a course no longer prints "( em ...)" (4.3.8.3).}
@@ -209,6 +212,17 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \changes{v5.0}{2026/09/17}{The line numbers of a listing stay inside the margin. The five language styles number the lines on the left, and without xleftmargin the listings package indents the code and leaves the number outside the 3 cm margin of 2.3.}
 % \changes{v5.0}{2026/09/17}{Footnotes start at the left margin and hang: from the second line the text aligns under the first letter, not under the mark, as 4.2 asks of a reference in a note -- the class used book's makefntext, which indented the mark by parindent and returned the second line to the margin. A footnote no longer splits across sheets either.}
 % \changes{v5.0}{2026/09/17}{PDF/A-2b is the default output, and the new option sempdfa turns it off. 2.2(d) of the Manual requires the final digital version to be PDF/A, the deposit has been digital only since Resolucao CEPG n. 246/2023, and the class already produced conformant PDF/A -- but only when asked, so a work written without reading the manual was deposited off the norm. The v4.1 option pdfa is still accepted and now does nothing.}
+% \changes{v5.0}{2026/09/21}{The access date is in the language of the work, and only the publication date follows the entry's langid: HOUTE, Jef Van den. Black hole. 1 June 2010. [...] Acesso em: 26 maio 2011. The access month came out in the language of the publication too: Acesso em: 26 May 2011.}
+% \changes{v5.0}{2026/09/21}{A patent takes its attorney, the Procurador of the Manual's essential elements (4.2.5), in the attorney field (procurador in Portuguese), printed in direct order after the depositor: Procurador: Maria Cristina Valim Lourenco Gomes.}
+% \changes{v5.0}{2026/09/21}{A part of a monograph with pages and no chapter ends in a full stop before the pages, as in the Manual: Companhia das Letras, 1996. p. 7-16. The comma of cap. 1, p. 23-64 went in even with no chapter, and replaced the full stop that closes the imprint. The same in the chapter+pages of the book and report drivers.}
+% \changes{v5.0}{2026/09/21}{The .bib files carry no comment line starting with a percent sign, which JabRef and other reference managers do not read as a comment: the docstrip preamble is gone from them, the notice and licence are a Comment entry, and the Manual's expected output for each reference is a comment{Manual: ...} entry before it instead of lines inside the entry.}
+% \changes{v5.0}{2026/09/21}{The advisor no longer enters the board of the folha de aprovacao automatically: the board is what examiner declares, in order, and the advisor, who chairs it (3.1.2.1.3e), is the first examiner. orientadorexamina puts advisors and coadvisors back at its head, as the v4.1 revision did by default.}
+% \changes{v5.0}{2026/09/18}{By default an abstract sheet is the one of Annexes E and F: its heading, the reference, the text and the keywords. The page identification, the title and author block and the advising block -- a COPPE tradition, not in the Manual's model -- are off by default, and setupabstracts turns them on.}
+% \changes{v5.0}{2026/09/18}{The abstract in Portuguese -- the vernacular language -- comes first, whatever the main language, as 3.1.2 orders; the class checks it by the language of each abstract sheet, so in an English work foreignabstract (Portuguese) precedes abstract, and in a Spanish work brazilianabstract opens the abstracts.}
+% \changes{v5.0}{2026/09/21}{The natureza sentence of the folha de rosto and the folha de aprovacao follows the SiBI model, which corrects Annex B: ...apresentada ao Programa de Pos-Graduacao em X, <unit's full name>, Universidade Federal do Rio de Janeiro, como requisito parcial a obtencao do titulo de... It had the unit's acronym instead of its name, "da" before the university and "como parte dos requisitos necessarios".}
+% \changes{v5.0}{2026/09/21}{Captions and source lines are aligned left, as in the only illustration of the Manual (Figure 1): with illustrationwidth the box takes the width of the illustration and is centred with it, so the text starts at its margin. They were centred.}
+% \changes{v5.0}{2026/09/21}{The UFRJ logo belongs to the class: it always heads the capa on the left, and a unit style can neither swap it nor remove it. The unit declares only its own logo, on the right, with the new ufrjdeclarelogo[height]{file}; the three-argument ufrjdeclarelogos is still accepted, with a warning, and ignores its left argument.}
+% \changes{v5.0}{2026/09/18}{The class checks the order of the pre-textual elements of 3.1.2 between maketitle and mainmatter: the folha de aprovacao, dedication, epigraph, lists and sumario each have their place, and one out of place is a compilation error that names what to move and where. mainmatter warns when there is no tableofcontents, the one mandatory element the author has to ask for.}
 % \changes{v5.0}{2026/09/17}{The logos are printed on the capa only. The folha de rosto repeated the capa's logo line; Annex B, which is the model of the folha de rosto, and the two sheets of the SiBI model carry no image there. Annex A puts the two logos on the CAPA and marks both as optional.}
 % \changes{v5.0}{2026/09/17}{The folha de rosto and the folha de aprovacao are written entirely in Portuguese, whatever the language of the work. The research-line label, the coadvisor label and the two approval labels followed the main language while the natureza and the advisor label did not, so an English or Spanish work came out with half of each sheet in each language. The class manual and section 7 of the Norma COPPE already stated the rule: these sheets are institutional identity. The four now read the Portuguese key through ufrj@unitstr, which still honours a text the unit declared.}
 % \changes{v5.0}{2026/09/17}{The reference above each abstract is composed like the references in the list: aligned to the left margin only, the title in bold and the subtitle out of it, and an em dash before the vinculacao academica. 4.2 asks for one presentation for every reference in the work; this one was justified, set the title flat and used an en dash, so the same reference had two shapes in the same work.}
@@ -1211,13 +1225,14 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \subsection{Folhas pré-textuais}
 %
 % \begin{description}
-%   \item[\texttt{semorientadornabanca}] \textbf{Desligada por padrão}: a
-%     folha de aprovação abre a banca com os orientadores e coorientadores, na
-%     frente dos examinadores, porque a 3.1.2.1.3(e) manda que ``o orientador
-%     deve aparecer em primeiro lugar, por ser o presidente da banca''. Ligue-a
-%     para listar só os examinadores.
-%   \item[\texttt{orientadorexamina}] Aceita e sem efeito desde a revisão da
-%     v4.1: pedia o orientador na banca, que agora é o padrão.
+%   \item[\texttt{orientadorexamina}] \textbf{Desligada por padrão.} A folha
+%     de aprovação lista a banca que você declara com |\examiner|, na ordem em
+%     que declara. A 3.1.2.1.3(e) manda que ``o orientador deve aparecer em
+%     primeiro lugar, por ser o presidente da banca'': declare-o como o
+%     \emph{primeiro} |\examiner|, com o nome, a titulação e a instituição. Esta
+%     opção faz isso por você: põe os orientadores e os coorientadores à frente
+%     dos examinadores.
+%   \item[\texttt{semorientadornabanca}] Aceita e sem efeito: é o padrão.
 %   \item[\texttt{coorientador}] Lista os coorientadores também nas três
 %     páginas de resumo, abaixo dos orientadores. Desligada por padrão: a
 %     3.1.2.1.4 descreve o resumo e não diz quem assina a orientação, e
@@ -1714,15 +1729,25 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \DescribeEnv{foreignabstract}
 % \DescribeEnv{brazilianabstract}
 % Os resumos. O |abstract| é o do idioma principal, o |foreignabstract| o do
-% estrangeiro --- inglês, por padrão, quando o trabalho é em português.
-% O |brazilianabstract| é o terceiro, em português, para o trabalho escrito
-% em espanhol, francês ou italiano que precise de um resumo legível pela UFRJ.
+% estrangeiro --- inglês, por padrão, quando o trabalho é em português, e
+% português quando o trabalho é em inglês. O |brazilianabstract| é o resumo
+% em português do trabalho escrito em espanhol, francês ou italiano.
+%
+% \textbf{O resumo em português vem sempre primeiro.} A 3.1.2 põe o resumo em
+% língua vernácula antes do resumo em língua estrangeira, e a 3.1.2.1.5 faz
+% do estrangeiro ``a versão do resumo em língua vernácula'': vale qualquer que
+% seja o idioma do trabalho. Num trabalho em inglês, o |foreignabstract| --- o
+% resumo em português --- vem antes do |abstract|; num trabalho em espanhol,
+% o |brazilianabstract| abre os resumos, antes do inglês e do espanhol. A
+% classe confere, como confere o resto da ordem pré-textual.
 %
 % \textbf{Cada folha inteira no seu idioma.} Tudo o que a \emph{classe}
-% escreve numa folha de resumo --- a frase de abertura, o título, o mês, os
-% rótulos \textbf{Orientador} e \textbf{Programa}, as palavras-chave --- sai no
-% idioma daquela folha. Você escreve o corpo em um idioma e a folha inteira
-% sai naquele idioma; não há nada a configurar.
+% escreve numa folha de resumo --- o título da folha e as palavras-chave, e,
+% se você os ligar, a frase de abertura, o título do trabalho, o mês e os
+% rótulos \textbf{Orientador} e \textbf{Programa} --- sai no idioma daquela
+% folha. Você escreve o corpo em um idioma e a folha inteira sai naquele
+% idioma; não há nada a configurar. A referência do alto é a exceção: é sempre
+% a mesma, em português.
 %
 % A única coisa que não se traduz é o \textbf{nome do Programa}: o estilo da
 % unidade o declara em português e em inglês, e só. Numa folha em espanhol,
@@ -1759,10 +1784,10 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % |resumosemreferencia|.
 %
 % \DescribeMacro{\configuraresumos}
-% \par\textbf{Os cinco elementos da folha, e como desligar quatro.} A folha abre
-% com o \textbf{título} --- RESUMO, ABSTRACT, RESUMEN, no idioma daquele resumo
-% ---, centralizado como todo título sem indicativo numérico (2.6). O título não
-% se desliga. Abaixo dele, uma folha de resumo tem cinco partes, nesta ordem:
+% \par\textbf{Os cinco elementos da folha.} A folha abre com o \textbf{título}
+% --- RESUMO, ABSTRACT, RESUMEN, no idioma daquele resumo ---, centralizado
+% como todo título sem indicativo numérico (2.6). O título não se desliga.
+% Abaixo dele, uma folha de resumo pode ter cinco partes, nesta ordem:
 % \begin{enumerate}
 %   \item a \textbf{identificação da página}: a frase ``Resumo da
 %     Dissertação apresentada à COPPE/UFRJ como parte dos requisitos
@@ -1777,12 +1802,14 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %   \item o \textbf{resumo propriamente dito}, que é o que você escreve
 %     dentro do ambiente.
 %    \end{enumerate}
-% \textbf{Só o quinto é obrigatório.} Os quatro primeiros vem ligados, que
-% é a folha completa dos Anexos E e F, e saem juntos com um comando no
-% preâmbulo:
+% \textbf{Só o quinto é obrigatório.} Por padrão vem ligada só a
+% referência, que é a folha dos Anexos E e F: referência, texto e
+% palavras-chave (\#157). Os outros três --- a frase de abertura, o título com
+% o autor e a orientação --- não estão no modelo do Manual; um Programa que os
+% exija os liga com um comando no preâmbulo:
 % \begin{verbatim}
-%   \setupabstracts{true}{true}{true}{true}   % o padrao: folha completa
-%   \setupabstracts{true}{true}{true}{false}  % sem a referencia
+%   \setupabstracts{false}{false}{false}{true}  % o padrao: Anexo E
+%   \setupabstracts{true}{true}{true}{true}     % os cinco elementos
 %   \setupabstracts{false}{false}{false}{false} % so o texto do resumo
 % \end{verbatim}
 % Os quatro argumentos são lógicos --- |true| ou |false|, e nada além
@@ -1796,9 +1823,9 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %
 % \textbf{O que a norma exige, e o que ela deixa a você.} A 3.1.2.1.4 exige
 % o resumo, o espaço 1,5, o parágrafo único, o limite de palavras e as
-% palavras-chave no fim. Os quatro elementos de cima são o modelo dos Anexos E
-% e F --- que o Manual apresenta como sugestão, e é por isso que dá para
-% desligar. Antes de desligar, pergunte na secretaria do seu Programa.
+% palavras-chave no fim, e \emph{sugere} a referência no alto, como no Anexo
+% E. Os outros três elementos vêm da tradição da COPPE e não do Manual; antes
+% de ligá-los, pergunte na secretaria do seu Programa se ele os pede.
 %
 % O uso prático é um: quem quer o resumo numa folha só. O Manual \textbf{não}
 % exige isso, e um resumo de 500 palavras em espaço 1,5, com os cinco
@@ -1834,6 +1861,28 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % quadros, programas, algoritmos e as dos tipos criados com |\newufrjfloat|,
 % porque quadro, programa e algoritmo são ilustrações (2.10) ---, depois a de
 % tabelas, a de abreviaturas e siglas, a de símbolos, e o sumário por último.
+%
+% \textbf{A classe confere a ordem.} Entre o |\maketitle| e o |\mainmatter|,
+% cada elemento pré-textual que a classe compõe --- a folha de aprovação, a
+% dedicatória, a epígrafe, as listas e o sumário --- tem o seu lugar na ordem
+% da 3.1.2, e um elemento fora dele é \textbf{erro de compilação}, com a
+% mensagem dizendo o que mover para onde:
+% \begin{verbatim}
+% ! Class ufrj Error: Fora da ordem da 3.1.2 do Manual: \listoftables
+% (ufrj)              (lista de tabelas) depois de \tableofcontents (sumario).
+% \end{verbatim}
+% A errata e os agradecimentos não entram na conferência, porque não têm
+% comando: são o seu |\chapter*|. Listas do mesmo lugar --- as de ilustração
+% entre si, a de abreviaturas e a de siglas --- vão em qualquer ordem. Sem o
+% |\tableofcontents|, o |\mainmatter| avisa que falta o sumário, o único
+% elemento pré-textual obrigatório que você mesmo tem de pedir. A classe
+% confere, e não reordena sozinha: o que você escrevesse entre duas listas
+% mudaria de lugar sem aviso, e o |.tex| continuaria errado.
+%
+% Um trabalho que ainda diz |\documentclass{coppe}| --- a compatibilidade com a
+% 4.x --- recebe \emph{aviso}, e não erro: os modelos da 4.x ensinavam outra
+% ordem, e a compatibilidade promete que o trabalho antigo compila como está.
+% O aviso diz o que mover.
 % As listas \textbf{não} entram no sumário, a não ser com a opção
 % |listasnosumario| --- que \textbf{contraria a norma}: a \mbox{NBR~6027} tira
 % os elementos pré-textuais do sumário, e o sumário modelo do Manual começa na
@@ -2387,6 +2436,13 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \end{tabular}
 % \end{center}
 %
+% A patente (4.2.5) tem campos só dela: o depositante em |holder|, o
+% procurador em |attorney| (|procurador|), e as datas de depósito e de
+% concessão em |filingdate| (|deposito|) e |grantdate| (|concessao|), escritas
+% como devem sair --- |27 jan. 2006|. O procurador é nome de pessoa, e sai em
+% ordem direta, como no Manual: ``Procurador: Maria Cristina Valim Lourenço
+% Gomes.''
+%
 % \textbf{Uma advertência.} Não misture as duas formas na MESMA entrada. Elas
 % funcionam juntas no mesmo arquivo, mas dentro de uma entrada escolha uma e
 % fique nela, ou a leitura fica confusa para quem vier depois.
@@ -2396,8 +2452,12 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % segunda parte do |exemplo.bib|, citada por inteiro no |max-exemplo.tex|, com as
 % chaves |m-|\meta{item}; a mesma base com os sinônimos em português está em
 % |tests/adversativa/referencias-manual.bib|, com as chaves |pt-|\meta{item}. Cada
-% entrada das duas traz, em comentário, a referência \textbf{como o Manual a
-% imprime}, e os documentos adversativos em português citam as duas. As chaves
+% entrada das duas vem logo depois de um |@comment{Manual: ...}| com a
+% referência \textbf{como o Manual a imprime}, e os documentos adversativos em
+% português citam as duas. Os comentários das bases são sempre |@comment|, e
+% nunca linha começada por |%|: o JabRef e os outros gerenciadores de
+% referências não entendem o |%| como comentário (\#164). Vale para o seu
+% |.bib| também. As chaves
 % são diferentes de propósito: com a mesma chave nos dois arquivos, o
 % \texttt{biber} achava tudo no primeiro e nem abria o segundo, e a forma em
 % português ficou sem conferência sem que nada avisasse.
@@ -2416,24 +2476,28 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \end{description}
 %
 % \textbf{Autor que é entidade.} Entre chaves duplas, para o \texttt{biber} não
-% o tratar como sobrenome e prenome. Quando a entidade tem um órgão
-% subordinado, a superior --- o país, o estado, a universidade --- vai
-% \textbf{digitada em caixa alta} por você, e o resto como se escreve:
+% o tratar como sobrenome e prenome, e \textbf{escrito como se escreve}, com as
+% maiúsculas e minúsculas de sempre: a caixa alta da lista é a classe que põe.
+% Quando a entidade tem um órgão subordinado, escreva os níveis do maior para o
+% menor, separados por ponto e espaço:
 %
 % \begin{verbatim}
-%   author = {{BRASIL. Ministério da Educação}},
-%   author = {{RIO DE JANEIRO (Estado). Secretaria de Saúde}},
-%   author = {{UNIVERSIDADE FEDERAL DO RIO DE JANEIRO. Sistema de
+%   author = {{Associação Brasileira de Normas Técnicas}},
+%   author = {{Brasil. Ministério da Educação}},
+%   author = {{Rio de Janeiro (Estado). Secretaria de Saúde}},
+%   author = {{Universidade Federal do Rio de Janeiro. Sistema de
 %              Bibliotecas e Informação}},
+%   author = {{IBGE}},
 % \end{verbatim}
 %
-% A classe não converte o nome na lista: um nome com ponto sai exatamente como
-% foi digitado, porque só você sabe onde termina a entidade superior (4.3.2.13).
-% Na \emph{chamada}, sim: a 4.1.1.2 cita só a entrada, com as iniciais
-% maiúsculas, e a classe escreve ``(Brasil, 1995)'' e ``(Universidade Federal do
-% Rio de Janeiro, 1998)'' a partir do mesmo |.bib|. Um nome sem hierarquia, como
-% |{{IBGE}}|, sai na chamada como foi digitado. Se quiser outra forma na
-% chamada, |shortauthor = {...}| vence sempre.
+% Na lista, a classe põe em caixa alta a \emph{entrada} --- o nome até o
+% primeiro ponto, sem o qualificador entre parênteses --- e deixa o resto como
+% você escreveu: ``ASSOCIAÇÃO BRASILEIRA DE NORMAS TÉCNICAS'', ``BRASIL.
+% Ministério da Educação'', ``RIO DE JANEIRO (Estado). Secretaria de Saúde''
+% (4.3.2.13). Na chamada vai só a entrada, como você a escreveu: ``(Brasil,
+% 1995)'', ``(Rio de Janeiro (Estado), 2000)'', ``(Universidade Federal do Rio de
+% Janeiro, 1998)'', e a sigla fica sigla, ``(IBGE, 2011)'' (4.1.1.2). Se quiser
+% outra forma na chamada, |shortauthor = {...}| vence sempre.
 %
 % \subsection{Como citar}
 %
@@ -2452,17 +2516,31 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \begin{tabular}{@{}lll@{}}
 % \textbf{Comando} & \textbf{Autor-data} & \textbf{Com \texttt{numbers}} \\
 % \hline
-% |\cite{x}|        & (SOBRENOME, 2026)          & (1) \\
-% |\citet{x}|       & SOBRENOME (2026)           & SOBRENOME (1) \\
-% |\citep{x}|       & (SOBRENOME, 2026)          & (1) \\
-% |\textcite{x}|    & SOBRENOME (2026)           & SOBRENOME (1) \\
-% |\parencite{x}|   & (SOBRENOME, 2026)          & (1) \\
-% |\citeauthor{x}|  & SOBRENOME                  & SOBRENOME \\
+% |\cite{x}|        & (Sobrenome, 2026)          & (1) \\
+% |\citet{x}|       & Sobrenome (2026)           & Sobrenome (1) \\
+% |\citep{x}|       & (Sobrenome, 2026)          & (1) \\
+% |\textcite{x}|    & Sobrenome (2026)           & Sobrenome (1) \\
+% |\parencite{x}|   & (Sobrenome, 2026)          & (1) \\
+% |\citeauthor{x}|  & Sobrenome                  & Sobrenome \\
 % |\citeyear{x}|    & 2026                       & 2026 \\
 % |\citetitle{x}|   & o título da obra         & o título da obra \\
 % |\nocite{x}|      & nada; só entra na lista  & idem \\
 % \end{tabular}
 % \end{center}
+%
+% Na chamada, o nome vai em maiúsculas e minúsculas, como você o escreveu ---
+% ``(Castro, 1978)'' ---; a caixa alta é só da lista (4.1.1.2a; NBR
+% 10520:2023).
+%
+% \textbf{Obra sem autor.} A chamada vai pelo título, cortado como a NBR
+% 10520:2023 manda (6.1.1.4): a palavra só, num título de uma palavra ---
+% ``(Inglês, 2012)'' ---; a primeira palavra e \texttt{[...]}, num título mais
+% longo --- ``(Anteprojeto [...], 1987)'' ---; e, num título que começa por
+% artigo ou monossílabo, ele, a palavra seguinte e \texttt{[...]} --- ``(A flor
+% [...], 1995)'', ``(Nos canaviais [...], 1995)''. O subtítulo não entra. Na
+% lista, a mesma palavra vai em caixa alta, com o artigo ou o monossílabo que a
+% preceder --- ``A FLOR prometida'' ---, e a ordem alfabética os ignora (4.2).
+% Se quiser outra forma na chamada, |shorttitle = {...}| vence.
 %
 % \subsection{Página citada, tradução nossa, e \emph{apud}}
 %
@@ -2641,7 +2719,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %     |\DeclareBibliographyStrings| para |availablefrom|, |urlseen|, |in|,
 %     |editor|, |editors|, |depositor|, |ufrjscale|, |mscdiss|, |dscthesis|,
 %     |phdthesis|, |tcc|, |ufrjmscdeg|, |ufrjdscdeg|, |ufrjphddeg|,
-%     |ufrjtccdeg|, |ufrjfiling| e |ufrjgrant|. Os arquivos
+%     |ufrjtccdeg|, |ufrjfiling|, |ufrjgrant| e |ufrjattorney|. Os arquivos
 %     |spanish-ufrj.lbx|, |french-ufrj.lbx| e |italian-ufrj.lbx| que acompanham
 %     a classe são os modelos a copiar.
 % \end{description}
@@ -2678,13 +2756,21 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \subsection{Quem manda, quando as fontes divergem}\label{sec:quemmanda}
 %
 % A ordem é esta, e vale a pena fixá-la porque as fontes \emph{de fato}
-% divergem em pelo menos um ponto:
+% divergem:
 %
 % \begin{enumerate}
-%   \item o \textbf{Manual do SiBI}, edição vigente;
-%   \item as \textbf{decisões próprias da unidade} sobre ele, registradas na
-%     norma da unidade --- na COPPE, a Norma da COPPE;
-%   \item onde nenhum dos dois manda nada, a \textbf{escolha do autor}, que na
+%   \item o \textbf{Manual do SiBI}, edição vigente. Quando o texto e um
+%     exemplo dele divergem, vale o texto. As duas folhas do modelo que o SiBI
+%     distribui --- a folha de rosto e a folha adicional, em |specs/| --- valem
+%     como \textbf{errata} sobre os exemplos do Manual;
+%   \item as \textbf{normas da ABNT}, nas edições que o Manual cita (a lista
+%     está na seção seguinte) e por meio dele: quando uma delas diverge do
+%     Manual, vale o Manual, e a divergência fica registrada como
+%     \textbf{aviso} --- não se resolve em silêncio;
+%   \item a \textbf{norma da unidade} --- na COPPE, a Norma da COPPE ---, que
+%     não contraria o Manual, decide só onde ele não obriga e, ao decidir,
+%     fica com o que os exemplos dele mostram;
+%   \item onde nenhum deles manda nada, a \textbf{escolha do autor}, que na
 %     classe vira opção e nunca decisão embutida.
 % \end{enumerate}
 %
@@ -2736,9 +2822,38 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \subsection{Normas da ABNT, por intermédio do Manual}
 %
 % O Manual do SiBI é que aplica as normas da ABNT; a classe segue o Manual, e
-% não as normas diretamente. As que aparecem são a NBR~14724 (trabalhos
-% acadêmicos), a NBR~6023 (referências), a NBR~6024 (numeração progressiva),
-% a NBR~6027 (sumário) e a NBR~10520:2023 (citações).
+% não as normas diretamente. Valem as \textbf{edições que o Manual cita} na sua
+% lista de referências, e não ``as vigentes'', que podem mudar sem o Manual
+% mudar: NBR~6023:2025 (referências), NBR~10520:2023 (citações),
+% NBR~14724:2024 (trabalhos acadêmicos), NBR~6028:2021 (resumos),
+% NBR~6027:2012 (sumário) e NBR~6024:2012 (numeração progressiva). As três
+% primeiras estão em |specs/ABNT/|, fora do repositório: são publicações da
+% ABNT, com todos os direitos reservados.
+%
+% Onde o Manual é menos específico que a norma, a classe segue a norma: a
+% chamada pelo título é cortada como a 6.1.1.4 da NBR~10520:2023 manda
+% (``(Anteprojeto [...], 1987)''), e os meses das obras em outro idioma vêm do
+% Anexo~A da NBR~6023:2025. \textbf{Onde a norma e o Manual divergem, vale o
+% Manual}, e a divergência é registrada aqui, como aviso. As conhecidas:
+% \begin{description}
+%   \item[Mês de quatro letras] a 4.3.5.5.1 manda abreviar ``de acordo com o
+%     Anexo~A da NBR~6023'' e não abreviar mês de quatro letras ou menos; o
+%     exemplo da mesma seção traz ``Jul.'', e o Anexo~A, ``July''. É o
+%     exemplo que diverge do texto, e a classe segue o texto.
+%   \item[Palavras-chave com maiúscula] a 3.1.2.1.4 e a NBR~6028:2021 começam
+%     a palavra-chave por minúscula; o Anexo~E do Manual mostra maiúsculas. Vale
+%     o texto.
+%   \item[Erratas do gabarito] as divergências aceitas do gabarito das
+%     referências --- a abreviatura ``LEVI, G;'' sem o ponto, e as demais ---
+%     estão escritas no próprio |exemplo.bib|, num
+%     |@comment{Divergencia aceita: ...}| antes de cada entrada, com a forma
+%     exata que a classe compõe em
+%     |@comment{Classe: ...}|, e o |tools/conferir-referencias.py| as confere a
+%     cada rodada (\#167).
+% \end{description}
+% Nenhuma divergência encontrada até aqui pôs a norma da ABNT contra o
+% \emph{texto} do Manual; se aparecer uma, vale o Manual, e ela entra nesta
+% lista.
 %
 % \subsection{Ficha catalográfica}
 %
@@ -2768,46 +2883,46 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % Título no estrangeiro      & |\foreigntitle|         & 117 \\
 % Autor                        & |\author|               & 121 \\
 % Orientação              & |\advisor|              & 125 \\
-% Coorientação            & |\coadvisor|            & 133 \\
-% Banca                        & |\examiner|             & 139 \\
-% Programa                     & |\department|           & 146 \\
-% Data do depósito           & |\date|                 & 147 \\
-% Data da defesa               & |\approvaldate|        & 150 \\
-% Palavras-chave               & |\keyword|              & 156 \\
-% Área de concentração  & |\concentrationarea|     & 166 \\
-% Linha de pesquisa            & |\researchline|        & 167 \\
-% Coleta CAPES                 & |\productiontype|         & 168 \\
-% Projeto vinculado            & |\linkedproject|     & 169 \\
-% Nome do projeto              & |\projectname|          & 170 \\
-% Agência de fomento         & |\fundingagency|       & 171 \\
-% Ficha catalográfica        & |\catalogcard|   & 177 \\
-% Capa e folha de rosto        & |\maketitle|            & 179 \\
-% Parte pré-textual          & |\frontmatter|          & 181 \\
-% Dedicatória                & |\dedication|           & 182 \\
+% Coorientação            & |\coadvisor|            & 131 \\
+% Banca                        & |\examiner|             & 141 \\
+% Programa                     & |\department|           & 147 \\
+% Data do depósito           & |\date|                 & 148 \\
+% Data da defesa               & |\approvaldate|        & 151 \\
+% Palavras-chave               & |\keyword|              & 154 \\
+% Área de concentração  & |\concentrationarea|     & 164 \\
+% Linha de pesquisa            & |\researchline|        & 165 \\
+% Coleta CAPES                 & |\productiontype|         & 166 \\
+% Projeto vinculado            & |\linkedproject|     & 167 \\
+% Nome do projeto              & |\projectname|          & 168 \\
+% Agência de fomento         & |\fundingagency|       & 169 \\
+% Ficha catalográfica        & |\catalogcard|   & 175 \\
+% Capa e folha de rosto        & |\maketitle|            & 180 \\
+% Parte pré-textual          & |\frontmatter|          & 182 \\
+% Dedicatória                & |\dedication|           & 183 \\
 % Resumo                       & |abstract|              & 112 \\
 % Abstract                     & |foreignabstract|       & 128 \\
 % Listas pré-textuais        & |\listoffigures| \dots  & 146 \\
-% Sumário                    & |\tableofcontents|      & 247 \\
-% Parte textual                & |\mainmatter|           & 261 \\
-% Símbolo                    & |\symbl|                & 329 \\
+% Sumário                    & |\tableofcontents|      & 190 \\
+% Parte textual                & |\mainmatter|           & 273 \\
+% Símbolo                    & |\symbl|                & 341 \\
 % Citação longa           & |longquote|             & 236 \\
-% Fonte da ilustração     & |\source|               & 420 \\
+% Fonte da ilustração     & |\source|               & 432 \\
 % Quadro                       & |quadro|                & 300 \\
-% Bibliografia                 & |\printbibliography|    & 910 \\
-% Código no texto            & |\pythoninline|         & 1058 \\
-% Código Java no texto       & |\javainline|           & 1095 \\
-% Sigla declarada              & |\defineacronym|             & 1431 \\
-% Sigla usada                  & |\useacronym|                & 1434 \\
-% Abreviatura                  & |\abbrev|               & 1428 \\
-% Parte pós-textual          & |\backmatter|           & 1440 \\
-% Apêndices                  & |\appendix|             & 1456 \\
-% Anexos                       & |\annex|                & 1468 \\
+% Bibliografia                 & |\printbibliography|    & 922 \\
+% Código no texto            & |\pythoninline|         & 1070 \\
+% Código Java no texto       & |\javainline|           & 1107 \\
+% Sigla declarada              & |\defineacronym|             & 1443 \\
+% Sigla usada                  & |\useacronym|                & 1446 \\
+% Abreviatura                  & |\abbrev|               & 1440 \\
+% Parte pós-textual          & |\backmatter|           & 1452 \\
+% Apêndices                  & |\appendix|             & 1468 \\
+% Anexos                       & |\annex|                & 1480 \\
 % Glossário automático        & |\makeglossarylist|     & 59 \\
 % Termo do glossário          & |\glossaryterm|         & 55 \\
 % Glossário                    & |\printglossarylist|    & 56 \\
-% Entrada do índice            & |\index|                & 372 \\
-% Índice                       & |\printindex|           & 1334 \\
-% Colófon                    & |\ufrjfinalpage|    & 1487 \\
+% Entrada do índice            & |\index|                & 384 \\
+% Índice                       & |\printindex|           & 1346 \\
+% Colófon                    & |\ufrjfinalpage|    & 1499 \\
 % \end{tabular}
 % \end{center}
 %
@@ -3375,7 +3490,7 @@ doublespacing & [dsc,doublespacing] & \pre & Double spacing instead of one-and-a
 twoside   & [dsc,twoside]   & \pre & Mirrored margins, for printing and binding. \\
 oneside   & [dsc,oneside]   & \pre & One-sided, 3\,cm left margin on every sheet. The default. \\
 semorientadornabanca & [dsc,semorientadornabanca] & \pre & Approval sheet with the examiners only. By default the advisors head the board, as 3.1.2.1.3(e) requires. \\
-orientadorexamina & [dsc,orientadorexamina] & \pre & Accepted, no effect: the advisors are on the board by default. \\
+orientadorexamina & [dsc,orientadorexamina] & \pre & Puts the advisors and coadvisors at the head of the board on the approval sheet. Off by default: the board is what examiner declares, in order, and the advisor, who chairs it, is the first examiner (3.1.2.1.3e). \\
 coorientador & [dsc,coorientador] & \pre & List coadvisors on the abstract pages too. \\
 rascunhoficha & [dsc,rascunhoficha] & \pre & Draft catalogue card while writing. \textbf{Never valid for deposit.} \\
 resumosemreferencia & [dsc,resumosemreferencia] & \pre & Drop the work's own reference from the top of the three abstracts. It is printed by default (3.1.2.1.4, Annexes E and F). \\
@@ -3444,7 +3559,7 @@ semmorewrites & [dsc,semmorewrites] & \pre & Do not load \texttt{morewrites}. Sa
 abstract & \textbackslash begin\{abstract\} ... & \doc & Abstract in the main language. One sheet, one paragraph, 250 words. \\
 foreignabstract & \textbackslash begin\{foreignabstract\} ... & \doc & Abstract in the foreign language. \\
 brazilianabstract & \textbackslash begin\{brazilianabstract\} ... & \doc & Third abstract, Portuguese, for a Spanish- or French-main work. \\
-\textbackslash configuraresumos & \textbackslash configuraresumos\{true\}\{true\}\{true\}\{true\} & \pre & Turns the four optional elements of every abstract sheet on or off, in every language: page identification, title and author, advising, reference. All on by default; only the abstract text itself cannot be turned off. \\
+\textbackslash configuraresumos & \textbackslash configuraresumos\{true\}\{true\}\{true\}\{true\} & \pre & Turns the four optional elements of every abstract sheet on or off, in every language: page identification, title and author, advising, reference. By default only the reference, as in Annexes E and F; only the abstract text itself cannot be turned off. \\
 \textbackslash appendix & \textbackslash appendix & \doc & Opens the appendices: text \emph{you} wrote. \\
 \textbackslash annex & \textbackslash annex & \doc & Opens the annexes: documents you did \emph{not} write. \\
 \textbackslash printbibliography & \textbackslash printbibliography & \doc & The reference list, titled ``Referências'' (3.1.4.1). \\
@@ -4151,12 +4266,19 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
 %
 %    \begin{macrocode}
 \RequirePackage{caption}
-% justification=centering makes MULTI-LINE captions centre like the one-line
-% ones. Without it, caption's singlelinecheck centres a caption that fits on one
-% line and justifies one that wraps, so in a document with mixed caption lengths
-% a couple of tables looked left-aligned while the rest looked centred -- which
-% is what a recent review noticed about tables 5.1 and 5.2. 2.10 does not
-% prescribe the alignment; it does not tolerate two alignments either.
+% A legenda alinhada a ESQUERDA (#160). A 2.10 nao fixa o alinhamento; diz que
+% "tipo, numero de ordem, titulo, fonte, legenda e notas devem respeitar as
+% margens da ilustracao". O unico exemplo do Manual, a Figura 1 (secao 3), poe a
+% identificacao e a fonte alinhadas a esquerda, na margem da ilustracao -- e,
+% onde o texto nao decide, vale o exemplo. A classe centralizava tudo. Com
+% \illustrationwidth (#125), a caixa da legenda tem a largura da ilustracao e
+% fica centrada na mancha, como a ilustracao, e o texto comeca na margem dela:
+% o desenho da Figura 1.
+%
+% singlelinecheck=false: sem ele, o caption centraliza a legenda que cabe numa
+% linha e alinha a que quebra, e um trabalho com legendas de tamanhos diferentes
+% saia com dois alinhamentos -- foi o que uma revisao notou nas tabelas 5.1 e
+% 5.2.
 % O sinal entre o numero e o titulo e o TRAVESSAO (U+2014), em toda parte: na
 % legenda, na lista de ilustracoes, no titulo de apendice e de anexo e no
 % sumario. E o nome que o Manual da ao sinal (2.10, 3.1.2.2.4, 3.1.4.3 e
@@ -4164,7 +4286,8 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
 % meia-risca em quase tudo e o travessao no driver de tese (#150). O caption nao
 % traz separador de travessao; este e o endash dele com o outro sinal.
 \DeclareCaptionLabelSeparator{emdash}{\space\textemdash\space}
-\captionsetup{font=footnotesize,labelsep=emdash,justification=centering}
+\captionsetup{font=footnotesize,labelsep=emdash,justification=raggedright,
+  singlelinecheck=false}
 % subcaption (NÃO subfig/subfigure) for subfigures / subtables; load right after
 % caption so it picks up the ABNT captionsetup above.
 \RequirePackage{subcaption}
@@ -4188,13 +4311,14 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
 % (float's own \l@quadro lays the number/title out incorrectly).
 \let\l@quadro\l@figure
 \newcommand\listofquadros{%
+  \ufrj@ordem{9}{lista de ilustracoes}{\string\listofquadros}%
   \chapter*{\listquadroname}%
   \ufrj@listtoc{\listquadroname}%
   \@mkboth{\MakeUppercase\listquadroname}{\MakeUppercase\listquadroname}%
   \@starttoc{loq}}
 % \source / \fonte: the illustration source (ABNT-mandatory). Typeset below the
-% float as a smaller, single-spaced, centred line; it does NOT advance any
-% caption counter. \cpsource/\cpfonte are clash-safe aliases (the rename rule);
+% float as a smaller, single-spaced line, aligned left like the caption (#160);
+% it does NOT advance any caption counter. \cpsource/\cpfonte are clash-safe aliases (the rename rule);
 % the label is "Fonte" (pt) / "Source" (en).
 \newcommand{\cpsourcename}{\ufrjstring{source}}
 % \illustrationwidth{<largura>}: a 2.10 fecha dizendo que "tipo, numero de
@@ -4214,11 +4338,11 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
 \newcommand{\cpsource}[1]{%
   \par\addvspace{\smallskipamount}%
   \ifx\ufrj@ilwidth\@empty
-    {\footnotesize\singlespacing\centering\cpsourcename: #1\par}%
+    {\footnotesize\singlespacing\raggedright\cpsourcename: #1\par}%
   \else
     {\centering
       \parbox{\ufrj@ilwidth}{%
-        \footnotesize\singlespacing\centering\cpsourcename: #1\par}\par}%
+        \footnotesize\singlespacing\raggedright\cpsourcename: #1\par}\par}%
   \fi}
 \let\cpfonte\cpsource
 \@ifundefined{source}{\let\source\cpsource}{}%
@@ -4242,6 +4366,7 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
   \AtBeginDocument{\expandafter\let\csname l@#1\endcsname\l@figure}%
   \expandafter\providecommand\csname #1autorefname\endcsname{#2}%
   \expandafter\newcommand\csname listof#1s\endcsname{%
+    \ufrj@ordem{9}{lista de ilustracoes}{\expandafter\string\csname listof#1s\endcsname}%
     \chapter*{#3}\ufrj@listtoc{#3}%
     \@mkboth{\MakeUppercase{#3}}{\MakeUppercase{#3}}%
     \@starttoc{lo#1}}}
@@ -4692,16 +4817,19 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % cada membro da banca. Com a entrega so digital (Resolucao CEPG n. 246/2023)
 % nao ha o que assinar a mao, e a v4.1 tirou as reguas. A opcao continua aceita,
 % sem efeito, para nao quebrar documento escrito antes disso.
-% A 3.1.2.1.3(e) do Manual: na folha de aprovacao, "o orientador deve aparecer
-% em primeiro lugar, por ser o presidente da banca". E o padrao desde a revisao
-% da v4.1 (issue 102): orientadores e coorientadores abrem a lista, na frente
-% dos examinadores. Antes dela o padrao era o contrario -- so os examinadores --,
-% o que contrariava o texto do Manual.
+% A 3.1.2.1.3(e) do Manual: na folha de aprovacao, "o nome, a titulacao e a
+% instituicao dos membros que constituem a Banca Examinadora. O orientador deve
+% aparecer em primeiro lugar, por ser o presidente da banca". A banca e quem o
+% autor declara com \examiner, na ordem em que declara: o orientador, que a
+% preside, e o primeiro \examiner (#165, decisao de 21/09/2026). A classe nao o
+% poe la sozinha -- quem compoe a banca e quem sabe quem a compos.
 %
-% `semorientadornabanca' devolve a folha so com os examinadores, para o
-% Programa que a queira assim. `orientadorexamina', que era como se pedia o
-% orientador na banca, continua aceita e agora so confirma o padrao.
-\newif\if@ufrjorientexam \@ufrjorientexamtrue
+% A historia: ate a v4.1 o padrao era este; a revisao da v4.1 (#102) passou a
+% abrir a lista com orientadores e coorientadores, sem opcao; e a #165 voltou
+% ao que era. `orientadorexamina' volta a valer: poe orientadores e
+% coorientadores a frente dos examinadores, para quem os quiser sem declarar.
+% `semorientadornabanca' continua aceita, e so confirma o padrao.
+\newif\if@ufrjorientexam \@ufrjorientexamfalse
 \DeclareOption{orientadorexamina}{\@ufrjorientexamtrue}
 \DeclareOption{semorientadornabanca}{\@ufrjorientexamfalse}
 % Os links. A classe carrega o hyperref, que sem opcao nenhuma desenha uma
@@ -4761,16 +4889,20 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %   4. referencia bibliografica do proprio trabalho (3.1.2.1.4);
 %   5. o resumo propriamente dito.
 %
-% So o quinto e obrigatorio. Os quatro primeiros tem um \newif cada, todos
-% ligados por padrao, porque e assim que os Anexos E e F do Manual mostram a
-% folha -- e porque quem nao pedir nada tem de receber a folha completa.
+% So o quinto e obrigatorio. Os quatro primeiros tem um \newif cada. Por
+% padrao, so a referencia vem ligada: os Anexos E e F do Manual mostram a folha
+% com a referencia, o texto e as palavras-chave, e nada mais (#157). Ate
+% 18/09/2026 os quatro vinham ligados, e a documentacao dizia que era a folha
+% dos Anexos -- nao era: a frase de abertura, o titulo com o autor e a
+% orientacao sao da tradicao da COPPE, e a Norma COPPE, que deve favorecer os
+% exemplos do Manual, deixou de pedi-los. Continuam como opcao.
 %
-% O Programa entra no bloco da orientacao, e nao num quinto interruptor: no
-% Anexo E ele e a ultima linha do mesmo bloco dos orientadores, colado nele, e
-% desligar um deixando o outro nao produz nenhuma folha que o Manual mostre.
-\newif\if@ufrjresidpag \@ufrjresidpagtrue
-\newif\if@ufrjrestitulo \@ufrjrestitulotrue
-\newif\if@ufrjresorient \@ufrjresorienttrue
+% O Programa entra no bloco da orientacao, e nao num quinto interruptor: os
+% dois sempre andaram juntos, colados, e desligar um deixando o outro nao
+% produz folha nenhuma que alguem use.
+\newif\if@ufrjresidpag \@ufrjresidpagfalse
+\newif\if@ufrjrestitulo \@ufrjrestitulofalse
+\newif\if@ufrjresorient \@ufrjresorientfalse
 % 3.1.2.1.6 says the sumario enumerates the divisions "na mesma ordem e grafia
 % em que a materia nele se sucede" and adds "inclusive os elementos
 % pos-textuais" -- and then settles the question by pointing at its own sumario
@@ -5276,6 +5408,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \renewcommand\lstlistlistingname{\ufrjstring{listprogram}}}
 % \listofprogramas in the ufrj list style (heading + ToC + running head).
 \newcommand\listofprogramas{%
+  \ufrj@ordem{9}{lista de ilustracoes}{\string\listofprogramas}%
   \chapter*{\lstlistlistingname}%
   \ufrj@listtoc{\lstlistlistingname}%
   \@mkboth{\MakeUppercase\lstlistlistingname}{\MakeUppercase\lstlistlistingname}%
@@ -5449,12 +5582,17 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % folhas de resumo em outros idiomas, vai o nome em português, que é o nome
 % próprio do Programa.
 %
+% \DescribeMacro{\ufrjdeclarelogo}
 % \DescribeMacro{\ufrjdeclarelogos}
-% |\ufrjdeclarelogos|\oarg{altura}\marg{esquerda}\marg{direita} diz quais
-% logotipos vão no alto da capa e da folha de rosto, pelo nome do arquivo |.pdf|
-% sem a extensão. Um nome vazio tira aquele logotipo. Sem declaração nenhuma,
-% vai só o da UFRJ, à esquerda, com 2\,cm de altura: o Anexo~A do Manual marca os
-% dois logotipos como opcionais.
+% |\ufrjdeclarelogo|\oarg{altura}\marg{arquivo} declara o logotipo da
+% \emph{unidade}, que vai no alto da capa, à direita, pelo nome do arquivo
+% |.pdf| sem a extensão; a altura, 2\,cm por padrão, vale para os dois
+% logotipos da linha. O da UFRJ é da classe: sai sempre, à esquerda, e a
+% unidade não o troca nem o tira. O Anexo~A do Manual põe ali o ``Logo do
+% Programa''; a unidade decide o que vai --- a COPPE usa o seu logotipo
+% unificado, porque nem todo Programa tem logotipo. Sem declaração, a direita
+% fica vazia. (A forma antiga, |\ufrjdeclarelogos|, com três argumentos,
+% continua aceita, com aviso, e ignora o logotipo da esquerda.)
 %
 % \DescribeMacro{\ufrjdeclarenorm}
 % |\ufrjdeclarenorm|\marg{artigo}\marg{título} troca a norma que o colofão diz
@@ -5470,7 +5608,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % contração (``à COPPE/UFRJ''); |sciencename|, o nome do grau (``em
 % Ciências''); e |coverprogram|, a linha do Programa na capa. A chave |natureza|,
 % a frase da folha de rosto e da folha de aprovação, tem um valor da classe que
-% já inclui a sigla da unidade, e raramente precisa ser trocada.
+% segue o modelo do SiBI e já inclui o nome da unidade, e raramente precisa ser
+% trocada.
 %
 %    \begin{macrocode}
 % A unidade. \local@instname e o nome que a referencia do resumo sempre usou, e
@@ -5492,25 +5631,38 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % da ficha catalografica. Os tres expandem ate o fim, porque vao parar no XMP e
 % nos metadados do hyperref.
 \newcommand*\ufrj@unitsep{ \ifx\ufrj@unitacronym\@empty\else\ufrj@unitacronym, \fi}
+% O mesmo com o NOME da unidade por extenso, para a natureza (#159): o modelo do
+% SiBI escreve "Faculdade, Escola, Instituto ou Nucleo XXXX", e o Anexo B,
+% "Museu Nacional" -- o nome, e nao a sigla.
+\newcommand*\ufrj@unitnamesep{ \ifx\local@instname\@empty\else\local@instname, \fi}
 \newcommand*\ufrj@unitshort{%
   \ifx\ufrj@unitacronym\@empty\else\ufrj@unitacronym/\fi UFRJ}
 \newcommand*\ufrj@unitshortrev{%
   UFRJ\ifx\ufrj@unitacronym\@empty\else/\ufrj@unitacronym\fi}
-% Os logotipos da capa e da folha de rosto. O da UFRJ, a esquerda, e o padrao da
-% classe; o da direita e da unidade.
+% Os logotipos da capa (#130: so da capa). O Anexo A poe "Logo da UFRJ" a
+% esquerda e "Logo do Programa" a direita, os dois opcionais. O da UFRJ e da
+% CLASSE: sai sempre, a esquerda, e a unidade nao o troca nem o tira (#162,
+% decisao de 18/09/2026). O da direita e da UNIDADE, e o estilo dela o declara
+% com \ufrjdeclarelogo -- a COPPE declara o logotipo unificado do Instituto, e
+% nao o de cada Programa, porque nem todo Programa tem logotipo. Sem declaracao,
+% a direita fica vazia.
 \newcommand*\ufrj@logoheight{2cm}
-\newcommand*\ufrj@logoleft{ufrj-logo}
 \newcommand*\ufrj@logoright{}
-\newcommand\ufrjdeclarelogos[3][2cm]{%
+\newcommand\ufrjdeclarelogo[2][2cm]{%
   \gdef\ufrj@logoheight{#1}%
-  \gdef\ufrj@logoleft{#2}%
-  \gdef\ufrj@logoright{#3}}
+  \gdef\ufrj@logoright{#2}}
+% A forma de tres argumentos, que a 5.0 teve enquanto se preparava: continua
+% aceita, com aviso, e ignora o logotipo da esquerda, que agora e da classe.
+\newcommand\ufrjdeclarelogos[3][2cm]{%
+  \ClassWarningNoLine{ufrj}{\string\ufrjdeclarelogos\space mudou para
+    \string\ufrjdeclarelogo[altura]{arquivo}:\MessageBreak o logotipo da UFRJ
+    e da classe, e a unidade declara so o dela}%
+  \ufrjdeclarelogo[#1]{#3}}
 % A linha dos logotipos. Nenhum espaco solto entre as pecas: a caixa tem a
 % largura da linha, e um espaco a mais empurraria o logotipo da direita.
 \newcommand\ufrj@logoline{%
   \makebox[\linewidth]{%
-    \ifx\ufrj@logoleft\@empty\else
-      \ufrj@logo[\ufrj@logoheight]{\ufrj@logoleft}\fi
+    \ufrj@logo[\ufrj@logoheight]{ufrj-logo}%
     \hfill
     \ifx\ufrj@logoright\@empty\else
       \ufrj@logo[\ufrj@logoheight]{\ufrj@logoright}\fi}}
@@ -5558,11 +5710,19 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % Os textos institucionais que a classe escreve quando nenhuma unidade diz outra
 % coisa. Estao em portugues, e so em portugues, porque sao identidade.
 \ufrjdefstring{brazilian}{coverprogram}{Programa de Pós-Graduação em \local@deptname}
+% A natureza segue o modelo do SiBI -- as duas folhas que a 3.1.2.1.2 manda
+% baixar, errata sobre os exemplos do Manual: "Tese ou dissertacao apresentada
+% ao Programa de Pos-Graduacao XXXX, Faculdade, Escola, Instituto ou Nucleo
+% XXXX como requisito parcial a obtencao do titulo de mestre ou doutor em
+% XXXXX" (#159). Ate 21/09/2026 a classe escrevia a sigla da unidade no lugar do
+% nome, "da" antes da universidade e "como parte dos requisitos necessarios". A
+% universidade fica, embora o modelo a omita: a 3.1.2.1.1(e) pede "o nome da
+% instituicao a que e submetido o trabalho", o Anexo B a traz, e sem os
+% logotipos (#130) a folha de rosto nao a teria em lugar nenhum.
 \ufrjdefstring{brazilian}{natureza}{\local@doctype\ de \@degreename\
   \ifthenelse{\boolean{maledoc}}{apresentado}{apresentada}
-  ao Programa de Pós-graduação em \local@deptname,\ufrj@unitsep
-  da \local@universityname, como parte dos requisitos
-  necessários à obtenção do título de
+  ao Programa de Pós-Graduação em \local@deptname,\ufrj@unitnamesep
+  \local@universityname, como requisito parcial à obtenção do título de
   \local@degname\ em \local@deptname.}
 %    \end{macrocode}
 %
@@ -5987,12 +6147,130 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %
 % \subsubsection{As três partes do documento}
 %
+% \subsubsection{A ordem dos elementos pré-textuais}
+%
+% A 3.1.2 do Manual dá a ordem dos elementos pré-textuais, e a classe a
+% confere (\#148). Cada elemento que ela compõe tem um posto nessa ordem;
+% entre o |\maketitle| e o |\mainmatter|, um elemento de posto menor que o de
+% um já composto é erro, e a mensagem diz o que mover.
+%    \begin{macrocode}
+% A ordem da 3.1.2: folha de rosto, folha adicional, errata, folha de
+% aprovacao, dedicatoria, agradecimentos, epigrafe, resumo em lingua
+% vernacula, resumo em lingua estrangeira, lista de ilustracoes, lista de
+% tabelas, lista de abreviaturas e siglas, lista de simbolos e sumario. Os
+% postos: 1 \maketitle (capa, folha de rosto, folha adicional), 3
+% \frontmatter (folha de aprovacao), 4 \dedication, 6 \epigrafe, 7 e 8 os
+% resumos, 9 as listas de ilustracao, 10 a de tabelas, 11 as de abreviaturas
+% e de siglas, 12 a de simbolos, 13 o sumario. Errata e agradecimentos nao tem
+% comando -- sao \chapter* do autor -- e ficam fora da conferencia. Listas do
+% mesmo posto -- as de ilustracao entre si, abreviaturas e siglas -- vao em
+% qualquer ordem.
+%
+% Por que conferir, e nao reordenar. A classe poderia guardar as listas e
+% compo-las todas no \mainmatter, na ordem certa, mas: os resumos e os
+% agradecimentos tem texto do autor e nao se guardam assim; um documento sem
+% \mainmatter perderia as listas; e o que o autor escrevesse entre duas listas
+% mudaria de lugar sem aviso. O erro diz o que esta fora e para onde vai, e o
+% .tex fica certo -- que e o que o aluno leva para o proximo trabalho.
+%
+% Depois do \mainmatter a conferencia para: a 3.1.2.2.3 admite epigrafe na
+% abertura das secoes primarias. E no \mainmatter, se o sumario nao veio, um
+% aviso: e o unico elemento pre-textual que a 3.1.2.1.6 exige alem das folhas
+% que a classe ja compoe.
+\newif\if@ufrjordem
+% Pela classe coppe de compatibilidade (o \documentclass{coppe} da 4.x), a
+% ordem errada e AVISO, e nao erro: a compatibilidade promete que um trabalho
+% antigo compila como esta, e os modelos da 4.x ensinavam outra ordem -- o
+% sumario antes das listas, ou as listas de quadros, programas e algoritmos
+% depois da de tabelas, como a Norma COPPE mandava. O aviso diz o que mover.
+\newif\if@ufrjordemaviso
+\newcount\ufrj@ordemposto
+\newcommand*\ufrj@ordemnome{}
+\newcommand*\ufrj@ordemcmd{}
+% #1 o posto, #2 o nome do elemento, #3 o comando (ja com \string)
+\newcommand\ufrj@ordem[3]{%
+  \if@ufrjordem
+    \ifnum#1<\ufrj@ordemposto
+      \if@ufrjordemaviso
+        \ClassWarning{ufrj}{Fora da ordem da 3.1.2 do Manual: #3 (#2)\MessageBreak
+          depois de \ufrj@ordemcmd\space(\ufrj@ordemnome). Mova #3\MessageBreak
+          para antes de \ufrj@ordemcmd: com a classe ufrj, isto\MessageBreak
+          e erro}%
+      \else
+        \ClassError{ufrj}{Fora da ordem da 3.1.2 do Manual: #3 (#2)\MessageBreak
+          depois de \ufrj@ordemcmd\space(\ufrj@ordemnome)}{%
+          A 3.1.2 do Manual poe os elementos pre-textuais nesta ordem:\MessageBreak
+          folha de rosto, folha adicional, errata, folha de aprovacao,\MessageBreak
+          dedicatoria, agradecimentos, epigrafe, resumo em portugues,\MessageBreak
+          resumo em lingua estrangeira, listas de ilustracoes, lista de\MessageBreak
+          tabelas, lista de abreviaturas e siglas, lista de simbolos\MessageBreak
+          e sumario. Mova #3 para antes de \ufrj@ordemcmd.}%
+      \fi
+    \else
+      \global\ufrj@ordemposto=#1\relax
+      \xdef\ufrj@ordemnome{#2}%
+      \xdef\ufrj@ordemcmd{#3}%
+    \fi
+  \fi}
+\newcommand\ufrj@ordeminicio{%
+  \global\@ufrjordemtrue
+  \global\ufrj@ordemposto=\@ne
+  \gdef\ufrj@ordemnome{folha de rosto}%
+  \xdef\ufrj@ordemcmd{\string\maketitle}}
+\newcommand\ufrj@ordemfim{%
+  \if@ufrjordem
+    \ifnum\ufrj@ordemposto<13
+      \ClassWarningNoLine{ufrj}{Falta o sumario (\string\tableofcontents),
+        que a 3.1.2.1.6\MessageBreak do Manual exige, antes do
+        \string\mainmatter}%
+    \fi
+    \global\@ufrjordemfalse
+  \fi}
+% Os resumos (#158): o posto e o do IDIOMA da folha, e nao o do ambiente. O
+% resumo em lingua vernacula -- o portugues -- vem antes do estrangeiro,
+% qualquer que seja o idioma principal (3.1.2; a 3.1.2.1.5 faz do estrangeiro
+% "a versao do resumo em lingua vernacula"): num trabalho em ingles, o
+% foreignabstract, que e o resumo em portugues, vem antes do abstract; num
+% trabalho em espanhol, o brazilianabstract abre os resumos. O gancho roda no
+% \begin, antes do codigo do ambiente -- por isso o idioma vem de fora, e nao
+% do \ufrj@reslang, que o ambiente ainda nao definiu.
+\newcommand*\ufrj@ordemlang{}
+\newcommand\ufrj@ordemresumo[1]{%
+  \edef\ufrj@ordemlang{#1}%
+  \ifboolexpr{ test {\ifdefstring{\ufrj@ordemlang}{brazilian}}
+            or test {\ifdefstring{\ufrj@ordemlang}{portuguese}}
+            or test {\ifdefstring{\ufrj@ordemlang}{brazil}}
+            or test {\ifdefstring{\ufrj@ordemlang}{portuges}} }
+    {\ufrj@ordem{7}{resumo em portugues}{\string\begin{\@currenvir}}}%
+    {\ufrj@ordem{8}{resumo em lingua estrangeira}{\string\begin{\@currenvir}}}}
+\AtBeginEnvironment{abstract}{\ufrj@ordemresumo{\ufrj@mainlang}}
+\AtBeginEnvironment{foreignabstract}{\ufrj@ordemresumo{\ufrj@foreignlang}}
+\AtBeginEnvironment{brazilianabstract}{\ufrj@ordemresumo{brazilian}}
+% O sumario e do book.cls, e a lista de algoritmos do algorithm2e. Nenhum dos
+% dois tem parametro, e o \pretocmd de um comando sem parametro nao retokeniza:
+% pode ficar para o \AtBeginDocument, depois de qualquer pacote que os redefina.
+% (Os comandos da classe que tem parametro -- \dedication, \epigrafe -- levam a
+% conferencia na propria definicao: no \AtBeginDocument o @ ja nao e letra, e a
+% retokenizacao os quebraria.)
+\AtBeginDocument{%
+  \pretocmd\tableofcontents
+    {\ufrj@ordem{13}{sumario}{\string\tableofcontents}}{}%
+    {\ClassWarningNoLine{ufrj}{Nao consegui conferir a ordem do sumario}}%
+  \ifdefined\listofalgorithms
+    \pretocmd\listofalgorithms
+      {\ufrj@ordem{9}{lista de ilustracoes}{\string\listofalgorithms}}{}%
+      {\ClassWarningNoLine{ufrj}{Nao consegui conferir a ordem da lista de
+        algoritmos}}%
+  \fi}
+%    \end{macrocode}
+%
 % \begin{macro}{\frontmatter}
 % The number of pages for both frontmatter and mainmatter printed
 % in the cataloging details page is computed by means of simple
 % \LaTeX\ labels.
 %    \begin{macrocode}
 \renewcommand\frontmatter{%
+  \ufrj@ordem{3}{folha de aprovacao}{\string\frontmatter}%
   \cleardoublepage
   \@mainmatterfalse
 % The count already started at the folha de rosto (see \maketitle) and simply
@@ -6039,6 +6317,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \begin{macro}{\mainmatter}
 %    \begin{macrocode}
 \renewcommand\mainmatter{%
+  \ufrj@ordemfim
   \ufrj@mainBegin
   \cleardoublepage
   \@mainmattertrue
@@ -6255,7 +6534,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % the institution block --- the university, the unit as |\ufrjdeclareunit|
 % wrote it for the cover, and the graduate program taken from |\department| ---
 % followed by the author, the title, and the city and year, all centred and
-% uppercased. The logos declared with |\ufrjdeclarelogos| head the page. The
+% uppercased. The UFRJ logo, on the left, and the unit's, declared with
+% |\ufrjdeclarelogo|, on the right, head the page. The
 % capa is not counted: it precedes the (roman) front matter and is produced
 % before the |titlepage| (folha de rosto).
 %    \begin{macrocode}
@@ -6300,6 +6580,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % count begins. Nothing is printed here: \frontmatter keeps \pagestyle{empty}
 % until the textual part starts.
   \pagenumbering{alph}
+  \ufrj@ordeminicio
   \ltx@ifpackageloaded{hyperref}{\ufrj@hypersetup}{}%
   \makecover
   \pagenumbering{arabic}
@@ -6812,6 +7093,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % comecava perto de 13 cm; a epigrafe ja tinha a meia mancha, mas tambem com o
 % texto alinhado a direita (#123).
 \newcommand\dedication[1]{%
+  \ufrj@ordem{4}{dedicatoria}{\string\dedication}%
   \gdef\@dedic{#1}%
   \cleardoublepage
   \vspace*{\fill}%
@@ -6832,6 +7114,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % mancha, como o da dedicatoria (\#123).
 %    \begin{macrocode}
 \newcommand\epigrafe[2]{%
+  \ufrj@ordem{6}{epigrafe}{\string\epigrafe}%
   \cleardoublepage
   \vspace*{\fill}%
   \begin{flushright}
@@ -6953,9 +7236,9 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % autor}\marg{orientação}\marg{referência}
 % \end{quote}
 % Os quatro argumentos são lógicos, |true| ou |false|, e o padrão é
-% |\configuraresumos{true}{true}{true}{true}|, que é a folha completa dos
-% Anexos E e F. O quinto elemento, o resumo propriamente dito, é o único
-% obrigatório e não tem interruptor.
+% |\configuraresumos{false}{false}{false}{true}|, que é a folha dos Anexos E
+% e F: a referência, o texto e as palavras-chave. O quinto elemento, o resumo
+% propriamente dito, é o único obrigatório e não tem interruptor.
 %
 % É um comando único, e não quatro opções de classe, por duas
 % razões. A primeira é que a decisão é uma só: quem tira a
@@ -7020,8 +7303,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % sem indicativo numerico, que sao centralizados, na mesma lista de
 % agradecimentos, sumario e referencias; ate a v4.1 a folha abria direto na
 % frase "Resumo da Tese apresentada a COPPE/UFRJ...", alinhada a esquerda
-% (#114). O titulo e o que diz ao leitor o que a folha e; a frase de abertura
-% (Norma COPPE, secoes 6 a 8) continua, abaixo dele, sob o seu interruptor.
+% (#114). O titulo e o que diz ao leitor o que a folha e; a frase de abertura,
+% que o Anexo E nao tem, e opcao, abaixo dele, desligada por padrao (#157).
 \newcommand\ufrj@res@heading[1]{%
   \begin{center}
     \bfseries\MakeUppercase{\@nameuse{ufrj@str@#1@abstractname}}%
@@ -7163,6 +7446,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \begin{macro}{\listoffigures}
 %    \begin{macrocode}
 \renewcommand\listoffigures{%
+    \ufrj@ordem{9}{lista de ilustracoes}{\string\listoffigures}%
     \ufrj@hasLof
     \if@twocolumn
       \@restonecoltrue\onecolumn
@@ -7182,6 +7466,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \begin{macro}{\listoftables}
 %    \begin{macrocode}
 \renewcommand\listoftables{%
+    \ufrj@ordem{10}{lista de tabelas}{\string\listoftables}%
     \if@twocolumn
       \@restonecoltrue\onecolumn
     \else
@@ -7208,6 +7493,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % documento, e o Glossario pos-textual da 3.1.4.2 saia com o titulo errado --
 % no sumario tambem. Dentro do grupo, a troca dura o que tem de durar.
 \newcommand\printlosymbols{%
+\ufrj@ordem{12}{lista de simbolos}{\string\printlosymbols}%
 \begingroup\@ufrjglosspretrue
 \renewcommand\glossaryname{\listsymbolname}%
 \@input@{\jobname.los}\endgroup}
@@ -7278,6 +7564,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \begin{macro}{\printloabbreviations}
 %    \begin{macrocode}
 \newcommand\printloabbreviations{%
+\ufrj@ordem{11}{lista de abreviaturas e siglas}{\string\printloabbreviations}%
 \begingroup\@ufrjglosspretrue
 \renewcommand\glossaryname{\listabbreviationname}%
 \@input@{\jobname.lab}\endgroup}
@@ -7348,6 +7635,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \@ifundefined{abbrev}{}{\abbrev[#1]{#2}{#3}}%
   \fi}
 \newcommand\printlosiglas{%
+\ufrj@ordem{11}{lista de abreviaturas e siglas}{\string\printlosiglas}%
 \begingroup\@ufrjglosspretrue
 \renewcommand\glossaryname{\listsiglaname}%
 \@input@{\jobname.lsg}\endgroup}
@@ -8213,13 +8501,16 @@ postamble
 \DeclareDatamodelFields[type=field,datatype=literal]{relator}     % jurisprudence rapporteur
 \DeclareDatamodelFields[type=field,datatype=literal]{filingdate}  % patente: deposito
 \DeclareDatamodelFields[type=field,datatype=literal]{grantdate}   % patente: concessao
+% O procurador da 4.2.5 -- "Procurador: Maria Cristina Valim Lourenco Gomes." --
+% e nome de pessoa, e sai em ordem direta, como o diretor e o produtor (#167).
+\DeclareDatamodelFields[type=list,datatype=name]{attorney}      % patente: procurador
 \DeclareDatamodelEntryfields{course,ufrjdegree}
 \DeclareDatamodelEntryfields[game,videogame,boardgame,software,movie,tvshow,video]%
   {artist,platform,director,producer,version}
 \DeclareDatamodelEntryfields[map]{scale}
 \DeclareDatamodelEntryfields[article]{caderno}
 \DeclareDatamodelEntryfields[jurisdiction]{relator}
-\DeclareDatamodelEntryfields[patent]{filingdate,grantdate}
+\DeclareDatamodelEntryfields[patent]{filingdate,grantdate,attorney}
 %</dbx>
 %<*bbx>
 \ProvidesFile{ufrj.bbx}[2026/09/15 v5.0 CoppeTeX ABNT bibliography style]
@@ -8299,50 +8590,69 @@ postamble
      \clearname{editor}}
     {}}
 
-% Uppercase the surname (family + prefix) only inside the bibliography list;
-% citations keep normal caps (post-2020 rule).
-% ABNT date (NBR 6023 §4.3.5.5.2): "dia mês. ano" -- without the brazilian "de"
-% between the parts (e.g. "4 fev. 1992", "abr. 1996"). #1=year, #2=month, #3=day
-% field names; the month stays abbreviated via \mkbibmonth.
-% Autor-entidade com subordinacao: a 4.3.2.13 poe em caixa alta a jurisdicao ou
-% a entidade superior, e deixa em caixa normal o que vem depois -- o orgao
-% subordinado ("BRASIL. Supremo Tribunal Federal.") e o qualificador entre
-% parenteses ("SAO PAULO (Estado)."). \mkbibnamefamily so conhecia nome de
-% pessoa e punha tudo em caixa alta. Corta-se no primeiro " (" e, dentro do que
-% sobra a esquerda, no primeiro ". ": o que estiver antes vai para caixa alta,
-% o resto sai como foi digitado.
-% O biber entrega o nome literal ENTRE CHAVES ("{Brasil. Supremo Tribunal
-% Federal}"), e as chaves escondem o ponto do casamento de padrao abaixo: sem
-% desembrulhar, o nome inteiro caia no \MakeUppercase. \ufrj@ucstrip tira a
-% chave externa -- um argumento delimitado que seja um grupo unico perde as
-% chaves na captura.
-% Autor-entidade: a 4.3.2.13 poe em caixa alta a jurisdicao ou a entidade
-% superior e deixa o orgao subordinado em caixa normal -- "BRASIL. Supremo
-% Tribunal Federal." Qual das duas coisas o nome e, so quem escreve sabe:
-% "Associacao Brasileira de Normas Tecnicas" e uma entidade so, e vai inteira
-% para versal; "Brasil. Supremo Tribunal Federal" tem subordinacao, e a parte
-% depois do ponto fica como esta.
+% --- Caixa alta do nome na LISTA (4.3.1 e 4.3.2.13, #144) ----------------------
+% Os nomes saem em caixa alta so na lista; nas chamadas ficam como se escrevem.
+% A 4.3.1 poe em caixa alta o sobrenome do autor pessoal, e a 4.3.2.13 a
+% ENTRADA do autor-entidade, com os exemplos "ASSOCIACAO BRASILEIRA DE NORMAS
+% TECNICAS.", "RIO DE JANEIRO (Estado). Secretaria do Meio Ambiente." e
+% "BIBLIOTECA NACIONAL (Brasil)"; a 4.1.1.2 junta "BRASIL. Ministerio da
+% Administracao Federal e da Reforma do Estado.". A entrada e o nome ate o
+% primeiro ". " -- a jurisdicao ou a entidade superior --; o orgao subordinado
+% que vem depois fica como se escreve, e o qualificador entre parenteses no fim
+% da entrada tambem.
 %
-% A regra, entao, e mecanica e previsivel: um nome que TENHA ponto sai
-% exatamente como o autor digitou; um nome sem ponto vai para caixa alta. O
-% teste e feito sobre a forma detokenizada, porque entre as palavras de um
-% nome o biblatex nao poe espaco -- poe \bibnamedelimb e \bibnamedelimi --, e
-% procurar ". " no fluxo de tokens nunca encontra nada.
-% O parentese conta junto com o ponto: "Sao Paulo (Estado)" leva o
-% qualificador em caixa normal, e so quem escreve sabe disso.
-% O argumento chega como \namepartfamily -- uma sequencia de controle, nao o
-% texto. Detokenizar sem expandir antes devolve a string "\namepartfamily",
-% que nao tem ponto nenhum, e por isso TODO nome caia no \MakeUppercase.
-\protected\def\ufrj@ucfamily#1{%
-  \protected@edef\ufrj@uctmp{#1}%
-  \edef\ufrj@ucstr{\detokenize\expandafter{\ufrj@uctmp}}%
-  \expandafter\ufrj@ucscan\ufrj@ucstr.\ufrj@ucstop{#1}}
-\protected\def\ufrj@ucscan#1.#2\ufrj@ucstop#3{%
-  \ifblank{#2}
-    {\expandafter\ufrj@ucscanp\ufrj@ucstr(\ufrj@ucstop{#3}}
-    {#3}}
-\protected\def\ufrj@ucscanp#1(#2\ufrj@ucstop#3{%
-  \ifblank{#2}{\MakeUppercase{#3}}{#3}}
+% A caixa alta e trabalho do estilo, e nao de quem escreve o .bib: o autor
+% digita o nome como ele se escreve -- {{Brasil. Ministerio da Educacao}} --, e
+% a classe compoe "BRASIL. Ministerio da Educacao." na lista e "(Brasil, 1995)"
+% na chamada (o ufrj.cbx usa a mesma divisao). Ate 18/09/2026 era o contrario:
+% o autor digitava a entrada em caixa alta, a classe deixava na lista todo nome
+% com ponto como viera, e a chamada tinha de desfazer a caixa alta -- e errava
+% em sigla.
+%
+% Pessoa -- o nome que tem prenome -- leva o sobrenome inteiro em caixa alta,
+% como sempre. Nome sem prenome e entidade, ou pessoa de nome unico, que nao
+% tem ". " e sai inteira em caixa alta do mesmo jeito.
+%
+% O biber entrega o nome literal entre chaves -- family={{Brasil. ...}} no
+% .bbl --, e as chaves escondem o ". " de qualquer divisao do nome. A divisao
+% do expl3 tira uma camada de chaves de cada item: o nome que sai inteiro da
+% primeira divisao e dividido de novo, ja sem elas. O argumento chega como
+% \namepartfamily, uma macro; a variante o a expande uma vez.
+\ExplSyntaxOn
+\seq_new:N \l__ufrj_nome_seq
+\seq_new:N \l__ufrj_entrada_seq
+\tl_new:N \l__ufrj_nome_tl
+\tl_new:N \l__ufrj_entrada_tl
+\cs_new_protected:Npn \__ufrj_nome_segmentos:n #1
+  {
+    \seq_set_split:Nnn \l__ufrj_nome_seq { .~ } {#1}
+    \int_compare:nNnT { \seq_count:N \l__ufrj_nome_seq } = { 1 }
+      {
+        \tl_set:Nx \l__ufrj_nome_tl { \seq_item:Nn \l__ufrj_nome_seq { 1 } }
+        \seq_set_split:NnV \l__ufrj_nome_seq { .~ } \l__ufrj_nome_tl
+      }
+  }
+\cs_generate_variant:Nn \__ufrj_nome_segmentos:n { o }
+\cs_new_protected:Npn \ufrj_nome_lista:n #1
+  {
+    \bool_lazy_or:nnTF
+      { ! \cs_if_exist_p:N \namepartgiven }
+      { \tl_if_blank_p:V \namepartgiven }
+      {
+        \__ufrj_nome_segmentos:o {#1}
+        \seq_pop_left:NN \l__ufrj_nome_seq \l__ufrj_entrada_tl
+        \seq_set_split:NnV \l__ufrj_entrada_seq { ~( } \l__ufrj_entrada_tl
+        \seq_pop_left:NN \l__ufrj_entrada_seq \l__ufrj_entrada_tl
+        \MakeUppercase { \l__ufrj_entrada_tl }
+        \seq_if_empty:NF \l__ufrj_entrada_seq
+          { ~( \seq_use:Nn \l__ufrj_entrada_seq { ~( } }
+        \seq_if_empty:NF \l__ufrj_nome_seq
+          { .~ \seq_use:Nn \l__ufrj_nome_seq { .~ } }
+      }
+      { \MakeUppercase {#1} }
+  }
+\cs_set_eq:NN \ufrj@ucfamily \ufrj_nome_lista:n
+\ExplSyntaxOff
 % O separador de um intervalo de datas depende do que o intervalo junta
 % (#142). A 4.3 separa os MESES do mesmo ano por barra -- "jan./jun. 1981" --;
 % a 4.3.5.5.1 separa os ANOS de uma publicacao encerrada por hifen --
@@ -8385,9 +8695,12 @@ postamble
 %
 % O idioma da publicacao e o campo langid da entrada. So o mes muda: ligar o
 % autolang do biblatex trocaria tambem "Disponivel em" e "Acesso em", que sao do
-% trabalho, e nao da obra citada. As tabelas sao as do Anexo A da NBR 6023; sem
-% langid, ou num idioma fora delas, vale o mes do idioma do documento, como
-% antes.
+% trabalho, e nao da obra citada. As tabelas sao as do Anexo A da NBR
+% 6023:2025, a edicao que o Manual adota, conferidas letra por letra em
+% 18/09/2026: as dos cinco idiomas da classe e a do alemao, que o Anexo A
+% tambem traz, porque a obra citada pode estar em alemao mesmo que o trabalho
+% nao possa. Sem langid, ou num idioma fora delas, vale o mes do idioma do
+% documento, como antes.
 \def\ufrj@mes@brazilian#1{\ifcase#1\or jan\adddot\or fev\adddot\or mar\adddot
   \or abr\adddot\or maio\or jun\adddot\or jul\adddot\or ago\adddot\or set\adddot
   \or out\adddot\or nov\adddot\or dez\adddot\fi}
@@ -8403,6 +8716,9 @@ postamble
 \def\ufrj@mes@italian#1{\ifcase#1\or genn\adddot\or febbr\adddot\or mar\adddot
   \or apr\adddot\or magg\adddot\or giugno\or luglio\or ag\adddot\or sett\adddot
   \or ott\adddot\or nov\adddot\or dic\adddot\fi}
+\def\ufrj@mes@german#1{\ifcase#1\or Jan\adddot\or Feb\adddot\or März
+  \or Apr\adddot\or Mai\or Juni\or Juli\or Aug\adddot\or Sept\adddot
+  \or Okt\adddot\or Nov\adddot\or Dez\adddot\fi}
 \let\ufrj@mes@portuguese\ufrj@mes@brazilian
 \let\ufrj@mes@portuges\ufrj@mes@brazilian
 \let\ufrj@mes@brazil\ufrj@mes@brazilian
@@ -8410,14 +8726,28 @@ postamble
 \let\ufrj@mes@british\ufrj@mes@english
 \let\ufrj@mes@USenglish\ufrj@mes@english
 \let\ufrj@mes@UKenglish\ufrj@mes@english
+\let\ufrj@mes@ngerman\ufrj@mes@german
+\let\ufrj@mes@austrian\ufrj@mes@german
+\let\ufrj@mes@naustrian\ufrj@mes@german
+\let\ufrj@mes@swissgerman\ufrj@mes@german
+\let\ufrj@mes@nswissgerman\ufrj@mes@german
+% A data de ACESSO e do trabalho, nao da obra: o exemplo da 4.2.11.1 traz a
+% fotografia de lingua inglesa com "1 June 2010" e "Acesso em: 26 maio 2011".
+% Ela saia no idioma da publicacao -- "Acesso em: 26 May 2011" --, e so o
+% verificador de referencias, conferindo de novo (#167), mostrou. O
+% url+urldate liga \if@ufrjmesdotrabalho em volta da data de acesso.
+\newif\if@ufrjmesdotrabalho
 \newcommand*\ufrj@monthlang{}
 \protected\def\ufrj@abntmonth#1{%
-  \iffieldundef{langid}
+  \ifboolexpr{ test {\iffieldundef{langid}} or bool {@ufrjmesdotrabalho} }
     {\mkbibmonth{#1}}
     {\edef\ufrj@monthlang{\thefield{langid}}%
      \ifcsdef{ufrj@mes@\ufrj@monthlang}
        {\csname ufrj@mes@\ufrj@monthlang\endcsname{#1}}
        {\mkbibmonth{#1}}}}
+% ABNT date (NBR 6023 §4.3.5.5.2): "dia mês. ano" -- without the brazilian "de"
+% between the parts (e.g. "4 fev. 1992", "abr. 1996"). #1=year, #2=month, #3=day
+% field names; the month stays abbreviated, by \ufrj@abntmonth above.
 \protected\def\ufrj@abntdate#1#2#3{%
   \iffieldundef{#3}{}{\stripzeros{\thefield{#3}}\nobreakspace}%
   \iffieldundef{#2}{}{\ufrj@abntmonth{\thefield{#2}}\iffieldundef{#1}{}{\space}}%
@@ -8443,11 +8773,14 @@ postamble
 
 % --- Titles: bold for whole-document types; plain for parts; entry-by-title
 %     (no author/editor) -> not bold, first word in CAPS (ABNT 4.2). ---
-% \ufrjUCtitle uppercases the first SIGNIFICANT word of the title (ABNT 4.2).
-% If the title starts with an article (o/a/os/as/um/uma/uns/umas, the/an), the
-% article AND the next word are uppercased; otherwise just the first word. The
-% delimited macros split off words; \ufrjUCkeep strips the trailing-space
-% sentinel so no spurious space is left before the following punctuation.
+% \ufrjUCtitle poe em caixa alta a primeira palavra SIGNIFICATIVA do titulo
+% (4.2 e 4.3.2.14 do Manual; NBR 6023:2025). Se o titulo comeca por artigo ou
+% por monossilabo -- preposicao, contracao ou conjuncao de uma silaba --, ele
+% e a palavra seguinte vao para caixa alta: "A FLOR prometida", "NOS
+% CANAVIAIS, mutilacoes..."; senao, so a primeira: "ANTEPROJETO de lei". Ate
+% 18/09/2026 so o artigo contava, e so em portugues e ingles. As macros
+% delimitadas separam as palavras; \ufrjUCkeep tira o espaco sentinela do fim,
+% para nao sobrar espaco antes da pontuacao seguinte.
 \protected\def\ufrjUCtitle#1{\ufrjUCtitleA#1 \ufrjUCstop}
 \protected\def\ufrjUCtitleA#1 #2\ufrjUCstop{%
   \ufrjUCifart{#1}
@@ -8456,14 +8789,48 @@ postamble
 \protected\def\ufrjUCtitleB#1 #2\ufrjUCstop{%
   \MakeUppercase{#1}\ifblank{#2}{}{\space\ufrjUCkeep#2\ufrjUCstop}}
 \protected\def\ufrjUCkeep#1 \ufrjUCstop{#1}
-% \ufrjUCifart{word}{if-article}{if-not}: case-insensitive membership test.
-\protected\def\ufrjUCifart#1{%
-  \begingroup
-  \lowercase{\def\ufrjUC@w{#1}}%
-  \edef\ufrjUC@w{,\ufrjUC@w,}%
-  \expandafter\in@\expandafter{\ufrjUC@w}{,a,o,as,os,um,uma,uns,umas,the,an,}%
-  \ifin@\aftergroup\@firstoftwo\else\aftergroup\@secondoftwo\fi
-  \endgroup}
+% As palavras que nao contam (#138, #141): os artigos e os monossilabos --
+% preposicoes, contracoes e conjuncoes de uma silaba -- dos cinco idiomas da
+% classe. A mesma lista serve a caixa alta da entrada pelo titulo (aqui), a
+% ordem alfabetica, que a 4.2 manda fazer sem elas (o mapa de sorttitle, mais
+% abaixo, que tem de trazer as MESMAS palavras -- o rt60 confere), e o corte do
+% titulo na chamada (\ufrj@titulochamada, no ufrj.cbx). Um monossilabo que e
+% palavra plena, como "Sol" ou "Paz", conta: a regra e das palavras que nao sao
+% significativas.
+%
+% \ufrjUCifart{palavra}{se nao conta}{se conta} compara sem caixa. A troca de
+% caixa e a do l3text, que baixa "A" com crase no pdfLaTeX (o \lowercase nao
+% baixa letra acentuada), e a comparacao e de cadeia, que nao depende da
+% categoria dos caracteres.
+\ExplSyntaxOn
+\clist_const:Nn \c_ufrj_naosignificativas_clist
+  {
+    o, a, os, as, um, uma, uns, umas, à, às, ao, aos, com, da, das, de, do,
+    dos, em, na, nas, no, nos, num, nuns, por, sem, sob, e, mas, nem, ou, que,
+    se,
+    the, an, of, in, on, at, to, for, by, and, or, from, with,
+    el, la, los, las, un, una, unos, unas, del, al, en, con, sin, y,
+    le, les, une, des, du, au, aux, et, par, sur, dans, pour,
+    il, lo, gli, uno, di, ai, per, su
+  }
+\str_new:N \l__ufrj_palavra_str
+\bool_new:N \l__ufrj_naosig_bool
+\prg_new_protected_conditional:Npnn \ufrj_se_nao_significativa:n #1 { T , F , TF }
+  {
+    \str_set:Nx \l__ufrj_palavra_str { \text_lowercase:n {#1} }
+    \bool_set_false:N \l__ufrj_naosig_bool
+    \clist_map_inline:Nn \c_ufrj_naosignificativas_clist
+      {
+        \str_if_eq:VnT \l__ufrj_palavra_str {##1}
+          { \bool_set_true:N \l__ufrj_naosig_bool \clist_map_break: }
+      }
+    \bool_if:NTF \l__ufrj_naosig_bool
+      { \prg_return_true: }
+      { \prg_return_false: }
+  }
+\prg_generate_conditional_variant:Nnn \ufrj_se_nao_significativa:n { V } { T , F , TF }
+\cs_set_eq:NN \ufrjUCifart \ufrj_se_nao_significativa:nTF
+\ExplSyntaxOff
 \DeclareFieldFormat{title}{%
   \ifboolexpr{ test {\ifnameundef{labelname}} }
     {#1}%
@@ -8536,11 +8903,14 @@ postamble
                replace={[\\emph{s. n.}]}]}
 % A 4.2: "Os artigos e palavras monossilabicas nao sao considerados para
 % efeito de alfabetacao" -- "O PERFIL administrativo brasileiro" alfabeta por
-% PERFIL (#141). O sorting=nyt ordenava pelo titulo inteiro, e a entrada ficava
-% entre os sobrenomes com O. O mapa guarda em sorttitle o titulo sem o artigo
-% inicial, nos idiomas da classe; o titulo impresso nao muda.
+% PERFIL, e "NOS CANAVIAIS" por CANAVIAIS (#141). O sorting=nyt ordenava pelo
+% titulo inteiro, e a entrada ficava entre os sobrenomes com O. O mapa guarda
+% em sorttitle o titulo sem o artigo ou o monossilabo inicial; o titulo
+% impresso nao muda. As palavras sao as de \c_ufrj_naosignificativas_clist,
+% acima, na mesma ordem (o \regexp so detokeniza, e nao expandiria a lista; o
+% rt60 confere que as duas sao iguais), e o matchi nao distingue caixa.
     \map{\step[fieldsource=title,
-               match=\regexp{\A(O|A|Os|As|Um|Uma|Uns|Umas|The|An|El|La|Los|Las|Le|Les|Il|Lo|Gli)\s+(.+)\Z},
+               matchi=\regexp{\A(o|a|os|as|um|uma|uns|umas|à|às|ao|aos|com|da|das|de|do|dos|em|na|nas|no|nos|num|nuns|por|sem|sob|e|mas|nem|ou|que|se|the|an|of|in|on|at|to|for|by|and|or|from|with|el|la|los|las|un|una|unos|unas|del|al|en|con|sin|y|le|les|une|des|du|au|aux|et|par|sur|dans|pour|il|lo|gli|uno|di|ai|per|su)\s+(.+)\Z},
                final]
          \step[fieldset=sorttitle, fieldvalue={$2}]}
   }%
@@ -8597,7 +8967,8 @@ postamble
   \iffieldundef{url}
     {}
     {\printfield{url}%
-     \iffieldundef{urlyear}{}{\setunit{\adddot\space}\printurldate}}}
+     \iffieldundef{urlyear}{}{\setunit{\adddot\space}%
+       \@ufrjmesdotrabalhotrue\printurldate\@ufrjmesdotrabalhofalse}}}
 
 % --- ABNT article driver: no "In:"; Journal, Local, v., n., p., date, DOI/URL.
 %     Newspapers (entrysubtype=newspaper, set by the @artigodejornal source map)
@@ -8750,7 +9121,7 @@ postamble
   \usebibmacro{finentry}}
 
 % --- incollection: ABNT puts the host organizer before the booktitle, as
-%     "AUTOR. Parte. In: ORGANIZADOR (Org.). Booktitle. Local: Editora, ano,
+%     "AUTOR. Parte. In: ORGANIZADOR (Org.). Booktitle. Local: Editora, ano.
 %     p. X-Y." The organizer role string is "Org./Orgs." (see the .lbx). ---
 \newbibmacro*{ufrj:bookeditor}{%
   \ifnameundef{editor}
@@ -8797,11 +9168,22 @@ postamble
   \setunit*{\addcomma\space}\printdate%
   \newunit\newblock
   \printfield{chapter}%
-  \setunit{\addcomma\space}\printfield{pages}%
+  \setunit*{\addcomma\space}\printfield{pages}%
   \newunit\newblock
   \usebibmacro{doi+eprint+url}%
   \usebibmacro{finentry}}
 \DeclareBibliographyDriver{incollection}{\usebibmacro{ufrj:partdriver}}
+% A virgula das paginas so vale depois do capitulo: "cap. 1, p. 23-64". Sem
+% capitulo, fica o ponto que fecha a imprenta -- "Companhia das Letras, 1996.
+% p. 7-16." (4.2.1.3) --, e por isso o \setunit* acima, que nao faz nada quando
+% o capitulo nao saiu. Com \setunit, a virgula entrava de todo jeito e tomava o
+% lugar do ponto: "1996, p. 7-16" (#167). O chapter+pages do biblatex, que os
+% drivers de livro e de relatorio usam, tinha o mesmo \setunit.
+\renewbibmacro*{chapter+pages}{%
+  \printfield{chapter}%
+  \setunit*{\bibpagespunct}%
+  \printfield{pages}%
+  \newunit}
 \DeclareBibliographyDriver{inbook}{\usebibmacro{ufrj:partdriver}}
 
 % --- type field: resolve a known bibliography string (babel-aware), else literal ---
@@ -9036,6 +9418,15 @@ postamble
        \def\mkbibnameprefix##1{##1}%
        \printnames{holder}%
      \endgroup}}
+% O procurador vem logo depois, como nos elementos essenciais da 4.2.5:
+% "Depositante: nome/titular (se houver). Procurador: nome (se houver). Numero
+% da patente." Nao havia campo para ele, e o gabarito do BERTAZZOLI omitia o
+% procurador que o Manual imprime (#167).
+\newbibmacro*{ufrj:attorney}{%
+  \ifnameundef{attorney}
+    {}
+    {\printtext{\bibstring{ufrjattorney}\addcolon\space}%
+     \printnames[ufrj:direta]{attorney}}}
 % A correspondencia da 4.2.2. Nao ha driver proprio porque nao e preciso: o de
 % `misc' produz exatamente a referencia que o Manual imprime -- autor, titulo
 % entre colchetes, a nota com o destinatario, local, data e o addendum com o
@@ -9053,6 +9444,8 @@ postamble
   \usebibmacro{title}%
   \newunit\newblock
   \usebibmacro{ufrj:depositor}%
+  \newunit\newblock
+  \usebibmacro{ufrj:attorney}%
   \newunit\newblock
   \printfield{type}%
   \setunit*{\addspace}\printfield{number}%
@@ -9220,6 +9613,7 @@ postamble
     \map{\step[fieldsource=localevento,fieldtarget=venue]}
     \map{\step[fieldsource=deposito,fieldtarget=filingdate]}
     \map{\step[fieldsource=concessao,fieldtarget=grantdate]}
+    \map{\step[fieldsource=procurador,fieldtarget=attorney]}
     % caderno e campo da classe (a secao do jornal); newspapersection e o nome
     % em ingles, e e o que as bases da entrega usam.
     \map{\step[fieldsource=newspapersection,fieldtarget=caderno]}
@@ -9254,70 +9648,94 @@ postamble
 % para "INGLES: guia de conversacao". O authoryear-comp poe o titulo em italico
 % (ou entre aspas, conforme o tipo da entrada) e o separa do ano por espaco:
 % "(Guia 2012, p. 7)". O formato com asterisco limpa os formatos por tipo, e o
-% delimitador entre titulo e ano passa a virgula. O labeltitle e o titulo sem o
-% subtitulo, como no exemplo; a caixa alta da primeira palavra e coisa da LISTA
-% (o formato titlecase), e nao chega a chamada.
+% delimitador entre titulo e ano passa a virgula. A caixa alta da primeira
+% palavra e coisa da LISTA (o formato titlecase), e nao chega a chamada.
 \DeclareFieldFormat*{citetitle}{#1}
 \DeclareDelimFormat{nonameyeardelim}{\addcomma\space}
-
-% --- Entidade com orgao subordinado na chamada (4.1.1.2 e 4.4.1, #144) ---------
-% Na LISTA, o nome com ponto sai como o autor digitou, e o autor digita a
-% entidade superior em caixa alta: "BRASIL. Ministerio da Educacao" (4.3.2.13;
-% decisao de 16/09/2026, junto do \ufrj@ucfamily no ufrj.bbx). Na CHAMADA, a
-% 4.1.1.2 cita so a entrada, com as iniciais maiusculas -- "(Brasil, 1995)" --,
-% e a 4.4.1 manda a chamada seguir a entrada da referencia, "mas nao quanto a
-% grafia". A chamada saia "(BRASIL. Ministerio da Educacao, 1995)".
-%
-% Para um nome de entidade (sem prenome) com hierarquia -- um ". " no meio --,
-% a chamada usa so o primeiro segmento, e cada palavra dele que esta INTEIRA em
-% caixa alta passa a inicial maiuscula e o resto minusculo; as particulas (de,
-% da, do, e...) ficam em minuscula. "UNIVERSIDADE FEDERAL DO RIO DE JANEIRO.
-% Sistema..." vira "Universidade Federal do Rio de Janeiro"; uma palavra que
-% nao esta toda em caixa alta, como o qualificador "(Estado)", fica como veio;
-% e um nome sem ". ", como "IBGE", nao e tocado. O shortauthor, quando o autor
-% o da, vence sempre: e ele que vira o labelname. A troca de caixa e a do
-% l3text, que sabe as letras acentuadas em todos os motores.
+% O corte do titulo (NBR 10520:2023, 6.1.1.4, a edicao que o Manual adota).
+% A chamada pelo titulo se faz pela unica palavra, se o titulo tem uma --
+% "(Ingles, 2012, p. 7)" --; pela primeira palavra seguida de [...], se tem
+% mais -- "(Anteprojeto [...], 1987, p. 55)" para "ANTEPROJETO de lei" --; e,
+% se comeca por artigo ou monossilabo, por ele, pela palavra seguinte e por
+% [...]: "(A flor [...], 1995, p. 4)", "(Nos canaviais [...], 1995, p. 12)".
+% O Manual so diz "pelo titulo de entrada", e a classe deixava o titulo
+% inteiro. O titulo e o que vem antes do subtitulo -- que esta no campo
+% subtitle ou, digitado junto, depois de ": " no proprio title --, e a
+% pontuacao que fecha a palavra cortada sai. As palavras que nao contam sao as
+% do ufrj.bbx (\c_ufrj_naosignificativas_clist). O shorttitle, quando o autor o
+% da, vence. So a chamada muda: o \citetitle continua com o titulo inteiro.
+% O \@ depois do [...] devolve o fator de espaco neutro: o rastreador de
+% pontuacao do biblatex le o fator de espaco, o "]" nao o muda, e os pontos do
+% [...] passavam por fim de frase -- a virgula antes do ano sumia.
 \ExplSyntaxOn
-\clist_const:Nn \c__ufrj_particulas_clist
-  { a, as, o, os, de, da, do, das, dos, e, em, na, no, nas, nos, para, por }
-\tl_new:N \l__ufrj_seg_tl
-\tl_new:N \l__ufrj_min_tl
-\tl_new:N \l__ufrj_mai_tl
-\seq_new:N \l__ufrj_seg_seq
-\seq_new:N \l__ufrj_pal_seq
-\int_new:N \l__ufrj_n_int
-\cs_generate_variant:Nn \text_titlecase_first:n { V }
-\cs_generate_variant:Nn \clist_if_in:NnTF { NV }
-\cs_new_protected:Npn \ufrj_entidade_chamada:n #1
+\seq_new:N \l__ufrj_tit_seq
+\tl_new:N \l__ufrj_tit_tl
+\tl_new:N \l__ufrj_pal_tl
+\tl_const:Nx \c__ufrj_doispontos_tl { \c_colon_str \c_space_tl }
+\cs_generate_variant:Nn \seq_set_split:Nnn { NV }
+\cs_new_protected:Npn \__ufrj_sem_pontuacao:N #1
+  { \regex_replace_once:nnN { [,.;\x{3A}]+ \Z } { } #1 }
+\cs_new_protected:Npn \ufrj_titulo_chamada:n #1
   {
-    \seq_set_split:Nnn \l__ufrj_seg_seq { .~ } { #1 }
-    \tl_set:Nx \l__ufrj_seg_tl { \seq_item:Nn \l__ufrj_seg_seq { 1 } }
-    \seq_set_split:NnV \l__ufrj_pal_seq { ~ } \l__ufrj_seg_tl
-    \int_zero:N \l__ufrj_n_int
-    \seq_map_inline:Nn \l__ufrj_pal_seq
+    \seq_set_split:NVn \l__ufrj_tit_seq \c__ufrj_doispontos_tl {#1}
+    \tl_set:Nx \l__ufrj_tit_tl { \seq_item:Nn \l__ufrj_tit_seq { 1 } }
+    \seq_set_split:NnV \l__ufrj_tit_seq { ~ } \l__ufrj_tit_tl
+    \seq_remove_all:Nn \l__ufrj_tit_seq { }
+    \int_compare:nNnTF { \seq_count:N \l__ufrj_tit_seq } < { 2 }
       {
-        \int_incr:N \l__ufrj_n_int
-        \int_compare:nNnT { \l__ufrj_n_int } > { 1 } { ~ }
-        \tl_set:Nx \l__ufrj_mai_tl { \text_uppercase:n { ##1 } }
-        \tl_set:Nn \l__ufrj_seg_tl { ##1 }
-        \tl_if_eq:NNTF \l__ufrj_mai_tl \l__ufrj_seg_tl
+        \__ufrj_sem_pontuacao:N \l__ufrj_tit_tl
+        \l__ufrj_tit_tl
+      }
+      {
+        \seq_pop_left:NN \l__ufrj_tit_seq \l__ufrj_pal_tl
+        \ufrj_se_nao_significativa:VT \l__ufrj_pal_tl
           {
-            \tl_set:Nx \l__ufrj_min_tl { \text_lowercase:n { ##1 } }
-            \int_compare:nNnTF { \l__ufrj_n_int } > { 1 }
-              {
-                \clist_if_in:NVTF \c__ufrj_particulas_clist \l__ufrj_min_tl
-                  { \l__ufrj_min_tl }
-                  { \text_titlecase_first:V \l__ufrj_min_tl }
-              }
-              { \text_titlecase_first:V \l__ufrj_min_tl }
+            \l__ufrj_pal_tl \c_space_tl
+            \seq_pop_left:NN \l__ufrj_tit_seq \l__ufrj_pal_tl
           }
-          { ##1 }
+        \__ufrj_sem_pontuacao:N \l__ufrj_pal_tl
+        \l__ufrj_pal_tl
+        \seq_if_empty:NF \l__ufrj_tit_seq { \c_space_tl [...] \@ }
       }
   }
-\cs_generate_variant:Nn \ufrj_entidade_chamada:n { V }
-\cs_new_protected:Npn \ufrj_se_hierarquia:NTF #1#2#3
-  { \tl_if_in:NnTF #1 { .~ } {#2} {#3} }
-\cs_set_eq:NN \ufrj@entidadechamada \ufrj_entidade_chamada:V
+\cs_set_eq:NN \ufrj@titulochamada \ufrj_titulo_chamada:n
+\ExplSyntaxOff
+\DeclareFieldFormat{ufrj:titulochamada}{%
+  \iffieldundef{shorttitle}{\ufrj@titulochamada{#1}}{#1}}
+\renewbibmacro*{cite:label}{%
+  \iffieldundef{label}
+    {\printtext[bibhyperref]{\printfield[ufrj:titulochamada]{labeltitle}}}
+    {\printtext[bibhyperref]{\printfield{label}}}}
+
+% --- Entidade com orgao subordinado na chamada (4.1.1.2 e 4.4.1, #144) ---------
+% A 4.1.1.2 cita a obra de entidade pela ENTRADA, com as iniciais maiusculas e
+% o resto em minuscula -- "(Organizacao Mundial da Saude, 2010)", "(IBGE,
+% 2011)" --, e a de entidade governamental so pela jurisdicao: "(Brasil, 1995)"
+% para "BRASIL. Ministerio da Administracao Federal..." na lista. A NBR
+% 10520:2023 diz o mesmo em 6.1.1.2 e 6.1.1.3, e a 4.4.1 manda a chamada seguir
+% a entrada da referencia, "mas nao quanto a grafia".
+%
+% O autor digita o nome como ele se escreve -- {{Brasil. Ministerio da
+% Educacao}} --, e a caixa alta da lista e do \ufrj@ucfamily do ufrj.bbx. A
+% chamada precisa so da ENTRADA, o primeiro segmento do nome, tal como foi
+% digitado: "(Brasil, 1995)", "(Rio de Janeiro (Estado), 2000)", e a sigla fica
+% como e, "(IBGE, 2011)". A divisao e a mesma do ufrj.bbx. Vale para nome sem
+% prenome com ". " no meio; o shortauthor, quando o autor o da, vence sempre:
+% e ele que vira o labelname.
+\ExplSyntaxOn
+\cs_new_protected:Npn \ufrj_entidade_chamada:n #1
+  {
+    \__ufrj_nome_segmentos:o {#1}
+    \seq_item:Nn \l__ufrj_nome_seq { 1 }
+  }
+\prg_new_protected_conditional:Npnn \ufrj_se_hierarquia:N #1 { TF }
+  {
+    \__ufrj_nome_segmentos:o {#1}
+    \int_compare:nNnTF { \seq_count:N \l__ufrj_nome_seq } > { 1 }
+      { \prg_return_true: }
+      { \prg_return_false: }
+  }
+\cs_set_eq:NN \ufrj@entidadechamada \ufrj_entidade_chamada:n
 \cs_set_eq:NN \ufrj@sehierarquia \ufrj_se_hierarquia:NTF
 \ExplSyntaxOff
 
@@ -9372,7 +9790,7 @@ postamble
 \ProvidesFile{brazilian-ufrj.lbx}[2026/09/15 v5.0 CoppeTeX brazilian strings]
 \InheritBibliographyExtras{brazilian}
 \NewBibliographyString{availablefrom,ufrjtranslationof,mscdiss,dscthesis,tcc,depositor,ufrjscale,
-  ufrjmscdeg,ufrjdscdeg,ufrjphddeg,ufrjtccdeg,ufrjfiling,ufrjgrant}
+  ufrjmscdeg,ufrjdscdeg,ufrjphddeg,ufrjtccdeg,ufrjfiling,ufrjgrant,ufrjattorney}
 \DeclareBibliographyStrings{%
   inherit       = {brazilian},
   ufrjtranslationof = {{Tradução de}{Tradução de}},
@@ -9389,6 +9807,7 @@ postamble
   ufrjtccdeg   = {{Graduação}{Graduação}},
   ufrjfiling   = {{Depósito}{Depósito}},
   ufrjgrant    = {{Concessão}{Concessão}},
+  ufrjattorney = {{Procurador}{Procurador}},
   urlseen       = {{Acesso em}{Acesso em}},
 % A 4.3 abrevia os meses nas tres primeiras letras seguidas de ponto -- menos
 % maio, que se escreve por extenso. O biblatex-brazilian abrevia "mai.".
@@ -9409,7 +9828,7 @@ postamble
 \ProvidesFile{english-ufrj.lbx}[2026/09/15 v5.0 CoppeTeX english strings]
 \InheritBibliographyExtras{english}
 \NewBibliographyString{availablefrom,ufrjtranslationof,mscdiss,dscthesis,tcc,depositor,ufrjscale,
-  ufrjmscdeg,ufrjdscdeg,ufrjphddeg,ufrjtccdeg,ufrjfiling,ufrjgrant}
+  ufrjmscdeg,ufrjdscdeg,ufrjphddeg,ufrjtccdeg,ufrjfiling,ufrjgrant,ufrjattorney}
 \DeclareBibliographyStrings{%
   inherit       = {english},
   ufrjtranslationof = {{Translation of}{Translation of}},
@@ -9421,6 +9840,7 @@ postamble
   ufrjtccdeg   = {{B\adddot Sc\adddot}{B\adddot Sc\adddot}},
   ufrjfiling   = {{Filed}{Filed}},
   ufrjgrant    = {{Granted}{Granted}},
+  ufrjattorney = {{Attorney}{Attorney}},
   urlseen       = {{Access on}{Access on}},
   in            = {{In}{In}},
   editor        = {{editor}{ed\adddot}},
@@ -9438,7 +9858,7 @@ postamble
 \ProvidesFile{spanish-ufrj.lbx}[2026/09/15 v5.0 CoppeTeX spanish strings]
 \InheritBibliographyExtras{spanish}
 \NewBibliographyString{availablefrom,ufrjtranslationof,mscdiss,dscthesis,tcc,depositor,ufrjscale,
-  ufrjmscdeg,ufrjdscdeg,ufrjphddeg,ufrjtccdeg,ufrjfiling,ufrjgrant}
+  ufrjmscdeg,ufrjdscdeg,ufrjphddeg,ufrjtccdeg,ufrjfiling,ufrjgrant,ufrjattorney}
 \DeclareBibliographyStrings{%
   inherit       = {spanish},
   ufrjtranslationof = {{Traducción de}{Traducción de}},
@@ -9450,6 +9870,7 @@ postamble
   ufrjtccdeg   = {{Grado}{Grado}},
   ufrjfiling   = {{Depósito}{Depósito}},
   ufrjgrant    = {{Concesión}{Concesión}},
+  ufrjattorney = {{Apoderado}{Apoderado}},
   urlseen       = {{Consultado el}{Consultado el}},
   in            = {{En}{En}},
   editor        = {{editor}{ed\adddot}},
@@ -9467,7 +9888,7 @@ postamble
 \ProvidesFile{french-ufrj.lbx}[2026/09/15 v5.0 CoppeTeX french strings]
 \InheritBibliographyExtras{french}
 \NewBibliographyString{availablefrom,ufrjtranslationof,mscdiss,dscthesis,tcc,depositor,ufrjscale,
-  ufrjmscdeg,ufrjdscdeg,ufrjphddeg,ufrjtccdeg,ufrjfiling,ufrjgrant}
+  ufrjmscdeg,ufrjdscdeg,ufrjphddeg,ufrjtccdeg,ufrjfiling,ufrjgrant,ufrjattorney}
 \DeclareBibliographyStrings{%
   inherit       = {french},
   ufrjtranslationof = {{Traduction de}{Traduction de}},
@@ -9479,6 +9900,7 @@ postamble
   ufrjtccdeg   = {{Licence}{Licence}},
   ufrjfiling   = {{Dépôt}{Dépôt}},
   ufrjgrant    = {{Délivrance}{Délivrance}},
+  ufrjattorney = {{Mandataire}{Mandataire}},
   urlseen       = {{Consulté le}{Consulté le}},
   in            = {{Dans}{Dans}},
   editor        = {{éditeur}{éd\adddot}},
@@ -9496,12 +9918,13 @@ postamble
 \ProvidesFile{italian-ufrj.lbx}[2026/09/15 v5.0 CoppeTeX italian strings]
 \InheritBibliographyExtras{italian}
 \NewBibliographyString{availablefrom,ufrjtranslationof,mscdiss,dscthesis,tcc,depositor,ufrjscale,
-  ufrjmscdeg,ufrjdscdeg,ufrjphddeg,ufrjtccdeg,ufrjfiling,ufrjgrant}
+  ufrjmscdeg,ufrjdscdeg,ufrjphddeg,ufrjtccdeg,ufrjfiling,ufrjgrant,ufrjattorney}
 \DeclareBibliographyStrings{%
   inherit       = {italian},
   ufrjtranslationof = {{Traduzione di}{Traduzione di}},
   andothers     = {{\mkbibemph{et al\adddot}}{\mkbibemph{et al\adddot}}},
   availablefrom = {{Disponibile da}{Disponibile da}},
+  ufrjattorney = {{Mandatario}{Mandatario}},
   urlseen       = {{Consultato il}{Consultato il}},
   in            = {{In}{In}},
   editor        = {{curatore}{cur\adddot}},
@@ -9876,6 +10299,13 @@ postamble
 %
 % \iffalse
 %<*examplebib>
+@Comment{ Gerado de ufrj.dtx pelo docstrip: edite o .dtx, e nao este arquivo.
+  Copyright (C) 2008-2026 Vicente Helano F. Batista, George O. Ainsworth Jr.,
+  Geraldo Xexeo e Eduardo Mangeli. Distribuido sob a GNU General Public
+  License, versao 3 (veja o COPYING.txt). Os comentarios desta base sao
+  entradas Comment, e nao linhas comecadas por um sinal de porcentagem:
+  gerenciadores de referencias como o JabRef nao o entendem como comentario. }
+
 @Comment{ exemplo.bib -- a base dos exemplos (min-exemplo.tex, max-exemplo.tex e
   os exemplos por idioma). Primeira parte: entradas de demonstracao. Segunda
   parte, mais abaixo: uma entrada de cada categoria da secao 4.2 do Manual.
@@ -10052,9 +10482,10 @@ postamble
 }
 
 @Comment{ Jurisprudencia / decisao judicial (NBR 6023 4.2.6.2): jurisdicao +
-  orgao (autor, CAIXA ALTA), titulo da decisao, Relator, local e data. }
+  orgao (autor, escrito como se escreve: a classe poe a jurisdicao em caixa
+  alta na lista), titulo da decisao, Relator, local e data. }
 @jurisdiction{jurisprudencia-example,
-   author = "{BRASIL. Supremo Tribunal Federal}",
+   author = "{Brasil. Supremo Tribunal Federal}",
    title = "Habeas Corpus 12.345",
    relator = "Min. Fulano de Tal",
    location = "Brasília, DF",
@@ -10083,6 +10514,13 @@ postamble
 }
 %</examplebib>
 %<*ufrjbib>
+@Comment{ Gerado de ufrj.dtx pelo docstrip: edite o .dtx, e nao este arquivo.
+  Copyright (C) 2008-2026 Vicente Helano F. Batista, George O. Ainsworth Jr.,
+  Geraldo Xexeo e Eduardo Mangeli. Distribuido sob a GNU General Public
+  License, versao 3 (veja o COPYING.txt). Os comentarios desta base sao
+  entradas Comment, e nao linhas comecadas por um sinal de porcentagem:
+  gerenciadores de referencias como o JabRef nao o entendem como comentario. }
+
 
 @book{ KNU86a,
   author = "Donald E. Knuth",
@@ -10156,8 +10594,12 @@ postamble
 %<*tiposbib>
 @Comment{ Segunda parte: um exemplo de CADA categoria de referencia da secao 4.2
   do Manual UFRJ/SiBI, 9.a ed. rev. (2026), com os dados dos exemplos do
-  proprio Manual. O comentario %% acima de cada entrada e a referencia COMO O
-  MANUAL A IMPRIME.
+  proprio Manual. O comentario Manual, logo antes de cada entrada, e a
+  referencia COMO O MANUAL A IMPRIME, errata e tudo, e e o gabarito contra o
+  qual o tools/conferir-referencias.py compara a saida da classe. Onde a classe
+  diverge dele, o comentario Divergencia aceita diz por que, e o comentario
+  Classe traz a referencia como a classe tem de compo-la: e contra ela que a
+  entrada e conferida, e o que ele nao aceita continua sendo divergencia.
 
   As entradas usam os nomes de tipo e campo em INGLES. A classe aceita tambem
   os sinonimos em PORTUGUES (@livro, autor, titulo, editora, local, ano,
@@ -10168,8 +10610,8 @@ postamble
   Dissertacao e tese levam o grau em type (mscdiss, dscthesis) e o curso em
   course: e dai que sai "Dissertacao (Mestrado em <course>)". }
 
+@comment{Manual: CASTRO, C. M. A prática da pesquisa. São Paulo: Mc Graw-Hill do Brasil, 1978. 156 p.}
 @book{m-4211,
-%% CASTRO, C. M. A prática da pesquisa. São Paulo: Mc Graw-Hill do Brasil, 1978. 156 p.
   author      = "Castro, C. M.",
   title       = "A prática da pesquisa",
   location    = "São Paulo",
@@ -10178,10 +10620,14 @@ postamble
   pagetotal   = "156",
 }
 
+@comment{Manual: BAUMAN, Zygmunt. Vida líquida . 2. ed. rev. Rio de Janeiro: Zahar, 2009. Disponível
+  em: https://lectio.proxy.ufrj.br/dashboard/midia/detalhe/1571. Acesso em 28 ago. 2023.}
+@comment{Divergencia aceita: errata do Manual: "Acesso em 28 ago. 2023", sem os dois-pontos. O texto da 4.2.1.2
+  pede a data de acesso "precedida da expressão Acesso em:", e é assim em todos os
+  outros exemplos.}
+@comment{Classe: BAUMAN, Zygmunt. Vida líquida. 2. ed. rev. Rio de Janeiro: Zahar, 2009. Disponível em:
+  https://lectio.proxy.ufrj.br/dashboard/midia/detalhe/1571. Acesso em: 28 ago. 2023.}
 @book{m-4212,
-%% BAUMAN, Zygmunt. Vida líquida. 2. ed. rev. Rio de Janeiro: Zahar, 2009.
-%% Disponível em: https://lectio.proxy.ufrj.br/dashboard/midia/detalhe/1571.
-%% Acesso em: 28 ago. 2023.
   author      = "Bauman, Zygmunt",
   title     = "Vida líquida",
   edition     = "2. ed. rev.",
@@ -10192,12 +10638,13 @@ postamble
   urldate = "2023-08-28",
 }
 
+@comment{Manual: ROMANO, Giovanni. Imagens da juventude na era moderna. In: LEVI, G; SCHIMIDT, J.
+  (org.). História dos jovens 2. São Paulo: Companhia das Letras, 1996. p. 7-16.}
+@comment{Divergencia aceita: errata do Manual: "LEVI, G;" sai sem o ponto da abreviatura do prenome. A 4.3.2
+  abrevia o prenome com ponto, e a classe imprime "LEVI, G.;".}
+@comment{Classe: ROMANO, Giovanni. Imagens da juventude na era moderna. In: LEVI, G.; SCHIMIDT, J.
+  (org.). História dos jovens 2. São Paulo: Companhia das Letras, 1996. p. 7-16.}
 @incollection{m-4213,
-%% ROMANO, Giovanni. Imagens da juventude na era moderna. In: LEVI, G;
-%% SCHIMIDT, J. (org.). História dos jovens 2. São Paulo: Companhia das
-%% Letras, 1996. p. 7-16.
-%%! errata do Manual: "LEVI, G;" sai sem o ponto da abreviatura do prenome.
-%%! A 4.3.2 abrevia o prenome com ponto, e a classe imprime "LEVI, G.;".
   author      = "Romano, Giovanni",
   title       = "Imagens da juventude na era moderna",
   editor      = "Levi, G. and Schimidt, J.",
@@ -10208,9 +10655,9 @@ postamble
   pages       = "7--16",
 }
 
+@comment{Manual: PILLA, Luiz. [Correspondência]. Destinatário: Moysés Valinho. Porto
+  Alegre, 6 jun. 1979. 1 cartão pessoal.}
 @letter{m-422,
-%% PILLA, Luiz. [Correspondência]. Destinatário: Moysés Valinho. Porto
-%% Alegre, 6 jun. 1979. 1 cartão pessoal.
   author    = "Pilla, Luiz",
   title   = "[Correspondência]",
   note     = "Destinatário: Moysés Valinho",
@@ -10219,9 +10666,18 @@ postamble
   addendum = "1 cartão pessoal",
 }
 
+@comment{Manual: LISPECTOR, Clarice. [Carta enviada para sua irmã]. Destinatário: Tânia Lispector.
+  Belém, 8 jul. 1944. 1 carta. Disponível em:
+  https://site.claricelispector.ims.com.br/acervo/cartas/067388-2/. Acesso em: 4. ago.
+  2023.}
+@comment{Divergencia aceita: errata do Manual: "4. ago. 2023", com ponto depois do dia. A data sai como dia, mês
+  abreviado e ano, sem ponto no dia, na própria referência ("8 jul. 1944") e em todos os
+  outros exemplos.}
+@comment{Classe: LISPECTOR, Clarice. [Carta enviada para sua irmã]. Destinatário: Tânia Lispector.
+  Belém, 8 jul. 1944. 1 carta. Disponível em:
+  https://site.claricelispector.ims.com.br/acervo/cartas/067388-2/. Acesso em: 4 ago.
+  2023.}
 @letter{m-4221,
-%% LISPECTOR, Clarice. [Carta enviada para sua irmã]. Destinatário: Tânia
-%% Lispector. Belém, 8 jul. 1944. 1 carta. Disponível em: https://site.claricelispector.ims.com.br/acervo/cartas/067388-2/. Acesso em: 4 ago. 2023.
   author      = "Lispector, Clarice",
   title       = "[Carta enviada para sua irmã]",
   note        = "Destinatário: Tânia Lispector",
@@ -10232,17 +10688,17 @@ postamble
   urldate     = "2023-08-04",
 }
 
+@comment{Manual: SÃO PAULO MEDICAL JOURNAL. São Paulo: Associação Paulista de Medicina, 1941- .}
 @periodical{m-4231,
-%% SÃO PAULO MEDICAL JOURNAL. São Paulo: Associação Paulista de Medicina, 1941- .
   title  = "São Paulo Medical Journal",
   location   = "São Paulo",
   publisher = "Associação Paulista de Medicina",
   date    = "1941/",
 }
 
+@comment{Manual: REVISTA BRASILEIRA DE NEUROLOGIA. Rio de Janeiro: Universidade Federal do
+  Rio de Janeiro, Instituto de Neurologia Deolindo Couto, v. 39, n. 2, abr./jun. 2003.}
 @periodical{m-4233,
-%% REVISTA BRASILEIRA DE NEUROLOGIA. Rio de Janeiro: Universidade Federal do
-%% Rio de Janeiro, Instituto de Neurologia Deolindo Couto, v. 39, n. 2, abr./jun. 2003.
   title       = "Revista Brasileira de Neurologia",
   location    = "Rio de Janeiro",
   publisher   = "Universidade Federal do Rio de Janeiro, Instituto de Neurologia Deolindo Couto",
@@ -10251,10 +10707,10 @@ postamble
   date        = "2003-04/2003-06",
 }
 
+@comment{Manual: ARAÚJO, Vânia Maria Rodrigues Hermes de. Informação: instrumento de
+  dominação e de submissão. Ciência da Informação, Brasília, DF, v. 20,
+  n. 1, p. 37-44, jan./jun. 1991.}
 @article{m-4234,
-%% ARAÚJO, Vânia Maria Rodrigues Hermes de. Informação: instrumento de
-%% dominação e de submissão. Ciência da Informação, Brasília, DF, v. 20,
-%% n. 1, p. 37-44, jan./jun. 1991.
   author     = "Araújo, Vânia Maria Rodrigues Hermes de",
   title    = "Informação: instrumento de dominação e de submissão",
   journaltitle = "Ciência da Informação",
@@ -10265,15 +10721,17 @@ postamble
   date      = "1991-01/1991-06",
 }
 
+@comment{Manual: LIEVENS, A.; MOENAERT, R. K. Project team communication in financial service
+  innovation. J. Manag. Stud., Oxford, v. 37, n. 5, Jul. 2000. Disponível em:
+  https://onlinelibrary.wiley.com/doi/10.1111/1467-6486.00201. Acesso em: 25 ago. 2023.}
+@comment{Divergencia aceita: o exemplo grafa "Jul. 2000". O texto da 4.3.5.5.1 manda abreviar o mês "no idioma
+  original da publicação, de acordo com o Anexo A da NBR 6023", e não abreviar mês de
+  quatro letras ou menos: o periódico é inglês (langid english), e o Anexo A escreve
+  "July" por extenso. Vale o texto (#146).}
+@comment{Classe: LIEVENS, A.; MOENAERT, R. K. Project team communication in financial service
+  innovation. J. Manag. Stud., Oxford, v. 37, n. 5, July 2000. Disponível em:
+  https://onlinelibrary.wiley.com/doi/10.1111/1467-6486.00201. Acesso em: 25 ago. 2023.}
 @article{m-4235,
-%% LIEVENS, A.; MOENAERT, R. K. Project team communication in financial
-%% service innovation. J. Manag. Stud., Oxford, v. 37, n. 5, Jul. 2000.
-%%! o Manual grafa "Jul." por ser periodico de lingua inglesa. A entrada nao
-%%! traz langid, e a classe compoe o mes no idioma do trabalho, "jul.". Com
-%%! langid = {english} ela seguiria o Anexo A da NBR 6023 (#146) -- que nao
-%%! abrevia mes de quatro letras ou menos, como diz a propria 4.3.5.5.1: "July",
-%%! e nao o "Jul." do exemplo. Nos dois casos ha divergencia com o exemplo.
-%% Disponível em: https://onlinelibrary.wiley.com/doi/10.1111/1467-6486.00201. Acesso em: 25 ago. 2023.
   author      = "Lievens, A. and Moenaert, R. K.",
   title       = "Project team communication in financial service innovation",
   journaltitle= "J. Manag. Stud.",
@@ -10283,11 +10741,12 @@ postamble
   date        = "2000-07",
   url         = "https://onlinelibrary.wiley.com/doi/10.1111/1467-6486.00201",
   urldate     = "2023-08-25",
+  langid      = "english",
 }
 
+@comment{Manual: BYRNE, J. A explosão de cursos para executivos nos EUA. Gazeta Mercantil,
+  São Paulo, 4 fev. 1992. Administração e Serviços, p. 28.}
 @article{m-4236,
-%% BYRNE, J. A explosão de cursos para executivos nos EUA. Gazeta Mercantil,
-%% São Paulo, 4 fev. 1992. Administração e Serviços, p. 28.
   author   = "Byrne, J.",
   title  = "A explosão de cursos para executivos nos EUA",
   journaltitle  = "Gazeta Mercantil",
@@ -10298,9 +10757,9 @@ postamble
   entrysubtype = {newspaper},
 }
 
+@comment{Manual: LEITÃO, M. Supremo pode formar maioria hoje contra o marco temporal.
+  O Globo, Rio de Janeiro, 30 ago. 2023. Disponível em: https://oglobo.globo.com/blogs/miriam-leitao/post/2023/08/supremo-pode-formar-maioria-hoje-contra-o-marco-temporal.ghtml. Acesso em: 30 ago. 2023.}
 @article{m-4237,
-%% LEITÃO, M. Supremo pode formar maioria hoje contra o marco temporal.
-%% O Globo, Rio de Janeiro, 30 ago. 2023. Disponível em: https://oglobo.globo.com/blogs/miriam-leitao/post/2023/08/supremo-pode-formar-maioria-hoje-contra-o-marco-temporal.ghtml. Acesso em: 30 ago. 2023.
   author      = "Leitão, M.",
   title       = "Supremo pode formar maioria hoje contra o marco temporal",
   journaltitle= "O Globo",
@@ -10310,23 +10769,23 @@ postamble
   urldate     = "2023-08-30",
 }
 
+@comment{Manual: FOTO de raios no Cristo é finalista em concurso de imagens de fenômenos
+  meteorológicos. G1, Rio de Janeiro, 24 out. 2023. Disponível em:
+  https://g1.globo.com/meio-ambiente/noticia/2023/08/24/concurso-elege-a-melhor-foto-de-fenomenos-meteorologicos-clique-de-raios-no-cristo-redentor-concorre.ghtml.
+  Acesso em: 26 ago. 2023.}
 @article{m-4238,
-%% FOTO de raios no Cristo é finalista em concurso de imagens de fenômenos
-%% meteorológicos. G1, Rio de Janeiro, 24 out. 2023. Disponível em:
-%% https://g1.globo.com/meio-ambiente/noticia/2023/08/24/concurso-elege-a-melhor-foto-de-fenomenos-meteorologicos.ghtml.
-%% Acesso em: 26 ago. 2023.
   title     = "Foto de raios no Cristo é finalista em concurso de imagens de fenômenos meteorológicos",
   journaltitle     = "G1",
   location      = "Rio de Janeiro",
   date       = "2023-10-24",
-  url        = "https://g1.globo.com/meio-ambiente/noticia/2023/08/24/concurso-elege-a-melhor-foto-de-fenomenos-meteorologicos.ghtml",
+  url        = "https://g1.globo.com/meio-ambiente/noticia/2023/08/24/concurso-elege-a-melhor-foto-de-fenomenos-meteorologicos-clique-de-raios-no-cristo-redentor-concorre.ghtml",
   urldate = "2023-08-26",
   entrysubtype = {newspaper},
 }
 
+@comment{Manual: ENCONTRO ANUAL DA ANPAD, 14., 1982, Florianópolis. Anais [...]. Belo
+  Horizonte: ANPAD, 1990. 9 v.}
 @proceedings{m-4241,
-%% ENCONTRO ANUAL DA ANPAD, 14., 1982, Florianópolis. Anais [...]. Belo
-%% Horizonte: ANPAD, 1990. 9 v.
   eventtitle  = "Encontro Anual da ANPAD",
   number      = "14",
   eventdate   = "1982",
@@ -10338,9 +10797,9 @@ postamble
   addendum    = "9 v.",
 }
 
+@comment{Manual: CONGRESSO BRASILEIRO DE BIBLIOTECONOMIA E DOCUMENTAÇÃO, 19., 2000, Porto
+  Alegre. Anais eletrônicos [...]. Porto Alegre: PUCRS, 2000. 1 CD.}
 @proceedings{m-4243,
-%% CONGRESSO BRASILEIRO DE BIBLIOTECONOMIA E DOCUMENTAÇÃO, 19., 2000, Porto
-%% Alegre. Anais eletrônicos [...]. Porto Alegre: PUCRS, 2000. 1 CD.
   eventtitle       = "Congresso Brasileiro de Biblioteconomia e Documentação",
   number       = "19",
   eventdate   = "2000",
@@ -10352,11 +10811,11 @@ postamble
   addendum = "1 CD",
 }
 
+@comment{Manual: CORDEIRO, Rosa Inês de N. Descrição e representação de fotografias de cenas
+  e fotogramas de filmes: um esquema de indexação. In: CONGRESSO BRASILEIRO DE
+  BIBLIOTECONOMIA E DOCUMENTAÇÃO, 16., 1991, Salvador. Anais [...]. Salvador:
+  APBEB, 1991. v. 2, p. 1008-1022.}
 @inproceedings{m-4245,
-%% CORDEIRO, Rosa Inês de N. Descrição e representação de fotografias de cenas
-%% e fotogramas de filmes: um esquema de indexação. In: CONGRESSO BRASILEIRO DE
-%% BIBLIOTECONOMIA E DOCUMENTAÇÃO, 16., 1991, Salvador. Anais [...]. Salvador:
-%% APBEB, 1991. v. 2, p. 1008-1022.
   author      = "Cordeiro, Rosa Inês de N.",
   title       = "Descrição e representação de fotografias de cenas e fotogramas de filmes: um esquema de indexação",
   eventtitle  = "Congresso Brasileiro de Biblioteconomia e Documentação",
@@ -10371,10 +10830,18 @@ postamble
   pages       = "1008--1022",
 }
 
+@comment{Manual: MACIEL, A. M. D.; SALES JÚNIOR, Ronaldo L.; SIQUEIRA, A. J. O indivíduo e a
+  pós-modernidade. In: CONGRESSO DE INICIAÇÃO DA UFPe, 4., 1996, Recife: UFPE. Anais
+  eletrônicos [...]. Recife: UFPe, 1996. Disponível em:
+  http://www.propesq.ufpe.br/anais/cfch/cfchtrab/htm. Acesso em: 16 jan. 2001.}
+@comment{Divergencia aceita: errata do Manual: "1996, Recife: UFPE." Pela 4.3.2.13 o nome do evento é seguido do
+  número, do ano e do local de realização, e só; a editora vai na imprenta, depois do
+  título dos anais ("Recife: UFPe, 1996.").}
+@comment{Classe: MACIEL, A. M. D.; SALES JÚNIOR, Ronaldo L.; SIQUEIRA, A. J. O indivíduo e a
+  pós-modernidade. In: CONGRESSO DE INICIAÇÃO DA UFPE, 4., 1996, Recife. Anais
+  eletrônicos [...]. Recife: UFPe, 1996. Disponível em:
+  http://www.propesq.ufpe.br/anais/cfch/cfchtrab/htm. Acesso em: 16 jan. 2001.}
 @inproceedings{m-4246,
-%% MACIEL, A. M. D.; SALES JÚNIOR, Ronaldo L.; SIQUEIRA, A. J. O indivíduo e a
-%% pós-modernidade. In: CONGRESSO DE INICIAÇÃO DA UFPE, 4., 1996, Recife.
-%% Anais eletrônicos [...]. Recife: UFPe, 1996. Disponível em: http://www.propesq.ufpe.br/anais/cfch/cfchtrab/htm. Acesso em: 16 jan. 2001.
   author      = "Maciel, A. M. D. and Sales Júnior, Ronaldo L. and Siqueira, A. J.",
   title     = "O indivíduo e a pós-modernidade",
   eventtitle      = "Congresso de Iniciação da UFPE",
@@ -10389,42 +10856,59 @@ postamble
   urldate = "2001-01-16",
 }
 
+@comment{Manual: BERTAZZOLI, Rodnei et al. Eletrodos de difusão gasosa modificados com catalisadores
+  redox, processo e reator eletroquímico de síntese de peróxido de hidrogênio utilizando
+  os mesmos. Depositante: Universidade Estadual de Campinas. Procurador: Maria Cristina
+  Valim Lourenço Gomes. BR n. PI0600460-1A. Depósito: 27 jan. 2006. Concessão: 25 mar.
+  2008.}
+@comment{Divergencia aceita: o Manual usa "et al."; a classe lista todos os autores (maxbibnames=99), que a 4.3.1.3
+  recomenda ("convém indicar todos") e é o que a COPPE pratica.}
+@comment{Classe: BERTAZZOLI, Rodnei; RODRIGUES, Christiane A.; SPOSITO, Guilherme. Eletrodos de difusão
+  gasosa modificados com catalisadores redox, processo e reator eletroquímico de síntese
+  de peróxido de hidrogênio utilizando os mesmos. Depositante: Universidade Estadual de
+  Campinas. Procurador: Maria Cristina Valim Lourenço Gomes. BR n. PI0600460-1A.
+  Depósito: 27 jan. 2006. Concessão: 25 mar. 2008.}
 @patent{m-425,
-%%! o Manual usa "et al."; a classe lista todos os autores (maxbibnames=99),
-%%! que a 4.3.1.3 admite igualmente e é o que a COPPE pratica.
-%% BERTAZZOLI, Rodnei et al. Eletrodos de difusão gasosa modificados com
-%% catalisadores redox... Depositante: Universidade Estadual de Campinas.
-%% BR n. PI0600460-1A. Depósito: 27 jan. 2006. Concessão: 25 mar. 2008.
   author      = "Bertazzoli, Rodnei and Rodrigues, Christiane A. and Sposito, Guilherme",
   title       = "Eletrodos de difusão gasosa modificados com catalisadores redox, processo e reator eletroquímico de síntese de peróxido de hidrogênio utilizando os mesmos",
   holder      = "{Universidade Estadual de Campinas}",
+  attorney    = "Gomes, Maria Cristina Valim Lourenço",
   number      = "BR n. PI0600460-1A",
-  type        = "Patente de Invento",
   filingdate  = "27 jan. 2006",
   grantdate   = "25 mar. 2008",
 }
 
+@comment{Manual: GALEMBECK, Fernando; SOUZA, Maria de Fátima Brito. Process to obtain an Intercalated
+  or exfoliated polyester with clay hybrid nanocomposite material. Depositante:
+  Universidade Estadual de Campinas; Rhodia Ster S/A. WO2005/030850 A1, Depósito: 1 Oct.
+  2003, Concessão: 7 Apr. 2005. Disponível em:
+  http://www.iprvillage.Info/portal/servlet/DIIDirect?CC=WO&PN=2005030850&DT=A1&SrcAuth=Wila&Token=UtWHB3Mmc98t05i1AVPmaGE5dYhs00Nlt38dpA3EfnOosue2.GSz63ySsIiukTB8VQWW32lISV87n4_naNBY8lhYY30Rw1UeDo_8Yo8UVD0.
+  Acesso em: 27 ago. 2010.}
+@comment{Divergencia aceita: o exemplo separa o número e as datas por vírgula ("WO2005/030850 A1, Depósito: 1 Oct.
+  2003, Concessão: 7 Apr. 2005."); os elementos essenciais da 4.2.5 e os dois exemplos
+  dela separam por ponto, e a classe segue o texto. O exemplo também grafa
+  "Intercalated" com maiúscula no meio do título, e a entrada o escreve com minúscula.}
+@comment{Classe: GALEMBECK, Fernando; SOUZA, Maria de Fátima Brito. Process to obtain an intercalated
+  or exfoliated polyester with clay hybrid nanocomposite material. Depositante:
+  Universidade Estadual de Campinas; Rhodia Ster S/A. WO2005/030850 A1. Depósito: 1 Oct.
+  2003. Concessão: 7 Apr. 2005. Disponível em:
+  http://www.iprvillage.info/portal/servlet/DIIDirect?CC=WO&PN=2005030850&DT=A1&SrcAuth=Wila&Token=UtWHB3Mmc98t05i1AVPmaGE5dYhs00Nlt38dpA3EfnOosue2.GSz63ySsIiukTB8VQWW32lISV87n4_naNBY8lhYY30Rw1UeDo_8Yo8UVD0.
+  Acesso em: 27 ago. 2010.}
 @patent{m-4251,
-%% GALEMBECK, Fernando; SOUZA, Maria de Fátima Brito. Process to obtain an
-%% intercalated or exfoliated polyester with clay hybrid nanocomposite
-%% material. Depositante: Universidade Estadual de Campinas; Rhodia Ster S/A.
-%% WO2005/030850 A1. Depósito: 1 Oct. 2003. Concessão: 7 Apr. 2005.
-%% Disponível em: http://www.iprvillage.info/portal/servlet/DIIDirect.
-%% Acesso em: 30 ago. 2023.
   author      = "Galembeck, Fernando and Souza, Maria de Fátima Brito",
   title     = "Process to obtain an intercalated or exfoliated polyester with clay hybrid nanocomposite material",
   holder     = "{Universidade Estadual de Campinas; Rhodia Ster S/A}",
   number     = "WO2005/030850 A1",
   filingdate   = "1 Oct. 2003",
   grantdate  = "7 Apr. 2005",
-  url        = "http://www.iprvillage.info/portal/servlet/DIIDirect",
-  urldate = "2023-08-30",
+  url        = "http://www.iprvillage.info/portal/servlet/DIIDirect?CC=WO&PN=2005030850&DT=A1&SrcAuth=Wila&Token=UtWHB3Mmc98t05i1AVPmaGE5dYhs00Nlt38dpA3EfnOosue2.GSz63ySsIiukTB8VQWW32lISV87n4_naNBY8lhYY30Rw1UeDo_8Yo8UVD0",
+  urldate = "2010-08-27",
 }
 
+@comment{Manual: SÃO PAULO (Estado). Decreto nº 42.822, de 20 de janeiro de 1998. Lex:
+  coletânea de legislação e jurisprudência. São Paulo, v. 62, n. 3, p. 217-220, 1998.}
 @legislation{m-4261,
-%% SÃO PAULO (Estado). Decreto nº 42.822, de 20 de janeiro de 1998. Lex:
-%% coletânea de legislação e jurisprudência. São Paulo, v. 62, n. 3, p. 217-220, 1998.
-  author      = "{SÃO PAULO (Estado)}",
+  author      = "{São Paulo (Estado)}",
   title       = "Decreto n\textordmasculine{} 42.822, de 20 de janeiro de 1998. Lex: coletânea de legislação e jurisprudência",
   type        = "Decreto Estadual",
   location    = "São Paulo",
@@ -10434,22 +10918,33 @@ postamble
   year        = 1998,
 }
 
+@comment{Manual: BRASIL. Supremo Tribunal Federal. Extradição nº 10. Apelante: Estados Unidos da
+  América. Apelada. Antônia Maria da Silva. Relator: Ministro Rafael Mayer. Brasília,
+  DF, 26 de fevereiro de 1986. Revista Trimestral de Jurisprudência, [Brasília], v.109,
+  p. 870-879, set. 1986.}
+@comment{Divergencia aceita: errata do Manual: "Apelada. Antônia Maria da Silva", com ponto, e não dois-pontos como
+  "Apelante:". E o texto da 4.2.6.2 pede a data do julgamento "precedido da expressão
+  julgado em e da data abreviada", como no segundo exemplo ("Relatora: Min. Ellen
+  Gracie, julgado em 29 nov. 2005."); este exemplo não segue o texto, e a classe ainda
+  não compõe o "julgado em" (#169): a entrada imita o exemplo, com o local e a data no
+  campo location.}
+@comment{Classe: BRASIL. Supremo Tribunal Federal. Extradição nº 10. Apelante: Estados Unidos da
+  América. Apelada: Antônia Maria da Silva. Relator: Ministro Rafael Mayer. Brasília,
+  DF, 26 de fevereiro de 1986. Revista Trimestral de Jurisprudência, [Brasília], v. 109,
+  p. 870-879, set. 1986.}
 @jurisdiction{m-4262,
-%% BRASIL. Supremo Tribunal Federal. Extradição nº 10. Relator: Ministro
-%% Rafael Mayer. Brasília, DF, 26 de fevereiro de 1986. Revista Trimestral de
-%% Jurisprudência, [Brasília], v. 109, p. 870-879, set. 1986.
-  author   = "{BRASIL. Supremo Tribunal Federal}",
-  title  = "Extradição n\textordmasculine{} 10",
+  author   = "{Brasil. Supremo Tribunal Federal}",
+  title  = "Extradição n\textordmasculine{} 10. Apelante: Estados Unidos da América. Apelada: Antônia Maria da Silva",
   relator = "Ministro Rafael Mayer",
   location   = "Brasília, DF, 26 de fevereiro de 1986",
   note    = "Revista Trimestral de Jurisprudência, [Brasília], v. 109, p. 870-879, set. 1986",
 }
 
+@comment{Manual: VARGINHA (MG). Edital de licitação nº 189/2007. Pregão nº 151/2007.
+  [Aquisição de leite pasteurizado]. Varginha: órgão oficial do município,
+  Varginha, ano 7, n. 494, p. 15, 31 maio 2007.}
 @legislation{m-4263,
-%% VARGINHA (MG). Edital de licitação nº 189/2007. Pregão nº 151/2007.
-%% [Aquisição de leite pasteurizado]. Varginha: órgão oficial do município,
-%% Varginha, ano 7, n. 494, p. 15, 31 maio 2007.
-  author      = "{VARGINHA (MG)}",
+  author      = "{Varginha (MG)}",
   title       = "Edital de licitação n\textordmasculine{} 189/2007. Pregão n\textordmasculine{} 151/2007. [Aquisição de leite pasteurizado]",
   type        = "Edital",
   location    = "Varginha",
@@ -10459,9 +10954,9 @@ postamble
   date        = "2007-05-31",
 }
 
+@comment{Manual: LEGISLAÇÃO brasileira: normas jurídicas, federais, bibliografia brasileira
+  de Direito. 7. ed. Brasília, DF: Senado Federal, 1999. 1 CD-ROM.}
 @legal{m-427,
-%% LEGISLAÇÃO brasileira: normas jurídicas, federais, bibliografia brasileira
-%% de Direito. 7. ed. Brasília, DF: Senado Federal, 1999. 1 CD-ROM.
   title   = "Legislação brasileira: normas jurídicas, federais, bibliografia brasileira de Direito",
   edition   = "7. ed.",
   location    = "Brasília, DF",
@@ -10470,18 +10965,24 @@ postamble
   addendum = "1 CD-ROM",
 }
 
+@comment{Manual: SÃO CARLOS (SP). Cartório de Registro Civil das Pessoas Naturais do 1º
+  Subdistrito de São Carlos. Certidão de nascimento [de] Maria da Silva.
+  Registro em: 9 ago. 1979.}
 @legal{m-428,
-%% SÃO CARLOS (SP). Cartório de Registro Civil das Pessoas Naturais do 1º
-%% Subdistrito de São Carlos. Certidão de nascimento [de] Maria da Silva.
-%% Registro em: 9 ago. 1979.
   author      = "{SÃO CARLOS (SP). Cartório de Registro Civil das Pessoas Naturais do 1\textordmasculine{} Subdistrito de São Carlos}",
   title       = "Certidão de nascimento [de] Maria da Silva",
   note        = "Registro em: 9 ago. 1979",
 }
 
+@comment{Manual: OS PERIGOS do uso de tóxicos. Produção de Jorge Ramos de Andrade. São Paulo: CERAVI,
+  1983. 1 videocassete.}
+@comment{Divergencia aceita: a 4.2.9 traz as duas formas: "Produção de Jorge Ramos de Andrade" neste exemplo, e
+  "Direção: Ridley Scott. Produção: Michael Deeley." no BLADE Runner, em que diretor e
+  produtor vêm juntos. O texto só lista "b) diretor; c) produtor", sem a forma; a classe
+  usa os dois-pontos nos dois casos, como no diretor (#143).}
+@comment{Classe: OS PERIGOS do uso de tóxicos. Produção: Jorge Ramos de Andrade. São Paulo: CERAVI,
+  1983. 1 videocassete.}
 @video{m-429,
-%% OS PERIGOS do uso de tóxicos. Produção de Jorge Ramos de Andrade. São
-%% Paulo: CERAVI, 1983. 1 videocassete.
   title   = "Os perigos do uso de tóxicos",
   producer = "Jorge Ramos de Andrade",
   location    = "São Paulo",
@@ -10490,8 +10991,8 @@ postamble
   addendum = "1 videocassete",
 }
 
+@comment{Manual: CANHOTO. Abismo de rosas. São Paulo: CEMBRA. 1 partitura (3 p.)}
 @music{m-42101,
-%% CANHOTO. Abismo de rosas. São Paulo: CEMBRA. 1 partitura (3 p.)
   author      = "{Canhoto}",
   title       = "Abismo de rosas",
   location    = "São Paulo",
@@ -10499,10 +11000,14 @@ postamble
   addendum    = "1 partitura (3 p.)",
 }
 
+@comment{Manual: OLIVA, Marcos; MOCOTÓ, Tiago. Fervilhar: frevo. [19--?]. 1 partitura. Piano.
+  Disponível em: http://openlink.br.inter.net/picolino/partitur.htm. Acesso em: 5 jan.
+  2022.}
+@comment{Divergencia aceita: a data "[19--?]" é século provável (4.3.5), e a classe ainda não compõe data incerta
+  (#168): a entrada usa 1990 no lugar.}
+@comment{Classe: OLIVA, Marcos; MOCOTÓ, Tiago. Fervilhar: frevo. 1990. 1 partitura. Piano. Disponível
+  em: http://openlink.br.inter.net/picolino/partitur.htm. Acesso em: 5 jan. 2022.}
 @music{m-42102,
-%% OLIVA, Marcos; MOCOTÓ, Tiago. Fervilhar: frevo. 1990. 1 partitura. Piano.
-%% Disponível em: http://openlink.br.inter.net/picolino/partitur.htm.
-%% Acesso em: 5 jan. 2022.
   author      = "Oliva, Marcos and Mocotó, Tiago",
   title     = "Fervilhar: frevo",
   year        = 1990,
@@ -10511,30 +11016,30 @@ postamble
   urldate = "2022-01-05",
 }
 
+@comment{Manual: CARDOSO, Cláudio. Pedra de Itapuça. 1989. 3 fotografias.}
 @image{m-42111,
-%% CARDOSO, Cláudio. Pedra de Itapuça. 1989. 3 fotografias.
   author      = "Cardoso, Cláudio",
   title       = "Pedra de Itapuça",
   year        = 1989,
   addendum    = "3 fotografias",
 }
 
+@comment{Manual: HOUTE, Jef Van den. Black hole. 1 June 2010. 1 fotografia. Disponível em:
+  http://photo.net/photodb/photo?photo_id=11724012. Acesso em: 26 maio 2011.}
 @image{m-42112,
-%% HOUTE, Jef Van den. Black hole. 1 jun. 2010. 1 fotografia.
-%% Disponível em: http://photo.net/photodb/photo?photo_id=11724012.
-%% Acesso em: 26 maio 2011.
   author      = "Houte, Jef Van den",
   title     = "Black hole",
   date       = "2010-06-01",
   addendum   = "1 fotografia",
   url        = "http://photo.net/photodb/photo?photo_id=11724012",
   urldate = "2011-05-26",
+  langid     = "english",
 }
 
+@comment{Manual: BRASIL. Ministério da Aeronáutica. Comando Costeiro. Base Aérea do Recife.
+  Saquarema. Recife, 1976. 71 fotografias. Escala 1: 20.000.}
 @map{m-42121,
-%% BRASIL. Ministério da Aeronáutica. Comando Costeiro. Base Aérea do Recife.
-%% Saquarema. Recife, 1976. 71 fotografias. Escala 1: 20.000.
-  author      = "{BRASIL. Ministério da Aeronáutica. Comando Costeiro. Base Aérea do Recife}",
+  author      = "{Brasil. Ministério da Aeronáutica. Comando Costeiro. Base Aérea do Recife}",
   title       = "Saquarema",
   location    = "Recife",
   year        = 1976,
@@ -10542,9 +11047,15 @@ postamble
   addendum    = "71 fotografias",
 }
 
+@comment{Manual: IBGE. República Federativa do Brasil. [Rio de Janeiro?]. 1996.1 mapa color., 31 cm x
+  34 cm. Escala 1: 15.000.000. 1 CD-ROM.}
+@comment{Divergencia aceita: errata do Manual: "[Rio de Janeiro?]. 1996.1 mapa", com ponto entre o local e a data e
+  sem espaço antes da descrição física. Sem editora, o local e a data vão separados por
+  vírgula, como na 4.2.14 ("Rio de Janeiro, 1998."), e a classe imprime "[Rio de
+  Janeiro?], 1996. 1 mapa".}
+@comment{Classe: IBGE. República Federativa do Brasil. [Rio de Janeiro?], 1996. 1 mapa color., 31 cm x
+  34 cm. Escala 1: 15.000.000. 1 CD-ROM.}
 @map{m-42122,
-%% IBGE. República Federativa do Brasil. [Rio de Janeiro?], 1996. 1 mapa
-%% color., 31 cm x 34 cm. Escala 1: 15.000.000. 1 CD-ROM.
   author      = "{IBGE}",
   title     = "República Federativa do Brasil",
   location      = "[Rio de Janeiro?]",
@@ -10554,20 +11065,20 @@ postamble
   note       = "1 CD-ROM",
 }
 
+@comment{Manual: DUCHAMP, Marcel. Escultura para viajar. 1918. 1 escultura variável,
+  borracha colorida e cordel.}
 @artwork{m-42131,
-%% DUCHAMP, Marcel. Escultura para viajar. 1918. 1 escultura variável,
-%% borracha colorida e cordel.
   author      = "Duchamp, Marcel",
   title       = "Escultura para viajar",
   year        = 1918,
   addendum    = "1 escultura variável, borracha colorida e cordel",
 }
 
+@comment{Manual: UNIVERSIDADE FEDERAL DO RIO DE JANEIRO. Sistema de Bibliotecas e
+  Informação. Minerva: Sistema de Documentação da UFRJ. Rio de Janeiro, 1998.
+  Disponível em: http://www.minerva.ufrj.br. Acesso em: 30 mar. 2022.}
 @online{m-4214,
-%% UNIVERSIDADE FEDERAL DO RIO DE JANEIRO. Sistema de Bibliotecas e
-%% Informação. Minerva: Sistema de Documentação da UFRJ. Rio de Janeiro, 1998.
-%% Disponível em: http://www.minerva.ufrj.br. Acesso em: 30 mar. 2022.
-  author      = "{UNIVERSIDADE FEDERAL DO RIO DE JANEIRO. Sistema de Bibliotecas e Informação}",
+  author      = "{Universidade Federal do Rio de Janeiro. Sistema de Bibliotecas e Informação}",
   title     = "Minerva: Sistema de Documentação da UFRJ",
   location      = "Rio de Janeiro",
   year        = 1998,
@@ -10575,10 +11086,10 @@ postamble
   urldate = "2022-03-30",
 }
 
+@comment{Manual: LEITE, Sonia. Memória da comunidade da Serrinha. 1997. 203 f. Dissertação (Mestrado em
+  Memória Social e Documento) — Centro de Ciências Humanas, Universidade do Rio de
+  Janeiro, Rio de Janeiro, 1997.}
 @thesis{m-diss,
-%% LEITE, Sonia. Memória da comunidade da Serrinha. 1997. 203 f. Dissertação
-%% (Mestrado em Memória Social e Documento) -- Centro de Ciências Humanas,
-%% Universidade do Rio de Janeiro, Rio de Janeiro, 1997.
   author      = "Leite, Sonia",
   title       = "Memória da comunidade da Serrinha",
   type        = "mscdiss",
@@ -10589,13 +11100,14 @@ postamble
   pagetotal   = "203",
 }
 
+@comment{Manual: ASSOCIAÇÃO BRASILEIRA DE NORMAS TÉCNICAS. NBR 6023: informação e documentação:
+  referências: elaboração. Rio de Janeiro: ABNT, 2025.}
 @standard{m-norma,
-%% ASSOCIAÇÃO BRASILEIRA DE NORMAS TÉCNICAS. NBR 6023: informação e
-%% documentação: referências: elaboração. Rio de Janeiro, 2018.
   author  = "{Associação Brasileira de Normas Técnicas}",
   title = "{NBR} 6023: informação e documentação: referências: elaboração",
   location  = "Rio de Janeiro",
-  year    = 2018,
+  publisher = "ABNT",
+  year    = 2025,
 }
 %</tiposbib>
 % \fi

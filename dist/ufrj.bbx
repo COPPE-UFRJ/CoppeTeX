@@ -80,16 +80,41 @@
      \clearname{editor}}
     {}}
 
-\protected\def\ufrj@ucfamily#1{%
-  \protected@edef\ufrj@uctmp{#1}%
-  \edef\ufrj@ucstr{\detokenize\expandafter{\ufrj@uctmp}}%
-  \expandafter\ufrj@ucscan\ufrj@ucstr.\ufrj@ucstop{#1}}
-\protected\def\ufrj@ucscan#1.#2\ufrj@ucstop#3{%
-  \ifblank{#2}
-    {\expandafter\ufrj@ucscanp\ufrj@ucstr(\ufrj@ucstop{#3}}
-    {#3}}
-\protected\def\ufrj@ucscanp#1(#2\ufrj@ucstop#3{%
-  \ifblank{#2}{\MakeUppercase{#3}}{#3}}
+\ExplSyntaxOn
+\seq_new:N \l__ufrj_nome_seq
+\seq_new:N \l__ufrj_entrada_seq
+\tl_new:N \l__ufrj_nome_tl
+\tl_new:N \l__ufrj_entrada_tl
+\cs_new_protected:Npn \__ufrj_nome_segmentos:n #1
+  {
+    \seq_set_split:Nnn \l__ufrj_nome_seq { .~ } {#1}
+    \int_compare:nNnT { \seq_count:N \l__ufrj_nome_seq } = { 1 }
+      {
+        \tl_set:Nx \l__ufrj_nome_tl { \seq_item:Nn \l__ufrj_nome_seq { 1 } }
+        \seq_set_split:NnV \l__ufrj_nome_seq { .~ } \l__ufrj_nome_tl
+      }
+  }
+\cs_generate_variant:Nn \__ufrj_nome_segmentos:n { o }
+\cs_new_protected:Npn \ufrj_nome_lista:n #1
+  {
+    \bool_lazy_or:nnTF
+      { ! \cs_if_exist_p:N \namepartgiven }
+      { \tl_if_blank_p:V \namepartgiven }
+      {
+        \__ufrj_nome_segmentos:o {#1}
+        \seq_pop_left:NN \l__ufrj_nome_seq \l__ufrj_entrada_tl
+        \seq_set_split:NnV \l__ufrj_entrada_seq { ~( } \l__ufrj_entrada_tl
+        \seq_pop_left:NN \l__ufrj_entrada_seq \l__ufrj_entrada_tl
+        \MakeUppercase { \l__ufrj_entrada_tl }
+        \seq_if_empty:NF \l__ufrj_entrada_seq
+          { ~( \seq_use:Nn \l__ufrj_entrada_seq { ~( } }
+        \seq_if_empty:NF \l__ufrj_nome_seq
+          { .~ \seq_use:Nn \l__ufrj_nome_seq { .~ } }
+      }
+      { \MakeUppercase {#1} }
+  }
+\cs_set_eq:NN \ufrj@ucfamily \ufrj_nome_lista:n
+\ExplSyntaxOff
 \newcommand*\ufrj@abntdaterangesep{%
   \iffieldequalstr{endyear}{}
     {\mbox{-}\space}%
@@ -119,6 +144,9 @@
 \def\ufrj@mes@italian#1{\ifcase#1\or genn\adddot\or febbr\adddot\or mar\adddot
   \or apr\adddot\or magg\adddot\or giugno\or luglio\or ag\adddot\or sett\adddot
   \or ott\adddot\or nov\adddot\or dic\adddot\fi}
+\def\ufrj@mes@german#1{\ifcase#1\or Jan\adddot\or Feb\adddot\or März
+  \or Apr\adddot\or Mai\or Juni\or Juli\or Aug\adddot\or Sept\adddot
+  \or Okt\adddot\or Nov\adddot\or Dez\adddot\fi}
 \let\ufrj@mes@portuguese\ufrj@mes@brazilian
 \let\ufrj@mes@portuges\ufrj@mes@brazilian
 \let\ufrj@mes@brazil\ufrj@mes@brazilian
@@ -126,9 +154,15 @@
 \let\ufrj@mes@british\ufrj@mes@english
 \let\ufrj@mes@USenglish\ufrj@mes@english
 \let\ufrj@mes@UKenglish\ufrj@mes@english
+\let\ufrj@mes@ngerman\ufrj@mes@german
+\let\ufrj@mes@austrian\ufrj@mes@german
+\let\ufrj@mes@naustrian\ufrj@mes@german
+\let\ufrj@mes@swissgerman\ufrj@mes@german
+\let\ufrj@mes@nswissgerman\ufrj@mes@german
+\newif\if@ufrjmesdotrabalho
 \newcommand*\ufrj@monthlang{}
 \protected\def\ufrj@abntmonth#1{%
-  \iffieldundef{langid}
+  \ifboolexpr{ test {\iffieldundef{langid}} or bool {@ufrjmesdotrabalho} }
     {\mkbibmonth{#1}}
     {\edef\ufrj@monthlang{\thefield{langid}}%
      \ifcsdef{ufrj@mes@\ufrj@monthlang}
@@ -158,13 +192,35 @@
 \protected\def\ufrjUCtitleB#1 #2\ufrjUCstop{%
   \MakeUppercase{#1}\ifblank{#2}{}{\space\ufrjUCkeep#2\ufrjUCstop}}
 \protected\def\ufrjUCkeep#1 \ufrjUCstop{#1}
-\protected\def\ufrjUCifart#1{%
-  \begingroup
-  \lowercase{\def\ufrjUC@w{#1}}%
-  \edef\ufrjUC@w{,\ufrjUC@w,}%
-  \expandafter\in@\expandafter{\ufrjUC@w}{,a,o,as,os,um,uma,uns,umas,the,an,}%
-  \ifin@\aftergroup\@firstoftwo\else\aftergroup\@secondoftwo\fi
-  \endgroup}
+\ExplSyntaxOn
+\clist_const:Nn \c_ufrj_naosignificativas_clist
+  {
+    o, a, os, as, um, uma, uns, umas, à, às, ao, aos, com, da, das, de, do,
+    dos, em, na, nas, no, nos, num, nuns, por, sem, sob, e, mas, nem, ou, que,
+    se,
+    the, an, of, in, on, at, to, for, by, and, or, from, with,
+    el, la, los, las, un, una, unos, unas, del, al, en, con, sin, y,
+    le, les, une, des, du, au, aux, et, par, sur, dans, pour,
+    il, lo, gli, uno, di, ai, per, su
+  }
+\str_new:N \l__ufrj_palavra_str
+\bool_new:N \l__ufrj_naosig_bool
+\prg_new_protected_conditional:Npnn \ufrj_se_nao_significativa:n #1 { T , F , TF }
+  {
+    \str_set:Nx \l__ufrj_palavra_str { \text_lowercase:n {#1} }
+    \bool_set_false:N \l__ufrj_naosig_bool
+    \clist_map_inline:Nn \c_ufrj_naosignificativas_clist
+      {
+        \str_if_eq:VnT \l__ufrj_palavra_str {##1}
+          { \bool_set_true:N \l__ufrj_naosig_bool \clist_map_break: }
+      }
+    \bool_if:NTF \l__ufrj_naosig_bool
+      { \prg_return_true: }
+      { \prg_return_false: }
+  }
+\prg_generate_conditional_variant:Nnn \ufrj_se_nao_significativa:n { V } { T , F , TF }
+\cs_set_eq:NN \ufrjUCifart \ufrj_se_nao_significativa:nTF
+\ExplSyntaxOff
 \DeclareFieldFormat{title}{%
   \ifboolexpr{ test {\ifnameundef{labelname}} }
     {#1}%
@@ -210,7 +266,7 @@
                match=\regexp{\[s\.\s*n\.\]},
                replace={[\\emph{s. n.}]}]}
     \map{\step[fieldsource=title,
-               match=\regexp{\A(O|A|Os|As|Um|Uma|Uns|Umas|The|An|El|La|Los|Las|Le|Les|Il|Lo|Gli)\s+(.+)\Z},
+               matchi=\regexp{\A(o|a|os|as|um|uma|uns|umas|à|às|ao|aos|com|da|das|de|do|dos|em|na|nas|no|nos|num|nuns|por|sem|sob|e|mas|nem|ou|que|se|the|an|of|in|on|at|to|for|by|and|or|from|with|el|la|los|las|un|una|unos|unas|del|al|en|con|sin|y|le|les|une|des|du|au|aux|et|par|sur|dans|pour|il|lo|gli|uno|di|ai|per|su)\s+(.+)\Z},
                final]
          \step[fieldset=sorttitle, fieldvalue={$2}]}
   }%
@@ -248,7 +304,8 @@
   \iffieldundef{url}
     {}
     {\printfield{url}%
-     \iffieldundef{urlyear}{}{\setunit{\adddot\space}\printurldate}}}
+     \iffieldundef{urlyear}{}{\setunit{\adddot\space}%
+       \@ufrjmesdotrabalhotrue\printurldate\@ufrjmesdotrabalhofalse}}}
 
 \DeclareBibliographyDriver{article}{%
   \usebibmacro{bibindex}%
@@ -414,11 +471,16 @@
   \setunit*{\addcomma\space}\printdate%
   \newunit\newblock
   \printfield{chapter}%
-  \setunit{\addcomma\space}\printfield{pages}%
+  \setunit*{\addcomma\space}\printfield{pages}%
   \newunit\newblock
   \usebibmacro{doi+eprint+url}%
   \usebibmacro{finentry}}
 \DeclareBibliographyDriver{incollection}{\usebibmacro{ufrj:partdriver}}
+\renewbibmacro*{chapter+pages}{%
+  \printfield{chapter}%
+  \setunit*{\bibpagespunct}%
+  \printfield{pages}%
+  \newunit}
 \DeclareBibliographyDriver{inbook}{\usebibmacro{ufrj:partdriver}}
 
 \DeclareFieldFormat{type}{\ifbibstring{#1}{\bibstring{#1}}{#1}}
@@ -592,6 +654,11 @@
        \def\mkbibnameprefix##1{##1}%
        \printnames{holder}%
      \endgroup}}
+\newbibmacro*{ufrj:attorney}{%
+  \ifnameundef{attorney}
+    {}
+    {\printtext{\bibstring{ufrjattorney}\addcolon\space}%
+     \printnames[ufrj:direta]{attorney}}}
 \DeclareBibliographyAlias{letter}{misc}
 \DeclareBibliographyDriver{patent}{%
   \usebibmacro{bibindex}%
@@ -601,6 +668,8 @@
   \usebibmacro{title}%
   \newunit\newblock
   \usebibmacro{ufrj:depositor}%
+  \newunit\newblock
+  \usebibmacro{ufrj:attorney}%
   \newunit\newblock
   \printfield{type}%
   \setunit*{\addspace}\printfield{number}%
@@ -750,6 +819,7 @@
     \map{\step[fieldsource=localevento,fieldtarget=venue]}
     \map{\step[fieldsource=deposito,fieldtarget=filingdate]}
     \map{\step[fieldsource=concessao,fieldtarget=grantdate]}
+    \map{\step[fieldsource=procurador,fieldtarget=attorney]}
     % caderno e campo da classe (a secao do jornal); newspapersection e o nome
     % em ingles, e e o que as bases da entrega usam.
     \map{\step[fieldsource=newspapersection,fieldtarget=caderno]}

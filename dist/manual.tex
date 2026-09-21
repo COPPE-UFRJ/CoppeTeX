@@ -80,6 +80,12 @@
   \foreignkeyword{Academic works}
   \foreignkeyword{LaTeX}
 
+  % A ordem dos elementos pré-textuais é a da 3.1.2 do Manual, e a classe a
+  % confere: \maketitle (capa, folha de rosto e folha adicional), errata,
+  % \frontmatter (folha de aprovação), dedicatória, agradecimentos, epígrafe,
+  % resumo em português, resumo em língua estrangeira, listas de ilustrações,
+  % de tabelas, de abreviaturas e siglas e de símbolos, e \tableofcontents
+  % (sumário), sempre o último. Fora dela, o documento não compila sem erro.
   \maketitle
 
   \frontmatter
@@ -454,9 +460,11 @@
   Com o depósito digital, a aprovação é registrada por outros meios, e a folha
   apenas lista quem examinou.
 
-  A folha lista os \textbf{examinadores}. Nos Programas em que o orientador
-  integra a banca, ele entra na lista também, à frente dos examinadores, como
-  presidência; na classe, isso é a opção \verb|orientadorexamina|.
+  A folha lista a \textbf{banca}, na ordem em que o trabalho a declara. O
+  orientador preside a banca e aparece em primeiro lugar (3.1.2.1.3e): declare-o
+  como o primeiro membro, com o nome, a titulação e a instituição. A classe não o
+  põe lá sozinha; a opção \verb|orientadorexamina| faz isso, pondo os
+  orientadores à frente dos examinadores.
 
   \section{Os resumos}
 
@@ -1024,8 +1032,9 @@ public class Saudacao {
         português e nome em inglês, este só para a folha do \emph{abstract} \\
       \hline
       Natureza do trabalho (3.1.2.1.1e) & ``apresentada ao Programa de
-        Pós-graduação em \dots, COPPE, da Universidade Federal do Rio de
-        Janeiro'' \\
+        Pós-Graduação em \dots, Instituto Alberto Luiz Coimbra de Pós-Graduação
+        e Pesquisa de Engenharia, Universidade Federal do Rio de Janeiro, como
+        requisito parcial\dots'', como o modelo do SiBI \\
       \hline
       Abertura da folha de resumo & ``apresentada à COPPE/UFRJ'' e o grau
         ``em Ciências (D.Sc.)'' \\
