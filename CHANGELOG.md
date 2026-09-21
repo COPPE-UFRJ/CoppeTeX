@@ -115,6 +115,13 @@ top of `CORRECOES_MANUAL_2026.md`.
 
 ### Changed
 
+- **The natureza sentence follows the SiBI model** (#159): "Tese de Doutorado
+  apresentada ao Programa de Pós-Graduação em X, <unit's full name>,
+  Universidade Federal do Rio de Janeiro, como requisito parcial à obtenção do
+  título de…". The two SiBI sheets correct Annex B; the class had the unit's
+  acronym instead of its name, "da" before the university and "como parte dos
+  requisitos necessários". The university stays, though the model leaves it
+  out: 3.1.2.1.1(e) asks for it. `rtu01` and `rtu02` check the sentence.
 - **The abstract sheet is the one of Annexes E and F** (#157): its heading
   (RESUMO, ABSTRACT…), the reference, the text and the keywords. The opening
   sentence ("Resumo da Tese apresentada à COPPE/UFRJ…"), the title with author

@@ -875,6 +875,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \gdef\ufrj@unitcover{#2}%
   \gdef\ufrj@unitacronym{#3}}
 \newcommand*\ufrj@unitsep{ \ifx\ufrj@unitacronym\@empty\else\ufrj@unitacronym, \fi}
+\newcommand*\ufrj@unitnamesep{ \ifx\local@instname\@empty\else\local@instname, \fi}
 \newcommand*\ufrj@unitshort{%
   \ifx\ufrj@unitacronym\@empty\else\ufrj@unitacronym/\fi UFRJ}
 \newcommand*\ufrj@unitshortrev{%
@@ -923,9 +924,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \ufrjdefstring{brazilian}{coverprogram}{Programa de Pós-Graduação em \local@deptname}
 \ufrjdefstring{brazilian}{natureza}{\local@doctype\ de \@degreename\
   \ifthenelse{\boolean{maledoc}}{apresentado}{apresentada}
-  ao Programa de Pós-graduação em \local@deptname,\ufrj@unitsep
-  da \local@universityname, como parte dos requisitos
-  necessários à obtenção do título de
+  ao Programa de Pós-Graduação em \local@deptname,\ufrj@unitnamesep
+  \local@universityname, como requisito parcial à obtenção do título de
   \local@degname\ em \local@deptname.}
 \newcommand\ufrj@deptcode{}
 \newcommand\meta@deptname{}

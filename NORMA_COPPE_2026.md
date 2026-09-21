@@ -92,9 +92,12 @@ Na COPPE são **três linhas**, nesta ordem:
 
 **Sem sigla na segunda linha.** O Anexo A do Manual, que é o modelo da capa,
 escreve o nome da unidade por extenso e sem sigla ("ESCOLA DE BELAS ARTES"). A
-sigla da COPPE não se perde: ela está no logotipo, no alto da mesma folha, e na
-frase da natureza da folha de rosto ("…, COPPE, da Universidade Federal do Rio
-de Janeiro, …").
+sigla da COPPE não se perde: ela está no logotipo, no alto da mesma folha. A
+frase da natureza da folha de rosto também traz o nome por extenso, como o
+modelo do SiBI: "…ao Programa de Pós-Graduação em Engenharia de Sistemas e
+Computação, Instituto Alberto Luiz Coimbra de Pós-Graduação e Pesquisa de
+Engenharia, Universidade Federal do Rio de Janeiro, como requisito parcial à
+obtenção do título de…".
 
 ## 3. Programas de Pós-graduação da COPPE — *Dado próprio*
 

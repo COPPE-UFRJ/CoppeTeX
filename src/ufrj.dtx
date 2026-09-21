@@ -219,6 +219,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \changes{v5.0}{2026/09/21}{The advisor no longer enters the board of the folha de aprovacao automatically: the board is what examiner declares, in order, and the advisor, who chairs it (3.1.2.1.3e), is the first examiner. orientadorexamina puts advisors and coadvisors back at its head, as the v4.1 revision did by default.}
 % \changes{v5.0}{2026/09/18}{By default an abstract sheet is the one of Annexes E and F: its heading, the reference, the text and the keywords. The page identification, the title and author block and the advising block -- a COPPE tradition, not in the Manual's model -- are off by default, and setupabstracts turns them on.}
 % \changes{v5.0}{2026/09/18}{The abstract in Portuguese -- the vernacular language -- comes first, whatever the main language, as 3.1.2 orders; the class checks it by the language of each abstract sheet, so in an English work foreignabstract (Portuguese) precedes abstract, and in a Spanish work brazilianabstract opens the abstracts.}
+% \changes{v5.0}{2026/09/21}{The natureza sentence of the folha de rosto and the folha de aprovacao follows the SiBI model, which corrects Annex B: ...apresentada ao Programa de Pos-Graduacao em X, <unit's full name>, Universidade Federal do Rio de Janeiro, como requisito parcial a obtencao do titulo de... It had the unit's acronym instead of its name, "da" before the university and "como parte dos requisitos necessarios".}
 % \changes{v5.0}{2026/09/18}{The class checks the order of the pre-textual elements of 3.1.2 between maketitle and mainmatter: the folha de aprovacao, dedication, epigraph, lists and sumario each have their place, and one out of place is a compilation error that names what to move and where. mainmatter warns when there is no tableofcontents, the one mandatory element the author has to ask for.}
 % \changes{v5.0}{2026/09/17}{The logos are printed on the capa only. The folha de rosto repeated the capa's logo line; Annex B, which is the model of the folha de rosto, and the two sheets of the SiBI model carry no image there. Annex A puts the two logos on the CAPA and marks both as optional.}
 % \changes{v5.0}{2026/09/17}{The folha de rosto and the folha de aprovacao are written entirely in Portuguese, whatever the language of the work. The research-line label, the coadvisor label and the two approval labels followed the main language while the natureza and the advisor label did not, so an English or Spanish work came out with half of each sheet in each language. The class manual and section 7 of the Norma COPPE already stated the rule: these sheets are institutional identity. The four now read the Portuguese key through ufrj@unitstr, which still honours a text the unit declared.}
@@ -5555,7 +5556,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % contração (``à COPPE/UFRJ''); |sciencename|, o nome do grau (``em
 % Ciências''); e |coverprogram|, a linha do Programa na capa. A chave |natureza|,
 % a frase da folha de rosto e da folha de aprovação, tem um valor da classe que
-% já inclui a sigla da unidade, e raramente precisa ser trocada.
+% segue o modelo do SiBI e já inclui o nome da unidade, e raramente precisa ser
+% trocada.
 %
 %    \begin{macrocode}
 % A unidade. \local@instname e o nome que a referencia do resumo sempre usou, e
@@ -5577,6 +5579,10 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % da ficha catalografica. Os tres expandem ate o fim, porque vao parar no XMP e
 % nos metadados do hyperref.
 \newcommand*\ufrj@unitsep{ \ifx\ufrj@unitacronym\@empty\else\ufrj@unitacronym, \fi}
+% O mesmo com o NOME da unidade por extenso, para a natureza (#159): o modelo do
+% SiBI escreve "Faculdade, Escola, Instituto ou Nucleo XXXX", e o Anexo B,
+% "Museu Nacional" -- o nome, e nao a sigla.
+\newcommand*\ufrj@unitnamesep{ \ifx\local@instname\@empty\else\local@instname, \fi}
 \newcommand*\ufrj@unitshort{%
   \ifx\ufrj@unitacronym\@empty\else\ufrj@unitacronym/\fi UFRJ}
 \newcommand*\ufrj@unitshortrev{%
@@ -5643,11 +5649,19 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % Os textos institucionais que a classe escreve quando nenhuma unidade diz outra
 % coisa. Estao em portugues, e so em portugues, porque sao identidade.
 \ufrjdefstring{brazilian}{coverprogram}{Programa de Pós-Graduação em \local@deptname}
+% A natureza segue o modelo do SiBI -- as duas folhas que a 3.1.2.1.2 manda
+% baixar, errata sobre os exemplos do Manual: "Tese ou dissertacao apresentada
+% ao Programa de Pos-Graduacao XXXX, Faculdade, Escola, Instituto ou Nucleo
+% XXXX como requisito parcial a obtencao do titulo de mestre ou doutor em
+% XXXXX" (#159). Ate 21/09/2026 a classe escrevia a sigla da unidade no lugar do
+% nome, "da" antes da universidade e "como parte dos requisitos necessarios". A
+% universidade fica, embora o modelo a omita: a 3.1.2.1.1(e) pede "o nome da
+% instituicao a que e submetido o trabalho", o Anexo B a traz, e sem os
+% logotipos (#130) a folha de rosto nao a teria em lugar nenhum.
 \ufrjdefstring{brazilian}{natureza}{\local@doctype\ de \@degreename\
   \ifthenelse{\boolean{maledoc}}{apresentado}{apresentada}
-  ao Programa de Pós-graduação em \local@deptname,\ufrj@unitsep
-  da \local@universityname, como parte dos requisitos
-  necessários à obtenção do título de
+  ao Programa de Pós-Graduação em \local@deptname,\ufrj@unitnamesep
+  \local@universityname, como requisito parcial à obtenção do título de
   \local@degname\ em \local@deptname.}
 %    \end{macrocode}
 %
