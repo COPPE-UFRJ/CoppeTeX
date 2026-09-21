@@ -115,6 +115,15 @@ top of `CORRECOES_MANUAL_2026.md`.
 
 ### Changed
 
+- **The abstract sheet is the one of Annexes E and F** (#157): its heading
+  (RESUMO, ABSTRACT…), the reference, the text and the keywords. The opening
+  sentence ("Resumo da Tese apresentada à COPPE/UFRJ…"), the title with author
+  and month and the advising block with the Programa came on by default, and
+  the class manual called that sheet the Annexes' — it was the COPPE
+  tradition, not in the Manual's model. They are off by default, and
+  `\setupabstracts` (`\configuraresumos`) turns them on. Section 6 of the COPPE
+  norm becomes "Folha de resumo — Reafirmação": the COPPE adds nothing to it.
+  `rt76` checks the default; `r27` turns the four on and checks them.
 - **The abstract in Portuguese comes first, whatever the language of the work**
   (#158). 3.1.2 orders "resumo em língua vernácula, resumo em língua
   estrangeira", and 3.1.2.1.5 makes the foreign one "a versão do resumo em

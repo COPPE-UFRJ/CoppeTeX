@@ -100,8 +100,11 @@ for nome, extras in CASOS:
         log = os.path.join(pasta, "main.log")
         texto = io.open(log, encoding="utf-8", errors="replace").read() \
             if os.path.exists(log) else ""
-        if "Output written on" not in texto:
-            erros = [l for l in texto.splitlines() if l.startswith("!")][:3]
+        # O PDF sai mesmo com erro, em nonstopmode: erro no log reprova, e nao
+        # so a falta de PDF. O r24 e o r25 passavam assim com os resumos fora da
+        # ordem (#158).
+        erros = [l for l in texto.splitlines() if l.startswith("!")][:3]
+        if "Output written on" not in texto or erros:
             problemas.append("%s: nao compilou -- %s"
                              % (nome, "; ".join(erros) or "sem PDF"))
             continue

@@ -1,0 +1,47 @@
+%% Teste de regressao da CoppeTeX.
+%% Rode com: python tests/regressivo/run-regressivo.py
+%% BUG: (exemplo do Manual, Anexos E e F) a folha de resumo vinha, por padrao,
+%% com quatro elementos acima do texto -- a frase "Resumo da Tese apresentada a
+%% COPPE/UFRJ...", o titulo com o autor e o mes, a orientacao com o Programa, e
+%% a referencia --, e o manual da classe dizia que aquela era a folha dos Anexos
+%% E e F. Nao era: os Anexos mostram so a referencia, o texto e as
+%% palavras-chave; o titulo RESUMO/ABSTRACT vem do texto da 2.6 (#114). A Norma
+%% COPPE, que deve favorecer os exemplos do Manual, deixou de pedir os outros
+%% tres, e a classe os deixa desligados por padrao (#157). O r27 os liga com
+%% \configuraresumos e cobra os cinco; este cobra o padrao, sem comando nenhum.
+%% ESPERA-PAGINAS: 8
+%% ESPERA-TEXTO-PAGINA: 5::RESUMO
+%% ESPERA-TEXTO-PAGINA: 5::SOBRENOME, Nome. Palavra Que So Existe No Titulo
+%% ESPERA-TEXTO-PAGINA: 5::Este e o corpo do resumo em portugues
+%% ESPERA-TEXTO-PAGINA: 5::Palavras-chave: regressao
+%% NAO-ESPERA-TEXTO-PAGINA: 5::Resumo da Tese apresentada
+%% NAO-ESPERA-TEXTO-PAGINA: 5::Orientador:
+%% NAO-ESPERA-TEXTO-PAGINA: 5::Programa:
+%% NAO-ESPERA-TEXTO-PAGINA: 5::Setembro/2026
+%% ESPERA-TEXTO-PAGINA: 6::ABSTRACT
+%% ESPERA-TEXTO-PAGINA: 6::SOBRENOME, Nome. Palavra Que So Existe No Titulo
+%% ESPERA-TEXTO-PAGINA: 6::This is the body of the foreign abstract
+%% NAO-ESPERA-TEXTO-PAGINA: 6::Abstract of Thesis presented
+%% NAO-ESPERA-TEXTO-PAGINA: 6::Advisor:
+%% NAO-ESPERA-TEXTO-PAGINA: 6::Department:
+\documentclass[dsc]{ufrj}
+\usepackage{ufrj-coppe}
+\title{Palavra Que So Existe No Titulo}
+\foreigntitle{Palavra Que So Existe No Titulo}
+\author{Nome}{Sobrenome}
+\advisor{Primeiro}{Orientador}{D.Sc.}{UFRJ}
+\examiner{Primeiro Examinador}{D.Sc.}{UFRJ}
+\department{PESC}
+\date{09}{2026}
+\keyword{regressao}
+\foreignkeyword{regression}
+\begin{document}
+  \maketitle
+  \frontmatter
+  \begin{abstract}Este e o corpo do resumo em portugues.\end{abstract}
+  \begin{foreignabstract}This is the body of the foreign abstract.\end{foreignabstract}
+  \tableofcontents
+  \mainmatter
+  \chapter{Um capitulo}
+  Texto.
+\end{document}

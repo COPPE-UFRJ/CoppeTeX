@@ -543,9 +543,9 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \DeclareOption{coorientador}{\@ufrjcoadvresumotrue}
 \newif\if@ufrjrefresumo \@ufrjrefresumotrue
 \DeclareOption{resumosemreferencia}{\@ufrjrefresumofalse}
-\newif\if@ufrjresidpag \@ufrjresidpagtrue
-\newif\if@ufrjrestitulo \@ufrjrestitulotrue
-\newif\if@ufrjresorient \@ufrjresorienttrue
+\newif\if@ufrjresidpag \@ufrjresidpagfalse
+\newif\if@ufrjrestitulo \@ufrjrestitulofalse
+\newif\if@ufrjresorient \@ufrjresorientfalse
 \newif\if@ufrjlistastoc \@ufrjlistastocfalse
 \DeclareOption{listasnosumario}{\@ufrjlistastoctrue}
 \newif\if@ufrjarearosto \@ufrjarearostofalse

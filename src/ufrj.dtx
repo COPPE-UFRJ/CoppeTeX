@@ -217,6 +217,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \changes{v5.0}{2026/09/21}{A part of a monograph with pages and no chapter ends in a full stop before the pages, as in the Manual: Companhia das Letras, 1996. p. 7-16. The comma of cap. 1, p. 23-64 went in even with no chapter, and replaced the full stop that closes the imprint. The same in the chapter+pages of the book and report drivers.}
 % \changes{v5.0}{2026/09/21}{The .bib files carry no comment line starting with a percent sign, which JabRef and other reference managers do not read as a comment: the docstrip preamble is gone from them, the notice and licence are a Comment entry, and the Manual's expected output for each reference is a comment{Manual: ...} entry before it instead of lines inside the entry.}
 % \changes{v5.0}{2026/09/21}{The advisor no longer enters the board of the folha de aprovacao automatically: the board is what examiner declares, in order, and the advisor, who chairs it (3.1.2.1.3e), is the first examiner. orientadorexamina puts advisors and coadvisors back at its head, as the v4.1 revision did by default.}
+% \changes{v5.0}{2026/09/18}{By default an abstract sheet is the one of Annexes E and F: its heading, the reference, the text and the keywords. The page identification, the title and author block and the advising block -- a COPPE tradition, not in the Manual's model -- are off by default, and setupabstracts turns them on.}
 % \changes{v5.0}{2026/09/18}{The abstract in Portuguese -- the vernacular language -- comes first, whatever the main language, as 3.1.2 orders; the class checks it by the language of each abstract sheet, so in an English work foreignabstract (Portuguese) precedes abstract, and in a Spanish work brazilianabstract opens the abstracts.}
 % \changes{v5.0}{2026/09/18}{The class checks the order of the pre-textual elements of 3.1.2 between maketitle and mainmatter: the folha de aprovacao, dedication, epigraph, lists and sumario each have their place, and one out of place is a compilation error that names what to move and where. mainmatter warns when there is no tableofcontents, the one mandatory element the author has to ask for.}
 % \changes{v5.0}{2026/09/17}{The logos are printed on the capa only. The folha de rosto repeated the capa's logo line; Annex B, which is the model of the folha de rosto, and the two sheets of the SiBI model carry no image there. Annex A puts the two logos on the CAPA and marks both as optional.}
@@ -1738,10 +1739,12 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % classe confere, como confere o resto da ordem pré-textual.
 %
 % \textbf{Cada folha inteira no seu idioma.} Tudo o que a \emph{classe}
-% escreve numa folha de resumo --- a frase de abertura, o título, o mês, os
-% rótulos \textbf{Orientador} e \textbf{Programa}, as palavras-chave --- sai no
-% idioma daquela folha. Você escreve o corpo em um idioma e a folha inteira
-% sai naquele idioma; não há nada a configurar.
+% escreve numa folha de resumo --- o título da folha e as palavras-chave, e,
+% se você os ligar, a frase de abertura, o título do trabalho, o mês e os
+% rótulos \textbf{Orientador} e \textbf{Programa} --- sai no idioma daquela
+% folha. Você escreve o corpo em um idioma e a folha inteira sai naquele
+% idioma; não há nada a configurar. A referência do alto é a exceção: é sempre
+% a mesma, em português.
 %
 % A única coisa que não se traduz é o \textbf{nome do Programa}: o estilo da
 % unidade o declara em português e em inglês, e só. Numa folha em espanhol,
@@ -1778,10 +1781,10 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % |resumosemreferencia|.
 %
 % \DescribeMacro{\configuraresumos}
-% \par\textbf{Os cinco elementos da folha, e como desligar quatro.} A folha abre
-% com o \textbf{título} --- RESUMO, ABSTRACT, RESUMEN, no idioma daquele resumo
-% ---, centralizado como todo título sem indicativo numérico (2.6). O título não
-% se desliga. Abaixo dele, uma folha de resumo tem cinco partes, nesta ordem:
+% \par\textbf{Os cinco elementos da folha.} A folha abre com o \textbf{título}
+% --- RESUMO, ABSTRACT, RESUMEN, no idioma daquele resumo ---, centralizado
+% como todo título sem indicativo numérico (2.6). O título não se desliga.
+% Abaixo dele, uma folha de resumo pode ter cinco partes, nesta ordem:
 % \begin{enumerate}
 %   \item a \textbf{identificação da página}: a frase ``Resumo da
 %     Dissertação apresentada à COPPE/UFRJ como parte dos requisitos
@@ -1796,12 +1799,14 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %   \item o \textbf{resumo propriamente dito}, que é o que você escreve
 %     dentro do ambiente.
 %    \end{enumerate}
-% \textbf{Só o quinto é obrigatório.} Os quatro primeiros vem ligados, que
-% é a folha completa dos Anexos E e F, e saem juntos com um comando no
-% preâmbulo:
+% \textbf{Só o quinto é obrigatório.} Por padrão vem ligada só a
+% referência, que é a folha dos Anexos E e F: referência, texto e
+% palavras-chave (\#157). Os outros três --- a frase de abertura, o título com
+% o autor e a orientação --- não estão no modelo do Manual; um Programa que os
+% exija os liga com um comando no preâmbulo:
 % \begin{verbatim}
-%   \setupabstracts{true}{true}{true}{true}   % o padrao: folha completa
-%   \setupabstracts{true}{true}{true}{false}  % sem a referencia
+%   \setupabstracts{false}{false}{false}{true}  % o padrao: Anexo E
+%   \setupabstracts{true}{true}{true}{true}     % os cinco elementos
 %   \setupabstracts{false}{false}{false}{false} % so o texto do resumo
 % \end{verbatim}
 % Os quatro argumentos são lógicos --- |true| ou |false|, e nada além
@@ -1815,9 +1820,9 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %
 % \textbf{O que a norma exige, e o que ela deixa a você.} A 3.1.2.1.4 exige
 % o resumo, o espaço 1,5, o parágrafo único, o limite de palavras e as
-% palavras-chave no fim. Os quatro elementos de cima são o modelo dos Anexos E
-% e F --- que o Manual apresenta como sugestão, e é por isso que dá para
-% desligar. Antes de desligar, pergunte na secretaria do seu Programa.
+% palavras-chave no fim, e \emph{sugere} a referência no alto, como no Anexo
+% E. Os outros três elementos vêm da tradição da COPPE e não do Manual; antes
+% de ligá-los, pergunte na secretaria do seu Programa se ele os pede.
 %
 % O uso prático é um: quem quer o resumo numa folha só. O Manual \textbf{não}
 % exige isso, e um resumo de 500 palavras em espaço 1,5, com os cinco
@@ -3514,7 +3519,7 @@ semmorewrites & [dsc,semmorewrites] & \pre & Do not load \texttt{morewrites}. Sa
 abstract & \textbackslash begin\{abstract\} ... & \doc & Abstract in the main language. One sheet, one paragraph, 250 words. \\
 foreignabstract & \textbackslash begin\{foreignabstract\} ... & \doc & Abstract in the foreign language. \\
 brazilianabstract & \textbackslash begin\{brazilianabstract\} ... & \doc & Third abstract, Portuguese, for a Spanish- or French-main work. \\
-\textbackslash configuraresumos & \textbackslash configuraresumos\{true\}\{true\}\{true\}\{true\} & \pre & Turns the four optional elements of every abstract sheet on or off, in every language: page identification, title and author, advising, reference. All on by default; only the abstract text itself cannot be turned off. \\
+\textbackslash configuraresumos & \textbackslash configuraresumos\{true\}\{true\}\{true\}\{true\} & \pre & Turns the four optional elements of every abstract sheet on or off, in every language: page identification, title and author, advising, reference. By default only the reference, as in Annexes E and F; only the abstract text itself cannot be turned off. \\
 \textbackslash appendix & \textbackslash appendix & \doc & Opens the appendices: text \emph{you} wrote. \\
 \textbackslash annex & \textbackslash annex & \doc & Opens the annexes: documents you did \emph{not} write. \\
 \textbackslash printbibliography & \textbackslash printbibliography & \doc & The reference list, titled ``Referências'' (3.1.4.1). \\
@@ -4836,16 +4841,20 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %   4. referencia bibliografica do proprio trabalho (3.1.2.1.4);
 %   5. o resumo propriamente dito.
 %
-% So o quinto e obrigatorio. Os quatro primeiros tem um \newif cada, todos
-% ligados por padrao, porque e assim que os Anexos E e F do Manual mostram a
-% folha -- e porque quem nao pedir nada tem de receber a folha completa.
+% So o quinto e obrigatorio. Os quatro primeiros tem um \newif cada. Por
+% padrao, so a referencia vem ligada: os Anexos E e F do Manual mostram a folha
+% com a referencia, o texto e as palavras-chave, e nada mais (#157). Ate
+% 18/09/2026 os quatro vinham ligados, e a documentacao dizia que era a folha
+% dos Anexos -- nao era: a frase de abertura, o titulo com o autor e a
+% orientacao sao da tradicao da COPPE, e a Norma COPPE, que deve favorecer os
+% exemplos do Manual, deixou de pedi-los. Continuam como opcao.
 %
-% O Programa entra no bloco da orientacao, e nao num quinto interruptor: no
-% Anexo E ele e a ultima linha do mesmo bloco dos orientadores, colado nele, e
-% desligar um deixando o outro nao produz nenhuma folha que o Manual mostre.
-\newif\if@ufrjresidpag \@ufrjresidpagtrue
-\newif\if@ufrjrestitulo \@ufrjrestitulotrue
-\newif\if@ufrjresorient \@ufrjresorienttrue
+% O Programa entra no bloco da orientacao, e nao num quinto interruptor: os
+% dois sempre andaram juntos, colados, e desligar um deixando o outro nao
+% produz folha nenhuma que alguem use.
+\newif\if@ufrjresidpag \@ufrjresidpagfalse
+\newif\if@ufrjrestitulo \@ufrjrestitulofalse
+\newif\if@ufrjresorient \@ufrjresorientfalse
 % 3.1.2.1.6 says the sumario enumerates the divisions "na mesma ordem e grafia
 % em que a materia nele se sucede" and adds "inclusive os elementos
 % pos-textuais" -- and then settles the question by pointing at its own sumario
@@ -7151,9 +7160,9 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % autor}\marg{orientação}\marg{referência}
 % \end{quote}
 % Os quatro argumentos são lógicos, |true| ou |false|, e o padrão é
-% |\configuraresumos{true}{true}{true}{true}|, que é a folha completa dos
-% Anexos E e F. O quinto elemento, o resumo propriamente dito, é o único
-% obrigatório e não tem interruptor.
+% |\configuraresumos{false}{false}{false}{true}|, que é a folha dos Anexos E
+% e F: a referência, o texto e as palavras-chave. O quinto elemento, o resumo
+% propriamente dito, é o único obrigatório e não tem interruptor.
 %
 % É um comando único, e não quatro opções de classe, por duas
 % razões. A primeira é que a decisão é uma só: quem tira a
@@ -7218,8 +7227,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % sem indicativo numerico, que sao centralizados, na mesma lista de
 % agradecimentos, sumario e referencias; ate a v4.1 a folha abria direto na
 % frase "Resumo da Tese apresentada a COPPE/UFRJ...", alinhada a esquerda
-% (#114). O titulo e o que diz ao leitor o que a folha e; a frase de abertura
-% (Norma COPPE, secoes 6 a 8) continua, abaixo dele, sob o seu interruptor.
+% (#114). O titulo e o que diz ao leitor o que a folha e; a frase de abertura,
+% que o Anexo E nao tem, e opcao, abaixo dele, desligada por padrao (#157).
 \newcommand\ufrj@res@heading[1]{%
   \begin{center}
     \bfseries\MakeUppercase{\@nameuse{ufrj@str@#1@abstractname}}%

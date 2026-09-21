@@ -46,7 +46,7 @@ de informações acadêmicas da CAPES**, que dá origem à folha adicional.
 | 3. Programas de Pós-graduação | 3.1.1, 3.1.2.1.1 | Dado próprio |
 | 4. Identidade institucional em português | 3.1.1, 3.1.2.1.1 | Escolha |
 | 5. Orientação na folha de rosto | 3.1.2.1.1(f) | Escolha |
-| 6. Orientadores nas páginas de resumo | 3.1.2.1.4 | Acréscimo |
+| 6. Folha de resumo | 3.1.2.1.4, Anexos E e F | Reafirmação |
 | 7. Os resumos e o terceiro resumo | 3.1.2, 3.1.2.1.4, 3.1.2.1.5 | Acréscimo |
 | 8. Referência no alto do resumo | 3.1.2.1.4, Anexo E | Escolha |
 | 9. Idioma principal | art. 57 da Res. CEPG 302/2024 | Escolha |
@@ -135,11 +135,11 @@ Instituto, nome do Programa, cidade (Rio de Janeiro), estado (RJ) e país
 principal do trabalho.
 
 Acompanham o idioma principal apenas o **título** e o **subtítulo**. A natureza
-e o objetivo acompanham o idioma de **cada página de resumo**, onde a frase de
-abertura os traz (Seção 7); nas folhas de identidade — capa, folha de rosto e
-folha de aprovação — eles ficam em português como o resto da folha. A área de
-concentração não entra na conta: ela é campo da folha adicional, que é um
-formulário da Coleta CAPES em português, e não figura nas folhas de identidade.
+e o objetivo ficam em português, como o resto das folhas de identidade — capa,
+folha de rosto e folha de aprovação —, e a referência no alto de cada resumo
+também (Seção 8). A área de concentração não entra na conta: ela é campo da
+folha adicional, que é um formulário da Coleta CAPES em português, e não figura
+nas folhas de identidade.
 
 ## 5. Orientação na folha de rosto — *Escolha*
 
@@ -148,15 +148,19 @@ coorientador, sem fixar a posição. Na COPPE ambos figuram **alinhados a partir
 da margem esquerda**, abaixo do bloco de natureza, o orientador antes do
 coorientador.
 
-## 6. Orientadores nas páginas de resumo — *Acréscimo*
+## 6. Folha de resumo — *Reafirmação*
 
-O item 3.1.2.1.4 descreve o resumo e não diz quem assina a orientação. A COPPE
-acrescenta, abaixo do título e do nome do autor, em cada página de resumo, o
-nome do **orientador** (ou dos orientadores) e o nome do **Programa**.
+Cada página de resumo segue o modelo dos Anexos E e F do Manual: o título da
+folha (RESUMO, *ABSTRACT*, RESUMEN), centralizado como todo título sem
+indicativo numérico (2.6), a referência do trabalho (Seção 8), o texto do
+resumo e as palavras-chave. **A COPPE não acrescenta nada a ela.**
 
-A inclusão do **coorientador** nessas páginas é **facultativa**, a critério do
-Programa. A implementação de referência a oferece como opção, desligada por
-padrão.
+Até esta edição, a COPPE acrescentava a frase de abertura ("Resumo da Tese
+apresentada à COPPE/UFRJ…"), o título com o nome do autor e o mês, e os
+orientadores com o Programa. Nada disso está no modelo do Manual, e a
+referência já traz o autor, o título, a natureza e a instituição. A
+implementação de referência continua a oferecer esses elementos como opção,
+desligada por padrão, para o Programa que os exija.
 
 ## 7. Os resumos e o terceiro resumo — *Acréscimo*
 
@@ -185,11 +189,9 @@ Cada resumo ocupa uma página própria, na ordem acima, e encerra com as
 palavras-chave **no seu próprio idioma**, separadas por ponto e vírgula, como
 determina o 3.1.2.1.4.
 
-**A página inteira fica no idioma do seu resumo**: a frase de abertura, o
-título, o mês e os rótulos de orientação e de Programa. Uma página com metade do
-texto em um idioma e metade em outro não serve a nenhum leitor. A única exceção é
-o **nome do Programa**, que é nome próprio: a COPPE o tem em português e em
-inglês, e nos demais idiomas vai o nome em português, na mesma regra da Seção 4.
+**A página inteira fica no idioma do seu resumo** — o título da folha, o texto
+e as palavras-chave —, com uma exceção: a referência no alto, que é a mesma em
+todas as páginas e fica em português (Seção 8).
 
 Isso vale só para as páginas de resumo. A capa, a folha de rosto e a folha de
 aprovação são identidade institucional e continuam em português.
@@ -227,9 +229,8 @@ são os idiomas admitidos pelo art. 57 da Resolução CEPG n. 302/2024. Não há
 UFRJ respaldo normativo para outros.
 
 A escolha do idioma principal afeta o corpo textual, as legendas, os títulos
-das seções pré-textuais, o título do trabalho na capa e na folha de rosto e o
-texto de abertura do resumo em idioma principal. Não afeta a identidade
-institucional (Seção 4).
+das seções pré-textuais e o título do trabalho na capa e na folha de rosto. Não
+afeta a identidade institucional (Seção 4).
 
 ## 10. Listas de Quadros, Programas e Algoritmos — *Acréscimo*
 
