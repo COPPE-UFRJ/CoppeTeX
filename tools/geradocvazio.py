@@ -513,19 +513,22 @@ def monta_capitulo(chave, titulo):
 
 
 def monta_bib(v):
-    return """%% Base de referencias gerada por tools/geradocvazio.py.
-%%
-%% Uma entrada de cada tipo mais comum, para copiar e trocar. A entrega traz,
-%% em exemplo.bib, um exemplo de CADA categoria da secao 4.2 do Manual -- olhe la
-%% quando precisar de um tipo que nao esteja aqui.
-%%
-%% Os nomes de campo podem ser os do biblatex (author, title, year) ou os
-%% sinonimos em portugues que a classe declara (autor, titulo, ano).
+    # So @Comment, e nunca linha comecada por %: o JabRef e os outros
+    # gerenciadores de referencias nao entendem o % como comentario (#164).
+    return """@Comment{ Base de referencias gerada por tools/geradocvazio.py.
+
+  Uma entrada de cada tipo mais comum, para copiar e trocar. A entrega traz,
+  em exemplo.bib, um exemplo de CADA categoria da secao 4.2 do Manual -- olhe
+  la quando precisar de um tipo que nao esteja aqui.
+
+  Os nomes de campo podem ser os do biblatex (author, title, year) ou os
+  sinonimos em portugues que a classe declara (autor, titulo, ano). Escreva os
+  acentos direto, em UTF-8, e os comentarios assim, dentro de um Comment. }
 
 @book{sobrenome2026livro,
   author    = "Sobrenome, Nome do Autor",
-  title     = "T{\\'i}tulo do livro",
-  subtitle  = "subt{\\'i}tulo, se houver",
+  title     = "Título do livro",
+  subtitle  = "subtítulo, se houver",
   edition   = "2",
   location  = "Rio de Janeiro",
   publisher = "Nome da Editora",
@@ -534,8 +537,8 @@ def monta_bib(v):
 
 @article{sobrenome2026artigo,
   author  = "Sobrenome, Nome do Autor and Outro, Nome do",
-  title   = "T{\\'i}tulo do artigo",
-  journal = "Nome do Peri{\\'o}dico",
+  title   = "Título do artigo",
+  journal = "Nome do Periódico",
   volume  = "12",
   number  = "3",
   pages   = "45--67",
@@ -544,7 +547,7 @@ def monta_bib(v):
 
 @inproceedings{sobrenome2026evento,
   author       = "Sobrenome, Nome do Autor",
-  title        = "T{\\'i}tulo do trabalho apresentado",
+  title        = "Título do trabalho apresentado",
   eventtitle   = "Nome do Congresso",
   eventdate    = "2026",
   venue        = "Rio de Janeiro",
@@ -557,7 +560,7 @@ def monta_bib(v):
 
 @thesis{sobrenome2026tese,
   author      = "Sobrenome, Nome do Autor",
-  title       = "T{\\'i}tulo da tese",
+  title       = "Título da tese",
   type        = "Tese (Doutorado em %s)",
   institution = "Universidade Federal do Rio de Janeiro",
   location    = "Rio de Janeiro",
@@ -566,7 +569,7 @@ def monta_bib(v):
 
 @online{sobrenome2026online,
   author      = "Sobrenome, Nome do Autor",
-  title       = "T{\\'i}tulo da p{\\'a}gina",
+  title       = "Título da página",
   location    = "Rio de Janeiro",
   year        = "2026",
   url         = "https://exemplo.ufrj.br/pagina",

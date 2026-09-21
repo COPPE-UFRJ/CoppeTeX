@@ -5,7 +5,7 @@
 O gabarito nao e inventado: as 34 categorias da secao 4.2 estao em duas bases,
 `src/exemplo.bib' (nomes de campo em ingles, chaves m-<item>) e
 `tests/adversativa/referencias-manual.bib' (sinonimos em portugues, chaves
-pt-<item>), e cada entrada traz, num comentario `%%' logo abaixo da chave, a
+pt-<item>), e cada entrada vem logo depois de um @comment{Manual: ...} com a
 referencia EXATAMENTE como o Manual a imprime. Este script le o que a classe
 compos, liga cada [n] a sua chave pelo .bbl ao lado do PDF, compara com o
 gabarito daquela chave e diz onde diverge.
@@ -64,36 +64,48 @@ def alvos_padrao():
 def gabaritos(caminho):
     """{chave: (referencia do Manual, motivo aceito ou None)}.
 
-    O gabarito vem das linhas `%%' LOGO ABAIXO da linha da chave; o bloco acaba
-    na primeira linha que nao comeca por `%%'. Uma linha `%%!' registra uma
-    divergencia ACEITA, com o motivo -- o Manual tem erratas, e ha coisas que
-    ele imprime de um jeito que a norma nao exige; onde o certo e divergir, isso
-    fica escrito ao lado da entrada, e nao escondido no numero final.
+    O gabarito e o @comment{Manual: ...} LOGO ANTES da entrada. Um
+    @comment{Divergencia aceita: ...} registra uma divergencia ACEITA, com o
+    motivo -- o Manual tem erratas, e ha coisas que ele imprime de um jeito que
+    a norma nao exige; onde o certo e divergir, isso fica escrito ao lado da
+    entrada, e nao escondido no numero final.
 
-    So o bloco colado a chave, porque o exemplo.bib tambem e lido, e nele ha
-    entradas sem gabarito e comentarios `%%' que nao sao gabarito de ninguem.
+    Ate a #164 o gabarito eram linhas `%%' dentro da entrada, logo abaixo da
+    chave; o JabRef e os outros gerenciadores de referencias nao entendem o %
+    como comentario, e os .bib passaram a ter so @Comment.
+
+    So os comentarios colados a entrada contam: qualquer outra coisa entre eles
+    e a entrada -- outra entrada, outro @Comment -- desfaz a ligacao, porque o
+    exemplo.bib tambem e lido, e nele ha entradas sem gabarito e comentarios
+    que nao sao gabarito de ninguem.
     """
-    texto = open(caminho, encoding="utf-8").read()
-    saida, chave, buf, mot = {}, None, [], []
-    def fecha():
-        if chave is not None and buf:
-            saida[chave] = (" ".join(buf), " ".join(mot) if mot else None)
-    for linha in texto.split("\n"):
-        linha = linha.rstrip("\r")
-        m = re.match(r"^@\w+\{\s*([^,\s]+)\s*,", linha)
-        if m:
-            fecha()
-            chave, buf, mot = m.group(1), [], []
+    texto = open(caminho, encoding="utf-8").read().replace("\r\n", "\n")
+    saida, gab, mot = {}, None, []
+    i = 0
+    while True:
+        m = re.compile(r"@(\w+)\s*\{", re.I).search(texto, i)
+        if not m:
+            break
+        tipo = m.group(1).lower()
+        if tipo == "comment":
+            prof, j = 1, m.end()
+            while prof and j < len(texto):
+                prof += {"{": 1, "}": -1}.get(texto[j], 0)
+                j += 1
+            corpo = " ".join(texto[m.end():j - 1].split())
+            if corpo.startswith("Manual:"):
+                gab, mot = corpo[len("Manual:"):].strip(), []
+            elif corpo.startswith("Divergencia aceita:") and gab is not None:
+                mot.append(corpo[len("Divergencia aceita:"):].strip())
+            else:
+                gab, mot = None, []
+            i = j
             continue
-        if chave is not None and linha.startswith("%%!"):
-            mot.append(linha[3:].strip())
-            continue
-        if chave is not None and linha.startswith("%%"):
-            buf.append(linha[2:].strip())
-            continue
-        fecha()
-        chave, buf, mot = None, [], []
-    fecha()
+        k = re.match(r"\s*([^,\s]+)\s*,", texto[m.end():])
+        if k and gab is not None:
+            saida[k.group(1)] = (gab, " ".join(mot) if mot else None)
+        gab, mot = None, []
+        i = m.end()
     return saida
 
 

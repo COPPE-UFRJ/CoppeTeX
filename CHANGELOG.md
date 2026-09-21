@@ -20,6 +20,19 @@ top of `CORRECOES_MANUAL_2026.md`.
 
 ### Verification
 
+- **The `.bib` files have no `%` comment lines** (#164). JabRef and other
+  reference managers do not read `%` as a comment, and the bases had three
+  kinds: the docstrip preamble and postamble at the top and bottom of
+  `exemplo.bib`, `manual.bib` and `ufrj.bib`; the Manual's expected output for
+  each of the 34 references, as `%%` lines *inside* the entry; and the accepted
+  divergences, as `%%!` lines. BibTeX and biber tolerate them, so nobody saw.
+  The three bases are now generated without preamble — the notice and the
+  licence are a `@Comment` entry at the top —, the expected output is a
+  `@comment{Manual: …}` right before its entry and the accepted divergence a
+  `@comment{Divergencia aceita: …}`, in `exemplo.bib` and in the adversarial
+  `referencias-manual.bib`; `conferir-referencias.py` reads the new form. The
+  `.bib` the document generator writes opens with a `@Comment` too, and writes
+  accents in UTF-8 instead of `{\'i}`. The new test `rt73` checks all of it.
 - **A measurement test can no longer pass without measuring** (#156).
   `medidas.palavras()` reads `pdftotext -bbox`, a poppler option; the Xpdf
   `pdftotext` that Git for Windows installs does not have it and returns no

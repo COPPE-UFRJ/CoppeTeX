@@ -1,22 +1,26 @@
-% referencias-manual.bib -- um exemplo de CADA categoria de referencia do
-% Manual UFRJ/SiBI, 9.a ed. rev. (2026), secao 4.2, com OS DADOS DO PROPRIO
-% MANUAL. A chave de cada entrada e o item do manual de onde ela saiu, e o
-% comentario acima dela traz a referencia como o manual a imprime -- que e o
-% gabarito contra o qual tools/conferir-referencias.py compara a saida.
-%
-% As entradas usam os SINONIMOS EM PORTUGUES dos tipos e campos (@livro, autor,
-% titulo, curso...). As mesmas 34 referencias, com os nomes em ingles, estao no
-% exemplo.bib que acompanha a classe, com a chave m-<item>; aqui a chave e
-% pt-<item>. As chaves ja foram iguais nos dois arquivos, e com isso o biber
-% achava todas as citacoes no exemplo.bib e nem abria este: as formas em
-% portugues ficaram sem conferencia sem que nada avisasse (#147). Os documentos
-% adversativos em portugues citam as duas.
-%
-% NAO e distribuido e nao sai do coppe.dtx: existe so para provar a classe.
-% E citado apenas pelos documentos adversativos em portugues.
+@Comment{ referencias-manual.bib -- um exemplo de CADA categoria de referencia
+  do Manual UFRJ/SiBI, 9.a ed. rev. (2026), secao 4.2, com OS DADOS DO PROPRIO
+  MANUAL. A chave de cada entrada e o item do manual de onde ela saiu. O
+  comentario Manual, logo antes da entrada, traz a referencia como o manual a
+  imprime -- o gabarito contra o qual o tools/conferir-referencias.py compara a
+  saida --, e o comentario Divergencia aceita, quando ha, diz por que a classe
+  diverge dela.
 
+  As entradas usam os SINONIMOS EM PORTUGUES dos tipos e campos (livro, autor,
+  titulo, curso...). As mesmas 34 referencias, com os nomes em ingles, estao no
+  exemplo.bib que acompanha a classe, com a chave m-<item>; aqui a chave e
+  pt-<item>. As chaves ja foram iguais nos dois arquivos, e com isso o biber
+  achava todas as citacoes no exemplo.bib e nem abria este: as formas em
+  portugues ficaram sem conferencia sem que nada avisasse (#147). Os documentos
+  adversativos em portugues citam as duas.
+
+  NAO e distribuido e nao sai do ufrj.dtx: existe so para provar a classe. E
+  citado apenas pelos documentos adversativos em portugues. Os comentarios sao
+  entradas Comment, e nao linhas comecadas por um sinal de porcentagem: o
+  JabRef nao o entende como comentario (#164). }
+
+@comment{Manual: CASTRO, C. M. A prática da pesquisa. São Paulo: Mc Graw-Hill do Brasil, 1978. 156 p.}
 @livro{pt-4211,
-%% CASTRO, C. M. A prática da pesquisa. São Paulo: Mc Graw-Hill do Brasil, 1978. 156 p.
   autor    = "Castro, C. M.",
   titulo   = "A prática da pesquisa",
   local    = "São Paulo",
@@ -25,10 +29,10 @@
   pagetotal = "156",
 }
 
+@comment{Manual: BAUMAN, Zygmunt. Vida líquida. 2. ed. rev. Rio de Janeiro: Zahar, 2009.
+  Disponível em: https://lectio.proxy.ufrj.br/dashboard/midia/detalhe/1571.
+  Acesso em: 28 ago. 2023.}
 @livro{pt-4212,
-%% BAUMAN, Zygmunt. Vida líquida. 2. ed. rev. Rio de Janeiro: Zahar, 2009.
-%% Disponível em: https://lectio.proxy.ufrj.br/dashboard/midia/detalhe/1571.
-%% Acesso em: 28 ago. 2023.
   autor      = "Bauman, Zygmunt",
   titulo     = "Vida líquida",
   edicao     = "2. ed. rev.",
@@ -39,12 +43,12 @@
   dataacesso = "2023-08-28",
 }
 
+@comment{Manual: ROMANO, Giovanni. Imagens da juventude na era moderna. In: LEVI, G;
+  SCHIMIDT, J. (org.). História dos jovens 2. São Paulo: Companhia das
+  Letras, 1996. p. 7-16.}
+@comment{Divergencia aceita: errata do Manual: "LEVI, G;" sai sem o ponto da abreviatura do prenome.
+  A 4.3.2 abrevia o prenome com ponto, e a classe imprime "LEVI, G.;".}
 @partedelivro{pt-4213,
-%% ROMANO, Giovanni. Imagens da juventude na era moderna. In: LEVI, G;
-%% SCHIMIDT, J. (org.). História dos jovens 2. São Paulo: Companhia das
-%% Letras, 1996. p. 7-16.
-%%! errata do Manual: "LEVI, G;" sai sem o ponto da abreviatura do prenome.
-%%! A 4.3.2 abrevia o prenome com ponto, e a classe imprime "LEVI, G.;".
   autor        = "Romano, Giovanni",
   titulo       = "Imagens da juventude na era moderna",
   organizador  = "Levi, G. and Schimidt, J.",
@@ -55,9 +59,9 @@
   paginas      = "7--16",
 }
 
+@comment{Manual: PILLA, Luiz. [Correspondência]. Destinatário: Moysés Valinho. Porto
+  Alegre, 6 jun. 1979. 1 cartão pessoal.}
 @correspondencia{pt-422,
-%% PILLA, Luiz. [Correspondência]. Destinatário: Moysés Valinho. Porto
-%% Alegre, 6 jun. 1979. 1 cartão pessoal.
   autor    = "Pilla, Luiz",
   titulo   = "[Correspondência]",
   nota     = "Destinatário: Moysés Valinho",
@@ -66,9 +70,9 @@
   addendum = "1 cartão pessoal",
 }
 
+@comment{Manual: LISPECTOR, Clarice. [Carta enviada para sua irmã]. Destinatário: Tânia
+  Lispector. Belém, 8 jul. 1944. 1 carta. Disponível em: https://site.claricelispector.ims.com.br/acervo/cartas/067388-2/. Acesso em: 4 ago. 2023.}
 @correspondencia{pt-4221,
-%% LISPECTOR, Clarice. [Carta enviada para sua irmã]. Destinatário: Tânia
-%% Lispector. Belém, 8 jul. 1944. 1 carta. Disponível em: https://site.claricelispector.ims.com.br/acervo/cartas/067388-2/. Acesso em: 4 ago. 2023.
   autor      = "Lispector, Clarice",
   titulo     = "[Carta enviada para sua irmã]",
   nota       = "Destinatário: Tânia Lispector",
@@ -79,17 +83,17 @@
   dataacesso = "2023-08-04",
 }
 
+@comment{Manual: SÃO PAULO MEDICAL JOURNAL. São Paulo: Associação Paulista de Medicina, 1941- .}
 @periodico{pt-4231,
-%% SÃO PAULO MEDICAL JOURNAL. São Paulo: Associação Paulista de Medicina, 1941- .
   titulo  = "São Paulo Medical Journal",
   local   = "São Paulo",
   editora = "Associação Paulista de Medicina",
   data    = "1941/",
 }
 
+@comment{Manual: REVISTA BRASILEIRA DE NEUROLOGIA. Rio de Janeiro: Universidade Federal do
+  Rio de Janeiro, Instituto de Neurologia Deolindo Couto, v. 39, n. 2, abr./jun. 2003.}
 @periodico{pt-4233,
-%% REVISTA BRASILEIRA DE NEUROLOGIA. Rio de Janeiro: Universidade Federal do
-%% Rio de Janeiro, Instituto de Neurologia Deolindo Couto, v. 39, n. 2, abr./jun. 2003.
   titulo  = "Revista Brasileira de Neurologia",
   local   = "Rio de Janeiro",
   editora = "Universidade Federal do Rio de Janeiro, Instituto de Neurologia Deolindo Couto",
@@ -98,10 +102,10 @@
   data    = "2003-04/2003-06",
 }
 
+@comment{Manual: ARAÚJO, Vânia Maria Rodrigues Hermes de. Informação: instrumento de
+  dominação e de submissão. Ciência da Informação, Brasília, DF, v. 20,
+  n. 1, p. 37-44, jan./jun. 1991.}
 @artigo{pt-4234,
-%% ARAÚJO, Vânia Maria Rodrigues Hermes de. Informação: instrumento de
-%% dominação e de submissão. Ciência da Informação, Brasília, DF, v. 20,
-%% n. 1, p. 37-44, jan./jun. 1991.
   autor     = "Araújo, Vânia Maria Rodrigues Hermes de",
   titulo    = "Informação: instrumento de dominação e de submissão",
   periodico = "Ciência da Informação",
@@ -112,15 +116,15 @@
   data      = "1991-01/1991-06",
 }
 
+@comment{Manual: LIEVENS, A.; MOENAERT, R. K. Project team communication in financial
+  service innovation. J. Manag. Stud., Oxford, v. 37, n. 5, Jul. 2000.
+  Disponível em: https://onlinelibrary.wiley.com/doi/10.1111/1467-6486.00201. Acesso em: 25 ago. 2023.}
+@comment{Divergencia aceita: o Manual grafa "Jul." por ser periodico de lingua inglesa. A entrada nao
+  traz langid, e a classe compoe o mes no idioma do trabalho, "jul.". Com
+  langid english ela seguiria o Anexo A da NBR 6023 (#146) -- que nao
+  abrevia mes de quatro letras ou menos, como diz a propria 4.3.5.5.1: "July",
+  e nao o "Jul." do exemplo. Nos dois casos ha divergencia com o exemplo.}
 @artigo{pt-4235,
-%% LIEVENS, A.; MOENAERT, R. K. Project team communication in financial
-%% service innovation. J. Manag. Stud., Oxford, v. 37, n. 5, Jul. 2000.
-%%! o Manual grafa "Jul." por ser periodico de lingua inglesa. A entrada nao
-%%! traz langid, e a classe compoe o mes no idioma do trabalho, "jul.". Com
-%%! langid = {english} ela seguiria o Anexo A da NBR 6023 (#146) -- que nao
-%%! abrevia mes de quatro letras ou menos, como diz a propria 4.3.5.5.1: "July",
-%%! e nao o "Jul." do exemplo. Nos dois casos ha divergencia com o exemplo.
-%% Disponível em: https://onlinelibrary.wiley.com/doi/10.1111/1467-6486.00201. Acesso em: 25 ago. 2023.
   autor      = "Lievens, A. and Moenaert, R. K.",
   titulo     = "Project team communication in financial service innovation",
   periodico  = "J. Manag. Stud.",
@@ -132,9 +136,9 @@
   dataacesso = "2023-08-25",
 }
 
+@comment{Manual: BYRNE, J. A explosão de cursos para executivos nos EUA. Gazeta Mercantil,
+  São Paulo, 4 fev. 1992. Administração e Serviços, p. 28.}
 @artigodejornal{pt-4236,
-%% BYRNE, J. A explosão de cursos para executivos nos EUA. Gazeta Mercantil,
-%% São Paulo, 4 fev. 1992. Administração e Serviços, p. 28.
   autor   = "Byrne, J.",
   titulo  = "A explosão de cursos para executivos nos EUA",
   jornal  = "Gazeta Mercantil",
@@ -144,9 +148,9 @@
   paginas = "28",
 }
 
+@comment{Manual: LEITÃO, M. Supremo pode formar maioria hoje contra o marco temporal.
+  O Globo, Rio de Janeiro, 30 ago. 2023. Disponível em: https://oglobo.globo.com/blogs/miriam-leitao/post/2023/08/supremo-pode-formar-maioria-hoje-contra-o-marco-temporal.ghtml. Acesso em: 30 ago. 2023.}
 @artigodejornal{pt-4237,
-%% LEITÃO, M. Supremo pode formar maioria hoje contra o marco temporal.
-%% O Globo, Rio de Janeiro, 30 ago. 2023. Disponível em: https://oglobo.globo.com/blogs/miriam-leitao/post/2023/08/supremo-pode-formar-maioria-hoje-contra-o-marco-temporal.ghtml. Acesso em: 30 ago. 2023.
   autor      = "Leitão, M.",
   titulo     = "Supremo pode formar maioria hoje contra o marco temporal",
   jornal     = "O Globo",
@@ -156,11 +160,11 @@
   dataacesso = "2023-08-30",
 }
 
+@comment{Manual: FOTO de raios no Cristo é finalista em concurso de imagens de fenômenos
+  meteorológicos. G1, Rio de Janeiro, 24 out. 2023. Disponível em:
+  https://g1.globo.com/meio-ambiente/noticia/2023/08/24/concurso-elege-a-melhor-foto-de-fenomenos-meteorologicos.ghtml.
+  Acesso em: 26 ago. 2023.}
 @artigodejornal{pt-4238,
-%% FOTO de raios no Cristo é finalista em concurso de imagens de fenômenos
-%% meteorológicos. G1, Rio de Janeiro, 24 out. 2023. Disponível em:
-%% https://g1.globo.com/meio-ambiente/noticia/2023/08/24/concurso-elege-a-melhor-foto-de-fenomenos-meteorologicos.ghtml.
-%% Acesso em: 26 ago. 2023.
   titulo     = "Foto de raios no Cristo é finalista em concurso de imagens de fenômenos meteorológicos",
   jornal     = "G1",
   local      = "Rio de Janeiro",
@@ -169,9 +173,9 @@
   dataacesso = "2023-08-26",
 }
 
+@comment{Manual: ENCONTRO ANUAL DA ANPAD, 14., 1982, Florianópolis. Anais [...]. Belo
+  Horizonte: ANPAD, 1990. 9 v.}
 @anais{pt-4241,
-%% ENCONTRO ANUAL DA ANPAD, 14., 1982, Florianópolis. Anais [...]. Belo
-%% Horizonte: ANPAD, 1990. 9 v.
   evento       = "Encontro Anual da ANPAD",
   numero       = "14",
   dataevento   = "1982",
@@ -183,9 +187,9 @@
   addendum = "9 v.",
 }
 
+@comment{Manual: CONGRESSO BRASILEIRO DE BIBLIOTECONOMIA E DOCUMENTAÇÃO, 19., 2000, Porto
+  Alegre. Anais eletrônicos [...]. Porto Alegre: PUCRS, 2000. 1 CD.}
 @anais{pt-4243,
-%% CONGRESSO BRASILEIRO DE BIBLIOTECONOMIA E DOCUMENTAÇÃO, 19., 2000, Porto
-%% Alegre. Anais eletrônicos [...]. Porto Alegre: PUCRS, 2000. 1 CD.
   evento       = "Congresso Brasileiro de Biblioteconomia e Documentação",
   numero       = "19",
   dataevento   = "2000",
@@ -197,11 +201,11 @@
   addendum = "1 CD",
 }
 
+@comment{Manual: CORDEIRO, Rosa Inês de N. Descrição e representação de fotografias de cenas
+  e fotogramas de filmes: um esquema de indexação. In: CONGRESSO BRASILEIRO DE
+  BIBLIOTECONOMIA E DOCUMENTAÇÃO, 16., 1991, Salvador. Anais [...]. Salvador:
+  APBEB, 1991. v. 2, p. 1008-1022.}
 @trabalhodeevento{pt-4245,
-%% CORDEIRO, Rosa Inês de N. Descrição e representação de fotografias de cenas
-%% e fotogramas de filmes: um esquema de indexação. In: CONGRESSO BRASILEIRO DE
-%% BIBLIOTECONOMIA E DOCUMENTAÇÃO, 16., 1991, Salvador. Anais [...]. Salvador:
-%% APBEB, 1991. v. 2, p. 1008-1022.
   autor     = "Cordeiro, Rosa Inês de N.",
   titulo    = "Descrição e representação de fotografias de cenas e fotogramas de filmes: um esquema de indexação",
   evento      = "Congresso Brasileiro de Biblioteconomia e Documentação",
@@ -216,10 +220,10 @@
   paginas   = "1008--1022",
 }
 
+@comment{Manual: MACIEL, A. M. D.; SALES JÚNIOR, Ronaldo L.; SIQUEIRA, A. J. O indivíduo e a
+  pós-modernidade. In: CONGRESSO DE INICIAÇÃO DA UFPE, 4., 1996, Recife.
+  Anais eletrônicos [...]. Recife: UFPe, 1996. Disponível em: http://www.propesq.ufpe.br/anais/cfch/cfchtrab/htm. Acesso em: 16 jan. 2001.}
 @trabalhodeevento{pt-4246,
-%% MACIEL, A. M. D.; SALES JÚNIOR, Ronaldo L.; SIQUEIRA, A. J. O indivíduo e a
-%% pós-modernidade. In: CONGRESSO DE INICIAÇÃO DA UFPE, 4., 1996, Recife.
-%% Anais eletrônicos [...]. Recife: UFPe, 1996. Disponível em: http://www.propesq.ufpe.br/anais/cfch/cfchtrab/htm. Acesso em: 16 jan. 2001.
   autor      = "Maciel, A. M. D. and Sales Júnior, Ronaldo L. and Siqueira, A. J.",
   titulo     = "O indivíduo e a pós-modernidade",
   evento      = "Congresso de Iniciação da UFPE",
@@ -234,12 +238,12 @@
   dataacesso = "2001-01-16",
 }
 
+@comment{Manual: BERTAZZOLI, Rodnei et al. Eletrodos de difusão gasosa modificados com
+  catalisadores redox... Depositante: Universidade Estadual de Campinas.
+  BR n. PI0600460-1A. Depósito: 27 jan. 2006. Concessão: 25 mar. 2008.}
+@comment{Divergencia aceita: o Manual usa "et al."; a classe lista todos os autores (maxbibnames=99),
+  que a 4.3.1.3 admite igualmente e é o que a COPPE pratica.}
 @patente{pt-425,
-%%! o Manual usa "et al."; a classe lista todos os autores (maxbibnames=99),
-%%! que a 4.3.1.3 admite igualmente e é o que a COPPE pratica.
-%% BERTAZZOLI, Rodnei et al. Eletrodos de difusão gasosa modificados com
-%% catalisadores redox... Depositante: Universidade Estadual de Campinas.
-%% BR n. PI0600460-1A. Depósito: 27 jan. 2006. Concessão: 25 mar. 2008.
   autor  = "Bertazzoli, Rodnei and Rodrigues, Christiane A. and Sposito, Guilherme",
   titulo = "Eletrodos de difusão gasosa modificados com catalisadores redox, processo e reator eletroquímico de síntese de peróxido de hidrogênio utilizando os mesmos",
   holder = "{Universidade Estadual de Campinas}",
@@ -249,13 +253,13 @@
   concessao = "25 mar. 2008",
 }
 
+@comment{Manual: GALEMBECK, Fernando; SOUZA, Maria de Fátima Brito. Process to obtain an
+  intercalated or exfoliated polyester with clay hybrid nanocomposite
+  material. Depositante: Universidade Estadual de Campinas; Rhodia Ster S/A.
+  WO2005/030850 A1. Depósito: 1 Oct. 2003. Concessão: 7 Apr. 2005.
+  Disponível em: http://www.iprvillage.info/portal/servlet/DIIDirect.
+  Acesso em: 30 ago. 2023.}
 @patente{pt-4251,
-%% GALEMBECK, Fernando; SOUZA, Maria de Fátima Brito. Process to obtain an
-%% intercalated or exfoliated polyester with clay hybrid nanocomposite
-%% material. Depositante: Universidade Estadual de Campinas; Rhodia Ster S/A.
-%% WO2005/030850 A1. Depósito: 1 Oct. 2003. Concessão: 7 Apr. 2005.
-%% Disponível em: http://www.iprvillage.info/portal/servlet/DIIDirect.
-%% Acesso em: 30 ago. 2023.
   autor      = "Galembeck, Fernando and Souza, Maria de Fátima Brito",
   titulo     = "Process to obtain an intercalated or exfoliated polyester with clay hybrid nanocomposite material",
   holder     = "{Universidade Estadual de Campinas; Rhodia Ster S/A}",
@@ -266,9 +270,9 @@
   dataacesso = "2023-08-30",
 }
 
+@comment{Manual: SÃO PAULO (Estado). Decreto nº 42.822, de 20 de janeiro de 1998. Lex:
+  coletânea de legislação e jurisprudência. São Paulo, v. 62, n. 3, p. 217-220, 1998.}
 @legislacao{pt-4261,
-%% SÃO PAULO (Estado). Decreto nº 42.822, de 20 de janeiro de 1998. Lex:
-%% coletânea de legislação e jurisprudência. São Paulo, v. 62, n. 3, p. 217-220, 1998.
   autor   = "{São Paulo (Estado)}",
   titulo  = "Decreto n\textordmasculine{} 42.822, de 20 de janeiro de 1998. Lex: coletânea de legislação e jurisprudência",
   tipo    = "Decreto Estadual",
@@ -279,10 +283,10 @@
   ano     = 1998,
 }
 
+@comment{Manual: BRASIL. Supremo Tribunal Federal. Extradição nº 10. Relator: Ministro
+  Rafael Mayer. Brasília, DF, 26 de fevereiro de 1986. Revista Trimestral de
+  Jurisprudência, [Brasília], v. 109, p. 870-879, set. 1986.}
 @jurisprudencia{pt-4262,
-%% BRASIL. Supremo Tribunal Federal. Extradição nº 10. Relator: Ministro
-%% Rafael Mayer. Brasília, DF, 26 de fevereiro de 1986. Revista Trimestral de
-%% Jurisprudência, [Brasília], v. 109, p. 870-879, set. 1986.
   autor   = "{Brasil. Supremo Tribunal Federal}",
   titulo  = "Extradição n\textordmasculine{} 10",
   relator = "Ministro Rafael Mayer",
@@ -290,10 +294,10 @@
   nota    = "Revista Trimestral de Jurisprudência, [Brasília], v. 109, p. 870-879, set. 1986",
 }
 
+@comment{Manual: VARGINHA (MG). Edital de licitação nº 189/2007. Pregão nº 151/2007.
+  [Aquisição de leite pasteurizado]. Varginha: órgão oficial do município,
+  Varginha, ano 7, n. 494, p. 15, 31 maio 2007.}
 @atonormativo{pt-4263,
-%% VARGINHA (MG). Edital de licitação nº 189/2007. Pregão nº 151/2007.
-%% [Aquisição de leite pasteurizado]. Varginha: órgão oficial do município,
-%% Varginha, ano 7, n. 494, p. 15, 31 maio 2007.
   autor   = "{Varginha (MG)}",
   titulo  = "Edital de licitação n\textordmasculine{} 189/2007. Pregão n\textordmasculine{} 151/2007. [Aquisição de leite pasteurizado]",
   tipo    = "Edital",
@@ -304,9 +308,9 @@
   data    = "2007-05-31",
 }
 
+@comment{Manual: LEGISLAÇÃO brasileira: normas jurídicas, federais, bibliografia brasileira
+  de Direito. 7. ed. Brasília, DF: Senado Federal, 1999. 1 CD-ROM.}
 @documentojuridico{pt-427,
-%% LEGISLAÇÃO brasileira: normas jurídicas, federais, bibliografia brasileira
-%% de Direito. 7. ed. Brasília, DF: Senado Federal, 1999. 1 CD-ROM.
   titulo   = "Legislação brasileira: normas jurídicas, federais, bibliografia brasileira de Direito",
   edicao   = "7. ed.",
   local    = "Brasília, DF",
@@ -315,18 +319,18 @@
   addendum = "1 CD-ROM",
 }
 
+@comment{Manual: SÃO CARLOS (SP). Cartório de Registro Civil das Pessoas Naturais do 1º
+  Subdistrito de São Carlos. Certidão de nascimento [de] Maria da Silva.
+  Registro em: 9 ago. 1979.}
 @documentocivil{pt-428,
-%% SÃO CARLOS (SP). Cartório de Registro Civil das Pessoas Naturais do 1º
-%% Subdistrito de São Carlos. Certidão de nascimento [de] Maria da Silva.
-%% Registro em: 9 ago. 1979.
   autor  = "{SÃO CARLOS (SP). Cartório de Registro Civil das Pessoas Naturais do 1\textordmasculine{} Subdistrito de São Carlos}",
   titulo = "Certidão de nascimento [de] Maria da Silva",
   nota   = "Registro em: 9 ago. 1979",
 }
 
+@comment{Manual: OS PERIGOS do uso de tóxicos. Produção de Jorge Ramos de Andrade. São
+  Paulo: CERAVI, 1983. 1 videocassete.}
 @audiovisual{pt-429,
-%% OS PERIGOS do uso de tóxicos. Produção de Jorge Ramos de Andrade. São
-%% Paulo: CERAVI, 1983. 1 videocassete.
   titulo   = "Os perigos do uso de tóxicos",
   produtor = "Jorge Ramos de Andrade",
   local    = "São Paulo",
@@ -335,8 +339,8 @@
   addendum = "1 videocassete",
 }
 
+@comment{Manual: CANHOTO. Abismo de rosas. São Paulo: CEMBRA. 1 partitura (3 p.)}
 @partitura{pt-42101,
-%% CANHOTO. Abismo de rosas. São Paulo: CEMBRA. 1 partitura (3 p.)
   autor    = "{Canhoto}",
   titulo   = "Abismo de rosas",
   local    = "São Paulo",
@@ -344,10 +348,10 @@
   addendum = "1 partitura (3 p.)",
 }
 
+@comment{Manual: OLIVA, Marcos; MOCOTÓ, Tiago. Fervilhar: frevo. 1990. 1 partitura. Piano.
+  Disponível em: http://openlink.br.inter.net/picolino/partitur.htm.
+  Acesso em: 5 jan. 2022.}
 @partitura{pt-42102,
-%% OLIVA, Marcos; MOCOTÓ, Tiago. Fervilhar: frevo. 1990. 1 partitura. Piano.
-%% Disponível em: http://openlink.br.inter.net/picolino/partitur.htm.
-%% Acesso em: 5 jan. 2022.
   autor      = "Oliva, Marcos and Mocotó, Tiago",
   titulo     = "Fervilhar: frevo",
   ano        = 1990,
@@ -356,18 +360,18 @@
   dataacesso = "2022-01-05",
 }
 
+@comment{Manual: CARDOSO, Cláudio. Pedra de Itapuça. 1989. 3 fotografias.}
 @iconografico{pt-42111,
-%% CARDOSO, Cláudio. Pedra de Itapuça. 1989. 3 fotografias.
   autor    = "Cardoso, Cláudio",
   titulo   = "Pedra de Itapuça",
   ano      = 1989,
   addendum = "3 fotografias",
 }
 
+@comment{Manual: HOUTE, Jef Van den. Black hole. 1 jun. 2010. 1 fotografia.
+  Disponível em: http://photo.net/photodb/photo?photo_id=11724012.
+  Acesso em: 26 maio 2011.}
 @iconografico{pt-42112,
-%% HOUTE, Jef Van den. Black hole. 1 jun. 2010. 1 fotografia.
-%% Disponível em: http://photo.net/photodb/photo?photo_id=11724012.
-%% Acesso em: 26 maio 2011.
   autor      = "Houte, Jef Van den",
   titulo     = "Black hole",
   data       = "2010-06-01",
@@ -376,9 +380,9 @@
   dataacesso = "2011-05-26",
 }
 
+@comment{Manual: BRASIL. Ministério da Aeronáutica. Comando Costeiro. Base Aérea do Recife.
+  Saquarema. Recife, 1976. 71 fotografias. Escala 1: 20.000.}
 @mapa{pt-42121,
-%% BRASIL. Ministério da Aeronáutica. Comando Costeiro. Base Aérea do Recife.
-%% Saquarema. Recife, 1976. 71 fotografias. Escala 1: 20.000.
   autor    = "{Brasil. Ministério da Aeronáutica. Comando Costeiro. Base Aérea do Recife}",
   titulo   = "Saquarema",
   local    = "Recife",
@@ -387,9 +391,9 @@
   addendum = "71 fotografias",
 }
 
+@comment{Manual: IBGE. República Federativa do Brasil. [Rio de Janeiro?], 1996. 1 mapa
+  color., 31 cm x 34 cm. Escala 1: 15.000.000. 1 CD-ROM.}
 @mapa{pt-42122,
-%% IBGE. República Federativa do Brasil. [Rio de Janeiro?], 1996. 1 mapa
-%% color., 31 cm x 34 cm. Escala 1: 15.000.000. 1 CD-ROM.
   autor      = "{IBGE}",
   titulo     = "República Federativa do Brasil",
   local      = "[Rio de Janeiro?]",
@@ -399,19 +403,19 @@
   nota       = "1 CD-ROM",
 }
 
+@comment{Manual: DUCHAMP, Marcel. Escultura para viajar. 1918. 1 escultura variável,
+  borracha colorida e cordel.}
 @tridimensional{pt-42131,
-%% DUCHAMP, Marcel. Escultura para viajar. 1918. 1 escultura variável,
-%% borracha colorida e cordel.
   autor    = "Duchamp, Marcel",
   titulo   = "Escultura para viajar",
   ano      = 1918,
   addendum = "1 escultura variável, borracha colorida e cordel",
 }
 
+@comment{Manual: UNIVERSIDADE FEDERAL DO RIO DE JANEIRO. Sistema de Bibliotecas e
+  Informação. Minerva: Sistema de Documentação da UFRJ. Rio de Janeiro, 1998.
+  Disponível em: http://www.minerva.ufrj.br. Acesso em: 30 mar. 2022.}
 @online{pt-4214,
-%% UNIVERSIDADE FEDERAL DO RIO DE JANEIRO. Sistema de Bibliotecas e
-%% Informação. Minerva: Sistema de Documentação da UFRJ. Rio de Janeiro, 1998.
-%% Disponível em: http://www.minerva.ufrj.br. Acesso em: 30 mar. 2022.
   autor      = "{Universidade Federal do Rio de Janeiro. Sistema de Bibliotecas e Informação}",
   titulo     = "Minerva: Sistema de Documentação da UFRJ",
   local      = "Rio de Janeiro",
@@ -420,10 +424,10 @@
   dataacesso = "2022-03-30",
 }
 
+@comment{Manual: LEITE, Sonia. Memória da comunidade da Serrinha. 1997. 203 f. Dissertação
+  (Mestrado em Memória Social e Documento) -- Centro de Ciências Humanas,
+  Universidade do Rio de Janeiro, Rio de Janeiro, 1997.}
 @dissertacaomestrado{pt-diss,
-%% LEITE, Sonia. Memória da comunidade da Serrinha. 1997. 203 f. Dissertação
-%% (Mestrado em Memória Social e Documento) -- Centro de Ciências Humanas,
-%% Universidade do Rio de Janeiro, Rio de Janeiro, 1997.
   autor       = "Leite, Sonia",
   titulo      = "Memória da comunidade da Serrinha",
   curso       = "Memória Social e Documento",
@@ -433,9 +437,9 @@
   pagetotal   = "203",
 }
 
+@comment{Manual: ASSOCIAÇÃO BRASILEIRA DE NORMAS TÉCNICAS. NBR 6023: informação e
+  documentação: referências: elaboração. Rio de Janeiro, 2018.}
 @norma{pt-norma,
-%% ASSOCIAÇÃO BRASILEIRA DE NORMAS TÉCNICAS. NBR 6023: informação e
-%% documentação: referências: elaboração. Rio de Janeiro, 2018.
   autor  = "{Associação Brasileira de Normas Técnicas}",
   titulo = "{NBR} 6023: informação e documentação: referências: elaboração",
   local  = "Rio de Janeiro",

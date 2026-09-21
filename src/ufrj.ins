@@ -96,18 +96,6 @@ Author(s): Vicente Helano F. Batista
 
 \endpreamble
 
-\declarepreamble\bibpreamble
-
-This is a BibLaTeX/biber bibliographic database for the `ufrj' document
-class.  It is generated from ufrj.dtx by docstrip; edit the .dtx source,
-not this file.
-
-Copyright (C) 2008-2026 Vicente Helano F. Batista, George O. Ainsworth Jr.,
-Geraldo Xexéo and Eduardo Mangeli. Released under the GNU General Public
-License version 3 (see the COPYING.txt file).
-
-\endpreamble
-
 \postamble
 % end of `ufrj' customized files
 \endpostamble
@@ -119,10 +107,6 @@ License version 3 (see the COPYING.txt file).
 % pelo ufrj-coppe.ins.
   \usepreamble\glossarypreamble
   \file{ufrj.ist}{\from{ufrj.dtx}{glossary}}%
-  \usepreamble\bibpreamble
-  \file{exemplo.bib}{\from{ufrj.dtx}{examplebib,tiposbib}}%
-  \file{manual.bib}{\from{ufrj.dtx}{examplebib}}%
-  \file{ufrj.bib}{\from{ufrj.dtx}{ufrjbib}}%
   \usepreamble\classpreamble
   \file{ufrj.cls}{\from{ufrj.dtx}{class}}%
   \file{ufrj.dbx}{\from{ufrj.dtx}{dbx}}%
@@ -157,5 +141,12 @@ License version 3 (see the COPYING.txt file).
   \nopreamble
   \nopostamble
   \file{latexmkrc.tex}{\from{ufrj.dtx}{latexmkrc}}%
+% As bases .bib tambem nao levam o preambulo nem o postambulo em %% (#164): o
+% JabRef e os outros gerenciadores de referencias nao entendem o % como
+% comentario. O aviso de arquivo gerado e a licenca vao num @Comment no alto de
+% cada modulo, e o gabarito das referencias do Manual em @comment{Manual: ...}.
+  \file{exemplo.bib}{\from{ufrj.dtx}{examplebib,tiposbib}}%
+  \file{manual.bib}{\from{ufrj.dtx}{examplebib}}%
+  \file{ufrj.bib}{\from{ufrj.dtx}{ufrjbib}}%
 }
 \endbatchfile
