@@ -273,7 +273,8 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
   \ufrj@tocline{4}{\normalfont\itshape}{#1}{#2}}
 \RequirePackage{caption}
 \DeclareCaptionLabelSeparator{emdash}{\space\textemdash\space}
-\captionsetup{font=footnotesize,labelsep=emdash,justification=centering}
+\captionsetup{font=footnotesize,labelsep=emdash,justification=raggedright,
+  singlelinecheck=false}
 \RequirePackage{subcaption}
 \RequirePackage{float}
 \floatstyle{plaintop}
@@ -299,11 +300,11 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
 \newcommand{\cpsource}[1]{%
   \par\addvspace{\smallskipamount}%
   \ifx\ufrj@ilwidth\@empty
-    {\footnotesize\singlespacing\centering\cpsourcename: #1\par}%
+    {\footnotesize\singlespacing\raggedright\cpsourcename: #1\par}%
   \else
     {\centering
       \parbox{\ufrj@ilwidth}{%
-        \footnotesize\singlespacing\centering\cpsourcename: #1\par}\par}%
+        \footnotesize\singlespacing\raggedright\cpsourcename: #1\par}\par}%
   \fi}
 \let\cpfonte\cpsource
 \@ifundefined{source}{\let\source\cpsource}{}%

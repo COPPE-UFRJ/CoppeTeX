@@ -115,6 +115,13 @@ top of `CORRECOES_MANUAL_2026.md`.
 
 ### Changed
 
+- **Captions and source lines are aligned left** (#160). 2.10 does not fix the
+  alignment; it says caption and source "devem respeitar as margens da
+  ilustração", and the Manual's only illustration, Figure 1, puts both on the
+  left, at the illustration's margin. The class centred them, and section 11
+  of the COPPE norm said to centre the source. With `\illustrationwidth` the
+  box takes the illustration's width and is centred with it, so the text
+  starts at its margin — the layout of Figure 1. `rt74` measures it.
 - **The natureza sentence follows the SiBI model** (#159): "Tese de Doutorado
   apresentada ao Programa de Pós-Graduação em X, <unit's full name>,
   Universidade Federal do Rio de Janeiro, como requisito parcial à obtenção do

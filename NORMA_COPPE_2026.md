@@ -252,8 +252,10 @@ na ordem do item 3.1.2:
 
 Para toda ilustração — figura, tabela, quadro, programa, algoritmo — a legenda
 figura **acima** e a fonte é **obrigatória** e figura **abaixo**, em corpo
-menor, espaçamento simples, centralizada, antecedida da palavra "Fonte:" ou de
-seu equivalente no idioma principal.
+menor, espaçamento simples, antecedida da palavra "Fonte:" ou de seu
+equivalente no idioma principal. Legenda e fonte ficam dentro das margens da
+ilustração (2.10) e alinhadas à esquerda, como na Figura 1 do Manual, o único
+exemplo que ele traz.
 
 ## 12. Apêndices e Anexos — *Escolha*
 

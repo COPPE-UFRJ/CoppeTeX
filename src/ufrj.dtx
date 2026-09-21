@@ -220,6 +220,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \changes{v5.0}{2026/09/18}{By default an abstract sheet is the one of Annexes E and F: its heading, the reference, the text and the keywords. The page identification, the title and author block and the advising block -- a COPPE tradition, not in the Manual's model -- are off by default, and setupabstracts turns them on.}
 % \changes{v5.0}{2026/09/18}{The abstract in Portuguese -- the vernacular language -- comes first, whatever the main language, as 3.1.2 orders; the class checks it by the language of each abstract sheet, so in an English work foreignabstract (Portuguese) precedes abstract, and in a Spanish work brazilianabstract opens the abstracts.}
 % \changes{v5.0}{2026/09/21}{The natureza sentence of the folha de rosto and the folha de aprovacao follows the SiBI model, which corrects Annex B: ...apresentada ao Programa de Pos-Graduacao em X, <unit's full name>, Universidade Federal do Rio de Janeiro, como requisito parcial a obtencao do titulo de... It had the unit's acronym instead of its name, "da" before the university and "como parte dos requisitos necessarios".}
+% \changes{v5.0}{2026/09/21}{Captions and source lines are aligned left, as in the only illustration of the Manual (Figure 1): with illustrationwidth the box takes the width of the illustration and is centred with it, so the text starts at its margin. They were centred.}
 % \changes{v5.0}{2026/09/18}{The class checks the order of the pre-textual elements of 3.1.2 between maketitle and mainmatter: the folha de aprovacao, dedication, epigraph, lists and sumario each have their place, and one out of place is a compilation error that names what to move and where. mainmatter warns when there is no tableofcontents, the one mandatory element the author has to ask for.}
 % \changes{v5.0}{2026/09/17}{The logos are printed on the capa only. The folha de rosto repeated the capa's logo line; Annex B, which is the model of the folha de rosto, and the two sheets of the SiBI model carry no image there. Annex A puts the two logos on the CAPA and marks both as optional.}
 % \changes{v5.0}{2026/09/17}{The folha de rosto and the folha de aprovacao are written entirely in Portuguese, whatever the language of the work. The research-line label, the coadvisor label and the two approval labels followed the main language while the natureza and the advisor label did not, so an English or Spanish work came out with half of each sheet in each language. The class manual and section 7 of the Norma COPPE already stated the rule: these sheets are institutional identity. The four now read the Portuguese key through ufrj@unitstr, which still honours a text the unit declared.}
@@ -4227,12 +4228,19 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
 %
 %    \begin{macrocode}
 \RequirePackage{caption}
-% justification=centering makes MULTI-LINE captions centre like the one-line
-% ones. Without it, caption's singlelinecheck centres a caption that fits on one
-% line and justifies one that wraps, so in a document with mixed caption lengths
-% a couple of tables looked left-aligned while the rest looked centred -- which
-% is what a recent review noticed about tables 5.1 and 5.2. 2.10 does not
-% prescribe the alignment; it does not tolerate two alignments either.
+% A legenda alinhada a ESQUERDA (#160). A 2.10 nao fixa o alinhamento; diz que
+% "tipo, numero de ordem, titulo, fonte, legenda e notas devem respeitar as
+% margens da ilustracao". O unico exemplo do Manual, a Figura 1 (secao 3), poe a
+% identificacao e a fonte alinhadas a esquerda, na margem da ilustracao -- e,
+% onde o texto nao decide, vale o exemplo. A classe centralizava tudo. Com
+% \illustrationwidth (#125), a caixa da legenda tem a largura da ilustracao e
+% fica centrada na mancha, como a ilustracao, e o texto comeca na margem dela:
+% o desenho da Figura 1.
+%
+% singlelinecheck=false: sem ele, o caption centraliza a legenda que cabe numa
+% linha e alinha a que quebra, e um trabalho com legendas de tamanhos diferentes
+% saia com dois alinhamentos -- foi o que uma revisao notou nas tabelas 5.1 e
+% 5.2.
 % O sinal entre o numero e o titulo e o TRAVESSAO (U+2014), em toda parte: na
 % legenda, na lista de ilustracoes, no titulo de apendice e de anexo e no
 % sumario. E o nome que o Manual da ao sinal (2.10, 3.1.2.2.4, 3.1.4.3 e
@@ -4240,7 +4248,8 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
 % meia-risca em quase tudo e o travessao no driver de tese (#150). O caption nao
 % traz separador de travessao; este e o endash dele com o outro sinal.
 \DeclareCaptionLabelSeparator{emdash}{\space\textemdash\space}
-\captionsetup{font=footnotesize,labelsep=emdash,justification=centering}
+\captionsetup{font=footnotesize,labelsep=emdash,justification=raggedright,
+  singlelinecheck=false}
 % subcaption (NÃO subfig/subfigure) for subfigures / subtables; load right after
 % caption so it picks up the ABNT captionsetup above.
 \RequirePackage{subcaption}
@@ -4270,8 +4279,8 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
   \@mkboth{\MakeUppercase\listquadroname}{\MakeUppercase\listquadroname}%
   \@starttoc{loq}}
 % \source / \fonte: the illustration source (ABNT-mandatory). Typeset below the
-% float as a smaller, single-spaced, centred line; it does NOT advance any
-% caption counter. \cpsource/\cpfonte are clash-safe aliases (the rename rule);
+% float as a smaller, single-spaced line, aligned left like the caption (#160);
+% it does NOT advance any caption counter. \cpsource/\cpfonte are clash-safe aliases (the rename rule);
 % the label is "Fonte" (pt) / "Source" (en).
 \newcommand{\cpsourcename}{\ufrjstring{source}}
 % \illustrationwidth{<largura>}: a 2.10 fecha dizendo que "tipo, numero de
@@ -4291,11 +4300,11 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
 \newcommand{\cpsource}[1]{%
   \par\addvspace{\smallskipamount}%
   \ifx\ufrj@ilwidth\@empty
-    {\footnotesize\singlespacing\centering\cpsourcename: #1\par}%
+    {\footnotesize\singlespacing\raggedright\cpsourcename: #1\par}%
   \else
     {\centering
       \parbox{\ufrj@ilwidth}{%
-        \footnotesize\singlespacing\centering\cpsourcename: #1\par}\par}%
+        \footnotesize\singlespacing\raggedright\cpsourcename: #1\par}\par}%
   \fi}
 \let\cpfonte\cpsource
 \@ifundefined{source}{\let\source\cpsource}{}%
