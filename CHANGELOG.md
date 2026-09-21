@@ -166,7 +166,9 @@ top of `CORRECOES_MANUAL_2026.md`.
   folha de aprovação, the dedication, the epigraph, the lists and the sumário
   each have their place in 3.1.2, and one out of place is a compilation error
   that names what to move and where; `\mainmatter` warns when there is no
-  `\tableofcontents`. The class checks rather than reorders: whatever the author
+  `\tableofcontents`. Through the `\documentclass{coppe}` compatibility class it
+  is a warning instead, because the 4.x models taught another order and an old
+  work must still compile as it is. The class checks rather than reorders: whatever the author
   wrote between two lists would move without notice. Every model — the
   examples, `manual.tex` and the document generator — now states the mandatory
   order in a comment above `\maketitle`. The new test `rt72` covers it.

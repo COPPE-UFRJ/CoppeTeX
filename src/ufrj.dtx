@@ -1855,6 +1855,11 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % elemento pré-textual obrigatório que você mesmo tem de pedir. A classe
 % confere, e não reordena sozinha: o que você escrevesse entre duas listas
 % mudaria de lugar sem aviso, e o |.tex| continuaria errado.
+%
+% Um trabalho que ainda diz |\documentclass{coppe}| --- a compatibilidade com a
+% 4.x --- recebe \emph{aviso}, e não erro: os modelos da 4.x ensinavam outra
+% ordem, e a compatibilidade promete que o trabalho antigo compila como está.
+% O aviso diz o que mover.
 % As listas \textbf{não} entram no sumário, a não ser com a opção
 % |listasnosumario| --- que \textbf{contraria a norma}: a \mbox{NBR~6027} tira
 % os elementos pré-textuais do sumário, e o sumário modelo do Manual começa na
@@ -2820,33 +2825,33 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % Nome do projeto              & |\projectname|          & 170 \\
 % Agência de fomento         & |\fundingagency|       & 171 \\
 % Ficha catalográfica        & |\catalogcard|   & 177 \\
-% Capa e folha de rosto        & |\maketitle|            & 179 \\
-% Parte pré-textual          & |\frontmatter|          & 181 \\
-% Dedicatória                & |\dedication|           & 182 \\
+% Capa e folha de rosto        & |\maketitle|            & 182 \\
+% Parte pré-textual          & |\frontmatter|          & 184 \\
+% Dedicatória                & |\dedication|           & 185 \\
 % Resumo                       & |abstract|              & 112 \\
 % Abstract                     & |foreignabstract|       & 128 \\
 % Listas pré-textuais        & |\listoffigures| \dots  & 146 \\
-% Sumário                    & |\tableofcontents|      & 247 \\
-% Parte textual                & |\mainmatter|           & 261 \\
-% Símbolo                    & |\symbl|                & 329 \\
+% Sumário                    & |\tableofcontents|      & 192 \\
+% Parte textual                & |\mainmatter|           & 275 \\
+% Símbolo                    & |\symbl|                & 343 \\
 % Citação longa           & |longquote|             & 236 \\
-% Fonte da ilustração     & |\source|               & 420 \\
+% Fonte da ilustração     & |\source|               & 434 \\
 % Quadro                       & |quadro|                & 300 \\
-% Bibliografia                 & |\printbibliography|    & 910 \\
-% Código no texto            & |\pythoninline|         & 1058 \\
-% Código Java no texto       & |\javainline|           & 1095 \\
-% Sigla declarada              & |\defineacronym|             & 1431 \\
-% Sigla usada                  & |\useacronym|                & 1434 \\
-% Abreviatura                  & |\abbrev|               & 1428 \\
-% Parte pós-textual          & |\backmatter|           & 1440 \\
-% Apêndices                  & |\appendix|             & 1456 \\
-% Anexos                       & |\annex|                & 1468 \\
+% Bibliografia                 & |\printbibliography|    & 924 \\
+% Código no texto            & |\pythoninline|         & 1072 \\
+% Código Java no texto       & |\javainline|           & 1109 \\
+% Sigla declarada              & |\defineacronym|             & 1445 \\
+% Sigla usada                  & |\useacronym|                & 1448 \\
+% Abreviatura                  & |\abbrev|               & 1442 \\
+% Parte pós-textual          & |\backmatter|           & 1454 \\
+% Apêndices                  & |\appendix|             & 1470 \\
+% Anexos                       & |\annex|                & 1482 \\
 % Glossário automático        & |\makeglossarylist|     & 59 \\
 % Termo do glossário          & |\glossaryterm|         & 55 \\
 % Glossário                    & |\printglossarylist|    & 56 \\
-% Entrada do índice            & |\index|                & 372 \\
-% Índice                       & |\printindex|           & 1334 \\
-% Colófon                    & |\ufrjfinalpage|    & 1487 \\
+% Entrada do índice            & |\index|                & 386 \\
+% Índice                       & |\printindex|           & 1348 \\
+% Colófon                    & |\ufrjfinalpage|    & 1501 \\
 % \end{tabular}
 % \end{center}
 %
@@ -6060,6 +6065,12 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % aviso: e o unico elemento pre-textual que a 3.1.2.1.6 exige alem das folhas
 % que a classe ja compoe.
 \newif\if@ufrjordem
+% Pela classe coppe de compatibilidade (o \documentclass{coppe} da 4.x), a
+% ordem errada e AVISO, e nao erro: a compatibilidade promete que um trabalho
+% antigo compila como esta, e os modelos da 4.x ensinavam outra ordem -- o
+% sumario antes das listas, ou as listas de quadros, programas e algoritmos
+% depois da de tabelas, como a Norma COPPE mandava. O aviso diz o que mover.
+\newif\if@ufrjordemaviso
 \newcount\ufrj@ordemposto
 \newcommand*\ufrj@ordemnome{}
 \newcommand*\ufrj@ordemcmd{}
@@ -6067,14 +6078,21 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \newcommand\ufrj@ordem[3]{%
   \if@ufrjordem
     \ifnum#1<\ufrj@ordemposto
-      \ClassError{ufrj}{Fora da ordem da 3.1.2 do Manual: #3 (#2)\MessageBreak
-        depois de \ufrj@ordemcmd\space(\ufrj@ordemnome)}{%
-        A 3.1.2 do Manual poe os elementos pre-textuais nesta ordem:\MessageBreak
-        folha de rosto, folha adicional, errata, folha de aprovacao,\MessageBreak
-        dedicatoria, agradecimentos, epigrafe, resumo em portugues,\MessageBreak
-        resumo em lingua estrangeira, listas de ilustracoes, lista de\MessageBreak
-        tabelas, lista de abreviaturas e siglas, lista de simbolos\MessageBreak
-        e sumario. Mova #3 para antes de \ufrj@ordemcmd.}%
+      \if@ufrjordemaviso
+        \ClassWarning{ufrj}{Fora da ordem da 3.1.2 do Manual: #3 (#2)\MessageBreak
+          depois de \ufrj@ordemcmd\space(\ufrj@ordemnome). Mova #3\MessageBreak
+          para antes de \ufrj@ordemcmd: com a classe ufrj, isto\MessageBreak
+          e erro}%
+      \else
+        \ClassError{ufrj}{Fora da ordem da 3.1.2 do Manual: #3 (#2)\MessageBreak
+          depois de \ufrj@ordemcmd\space(\ufrj@ordemnome)}{%
+          A 3.1.2 do Manual poe os elementos pre-textuais nesta ordem:\MessageBreak
+          folha de rosto, folha adicional, errata, folha de aprovacao,\MessageBreak
+          dedicatoria, agradecimentos, epigrafe, resumo em portugues,\MessageBreak
+          resumo em lingua estrangeira, listas de ilustracoes, lista de\MessageBreak
+          tabelas, lista de abreviaturas e siglas, lista de simbolos\MessageBreak
+          e sumario. Mova #3 para antes de \ufrj@ordemcmd.}%
+      \fi
     \else
       \global\ufrj@ordemposto=#1\relax
       \xdef\ufrj@ordemnome{#2}%

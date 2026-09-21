@@ -2018,6 +2018,10 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor i
   \string\documentclass[...]{ufrj} e acrescente\MessageBreak
   \string\usepackage{ufrj-coppe} logo abaixo}
 \LoadClassWithOptions{ufrj}
+% A ordem dos pre-textuais fora da 3.1.2 e erro na classe ufrj; aqui, aviso: os
+% modelos da 4.x ensinavam outra ordem, e o trabalho antigo tem de compilar
+% como esta (#148).
+\@ufrjordemavisotrue
 \RequirePackage{ufrj-coppe}
 %</compat>
 %    \end{macrocode}

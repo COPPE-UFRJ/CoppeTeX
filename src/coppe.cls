@@ -41,6 +41,7 @@
   \string\documentclass[...]{ufrj} e acrescente\MessageBreak
   \string\usepackage{ufrj-coppe} logo abaixo}
 \LoadClassWithOptions{ufrj}
+\@ufrjordemavisotrue
 \RequirePackage{ufrj-coppe}
 %% 
 %%

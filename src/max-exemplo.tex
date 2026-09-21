@@ -176,6 +176,20 @@
   % descomente a linha abaixo e a moldura vazia da folha adicional some.
   % \catalogcard{ficha.pdf}
 
+  % ORDEM DOS ELEMENTOS PRÉ-TEXTUAIS (Manual 3.1.2). A classe confere esta
+  % ordem: um elemento fora dela é erro de compilação, e a mensagem diz o que
+  % mover. Os obrigatórios estão em MAIÚSCULAS; os outros são opcionais.
+  %   \maketitle ......... CAPA, FOLHA DE ROSTO e FOLHA ADICIONAL
+  %   errata ............. se houver, antes da folha de aprovação
+  %   \frontmatter ....... FOLHA DE APROVAÇÃO
+  %   \dedication ........ dedicatória
+  %   agradecimentos ..... \chapter*{Agradecimentos}
+  %   \epigraph .......... epígrafe
+  %   resumos ............ RESUMO EM PORTUGUÊS, sempre o primeiro, e depois
+  %                        o RESUMO EM LÍNGUA ESTRANGEIRA
+  %   listas ............. de ilustrações, de tabelas, de abreviaturas e
+  %                        siglas e de símbolos, nessa ordem
+  %   \tableofcontents ... SUMÁRIO, sempre o último
   \maketitle
 
   \frontmatter

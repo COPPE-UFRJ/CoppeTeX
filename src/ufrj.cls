@@ -1140,20 +1140,28 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \renewcommand\foreign@doctype{#6}%
 }
 \newif\if@ufrjordem
+\newif\if@ufrjordemaviso
 \newcount\ufrj@ordemposto
 \newcommand*\ufrj@ordemnome{}
 \newcommand*\ufrj@ordemcmd{}
 \newcommand\ufrj@ordem[3]{%
   \if@ufrjordem
     \ifnum#1<\ufrj@ordemposto
-      \ClassError{ufrj}{Fora da ordem da 3.1.2 do Manual: #3 (#2)\MessageBreak
-        depois de \ufrj@ordemcmd\space(\ufrj@ordemnome)}{%
-        A 3.1.2 do Manual poe os elementos pre-textuais nesta ordem:\MessageBreak
-        folha de rosto, folha adicional, errata, folha de aprovacao,\MessageBreak
-        dedicatoria, agradecimentos, epigrafe, resumo em portugues,\MessageBreak
-        resumo em lingua estrangeira, listas de ilustracoes, lista de\MessageBreak
-        tabelas, lista de abreviaturas e siglas, lista de simbolos\MessageBreak
-        e sumario. Mova #3 para antes de \ufrj@ordemcmd.}%
+      \if@ufrjordemaviso
+        \ClassWarning{ufrj}{Fora da ordem da 3.1.2 do Manual: #3 (#2)\MessageBreak
+          depois de \ufrj@ordemcmd\space(\ufrj@ordemnome). Mova #3\MessageBreak
+          para antes de \ufrj@ordemcmd: com a classe ufrj, isto\MessageBreak
+          e erro}%
+      \else
+        \ClassError{ufrj}{Fora da ordem da 3.1.2 do Manual: #3 (#2)\MessageBreak
+          depois de \ufrj@ordemcmd\space(\ufrj@ordemnome)}{%
+          A 3.1.2 do Manual poe os elementos pre-textuais nesta ordem:\MessageBreak
+          folha de rosto, folha adicional, errata, folha de aprovacao,\MessageBreak
+          dedicatoria, agradecimentos, epigrafe, resumo em portugues,\MessageBreak
+          resumo em lingua estrangeira, listas de ilustracoes, lista de\MessageBreak
+          tabelas, lista de abreviaturas e siglas, lista de simbolos\MessageBreak
+          e sumario. Mova #3 para antes de \ufrj@ordemcmd.}%
+      \fi
     \else
       \global\ufrj@ordemposto=#1\relax
       \xdef\ufrj@ordemnome{#2}%

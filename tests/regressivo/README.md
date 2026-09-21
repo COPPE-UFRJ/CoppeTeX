@@ -134,12 +134,17 @@ sempre que o defeito for de uma folha só.
 
 ### Conformidade com o Manual 2026 (conferência de 16/09/2026)
 
-Estes não guardam defeito já corrigido: **mostram** defeito aberto. Saíram da
-conferência completa da 4.1 contra o Manual UFRJ/SiBI, 9.ª ed. rev. (2026) —
-issue guarda-chuva #112, uma issue por teste —, e **falham até a correção**.
-O roteiro de correção está em [`CORRECOES_MANUAL_2026.md`](../../CORRECOES_MANUAL_2026.md).
+Saíram da conferência completa da 4.1 contra o Manual UFRJ/SiBI, 9.ª ed. rev.
+(2026) — issue guarda-chuva #112, uma issue por teste. Nasceram **mostrando**
+defeito aberto, falhando até a correção; todos foram corrigidos no ramo
+`V05-unificada` (17 e 18/09/2026), e hoje guardam a correção como os de cima.
+O roteiro, com o commit de cada issue, está em
+[`CORRECOES_MANUAL_2026.md`](../../CORRECOES_MANUAL_2026.md). Os que vieram
+depois, da mesma família — a ordem dos pré-textuais, as normas da ABNT —,
+entram nesta tabela com o prefixo `rt`.
 
-**A marca `ABERTO`.** Cada um traz, logo depois da linha `BUG:`, uma linha
+**A marca `ABERTO`**, para a próxima conferência — hoje nenhum teste a traz.
+Um teste de defeito aberto traz, logo depois da linha `BUG:`, uma linha
 `ABERTO: #<issue>` (nos `.tex`, `%% ABERTO: #<issue>`). A rodada **sem filtro**
 não roda teste marcado — só lista quais ficaram de fora —, porque trinta e
 tantos testes que falham de propósito, e compilam cada um várias vezes, não
@@ -194,23 +199,23 @@ $env:COPPE_SRC = "C:\rascunho\src"; python tests/regressivo/rt38-referencias-ali
 | `rt54-tradutor-e-titulo-original` | #135 | Tradutor como autor ("Trad. por SOBRENOME, Nome"); sem título original (4.3.2.10). | |
 | `rt55-doi` | #136 | DOI em versalete, sem https://doi.org, e aviso de fonte (4.2.3.5). | |
 | `rt56-tese-e-dissertacao` | #137 | `@mastersthesis`/`@phdthesis` sem grau e sem travessão; "( em" com tipo digitado (4.3.8.3). | |
-| `rt57-citacao-pela-entrada-de-titulo` | #138 | Chamada pelo título em itálico e sem vírgula (4.1.1.1.2). | |
+| `rt57-citacao-pela-entrada-de-titulo` | #138 | Chamada pelo título em itálico e sem vírgula (4.1.1.1.2), e com o título inteiro: a NBR 10520:2023 (6.1.1.4) o corta — "(Anteprojeto [...], 1987)", "(A flor [...], 1995)". Cobra também a caixa alta da entrada na lista, com o artigo ou o monossílabo inicial. | |
 | `rt58-mesmo-sobrenome-mesmo-ano` | #139 | "(Orlando Braga, 1987)" no lugar de "(Braga, Orlando, 1987)" (4.1.1.2b). | ✓ |
 | `rt59-sistema-numerico` | #140 | Chamada numérica entre colchetes; nenhum aviso com nota de rodapé (4.1.1.1.1). | ✓ |
-| `rt60-ordem-alfabetica-sem-artigo` | #141 | O artigo inicial conta na alfabetação (4.2). | ✓ |
+| `rt60-ordem-alfabetica-sem-artigo` | #141 | O artigo e o monossílabo iniciais contam na alfabetação (4.2). Cobra também que as duas listas de palavras do `ufrj.bbx` — a do TeX e a do mapa do biber — sejam iguais. | ✓ |
 | `rt61-periodico-em-curso` | #142 | Periódico corrente "1950/." no lugar de "1950- ." (4.3.5.5.1). | ✓ |
 | `rt62-audiovisual-e-versao` | #143 | "Direção de Sobrenome, Nome"; versão depois da imprenta (4.2.9, 4.3.4). | |
-| `rt63-entidade-hierarquica` | #144 | Chamada de entidade com órgão subordinado repete a hierarquia em caixa alta (4.1.1.2). | |
+| `rt63-entidade-hierarquica` | #144 | Chamada de entidade com órgão subordinado repete a hierarquia em caixa alta (4.1.1.2). O autor digita o nome como se escreve, e a classe põe a entrada em caixa alta na lista, sem o qualificador entre parênteses: "BRASIL. Ministério da Educação", "RIO DE JANEIRO (Estado). Secretaria…", "(IBGE, 2011)". | |
 | `rt64-intervalo-de-paginas-com-hifen` | #145 | Intervalo de páginas com meia-risca (4.2.3.4). | ✓ |
-| `rt65-mes-no-idioma-da-publicacao` | #146 | Mês no idioma do trabalho, e não no da publicação (4.3.5.5.1). | |
+| `rt65-mes-no-idioma-da-publicacao` | #146 | Mês no idioma do trabalho, e não no da publicação (4.3.5.5.1). Cobra inglês, espanhol, francês e alemão, pelas tabelas do Anexo A da NBR 6023:2025. | |
 | `rt66-dissertacao-do-exemplo` (`.tex`) | #147 | A m-diss do `exemplo.bib` sem "Dissertação (Mestrado em …)" desde b14a5d6. Corrigida; a correção separou também as chaves das duas bases do gabarito (`m-` e `pt-`), porque com chaves iguais a forma em português nunca era composta. | |
 | `rt67-ordem-das-listas` | #148 | Listas de ilustração depois da lista de tabelas nos modelos e na Norma COPPE §10 (3.1.2). Sem compilar. | |
 | `rt68-conteudo-dos-exemplos` | #149 | Conteúdo dos exemplos contra o Manual: algoritmo sem fonte, acentos, palavras-chave, repetidas… Sem compilar. | |
 | `rt69-mesmo-traco` | #150 | Traço diferente na legenda, no apêndice, no sumário e na Norma COPPE §12; cobra só que seja o mesmo. | |
 | `rt70-lualatex-caracteres` | #152 | Achado ao ligar os verificadores à prova (#151): no LuaLaTeX, com `fontenc` T1, `º` saía `ž`, `§` saía `ğ`, e travessão, aspas curvas e reticências sumiam. Compila a mesma amostra nos dois motores. Corrigido: nos motores Unicode a classe fica em TU, com a Latin Modern em OpenType. | |
-| `rt89-prova-roda-as-conferencias` | A prova não rodava `conferir-referencias.py` nem `conferir-norma.py` (#151); a m-diss do `exemplo.bib` saiu errada na 4.1 com o verificador acusando a divergência, mas ninguém o chamava. Sem compilar: cobra que o painel ou o `build-check` chamem os dois. No primeiro dia ligados, os dois acharam o `nž` do LuaLaTeX (#152). |
-
 | `rt71-logotipos-so-na-capa` | #130 | A folha de rosto repetia a linha de logotipos da capa; o Anexo A põe os dois na **capa** e o Anexo B, modelo da folha de rosto, não traz imagem nenhuma. Mede **tinta** na faixa de cima de cada folha, porque os logotipos são vetoriais e o `pdfimages` não os vê. | |
+| `rt72-ordem-dos-pre-textuais` | #148 | A classe não conferia a ordem dos pré-textuais da 3.1.2: um sumário antes das listas, uma lista de tabelas antes da de figuras ou uma dedicatória antes da folha de aprovação saíam como o autor escrevesse. Cobra o erro que nomeia os dois comandos, a epígrafe aceita depois do `\mainmatter` e o aviso de falta do sumário. Pela classe `coppe` de compatibilidade é aviso, e o `rtu03` cobra isso. | |
+| `rt89-prova-roda-as-conferencias` | #151 | A prova não rodava `conferir-referencias.py` nem `conferir-norma.py`; a m-diss do `exemplo.bib` saiu errada na 4.1 com o verificador acusando a divergência, mas ninguém o chamava. Sem compilar: cobra que o painel ou o `build-check` chamem os dois. No primeiro dia ligados, os dois acharam o `nž` do LuaLaTeX (#152). | |
 
 ### A classe da UFRJ e o estilo da unidade (`rtu`)
 
@@ -221,7 +226,7 @@ classe `ufrj` e o estilo da unidade.
 |---|---|
 | `rtu01-classe-sem-unidade` | Não repara defeito antigo: guarda a separação em camadas da v5.0. A classe `ufrj`, **sem estilo de unidade nenhum**, compõe o trabalho inteiro com os textos da UFRJ — "Programa de Pós-Graduação em", "apresentada à UFRJ", "em conformidade com o Manual" — e não escreve o Instituto, a sigla, o grau "em Ciências" nem a norma da COPPE. |
 | `rtu02-unidade-ficticia` | Não repara defeito antigo: prova o objetivo da v5.0. Uma unidade inventada, no `ufrj-ficticia.sty` desta pasta, escrita **só com a interface pública** da classe, troca a capa, a natureza, a abertura do resumo, a referência e o colofão — com outra sigla, outro artigo e outro nome de grau — sem que a classe mude. |
-| `rtu03-classe-coppe-antiga` | Não repara defeito antigo: guarda a compatibilidade com o que foi escrito até a v4.1. `\documentclass{coppe}`, `\newcoppefloat`, `\coppetexfinalpage`, um `\renewcommand\coppefinalmanual` e um `.toc` escrito pela classe antiga compilam sem erro e com um aviso só. O `.toc` velho é o caso que a própria troca de nome encontrou: sem o apelido de `\coppe@tocapp`, a primeira compilação parava. |
+| `rtu03-classe-coppe-antiga` | Não repara defeito antigo: guarda a compatibilidade com o que foi escrito até a v4.1. `\documentclass{coppe}`, `\newcoppefloat`, `\coppetexfinalpage`, um `\renewcommand\coppefinalmanual` e um `.toc` escrito pela classe antiga compilam sem erro, só com avisos. O `.toc` velho é o caso que a própria troca de nome encontrou: sem o apelido de `\coppe@tocapp`, a primeira compilação parava. O documento tem o sumário antes da lista de mapas, como os modelos da 4.x ensinavam: pela classe `coppe` a ordem errada é **aviso**, e não o erro da classe `ufrj` (#148). |
 | `rtu04-classe-nao-nomeia-unidade` | Não repara defeito antigo: a mesma separação do rtu01, cobrada no **código**. Nada do que o `ufrj.ins` gera — classe, estilos de bibliografia, pacotes de idioma — pode nomear a COPPE, o Instituto, o logotipo, o grau "em Ciências" ou a sigla de um Programa. Pega o dado que voltasse para um ramo que o documento do rtu01 não percorre. Rodado contra a classe da v4.1, falha. |
 | `rtu05-area-na-folha-de-rosto` | Não repara defeito antigo: guarda o modelo do SiBI. A área de concentração sai na **folha adicional**, entre os campos da Coleta CAPES, e não no bloco da natureza da folha de rosto nem no da folha de aprovação — o Anexo B e o Anexo D terminam o bloco no grau. Cobra as duas metades: sem a opção não sai nas folhas de identidade e sai na adicional; com `areanafolhaderosto` volta às duas (#155). |
 
