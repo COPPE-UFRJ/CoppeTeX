@@ -159,9 +159,10 @@
 \let\ufrj@mes@naustrian\ufrj@mes@german
 \let\ufrj@mes@swissgerman\ufrj@mes@german
 \let\ufrj@mes@nswissgerman\ufrj@mes@german
+\newif\if@ufrjmesdotrabalho
 \newcommand*\ufrj@monthlang{}
 \protected\def\ufrj@abntmonth#1{%
-  \iffieldundef{langid}
+  \ifboolexpr{ test {\iffieldundef{langid}} or bool {@ufrjmesdotrabalho} }
     {\mkbibmonth{#1}}
     {\edef\ufrj@monthlang{\thefield{langid}}%
      \ifcsdef{ufrj@mes@\ufrj@monthlang}
@@ -303,7 +304,8 @@
   \iffieldundef{url}
     {}
     {\printfield{url}%
-     \iffieldundef{urlyear}{}{\setunit{\adddot\space}\printurldate}}}
+     \iffieldundef{urlyear}{}{\setunit{\adddot\space}%
+       \@ufrjmesdotrabalhotrue\printurldate\@ufrjmesdotrabalhofalse}}}
 
 \DeclareBibliographyDriver{article}{%
   \usebibmacro{bibindex}%
@@ -469,11 +471,16 @@
   \setunit*{\addcomma\space}\printdate%
   \newunit\newblock
   \printfield{chapter}%
-  \setunit{\addcomma\space}\printfield{pages}%
+  \setunit*{\addcomma\space}\printfield{pages}%
   \newunit\newblock
   \usebibmacro{doi+eprint+url}%
   \usebibmacro{finentry}}
 \DeclareBibliographyDriver{incollection}{\usebibmacro{ufrj:partdriver}}
+\renewbibmacro*{chapter+pages}{%
+  \printfield{chapter}%
+  \setunit*{\bibpagespunct}%
+  \printfield{pages}%
+  \newunit}
 \DeclareBibliographyDriver{inbook}{\usebibmacro{ufrj:partdriver}}
 
 \DeclareFieldFormat{type}{\ifbibstring{#1}{\bibstring{#1}}{#1}}
@@ -647,6 +654,11 @@
        \def\mkbibnameprefix##1{##1}%
        \printnames{holder}%
      \endgroup}}
+\newbibmacro*{ufrj:attorney}{%
+  \ifnameundef{attorney}
+    {}
+    {\printtext{\bibstring{ufrjattorney}\addcolon\space}%
+     \printnames[ufrj:direta]{attorney}}}
 \DeclareBibliographyAlias{letter}{misc}
 \DeclareBibliographyDriver{patent}{%
   \usebibmacro{bibindex}%
@@ -656,6 +668,8 @@
   \usebibmacro{title}%
   \newunit\newblock
   \usebibmacro{ufrj:depositor}%
+  \newunit\newblock
+  \usebibmacro{ufrj:attorney}%
   \newunit\newblock
   \printfield{type}%
   \setunit*{\addspace}\printfield{number}%
@@ -805,6 +819,7 @@
     \map{\step[fieldsource=localevento,fieldtarget=venue]}
     \map{\step[fieldsource=deposito,fieldtarget=filingdate]}
     \map{\step[fieldsource=concessao,fieldtarget=grantdate]}
+    \map{\step[fieldsource=procurador,fieldtarget=attorney]}
     % caderno e campo da classe (a secao do jornal); newspapersection e o nome
     % em ingles, e e o que as bases da entrega usam.
     \map{\step[fieldsource=newspapersection,fieldtarget=caderno]}

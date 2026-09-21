@@ -20,6 +20,30 @@ top of `CORRECOES_MANUAL_2026.md`.
 
 ### Verification
 
+- **`conferir-referencias.py` compares again, and against the Manual itself**
+  (#167). It split the reference list at the `[n]` label; since #140 the
+  numeric list has no brackets, so it found no reference, called the document
+  "skipped" and passed. From 2026-09-17 to 2026-09-21 no reference was
+  compared, and the "no divergence" claims of 9fd755e, 0659f9d and d73c707 were
+  false. It now splits at the number that opens the line, with or without
+  brackets, taking only the next number of the sequence; reads the PDF with
+  `-layout` (without it LuaLaTeX's labels were deleted with the folios); and a
+  document with no numbered reference fails. Two more holes came out. An
+  accepted divergence accepted the whole entry: a wrong comma of the class
+  before the pages hid behind the note about the Manual's "LEVI, G;". And 12
+  of the 34 expected references were not the Manual's text: errata corrected
+  in silence, data the class cannot compose replaced ("[19--?]" became
+  "1990"), elements it lacked left out (the patent's "Procurador:"). The
+  expected text is now the Manual as printed, errata and all, checked against
+  the Manual's PDF in `specs/` on every run; an accepted divergence passes only
+  if the class composes exactly the `@comment{Classe: …}` next to it, and a
+  missing form, a stale note or any other output is a divergence. The first
+  honest run found three defects of the class, fixed below, and two gaps that
+  have their own issues (uncertain dates, #168; the "julgado em" of
+  jurisprudence, #169). Result: 68 checks in each engine, no divergence, 11
+  accepted in each database, each with the reason and the class's exact form.
+  The new test `rt77` covers the splitting, the comparison and the expected
+  text.
 - **The `.bib` files have no `%` comment lines** (#164). JabRef and other
   reference managers do not read `%` as a comment, and the bases had three
   kinds: the docstrip preamble and postamble at the top and bottom of
@@ -66,6 +90,9 @@ top of `CORRECOES_MANUAL_2026.md`.
 
 ### Added
 
+- **The patent's attorney** (#167): `attorney` (`procurador`), printed in
+  direct order after the depositor — "Procurador: Maria Cristina Valim
+  Lourenço Gomes." —, an essential element of 4.2.5 that had no field.
 - **`\volumefiles` (`\arquivosdosvolumes`)** (#126): the `.tex` names of every
   volume, in order, in the preamble of all of them. 2.7 requires one sequence
   of sheets from the first volume to the last, and 3.1.2.1.6 the complete
@@ -193,6 +220,18 @@ top of `CORRECOES_MANUAL_2026.md`.
 
 ### Fixed
 
+- **The access date is in the language of the work** (#167). Since #146 the
+  month of an entry with `langid` follows Annex A of NBR 6023 in the
+  publication's language, and the access month went along: "Acesso em: 26 May
+  2011". The Manual's own example has "1 June 2010 … Acesso em: 26 maio 2011".
+- **A part of a monograph with pages and no chapter closes the imprint with a
+  full stop** (#167): "Companhia das Letras, 1996. p. 7-16.", as in 4.2.1.3.
+  The comma of "cap. 1, p. 23-64" went in without a chapter too, and took the
+  place of the full stop. The same in the book and report drivers.
+- **The examples in `exemplo.bib` follow the Manual's data** (#167): the full
+  URLs and access dates of the news item and the online patent, the parties of
+  the extradition, `langid = english` on the two English publications, and the
+  NBR 6023 as the Manual cites it, "Rio de Janeiro: ABNT, 2025."
 - **Corporate authors are typed as they are written, and the class sets the
   capitals** (#144). Up to 4.1 a name with a full stop was printed in the list
   exactly as typed, so the author had to type the superior entity in capitals —

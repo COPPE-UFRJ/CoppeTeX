@@ -53,7 +53,7 @@ for base, prefixo in ((os.path.join(SRC, "exemplo.bib"), "m-"), (ADV, "pt-")):
     if len(gab) != 34:
         problemas.append("%s: o conferir-referencias leu %d gabaritos %s*, e sao 34"
                          % (os.path.basename(base), len(gab), prefixo))
-    aceitas = [k for k, (ref, mot) in gab.items() if mot]
+    aceitas = [k for k, (ref, mot, classe) in gab.items() if mot]
     if not aceitas:
         problemas.append("%s: nenhuma divergencia aceita lida" % os.path.basename(base))
 

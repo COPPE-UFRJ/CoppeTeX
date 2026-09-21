@@ -34,7 +34,7 @@ compilar veio do `.dtx`, e não de um arquivo que ficou para trás.
 | `geradocvazio.py` | O gerador de documento vazio, com janela e linha de comando: escreve o `.tex` e o `.bib` de um trabalho novo, com os cinco capítulos e o texto de preenchimento. O `.bib` vai para `referencias/` por padrão, que é a recomendação desde a 4.1; o campo **Pasta das referências** vazio o devolve à raiz. É o que o `coppetex-novo.bat` da raiz chama. É a única ferramenta daqui feita para o ALUNO, e não para quem mantém a classe. |
 | `versao.py` | Confere se a versão está sincronizada nos 28 arquivos gerados e nos 6 lugares em prosa, e sobe o segundo ou o terceiro nível. Nunca o primeiro. |
 | `conferir-norma.py` | Lê um PDF pronto e mede, em centímetros, o que a norma fixa: margens, corpo, recuos, ordem das páginas pré-textuais. |
-| `conferir-referencias.py` | Compõe as referências e as compara, uma a uma, com o texto que o Manual imprime. O gabarito está nos comentários `%%` de `../tests/adversativa/referencias-manual.bib`. |
+| `conferir-referencias.py` | Compõe as referências e as compara, uma a uma, com o texto que o Manual imprime. O gabarito é o `@comment{Manual: …}` antes de cada entrada de `../src/exemplo.bib` e de `../tests/adversativa/referencias-manual.bib`, e a ferramenta confere primeiro que ele é o texto do PDF do Manual em `../specs/`. Divergência aceita só passa com a forma exata da classe, num `@comment{Classe: …}`. |
 | `conferir-referencias-cruzadas.py` | Caça `\ref` e `\cite` sem resolver em todos os `.log`. Nada disso aparece no código de saída do `pdflatex`: sai `??` na página e o PDF é gerado assim mesmo. |
 | `conferir-manual.py` | Cobra que todo comando público, todo ambiente e toda opção da classe estejam documentados, que a tabela "onde ver" do manual ainda bata com o `max-exemplo.tex`, e que os guardas de `macrocode` do `.dtx` estejam bem escritos — o `doc.sty` só fecha um bloco de código com `%` e **quatro** espaços, e um guarda de três espaços fez sessenta linhas de documentação saírem impressas como código no `ufrj.pdf` por várias versões, sem quebrar nada. |
 | `juntar-master.py` | Junta ao ramo da 5.0 o que o `master` da 4.1 fez depois que o `goufrj` nasceu: tira da `dist/` as cópias das fontes para o git parear `src` com `src`, faz o merge, resolve os conflitos que só existem por causa da troca de nome `coppe` → `ufrj`, leva ao `ufrj-coppe.dtx` o que mudou nos exemplos, renomeia os testes da conferência para `rt` e aponta o que sobrou da 4.1. Testado numa simulação do merge. O passo a passo está em [`JUNTAR_MASTER_GOUFRJ.md`](../JUNTAR_MASTER_GOUFRJ.md). |
@@ -110,7 +110,11 @@ esperado tem de vir com a referência de onde saiu — o item do Manual, ou o te
 que ele imprime. `conferir-referencias.py` guarda o gabarito em comentários ao
 lado de cada entrada, e registra as divergências **aceitas** com o motivo
 escrito, em vez de escondê-las no número final. O Manual tem erratas, e há
-lugares em que o certo é divergir dele; isso precisa estar escrito.
+lugares em que o certo é divergir dele; isso precisa estar escrito. E o
+gabarito é o Manual **como impresso**, errata e tudo: até a #167, 12 das 34
+referências tinham sido corrigidas ou ajustadas no próprio gabarito, e a
+comparação passava sem provar nada. Hoje a ferramenta confere o gabarito
+contra o PDF do Manual antes de comparar a classe com ele.
 
 **Ela não escreve em arquivo versionado.** Saída vai para `_scratch/`.
 

@@ -212,6 +212,9 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \changes{v5.0}{2026/09/17}{The line numbers of a listing stay inside the margin. The five language styles number the lines on the left, and without xleftmargin the listings package indents the code and leaves the number outside the 3 cm margin of 2.3.}
 % \changes{v5.0}{2026/09/17}{Footnotes start at the left margin and hang: from the second line the text aligns under the first letter, not under the mark, as 4.2 asks of a reference in a note -- the class used book's makefntext, which indented the mark by parindent and returned the second line to the margin. A footnote no longer splits across sheets either.}
 % \changes{v5.0}{2026/09/17}{PDF/A-2b is the default output, and the new option sempdfa turns it off. 2.2(d) of the Manual requires the final digital version to be PDF/A, the deposit has been digital only since Resolucao CEPG n. 246/2023, and the class already produced conformant PDF/A -- but only when asked, so a work written without reading the manual was deposited off the norm. The v4.1 option pdfa is still accepted and now does nothing.}
+% \changes{v5.0}{2026/09/21}{The access date is in the language of the work, and only the publication date follows the entry's langid: HOUTE, Jef Van den. Black hole. 1 June 2010. [...] Acesso em: 26 maio 2011. The access month came out in the language of the publication too: Acesso em: 26 May 2011.}
+% \changes{v5.0}{2026/09/21}{A patent takes its attorney, the Procurador of the Manual's essential elements (4.2.5), in the attorney field (procurador in Portuguese), printed in direct order after the depositor: Procurador: Maria Cristina Valim Lourenco Gomes.}
+% \changes{v5.0}{2026/09/21}{A part of a monograph with pages and no chapter ends in a full stop before the pages, as in the Manual: Companhia das Letras, 1996. p. 7-16. The comma of cap. 1, p. 23-64 went in even with no chapter, and replaced the full stop that closes the imprint. The same in the chapter+pages of the book and report drivers.}
 % \changes{v5.0}{2026/09/21}{The .bib files carry no comment line starting with a percent sign, which JabRef and other reference managers do not read as a comment: the docstrip preamble is gone from them, the notice and licence are a Comment entry, and the Manual's expected output for each reference is a comment{Manual: ...} entry before it instead of lines inside the entry.}
 % \changes{v5.0}{2026/09/18}{The class checks the order of the pre-textual elements of 3.1.2 between maketitle and mainmatter: the folha de aprovacao, dedication, epigraph, lists and sumario each have their place, and one out of place is a compilation error that names what to move and where. mainmatter warns when there is no tableofcontents, the one mandatory element the author has to ask for.}
 % \changes{v5.0}{2026/09/17}{The logos are printed on the capa only. The folha de rosto repeated the capa's logo line; Annex B, which is the model of the folha de rosto, and the two sheets of the SiBI model carry no image there. Annex A puts the two logos on the CAPA and marks both as optional.}
@@ -2414,6 +2417,13 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \end{tabular}
 % \end{center}
 %
+% A patente (4.2.5) tem campos só dela: o depositante em |holder|, o
+% procurador em |attorney| (|procurador|), e as datas de depósito e de
+% concessão em |filingdate| (|deposito|) e |grantdate| (|concessao|), escritas
+% como devem sair --- |27 jan. 2006|. O procurador é nome de pessoa, e sai em
+% ordem direta, como no Manual: ``Procurador: Maria Cristina Valim Lourenço
+% Gomes.''
+%
 % \textbf{Uma advertência.} Não misture as duas formas na MESMA entrada. Elas
 % funcionam juntas no mesmo arquivo, mas dentro de uma entrada escolha uma e
 % fique nela, ou a leitura fica confusa para quem vier depois.
@@ -2690,7 +2700,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %     |\DeclareBibliographyStrings| para |availablefrom|, |urlseen|, |in|,
 %     |editor|, |editors|, |depositor|, |ufrjscale|, |mscdiss|, |dscthesis|,
 %     |phdthesis|, |tcc|, |ufrjmscdeg|, |ufrjdscdeg|, |ufrjphddeg|,
-%     |ufrjtccdeg|, |ufrjfiling| e |ufrjgrant|. Os arquivos
+%     |ufrjtccdeg|, |ufrjfiling|, |ufrjgrant| e |ufrjattorney|. Os arquivos
 %     |spanish-ufrj.lbx|, |french-ufrj.lbx| e |italian-ufrj.lbx| que acompanham
 %     a classe são os modelos a copiar.
 % \end{description}
@@ -8372,13 +8382,16 @@ postamble
 \DeclareDatamodelFields[type=field,datatype=literal]{relator}     % jurisprudence rapporteur
 \DeclareDatamodelFields[type=field,datatype=literal]{filingdate}  % patente: deposito
 \DeclareDatamodelFields[type=field,datatype=literal]{grantdate}   % patente: concessao
+% O procurador da 4.2.5 -- "Procurador: Maria Cristina Valim Lourenco Gomes." --
+% e nome de pessoa, e sai em ordem direta, como o diretor e o produtor (#167).
+\DeclareDatamodelFields[type=list,datatype=name]{attorney}      % patente: procurador
 \DeclareDatamodelEntryfields{course,ufrjdegree}
 \DeclareDatamodelEntryfields[game,videogame,boardgame,software,movie,tvshow,video]%
   {artist,platform,director,producer,version}
 \DeclareDatamodelEntryfields[map]{scale}
 \DeclareDatamodelEntryfields[article]{caderno}
 \DeclareDatamodelEntryfields[jurisdiction]{relator}
-\DeclareDatamodelEntryfields[patent]{filingdate,grantdate}
+\DeclareDatamodelEntryfields[patent]{filingdate,grantdate,attorney}
 %</dbx>
 %<*bbx>
 \ProvidesFile{ufrj.bbx}[2026/09/15 v5.0 CoppeTeX ABNT bibliography style]
@@ -8599,9 +8612,15 @@ postamble
 \let\ufrj@mes@naustrian\ufrj@mes@german
 \let\ufrj@mes@swissgerman\ufrj@mes@german
 \let\ufrj@mes@nswissgerman\ufrj@mes@german
+% A data de ACESSO e do trabalho, nao da obra: o exemplo da 4.2.11.1 traz a
+% fotografia de lingua inglesa com "1 June 2010" e "Acesso em: 26 maio 2011".
+% Ela saia no idioma da publicacao -- "Acesso em: 26 May 2011" --, e so o
+% verificador de referencias, conferindo de novo (#167), mostrou. O
+% url+urldate liga \if@ufrjmesdotrabalho em volta da data de acesso.
+\newif\if@ufrjmesdotrabalho
 \newcommand*\ufrj@monthlang{}
 \protected\def\ufrj@abntmonth#1{%
-  \iffieldundef{langid}
+  \ifboolexpr{ test {\iffieldundef{langid}} or bool {@ufrjmesdotrabalho} }
     {\mkbibmonth{#1}}
     {\edef\ufrj@monthlang{\thefield{langid}}%
      \ifcsdef{ufrj@mes@\ufrj@monthlang}
@@ -8829,7 +8848,8 @@ postamble
   \iffieldundef{url}
     {}
     {\printfield{url}%
-     \iffieldundef{urlyear}{}{\setunit{\adddot\space}\printurldate}}}
+     \iffieldundef{urlyear}{}{\setunit{\adddot\space}%
+       \@ufrjmesdotrabalhotrue\printurldate\@ufrjmesdotrabalhofalse}}}
 
 % --- ABNT article driver: no "In:"; Journal, Local, v., n., p., date, DOI/URL.
 %     Newspapers (entrysubtype=newspaper, set by the @artigodejornal source map)
@@ -8982,7 +9002,7 @@ postamble
   \usebibmacro{finentry}}
 
 % --- incollection: ABNT puts the host organizer before the booktitle, as
-%     "AUTOR. Parte. In: ORGANIZADOR (Org.). Booktitle. Local: Editora, ano,
+%     "AUTOR. Parte. In: ORGANIZADOR (Org.). Booktitle. Local: Editora, ano.
 %     p. X-Y." The organizer role string is "Org./Orgs." (see the .lbx). ---
 \newbibmacro*{ufrj:bookeditor}{%
   \ifnameundef{editor}
@@ -9029,11 +9049,22 @@ postamble
   \setunit*{\addcomma\space}\printdate%
   \newunit\newblock
   \printfield{chapter}%
-  \setunit{\addcomma\space}\printfield{pages}%
+  \setunit*{\addcomma\space}\printfield{pages}%
   \newunit\newblock
   \usebibmacro{doi+eprint+url}%
   \usebibmacro{finentry}}
 \DeclareBibliographyDriver{incollection}{\usebibmacro{ufrj:partdriver}}
+% A virgula das paginas so vale depois do capitulo: "cap. 1, p. 23-64". Sem
+% capitulo, fica o ponto que fecha a imprenta -- "Companhia das Letras, 1996.
+% p. 7-16." (4.2.1.3) --, e por isso o \setunit* acima, que nao faz nada quando
+% o capitulo nao saiu. Com \setunit, a virgula entrava de todo jeito e tomava o
+% lugar do ponto: "1996, p. 7-16" (#167). O chapter+pages do biblatex, que os
+% drivers de livro e de relatorio usam, tinha o mesmo \setunit.
+\renewbibmacro*{chapter+pages}{%
+  \printfield{chapter}%
+  \setunit*{\bibpagespunct}%
+  \printfield{pages}%
+  \newunit}
 \DeclareBibliographyDriver{inbook}{\usebibmacro{ufrj:partdriver}}
 
 % --- type field: resolve a known bibliography string (babel-aware), else literal ---
@@ -9268,6 +9299,15 @@ postamble
        \def\mkbibnameprefix##1{##1}%
        \printnames{holder}%
      \endgroup}}
+% O procurador vem logo depois, como nos elementos essenciais da 4.2.5:
+% "Depositante: nome/titular (se houver). Procurador: nome (se houver). Numero
+% da patente." Nao havia campo para ele, e o gabarito do BERTAZZOLI omitia o
+% procurador que o Manual imprime (#167).
+\newbibmacro*{ufrj:attorney}{%
+  \ifnameundef{attorney}
+    {}
+    {\printtext{\bibstring{ufrjattorney}\addcolon\space}%
+     \printnames[ufrj:direta]{attorney}}}
 % A correspondencia da 4.2.2. Nao ha driver proprio porque nao e preciso: o de
 % `misc' produz exatamente a referencia que o Manual imprime -- autor, titulo
 % entre colchetes, a nota com o destinatario, local, data e o addendum com o
@@ -9285,6 +9325,8 @@ postamble
   \usebibmacro{title}%
   \newunit\newblock
   \usebibmacro{ufrj:depositor}%
+  \newunit\newblock
+  \usebibmacro{ufrj:attorney}%
   \newunit\newblock
   \printfield{type}%
   \setunit*{\addspace}\printfield{number}%
@@ -9452,6 +9494,7 @@ postamble
     \map{\step[fieldsource=localevento,fieldtarget=venue]}
     \map{\step[fieldsource=deposito,fieldtarget=filingdate]}
     \map{\step[fieldsource=concessao,fieldtarget=grantdate]}
+    \map{\step[fieldsource=procurador,fieldtarget=attorney]}
     % caderno e campo da classe (a secao do jornal); newspapersection e o nome
     % em ingles, e e o que as bases da entrega usam.
     \map{\step[fieldsource=newspapersection,fieldtarget=caderno]}
@@ -9628,7 +9671,7 @@ postamble
 \ProvidesFile{brazilian-ufrj.lbx}[2026/09/15 v5.0 CoppeTeX brazilian strings]
 \InheritBibliographyExtras{brazilian}
 \NewBibliographyString{availablefrom,ufrjtranslationof,mscdiss,dscthesis,tcc,depositor,ufrjscale,
-  ufrjmscdeg,ufrjdscdeg,ufrjphddeg,ufrjtccdeg,ufrjfiling,ufrjgrant}
+  ufrjmscdeg,ufrjdscdeg,ufrjphddeg,ufrjtccdeg,ufrjfiling,ufrjgrant,ufrjattorney}
 \DeclareBibliographyStrings{%
   inherit       = {brazilian},
   ufrjtranslationof = {{Tradução de}{Tradução de}},
@@ -9645,6 +9688,7 @@ postamble
   ufrjtccdeg   = {{Graduação}{Graduação}},
   ufrjfiling   = {{Depósito}{Depósito}},
   ufrjgrant    = {{Concessão}{Concessão}},
+  ufrjattorney = {{Procurador}{Procurador}},
   urlseen       = {{Acesso em}{Acesso em}},
 % A 4.3 abrevia os meses nas tres primeiras letras seguidas de ponto -- menos
 % maio, que se escreve por extenso. O biblatex-brazilian abrevia "mai.".
@@ -9665,7 +9709,7 @@ postamble
 \ProvidesFile{english-ufrj.lbx}[2026/09/15 v5.0 CoppeTeX english strings]
 \InheritBibliographyExtras{english}
 \NewBibliographyString{availablefrom,ufrjtranslationof,mscdiss,dscthesis,tcc,depositor,ufrjscale,
-  ufrjmscdeg,ufrjdscdeg,ufrjphddeg,ufrjtccdeg,ufrjfiling,ufrjgrant}
+  ufrjmscdeg,ufrjdscdeg,ufrjphddeg,ufrjtccdeg,ufrjfiling,ufrjgrant,ufrjattorney}
 \DeclareBibliographyStrings{%
   inherit       = {english},
   ufrjtranslationof = {{Translation of}{Translation of}},
@@ -9677,6 +9721,7 @@ postamble
   ufrjtccdeg   = {{B\adddot Sc\adddot}{B\adddot Sc\adddot}},
   ufrjfiling   = {{Filed}{Filed}},
   ufrjgrant    = {{Granted}{Granted}},
+  ufrjattorney = {{Attorney}{Attorney}},
   urlseen       = {{Access on}{Access on}},
   in            = {{In}{In}},
   editor        = {{editor}{ed\adddot}},
@@ -9694,7 +9739,7 @@ postamble
 \ProvidesFile{spanish-ufrj.lbx}[2026/09/15 v5.0 CoppeTeX spanish strings]
 \InheritBibliographyExtras{spanish}
 \NewBibliographyString{availablefrom,ufrjtranslationof,mscdiss,dscthesis,tcc,depositor,ufrjscale,
-  ufrjmscdeg,ufrjdscdeg,ufrjphddeg,ufrjtccdeg,ufrjfiling,ufrjgrant}
+  ufrjmscdeg,ufrjdscdeg,ufrjphddeg,ufrjtccdeg,ufrjfiling,ufrjgrant,ufrjattorney}
 \DeclareBibliographyStrings{%
   inherit       = {spanish},
   ufrjtranslationof = {{Traducción de}{Traducción de}},
@@ -9706,6 +9751,7 @@ postamble
   ufrjtccdeg   = {{Grado}{Grado}},
   ufrjfiling   = {{Depósito}{Depósito}},
   ufrjgrant    = {{Concesión}{Concesión}},
+  ufrjattorney = {{Apoderado}{Apoderado}},
   urlseen       = {{Consultado el}{Consultado el}},
   in            = {{En}{En}},
   editor        = {{editor}{ed\adddot}},
@@ -9723,7 +9769,7 @@ postamble
 \ProvidesFile{french-ufrj.lbx}[2026/09/15 v5.0 CoppeTeX french strings]
 \InheritBibliographyExtras{french}
 \NewBibliographyString{availablefrom,ufrjtranslationof,mscdiss,dscthesis,tcc,depositor,ufrjscale,
-  ufrjmscdeg,ufrjdscdeg,ufrjphddeg,ufrjtccdeg,ufrjfiling,ufrjgrant}
+  ufrjmscdeg,ufrjdscdeg,ufrjphddeg,ufrjtccdeg,ufrjfiling,ufrjgrant,ufrjattorney}
 \DeclareBibliographyStrings{%
   inherit       = {french},
   ufrjtranslationof = {{Traduction de}{Traduction de}},
@@ -9735,6 +9781,7 @@ postamble
   ufrjtccdeg   = {{Licence}{Licence}},
   ufrjfiling   = {{Dépôt}{Dépôt}},
   ufrjgrant    = {{Délivrance}{Délivrance}},
+  ufrjattorney = {{Mandataire}{Mandataire}},
   urlseen       = {{Consulté le}{Consulté le}},
   in            = {{Dans}{Dans}},
   editor        = {{éditeur}{éd\adddot}},
@@ -9752,12 +9799,13 @@ postamble
 \ProvidesFile{italian-ufrj.lbx}[2026/09/15 v5.0 CoppeTeX italian strings]
 \InheritBibliographyExtras{italian}
 \NewBibliographyString{availablefrom,ufrjtranslationof,mscdiss,dscthesis,tcc,depositor,ufrjscale,
-  ufrjmscdeg,ufrjdscdeg,ufrjphddeg,ufrjtccdeg,ufrjfiling,ufrjgrant}
+  ufrjmscdeg,ufrjdscdeg,ufrjphddeg,ufrjtccdeg,ufrjfiling,ufrjgrant,ufrjattorney}
 \DeclareBibliographyStrings{%
   inherit       = {italian},
   ufrjtranslationof = {{Traduzione di}{Traduzione di}},
   andothers     = {{\mkbibemph{et al\adddot}}{\mkbibemph{et al\adddot}}},
   availablefrom = {{Disponibile da}{Disponibile da}},
+  ufrjattorney = {{Mandatario}{Mandatario}},
   urlseen       = {{Consultato il}{Consultato il}},
   in            = {{In}{In}},
   editor        = {{curatore}{cur\adddot}},
@@ -10428,9 +10476,11 @@ postamble
 @Comment{ Segunda parte: um exemplo de CADA categoria de referencia da secao 4.2
   do Manual UFRJ/SiBI, 9.a ed. rev. (2026), com os dados dos exemplos do
   proprio Manual. O comentario Manual, logo antes de cada entrada, e a
-  referencia COMO O MANUAL A IMPRIME, e e o gabarito contra o qual o
-  tools/conferir-referencias.py compara a saida da classe; o comentario
-  Divergencia aceita, quando ha, diz por que a classe diverge dele.
+  referencia COMO O MANUAL A IMPRIME, errata e tudo, e e o gabarito contra o
+  qual o tools/conferir-referencias.py compara a saida da classe. Onde a classe
+  diverge dele, o comentario Divergencia aceita diz por que, e o comentario
+  Classe traz a referencia como a classe tem de compo-la: e contra ela que a
+  entrada e conferida, e o que ele nao aceita continua sendo divergencia.
 
   As entradas usam os nomes de tipo e campo em INGLES. A classe aceita tambem
   os sinonimos em PORTUGUES (@livro, autor, titulo, editora, local, ano,
@@ -10451,9 +10501,13 @@ postamble
   pagetotal   = "156",
 }
 
-@comment{Manual: BAUMAN, Zygmunt. Vida líquida. 2. ed. rev. Rio de Janeiro: Zahar, 2009.
-  Disponível em: https://lectio.proxy.ufrj.br/dashboard/midia/detalhe/1571.
-  Acesso em: 28 ago. 2023.}
+@comment{Manual: BAUMAN, Zygmunt. Vida líquida . 2. ed. rev. Rio de Janeiro: Zahar, 2009. Disponível
+  em: https://lectio.proxy.ufrj.br/dashboard/midia/detalhe/1571. Acesso em 28 ago. 2023.}
+@comment{Divergencia aceita: errata do Manual: "Acesso em 28 ago. 2023", sem os dois-pontos. O texto da 4.2.1.2
+  pede a data de acesso "precedida da expressão Acesso em:", e é assim em todos os
+  outros exemplos.}
+@comment{Classe: BAUMAN, Zygmunt. Vida líquida. 2. ed. rev. Rio de Janeiro: Zahar, 2009. Disponível em:
+  https://lectio.proxy.ufrj.br/dashboard/midia/detalhe/1571. Acesso em: 28 ago. 2023.}
 @book{m-4212,
   author      = "Bauman, Zygmunt",
   title     = "Vida líquida",
@@ -10465,11 +10519,12 @@ postamble
   urldate = "2023-08-28",
 }
 
-@comment{Manual: ROMANO, Giovanni. Imagens da juventude na era moderna. In: LEVI, G;
-  SCHIMIDT, J. (org.). História dos jovens 2. São Paulo: Companhia das
-  Letras, 1996. p. 7-16.}
-@comment{Divergencia aceita: errata do Manual: "LEVI, G;" sai sem o ponto da abreviatura do prenome.
-  A 4.3.2 abrevia o prenome com ponto, e a classe imprime "LEVI, G.;".}
+@comment{Manual: ROMANO, Giovanni. Imagens da juventude na era moderna. In: LEVI, G; SCHIMIDT, J.
+  (org.). História dos jovens 2. São Paulo: Companhia das Letras, 1996. p. 7-16.}
+@comment{Divergencia aceita: errata do Manual: "LEVI, G;" sai sem o ponto da abreviatura do prenome. A 4.3.2
+  abrevia o prenome com ponto, e a classe imprime "LEVI, G.;".}
+@comment{Classe: ROMANO, Giovanni. Imagens da juventude na era moderna. In: LEVI, G.; SCHIMIDT, J.
+  (org.). História dos jovens 2. São Paulo: Companhia das Letras, 1996. p. 7-16.}
 @incollection{m-4213,
   author      = "Romano, Giovanni",
   title       = "Imagens da juventude na era moderna",
@@ -10492,8 +10547,17 @@ postamble
   addendum = "1 cartão pessoal",
 }
 
-@comment{Manual: LISPECTOR, Clarice. [Carta enviada para sua irmã]. Destinatário: Tânia
-  Lispector. Belém, 8 jul. 1944. 1 carta. Disponível em: https://site.claricelispector.ims.com.br/acervo/cartas/067388-2/. Acesso em: 4 ago. 2023.}
+@comment{Manual: LISPECTOR, Clarice. [Carta enviada para sua irmã]. Destinatário: Tânia Lispector.
+  Belém, 8 jul. 1944. 1 carta. Disponível em:
+  https://site.claricelispector.ims.com.br/acervo/cartas/067388-2/. Acesso em: 4. ago.
+  2023.}
+@comment{Divergencia aceita: errata do Manual: "4. ago. 2023", com ponto depois do dia. A data sai como dia, mês
+  abreviado e ano, sem ponto no dia, na própria referência ("8 jul. 1944") e em todos os
+  outros exemplos.}
+@comment{Classe: LISPECTOR, Clarice. [Carta enviada para sua irmã]. Destinatário: Tânia Lispector.
+  Belém, 8 jul. 1944. 1 carta. Disponível em:
+  https://site.claricelispector.ims.com.br/acervo/cartas/067388-2/. Acesso em: 4 ago.
+  2023.}
 @letter{m-4221,
   author      = "Lispector, Clarice",
   title       = "[Carta enviada para sua irmã]",
@@ -10538,14 +10602,16 @@ postamble
   date      = "1991-01/1991-06",
 }
 
-@comment{Manual: LIEVENS, A.; MOENAERT, R. K. Project team communication in financial
-  service innovation. J. Manag. Stud., Oxford, v. 37, n. 5, Jul. 2000.
-  Disponível em: https://onlinelibrary.wiley.com/doi/10.1111/1467-6486.00201. Acesso em: 25 ago. 2023.}
-@comment{Divergencia aceita: o Manual grafa "Jul." por ser periodico de lingua inglesa. A entrada nao
-  traz langid, e a classe compoe o mes no idioma do trabalho, "jul.". Com
-  langid english ela seguiria o Anexo A da NBR 6023 (#146) -- que nao
-  abrevia mes de quatro letras ou menos, como diz a propria 4.3.5.5.1: "July",
-  e nao o "Jul." do exemplo. Nos dois casos ha divergencia com o exemplo.}
+@comment{Manual: LIEVENS, A.; MOENAERT, R. K. Project team communication in financial service
+  innovation. J. Manag. Stud., Oxford, v. 37, n. 5, Jul. 2000. Disponível em:
+  https://onlinelibrary.wiley.com/doi/10.1111/1467-6486.00201. Acesso em: 25 ago. 2023.}
+@comment{Divergencia aceita: o exemplo grafa "Jul. 2000". O texto da 4.3.5.5.1 manda abreviar o mês "no idioma
+  original da publicação, de acordo com o Anexo A da NBR 6023", e não abreviar mês de
+  quatro letras ou menos: o periódico é inglês (langid english), e o Anexo A escreve
+  "July" por extenso. Vale o texto (#146).}
+@comment{Classe: LIEVENS, A.; MOENAERT, R. K. Project team communication in financial service
+  innovation. J. Manag. Stud., Oxford, v. 37, n. 5, July 2000. Disponível em:
+  https://onlinelibrary.wiley.com/doi/10.1111/1467-6486.00201. Acesso em: 25 ago. 2023.}
 @article{m-4235,
   author      = "Lievens, A. and Moenaert, R. K.",
   title       = "Project team communication in financial service innovation",
@@ -10556,6 +10622,7 @@ postamble
   date        = "2000-07",
   url         = "https://onlinelibrary.wiley.com/doi/10.1111/1467-6486.00201",
   urldate     = "2023-08-25",
+  langid      = "english",
 }
 
 @comment{Manual: BYRNE, J. A explosão de cursos para executivos nos EUA. Gazeta Mercantil,
@@ -10585,14 +10652,14 @@ postamble
 
 @comment{Manual: FOTO de raios no Cristo é finalista em concurso de imagens de fenômenos
   meteorológicos. G1, Rio de Janeiro, 24 out. 2023. Disponível em:
-  https://g1.globo.com/meio-ambiente/noticia/2023/08/24/concurso-elege-a-melhor-foto-de-fenomenos-meteorologicos.ghtml.
+  https://g1.globo.com/meio-ambiente/noticia/2023/08/24/concurso-elege-a-melhor-foto-de-fenomenos-meteorologicos-clique-de-raios-no-cristo-redentor-concorre.ghtml.
   Acesso em: 26 ago. 2023.}
 @article{m-4238,
   title     = "Foto de raios no Cristo é finalista em concurso de imagens de fenômenos meteorológicos",
   journaltitle     = "G1",
   location      = "Rio de Janeiro",
   date       = "2023-10-24",
-  url        = "https://g1.globo.com/meio-ambiente/noticia/2023/08/24/concurso-elege-a-melhor-foto-de-fenomenos-meteorologicos.ghtml",
+  url        = "https://g1.globo.com/meio-ambiente/noticia/2023/08/24/concurso-elege-a-melhor-foto-de-fenomenos-meteorologicos-clique-de-raios-no-cristo-redentor-concorre.ghtml",
   urldate = "2023-08-26",
   entrysubtype = {newspaper},
 }
@@ -10645,8 +10712,16 @@ postamble
 }
 
 @comment{Manual: MACIEL, A. M. D.; SALES JÚNIOR, Ronaldo L.; SIQUEIRA, A. J. O indivíduo e a
-  pós-modernidade. In: CONGRESSO DE INICIAÇÃO DA UFPE, 4., 1996, Recife.
-  Anais eletrônicos [...]. Recife: UFPe, 1996. Disponível em: http://www.propesq.ufpe.br/anais/cfch/cfchtrab/htm. Acesso em: 16 jan. 2001.}
+  pós-modernidade. In: CONGRESSO DE INICIAÇÃO DA UFPe, 4., 1996, Recife: UFPE. Anais
+  eletrônicos [...]. Recife: UFPe, 1996. Disponível em:
+  http://www.propesq.ufpe.br/anais/cfch/cfchtrab/htm. Acesso em: 16 jan. 2001.}
+@comment{Divergencia aceita: errata do Manual: "1996, Recife: UFPE." Pela 4.3.2.13 o nome do evento é seguido do
+  número, do ano e do local de realização, e só; a editora vai na imprenta, depois do
+  título dos anais ("Recife: UFPe, 1996.").}
+@comment{Classe: MACIEL, A. M. D.; SALES JÚNIOR, Ronaldo L.; SIQUEIRA, A. J. O indivíduo e a
+  pós-modernidade. In: CONGRESSO DE INICIAÇÃO DA UFPE, 4., 1996, Recife. Anais
+  eletrônicos [...]. Recife: UFPe, 1996. Disponível em:
+  http://www.propesq.ufpe.br/anais/cfch/cfchtrab/htm. Acesso em: 16 jan. 2001.}
 @inproceedings{m-4246,
   author      = "Maciel, A. M. D. and Sales Júnior, Ronaldo L. and Siqueira, A. J.",
   title     = "O indivíduo e a pós-modernidade",
@@ -10662,27 +10737,44 @@ postamble
   urldate = "2001-01-16",
 }
 
-@comment{Manual: BERTAZZOLI, Rodnei et al. Eletrodos de difusão gasosa modificados com
-  catalisadores redox... Depositante: Universidade Estadual de Campinas.
-  BR n. PI0600460-1A. Depósito: 27 jan. 2006. Concessão: 25 mar. 2008.}
-@comment{Divergencia aceita: o Manual usa "et al."; a classe lista todos os autores (maxbibnames=99),
-  que a 4.3.1.3 admite igualmente e é o que a COPPE pratica.}
+@comment{Manual: BERTAZZOLI, Rodnei et al. Eletrodos de difusão gasosa modificados com catalisadores
+  redox, processo e reator eletroquímico de síntese de peróxido de hidrogênio utilizando
+  os mesmos. Depositante: Universidade Estadual de Campinas. Procurador: Maria Cristina
+  Valim Lourenço Gomes. BR n. PI0600460-1A. Depósito: 27 jan. 2006. Concessão: 25 mar.
+  2008.}
+@comment{Divergencia aceita: o Manual usa "et al."; a classe lista todos os autores (maxbibnames=99), que a 4.3.1.3
+  recomenda ("convém indicar todos") e é o que a COPPE pratica.}
+@comment{Classe: BERTAZZOLI, Rodnei; RODRIGUES, Christiane A.; SPOSITO, Guilherme. Eletrodos de difusão
+  gasosa modificados com catalisadores redox, processo e reator eletroquímico de síntese
+  de peróxido de hidrogênio utilizando os mesmos. Depositante: Universidade Estadual de
+  Campinas. Procurador: Maria Cristina Valim Lourenço Gomes. BR n. PI0600460-1A.
+  Depósito: 27 jan. 2006. Concessão: 25 mar. 2008.}
 @patent{m-425,
   author      = "Bertazzoli, Rodnei and Rodrigues, Christiane A. and Sposito, Guilherme",
   title       = "Eletrodos de difusão gasosa modificados com catalisadores redox, processo e reator eletroquímico de síntese de peróxido de hidrogênio utilizando os mesmos",
   holder      = "{Universidade Estadual de Campinas}",
+  attorney    = "Gomes, Maria Cristina Valim Lourenço",
   number      = "BR n. PI0600460-1A",
-  type        = "Patente de Invento",
   filingdate  = "27 jan. 2006",
   grantdate   = "25 mar. 2008",
 }
 
-@comment{Manual: GALEMBECK, Fernando; SOUZA, Maria de Fátima Brito. Process to obtain an
-  intercalated or exfoliated polyester with clay hybrid nanocomposite
-  material. Depositante: Universidade Estadual de Campinas; Rhodia Ster S/A.
-  WO2005/030850 A1. Depósito: 1 Oct. 2003. Concessão: 7 Apr. 2005.
-  Disponível em: http://www.iprvillage.info/portal/servlet/DIIDirect.
-  Acesso em: 30 ago. 2023.}
+@comment{Manual: GALEMBECK, Fernando; SOUZA, Maria de Fátima Brito. Process to obtain an Intercalated
+  or exfoliated polyester with clay hybrid nanocomposite material. Depositante:
+  Universidade Estadual de Campinas; Rhodia Ster S/A. WO2005/030850 A1, Depósito: 1 Oct.
+  2003, Concessão: 7 Apr. 2005. Disponível em:
+  http://www.iprvillage.Info/portal/servlet/DIIDirect?CC=WO&PN=2005030850&DT=A1&SrcAuth=Wila&Token=UtWHB3Mmc98t05i1AVPmaGE5dYhs00Nlt38dpA3EfnOosue2.GSz63ySsIiukTB8VQWW32lISV87n4_naNBY8lhYY30Rw1UeDo_8Yo8UVD0.
+  Acesso em: 27 ago. 2010.}
+@comment{Divergencia aceita: o exemplo separa o número e as datas por vírgula ("WO2005/030850 A1, Depósito: 1 Oct.
+  2003, Concessão: 7 Apr. 2005."); os elementos essenciais da 4.2.5 e os dois exemplos
+  dela separam por ponto, e a classe segue o texto. O exemplo também grafa
+  "Intercalated" com maiúscula no meio do título, e a entrada o escreve com minúscula.}
+@comment{Classe: GALEMBECK, Fernando; SOUZA, Maria de Fátima Brito. Process to obtain an intercalated
+  or exfoliated polyester with clay hybrid nanocomposite material. Depositante:
+  Universidade Estadual de Campinas; Rhodia Ster S/A. WO2005/030850 A1. Depósito: 1 Oct.
+  2003. Concessão: 7 Apr. 2005. Disponível em:
+  http://www.iprvillage.info/portal/servlet/DIIDirect?CC=WO&PN=2005030850&DT=A1&SrcAuth=Wila&Token=UtWHB3Mmc98t05i1AVPmaGE5dYhs00Nlt38dpA3EfnOosue2.GSz63ySsIiukTB8VQWW32lISV87n4_naNBY8lhYY30Rw1UeDo_8Yo8UVD0.
+  Acesso em: 27 ago. 2010.}
 @patent{m-4251,
   author      = "Galembeck, Fernando and Souza, Maria de Fátima Brito",
   title     = "Process to obtain an intercalated or exfoliated polyester with clay hybrid nanocomposite material",
@@ -10690,8 +10782,8 @@ postamble
   number     = "WO2005/030850 A1",
   filingdate   = "1 Oct. 2003",
   grantdate  = "7 Apr. 2005",
-  url        = "http://www.iprvillage.info/portal/servlet/DIIDirect",
-  urldate = "2023-08-30",
+  url        = "http://www.iprvillage.info/portal/servlet/DIIDirect?CC=WO&PN=2005030850&DT=A1&SrcAuth=Wila&Token=UtWHB3Mmc98t05i1AVPmaGE5dYhs00Nlt38dpA3EfnOosue2.GSz63ySsIiukTB8VQWW32lISV87n4_naNBY8lhYY30Rw1UeDo_8Yo8UVD0",
+  urldate = "2010-08-27",
 }
 
 @comment{Manual: SÃO PAULO (Estado). Decreto nº 42.822, de 20 de janeiro de 1998. Lex:
@@ -10707,12 +10799,23 @@ postamble
   year        = 1998,
 }
 
-@comment{Manual: BRASIL. Supremo Tribunal Federal. Extradição nº 10. Relator: Ministro
-  Rafael Mayer. Brasília, DF, 26 de fevereiro de 1986. Revista Trimestral de
-  Jurisprudência, [Brasília], v. 109, p. 870-879, set. 1986.}
+@comment{Manual: BRASIL. Supremo Tribunal Federal. Extradição nº 10. Apelante: Estados Unidos da
+  América. Apelada. Antônia Maria da Silva. Relator: Ministro Rafael Mayer. Brasília,
+  DF, 26 de fevereiro de 1986. Revista Trimestral de Jurisprudência, [Brasília], v.109,
+  p. 870-879, set. 1986.}
+@comment{Divergencia aceita: errata do Manual: "Apelada. Antônia Maria da Silva", com ponto, e não dois-pontos como
+  "Apelante:". E o texto da 4.2.6.2 pede a data do julgamento "precedido da expressão
+  julgado em e da data abreviada", como no segundo exemplo ("Relatora: Min. Ellen
+  Gracie, julgado em 29 nov. 2005."); este exemplo não segue o texto, e a classe ainda
+  não compõe o "julgado em" (#169): a entrada imita o exemplo, com o local e a data no
+  campo location.}
+@comment{Classe: BRASIL. Supremo Tribunal Federal. Extradição nº 10. Apelante: Estados Unidos da
+  América. Apelada: Antônia Maria da Silva. Relator: Ministro Rafael Mayer. Brasília,
+  DF, 26 de fevereiro de 1986. Revista Trimestral de Jurisprudência, [Brasília], v. 109,
+  p. 870-879, set. 1986.}
 @jurisdiction{m-4262,
   author   = "{Brasil. Supremo Tribunal Federal}",
-  title  = "Extradição n\textordmasculine{} 10",
+  title  = "Extradição n\textordmasculine{} 10. Apelante: Estados Unidos da América. Apelada: Antônia Maria da Silva",
   relator = "Ministro Rafael Mayer",
   location   = "Brasília, DF, 26 de fevereiro de 1986",
   note    = "Revista Trimestral de Jurisprudência, [Brasília], v. 109, p. 870-879, set. 1986",
@@ -10752,8 +10855,14 @@ postamble
   note        = "Registro em: 9 ago. 1979",
 }
 
-@comment{Manual: OS PERIGOS do uso de tóxicos. Produção de Jorge Ramos de Andrade. São
-  Paulo: CERAVI, 1983. 1 videocassete.}
+@comment{Manual: OS PERIGOS do uso de tóxicos. Produção de Jorge Ramos de Andrade. São Paulo: CERAVI,
+  1983. 1 videocassete.}
+@comment{Divergencia aceita: a 4.2.9 traz as duas formas: "Produção de Jorge Ramos de Andrade" neste exemplo, e
+  "Direção: Ridley Scott. Produção: Michael Deeley." no BLADE Runner, em que diretor e
+  produtor vêm juntos. O texto só lista "b) diretor; c) produtor", sem a forma; a classe
+  usa os dois-pontos nos dois casos, como no diretor (#143).}
+@comment{Classe: OS PERIGOS do uso de tóxicos. Produção: Jorge Ramos de Andrade. São Paulo: CERAVI,
+  1983. 1 videocassete.}
 @video{m-429,
   title   = "Os perigos do uso de tóxicos",
   producer = "Jorge Ramos de Andrade",
@@ -10772,9 +10881,13 @@ postamble
   addendum    = "1 partitura (3 p.)",
 }
 
-@comment{Manual: OLIVA, Marcos; MOCOTÓ, Tiago. Fervilhar: frevo. 1990. 1 partitura. Piano.
-  Disponível em: http://openlink.br.inter.net/picolino/partitur.htm.
-  Acesso em: 5 jan. 2022.}
+@comment{Manual: OLIVA, Marcos; MOCOTÓ, Tiago. Fervilhar: frevo. [19--?]. 1 partitura. Piano.
+  Disponível em: http://openlink.br.inter.net/picolino/partitur.htm. Acesso em: 5 jan.
+  2022.}
+@comment{Divergencia aceita: a data "[19--?]" é século provável (4.3.5), e a classe ainda não compõe data incerta
+  (#168): a entrada usa 1990 no lugar.}
+@comment{Classe: OLIVA, Marcos; MOCOTÓ, Tiago. Fervilhar: frevo. 1990. 1 partitura. Piano. Disponível
+  em: http://openlink.br.inter.net/picolino/partitur.htm. Acesso em: 5 jan. 2022.}
 @music{m-42102,
   author      = "Oliva, Marcos and Mocotó, Tiago",
   title     = "Fervilhar: frevo",
@@ -10792,9 +10905,8 @@ postamble
   addendum    = "3 fotografias",
 }
 
-@comment{Manual: HOUTE, Jef Van den. Black hole. 1 jun. 2010. 1 fotografia.
-  Disponível em: http://photo.net/photodb/photo?photo_id=11724012.
-  Acesso em: 26 maio 2011.}
+@comment{Manual: HOUTE, Jef Van den. Black hole. 1 June 2010. 1 fotografia. Disponível em:
+  http://photo.net/photodb/photo?photo_id=11724012. Acesso em: 26 maio 2011.}
 @image{m-42112,
   author      = "Houte, Jef Van den",
   title     = "Black hole",
@@ -10802,6 +10914,7 @@ postamble
   addendum   = "1 fotografia",
   url        = "http://photo.net/photodb/photo?photo_id=11724012",
   urldate = "2011-05-26",
+  langid     = "english",
 }
 
 @comment{Manual: BRASIL. Ministério da Aeronáutica. Comando Costeiro. Base Aérea do Recife.
@@ -10815,8 +10928,14 @@ postamble
   addendum    = "71 fotografias",
 }
 
-@comment{Manual: IBGE. República Federativa do Brasil. [Rio de Janeiro?], 1996. 1 mapa
-  color., 31 cm x 34 cm. Escala 1: 15.000.000. 1 CD-ROM.}
+@comment{Manual: IBGE. República Federativa do Brasil. [Rio de Janeiro?]. 1996.1 mapa color., 31 cm x
+  34 cm. Escala 1: 15.000.000. 1 CD-ROM.}
+@comment{Divergencia aceita: errata do Manual: "[Rio de Janeiro?]. 1996.1 mapa", com ponto entre o local e a data e
+  sem espaço antes da descrição física. Sem editora, o local e a data vão separados por
+  vírgula, como na 4.2.14 ("Rio de Janeiro, 1998."), e a classe imprime "[Rio de
+  Janeiro?], 1996. 1 mapa".}
+@comment{Classe: IBGE. República Federativa do Brasil. [Rio de Janeiro?], 1996. 1 mapa color., 31 cm x
+  34 cm. Escala 1: 15.000.000. 1 CD-ROM.}
 @map{m-42122,
   author      = "{IBGE}",
   title     = "República Federativa do Brasil",
@@ -10848,9 +10967,9 @@ postamble
   urldate = "2022-03-30",
 }
 
-@comment{Manual: LEITE, Sonia. Memória da comunidade da Serrinha. 1997. 203 f. Dissertação
-  (Mestrado em Memória Social e Documento) -- Centro de Ciências Humanas,
-  Universidade do Rio de Janeiro, Rio de Janeiro, 1997.}
+@comment{Manual: LEITE, Sonia. Memória da comunidade da Serrinha. 1997. 203 f. Dissertação (Mestrado em
+  Memória Social e Documento) — Centro de Ciências Humanas, Universidade do Rio de
+  Janeiro, Rio de Janeiro, 1997.}
 @thesis{m-diss,
   author      = "Leite, Sonia",
   title       = "Memória da comunidade da Serrinha",
@@ -10862,13 +10981,14 @@ postamble
   pagetotal   = "203",
 }
 
-@comment{Manual: ASSOCIAÇÃO BRASILEIRA DE NORMAS TÉCNICAS. NBR 6023: informação e
-  documentação: referências: elaboração. Rio de Janeiro, 2018.}
+@comment{Manual: ASSOCIAÇÃO BRASILEIRA DE NORMAS TÉCNICAS. NBR 6023: informação e documentação:
+  referências: elaboração. Rio de Janeiro: ABNT, 2025.}
 @standard{m-norma,
   author  = "{Associação Brasileira de Normas Técnicas}",
   title = "{NBR} 6023: informação e documentação: referências: elaboração",
   location  = "Rio de Janeiro",
-  year    = 2018,
+  publisher = "ABNT",
+  year    = 2025,
 }
 %</tiposbib>
 % \fi
