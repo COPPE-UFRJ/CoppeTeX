@@ -221,6 +221,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \changes{v5.0}{2026/09/18}{The abstract in Portuguese -- the vernacular language -- comes first, whatever the main language, as 3.1.2 orders; the class checks it by the language of each abstract sheet, so in an English work foreignabstract (Portuguese) precedes abstract, and in a Spanish work brazilianabstract opens the abstracts.}
 % \changes{v5.0}{2026/09/21}{The natureza sentence of the folha de rosto and the folha de aprovacao follows the SiBI model, which corrects Annex B: ...apresentada ao Programa de Pos-Graduacao em X, <unit's full name>, Universidade Federal do Rio de Janeiro, como requisito parcial a obtencao do titulo de... It had the unit's acronym instead of its name, "da" before the university and "como parte dos requisitos necessarios".}
 % \changes{v5.0}{2026/09/21}{Captions and source lines are aligned left, as in the only illustration of the Manual (Figure 1): with illustrationwidth the box takes the width of the illustration and is centred with it, so the text starts at its margin. They were centred.}
+% \changes{v5.0}{2026/09/21}{The UFRJ logo belongs to the class: it always heads the capa on the left, and a unit style can neither swap it nor remove it. The unit declares only its own logo, on the right, with the new ufrjdeclarelogo[height]{file}; the three-argument ufrjdeclarelogos is still accepted, with a warning, and ignores its left argument.}
 % \changes{v5.0}{2026/09/18}{The class checks the order of the pre-textual elements of 3.1.2 between maketitle and mainmatter: the folha de aprovacao, dedication, epigraph, lists and sumario each have their place, and one out of place is a compilation error that names what to move and where. mainmatter warns when there is no tableofcontents, the one mandatory element the author has to ask for.}
 % \changes{v5.0}{2026/09/17}{The logos are printed on the capa only. The folha de rosto repeated the capa's logo line; Annex B, which is the model of the folha de rosto, and the two sheets of the SiBI model carry no image there. Annex A puts the two logos on the CAPA and marks both as optional.}
 % \changes{v5.0}{2026/09/17}{The folha de rosto and the folha de aprovacao are written entirely in Portuguese, whatever the language of the work. The research-line label, the coadvisor label and the two approval labels followed the main language while the natureza and the advisor label did not, so an English or Spanish work came out with half of each sheet in each language. The class manual and section 7 of the Norma COPPE already stated the rule: these sheets are institutional identity. The four now read the Portuguese key through ufrj@unitstr, which still honours a text the unit declared.}
@@ -5544,12 +5545,17 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % folhas de resumo em outros idiomas, vai o nome em português, que é o nome
 % próprio do Programa.
 %
+% \DescribeMacro{\ufrjdeclarelogo}
 % \DescribeMacro{\ufrjdeclarelogos}
-% |\ufrjdeclarelogos|\oarg{altura}\marg{esquerda}\marg{direita} diz quais
-% logotipos vão no alto da capa e da folha de rosto, pelo nome do arquivo |.pdf|
-% sem a extensão. Um nome vazio tira aquele logotipo. Sem declaração nenhuma,
-% vai só o da UFRJ, à esquerda, com 2\,cm de altura: o Anexo~A do Manual marca os
-% dois logotipos como opcionais.
+% |\ufrjdeclarelogo|\oarg{altura}\marg{arquivo} declara o logotipo da
+% \emph{unidade}, que vai no alto da capa, à direita, pelo nome do arquivo
+% |.pdf| sem a extensão; a altura, 2\,cm por padrão, vale para os dois
+% logotipos da linha. O da UFRJ é da classe: sai sempre, à esquerda, e a
+% unidade não o troca nem o tira. O Anexo~A do Manual põe ali o ``Logo do
+% Programa''; a unidade decide o que vai --- a COPPE usa o seu logotipo
+% unificado, porque nem todo Programa tem logotipo. Sem declaração, a direita
+% fica vazia. (A forma antiga, |\ufrjdeclarelogos|, com três argumentos,
+% continua aceita, com aviso, e ignora o logotipo da esquerda.)
 %
 % \DescribeMacro{\ufrjdeclarenorm}
 % |\ufrjdeclarenorm|\marg{artigo}\marg{título} troca a norma que o colofão diz
@@ -5596,21 +5602,30 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \ifx\ufrj@unitacronym\@empty\else\ufrj@unitacronym/\fi UFRJ}
 \newcommand*\ufrj@unitshortrev{%
   UFRJ\ifx\ufrj@unitacronym\@empty\else/\ufrj@unitacronym\fi}
-% Os logotipos da capa e da folha de rosto. O da UFRJ, a esquerda, e o padrao da
-% classe; o da direita e da unidade.
+% Os logotipos da capa (#130: so da capa). O Anexo A poe "Logo da UFRJ" a
+% esquerda e "Logo do Programa" a direita, os dois opcionais. O da UFRJ e da
+% CLASSE: sai sempre, a esquerda, e a unidade nao o troca nem o tira (#162,
+% decisao de 18/09/2026). O da direita e da UNIDADE, e o estilo dela o declara
+% com \ufrjdeclarelogo -- a COPPE declara o logotipo unificado do Instituto, e
+% nao o de cada Programa, porque nem todo Programa tem logotipo. Sem declaracao,
+% a direita fica vazia.
 \newcommand*\ufrj@logoheight{2cm}
-\newcommand*\ufrj@logoleft{ufrj-logo}
 \newcommand*\ufrj@logoright{}
-\newcommand\ufrjdeclarelogos[3][2cm]{%
+\newcommand\ufrjdeclarelogo[2][2cm]{%
   \gdef\ufrj@logoheight{#1}%
-  \gdef\ufrj@logoleft{#2}%
-  \gdef\ufrj@logoright{#3}}
+  \gdef\ufrj@logoright{#2}}
+% A forma de tres argumentos, que a 5.0 teve enquanto se preparava: continua
+% aceita, com aviso, e ignora o logotipo da esquerda, que agora e da classe.
+\newcommand\ufrjdeclarelogos[3][2cm]{%
+  \ClassWarningNoLine{ufrj}{\string\ufrjdeclarelogos\space mudou para
+    \string\ufrjdeclarelogo[altura]{arquivo}:\MessageBreak o logotipo da UFRJ
+    e da classe, e a unidade declara so o dela}%
+  \ufrjdeclarelogo[#1]{#3}}
 % A linha dos logotipos. Nenhum espaco solto entre as pecas: a caixa tem a
 % largura da linha, e um espaco a mais empurraria o logotipo da direita.
 \newcommand\ufrj@logoline{%
   \makebox[\linewidth]{%
-    \ifx\ufrj@logoleft\@empty\else
-      \ufrj@logo[\ufrj@logoheight]{\ufrj@logoleft}\fi
+    \ufrj@logo[\ufrj@logoheight]{ufrj-logo}%
     \hfill
     \ifx\ufrj@logoright\@empty\else
       \ufrj@logo[\ufrj@logoheight]{\ufrj@logoright}\fi}}
@@ -6482,7 +6497,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % the institution block --- the university, the unit as |\ufrjdeclareunit|
 % wrote it for the cover, and the graduate program taken from |\department| ---
 % followed by the author, the title, and the city and year, all centred and
-% uppercased. The logos declared with |\ufrjdeclarelogos| head the page. The
+% uppercased. The UFRJ logo, on the left, and the unit's, declared with
+% |\ufrjdeclarelogo|, on the right, head the page. The
 % capa is not counted: it precedes the (roman) front matter and is produced
 % before the |titlepage| (folha de rosto).
 %    \begin{macrocode}

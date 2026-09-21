@@ -115,6 +115,13 @@ top of `CORRECOES_MANUAL_2026.md`.
 
 ### Changed
 
+- **The UFRJ logo belongs to the class** (#162). It always heads the capa on
+  the left, and a unit style can neither swap it nor remove it. The unit
+  declares only its own logo, on the right, with the new
+  `\ufrjdeclarelogo[height]{file}`: COPPE declares its unified logo, not one
+  per Programa — not every Programa has one. The three-argument
+  `\ufrjdeclarelogos` is still accepted, with a warning, and ignores its left
+  argument. `rtu06` checks it.
 - **Captions and source lines are aligned left** (#160). 2.10 does not fix the
   alignment; it says caption and source "devem respeitar as margens da
   ilustração", and the Manual's only illustration, Figure 1, puts both on the

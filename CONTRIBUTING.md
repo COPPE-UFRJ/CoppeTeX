@@ -152,7 +152,7 @@ unidade*):
 |---|---|
 | `\ufrjdeclareunit{full name}{cover form}{acronym}` | the unit, in the reference line, on the cover (with `\\` breaks) and as an acronym |
 | `\ufrjdeclareprogram{code}{Portuguese name}{English name}` | one Programa, chosen by the author with `\department{code}` |
-| `\ufrjdeclarelogos[height]{left}{right}` | the logos on the cover and title page; an empty name removes one |
+| `\ufrjdeclarelogo[height]{file}` | the unit's logo, on the right of the cover; the UFRJ logo on the left belongs to the class and cannot be changed |
 | `\ufrjdeclarenorm{article}{title}` | the norm the colophon says the document follows |
 | `\ufrjdefunitstring{language}{key}{text}` | a unit text: `tounit` (*à COPPE/UFRJ*), `sciencename` (*em Ciências*), `coverprogram`, `natureza` |
 

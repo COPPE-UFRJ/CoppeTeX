@@ -174,7 +174,7 @@ Se você escreveu um pacote para outro idioma, ele precisa de quatro ajustes:
   trabalho sem estilo e cobra que nada da COPPE apareça no PDF.
 - A interface entre a classe e o estilo é pública e está documentada no
   `ufrj.pdf`, na seção *A instituição e a unidade*: `\ufrjdeclareunit`,
-  `\ufrjdeclareprogram`, `\ufrjdeclarelogos`, `\ufrjdeclarenorm` e
+  `\ufrjdeclareprogram`, `\ufrjdeclarelogo`, `\ufrjdeclarenorm` e
   `\ufrjdefunitstring`. `rtu02` prova que uma unidade inventada se escreve só com
   ela, e `rtu03` que um documento da 4.1 continua compilando.
 - Os textos de uma unidade ficam numa tabela própria, que tem precedência sobre a

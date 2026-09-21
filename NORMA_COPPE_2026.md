@@ -66,7 +66,10 @@ marca ambos como **opcionais**: o da UFRJ, à esquerda, e o do Programa, à
 direita.
 
 **A COPPE adota os dois**, e especializa o da direita: no lugar do logotipo do
-Programa vai o do **Instituto (COPPE)**, que é comum a todos os Programas.
+Programa vai o do **Instituto (COPPE)**, o logotipo unificado, comum a todos os
+Programas. A COPPE não usa o logotipo de cada Programa, até porque nem todo
+Programa tem um. O da UFRJ, à esquerda, é fixado pela classe da UFRJ, e não
+por esta Norma.
 
 - Ambos figuram no alto da **capa**, na mesma linha, o da UFRJ alinhado à
   margem esquerda e o da COPPE à margem direita. **Não figuram na folha de

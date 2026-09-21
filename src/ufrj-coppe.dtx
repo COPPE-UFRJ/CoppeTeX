@@ -193,7 +193,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % |ufrj-poli.ins|, troque os dados da seção~\ref{sec:implementacao}, tire os
 % nomes antigos e a classe de compatibilidade, que só a COPPE tem, e troque os
 % exemplos pelos da unidade. A interface que o estilo usa --- |\ufrjdeclareunit|,
-% |\ufrjdeclareprogram|, |\ufrjdeclarelogos|, |\ufrjdeclarenorm| e
+% |\ufrjdeclareprogram|, |\ufrjdeclarelogo|, |\ufrjdeclarenorm| e
 % |\ufrjdefunitstring| --- está no manual da classe, na seção ``A instituição e a
 % unidade''. Um trabalho de uma unidade que ainda não tem estilo pode usar as
 % mesmas declarações no preâmbulo.
@@ -1902,7 +1902,10 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor i
   {COPPE}
 % Secao 1: o logotipo da UFRJ a esquerda e o da COPPE a direita, os dois com
 % 2 cm de altura.
-\ufrjdeclarelogos[2cm]{ufrj-logo}{coppe-logo}
+% O logotipo da COPPE, a direita da capa: o unificado do Instituto, e nao o de
+% cada Programa -- nem todo Programa tem logotipo (Norma COPPE, secao 1; #162).
+% O da UFRJ, a esquerda, e da classe.
+\ufrjdeclarelogo[2cm]{coppe-logo}
 % Secao 3: os treze Programas, com o nome em portugues e em ingles. O nome em
 % ingles so aparece na folha do abstract.
 \ufrjdeclareprogram{PEB} {Engenharia Biomédica}{Biomedical Engineering}

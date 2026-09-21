@@ -882,16 +882,18 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \newcommand*\ufrj@unitshortrev{%
   UFRJ\ifx\ufrj@unitacronym\@empty\else/\ufrj@unitacronym\fi}
 \newcommand*\ufrj@logoheight{2cm}
-\newcommand*\ufrj@logoleft{ufrj-logo}
 \newcommand*\ufrj@logoright{}
-\newcommand\ufrjdeclarelogos[3][2cm]{%
+\newcommand\ufrjdeclarelogo[2][2cm]{%
   \gdef\ufrj@logoheight{#1}%
-  \gdef\ufrj@logoleft{#2}%
-  \gdef\ufrj@logoright{#3}}
+  \gdef\ufrj@logoright{#2}}
+\newcommand\ufrjdeclarelogos[3][2cm]{%
+  \ClassWarningNoLine{ufrj}{\string\ufrjdeclarelogos\space mudou para
+    \string\ufrjdeclarelogo[altura]{arquivo}:\MessageBreak o logotipo da UFRJ
+    e da classe, e a unidade declara so o dela}%
+  \ufrjdeclarelogo[#1]{#3}}
 \newcommand\ufrj@logoline{%
   \makebox[\linewidth]{%
-    \ifx\ufrj@logoleft\@empty\else
-      \ufrj@logo[\ufrj@logoheight]{\ufrj@logoleft}\fi
+    \ufrj@logo[\ufrj@logoheight]{ufrj-logo}%
     \hfill
     \ifx\ufrj@logoright\@empty\else
       \ufrj@logo[\ufrj@logoheight]{\ufrj@logoright}\fi}}
