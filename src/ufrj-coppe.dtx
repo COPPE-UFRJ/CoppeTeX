@@ -2138,21 +2138,26 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor i
   \date{05}{2026}
   \keyword{Multilingual}
   \keyword{Demonstration}
-  %% palavras-chave do resumo em idioma estrangeiro (3.1.2.1.5, Anexo F)
+  %% palavras-chave do resumo em português, a língua vernácula (3.1.2.1.4)
   \foreignkeyword{multilíngue}
   \foreignkeyword{demonstração}
+  % Pre-textual order (UFRJ Manual 3.1.2), checked by the class: \maketitle,
+  % \frontmatter, the abstract in Portuguese -- the vernacular language,
+  % always the first one; here it is foreignabstract --, the abstract in
+  % English (abstract), the lists and \tableofcontents, always the last.
   \maketitle
   \frontmatter
-  \begin{abstract}
-    This is the main abstract in English, used when the class is loaded
-    with the \texttt{english} option. Lorem ipsum dolor sit amet,
-    consectetur adipiscing elit.
-  \end{abstract}
   \begin{foreignabstract}
-    Este é o resumo em língua estrangeira, que aqui é o português. Quem o
-    produz é o ambiente \texttt{foreignabstract}, quando o idioma principal
-    do trabalho é o inglês.
+    Este é o resumo em português, a língua vernácula, que vem antes do
+    abstract qualquer que seja o idioma do trabalho (Manual 3.1.2). Num
+    trabalho em inglês, quem o produz é o ambiente \texttt{foreignabstract}.
   \end{foreignabstract}
+  \begin{abstract}
+    This is the abstract in English, the main language of this work, used
+    when the class is loaded with the \texttt{english} option. It comes after
+    the abstract in Portuguese. Lorem ipsum dolor sit amet, consectetur
+    adipiscing elit.
+  \end{abstract}
   % Front-matter lists: only the table of contents is mandatory (UFRJ
   % Manual 3.1.2.1.6). The lists of figures, tables, abbreviations and
   % symbols are optional (3.1.2.2); the lists of quadros, programs and
@@ -2221,26 +2226,32 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor i
   %% palavras-chave do resumo em idioma estrangeiro (3.1.2.1.5, Anexo F)
   \foreignkeyword{Multilingual}
   \foreignkeyword{Demonstration}
-  %% palavras-chave do terceiro resumo, em português (Norma COPPE, secao 3)
+  %% palavras-chave do resumo em português, a língua vernácula (3.1.2.1.4)
   \braziliankeyword{multilíngue}
   \braziliankeyword{demonstração}
+  % Orden de los elementos pretextuales (Manual UFRJ 3.1.2), que la clase
+  % verifica: \maketitle, \frontmatter, el resumen en portugués -- la lengua
+  % vernácula, siempre el primero; aquí es brazilianabstract --, el resumen
+  % en inglés (foreignabstract), el resumen en español (abstract, adición de
+  % la norma COPPE), las listas y \tableofcontents, siempre el último.
   \maketitle
   \frontmatter
-  \begin{abstract}
-    Este es el resumen principal en español. La tesis está escrita
-    en español como idioma principal, con la portada conservada en
-    portugués por convención institucional de la UFRJ. Lorem ipsum
-    dolor sit amet, consectetur adipiscing elit.
-  \end{abstract}
+  \begin{brazilianabstract}
+    Este é o resumo em português, a língua vernácula, que abre os resumos
+    qualquer que seja o idioma do trabalho (Manual 3.1.2). Quem o produz é o
+    ambiente \texttt{brazilianabstract}, quando o idioma principal não é nem
+    o português nem o inglês.
+  \end{brazilianabstract}
   \begin{foreignabstract}
     This is the English foreign abstract. Mandatory in CoppeTeX whichever
     the main language is, for international readability.
   \end{foreignabstract}
-  \begin{brazilianabstract}
-    Este é o resumo em português, oferecido pelo ambiente
-    \texttt{brazilianabstract} para a leitura da banca brasileira quando o
-    idioma principal não é o português.
-  \end{brazilianabstract}
+  \begin{abstract}
+    Este es el resumen en español, idioma principal de la tesis, que viene
+    después de los resúmenes en portugués y en inglés; la portada se conserva
+    en portugués por convención institucional de la UFRJ. Lorem ipsum dolor
+    sit amet, consectetur adipiscing elit.
+  \end{abstract}
   % Listas pretextuales: solo el sumario es obligatorio (Manual UFRJ
   % 3.1.2.1.6). Las listas de figuras, tablas, abreviaturas y símbolos son
   % opcionales (3.1.2.2); las de cuadros, programas y algoritmos aparecen
@@ -2311,27 +2322,32 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor i
   %% palavras-chave do resumo em idioma estrangeiro (3.1.2.1.5, Anexo F)
   \foreignkeyword{Multilingual}
   \foreignkeyword{Demonstration}
-  %% palavras-chave do terceiro resumo, em português (Norma COPPE, secao 3)
+  %% palavras-chave do resumo em português, a língua vernácula (3.1.2.1.4)
   \braziliankeyword{multilíngue}
   \braziliankeyword{demonstração}
+  % Ordre des éléments pré-textuels (Manuel UFRJ 3.1.2), vérifié par la
+  % classe : \maketitle, \frontmatter, le résumé en portugais -- la langue
+  % vernaculaire, toujours le premier ; ici brazilianabstract --, le résumé
+  % en anglais (foreignabstract), le résumé en français (abstract), les
+  % listes et \tableofcontents, toujours le dernier.
   \maketitle
   \frontmatter
-  \begin{abstract}
-    Ceci est le résumé principal en français. La thèse est
-    rédigée en français comme langue principale, avec la
-    couverture conservée en portugais selon la convention
-    institutionnelle de l'UFRJ. Lorem ipsum dolor sit amet, consectetur
-    adipiscing elit.
-  \end{abstract}
+  \begin{brazilianabstract}
+    Este é o resumo em português, a língua vernácula, que abre os resumos
+    qualquer que seja o idioma do trabalho (Manual 3.1.2). Quem o produz é o
+    ambiente \texttt{brazilianabstract}, quando o idioma principal não é nem
+    o português nem o inglês.
+  \end{brazilianabstract}
   \begin{foreignabstract}
     This is the English foreign abstract. Required in CoppeTeX whichever
     the main language is, for international readability.
   \end{foreignabstract}
-  \begin{brazilianabstract}
-    Este é o resumo em português, oferecido pelo ambiente
-    \texttt{brazilianabstract} para a leitura da banca brasileira quando
-    o idioma principal não é o português.
-  \end{brazilianabstract}
+  \begin{abstract}
+    Ceci est le résumé en français, langue principale de la thèse, qui vient
+    après les résumés en portugais et en anglais ; la couverture est
+    conservée en portugais selon la convention institutionnelle de l'UFRJ.
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+  \end{abstract}
   % Listes pré-textuelles : seule la table des matières est obligatoire
   % (Manuel UFRJ 3.1.2.1.6). Les listes des figures, des tableaux, des
   % abréviations et des symboles sont facultatives (3.1.2.2) ; celles des
@@ -2403,26 +2419,32 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor i
   %% palavras-chave do resumo em idioma estrangeiro (3.1.2.1.5, Anexo F)
   \foreignkeyword{Multilingual}
   \foreignkeyword{Demonstration}
-  %% palavras-chave do terceiro resumo, em português (Norma COPPE, secao 3)
+  %% palavras-chave do resumo em português, a língua vernácula (3.1.2.1.4)
   \braziliankeyword{multilíngue}
   \braziliankeyword{demonstração}
+  % Ordine degli elementi pre-testuali (Manuale UFRJ 3.1.2), verificato dalla
+  % classe: \maketitle, \frontmatter, il riassunto in portoghese -- la lingua
+  % vernacola, sempre il primo; qui brazilianabstract --, il riassunto in
+  % inglese (foreignabstract), il riassunto in italiano (abstract), gli
+  % elenchi e \tableofcontents, sempre l'ultimo.
   \maketitle
   \frontmatter
-  \begin{abstract}
-    Questo è il riassunto principale in italiano. La tesi è redatta
-    in italiano come lingua principale, con la copertina conservata in
-    portoghese per convenzione istituzionale dell'UFRJ. Lorem ipsum dolor
-    sit amet, consectetur adipiscing elit.
-  \end{abstract}
+  \begin{brazilianabstract}
+    Este é o resumo em português, a língua vernácula, que abre os resumos
+    qualquer que seja o idioma do trabalho (Manual 3.1.2). Quem o produz é o
+    ambiente \texttt{brazilianabstract}, quando o idioma principal não é nem
+    o português nem o inglês.
+  \end{brazilianabstract}
   \begin{foreignabstract}
     This is the English foreign abstract. Required in CoppeTeX whichever
     the main language is, for international readability.
   \end{foreignabstract}
-  \begin{brazilianabstract}
-    Este é o resumo em português, oferecido pelo ambiente
-    \texttt{brazilianabstract} para a leitura da banca brasileira quando
-    o idioma principal não é o português.
-  \end{brazilianabstract}
+  \begin{abstract}
+    Questo è il riassunto in italiano, lingua principale della tesi, che
+    viene dopo i riassunti in portoghese e in inglese; la copertina è
+    conservata in portoghese per convenzione istituzionale dell'UFRJ. Lorem
+    ipsum dolor sit amet, consectetur adipiscing elit.
+  \end{abstract}
   % Elenchi pre-testuali: solo l'indice generale è obbligatorio (Manuale
   % UFRJ 3.1.2.1.6). Gli elenchi di figure, tabelle, abbreviazioni e simboli
   % sono facoltativi (3.1.2.2); quelli di quadros, programmi e algoritmi

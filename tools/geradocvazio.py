@@ -199,10 +199,10 @@ CAMPOS = [
     ("dedicatoria", "Estrutura", "Dedicat\u00f3ria", "sim/nao", True, None, ""),
     ("agradecimentos", "Estrutura", "Agradecimentos", "sim/nao", True, None, ""),
     ("resumo_pt", "Estrutura", "Resumo em portugu\u00eas", "sim/nao", True, None,
-     "Obrigat\u00f3rio; desligue s\u00f3 se souber o que est\u00e1 fazendo"),
+     "Obrigat\u00f3rio e sempre o primeiro resumo (3.1.2); desligue s\u00f3 se souber o que est\u00e1 fazendo"),
     ("resumo_terceiro", "Estrutura",
-     "Terceiro resumo (trabalho em espanhol)", "sim/nao", False, None,
-     "Obrigat\u00f3rio quando nem o principal nem o estrangeiro est\u00e3o em portugu\u00eas"),
+     "Resumo em portugu\u00eas num trabalho em espanhol", "sim/nao", False, None,
+     "O mesmo que o anterior, para trabalho em espanhol, franc\u00eas ou italiano; um dos dois basta"),
     ("listoffigures", "Estrutura", "Lista de figuras", "sim/nao", True, None, ""),
     ("listoftables", "Estrutura", "Lista de tabelas", "sim/nao", True, None, ""),
     ("listofquadros", "Estrutura", "Lista de quadros", "sim/nao", False, None, ""),
@@ -421,26 +421,31 @@ def monta_tex(v, nome_bib):
         A("")
         A("  " + FILLER)
         A("")
-    if v["resumo_pt"]:
-        A("  \\begin{abstract}")
+    # O resumo em portugues vem sempre primeiro (3.1.2), qualquer que seja o
+    # idioma do trabalho, e a classe confere. Em portugues, ele e o abstract;
+    # em ingles, o foreignabstract; nos demais idiomas, o brazilianabstract.
+    # Depois vem o estrangeiro -- o ingles -- e, por ultimo, o do idioma do
+    # trabalho quando ele nao e nem o portugues nem o ingles.
+    def resumo(amb):
+        A("  \\begin{%s}" % amb)
         A("")
         A("  " + FILLER)
         A("")
-        A("  \\end{abstract}")
+        A("  \\end{%s}" % amb)
         A("")
-    A("  \\begin{foreignabstract}")
-    A("")
-    A("  " + FILLER)
-    A("")
-    A("  \\end{foreignabstract}")
-    A("")
-    if v["resumo_terceiro"]:
-        A("  \\begin{brazilianabstract}")
-        A("")
-        A("  " + FILLER)
-        A("")
-        A("  \\end{brazilianabstract}")
-        A("")
+    if v["idioma"] == "brazilian":
+        if v["resumo_pt"]:
+            resumo("abstract")
+        resumo("foreignabstract")
+    elif v["idioma"] == "english":
+        if v["resumo_pt"]:
+            resumo("foreignabstract")
+        resumo("abstract")
+    else:
+        if v["resumo_pt"] or v["resumo_terceiro"]:
+            resumo("brazilianabstract")
+        resumo("foreignabstract")
+        resumo("abstract")
     marcadas = [cmd for chave, cmd in LISTAS if v.get(chave)]
     if marcadas:
         A("  %% As listas vem ANTES do sumario (3.1.2.1.6).")

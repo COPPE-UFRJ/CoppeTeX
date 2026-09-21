@@ -36,27 +36,32 @@
   %% palavras-chave do resumo em idioma estrangeiro (3.1.2.1.5, Anexo F)
   \foreignkeyword{Multilingual}
   \foreignkeyword{Demonstration}
-  %% palavras-chave do terceiro resumo, em português (Norma COPPE, secao 3)
+  %% palavras-chave do resumo em português, a língua vernácula (3.1.2.1.4)
   \braziliankeyword{multilíngue}
   \braziliankeyword{demonstração}
+  % Ordre des éléments pré-textuels (Manuel UFRJ 3.1.2), vérifié par la
+  % classe : \maketitle, \frontmatter, le résumé en portugais -- la langue
+  % vernaculaire, toujours le premier ; ici brazilianabstract --, le résumé
+  % en anglais (foreignabstract), le résumé en français (abstract), les
+  % listes et \tableofcontents, toujours le dernier.
   \maketitle
   \frontmatter
-  \begin{abstract}
-    Ceci est le résumé principal en français. La thèse est
-    rédigée en français comme langue principale, avec la
-    couverture conservée en portugais selon la convention
-    institutionnelle de l'UFRJ. Lorem ipsum dolor sit amet, consectetur
-    adipiscing elit.
-  \end{abstract}
+  \begin{brazilianabstract}
+    Este é o resumo em português, a língua vernácula, que abre os resumos
+    qualquer que seja o idioma do trabalho (Manual 3.1.2). Quem o produz é o
+    ambiente \texttt{brazilianabstract}, quando o idioma principal não é nem
+    o português nem o inglês.
+  \end{brazilianabstract}
   \begin{foreignabstract}
     This is the English foreign abstract. Required in CoppeTeX whichever
     the main language is, for international readability.
   \end{foreignabstract}
-  \begin{brazilianabstract}
-    Este é o resumo em português, oferecido pelo ambiente
-    \texttt{brazilianabstract} para a leitura da banca brasileira quando
-    o idioma principal não é o português.
-  \end{brazilianabstract}
+  \begin{abstract}
+    Ceci est le résumé en français, langue principale de la thèse, qui vient
+    après les résumés en portugais et en anglais ; la couverture est
+    conservée en portugais selon la convention institutionnelle de l'UFRJ.
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+  \end{abstract}
   % Listes pré-textuelles : seule la table des matières est obligatoire
   % (Manuel UFRJ 3.1.2.1.6). Les listes des figures, des tableaux, des
   % abréviations et des symboles sont facultatives (3.1.2.2) ; celles des

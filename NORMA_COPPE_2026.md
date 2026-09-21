@@ -47,7 +47,7 @@ de informações acadêmicas da CAPES**, que dá origem à folha adicional.
 | 4. Identidade institucional em português | 3.1.1, 3.1.2.1.1 | Escolha |
 | 5. Orientação na folha de rosto | 3.1.2.1.1(f) | Escolha |
 | 6. Orientadores nas páginas de resumo | 3.1.2.1.4 | Acréscimo |
-| 7. Terceiro resumo | 3.1.2.1.4, 3.1.2.1.5 | Acréscimo |
+| 7. Os resumos e o terceiro resumo | 3.1.2, 3.1.2.1.4, 3.1.2.1.5 | Acréscimo |
 | 8. Referência no alto do resumo | 3.1.2.1.4, Anexo E | Escolha |
 | 9. Idioma principal | art. 57 da Res. CEPG 302/2024 | Escolha |
 | 10. Listas de Quadros, Programas e Algoritmos | 3.1.2.2.4 | Acréscimo |
@@ -158,21 +158,28 @@ A inclusão do **coorientador** nessas páginas é **facultativa**, a critério 
 Programa. A implementação de referência a oferece como opção, desligada por
 padrão.
 
-## 7. Terceiro resumo — *Acréscimo*
+## 7. Os resumos e o terceiro resumo — *Acréscimo*
 
-O Manual prevê dois resumos: o da língua vernácula (3.1.2.1.4) e o da língua de
-divulgação internacional (3.1.2.1.5). A COPPE reconhece três posições:
+O Manual prevê dois resumos, nesta ordem (3.1.2): o **resumo em língua
+vernácula** (3.1.2.1.4), que é o português, e o **resumo em língua
+estrangeira** (3.1.2.1.5), "a versão do resumo em língua vernácula no idioma de
+divulgação internacional" — o *abstract* do Anexo F. **O resumo em português
+vem sempre primeiro**, qualquer que seja o idioma do trabalho.
 
-1. **Resumo em idioma principal** — obrigatório, no idioma de redação;
-2. **Resumo em idioma estrangeiro** — obrigatório, por convenção em inglês;
-   quando o idioma principal é o inglês, este resumo é redigido em português;
-3. **Resumo em português** — obrigatório apenas quando nenhum dos dois
-   anteriores estiver em português.
+A COPPE fixa o inglês como a língua estrangeira e acrescenta um terceiro resumo
+quando o trabalho não está escrito em nenhuma das duas línguas:
+
+1. **Resumo em português** — obrigatório, sempre o primeiro;
+2. **Resumo em inglês** — obrigatório; num trabalho redigido em inglês, é o
+   resumo no idioma do trabalho;
+3. **Resumo no idioma do trabalho** — obrigatório só quando ele não é nem o
+   português nem o inglês, e vem por último.
 
 A terceira posição existe por um caso concreto: num trabalho redigido em
-espanhol, idioma admitido pelo art. 57 da Resolução CEPG n. 302/2024, o par
-previsto pelo Manual é espanhol e inglês, e o português — língua da
-Universidade e da banca — ficaria de fora.
+espanhol, idioma admitido pelo art. 57 da Resolução CEPG n. 302/2024, os dois
+resumos do Manual são o português e o inglês, e o resumo na língua em que o
+trabalho foi escrito ficaria de fora. Ela vem depois dos dois do Manual, e não
+entre eles.
 
 Cada resumo ocupa uma página própria, na ordem acima, e encerra com as
 palavras-chave **no seu próprio idioma**, separadas por ponto e vírgula, como

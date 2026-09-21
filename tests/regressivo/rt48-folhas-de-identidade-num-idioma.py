@@ -44,9 +44,13 @@ PREAMBULO = r"""\title{Documento de prova}
 
 problemas = []
 for lingua in ("english", "spanish"):
-    pre = r"\begin{abstract}Um.\end{abstract}\begin{foreignabstract}Dois.\end{foreignabstract}"
+    # o resumo em portugues vem primeiro (3.1.2; #158)
     if lingua == "spanish":
-        pre += r"\begin{brazilianabstract}Tres.\end{brazilianabstract}"
+        pre = (r"\begin{brazilianabstract}Tres.\end{brazilianabstract}"
+               r"\begin{foreignabstract}Dois.\end{foreignabstract}"
+               r"\begin{abstract}Um.\end{abstract}")
+    else:
+        pre = r"\begin{foreignabstract}Dois.\end{foreignabstract}\begin{abstract}Um.\end{abstract}"
     with Documento(opcoes="dsc," + lingua, preambulo=PREAMBULO, pre=pre,
                    corpo=r"\chapter{Um}Texto.") as d:
         if not d.ok:

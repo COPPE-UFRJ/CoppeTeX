@@ -36,26 +36,32 @@
   %% palavras-chave do resumo em idioma estrangeiro (3.1.2.1.5, Anexo F)
   \foreignkeyword{Multilingual}
   \foreignkeyword{Demonstration}
-  %% palavras-chave do terceiro resumo, em português (Norma COPPE, secao 3)
+  %% palavras-chave do resumo em português, a língua vernácula (3.1.2.1.4)
   \braziliankeyword{multilíngue}
   \braziliankeyword{demonstração}
+  % Ordine degli elementi pre-testuali (Manuale UFRJ 3.1.2), verificato dalla
+  % classe: \maketitle, \frontmatter, il riassunto in portoghese -- la lingua
+  % vernacola, sempre il primo; qui brazilianabstract --, il riassunto in
+  % inglese (foreignabstract), il riassunto in italiano (abstract), gli
+  % elenchi e \tableofcontents, sempre l'ultimo.
   \maketitle
   \frontmatter
-  \begin{abstract}
-    Questo è il riassunto principale in italiano. La tesi è redatta
-    in italiano come lingua principale, con la copertina conservata in
-    portoghese per convenzione istituzionale dell'UFRJ. Lorem ipsum dolor
-    sit amet, consectetur adipiscing elit.
-  \end{abstract}
+  \begin{brazilianabstract}
+    Este é o resumo em português, a língua vernácula, que abre os resumos
+    qualquer que seja o idioma do trabalho (Manual 3.1.2). Quem o produz é o
+    ambiente \texttt{brazilianabstract}, quando o idioma principal não é nem
+    o português nem o inglês.
+  \end{brazilianabstract}
   \begin{foreignabstract}
     This is the English foreign abstract. Required in CoppeTeX whichever
     the main language is, for international readability.
   \end{foreignabstract}
-  \begin{brazilianabstract}
-    Este é o resumo em português, oferecido pelo ambiente
-    \texttt{brazilianabstract} para a leitura da banca brasileira quando
-    o idioma principal não é o português.
-  \end{brazilianabstract}
+  \begin{abstract}
+    Questo è il riassunto in italiano, lingua principale della tesi, che
+    viene dopo i riassunti in portoghese e in inglese; la copertina è
+    conservata in portoghese per convenzione istituzionale dell'UFRJ. Lorem
+    ipsum dolor sit amet, consectetur adipiscing elit.
+  \end{abstract}
   % Elenchi pre-testuali: solo l'indice generale è obbligatorio (Manuale
   % UFRJ 3.1.2.1.6). Gli elenchi di figure, tabelle, abbreviazioni e simboli
   % sono facoltativi (3.1.2.2); quelli di quadros, programmi e algoritmi

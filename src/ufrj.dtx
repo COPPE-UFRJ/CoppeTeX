@@ -217,6 +217,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \changes{v5.0}{2026/09/21}{A part of a monograph with pages and no chapter ends in a full stop before the pages, as in the Manual: Companhia das Letras, 1996. p. 7-16. The comma of cap. 1, p. 23-64 went in even with no chapter, and replaced the full stop that closes the imprint. The same in the chapter+pages of the book and report drivers.}
 % \changes{v5.0}{2026/09/21}{The .bib files carry no comment line starting with a percent sign, which JabRef and other reference managers do not read as a comment: the docstrip preamble is gone from them, the notice and licence are a Comment entry, and the Manual's expected output for each reference is a comment{Manual: ...} entry before it instead of lines inside the entry.}
 % \changes{v5.0}{2026/09/21}{The advisor no longer enters the board of the folha de aprovacao automatically: the board is what examiner declares, in order, and the advisor, who chairs it (3.1.2.1.3e), is the first examiner. orientadorexamina puts advisors and coadvisors back at its head, as the v4.1 revision did by default.}
+% \changes{v5.0}{2026/09/18}{The abstract in Portuguese -- the vernacular language -- comes first, whatever the main language, as 3.1.2 orders; the class checks it by the language of each abstract sheet, so in an English work foreignabstract (Portuguese) precedes abstract, and in a Spanish work brazilianabstract opens the abstracts.}
 % \changes{v5.0}{2026/09/18}{The class checks the order of the pre-textual elements of 3.1.2 between maketitle and mainmatter: the folha de aprovacao, dedication, epigraph, lists and sumario each have their place, and one out of place is a compilation error that names what to move and where. mainmatter warns when there is no tableofcontents, the one mandatory element the author has to ask for.}
 % \changes{v5.0}{2026/09/17}{The logos are printed on the capa only. The folha de rosto repeated the capa's logo line; Annex B, which is the model of the folha de rosto, and the two sheets of the SiBI model carry no image there. Annex A puts the two logos on the CAPA and marks both as optional.}
 % \changes{v5.0}{2026/09/17}{The folha de rosto and the folha de aprovacao are written entirely in Portuguese, whatever the language of the work. The research-line label, the coadvisor label and the two approval labels followed the main language while the natureza and the advisor label did not, so an English or Spanish work came out with half of each sheet in each language. The class manual and section 7 of the Norma COPPE already stated the rule: these sheets are institutional identity. The four now read the Portuguese key through ufrj@unitstr, which still honours a text the unit declared.}
@@ -1724,9 +1725,17 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \DescribeEnv{foreignabstract}
 % \DescribeEnv{brazilianabstract}
 % Os resumos. O |abstract| é o do idioma principal, o |foreignabstract| o do
-% estrangeiro --- inglês, por padrão, quando o trabalho é em português.
-% O |brazilianabstract| é o terceiro, em português, para o trabalho escrito
-% em espanhol, francês ou italiano que precise de um resumo legível pela UFRJ.
+% estrangeiro --- inglês, por padrão, quando o trabalho é em português, e
+% português quando o trabalho é em inglês. O |brazilianabstract| é o resumo
+% em português do trabalho escrito em espanhol, francês ou italiano.
+%
+% \textbf{O resumo em português vem sempre primeiro.} A 3.1.2 põe o resumo em
+% língua vernácula antes do resumo em língua estrangeira, e a 3.1.2.1.5 faz
+% do estrangeiro ``a versão do resumo em língua vernácula'': vale qualquer que
+% seja o idioma do trabalho. Num trabalho em inglês, o |foreignabstract| --- o
+% resumo em português --- vem antes do |abstract|; num trabalho em espanhol,
+% o |brazilianabstract| abre os resumos, antes do inglês e do espanhol. A
+% classe confere, como confere o resto da ordem pré-textual.
 %
 % \textbf{Cada folha inteira no seu idioma.} Tudo o que a \emph{classe}
 % escreve numa folha de resumo --- a frase de abertura, o título, o mês, os
@@ -6133,6 +6142,26 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \fi
     \global\@ufrjordemfalse
   \fi}
+% Os resumos (#158): o posto e o do IDIOMA da folha, e nao o do ambiente. O
+% resumo em lingua vernacula -- o portugues -- vem antes do estrangeiro,
+% qualquer que seja o idioma principal (3.1.2; a 3.1.2.1.5 faz do estrangeiro
+% "a versao do resumo em lingua vernacula"): num trabalho em ingles, o
+% foreignabstract, que e o resumo em portugues, vem antes do abstract; num
+% trabalho em espanhol, o brazilianabstract abre os resumos. O gancho roda no
+% \begin, antes do codigo do ambiente -- por isso o idioma vem de fora, e nao
+% do \ufrj@reslang, que o ambiente ainda nao definiu.
+\newcommand*\ufrj@ordemlang{}
+\newcommand\ufrj@ordemresumo[1]{%
+  \edef\ufrj@ordemlang{#1}%
+  \ifboolexpr{ test {\ifdefstring{\ufrj@ordemlang}{brazilian}}
+            or test {\ifdefstring{\ufrj@ordemlang}{portuguese}}
+            or test {\ifdefstring{\ufrj@ordemlang}{brazil}}
+            or test {\ifdefstring{\ufrj@ordemlang}{portuges}} }
+    {\ufrj@ordem{7}{resumo em portugues}{\string\begin{\@currenvir}}}%
+    {\ufrj@ordem{8}{resumo em lingua estrangeira}{\string\begin{\@currenvir}}}}
+\AtBeginEnvironment{abstract}{\ufrj@ordemresumo{\ufrj@mainlang}}
+\AtBeginEnvironment{foreignabstract}{\ufrj@ordemresumo{\ufrj@foreignlang}}
+\AtBeginEnvironment{brazilianabstract}{\ufrj@ordemresumo{brazilian}}
 % O sumario e do book.cls, e a lista de algoritmos do algorithm2e. Nenhum dos
 % dois tem parametro, e o \pretocmd de um comando sem parametro nao retokeniza:
 % pode ficar para o \AtBeginDocument, depois de qualquer pacote que os redefina.

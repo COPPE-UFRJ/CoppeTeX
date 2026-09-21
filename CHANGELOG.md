@@ -115,6 +115,19 @@ top of `CORRECOES_MANUAL_2026.md`.
 
 ### Changed
 
+- **The abstract in Portuguese comes first, whatever the language of the work**
+  (#158). 3.1.2 orders "resumo em língua vernácula, resumo em língua
+  estrangeira", and 3.1.2.1.5 makes the foreign one "a versão do resumo em
+  língua vernácula"; the vernacular is Portuguese. Section 7 of the COPPE norm
+  ordered the abstracts by the main language, so an English work had the
+  English abstract first and a Spanish one had Portuguese last (Spanish,
+  English, Portuguese), and the English, Spanish, French and Italian examples,
+  the document generator and the adversarial generator followed it. Now
+  Portuguese is first: in an English work `foreignabstract` (Portuguese) comes
+  before `abstract`; in a Spanish one `brazilianabstract` opens, then English,
+  then Spanish — the COPPE's third abstract, after the Manual's two. The class
+  checks it with the order guard (#148), by the language of each sheet. `rt75`
+  covers it.
 - **`max-exemplo.tex`: no coadvisor, a five-member board and "(caso haja)"**
   (#166), at COPPE's request of 2026-09-21. COPPE has advisors only — one or
   more —, so the COPPE example no longer shows `\coadvisor` (the class keeps it

@@ -1182,6 +1182,18 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \fi
     \global\@ufrjordemfalse
   \fi}
+\newcommand*\ufrj@ordemlang{}
+\newcommand\ufrj@ordemresumo[1]{%
+  \edef\ufrj@ordemlang{#1}%
+  \ifboolexpr{ test {\ifdefstring{\ufrj@ordemlang}{brazilian}}
+            or test {\ifdefstring{\ufrj@ordemlang}{portuguese}}
+            or test {\ifdefstring{\ufrj@ordemlang}{brazil}}
+            or test {\ifdefstring{\ufrj@ordemlang}{portuges}} }
+    {\ufrj@ordem{7}{resumo em portugues}{\string\begin{\@currenvir}}}%
+    {\ufrj@ordem{8}{resumo em lingua estrangeira}{\string\begin{\@currenvir}}}}
+\AtBeginEnvironment{abstract}{\ufrj@ordemresumo{\ufrj@mainlang}}
+\AtBeginEnvironment{foreignabstract}{\ufrj@ordemresumo{\ufrj@foreignlang}}
+\AtBeginEnvironment{brazilianabstract}{\ufrj@ordemresumo{brazilian}}
 \AtBeginDocument{%
   \pretocmd\tableofcontents
     {\ufrj@ordem{13}{sumario}{\string\tableofcontents}}{}%

@@ -274,19 +274,24 @@ def doc(i, linha, tiponome):
     A("  \\chapter*{%s}" % d["ack"])
     A("  %s" % d["body"])
     A("")
-    A("  \\begin{abstract}")
-    A("  %s" % d["abs_"])
-    A("  \\end{abstract}")
-    A("")
-    A("  \\begin{foreignabstract}")
-    A("  %s" % (L["pt"]["abs_"] if lang == "en" else L["en"]["abs_"]))
-    A("  \\end{foreignabstract}")
-    if lang == "es":
+    # O resumo em portugues vem sempre primeiro (3.1.2), e a classe confere
+    # (#158): em ingles ele e o foreignabstract; em espanhol, o
+    # brazilianabstract, antes do ingles e do espanhol.
+    def resumo(amb, texto):
+        A("  \\begin{%s}" % amb)
+        A("  %s" % texto)
+        A("  \\end{%s}" % amb)
         A("")
-        A("  \\begin{brazilianabstract}")
-        A("  %s" % L["pt"]["abs_"])
-        A("  \\end{brazilianabstract}")
-    A("")
+    if lang == "en":
+        resumo("foreignabstract", L["pt"]["abs_"])
+        resumo("abstract", d["abs_"])
+    elif lang == "es":
+        resumo("brazilianabstract", L["pt"]["abs_"])
+        resumo("foreignabstract", L["en"]["abs_"])
+        resumo("abstract", d["abs_"])
+    else:
+        resumo("abstract", d["abs_"])
+        resumo("foreignabstract", L["en"]["abs_"])
     # na ordem da 3.1.2: listas de ilustracao, depois a de tabelas (#148)
     A("  \\listoffigures")
     A("  \\listofquadros")
