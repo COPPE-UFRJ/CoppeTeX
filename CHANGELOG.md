@@ -115,6 +115,16 @@ top of `CORRECOES_MANUAL_2026.md`.
 
 ### Changed
 
+- **The advisor no longer enters the board of the folha de aprovação by
+  itself** (#165). 3.1.2.1.3(e) lists "os membros que constituem a Banca
+  Examinadora", with the advisor first "por ser o presidente da banca". Since
+  the v4.1 revision (#102) the class opened that list with every advisor and
+  coadvisor, with no option; the maintainer decided on 2026-09-21 that the
+  board is what the work declares with `\examiner`, in order, the advisor being
+  the first examiner. `orientadorexamina` puts advisors and coadvisors back at
+  its head; `semorientadornabanca` is accepted and now confirms the default.
+  The document generator writes the advisor as the first `\examiner` unless
+  `orientadorexamina` is chosen.
 - **PDF/A-2b is the default output** (#124). 2.2(d) of the Manual requires the
   final digital version to be PDF/A, and the deposit has been digital only
   since Resolução CEPG n. 246/2023. The class already produced conformant

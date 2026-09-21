@@ -223,7 +223,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %% doublespacing, twoside, numeraisromanos, linkscommoldura, linkscoloridos
 %% (contra a 2.1b), listasnosumario (contra
 %% a norma: veja o comentário antes das listas),
-%% semorientadornabanca, coorientador, resumosemreferencia, rascunhoficha,
+%% orientadorexamina, coorientador, resumosemreferencia, rascunhoficha,
 %% simbolosalfabeticos, semmorewrites. O manual da classe descreve cada uma.
 %%
 %% Opções de classe que valem conhecer aqui:
@@ -329,6 +329,10 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   % mais sai como "Orientadores" (plural). Para o caso 1/3 orientadores,
   % veja tests/test_brazilian_one_advisor.tex e tests/test_brazilian_three_advisors.tex.
 
+  % A banca da folha de aprovacao e o que voce declara com \examiner, na
+  % ordem: o orientador, que preside a banca, e o primeiro (3.1.2.1.3e). A
+  % classe nao o poe la sozinha; a opcao `orientadorexamina' faz isso.
+  \examiner{Nome do Primeiro Orientador Sobrenome}{D.Sc.}{UFRJ}
   \examiner{Nome do Primeiro Examinador Sobrenome}{D.Sc.}{UFRJ}
   \examiner{Nome do Segundo Examinador Sobrenome}{Ph.D.}{UFRJ}
   \examiner{Nome do Terceiro Examinador Sobrenome}{D.Sc.}{UFF}
@@ -342,9 +346,6 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   % "a ser determinada", que e o que se quer enquanto a data nao existe.
   % \approvaldate{15 de setembro de 2026}
   %
-  % A folha de aprovacao abre a banca com os orientadores, na frente dos
-  % examinadores, como manda a 3.1.2.1.3(e). A opcao de classe
-  % `semorientadornabanca' deixa so os examinadores.
 
   \keyword{primeira palavra-chave}
   \keyword{segunda palavra-chave}
@@ -1765,7 +1766,10 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor i
   \foreignsubtitle{a minimal example of use of CoppeTeX}
   \author{Nome do Autor}{Sobrenome}
   \advisor{Nome do Orientador}{Sobrenome}{D.Sc.}{UFRJ}
-  % A composição da banca é regra do Programa, não da formatação.
+  % A composição da banca é regra do Programa, não da formatação. A folha de
+  % aprovação lista o que você declara aqui, na ordem: o orientador, que
+  % preside a banca, é o primeiro (3.1.2.1.3e).
+  \examiner{Nome do Orientador Sobrenome}{D.Sc.}{UFRJ}
   \examiner{Nome do Primeiro Examinador Sobrenome}{D.Sc.}{UFRJ}
   \examiner{Nome do Segundo Examinador Sobrenome}{D.Sc.}{UFRJ}
   \examiner{Nome do Terceiro Examinador Sobrenome}{D.Sc.}{UFF}

@@ -525,7 +525,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \newif\if@ufrjpdfa \@ufrjpdfatrue
 \DeclareOption{pdfa}{\@ufrjpdfatrue}
 \DeclareOption{sempdfa}{\@ufrjpdfafalse}
-\newif\if@ufrjorientexam \@ufrjorientexamtrue
+\newif\if@ufrjorientexam \@ufrjorientexamfalse
 \DeclareOption{orientadorexamina}{\@ufrjorientexamtrue}
 \DeclareOption{semorientadornabanca}{\@ufrjorientexamfalse}
 \newif\if@ufrjsemlinks \@ufrjsemlinksfalse

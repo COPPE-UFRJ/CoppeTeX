@@ -216,6 +216,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \changes{v5.0}{2026/09/21}{A patent takes its attorney, the Procurador of the Manual's essential elements (4.2.5), in the attorney field (procurador in Portuguese), printed in direct order after the depositor: Procurador: Maria Cristina Valim Lourenco Gomes.}
 % \changes{v5.0}{2026/09/21}{A part of a monograph with pages and no chapter ends in a full stop before the pages, as in the Manual: Companhia das Letras, 1996. p. 7-16. The comma of cap. 1, p. 23-64 went in even with no chapter, and replaced the full stop that closes the imprint. The same in the chapter+pages of the book and report drivers.}
 % \changes{v5.0}{2026/09/21}{The .bib files carry no comment line starting with a percent sign, which JabRef and other reference managers do not read as a comment: the docstrip preamble is gone from them, the notice and licence are a Comment entry, and the Manual's expected output for each reference is a comment{Manual: ...} entry before it instead of lines inside the entry.}
+% \changes{v5.0}{2026/09/21}{The advisor no longer enters the board of the folha de aprovacao automatically: the board is what examiner declares, in order, and the advisor, who chairs it (3.1.2.1.3e), is the first examiner. orientadorexamina puts advisors and coadvisors back at its head, as the v4.1 revision did by default.}
 % \changes{v5.0}{2026/09/18}{The class checks the order of the pre-textual elements of 3.1.2 between maketitle and mainmatter: the folha de aprovacao, dedication, epigraph, lists and sumario each have their place, and one out of place is a compilation error that names what to move and where. mainmatter warns when there is no tableofcontents, the one mandatory element the author has to ask for.}
 % \changes{v5.0}{2026/09/17}{The logos are printed on the capa only. The folha de rosto repeated the capa's logo line; Annex B, which is the model of the folha de rosto, and the two sheets of the SiBI model carry no image there. Annex A puts the two logos on the CAPA and marks both as optional.}
 % \changes{v5.0}{2026/09/17}{The folha de rosto and the folha de aprovacao are written entirely in Portuguese, whatever the language of the work. The research-line label, the coadvisor label and the two approval labels followed the main language while the natureza and the advisor label did not, so an English or Spanish work came out with half of each sheet in each language. The class manual and section 7 of the Norma COPPE already stated the rule: these sheets are institutional identity. The four now read the Portuguese key through ufrj@unitstr, which still honours a text the unit declared.}
@@ -1219,13 +1220,14 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \subsection{Folhas pré-textuais}
 %
 % \begin{description}
-%   \item[\texttt{semorientadornabanca}] \textbf{Desligada por padrão}: a
-%     folha de aprovação abre a banca com os orientadores e coorientadores, na
-%     frente dos examinadores, porque a 3.1.2.1.3(e) manda que ``o orientador
-%     deve aparecer em primeiro lugar, por ser o presidente da banca''. Ligue-a
-%     para listar só os examinadores.
-%   \item[\texttt{orientadorexamina}] Aceita e sem efeito desde a revisão da
-%     v4.1: pedia o orientador na banca, que agora é o padrão.
+%   \item[\texttt{orientadorexamina}] \textbf{Desligada por padrão.} A folha
+%     de aprovação lista a banca que você declara com |\examiner|, na ordem em
+%     que declara. A 3.1.2.1.3(e) manda que ``o orientador deve aparecer em
+%     primeiro lugar, por ser o presidente da banca'': declare-o como o
+%     \emph{primeiro} |\examiner|, com o nome, a titulação e a instituição. Esta
+%     opção faz isso por você: põe os orientadores e os coorientadores à frente
+%     dos examinadores.
+%   \item[\texttt{semorientadornabanca}] Aceita e sem efeito: é o padrão.
 %   \item[\texttt{coorientador}] Lista os coorientadores também nas três
 %     páginas de resumo, abaixo dos orientadores. Desligada por padrão: a
 %     3.1.2.1.4 descreve o resumo e não diz quem assina a orientação, e
@@ -2829,44 +2831,44 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % Orientação              & |\advisor|              & 125 \\
 % Coorientação            & |\coadvisor|            & 133 \\
 % Banca                        & |\examiner|             & 139 \\
-% Programa                     & |\department|           & 146 \\
-% Data do depósito           & |\date|                 & 147 \\
-% Data da defesa               & |\approvaldate|        & 150 \\
-% Palavras-chave               & |\keyword|              & 156 \\
-% Área de concentração  & |\concentrationarea|     & 166 \\
-% Linha de pesquisa            & |\researchline|        & 167 \\
-% Coleta CAPES                 & |\productiontype|         & 168 \\
-% Projeto vinculado            & |\linkedproject|     & 169 \\
-% Nome do projeto              & |\projectname|          & 170 \\
-% Agência de fomento         & |\fundingagency|       & 171 \\
-% Ficha catalográfica        & |\catalogcard|   & 177 \\
-% Capa e folha de rosto        & |\maketitle|            & 182 \\
-% Parte pré-textual          & |\frontmatter|          & 184 \\
-% Dedicatória                & |\dedication|           & 185 \\
+% Programa                     & |\department|           & 150 \\
+% Data do depósito           & |\date|                 & 151 \\
+% Data da defesa               & |\approvaldate|        & 154 \\
+% Palavras-chave               & |\keyword|              & 157 \\
+% Área de concentração  & |\concentrationarea|     & 167 \\
+% Linha de pesquisa            & |\researchline|        & 168 \\
+% Coleta CAPES                 & |\productiontype|         & 169 \\
+% Projeto vinculado            & |\linkedproject|     & 170 \\
+% Nome do projeto              & |\projectname|          & 171 \\
+% Agência de fomento         & |\fundingagency|       & 172 \\
+% Ficha catalográfica        & |\catalogcard|   & 178 \\
+% Capa e folha de rosto        & |\maketitle|            & 183 \\
+% Parte pré-textual          & |\frontmatter|          & 185 \\
+% Dedicatória                & |\dedication|           & 186 \\
 % Resumo                       & |abstract|              & 112 \\
 % Abstract                     & |foreignabstract|       & 128 \\
 % Listas pré-textuais        & |\listoffigures| \dots  & 146 \\
-% Sumário                    & |\tableofcontents|      & 192 \\
-% Parte textual                & |\mainmatter|           & 275 \\
-% Símbolo                    & |\symbl|                & 343 \\
+% Sumário                    & |\tableofcontents|      & 193 \\
+% Parte textual                & |\mainmatter|           & 276 \\
+% Símbolo                    & |\symbl|                & 344 \\
 % Citação longa           & |longquote|             & 236 \\
-% Fonte da ilustração     & |\source|               & 434 \\
+% Fonte da ilustração     & |\source|               & 435 \\
 % Quadro                       & |quadro|                & 300 \\
-% Bibliografia                 & |\printbibliography|    & 924 \\
-% Código no texto            & |\pythoninline|         & 1072 \\
-% Código Java no texto       & |\javainline|           & 1109 \\
-% Sigla declarada              & |\defineacronym|             & 1445 \\
-% Sigla usada                  & |\useacronym|                & 1448 \\
-% Abreviatura                  & |\abbrev|               & 1442 \\
-% Parte pós-textual          & |\backmatter|           & 1454 \\
-% Apêndices                  & |\appendix|             & 1470 \\
-% Anexos                       & |\annex|                & 1482 \\
+% Bibliografia                 & |\printbibliography|    & 925 \\
+% Código no texto            & |\pythoninline|         & 1073 \\
+% Código Java no texto       & |\javainline|           & 1110 \\
+% Sigla declarada              & |\defineacronym|             & 1446 \\
+% Sigla usada                  & |\useacronym|                & 1449 \\
+% Abreviatura                  & |\abbrev|               & 1443 \\
+% Parte pós-textual          & |\backmatter|           & 1455 \\
+% Apêndices                  & |\appendix|             & 1471 \\
+% Anexos                       & |\annex|                & 1483 \\
 % Glossário automático        & |\makeglossarylist|     & 59 \\
 % Termo do glossário          & |\glossaryterm|         & 55 \\
 % Glossário                    & |\printglossarylist|    & 56 \\
-% Entrada do índice            & |\index|                & 386 \\
-% Índice                       & |\printindex|           & 1348 \\
-% Colófon                    & |\ufrjfinalpage|    & 1501 \\
+% Entrada do índice            & |\index|                & 387 \\
+% Índice                       & |\printindex|           & 1349 \\
+% Colófon                    & |\ufrjfinalpage|    & 1502 \\
 % \end{tabular}
 % \end{center}
 %
@@ -3434,7 +3436,7 @@ doublespacing & [dsc,doublespacing] & \pre & Double spacing instead of one-and-a
 twoside   & [dsc,twoside]   & \pre & Mirrored margins, for printing and binding. \\
 oneside   & [dsc,oneside]   & \pre & One-sided, 3\,cm left margin on every sheet. The default. \\
 semorientadornabanca & [dsc,semorientadornabanca] & \pre & Approval sheet with the examiners only. By default the advisors head the board, as 3.1.2.1.3(e) requires. \\
-orientadorexamina & [dsc,orientadorexamina] & \pre & Accepted, no effect: the advisors are on the board by default. \\
+orientadorexamina & [dsc,orientadorexamina] & \pre & Puts the advisors and coadvisors at the head of the board on the approval sheet. Off by default: the board is what examiner declares, in order, and the advisor, who chairs it, is the first examiner (3.1.2.1.3e). \\
 coorientador & [dsc,coorientador] & \pre & List coadvisors on the abstract pages too. \\
 rascunhoficha & [dsc,rascunhoficha] & \pre & Draft catalogue card while writing. \textbf{Never valid for deposit.} \\
 resumosemreferencia & [dsc,resumosemreferencia] & \pre & Drop the work's own reference from the top of the three abstracts. It is printed by default (3.1.2.1.4, Annexes E and F). \\
@@ -4753,16 +4755,19 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % cada membro da banca. Com a entrega so digital (Resolucao CEPG n. 246/2023)
 % nao ha o que assinar a mao, e a v4.1 tirou as reguas. A opcao continua aceita,
 % sem efeito, para nao quebrar documento escrito antes disso.
-% A 3.1.2.1.3(e) do Manual: na folha de aprovacao, "o orientador deve aparecer
-% em primeiro lugar, por ser o presidente da banca". E o padrao desde a revisao
-% da v4.1 (issue 102): orientadores e coorientadores abrem a lista, na frente
-% dos examinadores. Antes dela o padrao era o contrario -- so os examinadores --,
-% o que contrariava o texto do Manual.
+% A 3.1.2.1.3(e) do Manual: na folha de aprovacao, "o nome, a titulacao e a
+% instituicao dos membros que constituem a Banca Examinadora. O orientador deve
+% aparecer em primeiro lugar, por ser o presidente da banca". A banca e quem o
+% autor declara com \examiner, na ordem em que declara: o orientador, que a
+% preside, e o primeiro \examiner (#165, decisao de 21/09/2026). A classe nao o
+% poe la sozinha -- quem compoe a banca e quem sabe quem a compos.
 %
-% `semorientadornabanca' devolve a folha so com os examinadores, para o
-% Programa que a queira assim. `orientadorexamina', que era como se pedia o
-% orientador na banca, continua aceita e agora so confirma o padrao.
-\newif\if@ufrjorientexam \@ufrjorientexamtrue
+% A historia: ate a v4.1 o padrao era este; a revisao da v4.1 (#102) passou a
+% abrir a lista com orientadores e coorientadores, sem opcao; e a #165 voltou
+% ao que era. `orientadorexamina' volta a valer: poe orientadores e
+% coorientadores a frente dos examinadores, para quem os quiser sem declarar.
+% `semorientadornabanca' continua aceita, e so confirma o padrao.
+\newif\if@ufrjorientexam \@ufrjorientexamfalse
 \DeclareOption{orientadorexamina}{\@ufrjorientexamtrue}
 \DeclareOption{semorientadornabanca}{\@ufrjorientexamfalse}
 % Os links. A classe carrega o hyperref, que sem opcao nenhuma desenha uma

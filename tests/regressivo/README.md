@@ -109,7 +109,7 @@ sempre que o defeito for de uma folha só.
 | `r08-todas-as-listas` | O TeX tem dezesseis fluxos de escrita; um trabalho que pede **todas** as listas precisa de dezessete. Morria com `No room for a new \write`. |
 | `r09-listas-sem-folio` | As listas de abreviaturas e de símbolos saíam com número de folha e pontilhado. A 4.1.1 pede o termo e o significado, e não pede localização nenhuma. |
 | `r10-data-a-ser-determinada` | Sem `\dataaprovacao` a folha desenhava uma régua para preencher à mão. Ninguém escreve num PDF. |
-| `r11-orientador-fora-da-banca` | A folha de aprovação listava sempre os orientadores, sem como tirar. Ela registra quem **examinou**. |
+| `r11-orientador-fora-da-banca` | A folha de aprovação listava sempre os orientadores, sem como tirar. Desde a #165 é o padrão: a banca é o que o autor declara com `\examiner`, e o orientador, que a preside, é o primeiro (3.1.2.1.3e). |
 | `r12-orientador-examina` | O outro lado: a opção `orientadorexamina` põe o orientador de volta, à frente dos examinadores. |
 | `r13-xmp-do-documento` | A opção `pdfa` nunca tinha sido compilada num documento de verdade: o `.xmpdata` era escrito antes de `\title` existir. |
 | `r14-id-no-lualatex` | O LuaTeX renomeou `\pdfsuppressptexinfo` e ampliou o alcance dele: `-1` suprimiria também o `/ID` do trailer, que o PDF/A **exige**. |

@@ -180,8 +180,9 @@ CAMPOS = [
      False, None, "S\u00f3 para quem vai imprimir e encadernar"),
     ("coorientador", "Op\u00e7\u00f5es", "Coorientadores nas folhas de resumo",
      "sim/nao", False, None, ""),
-    ("semorientadornabanca", "Op\u00e7\u00f5es", "Banca sem o orientador na folha de aprova\u00e7\u00e3o",
-     "sim/nao", False, None, "A 3.1.2.1.3(e) o p\u00f5e em primeiro, como presidente"),
+    ("orientadorexamina", "Op\u00e7\u00f5es", "Orientadores \u00e0 frente da banca, sozinhos",
+     "sim/nao", False, None,
+     "Sem esta op\u00e7\u00e3o, o orientador \u00e9 o primeiro membro da banca que voc\u00ea declara (3.1.2.1.3e)"),
     ("rascunhoficha", "Op\u00e7\u00f5es", "Ficha de rascunho enquanto escreve",
      "sim/nao", False, None, "Nunca vale para dep\u00f3sito"),
     ("listasnosumario", "Op\u00e7\u00f5es", "Listas pr\u00e9-textuais no sum\u00e1rio", "sim/nao",
@@ -231,7 +232,7 @@ ABAS = ["Arquivos", "Trabalho", "Banca", "Folha adicional", "Op\u00e7\u00f5es",
         "Estrutura"]
 
 OPCOES_CLASSE = ["numbers", "comserifa", "linkscommoldura", "linkscoloridos", "setavermelha", "doublespacing",
-                 "twoside", "coorientador", "semorientadornabanca",
+                 "twoside", "coorientador", "orientadorexamina",
                  "rascunhoficha", "listasnosumario", "resumosemreferencia",
                  "semmorewrites"]
 
@@ -345,11 +346,17 @@ def monta_tex(v, nome_bib):
     for i in range(int(v["n_coorientadores"])):
         A("  \\coadvisor{Nome}{Sobrenome do Coorientador %d}{D.Sc.}{UFRJ}"
           % (i + 1))
-    if int(v["n_examinadores"]):
-        A("")
-        for i in range(int(v["n_examinadores"])):
-            A("  \\examiner{Nome Sobrenome do Examinador %d}{D.Sc.}{UFRJ}"
-              % (i + 1))
+    # A banca da folha de aprovacao e o que o autor declara com \examiner, na
+    # ordem (#165): o orientador, que preside a banca, e o primeiro (3.1.2.1.3e).
+    # Com orientadorexamina, e a classe que o poe la, e ele nao se repete aqui.
+    A("")
+    A("  %% A banca da folha de aprovacao e o que voce declara aqui, na ordem:")
+    A("  %% o orientador, que preside a banca, e o primeiro (3.1.2.1.3e).")
+    if not v.get("orientadorexamina"):
+        A("  \\examiner{Nome Sobrenome do Orientador 1}{D.Sc.}{UFRJ}")
+    for i in range(int(v["n_examinadores"])):
+        A("  \\examiner{Nome Sobrenome do Examinador %d}{D.Sc.}{UFRJ}"
+          % (i + 1))
     A("")
     A("  \\department{%s}" % v["programa"])
     A("  \\date{%s}{%s}" % (v["mes"], v["ano"]))
