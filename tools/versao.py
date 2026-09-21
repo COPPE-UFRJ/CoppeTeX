@@ -62,7 +62,7 @@ ESTILOS = [
     "brazilian-ufrj.lbx", "english-ufrj.lbx", "spanish-ufrj.lbx",
     "french-ufrj.lbx", "italian-ufrj.lbx",
     "ufrj-lang-spanish.def", "ufrj-lang-french.def", "ufrj-lang-italian.def",
-    "ufrj-coppe.sty", "coppe.cls",
+    "ufrj-coppe.sty", "coppe.cls", "ufrj-poli.sty",
 ]
 
 GERADOS = ["src/" + n for n in ESTILOS]

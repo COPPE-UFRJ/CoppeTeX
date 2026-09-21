@@ -14,8 +14,8 @@
 
 .PARAMETER Scope
     class    - só regenera ufrj.cls e companhia a partir de ufrj.ins (rápido)
-    example  - class + max-exemplo.tex e min-exemplo.tex, e o conferir-norma
-               nos dois PDFs
+    example  - class + max-exemplo.tex, min-exemplo.tex e poli-exemplo.tex, e o
+               conferir-norma nos tres PDFs
     langs    - class + os cinco example_<lang>.tex
     tests    - class + a suíte tests/run-tests.ps1
     docs     - class + ufrj.pdf (manual), NORMA_COPPE_2026.pdf,
@@ -283,6 +283,7 @@ if ($prova) {
         Push-Location $src
         & pdflatex -interaction=nonstopmode ufrj.ins 2>&1 | Out-Null
         & pdflatex -interaction=nonstopmode ufrj-coppe.ins 2>&1 | Out-Null
+        & pdflatex -interaction=nonstopmode ufrj-poli.ins 2>&1 | Out-Null
         Pop-Location
         Push-Location $root
         $gitDepois = @(& git status --porcelain -- src 2>$null)
@@ -313,6 +314,8 @@ Add-Line ""
 # montagem das capas -- tudo o que depende de uma unidade.
 Invoke-Step "ufrj.ins" $src { & pdflatex -interaction=nonstopmode ufrj.ins }
 Invoke-Step "ufrj-coppe.ins" $src { & pdflatex -interaction=nonstopmode ufrj-coppe.ins }
+# O estilo da Escola Politecnica e o exemplo dele (#170).
+Invoke-Step "ufrj-poli.ins" $src { & pdflatex -interaction=nonstopmode ufrj-poli.ins }
 
 # O latexmkrc sai do docstrip como latexmkrc.tex: o \openout do TeX acrescenta
 # .tex a todo nome sem extensao, e nao ha como pedir a ele o nome exato. Poe no
@@ -327,8 +330,10 @@ if (Test-Path $mkrcGen) {
 if ($Scope -in @("example", "all")) {
     Build-Tex -Stem "max-exemplo" -Dir $src -WithBiber
     Build-Tex -Stem "min-exemplo" -Dir $src -WithBiber
+    Build-Tex -Stem "poli-exemplo" -Dir $src -WithBiber
     Invoke-Conferir "conferir-norma-exemplos" "conferir-norma.py" @(
-        (Join-Path $src "max-exemplo.pdf"), (Join-Path $src "min-exemplo.pdf"))
+        (Join-Path $src "max-exemplo.pdf"), (Join-Path $src "min-exemplo.pdf"),
+        (Join-Path $src "poli-exemplo.pdf"))
 }
 
 if ($Scope -in @("langs", "all")) {
@@ -366,6 +371,15 @@ if ($Scope -in @("docs", "all")) {
     Invoke-Step "ufrj-coppe-glo" $src { & makeindex -s gglo.ist -o ufrj-coppe.gls ufrj-coppe.glo }
     Invoke-Step "ufrj-coppe-2" $src { & pdflatex -interaction=nonstopmode ufrj-coppe.dtx }
     Invoke-Step "ufrj-coppe-3" $src { & pdflatex -interaction=nonstopmode ufrj-coppe.dtx }
+
+    # O manual do estilo da Escola Politecnica (#170).
+    Remove-Item (Join-Path $src "ufrj-poli.gls"), (Join-Path $src "ufrj-poli.ind") `
+        -ErrorAction SilentlyContinue
+    Invoke-Step "ufrj-poli-1" $src { & pdflatex -interaction=nonstopmode ufrj-poli.dtx }
+    Invoke-Step "ufrj-poli-idx" $src { & makeindex -s gind.ist -o ufrj-poli.ind ufrj-poli.idx }
+    Invoke-Step "ufrj-poli-glo" $src { & makeindex -s gglo.ist -o ufrj-poli.gls ufrj-poli.glo }
+    Invoke-Step "ufrj-poli-2" $src { & pdflatex -interaction=nonstopmode ufrj-poli.dtx }
+    Invoke-Step "ufrj-poli-3" $src { & pdflatex -interaction=nonstopmode ufrj-poli.dtx }
 
     # O manual envelhece em silencio: um comando novo entra na classe e ninguem o
     # documenta, e nada quebra. Este passo cobra isso, e tambem confere se a

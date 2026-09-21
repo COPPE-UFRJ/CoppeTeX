@@ -1,0 +1,42 @@
+%% Teste de regressao da CoppeTeX. NAO roda na suite normal.
+%% Rode com: python tests/regressivo/run-regressivo.py
+%% BUG: nao havia defeito antigo aqui -- a classe so compunha trabalho de
+%% pos-graduacao, e este teste guarda o de graduacao (#170), com o estilo da
+%% Escola Politecnica. Um departamento da Engenharia Civil (DES) prova as duas
+%% coisas que a poli.cls fazia errado: o curso e Engenharia Civil, e nao
+%% "Estruturas", e o titulo e Engenheiro Civil. O trabalho e apresentado ao
+%% CURSO; a folha adicional traz so a ficha (os campos da Coleta CAPES sao das
+%% teses e dissertacoes, 3.1.2.1.2); e a referencia do resumo diz o tipo que a
+%% Poli da ao trabalho.
+%% ESPERA-TEXTO-PAGINA: 1::ESCOLA POLITECNICA
+%% ESPERA-TEXTO-PAGINA: 1::CURSO DE ENGENHARIA CIVIL
+%% ESPERA-TEXTO-PAGINA: 2::Projeto de Graduacao apresentado ao Curso de Engenharia Civil, Escola Politecnica, Universidade Federal do Rio de Janeiro, como requisito parcial a obtencao do titulo de Engenheiro Civil.
+%% ESPERA-TEXTO-PAGINA: 3::Ficha catalografica
+%% NAO-ESPERA-TEXTO-PAGINA: 3::Coleta CAPES
+%% ESPERA-TEXTO-PAGINA: 4::Aprovado por
+%% ESPERA-TEXTO-PAGINA: 5::Projeto de Graduacao (Graduacao em Engenharia Civil)
+%% ESPERA-TEXTO-PAGINA: 5::Escola Politecnica, Universidade Federal do Rio de Janeiro, Rio de Janeiro, 2026.
+%% NAO-ESPERA-TEXTO: Estruturas
+%% NAO-ESPERA-TEXTO: Pos-Graduacao
+\documentclass[grad]{ufrj}
+\usepackage{ufrj-poli}
+\title{Palavra que so existe aqui}
+\foreigntitle{Word found only here}
+\author{Nome}{Sobrenome}
+\advisor{Primeiro}{Orientador}{D.Sc.}{UFRJ}
+\examiner{Primeiro Orientador}{D.Sc.}{UFRJ}
+\examiner{Primeiro Examinador}{D.Sc.}{UFRJ}
+\department{DES}
+\date{09}{2026}
+\keyword{regressao}
+\foreignkeyword{regression}
+\begin{document}
+  \maketitle
+  \frontmatter
+  \begin{abstract}Corpo do resumo.\end{abstract}
+  \begin{foreignabstract}Body of the abstract.\end{foreignabstract}
+  \tableofcontents
+  \mainmatter
+  \chapter{Um capitulo}
+  Texto.
+\end{document}

@@ -1,0 +1,265 @@
+% \iffalse meta-comment
+%
+% This is file `ufrj-poli.dtx'.
+%
+% It uses the doc utility to document the `ufrj-poli' unit style of the
+% `ufrj' document class, and docstrip to generate the style and its example
+% document.
+%
+% Copyright (C) 2008-2026 Vicente Helano F. Batista, George O. Ainsworth Jr.,
+%                         Geraldo Xexéo and Eduardo Mangeli.
+% CoppeTeX 5.0.
+%
+% This program is free software; you can redistribute it and/or modify
+% it under the terms of the GNU General Public License version 3 as
+% published by the Free Software Foundation.
+%
+% This program is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+% GNU General Public License version 3 for more details.
+%
+% You should have received a copy of the GNU General Public License
+% version 3 along with this package (see the COPYING.txt file).
+% If not, see <http://www.gnu.org/licenses/>.
+%
+% Author(s): Vicente Helano F. Batista
+%            George O. Ainsworth Jr.
+%            Geraldo Xexéo
+%            Eduardo Mangeli
+%
+% The Escola Politecnica unit style (September 2026) was developed with the
+% support of Claude Opus 5 (Anthropic); every change was reviewed by the
+% maintainer.
+%
+% \fi
+%
+% \iffalse
+%<*driver>
+\documentclass[a4paper]{ltxdoc}
+\usepackage[T1]{fontenc}
+\usepackage[colorlinks={true},breaklinks={true}]{hyperref}
+\usepackage{hologo}
+\def\TeX{\hologo{TeX}}
+\def\LaTeX{\hologo{LaTeX}}
+\def\CoppeTeX{{\rmfamily C\kern-.05em{\scshape o\kern-.025em p\kern-.025em
+p\kern-.025em e}}\kern-.08em
+T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
+\setcounter{tocdepth}{2}
+\EnableCrossrefs \CodelineIndex \RecordChanges
+\begin{document}
+  \DocInput{ufrj-poli.dtx}
+\end{document}
+%</driver> \fi
+%
+% \iffalse
+% Este arquivo segue as mesmas regras do ufrj.dtx e do ufrj-coppe.dtx: linha
+% comecada por um sinal de porcentagem e documentacao, linha sem ele e codigo, e
+% os guardas de modulo dizem para qual arquivo gerado cada trecho vai. O
+% ufrj-poli.ins diz o resto.
+% \fi
+% \changes{v5.0}{2026/09/21}{First version of the Escola Politecnica unit style: the school, its thirteen departments with the course and the title each one confers, the name the Poli gives to the undergraduate work (Projeto de Graduacao), and an example document. It uses the grad work type of the class.}
+%
+% \ProvidesFile{ufrj-poli.dtx}[2026/09/21 v5.0 CoppeTeX]
+% \GetFileInfo{ufrj-poli.dtx}
+%
+% \title{O estilo \texttt{ufrj-poli}\\
+%   \large A Escola Politécnica na classe \texttt{ufrj} --- versão
+%   \fileversion, \filedate}
+% \author{Geraldo Xexéo \and Vicente H. F. Batista \and George O. Ainsworth Jr.
+%   \and Eduardo Mangeli}
+%
+% \maketitle
+%
+% \begin{abstract}
+% \noindent
+% A classe |ufrj| compõe os trabalhos acadêmicos da Universidade Federal do Rio
+% de Janeiro segundo o \emph{Manual para elaboração e normalização de trabalhos
+% acadêmicos} da UFRJ/SiBI. O que é próprio de cada unidade fica num estilo de
+% unidade. Este é o da \textbf{Escola Politécnica} (POLI), para os
+% \textbf{Projetos de Graduação} dos seus cursos.
+% \end{abstract}
+%
+% \tableofcontents
+%
+% \section{Como usar}
+%
+% \begin{verbatim}
+%   \documentclass[grad]{ufrj}
+%   \usepackage{ufrj-poli}
+%   ...
+%   \department{ECI}
+% \end{verbatim}
+%
+% A opção |grad| é o tipo de trabalho de graduação da classe: a natureza diz
+% ``apresentado ao Curso de \ldots'', o título conferido é o do curso, a folha
+% adicional traz só a ficha catalográfica --- os campos da Coleta CAPES são das
+% teses e dissertações (3.1.2.1.2) --- e a referência no alto do resumo diz
+% ``Projeto de Graduação (Graduação em \ldots) --- Escola Politécnica,
+% Universidade Federal do Rio de Janeiro''. O resto --- ordem dos elementos,
+% margens, fontes, citações e referências --- é a classe, que segue o Manual.
+%
+% O |poli-exemplo.tex|, gerado deste arquivo, é um trabalho completo com o
+% estilo.
+%
+% \section{De onde vêm os dados}
+%
+% Os cursos, os títulos e o nome ``Projeto de Graduação'' vêm da classe |poli|
+% que a Escola usava, derivada da \CoppeTeX\ 2.3. Ela serviu só como
+% \emph{informação}: onde diverge do Manual, vale o Manual. Por isso a capa, a
+% folha de rosto, a folha de aprovação e a ficha são as da classe |ufrj|, e não
+% as da |poli|: a |poli| punha, por exemplo, ``como parte dos requisitos
+% necessários'' na natureza, que o modelo do SiBI escreve ``como requisito
+% parcial''.
+%
+% Uma correção sobre os dados da |poli|: ela dava a cada \emph{departamento} o
+% seu nome como curso --- ``Curso de Construção Civil'', ``Curso de
+% Estruturas'', ``Curso de Expressão Gráfica''. Esses cinco departamentos
+% (DCC, DES, DEG, DET e DHIMA) conferem o mesmo título, Engenheiro Civil, e o
+% nome em inglês que a |poli| lhes dava era o mesmo, \emph{Civil Engineering}:
+% o curso é Engenharia Civil. As siglas continuam aceitas, cada uma com o curso
+% certo.
+%
+% \section{O logotipo}
+%
+% O logotipo da UFRJ, à esquerda da capa, é da classe. O da Escola, à direita,
+% é declarado se o arquivo |poli-logo.pdf| estiver ao alcance do \TeX; sem ele,
+% a direita fica vazia e o log avisa. O arquivo não vem com a distribuição.
+%
+% \section{O código}
+%
+%    \begin{macrocode}
+%<*package>
+\NeedsTeXFormat{LaTeX2e}[2020/10/01]
+\ProvidesPackage{ufrj-poli}[2026/09/21 v5.0 CoppeTeX Escola Politecnica/UFRJ unit style]
+\@ifclassloaded{ufrj}{}{%
+  \PackageError{ufrj-poli}{O estilo ufrj-poli precisa da classe ufrj}{%
+    Escreva \string\documentclass[grad]{ufrj} antes de\MessageBreak
+    \string\usepackage{ufrj-poli}.}%
+  \endinput}
+% A Escola Politecnica faz trabalho de graduacao; mestrado e doutorado de
+% engenharia, na UFRJ, sao da COPPE. Outro tipo de trabalho com este estilo e
+% quase certamente engano, e o aviso diz isso sem impedir.
+\if@ufrjgrad\else
+  \PackageWarningNoLine{ufrj-poli}{O estilo da Escola Politecnica e para o
+    Projeto de Graduacao:\MessageBreak use \string\documentclass[grad]{ufrj}}
+\fi
+% A unidade: o nome por extenso (referencia e natureza), o nome da capa e a
+% sigla.
+\ufrjdeclareunit{Escola Politécnica}{Escola Politécnica}{POLI}
+% O logotipo da Escola, a direita da capa, se o arquivo existir.
+\IfFileExists{poli-logo.pdf}
+  {\ufrjdeclarelogo[2cm]{poli-logo}}
+  {\PackageWarningNoLine{ufrj-poli}{poli-logo.pdf nao encontrado: a capa sai
+     so com o logotipo da UFRJ}}
+% Os departamentos da Escola, pela sigla, com o curso e o titulo que ele
+% confere. Os cinco primeiros sao da Engenharia Civil.
+\ufrjdeclareprogram[Engenheiro Civil]{DCC}{Engenharia Civil}{Civil Engineering}
+\ufrjdeclareprogram[Engenheiro Civil]{DES}{Engenharia Civil}{Civil Engineering}
+\ufrjdeclareprogram[Engenheiro Civil]{DEG}{Engenharia Civil}{Civil Engineering}
+\ufrjdeclareprogram[Engenheiro Civil]{DET}{Engenharia Civil}{Civil Engineering}
+\ufrjdeclareprogram[Engenheiro Civil]{DHIMA}{Engenharia Civil}{Civil Engineering}
+\ufrjdeclareprogram[Engenheiro Elétrico]{DEE}
+  {Engenharia Elétrica}{Electrical Engineering}
+\ufrjdeclareprogram[Engenheiro Mecânico]{DEM}
+  {Engenharia Mecânica}{Mechanical Engineering}
+\ufrjdeclareprogram[Engenheiro Metalúrgico e de Materiais]{DMM}
+  {Engenharia Metalúrgica e de Materiais}{Metallurgical and Materials Engineering}
+\ufrjdeclareprogram[Engenheiro Nuclear]{DNC}
+  {Engenharia Nuclear}{Nuclear Engineering}
+\ufrjdeclareprogram[Engenheiro Naval]{DENO}
+  {Engenharia Naval e Oceânica}{Naval and Ocean Engineering}
+\ufrjdeclareprogram[Engenheiro de Produção]{DEI}
+  {Engenharia de Produção}{Production Engineering}
+\ufrjdeclareprogram[Engenheiro de Computação e Informação]{ECI}
+  {Engenharia de Computação e Informação}{Computer and Information Engineering}
+\ufrjdeclareprogram[Engenheiro Eletrônico e de Computação]{DEL}
+  {Engenharia Eletrônica e de Computação}{Electronic and Computer Engineering}
+% O nome que a Escola da ao trabalho de graduacao.
+\ufrjdefunitstring{brazilian}{doctypegrad}{Projeto de Graduação}
+\ufrjdefunitstring{english}  {doctypegrad}{Undergraduate Project}
+\ufrjdefunitstring{spanish}  {doctypegrad}{Proyecto de Graduación}
+\ufrjdefunitstring{french}   {doctypegrad}{Projet de fin d'études}
+\ufrjdefunitstring{italian}  {doctypegrad}{Progetto di Laurea}
+% A quem o trabalho foi apresentado, na frase de abertura do resumo (opcional,
+% \configuraresumos).
+\ufrjdefunitstring{brazilian}{tounit}{à Escola Politécnica/UFRJ}
+\ufrjdefunitstring{english}  {tounit}{to POLI/UFRJ}
+\ufrjdefunitstring{spanish}  {tounit}{a la Escuela Politécnica/UFRJ}
+\ufrjdefunitstring{french}   {tounit}{à l'École Polytechnique/UFRJ}
+\ufrjdefunitstring{italian}  {tounit}{alla Scuola Politecnica/UFRJ}
+%</package>
+%    \end{macrocode}
+%
+% \section{O exemplo}
+%
+% O |poli-exemplo.tex| usa os dados de um Projeto de Graduação de Engenharia de
+% Computação e Informação, com nomes genéricos no lugar das pessoas.
+%
+%    \begin{macrocode}
+%<*poliexemplo>
+% Um Projeto de Graduacao da Escola Politecnica com a classe ufrj e o estilo
+% ufrj-poli. Os nomes sao genericos: troque pelos seus.
+\documentclass[grad]{ufrj}
+\usepackage{ufrj-poli}
+\addbibresource{exemplo.bib}
+
+\begin{document}
+  \title{Título do Projeto de Graduação}
+  \foreigntitle{Title of the Undergraduate Project}
+  \author{Nome do Autor}{Sobrenome}
+  \advisor{Nome do Orientador}{Sobrenome}{D.Sc.}{UFRJ}
+  % A folha de aprovacao lista a banca declarada aqui, na ordem: o orientador,
+  % que preside a banca, e o primeiro (3.1.2.1.3e).
+  \examiner{Nome do Orientador Sobrenome}{D.Sc.}{UFRJ}
+  \examiner{Nome do Primeiro Examinador Sobrenome}{D.Sc.}{UFRJ}
+  \examiner{Nome do Segundo Examinador Sobrenome}{Ph.D.}{UFRJ}
+  % A sigla do departamento: DCC, DES, DEG, DET, DHIMA, DEE, DEM, DMM, DNC,
+  % DENO, DEI, ECI ou DEL.
+  \department{ECI}
+  \date{01}{2026}
+  \approvaldate{15 de janeiro de 2026}
+  \keyword{primeira palavra-chave}
+  \keyword{segunda palavra-chave}
+  \foreignkeyword{first keyword}
+  \foreignkeyword{second keyword}
+
+  % Ordem dos elementos pre-textuais (Manual 3.1.2), que a classe confere:
+  % \maketitle, \frontmatter, o resumo em portugues, o abstract, as listas e
+  % \tableofcontents, sempre o ultimo.
+  \maketitle
+  \frontmatter
+  \begin{abstract}
+    O resumo em português, em parágrafo único, com até 500 palavras
+    (3.1.2.1.4).
+  \end{abstract}
+  \begin{foreignabstract}
+    The abstract in English, the version of the abstract in the language of
+    international dissemination (3.1.2.1.5).
+  \end{foreignabstract}
+  \listoffigures
+  \tableofcontents
+
+  \mainmatter
+  \chapter{Introdução}
+  O texto do trabalho começa aqui, e as citações seguem a classe
+  \cite{m-4211}.
+
+  \begin{figure}[ht]
+    \caption{Uma figura de exemplo}
+    \centering
+    \rule{6cm}{3cm}
+    \source{Elaborado pelo autor (2026).}
+  \end{figure}
+
+  \chapter{Conclusão}
+  A conclusão do trabalho.
+
+  \backmatter
+  \printbibliography
+\end{document}
+%</poliexemplo>
+%    \end{macrocode}
+%
+% \Finale
+\endinput

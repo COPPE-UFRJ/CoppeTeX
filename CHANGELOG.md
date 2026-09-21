@@ -90,6 +90,23 @@ top of `CORRECOES_MANUAL_2026.md`.
 
 ### Added
 
+- **Undergraduate work, and the Escola Politécnica style** (#170). The class
+  composed only graduate work. The new `grad` option is the undergraduate
+  work (Trabalho de Conclusão de Curso): presented to a *Course*, with the
+  title the course confers — a new optional argument of
+  `\ufrjdeclareprogram`, "Engenheiro Civil"; without it, "Bacharel em" the
+  course —, deposited (catalog card and reference on the abstract sheets),
+  and with an additional sheet that carries only the catalog card, since the
+  CAPES fields belong to theses and dissertations (3.1.2.1.2). The new unit
+  style `ufrj-poli` (`ufrj-poli.dtx`/`.ins`) declares the Escola Politécnica,
+  its thirteen departments with the course and title of each, and the name it
+  gives the work, "Projeto de Graduação", with the example `poli-exemplo.tex`.
+  The old `poli.cls` served only as information: its layout is not copied,
+  and the five Civil Engineering departments, which it named as courses
+  ("Curso de Estruturas"), take the course Engenharia Civil. The Poli logo is
+  used if `poli-logo.pdf` is found; it is not distributed yet. `rtu07` and
+  `rtu08` cover it; `conferir-norma.py` recognises the additional sheet by the
+  catalog card too, and checks the Poli example.
 - **The patent's attorney** (#167): `attorney` (`procurador`), printed in
   direct order after the depositor — "Procurador: Maria Cristina Valim
   Lourenço Gomes." —, an essential element of 4.2.5 that had no field.

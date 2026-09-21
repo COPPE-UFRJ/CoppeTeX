@@ -212,6 +212,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \changes{v5.0}{2026/09/17}{The line numbers of a listing stay inside the margin. The five language styles number the lines on the left, and without xleftmargin the listings package indents the code and leaves the number outside the 3 cm margin of 2.3.}
 % \changes{v5.0}{2026/09/17}{Footnotes start at the left margin and hang: from the second line the text aligns under the first letter, not under the mark, as 4.2 asks of a reference in a note -- the class used book's makefntext, which indented the mark by parindent and returned the second line to the margin. A footnote no longer splits across sheets either.}
 % \changes{v5.0}{2026/09/17}{PDF/A-2b is the default output, and the new option sempdfa turns it off. 2.2(d) of the Manual requires the final digital version to be PDF/A, the deposit has been digital only since Resolucao CEPG n. 246/2023, and the class already produced conformant PDF/A -- but only when asked, so a work written without reading the manual was deposited off the norm. The v4.1 option pdfa is still accepted and now does nothing.}
+% \changes{v5.0}{2026/09/21}{New work type grad, the undergraduate work (TCC, or Projeto de Graduacao at the Escola Politecnica): presented to a Course, with the title the course confers -- the new optional argument of ufrjdeclareprogram --, the catalog card and the reference, and an additional sheet without the CAPES fields, which belong to theses and dissertations (3.1.2.1.2).}
 % \changes{v5.0}{2026/09/21}{The access date is in the language of the work, and only the publication date follows the entry's langid: HOUTE, Jef Van den. Black hole. 1 June 2010. [...] Acesso em: 26 maio 2011. The access month came out in the language of the publication too: Acesso em: 26 May 2011.}
 % \changes{v5.0}{2026/09/21}{A patent takes its attorney, the Procurador of the Manual's essential elements (4.2.5), in the attorney field (procurador in Portuguese), printed in direct order after the depositor: Procurador: Maria Cristina Valim Lourenco Gomes.}
 % \changes{v5.0}{2026/09/21}{A part of a monograph with pages and no chapter ends in a full stop before the pages, as in the Manual: Companhia das Letras, 1996. p. 7-16. The comma of cap. 1, p. 23-64 went in even with no chapter, and replaced the full stop that closes the imprint. The same in the chapter+pages of the book and report drivers.}
@@ -1096,7 +1097,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \begin{tabular}{@{}p{0.26\textwidth}p{0.28\textwidth}p{0.34\textwidth}@{}}
 % \textbf{Assunto} & \textbf{Como vem} & \textbf{Opção que muda} \\
 % \hline
-% Tipo do trabalho & \emph{sem padrão: é obrigatória} & \texttt{msc} \texttt{dsc} \texttt{mscexam} \texttt{dscexam} \texttt{mscsem} \\
+% Tipo do trabalho & \emph{sem padrão: é obrigatória} & \texttt{msc} \texttt{dsc} \texttt{mscexam} \texttt{dscexam} \texttt{mscsem} \texttt{grad} \\
 % Idioma & português & \texttt{english} \texttt{spanish} \texttt{french} \texttt{italian} \\
 % Citação & autor-data & \texttt{numbers} \\
 % Família da fonte & sem serifa & \texttt{comserifa} \\
@@ -1139,6 +1140,16 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %     \textbf{não é} um exame de qualificação: são momentos diferentes
 %     do curso. Quem precisava dele compunha com |mscexam| e trocava o título
 %     à mão, o que sai errado em quatro folhas de uma vez.
+%   \item[\texttt{grad}] Trabalho de graduação: o Trabalho de Conclusão de
+%     Curso, ou o nome que a unidade lhe dá --- ``Projeto de Graduação'' na
+%     Escola Politécnica, com o estilo |ufrj-poli|. É apresentado a um
+%     \emph{Curso}, e não a um Programa de Pós-Graduação: a natureza diz
+%     ``apresentado ao Curso de \ldots'' e o título conferido é o do curso,
+%     declarado pela unidade no argumento opcional de |\ufrjdeclareprogram|
+%     (``Engenheiro Civil''; sem ele, ``Bacharel em'' o curso). Vai à
+%     biblioteca, e por isso tem ficha e referência no alto dos resumos; a
+%     folha adicional traz só a ficha, porque os campos da Coleta CAPES são
+%     das teses e dissertações (3.1.2.1.2).
 % \end{description}
 %
 % \textbf{Os dois exames e o seminário não levam folha adicional da Coleta
@@ -3465,6 +3476,7 @@ dsc      & \textbackslash documentclass[dsc]\{ufrj\}     & \pre & D.Sc.\ thesis.
 mscexam  & \textbackslash documentclass[mscexam]\{ufrj\} & \pre & M.Sc.\ qualifying exam. No CAPES sheet, no catalogue card, no reference above the abstract. \\
 dscexam  & \textbackslash documentclass[dscexam]\{ufrj\} & \pre & D.Sc.\ qualifying exam. Same. \\
 mscsem   & \textbackslash documentclass[mscsem]\{ufrj\}  & \pre & M.Sc.\ seminar, a requirement of some Programas and \emph{not} a qualifying exam. Same three omissions: it is not deposited. \\
+grad     & \textbackslash documentclass[grad]\{ufrj\}    & \pre & Undergraduate work (TCC; ``Projeto de Graduação'' with \texttt{ufrj-poli}), presented to a Course: the title conferred is the course's, and the additional sheet carries only the catalog card, without the CAPES fields. \\
 \midrule
 
 \multicolumn{4}{@{}l@{}}{\normalfont\bfseries\small CLASS OPTIONS --- writing
@@ -4657,6 +4669,11 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % outra coisa. As duas condicoes coincidem hoje por acaso, e por isso ganham
 % cada uma o seu booleano.
 \newif\if@ufrjexame \@ufrjexamefalse
+% O trabalho de GRADUACAO (#170). Vai a deposito -- tem ficha e referencia --,
+% mas a folha adicional da Coleta CAPES e "das teses e dissertacoes"
+% (3.1.2.1.2), e o trabalho e apresentado a um Curso, e nao a um Programa de
+% Pos-Graduacao. E o que este booleano governa.
+\newif\if@ufrjgrad \@ufrjgradfalse
 %
 % Class options.
 % Multilingual model (CoppeTeX 4.x, branch nlinguas). The class holds three
@@ -4768,6 +4785,21 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \setboolean{maledoc}{true}\@ufrjexametrue
   \newcommand\local@doctype{Seminário}
   \newcommand\foreign@doctype{Seminar}
+}
+% O trabalho de graduacao (#170). O substantivo -- "Trabalho de Conclusao de
+% Curso", ou o nome que a unidade lhe da, "Projeto de Graduacao" na Poli -- e o
+% titulo conferido -- "Engenheiro de Computacao e Informacao" -- vem da tabela
+% de textos e do curso, e por isso sao lidos na hora do uso, e nao aqui. Nao ha
+% sigla de grau: \@degree fica vazio, com \def, para que \ifx o ache vazio.
+\DeclareOption{grad}{%
+  \def\ufrj@doctypekey{grad}\def\ufrj@degkey{grad}
+  \def\@degree{}
+  \newcommand{\@degreename}{Graduação}
+  \newcommand{\local@degname}{\ufrj@coursetitle}
+  \newcommand{\foreign@degname}{\ufrj@coursetitle}
+  \setboolean{maledoc}{true}\@ufrjgradtrue
+  \newcommand\local@doctype{\ufrj@unitstr{brazilian}{doctypegrad}}
+  \newcommand\foreign@doctype{\ufrj@unitstr{english}{doctypegrad}}
 }
 \DeclareOption{dsc}{%
   \def\ufrj@doctypekey{dsc}\def\ufrj@degkey{dsc}
@@ -5011,7 +5043,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \ClassError{ufrj}{Falta dizer o tipo do trabalho}{%
     A classe ufrj precisa de exatamente uma opcao de tipo: msc, dsc,
     mscexam,\MessageBreak
-    dscexam ou mscsem. Escreva, por exemplo,
+    dscexam, mscsem ou grad. Escreva, por exemplo,
     \string\documentclass[dsc]\string{ufrj\string}.}%
 % Em nonstopmode o LaTeX SEGUE depois de um \ClassError, e sem os remendos
 % abaixo ele seguiria por umas quarenta linhas de "Undefined control sequence"
@@ -5255,6 +5287,10 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \ufrjdefstring{english}  {doctypeexam} {Qualifying Exam}
 \ufrjdefstring{brazilian}{doctypesem}  {Seminário}
 \ufrjdefstring{english}  {doctypesem}  {Seminar}
+\ufrjdefstring{brazilian}{doctypegrad} {Trabalho de Conclusão de Curso}
+\ufrjdefstring{english}  {doctypegrad} {Undergraduate Thesis}
+\ufrjdefstring{brazilian}{degnamegrad} {\ufrj@coursetitle}
+\ufrjdefstring{english}  {degnamegrad} {\ufrj@coursetitle}
 \ufrjdefstring{brazilian}{degnamemsc}  {Mestre}
 \ufrjdefstring{english}  {degnamemsc}  {Master}
 \ufrjdefstring{brazilian}{degnamedsc}  {Doutor}
@@ -5580,7 +5616,10 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % inglês} declara um Programa, que o autor escolhe com |\department|\marg{sigla}.
 % O nome em inglês só aparece na folha do \emph{abstract}; em todo o resto, e nas
 % folhas de resumo em outros idiomas, vai o nome em português, que é o nome
-% próprio do Programa.
+% próprio do Programa. No trabalho de graduação (opção |grad|) a sigla é a de
+% um curso ou departamento, e o argumento opcional,
+% |\ufrjdeclareprogram|\oarg{título}\marg{sigla}\ldots, é o título que o curso
+% confere: |[Engenheiro Civil]|.
 %
 % \DescribeMacro{\ufrjdeclarelogo}
 % \DescribeMacro{\ufrjdeclarelogos}
@@ -5667,9 +5706,17 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \ifx\ufrj@logoright\@empty\else
       \ufrj@logo[\ufrj@logoheight]{\ufrj@logoright}\fi}}
 % Os Programas: cada um guarda o nome nos dois idiomas em que a unidade o tem.
-\newcommand\ufrjdeclareprogram[3]{%
-  \expandafter\gdef\csname ufrj@prog@#1@brazilian\endcsname{#2}%
-  \expandafter\gdef\csname ufrj@prog@#1@english\endcsname{#3}}
+% O argumento opcional e o titulo que o CURSO confere, no trabalho de graduacao
+% (#170): "Engenheiro Civil" para varios departamentos da Poli. Na pos-graduacao
+% o titulo e o do grau, e o argumento fica vazio.
+\newcommand*\ufrj@coursetitle{}
+\newcommand\ufrjdeclareprogram[4][]{%
+  \expandafter\gdef\csname ufrj@prog@#2@brazilian\endcsname{#3}%
+  \expandafter\gdef\csname ufrj@prog@#2@english\endcsname{#4}%
+  \expandafter\gdef\csname ufrj@prog@#2@title\endcsname{#1}}
+% "Programa" ou "Curso", onde a classe nomeia a quem o trabalho e apresentado:
+% a ficha e os metadados.
+\newcommand*\ufrj@progword{\if@ufrjgrad Curso\else Programa\fi}
 % Os textos da unidade, e a leitura deles. A unidade escreve numa tabela propria,
 % ufrj@unit@<idioma>@<chave>, e nao na da classe: um pacote de idioma carregado
 % DEPOIS dela -- \useufrjlanguage vale no preambulo inteiro -- apagaria o texto
@@ -5709,7 +5756,12 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \gdef\ufrjfinalmanual{#2}}
 % Os textos institucionais que a classe escreve quando nenhuma unidade diz outra
 % coisa. Estao em portugues, e so em portugues, porque sao identidade.
+% Na graduacao (#170), o Curso no lugar do Programa, nos dois textos.
+\if@ufrjgrad
+\ufrjdefstring{brazilian}{coverprogram}{Curso de \local@deptname}
+\else
 \ufrjdefstring{brazilian}{coverprogram}{Programa de Pós-Graduação em \local@deptname}
+\fi
 % A natureza segue o modelo do SiBI -- as duas folhas que a 3.1.2.1.2 manda
 % baixar, errata sobre os exemplos do Manual: "Tese ou dissertacao apresentada
 % ao Programa de Pos-Graduacao XXXX, Faculdade, Escola, Instituto ou Nucleo
@@ -5719,11 +5771,19 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % universidade fica, embora o modelo a omita: a 3.1.2.1.1(e) pede "o nome da
 % instituicao a que e submetido o trabalho", o Anexo B a traz, e sem os
 % logotipos (#130) a folha de rosto nao a teria em lugar nenhum.
+\if@ufrjgrad
+\ufrjdefstring{brazilian}{natureza}{\local@doctype\
+  \ifthenelse{\boolean{maledoc}}{apresentado}{apresentada}
+  ao Curso de \local@deptname,\ufrj@unitnamesep
+  \local@universityname, como requisito parcial à obtenção do título de
+  \local@degname.}
+\else
 \ufrjdefstring{brazilian}{natureza}{\local@doctype\ de \@degreename\
   \ifthenelse{\boolean{maledoc}}{apresentado}{apresentada}
   ao Programa de Pós-Graduação em \local@deptname,\ufrj@unitnamesep
   \local@universityname, como requisito parcial à obtenção do título de
   \local@degname\ em \local@deptname.}
+\fi
 %    \end{macrocode}
 %
 % \subsubsection{Identificação do trabalho}
@@ -5754,7 +5814,11 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   }{%
     \ufrj@gletcs\local@deptname{ufrj@prog@#1@brazilian}%
     \ufrj@gletcs\meta@deptname{ufrj@prog@#1@brazilian}%
-    \ufrj@gletcs\foreign@deptname{ufrj@prog@#1@english}}}
+    \ufrj@gletcs\foreign@deptname{ufrj@prog@#1@english}%
+% O titulo do curso, no trabalho de graduacao; sem ele, "Bacharel em" o curso.
+    \ufrj@gletcs\ufrj@coursetitle{ufrj@prog@#1@title}%
+    \ifx\ufrj@coursetitle\@empty
+      \gdef\ufrj@coursetitle{Bacharel em \local@deptname}\fi}}
 % \global\let de uma macro para outra dada pelo nome.
 \newcommand\ufrj@gletcs[2]{%
   \expandafter\global\expandafter\let\expandafter#1\csname #2\endcsname}
@@ -6901,7 +6965,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \hypersetup{%
     pdfauthor={\@authname\ \@authsurn},
     pdftitle={\local@title},
-    pdfsubject={\local@doctype\ de \@degreename\ em \local@deptname\ da \ufrj@unitshort},
+    pdfsubject={\local@doctype\ \if@ufrjgrad\else de \@degreename\ \fi em \local@deptname\ da \ufrj@unitshort},
     pdfcreator={LaTeX with CoppeTeX toolkit}}%
 \fi
 \hypersetup{%
@@ -6962,7 +7026,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
         \the\toks@
       \end{tabularx}}\par
       \nohyphens{\local@doctype\ ({\MakeLowercase\@degreename}) --
-      \ufrj@unitshortrev/Programa de \local@deptname, \ufrj@docyear.}\par
+      \ufrj@unitshortrev/\ufrj@progword\ de \local@deptname, \ufrj@docyear.}\par
       Referências Bibliográficas: p. \pageref{bib:begin} -- \pageref{bib:end}.\par
       \count1=0
       \count2=1
@@ -7029,8 +7093,11 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \newcommand\makefolhaadicional{%
   \clearpage
   \thispagestyle{empty}%
-  \ufrj@checatipo
+% No trabalho de graduacao (#170) a folha traz so a ficha: os campos da Coleta
+% CAPES sao "das teses e dissertacoes" (3.1.2.1.2).
+  \if@ufrjgrad\else\ufrj@checatipo\fi
   {\singlespacing
+  \if@ufrjgrad\else
   \begin{center}
     {\bfseries Informações Coleta CAPES}
   \end{center}
@@ -7063,6 +7130,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
           \advance\count1 by 1}}}
   \end{tabular}\par
   \vspace{9mm}
+  \fi
   \begin{center}
     {\bfseries Ficha catalográfica}\par
     \vspace{4mm}
@@ -7074,7 +7142,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
           Espaço reservado à ficha catalográfica.\\[1ex]
           Gere-a em \texttt{fichacatalografica.sibi.ufrj.br} e inclua o
           arquivo com \texttt{\string\fichacatalografica\{arquivo.pdf\}},
-          ou solicite-a à biblioteca do seu Programa.}}%
+          ou solicite-a à biblioteca da sua unidade.}}%
       \fi}{%
       \includegraphics[page=\ufrj@fichapage,width=125mm]{\ufrj@fichafile}}%
   \end{center}
@@ -8092,7 +8160,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     {\@nameuse{ufrj@str@#1@presentedmale}}%
     {\@nameuse{ufrj@str@#1@presentedfemale}}
   \sloppy\nohyphens{\ufrj@unitstr{#1}{tounit} \@nameuse{ufrj@str@#1@abstracttail}\
-  \@nameuse{ufrj@str@#1@degname\ufrj@degkey}\ufrj@unitstrsp{#1}{sciencename} (\@degree)}%
+  \@nameuse{ufrj@str@#1@degname\ufrj@degkey}%
+  \ifx\@degree\@empty\else\ufrj@unitstrsp{#1}{sciencename} (\@degree)\fi}%
 }
 % As demais pecas que a classe escreve na folha. Sao macros, e nao texto solto
 % dentro do ambiente, porque as tres folhas de resumo usam as mesmas seis e a
@@ -8295,7 +8364,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
       \immediate\write\ufrj@xmpout{\string\Keywords{\ufrj@xmpkeys}}%
       \ifthenelse{\equal{\ufrj@deptcode}{}}{}{%
         \immediate\write\ufrj@xmpout{\string\Subject{\local@doctype\space de
-          \@degreename. Programa de \meta@deptname\space(\ufrj@deptcode),
+          \@degreename. \ufrj@progword\space de \meta@deptname\space(\ufrj@deptcode),
           \ufrj@unitshort}}}%
       \immediate\write\ufrj@xmpout{\string\Publisher{\local@universityname}}%
       \@ifundefined{ufrj@docyear}{}{%
@@ -9967,6 +10036,8 @@ postamble
 \ufrjdefstring{spanish}{doctypedsc}  {Tesis}
 \ufrjdefstring{spanish}{doctypeexam} {Examen de Calificación}
 \ufrjdefstring{spanish}{doctypesem}  {Seminario}
+\ufrjdefstring{spanish}{doctypegrad} {Trabajo de Conclusión de Curso}
+\ufrjdefstring{spanish}{degnamegrad} {\ufrj@coursetitle}
 \ufrjdefstring{spanish}{degnamemsc}  {Maestro}
 \ufrjdefstring{spanish}{degnamedsc}  {Doctor}
 \ufrjdefstring{spanish}{appendix}        {Apéndice}
@@ -10045,6 +10116,8 @@ postamble
 \ufrjdefstring{french}{doctypedsc}  {Thèse}
 \ufrjdefstring{french}{doctypeexam} {Examen de Qualification}
 \ufrjdefstring{french}{doctypesem}  {Séminaire}
+\ufrjdefstring{french}{doctypegrad} {Mémoire de fin d'études}
+\ufrjdefstring{french}{degnamegrad} {\ufrj@coursetitle}
 \ufrjdefstring{french}{degnamemsc}  {Maître}
 \ufrjdefstring{french}{degnamedsc}  {Docteur}
 \ufrjdefstring{french}{appendix}        {Annexe}
@@ -10122,6 +10195,8 @@ postamble
 \ufrjdefstring{italian}{doctypedsc}  {Tesi}
 \ufrjdefstring{italian}{doctypeexam} {Esame di Qualificazione}
 \ufrjdefstring{italian}{doctypesem}  {Seminario}
+\ufrjdefstring{italian}{doctypegrad} {Tesi di Laurea}
+\ufrjdefstring{italian}{degnamegrad} {\ufrj@coursetitle}
 \ufrjdefstring{italian}{degnamemsc}  {Magistrale}
 \ufrjdefstring{italian}{degnamedsc}  {Dottore}
 \ufrjdefstring{italian}{appendix}        {Appendice}

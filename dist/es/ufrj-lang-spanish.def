@@ -60,6 +60,8 @@
 \ufrjdefstring{spanish}{doctypedsc}  {Tesis}
 \ufrjdefstring{spanish}{doctypeexam} {Examen de Calificación}
 \ufrjdefstring{spanish}{doctypesem}  {Seminario}
+\ufrjdefstring{spanish}{doctypegrad} {Trabajo de Conclusión de Curso}
+\ufrjdefstring{spanish}{degnamegrad} {\ufrj@coursetitle}
 \ufrjdefstring{spanish}{degnamemsc}  {Maestro}
 \ufrjdefstring{spanish}{degnamedsc}  {Doctor}
 \ufrjdefstring{spanish}{appendix}        {Apéndice}

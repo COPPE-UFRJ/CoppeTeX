@@ -13,7 +13,8 @@ sistema; no Windows, o poppler que vem com o MiKTeX serve.
     python3 tools/conferir-norma.py tests/adversativa/adv_*.pdf
     python3 tools/conferir-norma.py src/max-exemplo.pdf
 
-Sem argumento, confere os dois exemplos de src/ e os documentos adversativos
+Sem argumento, confere os tres exemplos de src/ (o da COPPE, o minimo e o da
+Poli) e os documentos adversativos
 que ja tiverem sido compilados, nos dois motores -- e o que o `--conferir' do
 painel faz. O build-check.ps1 chama este script logo depois de compilar os
 exemplos e os adversativos, com os PDFs daquele escopo.
@@ -222,9 +223,10 @@ def confere(pdf):
             if alto:
                 folios[i] = int(alto[0][4].strip())
         # A folha adicional so existe fora do exame de qualificacao; procura-se
-        # pelo titulo dela entre as pre-textuais.
-        temadicional = any("Coleta CAPES" in texto(pdf, j)
-                           for j in range(1, prim_num))
+        # pelo titulo dela entre as pre-textuais. No trabalho de graduacao
+        # (#170) ela traz so a ficha, sem o bloco da Coleta CAPES.
+        temadicional = any("Coleta CAPES" in t or "Ficha catalogr" in t
+                           for t in (texto(pdf, j) for j in range(1, prim_num)))
         previsto = 2 if temadicional else 1
         naocontadas = prim_num - folios[prim_num]
         comose = ("a capa e a folha adicional" if temadicional else "a capa")
@@ -372,7 +374,8 @@ def alvos_padrao():
     LuaLaTeX. A sonda de fluxos (_writes_probe) fica de fora: estoura de
     proposito e o PDF dela nao e documento.
     """
-    alvos = [os.path.join(RAIZ, "src", n) for n in ("max-exemplo.pdf", "min-exemplo.pdf")]
+    alvos = [os.path.join(RAIZ, "src", n) for n in ("max-exemplo.pdf", "min-exemplo.pdf",
+                                                   "poli-exemplo.pdf")]
     alvos += sorted(glob.glob(os.path.join(RAIZ, "tests", "adversativa", "adv_*.pdf")))
     return [a for a in alvos if os.path.exists(a)]
 

@@ -58,6 +58,8 @@
 \ufrjdefstring{italian}{doctypedsc}  {Tesi}
 \ufrjdefstring{italian}{doctypeexam} {Esame di Qualificazione}
 \ufrjdefstring{italian}{doctypesem}  {Seminario}
+\ufrjdefstring{italian}{doctypegrad} {Tesi di Laurea}
+\ufrjdefstring{italian}{degnamegrad} {\ufrj@coursetitle}
 \ufrjdefstring{italian}{degnamemsc}  {Magistrale}
 \ufrjdefstring{italian}{degnamedsc}  {Dottore}
 \ufrjdefstring{italian}{appendix}        {Appendice}

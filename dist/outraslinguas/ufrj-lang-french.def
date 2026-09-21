@@ -56,6 +56,8 @@
 \ufrjdefstring{french}{doctypedsc}  {Thèse}
 \ufrjdefstring{french}{doctypeexam} {Examen de Qualification}
 \ufrjdefstring{french}{doctypesem}  {Séminaire}
+\ufrjdefstring{french}{doctypegrad} {Mémoire de fin d'études}
+\ufrjdefstring{french}{degnamegrad} {\ufrj@coursetitle}
 \ufrjdefstring{french}{degnamemsc}  {Maître}
 \ufrjdefstring{french}{degnamedsc}  {Docteur}
 \ufrjdefstring{french}{appendix}        {Annexe}

@@ -1,0 +1,84 @@
+%
+% This is file `ufrj-poli.ins'.
+%
+% It uses the docstrip utility to generate, from file `ufrj-poli.dtx', the
+% `ufrj-poli' unit style of the `ufrj' document class and its example
+% document.
+%
+% Copyright (C) 2008-2026 Vicente Helano F. Batista, George O. Ainsworth Jr.,
+%                         Geraldo Xexéo and Eduardo Mangeli.
+% CoppeTeX 5.0.
+%
+% This program is free software; you can redistribute it and/or modify
+% it under the terms of the GNU General Public License version 3 as
+% published by the Free Software Foundation.
+%
+% This program is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+% GNU General Public License version 3 for more details.
+%
+% You should have received a copy of the GNU General Public License
+% version 3 along with this package (see the COPYING.txt file).
+% If not, see <http://www.gnu.org/licenses/>.
+%
+% Author(s): Vicente Helano F. Batista
+%            George O. Ainsworth Jr.
+%            Geraldo Xexéo
+%            Eduardo Mangeli
+%
+
+\input docstrip
+
+\keepsilent
+\askforoverwritefalse
+
+\declarepreamble\stylepreamble
+
+This is the `ufrj-poli' unit style of the `ufrj' document class: the data
+and texts of the Escola Politecnica (POLI) of the Federal University of Rio
+de Janeiro, for its undergraduate projects. It is generated from
+ufrj-poli.dtx by docstrip; edit the .dtx source, not this file.
+
+Copyright (C) 2008-2026 Vicente Helano F. Batista, George O. Ainsworth Jr.,
+Geraldo Xexéo and Eduardo Mangeli.
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License version 3 as
+published by the Free Software Foundation.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License version 3 for more details.
+
+You should have received a copy of the GNU General Public License
+version 3 along with this package (see the COPYING.txt file).
+If not, see <http://www.gnu.org/licenses/>.
+
+\endpreamble
+
+\declarepreamble\examplepreamble
+
+This is a sample undergraduate project which illustrates the use of the
+`ufrj' document class with the `ufrj-poli' unit style. It is generated from
+ufrj-poli.dtx by docstrip.
+
+Copyright (C) 2008-2026 Vicente Helano F. Batista, George O. Ainsworth Jr.,
+Geraldo Xexéo and Eduardo Mangeli. Released under the GNU General Public
+License version 3 (see the COPYING.txt file).
+
+\endpreamble
+
+\postamble
+% end of `ufrj-poli' customized files
+\endpostamble
+
+\usedir{tex/latex/ufrj}
+\generate{%
+  \usepreamble\stylepreamble
+  \file{ufrj-poli.sty}{\from{ufrj-poli.dtx}{package}}%
+  \usepreamble\examplepreamble
+  \file{poli-exemplo.tex}{\from{ufrj-poli.dtx}{poliexemplo}}%
+}
+\endbatchfile

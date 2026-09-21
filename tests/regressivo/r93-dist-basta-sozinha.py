@@ -40,8 +40,8 @@ RAIZ = os.path.dirname(os.path.dirname(AQUI))
 DIST = os.path.join(RAIZ, "dist")
 
 # (documento, pasta cujo conteudo tem de vir para a raiz antes de compilar)
-EXEMPLOS = [("min-exemplo", None), ("max-exemplo", None), ("example_en", "en"),
-            ("example_es", "es")]
+EXEMPLOS = [("min-exemplo", None), ("max-exemplo", None), ("poli-exemplo", None),
+            ("example_en", "en"), ("example_es", "es")]
 
 problemas = []
 

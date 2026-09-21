@@ -1,0 +1,32 @@
+%% Teste de regressao da CoppeTeX. NAO roda na suite normal.
+%% Rode com: python tests/regressivo/run-regressivo.py
+%% BUG: nao havia defeito antigo aqui -- este teste guarda o trabalho de
+%% graduacao (#170) SEM estilo de unidade: a classe sozinha compoe um Trabalho
+%% de Conclusao de Curso da UFRJ, e um curso declarado sem titulo confere
+%% "Bacharel em" o nome do curso.
+%% ESPERA-TEXTO-PAGINA: 1::CURSO DE CIENCIA DA COMPUTACAO
+%% ESPERA-TEXTO-PAGINA: 2::Trabalho de Conclusao de Curso apresentado ao Curso de Ciencia da Computacao, Universidade Federal do Rio de Janeiro, como requisito parcial a obtencao do titulo de Bacharel em Ciencia da Computacao.
+%% ESPERA-TEXTO-PAGINA: 3::Ficha catalografica
+%% NAO-ESPERA-TEXTO-PAGINA: 3::Coleta CAPES
+%% ESPERA-TEXTO-PAGINA: 5::Trabalho de Conclusao de Curso (Graduacao em Ciencia da Computacao)
+\documentclass[grad]{ufrj}
+\ufrjdeclareprogram{BCC}{Ciência da Computação}{Computer Science}
+\title{Palavra que so existe aqui}
+\foreigntitle{Word found only here}
+\author{Nome}{Sobrenome}
+\advisor{Primeiro}{Orientador}{D.Sc.}{UFRJ}
+\examiner{Primeiro Orientador}{D.Sc.}{UFRJ}
+\department{BCC}
+\date{09}{2026}
+\keyword{regressao}
+\foreignkeyword{regression}
+\begin{document}
+  \maketitle
+  \frontmatter
+  \begin{abstract}Corpo do resumo.\end{abstract}
+  \begin{foreignabstract}Body of the abstract.\end{foreignabstract}
+  \tableofcontents
+  \mainmatter
+  \chapter{Um capitulo}
+  Texto.
+\end{document}

@@ -62,7 +62,8 @@ else:
                     "max-exemplo.tex", "max-exemplo.pdf", "exemplo.bib",
                     "example_en.tex", "example_en.pdf",
                     "example_es.tex", "example_es.pdf",
-                    "latexmkrc", "ufrj.ist", "ufrj-logo.pdf"):
+                    "latexmkrc", "ufrj.ist", "ufrj-logo.pdf",
+                    "ufrj-poli.sty", "poli-exemplo.tex", "poli-exemplo.pdf"):
         if '"%s"' % preciso not in lista:
             problemas.append("PARA_DIST nao leva %s" % preciso)
 
@@ -71,7 +72,8 @@ else:
     # example.tex a declara -- quem baixava a entrega recebia um PDF com as
     # citacoes em branco. Perguntar ao proprio .tex e melhor que manter uma
     # segunda lista aqui, que envelheceria do mesmo jeito.
-    for exemplo in ("min-exemplo", "max-exemplo", "example_en", "example_es"):
+    for exemplo in ("min-exemplo", "max-exemplo", "poli-exemplo", "example_en",
+                    "example_es"):
         fonte = ler("src/%s.tex" % exemplo)
         for base in re.findall(r"\\addbibresource\{([^}]+)\}", fonte):
             if '"%s"' % base not in lista:

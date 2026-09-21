@@ -457,6 +457,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \newboolean{maledoc}
 \setboolean{maledoc}{false}
 \newif\if@ufrjexame \@ufrjexamefalse
+\newif\if@ufrjgrad \@ufrjgradfalse
 \def\ufrj@mainlang{brazilian}
 \def\ufrj@foreignlang{english}
 \DeclareOption{brazilian}{%
@@ -507,6 +508,16 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \setboolean{maledoc}{true}\@ufrjexametrue
   \newcommand\local@doctype{Seminário}
   \newcommand\foreign@doctype{Seminar}
+}
+\DeclareOption{grad}{%
+  \def\ufrj@doctypekey{grad}\def\ufrj@degkey{grad}
+  \def\@degree{}
+  \newcommand{\@degreename}{Graduação}
+  \newcommand{\local@degname}{\ufrj@coursetitle}
+  \newcommand{\foreign@degname}{\ufrj@coursetitle}
+  \setboolean{maledoc}{true}\@ufrjgradtrue
+  \newcommand\local@doctype{\ufrj@unitstr{brazilian}{doctypegrad}}
+  \newcommand\foreign@doctype{\ufrj@unitstr{english}{doctypegrad}}
 }
 \DeclareOption{dsc}{%
   \def\ufrj@doctypekey{dsc}\def\ufrj@degkey{dsc}
@@ -572,7 +583,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \ClassError{ufrj}{Falta dizer o tipo do trabalho}{%
     A classe ufrj precisa de exatamente uma opcao de tipo: msc, dsc,
     mscexam,\MessageBreak
-    dscexam ou mscsem. Escreva, por exemplo,
+    dscexam, mscsem ou grad. Escreva, por exemplo,
     \string\documentclass[dsc]\string{ufrj\string}.}%
   \def\ufrj@doctypekey{dsc}\def\ufrj@degkey{dsc}
   \newcommand{\@degree}{??}
@@ -694,6 +705,10 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \ufrjdefstring{english}  {doctypeexam} {Qualifying Exam}
 \ufrjdefstring{brazilian}{doctypesem}  {Seminário}
 \ufrjdefstring{english}  {doctypesem}  {Seminar}
+\ufrjdefstring{brazilian}{doctypegrad} {Trabalho de Conclusão de Curso}
+\ufrjdefstring{english}  {doctypegrad} {Undergraduate Thesis}
+\ufrjdefstring{brazilian}{degnamegrad} {\ufrj@coursetitle}
+\ufrjdefstring{english}  {degnamegrad} {\ufrj@coursetitle}
 \ufrjdefstring{brazilian}{degnamemsc}  {Mestre}
 \ufrjdefstring{english}  {degnamemsc}  {Master}
 \ufrjdefstring{brazilian}{degnamedsc}  {Doutor}
@@ -897,9 +912,12 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \hfill
     \ifx\ufrj@logoright\@empty\else
       \ufrj@logo[\ufrj@logoheight]{\ufrj@logoright}\fi}}
-\newcommand\ufrjdeclareprogram[3]{%
-  \expandafter\gdef\csname ufrj@prog@#1@brazilian\endcsname{#2}%
-  \expandafter\gdef\csname ufrj@prog@#1@english\endcsname{#3}}
+\newcommand*\ufrj@coursetitle{}
+\newcommand\ufrjdeclareprogram[4][]{%
+  \expandafter\gdef\csname ufrj@prog@#2@brazilian\endcsname{#3}%
+  \expandafter\gdef\csname ufrj@prog@#2@english\endcsname{#4}%
+  \expandafter\gdef\csname ufrj@prog@#2@title\endcsname{#1}}
+\newcommand*\ufrj@progword{\if@ufrjgrad Curso\else Programa\fi}
 \newcommand\ufrjdefunitstring[3]{%
   \expandafter\gdef\csname ufrj@unit@#1@#2\endcsname{#3}}
 \newcommand\ufrj@unitstr[2]{%
@@ -924,12 +942,24 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \newcommand\ufrjdeclarenorm[2]{%
   \gdef\ufrj@finalmanualart{#1 }%
   \gdef\ufrjfinalmanual{#2}}
+\if@ufrjgrad
+\ufrjdefstring{brazilian}{coverprogram}{Curso de \local@deptname}
+\else
 \ufrjdefstring{brazilian}{coverprogram}{Programa de Pós-Graduação em \local@deptname}
+\fi
+\if@ufrjgrad
+\ufrjdefstring{brazilian}{natureza}{\local@doctype\
+  \ifthenelse{\boolean{maledoc}}{apresentado}{apresentada}
+  ao Curso de \local@deptname,\ufrj@unitnamesep
+  \local@universityname, como requisito parcial à obtenção do título de
+  \local@degname.}
+\else
 \ufrjdefstring{brazilian}{natureza}{\local@doctype\ de \@degreename\
   \ifthenelse{\boolean{maledoc}}{apresentado}{apresentada}
   ao Programa de Pós-Graduação em \local@deptname,\ufrj@unitnamesep
   \local@universityname, como requisito parcial à obtenção do título de
   \local@degname\ em \local@deptname.}
+\fi
 \newcommand\ufrj@deptcode{}
 \newcommand\meta@deptname{}
 \newcommand\department[1]{%
@@ -942,7 +972,10 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   }{%
     \ufrj@gletcs\local@deptname{ufrj@prog@#1@brazilian}%
     \ufrj@gletcs\meta@deptname{ufrj@prog@#1@brazilian}%
-    \ufrj@gletcs\foreign@deptname{ufrj@prog@#1@english}}}
+    \ufrj@gletcs\foreign@deptname{ufrj@prog@#1@english}%
+    \ufrj@gletcs\ufrj@coursetitle{ufrj@prog@#1@title}%
+    \ifx\ufrj@coursetitle\@empty
+      \gdef\ufrj@coursetitle{Bacharel em \local@deptname}\fi}}
 \newcommand\ufrj@gletcs[2]{%
   \expandafter\global\expandafter\let\expandafter#1\csname #2\endcsname}
 \renewcommand\title[1]{%
@@ -1584,7 +1617,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \hypersetup{%
     pdfauthor={\@authname\ \@authsurn},
     pdftitle={\local@title},
-    pdfsubject={\local@doctype\ de \@degreename\ em \local@deptname\ da \ufrj@unitshort},
+    pdfsubject={\local@doctype\ \if@ufrjgrad\else de \@degreename\ \fi em \local@deptname\ da \ufrj@unitshort},
     pdfcreator={LaTeX with CoppeTeX toolkit}}%
 \fi
 \hypersetup{%
@@ -1634,7 +1667,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
         \the\toks@
       \end{tabularx}}\par
       \nohyphens{\local@doctype\ ({\MakeLowercase\@degreename}) --
-      \ufrj@unitshortrev/Programa de \local@deptname, \ufrj@docyear.}\par
+      \ufrj@unitshortrev/\ufrj@progword\ de \local@deptname, \ufrj@docyear.}\par
       Referências Bibliográficas: p. \pageref{bib:begin} -- \pageref{bib:end}.\par
       \count1=0
       \count2=1
@@ -1679,8 +1712,9 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \newcommand\makefolhaadicional{%
   \clearpage
   \thispagestyle{empty}%
-  \ufrj@checatipo
+  \if@ufrjgrad\else\ufrj@checatipo\fi
   {\singlespacing
+  \if@ufrjgrad\else
   \begin{center}
     {\bfseries Informações Coleta CAPES}
   \end{center}
@@ -1713,6 +1747,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
           \advance\count1 by 1}}}
   \end{tabular}\par
   \vspace{9mm}
+  \fi
   \begin{center}
     {\bfseries Ficha catalográfica}\par
     \vspace{4mm}
@@ -1724,7 +1759,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
           Espaço reservado à ficha catalográfica.\\[1ex]
           Gere-a em \texttt{fichacatalografica.sibi.ufrj.br} e inclua o
           arquivo com \texttt{\string\fichacatalografica\{arquivo.pdf\}},
-          ou solicite-a à biblioteca do seu Programa.}}%
+          ou solicite-a à biblioteca da sua unidade.}}%
       \fi}{%
       \includegraphics[page=\ufrj@fichapage,width=125mm]{\ufrj@fichafile}}%
   \end{center}
@@ -2316,7 +2351,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     {\@nameuse{ufrj@str@#1@presentedmale}}%
     {\@nameuse{ufrj@str@#1@presentedfemale}}
   \sloppy\nohyphens{\ufrj@unitstr{#1}{tounit} \@nameuse{ufrj@str@#1@abstracttail}\
-  \@nameuse{ufrj@str@#1@degname\ufrj@degkey}\ufrj@unitstrsp{#1}{sciencename} (\@degree)}%
+  \@nameuse{ufrj@str@#1@degname\ufrj@degkey}%
+  \ifx\@degree\@empty\else\ufrj@unitstrsp{#1}{sciencename} (\@degree)\fi}%
 }
 \newcommand\ufrj@res@title[1]{%
   \@ifundefined{ufrj@title@#1}%
@@ -2391,7 +2427,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
       \immediate\write\ufrj@xmpout{\string\Keywords{\ufrj@xmpkeys}}%
       \ifthenelse{\equal{\ufrj@deptcode}{}}{}{%
         \immediate\write\ufrj@xmpout{\string\Subject{\local@doctype\space de
-          \@degreename. Programa de \meta@deptname\space(\ufrj@deptcode),
+          \@degreename. \ufrj@progword\space de \meta@deptname\space(\ufrj@deptcode),
           \ufrj@unitshort}}}%
       \immediate\write\ufrj@xmpout{\string\Publisher{\local@universityname}}%
       \@ifundefined{ufrj@docyear}{}{%

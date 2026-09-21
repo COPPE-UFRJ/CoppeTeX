@@ -100,6 +100,10 @@ PARA_DIST = [
     # v4.1; o .dtx e o .ins do estilo vao pela mesma razao dos da classe.
     ("", "ufrj-coppe.sty"), ("", "coppe.cls"),
     ("", "ufrj-coppe.dtx"), ("", "ufrj-coppe.ins"),
+    # --- o estilo da Escola Politecnica (#170) --------------------------------
+    # Tambem na raiz, pela mesma razao, com o exemplo dele.
+    ("", "ufrj-poli.sty"), ("", "ufrj-poli.dtx"), ("", "ufrj-poli.ins"),
+    ("", "poli-exemplo.tex"),
     # --- logos/ -------------------------------------------------------------
     ("logos", "coppe-logo.eps"), ("logos", "coppe-logo.pdf"),
     ("logos", "ufrj-logo.pdf"),
@@ -108,6 +112,7 @@ PARA_DIST = [
     ("manuais", "ufrj-quickref.pdf"),
     ("manuais", "manual.pdf"), ("manuais", "min-exemplo.pdf"),
     ("manuais", "max-exemplo.pdf"),
+    ("manuais", "ufrj-poli.pdf"), ("manuais", "poli-exemplo.pdf"),
     # --- en/ e es/: traga para a raiz para usar -----------------------------
     ("en", "example_en.tex"), ("en", "example_en.pdf"),
     ("es", "example_es.tex"), ("es", "example_es.pdf"),
