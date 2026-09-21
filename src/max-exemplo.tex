@@ -127,26 +127,23 @@
   % O segundo orientador vai com tratamento, so para mostrar o argumento
   % opcional funcionando; a norma nao pede tratamento nenhum.
   \advisor[Prof.]{Nome do Segundo Orientador}{Sobrenome}{Ph.D.}{UFRJ}
-  % Coorientador: mesmos quatro argumentos de \advisor. Aparece na folha de
-  % rosto e na folha de aprovacao; para ve-lo tambem nas paginas de resumo,
-  % passe a opcao de classe `coorientador'.
-  \coadvisor{Nome do Coorientador}{Sobrenome}{D.Sc.}{UFF}
+  % Coorientador: a COPPE nao tem -- so orientadores, um ou mais --, e por
+  % isso este exemplo nao usa \coadvisor. A classe o oferece, com os mesmos
+  % quatro argumentos de \advisor, para as unidades que tem coorientador.
   % A classe aceita de um a tres \advisor; se houver apenas um, o rotulo na
   % capa e na folha de rosto sai como "Orientador" (singular), com dois ou
   % mais sai como "Orientadores" (plural). Para o caso 1/3 orientadores,
   % veja tests/test_brazilian_one_advisor.tex e tests/test_brazilian_three_advisors.tex.
 
-  % A banca da folha de aprovacao e o que voce declara com \examiner, na
-  % ordem: o orientador, que preside a banca, e o primeiro (3.1.2.1.3e). A
-  % classe nao o poe la sozinha; a opcao `orientadorexamina' faz isso.
-  \examiner{Nome do Primeiro Orientador Sobrenome}{D.Sc.}{UFRJ}
-  \examiner{Nome do Primeiro Examinador Sobrenome}{D.Sc.}{UFRJ}
-  \examiner{Nome do Segundo Examinador Sobrenome}{Ph.D.}{UFRJ}
-  \examiner{Nome do Terceiro Examinador Sobrenome}{D.Sc.}{UFF}
-  \examiner{Nome do Quarto Examinador Sobrenome}{Ph.D.}{UNICAMP}
-  % Instituicao vazia: o argumento e obrigatorio, mas aceita ficar em branco e
-  % entao nada e impresso no lugar dela.
-  \examiner{Nome do Quinto Examinador Sobrenome}{Ph.D.}{}
+  % A banca da folha de aprovacao e o que se declara aqui, na ordem: nome,
+  % titulacao e instituicao de cada membro (3.1.2.1.3e). O orientador, que
+  % preside a banca, e o primeiro membro. A instituicao e obrigatoria, mas pode
+  % ficar vazia: \examiner{Nome}{D.Sc.}{} compila sem erro.
+  \examiner{Nome do Primeiro membro da banca Sobrenome}{D.Sc.}{UFRJ}
+  \examiner{Nome do Segundo membro da banca Sobrenome}{Ph.D.}{UFRJ}
+  \examiner{Nome do Terceiro membro da banca Sobrenome}{D.Sc.}{UFF}
+  \examiner{Nome do Quarto membro da banca Sobrenome}{D.Sc.}{UNICAMP}
+  \examiner{Nome do Quinto membro da banca Sobrenome}{D.Sc.}{PUC-Rio}
   \department{PESC}
   \date{06}{2026}
   % Data da defesa, na folha de aprovacao. Sem esta linha a folha sai com
@@ -168,7 +165,7 @@
   \researchline{Engenharia de Dados e Conhecimento}
   \productiontype{bibliographic}   % bibliografica | artistica | tecnologica | tecnica
   \linkedproject{yes}         % sim | nao
-  \projectname{Nome do Projeto de Pesquisa ao qual o trabalho se vincula}
+  \projectname{Nome do Projeto de Pesquisa ao qual o trabalho se vincula (caso haja)}
   \fundingagency{Conselho Nacional de Desenvolvimento Científico e
                   Tecnológico}{CNPq}
   \fundingagency{Fundação Carlos Chagas Filho de Amparo à Pesquisa do

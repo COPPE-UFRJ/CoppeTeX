@@ -18,13 +18,20 @@ Um por um, com a regra:
     autor, titulo e ano em duas chaves);
   * specs/README.md -- a norma vigente e a 9. ed. rev., 2026; o exemplo.bib
     citava o Manual como 9. ed., 2025;
-  * 4.3.2.13 -- "Brasil. Supremo Tribunal Federal" digitado sem a entidade
-    superior em caixa alta, que a classe (por decisao registrada junto de
-    \\ufrj@ucfamily) imprime como foi digitado.
+  * 4.3.2.13 -- o autor-entidade e digitado como se escreve, e a classe poe a
+    entrada em caixa alta na lista (#144); um exemplo com a entrada digitada em
+    caixa alta ensina a regra antiga, e a chamada sairia "(BRASIL, 1995)".
+
+E os pedidos de 21/09/2026 para o max-exemplo (#166):
+  * sem \\coadvisor: na COPPE so ha orientadores, um ou mais; o recurso fica na
+    classe para as outras unidades;
+  * a banca da folha de aprovacao com cinco membros declarados ("membro da
+    banca"), sem os orientadores automaticos (#165);
+  * o nome do projeto de pesquisa da folha adicional com "(caso haja)".
 
 Cobra-se tudo isso sem compilar, lendo src/max-exemplo.tex e src/exemplo.bib
-(os dois saem do ufrj.dtx: a correcao vai nos modulos maxexemplo, examplebib e
-tiposbib).
+(o max-exemplo sai do ufrj-coppe.dtx, modulo maxexemplo; o exemplo.bib, do
+ufrj.dtx, modulos examplebib e tiposbib).
 """
 import io
 import os
@@ -148,6 +155,19 @@ for tipo, chave, corpo in entradas_do_bib(bib):
             problemas.append("exemplo.bib: %s: entidade %r digitada em caixa alta; "
                              "escreva como se escreve, a classe poe a caixa alta"
                              % (chave, nome[:45]))
+
+# #166: o max-exemplo da COPPE sem coorientador, com a banca de cinco membros
+# declarados e o projeto de pesquisa "(caso haja)"
+codigo = "\n".join(l.split("%", 1)[0] for l in tex.splitlines())
+if "\\coadvisor{" in codigo:
+    problemas.append("max-exemplo.tex: usa \\coadvisor; na COPPE so ha orientadores (#166)")
+banca = re.findall(r"\\examiner\{([^}]*)\}", codigo)
+if len(banca) != 5 or not all("membro da banca" in b for b in banca):
+    problemas.append("max-exemplo.tex: a banca deve ter cinco membros declarados, "
+                     "'Nome do Primeiro membro da banca Sobrenome'...; tem %r (#166)" % banca)
+m = re.search(r"\\projectname\{([^}]*)\}", codigo)
+if not m or "(caso haja)" not in m.group(1):
+    problemas.append("max-exemplo.tex: o projeto de pesquisa sem '(caso haja)' (#166)")
 
 # o Manual na edicao vigente
 m = re.search(r"@\w+\{manualbib,(.*?)\n\}", bib, re.S)

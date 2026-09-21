@@ -115,6 +115,15 @@ top of `CORRECOES_MANUAL_2026.md`.
 
 ### Changed
 
+- **`max-exemplo.tex`: no coadvisor, a five-member board and "(caso haja)"**
+  (#166), at COPPE's request of 2026-09-21. COPPE has advisors only — one or
+  more —, so the COPPE example no longer shows `\coadvisor` (the class keeps it
+  for the units that have coadvisors). The approval sheet shows five declared
+  board members ("Nome do Primeiro membro da banca Sobrenome, D.Sc., UFRJ"…),
+  with no automatic advisors (#165), and the research-project name of the CAPES
+  sheet reads "(caso haja)". The área de concentração the request also asked to
+  remove from the folha de rosto and the folha de aprovação was already gone
+  (#155). `rt68` checks the three.
 - **The advisor no longer enters the board of the folha de aprovação by
   itself** (#165). 3.1.2.1.3(e) lists "os membros que constituem a Banca
   Examinadora", with the advisor first "por ser o presidente da banca". Since
