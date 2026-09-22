@@ -112,13 +112,29 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % necessários'' na natureza, que o modelo do SiBI escreve ``como requisito
 % parcial''.
 %
-% Uma correção sobre os dados da |poli|: ela dava a cada \emph{departamento} o
-% seu nome como curso --- ``Curso de Construção Civil'', ``Curso de
-% Estruturas'', ``Curso de Expressão Gráfica''. Esses cinco departamentos
-% (DCC, DES, DEG, DET e DHIMA) conferem o mesmo título, Engenheiro Civil, e o
-% nome em inglês que a |poli| lhes dava era o mesmo, \emph{Civil Engineering}:
-% o curso é Engenharia Civil. As siglas continuam aceitas, cada uma com o curso
-% certo.
+% \section{As duas formas da Engenharia Civil}
+%
+% Cinco siglas --- DCC, DES, DEG, DET e DHIMA --- são \emph{departamentos} que
+% conferem o mesmo título, Engenheiro Civil, e que a |poli| nomeava como curso:
+% ``Curso de Construção Civil'', ``Curso de Estruturas'', ``Curso de Expressão
+% Gráfica''. O nome em inglês que ela dava aos cinco já era o mesmo,
+% \emph{Civil Engineering}.
+%
+% O estilo traz \textbf{as duas formas}, e a escolha é uma opção do pacote:
+%
+% \begin{verbatim}
+%   \usepackage{ufrj-poli}                        % Curso de Engenharia Civil
+%   \usepackage[civilpordepartamento]{ufrj-poli}  % Curso de Estruturas
+% \end{verbatim}
+%
+% \DescribeMacro{civilporcurso}
+% \DescribeMacro{civilpordepartamento}
+% |civilporcurso| é o padrão: as cinco siglas dão o curso Engenharia Civil, que
+% é o nome do curso de graduação. |civilpordepartamento| devolve o nome do
+% departamento, como na |poli|, para o Programa que assim o queira. O título
+% conferido e o nome em inglês são os mesmos nas duas: Engenheiro Civil e
+% \emph{Civil Engineering}. As outras oito siglas não mudam, porque nelas o
+% departamento e o curso já têm o mesmo nome.
 %
 % \textbf{Os títulos conferidos são os da |poli|, sem mudança} --- ``Engenheiro
 % Elétrico'', ``Engenheiro Naval'', ``Engenheiro Eletrônico e de Computação'' e os
@@ -149,6 +165,13 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \PackageWarningNoLine{ufrj-poli}{O estilo da Escola Politecnica e para o
     Projeto de Graduacao:\MessageBreak use \string\documentclass[grad]{ufrj}}
 \fi
+% As duas formas da Engenharia Civil: `civilporcurso' (padrao) da o curso,
+% Engenharia Civil; `civilpordepartamento' da o nome do departamento, como a
+% poli.cls fazia. O titulo conferido e o nome em ingles sao os mesmos nos dois.
+\newif\if@ufrjpolidepcivil \@ufrjpolidepcivilfalse
+\DeclareOption{civilporcurso}{\@ufrjpolidepcivilfalse}
+\DeclareOption{civilpordepartamento}{\@ufrjpolidepciviltrue}
+\ProcessOptions\relax
 % A unidade: o nome por extenso (referencia e natureza), o nome da capa e a
 % sigla.
 \ufrjdeclareunit{Escola Politécnica}{Escola Politécnica}{POLI}
@@ -158,12 +181,25 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   {\PackageWarningNoLine{ufrj-poli}{poli-logo.pdf nao encontrado: a capa sai
      so com o logotipo da UFRJ}}
 % Os departamentos da Escola, pela sigla, com o curso e o titulo que ele
-% confere. Os cinco primeiros sao da Engenharia Civil.
-\ufrjdeclareprogram[Engenheiro Civil]{DCC}{Engenharia Civil}{Civil Engineering}
-\ufrjdeclareprogram[Engenheiro Civil]{DES}{Engenharia Civil}{Civil Engineering}
-\ufrjdeclareprogram[Engenheiro Civil]{DEG}{Engenharia Civil}{Civil Engineering}
-\ufrjdeclareprogram[Engenheiro Civil]{DET}{Engenharia Civil}{Civil Engineering}
-\ufrjdeclareprogram[Engenheiro Civil]{DHIMA}{Engenharia Civil}{Civil Engineering}
+% confere. Os cinco primeiros sao da Engenharia Civil, nas duas formas: o
+% curso (padrao) ou o nome do departamento, com a opcao do pacote. Um so
+% \ufrjdeclareprogram por sigla nos dois casos -- o segundo apagaria o
+% primeiro, e um estilo com a sigla declarada duas vezes esconderia qual das
+% duas vale.
+\if@ufrjpolidepcivil
+  \ufrjdeclareprogram[Engenheiro Civil]{DCC}{Construção Civil}{Civil Engineering}
+  \ufrjdeclareprogram[Engenheiro Civil]{DES}{Estruturas}{Civil Engineering}
+  \ufrjdeclareprogram[Engenheiro Civil]{DEG}{Expressão Gráfica}{Civil Engineering}
+  \ufrjdeclareprogram[Engenheiro Civil]{DET}{Engenharia de Transportes}{Civil Engineering}
+  \ufrjdeclareprogram[Engenheiro Civil]{DHIMA}{Recursos Hídricos e Meio Ambiente}
+    {Civil Engineering}
+\else
+  \ufrjdeclareprogram[Engenheiro Civil]{DCC}{Engenharia Civil}{Civil Engineering}
+  \ufrjdeclareprogram[Engenheiro Civil]{DES}{Engenharia Civil}{Civil Engineering}
+  \ufrjdeclareprogram[Engenheiro Civil]{DEG}{Engenharia Civil}{Civil Engineering}
+  \ufrjdeclareprogram[Engenheiro Civil]{DET}{Engenharia Civil}{Civil Engineering}
+  \ufrjdeclareprogram[Engenheiro Civil]{DHIMA}{Engenharia Civil}{Civil Engineering}
+\fi
 \ufrjdeclareprogram[Engenheiro Elétrico]{DEE}
   {Engenharia Elétrica}{Electrical Engineering}
 \ufrjdeclareprogram[Engenheiro Mecânico]{DEM}
@@ -206,6 +242,9 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % Um Projeto de Graduacao da Escola Politecnica com a classe ufrj e o estilo
 % ufrj-poli. Os nomes sao genericos: troque pelos seus.
 \documentclass[grad]{ufrj}
+% Com [civilpordepartamento], as cinco siglas da Engenharia Civil (DCC, DES,
+% DEG, DET e DHIMA) dao o nome do departamento como curso, como na poli.cls;
+% sem ela, dao o curso, Engenharia Civil. O titulo conferido e o mesmo.
 \usepackage{ufrj-poli}
 \addbibresource{exemplo.bib}
 

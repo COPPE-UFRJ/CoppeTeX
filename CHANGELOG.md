@@ -103,7 +103,9 @@ top of `CORRECOES_MANUAL_2026.md`.
   gives the work, "Projeto de Graduação", with the example `poli-exemplo.tex`.
   The old `poli.cls` served only as information: its layout is not copied,
   and the five Civil Engineering departments, which it named as courses
-  ("Curso de Estruturas"), take the course Engenharia Civil. The Poli logo is
+  ("Curso de Estruturas"), take the course Engenharia Civil by default and
+  their own names with the package option `civilpordepartamento` — both forms
+  ship, with the same title and English name (`rtu09`). The Poli logo is
   used if `poli-logo.pdf` is found; it is not distributed yet. `rtu07` and
   `rtu08` cover it; `conferir-norma.py` recognises the additional sheet by the
   catalog card too, and checks the Poli example.

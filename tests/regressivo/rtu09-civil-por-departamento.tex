@@ -1,0 +1,34 @@
+%% Teste de regressao da CoppeTeX. NAO roda na suite normal.
+%% Rode com: python tests/regressivo/run-regressivo.py
+%% BUG: nao havia defeito antigo aqui -- este teste guarda a SEGUNDA forma da
+%% Engenharia Civil no estilo da Escola Politecnica (#170). Cinco siglas (DCC,
+%% DES, DEG, DET e DHIMA) sao departamentos que conferem o mesmo titulo,
+%% Engenheiro Civil, e que a poli.cls nomeava como curso. Por padrao o estilo
+%% da o curso, Engenharia Civil (rtu07); com a opcao civilpordepartamento ele
+%% da o nome do departamento, como a poli.cls fazia. O titulo conferido e o
+%% mesmo nas duas.
+%% ESPERA-TEXTO-PAGINA: 1::CURSO DE ESTRUTURAS
+%% ESPERA-TEXTO-PAGINA: 2::Projeto de Graduacao apresentado ao Curso de Estruturas, Escola Politecnica, Universidade Federal do Rio de Janeiro, como requisito parcial a obtencao do titulo de Engenheiro Civil.
+%% ESPERA-TEXTO-PAGINA: 5::Projeto de Graduacao (Graduacao em Estruturas)
+%% NAO-ESPERA-TEXTO: Engenharia Civil
+\documentclass[grad]{ufrj}
+\usepackage[civilpordepartamento]{ufrj-poli}
+\title{Palavra que so existe aqui}
+\foreigntitle{Word found only here}
+\author{Nome}{Sobrenome}
+\advisor{Primeiro}{Orientador}{D.Sc.}{UFRJ}
+\examiner{Primeiro Orientador}{D.Sc.}{UFRJ}
+\department{DES}
+\date{09}{2026}
+\keyword{regressao}
+\foreignkeyword{regression}
+\begin{document}
+  \maketitle
+  \frontmatter
+  \begin{abstract}Corpo do resumo.\end{abstract}
+  \begin{foreignabstract}Body of the abstract.\end{foreignabstract}
+  \tableofcontents
+  \mainmatter
+  \chapter{Um capitulo}
+  Texto.
+\end{document}

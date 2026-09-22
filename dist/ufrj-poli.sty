@@ -38,16 +38,29 @@
   \PackageWarningNoLine{ufrj-poli}{O estilo da Escola Politecnica e para o
     Projeto de Graduacao:\MessageBreak use \string\documentclass[grad]{ufrj}}
 \fi
+\newif\if@ufrjpolidepcivil \@ufrjpolidepcivilfalse
+\DeclareOption{civilporcurso}{\@ufrjpolidepcivilfalse}
+\DeclareOption{civilpordepartamento}{\@ufrjpolidepciviltrue}
+\ProcessOptions\relax
 \ufrjdeclareunit{Escola Politécnica}{Escola Politécnica}{POLI}
 \IfFileExists{poli-logo.pdf}
   {\ufrjdeclarelogo[2cm]{poli-logo}}
   {\PackageWarningNoLine{ufrj-poli}{poli-logo.pdf nao encontrado: a capa sai
      so com o logotipo da UFRJ}}
-\ufrjdeclareprogram[Engenheiro Civil]{DCC}{Engenharia Civil}{Civil Engineering}
-\ufrjdeclareprogram[Engenheiro Civil]{DES}{Engenharia Civil}{Civil Engineering}
-\ufrjdeclareprogram[Engenheiro Civil]{DEG}{Engenharia Civil}{Civil Engineering}
-\ufrjdeclareprogram[Engenheiro Civil]{DET}{Engenharia Civil}{Civil Engineering}
-\ufrjdeclareprogram[Engenheiro Civil]{DHIMA}{Engenharia Civil}{Civil Engineering}
+\if@ufrjpolidepcivil
+  \ufrjdeclareprogram[Engenheiro Civil]{DCC}{Construção Civil}{Civil Engineering}
+  \ufrjdeclareprogram[Engenheiro Civil]{DES}{Estruturas}{Civil Engineering}
+  \ufrjdeclareprogram[Engenheiro Civil]{DEG}{Expressão Gráfica}{Civil Engineering}
+  \ufrjdeclareprogram[Engenheiro Civil]{DET}{Engenharia de Transportes}{Civil Engineering}
+  \ufrjdeclareprogram[Engenheiro Civil]{DHIMA}{Recursos Hídricos e Meio Ambiente}
+    {Civil Engineering}
+\else
+  \ufrjdeclareprogram[Engenheiro Civil]{DCC}{Engenharia Civil}{Civil Engineering}
+  \ufrjdeclareprogram[Engenheiro Civil]{DES}{Engenharia Civil}{Civil Engineering}
+  \ufrjdeclareprogram[Engenheiro Civil]{DEG}{Engenharia Civil}{Civil Engineering}
+  \ufrjdeclareprogram[Engenheiro Civil]{DET}{Engenharia Civil}{Civil Engineering}
+  \ufrjdeclareprogram[Engenheiro Civil]{DHIMA}{Engenharia Civil}{Civil Engineering}
+\fi
 \ufrjdeclareprogram[Engenheiro Elétrico]{DEE}
   {Engenharia Elétrica}{Electrical Engineering}
 \ufrjdeclareprogram[Engenheiro Mecânico]{DEM}
