@@ -312,6 +312,17 @@ top of `CORRECOES_MANUAL_2026.md`.
 
 ### Fixed
 
+- **Jurisprudence follows the text of 4.2.6.2** (#169). The date of judgement
+  now comes right after the rapporteur, preceded by "julgado em" and
+  abbreviated — "Relator: Ministro Rafael Mayer, julgado em 26 fev. 1986" —, as
+  the section's own second example does; it had no place before, and whoever
+  wanted it typed it into the `location` field, as the expected output of
+  `m-4262` did. The label is a language string now, with the feminine form in
+  the new `relatora` field ("Relatora: Min. Ellen Gracie"); it used to be the
+  word "Relator" written in the class code, printed in every language. That
+  second example joins the expected output of both databases (`m-4262b`,
+  `pt-4262b`), so they now hold the 34 categories of 4.2 plus it. `rt78` covers
+  both forms.
 - **The access date is in the language of the work** (#167). Since #146 the
   month of an entry with `langid` follows Annex A of NBR 6023 in the
   publication's language, and the access month went along: "Acesso em: 26 May

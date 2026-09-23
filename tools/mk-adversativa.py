@@ -154,6 +154,9 @@ PROVA_REFS = [
     ("m-4251",  "4.2.5.1 patente em meio eletrônico"),
     ("m-4261",  "4.2.6.1 legislação"),
     ("m-4262",  "4.2.6.2 jurisprudência"),
+    # O segundo exemplo da 4.2.6.2, o que segue o texto da norma: relatora e a
+    # data do julgamento com "julgado em" (#169).
+    ("m-4262b", "4.2.6.2 jurisprudência, segundo exemplo"),
     ("m-4263",  "4.2.6.3 ato administrativo normativo"),
     ("m-427",   "4.2.7 documento jurídico em meio eletrônico"),
     ("m-428",   "4.2.8 documento civil e de cartório"),

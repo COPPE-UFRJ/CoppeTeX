@@ -50,8 +50,8 @@ for nome, texto in textos:
 confere = carrega("conferir_referencias", os.path.join(RAIZ, "tools", "conferir-referencias.py"))
 for base, prefixo in ((os.path.join(SRC, "exemplo.bib"), "m-"), (ADV, "pt-")):
     gab = {k: v for k, v in confere.gabaritos(base).items() if k.startswith(prefixo)}
-    if len(gab) != 34:
-        problemas.append("%s: o conferir-referencias leu %d gabaritos %s*, e sao 34"
+    if len(gab) != 35:
+        problemas.append("%s: o conferir-referencias leu %d gabaritos %s*, e sao 35"
                          % (os.path.basename(base), len(gab), prefixo))
     aceitas = [k for k, (ref, mot, classe) in gab.items() if mot]
     if not aceitas:

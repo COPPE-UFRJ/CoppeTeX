@@ -15,7 +15,9 @@ Cobra-se, sem compilar:
   2. a comparacao: a divergencia aceita so passa quando a classe compoe a forma
      do @comment{Classe: ...}; sem essa forma, com outra saida, ou com a nota
      velha (a classe ja compoe o Manual), e divergencia;
-  3. os 34 gabaritos de cada base sao o texto do Manual, lido do PDF de specs/;
+  3. os 35 gabaritos de cada base sao o texto do Manual, lido do PDF de specs/
+     (as 34 categorias da 4.2, e o segundo exemplo da 4.2.6.2, que e o que segue
+     o texto da norma);
   4. toda divergencia aceita das duas bases traz a forma da classe.
 """
 import importlib.util
@@ -105,8 +107,8 @@ else:
     texto = cr._saida(["pdftotext", "-enc", "UTF-8", "-layout", cr.MANUAL, "-"])
     for base in cr.BASES:
         gab = cr.gabaritos(base)
-        if len(gab) != 34:
-            problemas.append("%s: %d gabaritos lidos, e sao 34" % (os.path.basename(base), len(gab)))
+        if len(gab) != 35:
+            problemas.append("%s: %d gabaritos lidos, e sao 35" % (os.path.basename(base), len(gab)))
         fora = cr.fora_do_manual(gab, texto)
         if fora:
             problemas.append("%s: gabarito que nao e o texto do Manual: %s"

@@ -695,8 +695,16 @@
   \setunit{\labelnamepunct}\newblock
   \usebibmacro{title}%
   \newunit\newblock
-  % Jurisprudência: "Relator: <nome>." after the decision title (NBR 6023).
-  \iffieldundef{relator}{}{\printtext{Relator\addcolon\space}\printfield{relator}\newunit\newblock}%
+  \ifboolexpr{ test {\iffieldundef{relator}} and test {\iffieldundef{relatora}} }
+    {}
+    {\iffieldundef{relatora}
+       {\printtext{\bibstring{ufrjrelator}\addcolon\space}\printfield{relator}}
+       {\printtext{\bibstring{ufrjrelatora}\addcolon\space}\printfield{relatora}}%
+     \ifboolexpr{ test {\ifentrytype{jurisdiction}} and not test {\iffieldundef{year}} }
+       {\setunit{\addcomma\space}%
+        \printtext{\bibstring{ufrjjudged}\addspace}\printdate\clearfield{year}}
+       {}%
+     \newunit\newblock}%
   \printfield{edition}%
   \newunit\newblock
   \printlist{location}%
