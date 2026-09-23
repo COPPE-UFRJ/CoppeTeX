@@ -1907,6 +1907,9 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor i
 % cada Programa -- nem todo Programa tem logotipo (Norma COPPE, secao 1; #162).
 % O da UFRJ, a esquerda, e da classe.
 \ufrjdeclarelogo[2cm]{coppe-logo}
+% A COPPE fica no Rio de Janeiro. E declaracao de padrao, e nao imposicao: se o
+% autor escrever \city{Macae}, vale a dele.
+\ufrjdeclareplace{Rio de Janeiro}{RJ}{Brasil}
 % Secao 3: os treze Programas, com o nome em portugues e em ingles. O nome em
 % ingles so aparece na folha do abstract.
 \ufrjdeclareprogram{PEB} {Engenharia Biomédica}{Biomedical Engineering}
@@ -2023,10 +2026,10 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor i
   \string\documentclass[...]{ufrj} e acrescente\MessageBreak
   \string\usepackage{ufrj-coppe} logo abaixo}
 \LoadClassWithOptions{ufrj}
-% A ordem dos pre-textuais fora da 3.1.2 e erro na classe ufrj; aqui, aviso: os
-% modelos da 4.x ensinavam outra ordem, e o trabalho antigo tem de compilar
-% como esta (#148).
-\@ufrjordemavisotrue
+% A classe coppe NAO relaxa regra nenhuma da ufrj: a ordem dos pre-textuais da
+% 3.1.2 e erro aqui tambem (decisao de 23/09/2026). Ate aqui era aviso, porque
+% os modelos da 4.x ensinavam outra ordem; o trabalho antigo se ajusta, e a
+% mensagem diz o que mover para onde.
 \RequirePackage{ufrj-coppe}
 %</compat>
 %    \end{macrocode}

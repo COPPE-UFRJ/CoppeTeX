@@ -112,6 +112,30 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % necessários'' na natureza, que o modelo do SiBI escreve ``como requisito
 % parcial''.
 %
+% \section{Os cursos}
+%
+% O estilo declara \textbf{um curso para cada curso de graduação da Escola},
+% pela lista da própria Escola
+% (\url{https://poli.ufrj.br/ensino/graduacao/cursos/}, conferida em
+% 23/09/2026): os treze de Engenharia --- Ambiental, Civil, Computação e
+% Informação, Controle e Automação, Elétrica, Eletrônica e de Computação,
+% Materiais, Mecânica, Metalúrgica, Naval e Oceânica, Nuclear, Petróleo e
+% Produção --- e o de Nanotecnologia. A sigla é o nome do curso:
+% |\department{PETROLEO}|, |\department{CONTROLE}|.
+%
+% \textbf{As siglas de departamento da |poli| continuam valendo} --- |DCC|,
+% |DES|, |DEG|, |DET|, |DHIMA|, |DEE|, |DEM|, |DMM|, |DNC|, |DENO|, |DEI|,
+% |ECI| e |DEL| ---, cada uma com o curso do seu departamento e com o título
+% que a |poli| conferia, para que o trabalho escrito com ela continue
+% compilando. Duas notas sobre elas: |DMM| era um departamento só e hoje são
+% dois cursos, Metalúrgica e Materiais, e por isso a sigla antiga guarda o
+% nome que a |poli| dava aos dois juntos; e o curso de Nanotecnologia não
+% existia nela.
+%
+% O título do curso de Nanotecnologia não está declarado: ele não se chama
+% Engenharia, e a classe compõe ``Bacharel em Nanotecnologia'' até a Escola
+% dizer qual é.
+%
 % \section{As duas formas da Engenharia Civil}
 %
 % Cinco siglas --- DCC, DES, DEG, DET e DHIMA --- são \emph{departamentos} que
@@ -140,6 +164,24 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % Elétrico'', ``Engenheiro Naval'', ``Engenheiro Eletrônico e de Computação'' e os
 % demais ---, por decisão do mantenedor em 21/09/2026: estão certos, e não se
 % trocam por outra forma que pareça mais usual.
+%
+% \section{A família da letra}
+%
+% \DescribeMacro{times}
+% \DescribeMacro{arial}
+% A Resolução 05/2012 da Escola fala em ``letra de tamanho equivalente a Times
+% New Roman 12 ou Arial 11''. O \emph{tamanho} é do Manual, que fixa 12 (2.2b)
+% e não nomeia família; a família é escolha da Escola, e o estilo a oferece:
+%
+% \begin{verbatim}
+%   \usepackage[times]{ufrj-poli}   % com serifa, no desenho do Times
+%   \usepackage[arial]{ufrj-poli}   % sem serifa, no desenho do Arial
+% \end{verbatim}
+%
+% Sem opção nenhuma vale a fonte da classe, a Latin Modern, que é a testada com
+% o PDF/A e com a matemática. O corpo continua 12 nas três: o ``Arial 11'' da
+% Resolução está superado pelo Manual, como diz o
+% |NAO-CONFORMIDADES-POLI.md|.
 %
 % \section{O logotipo}
 %
@@ -171,21 +213,84 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \newif\if@ufrjpolidepcivil \@ufrjpolidepcivilfalse
 \DeclareOption{civilporcurso}{\@ufrjpolidepcivilfalse}
 \DeclareOption{civilpordepartamento}{\@ufrjpolidepciviltrue}
+% A familia da letra. A Resolucao 05/2012 da Escola fala em "letra de tamanho
+% equivalente a Times New Roman 12 ou Arial 11": o TAMANHO e do Manual, que
+% fixa 12 (2.2b) e nao nomeia familia, e a familia e escolha da Escola. Sem
+% opcao, vale a fonte da classe -- a Latin Modern, que e a testada com o PDF/A
+% e com a matematica.
+\newif\if@ufrjpolitimes \@ufrjpolitimesfalse
+\newif\if@ufrjpoliarial \@ufrjpoliarialfalse
+\DeclareOption{times}{\@ufrjpolitimestrue}
+\DeclareOption{arial}{\@ufrjpoliarialtrue}
 \ProcessOptions\relax
+\if@ufrjpolitimes
+  \RequirePackage{newtxtext}
+  \RequirePackage{newtxmath}
+\fi
+\if@ufrjpoliarial
+  \RequirePackage[scaled]{helvet}
+  \renewcommand\familydefault{\sfdefault}
+\fi
 % A unidade: o nome por extenso (referencia e natureza), o nome da capa e a
 % sigla.
 \ufrjdeclareunit{Escola Politécnica}{Escola Politécnica}{POLI}
 % O logotipo da Escola, a direita da capa, se o arquivo existir.
-\IfFileExists{poli-logo.pdf}
+% O arquivo pode estar em logos/ (a pasta da distribuicao) ou ao lado do
+% trabalho, que e onde a classe o procura, nessa ordem.
+\IfFileExists{logos/poli-logo.pdf}
   {\ufrjdeclarelogo[2cm]{poli-logo}}
-  {\PackageWarningNoLine{ufrj-poli}{poli-logo.pdf nao encontrado: a capa sai
-     so com o logotipo da UFRJ}}
-% Os departamentos da Escola, pela sigla, com o curso e o titulo que ele
-% confere. Os cinco primeiros sao da Engenharia Civil, nas duas formas: o
-% curso (padrao) ou o nome do departamento, com a opcao do pacote. Um so
-% \ufrjdeclareprogram por sigla nos dois casos -- o segundo apagaria o
-% primeiro, e um estilo com a sigla declarada duas vezes esconderia qual das
-% duas vale.
+  {\IfFileExists{poli-logo.pdf}
+    {\ufrjdeclarelogo[2cm]{poli-logo}}
+    {\PackageWarningNoLine{ufrj-poli}{poli-logo.pdf nao encontrado: a capa sai
+       so com o logotipo da UFRJ}}}
+% A Escola fica no Rio de Janeiro. E declaracao de padrao, e nao imposicao: se
+% o autor escrever \city{Macae}, vale a dele.
+\ufrjdeclareplace{Rio de Janeiro}{RJ}{Brasil}
+% ---------------------------------------------------------------------------
+% OS CURSOS DE GRADUACAO DA ESCOLA, um \ufrjdeclareprogram para cada um, com o
+% titulo que ele confere. A lista e a da propria Escola
+% (poli.ufrj.br/ensino/graduacao/cursos), conferida em 23/09/2026: treze cursos
+% de Engenharia e o de Nanotecnologia. A sigla e o nome do curso, sem
+% abreviatura que ninguem reconheca; as siglas de DEPARTAMENTO da poli.cls
+% continuam valendo, mais abaixo.
+\ufrjdeclareprogram[Engenheiro Ambiental]{AMBIENTAL}
+  {Engenharia Ambiental}{Environmental Engineering}
+\ufrjdeclareprogram[Engenheiro Civil]{CIVIL}
+  {Engenharia Civil}{Civil Engineering}
+\ufrjdeclareprogram[Engenheiro de Computação e Informação]{COMPUTACAO}
+  {Engenharia de Computação e Informação}{Computer and Information Engineering}
+\ufrjdeclareprogram[Engenheiro de Controle e Automação]{CONTROLE}
+  {Engenharia de Controle e Automação}{Control and Automation Engineering}
+\ufrjdeclareprogram[Engenheiro Elétrico]{ELETRICA}
+  {Engenharia Elétrica}{Electrical Engineering}
+\ufrjdeclareprogram[Engenheiro Eletrônico e de Computação]{ELETRONICA}
+  {Engenharia Eletrônica e de Computação}{Electronic and Computer Engineering}
+\ufrjdeclareprogram[Engenheiro de Materiais]{MATERIAIS}
+  {Engenharia de Materiais}{Materials Engineering}
+\ufrjdeclareprogram[Engenheiro Mecânico]{MECANICA}
+  {Engenharia Mecânica}{Mechanical Engineering}
+\ufrjdeclareprogram[Engenheiro Metalúrgico]{METALURGICA}
+  {Engenharia Metalúrgica}{Metallurgical Engineering}
+\ufrjdeclareprogram[Engenheiro Naval]{NAVAL}
+  {Engenharia Naval e Oceânica}{Naval and Ocean Engineering}
+\ufrjdeclareprogram[Engenheiro Nuclear]{NUCLEAR}
+  {Engenharia Nuclear}{Nuclear Engineering}
+\ufrjdeclareprogram[Engenheiro de Petróleo]{PETROLEO}
+  {Engenharia de Petróleo}{Petroleum Engineering}
+\ufrjdeclareprogram[Engenheiro de Produção]{PRODUCAO}
+  {Engenharia de Produção}{Production Engineering}
+% A Nanotecnologia e curso de graduacao da Escola, e nao se chama Engenharia: o
+% titulo fica com o padrao da classe, "Bacharel em Engenharia..." -- na
+% verdade, "Bacharel em" o nome do curso -- ate a Escola dizer qual e.
+\ufrjdeclareprogram{NANOTECNOLOGIA}
+  {Nanotecnologia}{Nanotechnology}
+% ---------------------------------------------------------------------------
+% AS SIGLAS DE DEPARTAMENTO da poli.cls, que o trabalho escrito com ela usa.
+% Cada uma leva ao curso do seu departamento; o titulo e o que a poli.cls
+% conferia. Os cinco da Engenharia Civil vao nas duas formas: o curso (padrao)
+% ou o nome do departamento, com a opcao do pacote. Um so \ufrjdeclareprogram
+% por sigla nos dois casos -- o segundo apagaria o primeiro, e um estilo com a
+% sigla declarada duas vezes esconderia qual das duas vale.
 \if@ufrjpolidepcivil
   \ufrjdeclareprogram[Engenheiro Civil]{DCC}{Construção Civil}{Civil Engineering}
   \ufrjdeclareprogram[Engenheiro Civil]{DES}{Estruturas}{Civil Engineering}
@@ -204,6 +309,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   {Engenharia Elétrica}{Electrical Engineering}
 \ufrjdeclareprogram[Engenheiro Mecânico]{DEM}
   {Engenharia Mecânica}{Mechanical Engineering}
+% O departamento e um so, e hoje sao dois cursos: METALURGICA e MATERIAIS. A
+% sigla antiga guarda o nome que a poli.cls dava aos dois juntos.
 \ufrjdeclareprogram[Engenheiro Metalúrgico e de Materiais]{DMM}
   {Engenharia Metalúrgica e de Materiais}{Metallurgical and Materials Engineering}
 \ufrjdeclareprogram[Engenheiro Nuclear]{DNC}
@@ -230,6 +337,86 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \ufrjdefunitstring{french}   {tounit}{à l'École Polytechnique/UFRJ}
 \ufrjdefunitstring{italian}  {tounit}{alla Scuola Politecnica/UFRJ}
 %</package>
+%    \end{macrocode}
+%
+% \section{A classe \texttt{poli}, de compatibilidade}
+%
+% A Escola usava uma classe |poli|, derivada da \CoppeTeX\ 2.3. O trabalho
+% escrito com ela continua compilando: |\documentclass[grad]{poli}| carrega a
+% classe |ufrj| com o estilo |ufrj-poli| e avisa, uma vez, como se escreve
+% hoje. É o mesmo que a classe |coppe| faz pela COPPE.
+%
+% \textbf{Ela não relaxa regra nenhuma da classe.} A ordem dos pré-textuais da
+% 3.1.2, por exemplo, continua sendo erro de compilação, e não aviso: a classe
+% |coppe| a rebaixa a aviso por causa do acervo da 4.x, escrito quando os
+% modelos ensinavam outra ordem, e aqui não há esse acervo --- o que vale é a
+% regra da classe |ufrj|, e o documento antigo se ajusta a ela.
+%
+% Três comandos tinham outra assinatura na |poli| antiga, e ela volta a valer
+% aqui: |\advisor| e |\coadvisor| com \emph{quatro} argumentos obrigatórios
+% (tratamento, nome, sobrenome, grau) e |\examiner| com \emph{três}
+% (tratamento, nome completo, grau). Na classe |ufrj| o tratamento é argumento
+% opcional e a instituição é obrigatória --- a |poli| não a tinha, e por isso
+% ela sai vazia, que é o que a |poli| imprimia. A 3.1.2.1.3(e) pede a
+% instituição de cada membro da banca, e o |\examiner| antigo avisa isso uma
+% vez, para o autor completar.
+%
+% |\university| e |\place|, que a |poli| tinha e a classe não, hoje são
+% \emph{da classe} (a UFRJ tem campus em Macaé e em Duque de Caxias), e por
+% isso não há remendo para eles aqui.
+%
+% O que a classe de compatibilidade \textbf{não} faz é trocar o mecanismo de
+% bibliografia: a |poli| usava \BibTeX\ (|\bibliographystyle|,
+% |\bibliography|), e a 5.0 usa |biblatex| com |biber|. Esse trecho do
+% documento antigo tem de ser reescrito, e o guia de migração diz como.
+%
+%    \begin{macrocode}
+%<*compat>
+\NeedsTeXFormat{LaTeX2e}[2020/10/01]
+\ProvidesClass{poli}[2026/09/23 v5.0 CoppeTeX compatibility class: ufrj with ufrj-poli]
+\ClassWarningNoLine{poli}{A classe poli agora e a classe ufrj com o estilo\MessageBreak
+  ufrj-poli. Este documento compila como esta, mas troque\MessageBreak
+  \string\documentclass[grad]{poli} por\MessageBreak
+  \string\documentclass[grad]{ufrj} e acrescente\MessageBreak
+  \string\usepackage{ufrj-poli} logo abaixo}
+% As opcoes de motor da poli antiga: o pdftex, o dvips e o dvipdfm iam para o
+% hyperref e o graphicx, que hoje se viram sozinhos. Sao aceitas e ignoradas,
+% para o documento antigo nao parar em "unknown option".
+\DeclareOption{pdftex}{}
+\DeclareOption{dvips}{}
+\DeclareOption{dvipdfm}{}
+\DeclareOption*{\PassOptionsToClass{\CurrentOption}{ufrj}}
+\ProcessOptions\relax
+\LoadClass{ufrj}
+% A classe poli NAO relaxa regra nenhuma da ufrj: a ordem dos pre-textuais
+% fora da 3.1.2 continua sendo ERRO, e nao aviso (decisao de 23/09/2026). A
+% classe coppe faz o contrario porque tem o acervo da 4.x atras dela, escrito
+% quando os modelos ensinavam outra ordem; aqui o que vale e a regra da
+% classe, e o documento antigo se ajusta a ela.
+\RequirePackage{ufrj-poli}
+% As tres assinaturas da poli antiga. A instituicao, que ela nao tinha, sai
+% vazia -- o argumento e obrigatorio na classe, mas aceita ficar em branco.
+\let\ufrjpoli@advisor\advisor
+\renewcommand\advisor[4]{\ufrjpoli@advisor[#1]{#2}{#3}{#4}{}}
+\let\ufrjpoli@coadvisor\coadvisor
+\renewcommand\coadvisor[4]{\ufrjpoli@coadvisor[#1]{#2}{#3}{#4}{}}
+% A forma antiga do \examiner nao tem instituicao, e a 3.1.2.1.3(e) pede o
+% nome, a titulacao E a instituicao de cada membro da banca. O documento
+% compila, e o aviso diz o que falta -- uma vez, e nao a cada membro.
+\newif\if@ufrjpoliavisoexaminador \@ufrjpoliavisoexaminadortrue
+\let\ufrjpoli@examiner\examiner
+\renewcommand\examiner[3]{%
+  \if@ufrjpoliavisoexaminador
+    \ClassWarningNoLine{poli}{A forma antiga do \string\examiner\space nao tem
+      instituicao,\MessageBreak e a 3.1.2.1.3(e) a pede: escreva\MessageBreak
+      \string\examiner{Nome Sobrenome}{D.Sc.}{UFRJ}}%
+    \@ufrjpoliavisoexaminadorfalse
+  \fi
+  \ufrjpoli@examiner{#1\ #2}{#3}{}}
+% \university e \place sao da CLASSE desde 23/09/2026 -- a UFRJ tem campus fora
+% do Rio --, e por isso nao ha remendo aqui: o documento antigo os chama e eles
+% funcionam.
+%</compat>
 %    \end{macrocode}
 %
 % \section{O exemplo}

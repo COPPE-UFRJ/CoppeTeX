@@ -63,6 +63,18 @@ nas edições que o Manual cita e por meio dele; onde uma delas diverge do Manua
 vale o Manual, e a divergência é registrada como aviso — a lista das conhecidas
 está no manual da classe, na seção "Quem manda, quando as fontes divergem".
 
+## A norma da Escola Politécnica
+
+`Anexo_Resolucao_n_05_de_2012-Estabelece_Normas_Elaboracao_Grafica_Projeto_de_Graduacao-1.pdf`
+— a norma gráfica do Projeto de Graduação da Escola Politécnica, de 2012. É
+**anterior ao Manual vigente** e o contraria em treze pontos, entre eles a
+numeração das folhas pré-textuais, a ordem dos elementos, a posição da legenda
+das figuras e o formato das referências, que ela baseia na NB-66 — norma da
+ABNT substituída em 1989. A conferência item a item está no
+[`NAO-CONFORMIDADES-POLI.md`](../NAO-CONFORMIDADES-POLI.md), e o que continua
+valendo dela está na proposta de norma nova,
+[`src/PROPOSTA-DE-RESOLUCAO.tex`](../src/PROPOSTA-DE-RESOLUCAO.tex).
+
 ## Também nesta pasta
 
 - `ANOTACOES.md` — anotações de Geraldo Xexéo feitas na 9.ª ed. (2025) do

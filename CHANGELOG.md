@@ -90,6 +90,37 @@ top of `CORRECOES_MANUAL_2026.md`.
 
 ### Added
 
+- **The Escola Politécnica's own rule, read and answered** (#170). The school's
+  graphic norm (Resolução 05/2012, in `specs/`) is older than the Manual and
+  contradicts it in thirteen points — pre-textual folios in roman numerals, the
+  sumário before the lists, figure captions below the illustration, the
+  approval sheet in capitals, the hand-drawn catalog card, a blue hard cover
+  and, above all, references based on NB-66, an ABNT standard replaced in 1989.
+  `NAO-CONFORMIDADES-POLI.md` checks it item by item: where it contradicts the
+  Manual it is superseded, and where it only chooses among what the Manual
+  leaves open the choice stands and is implemented. What stands: the font
+  family (new `times` and `arial` options of `ufrj-poli`, with the body size
+  staying 12, which is what the Manual fixes), the choice between the numeric
+  and the author-date citation systems, the 250-word abstract, the course
+  naming "Curso de Engenharia X" and the school's colour mark on the cover,
+  beside UFRJ's. `src/PROPOSTA-DE-RESOLUCAO.tex` is the minimal norm proposed
+  in its place, in the same shape as the COPPE one. `rtu13` covers the fonts.
+- **The city, the state and the country of the work belong to the class**
+  (#170). UFRJ has campuses in Macaé and in Duque de Caxias, and the city heads
+  the capa and closes the reference on the abstract sheets, so `\city`,
+  `\state`, `\country` and `\place` are class commands now, with
+  `\university` beside them; the unit style declares its own default with
+  `\ufrjdeclareplace` (COPPE and the Escola Politécnica declare Rio de
+  Janeiro), and what the author writes always wins over it. `rtu12` checks a
+  work defended in Macaé.
+- **Every undergraduate course of the Escola Politécnica** (#170): the style
+  declares the thirteen Engineering courses of the school's own list — plus
+  Nanotecnologia — with the title each one confers, and keeps the thirteen
+  department acronyms of the old `poli.cls` working. The new `poli` class loads
+  `ufrj` with `ufrj-poli` and accepts the old signatures (`\advisor` with four
+  arguments, `\examiner` with three), warning once that the board is left
+  without the institution 3.1.2.1.3(e) asks for. `rtu10` and `rtu11` cover
+  them.
 - **The uncertain dates of 4.3.5** (#168): write in `year` the form the Manual
   shows — `{[1981?]}`, `{[ca. 1977]}`, `{[197-]}`, `{[197-?]}`, `{[19--]}`,
   `{[19--?]}`, `{[1071 ou 1072]}`, `{[1987]}` — and it comes out as typed, in
@@ -145,6 +176,12 @@ top of `CORRECOES_MANUAL_2026.md`.
 
 ### Changed
 
+- **The order of the pre-textual elements is an error in every class** (#148,
+  decision of 2026-09-23). The `coppe` compatibility class used to downgrade it
+  to a warning, because the 4.x models taught another order; there is no
+  switch any more, and the new `poli` class never had one. A document that is
+  right in one class is right in all of them, and the message says what to move
+  where.
 - **What the COPPE norm may decide, and which ABNT editions apply** (#161,
   #163). The COPPE norm does not contradict the Manual: it decides only where
   the Manual does not oblige, and then sides with the Manual's examples; the

@@ -19,6 +19,7 @@
     langs    - class + os cinco example_<lang>.tex
     tests    - class + a suíte tests/run-tests.ps1
     docs     - class + ufrj.pdf (manual), NORMA_COPPE_2026.pdf,
+               PROPOSTA-DE-RESOLUCAO.pdf (a proposta da Escola Politecnica),
                manual.pdf e covers_5languages.pdf
     pdfa     - class + max-exemplo.tex e min-exemplo.tex (que usam pdfa), tests/test_pdfa.tex e
                tests/test_comserifa.tex, e passa os tres
@@ -398,6 +399,8 @@ if ($Scope -in @("docs", "all")) {
 
     Build-Tex -Stem "manual"     -Dir $src -WithBiber
     Build-Tex -Stem "NORMA_COPPE_2026"     -Dir $src
+    # A proposta de norma da Escola Politecnica, no mesmo desenho (#170).
+    Build-Tex -Stem "PROPOSTA-DE-RESOLUCAO" -Dir $src
 
     # covers_5languages monta uma montagem das cinco capas a partir de PNGs
     # extraidos dos example_<lang>.pdf. Sem pdftoppm (poppler) nao ha como

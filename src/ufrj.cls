@@ -1176,20 +1176,13 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \renewcommand\foreign@doctype{#6}%
 }
 \newif\if@ufrjordem
-\newif\if@ufrjordemaviso
 \newcount\ufrj@ordemposto
 \newcommand*\ufrj@ordemnome{}
 \newcommand*\ufrj@ordemcmd{}
 \newcommand\ufrj@ordem[3]{%
   \if@ufrjordem
     \ifnum#1<\ufrj@ordemposto
-      \if@ufrjordemaviso
-        \ClassWarning{ufrj}{Fora da ordem da 3.1.2 do Manual: #3 (#2)\MessageBreak
-          depois de \ufrj@ordemcmd\space(\ufrj@ordemnome). Mova #3\MessageBreak
-          para antes de \ufrj@ordemcmd: com a classe ufrj, isto\MessageBreak
-          e erro}%
-      \else
-        \ClassError{ufrj}{Fora da ordem da 3.1.2 do Manual: #3 (#2)\MessageBreak
+      \ClassError{ufrj}{Fora da ordem da 3.1.2 do Manual: #3 (#2)\MessageBreak
           depois de \ufrj@ordemcmd\space(\ufrj@ordemnome)}{%
           A 3.1.2 do Manual poe os elementos pre-textuais nesta ordem:\MessageBreak
           folha de rosto, folha adicional, errata, folha de aprovacao,\MessageBreak
@@ -1197,7 +1190,6 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
           resumo em lingua estrangeira, listas de ilustracoes, lista de\MessageBreak
           tabelas, lista de abreviaturas e siglas, lista de simbolos\MessageBreak
           e sumario. Mova #3 para antes de \ufrj@ordemcmd.}%
-      \fi
     \else
       \global\ufrj@ordemposto=#1\relax
       \xdef\ufrj@ordemnome{#2}%
@@ -2333,6 +2325,18 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \newcommand\local@cityname{Rio de Janeiro}
 \newcommand\local@statename{RJ}
 \newcommand\local@countryname{Brasil}
+\newif\if@ufrjlocaldoautor \@ufrjlocaldoautorfalse
+\newcommand\city[1]{\gdef\local@cityname{#1}\@ufrjlocaldoautortrue}
+\newcommand\state[1]{\gdef\local@statename{#1}\@ufrjlocaldoautortrue}
+\newcommand\country[1]{\gdef\local@countryname{#1}\@ufrjlocaldoautortrue}
+\newcommand\place[3]{\city{#1}\state{#2}\country{#3}}
+\newcommand\university[1]{\gdef\local@universityname{#1}}
+\newcommand\ufrjdeclareplace[3]{%
+  \if@ufrjlocaldoautor\else
+    \gdef\local@cityname{#1}%
+    \gdef\local@statename{#2}%
+    \gdef\local@countryname{#3}%
+  \fi}
 \newcommand\frontcover@maintext{
   \sloppy\nohyphens{\ufrj@unitstr{brazilian}{natureza}}%
   \if@ufrjarearosto

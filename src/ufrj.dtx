@@ -212,6 +212,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \changes{v5.0}{2026/09/17}{The line numbers of a listing stay inside the margin. The five language styles number the lines on the left, and without xleftmargin the listings package indents the code and leaves the number outside the 3 cm margin of 2.3.}
 % \changes{v5.0}{2026/09/17}{Footnotes start at the left margin and hang: from the second line the text aligns under the first letter, not under the mark, as 4.2 asks of a reference in a note -- the class used book's makefntext, which indented the mark by parindent and returned the second line to the margin. A footnote no longer splits across sheets either.}
 % \changes{v5.0}{2026/09/17}{PDF/A-2b is the default output, and the new option sempdfa turns it off. 2.2(d) of the Manual requires the final digital version to be PDF/A, the deposit has been digital only since Resolucao CEPG n. 246/2023, and the class already produced conformant PDF/A -- but only when asked, so a work written without reading the manual was deposited off the norm. The v4.1 option pdfa is still accepted and now does nothing.}
+% \changes{v5.0}{2026/09/23}{The order of the pre-textual elements of 3.1.2 is an error in every class of the project, the compatibility ones included: the coppe class no longer downgrades it to a warning, and there is no switch. A document that is right in one class is right in all of them.}
+% \changes{v5.0}{2026/09/23}{The city, the state and the country of the work are the class's, not the unit's: UFRJ has campuses in Macae and in Duque de Caxias, and the city heads the capa and the reference of the abstract sheets. city, state, country and place set them, university sets the university's name, and the unit declares its own default with ufrjdeclareplace, which never overrides what the author chose.}
 % \changes{v5.0}{2026/09/23}{The uncertain dates of 4.3.5 are written as the Manual shows them -- year = {[19--?]}, {[ca. 1977]}, {[197-]}, {[1071 ou 1072]} -- and come out as typed, in the reference and in the citation. The literal goes to the ufrjyear field and the year keeps the number inside it, so biber sorts and no longer warns; the two hyphens do not become a dash, and the full stop after a bracket that closes on a question mark is not swallowed.}
 % \changes{v5.0}{2026/09/23}{Jurisprudence follows the text of 4.2.6.2: the date of judgement comes after the rapporteur, preceded by julgado em and abbreviated -- Relator: Ministro Rafael Mayer, julgado em 26 fev. 1986 --, and the feminine relatora field prints Relatora. The label was the literal word Relator, in every language, and the date of judgement had no place: it was typed into the location field.}
 % \changes{v5.0}{2026/09/21}{New work type grad, the undergraduate work (TCC, or Projeto de Graduacao at the Escola Politecnica): presented to a Course, with the title the course confers -- the new optional argument of ufrjdeclareprogram --, the catalog card and the reference, and an additional sheet without the CAPES fields, which belong to theses and dissertations (3.1.2.1.2).}
@@ -5658,6 +5660,35 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % fica vazia. (A forma antiga, |\ufrjdeclarelogos|, com três argumentos,
 % continua aceita, com aviso, e ignora o logotipo da esquerda.)
 %
+%
+% \DescribeMacro{\city}
+% \DescribeMacro{\state}
+% \DescribeMacro{\country}
+% \DescribeMacro{\place}
+% \DescribeMacro{\university}
+% \textbf{Onde o trabalho é defendido.} A UFRJ não é só o Rio de Janeiro: há
+% campus em Macaé, em Duque de Caxias (Xerém) e fora da capital, e a cidade
+% aparece na capa, na folha de rosto, na ficha, na referência do alto dos
+% resumos e no colofão. |\city|\marg{cidade}, |\state|\marg{estado} e
+% |\country|\marg{país} trocam cada um deles, e |\place|\marg{cidade}\marg{%
+% estado}\marg{país} troca os três de uma vez:
+% \begin{verbatim}
+%   \city{Macaé}
+%   \place{Duque de Caxias}{RJ}{Brasil}
+% \end{verbatim}
+% O valor da classe é Rio de Janeiro, RJ, Brasil. O estilo da unidade declara
+% o dela com |\ufrjdeclareplace|\marg{cidade}\marg{estado}\marg{país} --- a
+% COPPE e a Escola Politécnica declaram o Rio de Janeiro ---, e \textbf{o que
+% você escrever prevalece} sobre a declaração da unidade, não importa a ordem.
+%
+% |\university|\marg{nome} troca o nome da universidade. É pro-forma --- todo
+% trabalho desta classe é da UFRJ ---, e existe para facilitar a adaptação de
+% quem chega de outra classe.
+%
+% \DescribeMacro{\ufrjdeclareplace}
+% Do lado da unidade, |\ufrjdeclareplace| é a declaração do padrão dela, e não
+% uma imposição: se o autor já tiver escolhido a cidade, ela fica com a dele.
+%
 % \DescribeMacro{\ufrjdeclarenorm}
 % |\ufrjdeclarenorm|\marg{artigo}\marg{título} troca a norma que o colofão diz
 % seguir. O artigo vem à parte porque a frase é ``em conformidade com
@@ -6267,12 +6298,12 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % aviso: e o unico elemento pre-textual que a 3.1.2.1.6 exige alem das folhas
 % que a classe ja compoe.
 \newif\if@ufrjordem
-% Pela classe coppe de compatibilidade (o \documentclass{coppe} da 4.x), a
-% ordem errada e AVISO, e nao erro: a compatibilidade promete que um trabalho
-% antigo compila como esta, e os modelos da 4.x ensinavam outra ordem -- o
-% sumario antes das listas, ou as listas de quadros, programas e algoritmos
-% depois da de tabelas, como a Norma COPPE mandava. O aviso diz o que mover.
-\newif\if@ufrjordemaviso
+% A ordem da 3.1.2 vale para TODA classe deste projeto, e fora dela e ERRO --
+% tambem nas classes de compatibilidade, coppe e poli (decisao de 23/09/2026).
+% Ate aqui a classe coppe rebaixava o erro a aviso, porque os modelos da 4.x
+% ensinavam outra ordem; o trabalho antigo passa a se ajustar a ordem oficial,
+% e a mensagem diz o que mover para onde. Nao ha interruptor: um documento
+% certo em uma classe e certo em todas.
 \newcount\ufrj@ordemposto
 \newcommand*\ufrj@ordemnome{}
 \newcommand*\ufrj@ordemcmd{}
@@ -6280,13 +6311,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \newcommand\ufrj@ordem[3]{%
   \if@ufrjordem
     \ifnum#1<\ufrj@ordemposto
-      \if@ufrjordemaviso
-        \ClassWarning{ufrj}{Fora da ordem da 3.1.2 do Manual: #3 (#2)\MessageBreak
-          depois de \ufrj@ordemcmd\space(\ufrj@ordemnome). Mova #3\MessageBreak
-          para antes de \ufrj@ordemcmd: com a classe ufrj, isto\MessageBreak
-          e erro}%
-      \else
-        \ClassError{ufrj}{Fora da ordem da 3.1.2 do Manual: #3 (#2)\MessageBreak
+      \ClassError{ufrj}{Fora da ordem da 3.1.2 do Manual: #3 (#2)\MessageBreak
           depois de \ufrj@ordemcmd\space(\ufrj@ordemnome)}{%
           A 3.1.2 do Manual poe os elementos pre-textuais nesta ordem:\MessageBreak
           folha de rosto, folha adicional, errata, folha de aprovacao,\MessageBreak
@@ -6294,7 +6319,6 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
           resumo em lingua estrangeira, listas de ilustracoes, lista de\MessageBreak
           tabelas, lista de abreviaturas e siglas, lista de simbolos\MessageBreak
           e sumario. Mova #3 para antes de \ufrj@ordemcmd.}%
-      \fi
     \else
       \global\ufrj@ordemposto=#1\relax
       \xdef\ufrj@ordemnome{#2}%
@@ -8128,6 +8152,31 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \newcommand\local@cityname{Rio de Janeiro}
 \newcommand\local@statename{RJ}
 \newcommand\local@countryname{Brasil}
+% --- Onde o trabalho e defendido, e a universidade ---------------------------
+% A UFRJ nao e so o Rio de Janeiro: ha campus em Macae, em Duque de Caxias
+% (Xerem) e fora da capital, e a cidade aparece na capa, na folha de rosto, na
+% ficha, na referencia do alto dos resumos e no colofao. Por isso isto e da
+% CLASSE, e nao do estilo da unidade: o campus e da universidade.
+%
+% Quem manda, nesta ordem: o valor da classe (Rio de Janeiro), o que a unidade
+% declarar com \ufrjdeclareplace, e por ultimo o AUTOR. A ordem vale mesmo que
+% o estilo da unidade seja carregado depois: a declaracao da unidade nao
+% sobrepoe o que o autor ja tenha escolhido.
+%
+% A universidade e pro-forma -- todo trabalho desta classe e da UFRJ --, e
+% existe para facilitar a adaptacao de quem vem de outra classe.
+\newif\if@ufrjlocaldoautor \@ufrjlocaldoautorfalse
+\newcommand\city[1]{\gdef\local@cityname{#1}\@ufrjlocaldoautortrue}
+\newcommand\state[1]{\gdef\local@statename{#1}\@ufrjlocaldoautortrue}
+\newcommand\country[1]{\gdef\local@countryname{#1}\@ufrjlocaldoautortrue}
+\newcommand\place[3]{\city{#1}\state{#2}\country{#3}}
+\newcommand\university[1]{\gdef\local@universityname{#1}}
+\newcommand\ufrjdeclareplace[3]{%
+  \if@ufrjlocaldoautor\else
+    \gdef\local@cityname{#1}%
+    \gdef\local@statename{#2}%
+    \gdef\local@countryname{#3}%
+  \fi}
 %
 % 3.1.2.1.1(e) and 3.1.2.1.3(c) of the 2026 manual list the natureza, the
 % objetivo, the name of the institution AND the area de concentracao among the
