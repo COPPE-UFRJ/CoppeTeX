@@ -168,10 +168,24 @@
      \ifcsdef{ufrj@mes@\ufrj@monthlang}
        {\csname ufrj@mes@\ufrj@monthlang\endcsname{#1}}
        {\mkbibmonth{#1}}}}
+\ExplSyntaxOn
+\tl_new:N \l__ufrj_ano_tl
+\cs_new_protected:Npn \ufrj_semligadura:n #1
+  { \tl_set:Nx \l__ufrj_ano_tl {#1}
+    \tl_replace_all:Nnn \l__ufrj_ano_tl { -- } { - {} - }
+    \tl_use:N \l__ufrj_ano_tl }
+\cs_set_eq:NN \ufrj@semligadura \ufrj_semligadura:n
+\ExplSyntaxOff
+\protected\def\ufrj@anoliteral{\ufrj@semligadura{\thefield{ufrjyear}}\@}
 \protected\def\ufrj@abntdate#1#2#3{%
-  \iffieldundef{#3}{}{\stripzeros{\thefield{#3}}\nobreakspace}%
-  \iffieldundef{#2}{}{\ufrj@abntmonth{\thefield{#2}}\iffieldundef{#1}{}{\space}}%
-  \iffieldundef{#1}{}{\stripzeros{\thefield{#1}}}}
+  \def\ufrj@datacampo{#1}%
+  \ifboolexpr{ ( test {\ifdefstring{\ufrj@datacampo}{year}}
+                 or test {\ifdefstring{\ufrj@datacampo}{labelyear}} )
+               and not test {\iffieldundef{ufrjyear}} }
+    {\ufrj@anoliteral}
+    {\iffieldundef{#3}{}{\stripzeros{\thefield{#3}}\nobreakspace}%
+     \iffieldundef{#2}{}{\ufrj@abntmonth{\thefield{#2}}\iffieldundef{#1}{}{\space}}%
+     \iffieldundef{#1}{}{\stripzeros{\thefield{#1}}}}}
 \AtBeginBibliography{%
   \raggedright
   \hyphenpenalty=\@M
@@ -828,6 +842,22 @@
     \map{\step[fieldsource=deposito,fieldtarget=filingdate]}
     \map{\step[fieldsource=concessao,fieldtarget=grantdate]}
     \map{\step[fieldsource=procurador,fieldtarget=attorney]}
+    % A data incerta da 4.3.5 (#168). O ano escrito como o Manual o mostra --
+    % "[1981?]", "[ca. 1977]", "[197-]", "[197-?]", "[19--]", "[19--?]",
+    % "[1071 ou 1072]", "[1987]" -- nao e numero: o biber avisaria "not an
+    % integer - this will probably not sort properly", e a lista ordenaria pelo
+    % texto. O literal passa para ufrjyear, que e o que a classe imprime, e o
+    % year fica com o ano que ele contem: "[197-]" ordena em 1970, "[19--?]" em
+    % 1900, "[ca. 1977]" em 1977. Quem escreve o ano como numero nao passa por
+    % nada disto -- o primeiro passo encerra o mapa.
+    \map{
+      \step[fieldsource=year, notmatch=\regexp{\A\s*\d+\s*\Z}, final]
+      \step[fieldset=ufrjyear, origfieldval]
+      \step[fieldsource=year, match=\regexp{\A[^\d]*(\d{4}).*\Z}, replace={$1}]
+      \step[fieldsource=year, match=\regexp{\A[^\d]*(\d{3})[-\x{2013}].*\Z}, replace={${1}0}]
+      \step[fieldsource=year, match=\regexp{\A[^\d]*(\d{2})[-\x{2013}]{2}.*\Z}, replace={${1}00}]
+      \step[fieldsource=year, notmatch=\regexp{\A\d+\Z}, null]
+    }
     % caderno e campo da classe (a secao do jornal); newspapersection e o nome
     % em ingles, e e o que as bases da entrega usam.
     \map{\step[fieldsource=newspapersection,fieldtarget=caderno]}

@@ -90,6 +90,17 @@ top of `CORRECOES_MANUAL_2026.md`.
 
 ### Added
 
+- **The uncertain dates of 4.3.5** (#168): write in `year` the form the Manual
+  shows — `{[1981?]}`, `{[ca. 1977]}`, `{[197-]}`, `{[197-?]}`, `{[19--]}`,
+  `{[19--?]}`, `{[1071 ou 1072]}`, `{[1987]}` — and it comes out as typed, in
+  the reference and in the citation. The literal goes to the new `ufrjyear`
+  field and `year` keeps the number the form contains, so biber sorts the list
+  by it ("[197-]" between 1969 and 1971) and no longer warns "not an integer";
+  the two hyphens are not read as a dash, and the full stop after a bracket
+  closing on a question mark is not swallowed. Only the work's own date is
+  affected: the access date and every other date print as before. The Manual's
+  score example goes back to its own date, `[19--?]`, and the accepted
+  divergence it had is gone. `rt79` covers the eight forms.
 - **Undergraduate work, and the Escola Politécnica style** (#170). The class
   composed only graduate work. The new `grad` option is the undergraduate
   work (Trabalho de Conclusão de Curso): presented to a *Course*, with the

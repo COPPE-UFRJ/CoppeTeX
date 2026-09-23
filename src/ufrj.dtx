@@ -212,6 +212,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \changes{v5.0}{2026/09/17}{The line numbers of a listing stay inside the margin. The five language styles number the lines on the left, and without xleftmargin the listings package indents the code and leaves the number outside the 3 cm margin of 2.3.}
 % \changes{v5.0}{2026/09/17}{Footnotes start at the left margin and hang: from the second line the text aligns under the first letter, not under the mark, as 4.2 asks of a reference in a note -- the class used book's makefntext, which indented the mark by parindent and returned the second line to the margin. A footnote no longer splits across sheets either.}
 % \changes{v5.0}{2026/09/17}{PDF/A-2b is the default output, and the new option sempdfa turns it off. 2.2(d) of the Manual requires the final digital version to be PDF/A, the deposit has been digital only since Resolucao CEPG n. 246/2023, and the class already produced conformant PDF/A -- but only when asked, so a work written without reading the manual was deposited off the norm. The v4.1 option pdfa is still accepted and now does nothing.}
+% \changes{v5.0}{2026/09/23}{The uncertain dates of 4.3.5 are written as the Manual shows them -- year = {[19--?]}, {[ca. 1977]}, {[197-]}, {[1071 ou 1072]} -- and come out as typed, in the reference and in the citation. The literal goes to the ufrjyear field and the year keeps the number inside it, so biber sorts and no longer warns; the two hyphens do not become a dash, and the full stop after a bracket that closes on a question mark is not swallowed.}
 % \changes{v5.0}{2026/09/23}{Jurisprudence follows the text of 4.2.6.2: the date of judgement comes after the rapporteur, preceded by julgado em and abbreviated -- Relator: Ministro Rafael Mayer, julgado em 26 fev. 1986 --, and the feminine relatora field prints Relatora. The label was the literal word Relator, in every language, and the date of judgement had no place: it was typed into the location field.}
 % \changes{v5.0}{2026/09/21}{New work type grad, the undergraduate work (TCC, or Projeto de Graduacao at the Escola Politecnica): presented to a Course, with the title the course confers -- the new optional argument of ufrjdeclareprogram --, the catalog card and the reference, and an additional sheet without the CAPES fields, which belong to theses and dissertations (3.1.2.1.2).}
 % \changes{v5.0}{2026/09/21}{The access date is in the language of the work, and only the publication date follows the entry's langid: HOUTE, Jef Van den. Black hole. 1 June 2010. [...] Acesso em: 26 maio 2011. The access month came out in the language of the publication too: Acesso em: 26 May 2011.}
@@ -2448,6 +2449,23 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \end{tabular}
 % \end{center}
 %
+% \textbf{Data incerta} (4.3.5). Quando a obra não traz data, escreva no
+% |year| a forma que o Manual mostra, entre colchetes, e ela sai assim na
+% referência e na chamada:
+% \begin{verbatim}
+%   year = {[1981?]}         data provável
+%   year = {[ca. 1977]}      data aproximada
+%   year = {[197-]}          década certa
+%   year = {[197-?]}         década provável
+%   year = {[19--]}          século certo
+%   year = {[19--?]}         século provável
+%   year = {[1071 ou 1072]}  um ano ou outro
+%   year = {[1987]}          data certa, não indicada no documento
+% \end{verbatim}
+% A lista continua ordenada pelo ano que a forma contém --- |[197-]| entre 1969
+% e 1971 ---, e o |biber| não reclama. A data de acesso e as demais datas não
+% mudam: a incerteza é da publicação.
+%
 % A jurisprudência (4.2.6.2) tem o relator em |relator|, ou em |relatora| quando
 % é relatora --- o rótulo acompanha ---, e a data do julgamento no |date|, que
 % sai logo depois dele: ``Relatora: Min.\ Ellen Gracie, julgado em 29 nov.
@@ -2905,42 +2923,42 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % Banca                        & |\examiner|             & 141 \\
 % Programa                     & |\department|           & 147 \\
 % Data do depósito           & |\date|                 & 148 \\
-% Data da defesa               & |\approvaldate|        & 151 \\
-% Palavras-chave               & |\keyword|              & 154 \\
-% Área de concentração  & |\concentrationarea|     & 164 \\
-% Linha de pesquisa            & |\researchline|        & 165 \\
-% Coleta CAPES                 & |\productiontype|         & 166 \\
-% Projeto vinculado            & |\linkedproject|     & 167 \\
-% Nome do projeto              & |\projectname|          & 168 \\
-% Agência de fomento         & |\fundingagency|       & 169 \\
-% Ficha catalográfica        & |\catalogcard|   & 175 \\
-% Capa e folha de rosto        & |\maketitle|            & 180 \\
-% Parte pré-textual          & |\frontmatter|          & 182 \\
-% Dedicatória                & |\dedication|           & 183 \\
+% Data da defesa               & |\approvaldate|        & 152 \\
+% Palavras-chave               & |\keyword|              & 155 \\
+% Área de concentração  & |\concentrationarea|     & 165 \\
+% Linha de pesquisa            & |\researchline|        & 166 \\
+% Coleta CAPES                 & |\productiontype|         & 167 \\
+% Projeto vinculado            & |\linkedproject|     & 168 \\
+% Nome do projeto              & |\projectname|          & 169 \\
+% Agência de fomento         & |\fundingagency|       & 170 \\
+% Ficha catalográfica        & |\catalogcard|   & 176 \\
+% Capa e folha de rosto        & |\maketitle|            & 181 \\
+% Parte pré-textual          & |\frontmatter|          & 183 \\
+% Dedicatória                & |\dedication|           & 184 \\
 % Resumo                       & |abstract|              & 112 \\
 % Abstract                     & |foreignabstract|       & 128 \\
 % Listas pré-textuais        & |\listoffigures| \dots  & 146 \\
-% Sumário                    & |\tableofcontents|      & 190 \\
-% Parte textual                & |\mainmatter|           & 273 \\
-% Símbolo                    & |\symbl|                & 341 \\
+% Sumário                    & |\tableofcontents|      & 191 \\
+% Parte textual                & |\mainmatter|           & 274 \\
+% Símbolo                    & |\symbl|                & 342 \\
 % Citação longa           & |longquote|             & 236 \\
-% Fonte da ilustração     & |\source|               & 432 \\
+% Fonte da ilustração     & |\source|               & 433 \\
 % Quadro                       & |quadro|                & 300 \\
-% Bibliografia                 & |\printbibliography|    & 922 \\
-% Código no texto            & |\pythoninline|         & 1070 \\
-% Código Java no texto       & |\javainline|           & 1107 \\
-% Sigla declarada              & |\defineacronym|             & 1443 \\
-% Sigla usada                  & |\useacronym|                & 1446 \\
-% Abreviatura                  & |\abbrev|               & 1440 \\
-% Parte pós-textual          & |\backmatter|           & 1452 \\
-% Apêndices                  & |\appendix|             & 1468 \\
-% Anexos                       & |\annex|                & 1480 \\
+% Bibliografia                 & |\printbibliography|    & 923 \\
+% Código no texto            & |\pythoninline|         & 1071 \\
+% Código Java no texto       & |\javainline|           & 1108 \\
+% Sigla declarada              & |\defineacronym|             & 1444 \\
+% Sigla usada                  & |\useacronym|                & 1447 \\
+% Abreviatura                  & |\abbrev|               & 1441 \\
+% Parte pós-textual          & |\backmatter|           & 1453 \\
+% Apêndices                  & |\appendix|             & 1469 \\
+% Anexos                       & |\annex|                & 1481 \\
 % Glossário automático        & |\makeglossarylist|     & 59 \\
 % Termo do glossário          & |\glossaryterm|         & 55 \\
 % Glossário                    & |\printglossarylist|    & 56 \\
-% Entrada do índice            & |\index|                & 384 \\
-% Índice                       & |\printindex|           & 1346 \\
-% Colófon                    & |\ufrjfinalpage|    & 1499 \\
+% Entrada do índice            & |\index|                & 385 \\
+% Índice                       & |\printindex|           & 1347 \\
+% Colófon                    & |\ufrjfinalpage|    & 1500 \\
 % \end{tabular}
 % \end{center}
 %
@@ -8578,6 +8596,10 @@ postamble
 % A forma feminina, que a 4.2.6.2 usa no segundo exemplo ("Relatora: Min. Ellen
 % Gracie"): e o mesmo elemento, e o que muda e o rotulo (#169).
 \DeclareDatamodelFields[type=field,datatype=literal]{relatora}
+% A data incerta da 4.3.5, como o Manual a mostra: "[19--?]", "[ca. 1977]",
+% "[1071 ou 1072]". Quem escreve e o autor, no campo year; o sourcemap traz o
+% literal para ca e deixa no year o ano numerico que ele contem (#168).
+\DeclareDatamodelFields[type=field,datatype=literal]{ufrjyear}
 \DeclareDatamodelFields[type=field,datatype=literal]{filingdate}  % patente: deposito
 \DeclareDatamodelFields[type=field,datatype=literal]{grantdate}   % patente: concessao
 % O procurador da 4.2.5 -- "Procurador: Maria Cristina Valim Lourenco Gomes." --
@@ -8824,13 +8846,39 @@ postamble
      \ifcsdef{ufrj@mes@\ufrj@monthlang}
        {\csname ufrj@mes@\ufrj@monthlang\endcsname{#1}}
        {\mkbibmonth{#1}}}}
+% A data incerta da 4.3.5 (#168), escrita como o Manual a mostra e impressa como
+% foi escrita. Duas armadilhas, as duas vistas no PDF:
+%
+%   - "[19--]" sairia "[19--]" com meia-risca, porque a fonte de texto liga dois
+%     hifens. O \ufrj@semligadura mete um {} entre eles;
+%   - "[1981?]" perdia o PONTO seguinte: o rastreador de pontuacao do biblatex
+%     olha o "?" -- o "]" e transparente para ele -- e nao repete pontuacao. O
+%     \@ do fim devolve o fator de espaco ao normal, e o ponto volta.
+\ExplSyntaxOn
+\tl_new:N \l__ufrj_ano_tl
+\cs_new_protected:Npn \ufrj_semligadura:n #1
+  { \tl_set:Nx \l__ufrj_ano_tl {#1}
+    \tl_replace_all:Nnn \l__ufrj_ano_tl { -- } { - {} - }
+    \tl_use:N \l__ufrj_ano_tl }
+\cs_set_eq:NN \ufrj@semligadura \ufrj_semligadura:n
+\ExplSyntaxOff
+\protected\def\ufrj@anoliteral{\ufrj@semligadura{\thefield{ufrjyear}}\@}
 % ABNT date (NBR 6023 §4.3.5.5.2): "dia mês. ano" -- without the brazilian "de"
 % between the parts (e.g. "4 fev. 1992", "abr. 1996"). #1=year, #2=month, #3=day
 % field names; the month stays abbreviated, by \ufrj@abntmonth above.
+%
+% A data incerta vale so onde se imprime o ano DO DOCUMENTO -- o campo year e o
+% labelyear da chamada --, e nao na data de acesso nem em nenhuma outra: a
+% incerteza e da publicacao, e "Acesso em: [19--?]" seria absurdo.
 \protected\def\ufrj@abntdate#1#2#3{%
-  \iffieldundef{#3}{}{\stripzeros{\thefield{#3}}\nobreakspace}%
-  \iffieldundef{#2}{}{\ufrj@abntmonth{\thefield{#2}}\iffieldundef{#1}{}{\space}}%
-  \iffieldundef{#1}{}{\stripzeros{\thefield{#1}}}}
+  \def\ufrj@datacampo{#1}%
+  \ifboolexpr{ ( test {\ifdefstring{\ufrj@datacampo}{year}}
+                 or test {\ifdefstring{\ufrj@datacampo}{labelyear}} )
+               and not test {\iffieldundef{ufrjyear}} }
+    {\ufrj@anoliteral}
+    {\iffieldundef{#3}{}{\stripzeros{\thefield{#3}}\nobreakspace}%
+     \iffieldundef{#2}{}{\ufrj@abntmonth{\thefield{#2}}\iffieldundef{#1}{}{\space}}%
+     \iffieldundef{#1}{}{\stripzeros{\thefield{#1}}}}}
 % A 4.2: "as referencias sao alinhadas somente a margem esquerda (nao utilize
 % o recurso justificar do editor do texto), possibilitando a identificacao de
 % cada documento individualmente" (#118). A lista saia justificada, e o TeX
@@ -9708,6 +9756,22 @@ postamble
     \map{\step[fieldsource=deposito,fieldtarget=filingdate]}
     \map{\step[fieldsource=concessao,fieldtarget=grantdate]}
     \map{\step[fieldsource=procurador,fieldtarget=attorney]}
+    % A data incerta da 4.3.5 (#168). O ano escrito como o Manual o mostra --
+    % "[1981?]", "[ca. 1977]", "[197-]", "[197-?]", "[19--]", "[19--?]",
+    % "[1071 ou 1072]", "[1987]" -- nao e numero: o biber avisaria "not an
+    % integer - this will probably not sort properly", e a lista ordenaria pelo
+    % texto. O literal passa para ufrjyear, que e o que a classe imprime, e o
+    % year fica com o ano que ele contem: "[197-]" ordena em 1970, "[19--?]" em
+    % 1900, "[ca. 1977]" em 1977. Quem escreve o ano como numero nao passa por
+    % nada disto -- o primeiro passo encerra o mapa.
+    \map{
+      \step[fieldsource=year, notmatch=\regexp{\A\s*\d+\s*\Z}, final]
+      \step[fieldset=ufrjyear, origfieldval]
+      \step[fieldsource=year, match=\regexp{\A[^\d]*(\d{4}).*\Z}, replace={$1}]
+      \step[fieldsource=year, match=\regexp{\A[^\d]*(\d{3})[-\x{2013}].*\Z}, replace={${1}0}]
+      \step[fieldsource=year, match=\regexp{\A[^\d]*(\d{2})[-\x{2013}]{2}.*\Z}, replace={${1}00}]
+      \step[fieldsource=year, notmatch=\regexp{\A\d+\Z}, null]
+    }
     % caderno e campo da classe (a secao do jornal); newspapersection e o nome
     % em ingles, e e o que as bases da entrega usam.
     \map{\step[fieldsource=newspapersection,fieldtarget=caderno]}
@@ -9724,6 +9788,14 @@ postamble
 % Author-date is the CoppeTeX 4.1 default. authoryear-comp gives compressed
 % author-year cites with normal-caps names (post-2020 rule) out of the box.
 \RequireCitationStyle{authoryear-comp}
+% A data da CHAMADA sai pelo mesmo formato da lista. A classe troca o
+% \mkbibdatelong dentro da bibliografia, e a chamada ficava com o do biblatex:
+% a obra de data incerta saia "(ALFA, 1981)" na chamada e "[1981?]" na
+% referencia, que e o ano numerico que o sourcemap deriva para ordenar (#168).
+% O \AtEveryCite vale so dentro do comando de citacao.
+\AtEveryCite{%
+  \let\mkbibdatelong\ufrj@abntdate
+  \let\mkbibdateshort\ufrj@abntdate}
 
 % --- NBR 10520:2023 author separator -----------------------------------------
 % Parenthetical citations separate authors with ";" -> (Silva; Souza, 2020).
@@ -11140,14 +11212,10 @@ postamble
 @comment{Manual: OLIVA, Marcos; MOCOTÓ, Tiago. Fervilhar: frevo. [19--?]. 1 partitura. Piano.
   Disponível em: http://openlink.br.inter.net/picolino/partitur.htm. Acesso em: 5 jan.
   2022.}
-@comment{Divergencia aceita: a data "[19--?]" é século provável (4.3.5), e a classe ainda não compõe data incerta
-  (#168): a entrada usa 1990 no lugar.}
-@comment{Classe: OLIVA, Marcos; MOCOTÓ, Tiago. Fervilhar: frevo. 1990. 1 partitura. Piano. Disponível
-  em: http://openlink.br.inter.net/picolino/partitur.htm. Acesso em: 5 jan. 2022.}
 @music{m-42102,
   author      = "Oliva, Marcos and Mocotó, Tiago",
   title     = "Fervilhar: frevo",
-  year        = 1990,
+  year        = "[19--?]",
   addendum   = "1 partitura. Piano",
   url        = "http://openlink.br.inter.net/picolino/partitur.htm",
   urldate = "2022-01-05",
