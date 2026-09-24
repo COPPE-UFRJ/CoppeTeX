@@ -35,10 +35,11 @@
 
 \declarepreamble\stylepreamble
 
-This is the `ufrj-poli' unit style of the `ufrj' document class: the data
+This is the `ufrj-poli' unit style of the `ufrj' document class -- the data
 and texts of the Escola Politecnica (POLI) of the Federal University of Rio
-de Janeiro, for its undergraduate projects. It is generated from
-ufrj-poli.dtx by docstrip; edit the .dtx source, not this file.
+de Janeiro, for its undergraduate projects -- and the `poli' compatibility
+class, which loads the `ufrj' class with this style. Both are generated from
+ufrj-poli.dtx by docstrip; edit the .dtx source, not these files.
 
 Copyright (C) 2008-2026 Vicente Helano F. Batista, George O. Ainsworth Jr.,
 Geraldo Xexéo and Eduardo Mangeli.
@@ -78,6 +79,9 @@ License version 3 (see the COPYING.txt file).
 \generate{%
   \usepreamble\stylepreamble
   \file{ufrj-poli.sty}{\from{ufrj-poli.dtx}{package}}%
+% A classe poli so existe para que um trabalho escrito com a classe antiga da
+% Escola continue compilando: carrega a ufrj e o ufrj-poli, e avisa.
+  \file{poli.cls}{\from{ufrj-poli.dtx}{compat}}%
   \usepreamble\examplepreamble
   \file{poli-exemplo.tex}{\from{ufrj-poli.dtx}{poliexemplo}}%
 }

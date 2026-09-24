@@ -43,6 +43,8 @@
 \DeclareDatamodelFields[type=list,datatype=name]{producer}
 \DeclareDatamodelFields[type=field,datatype=literal]{caderno}     % newspaper section
 \DeclareDatamodelFields[type=field,datatype=literal]{relator}     % jurisprudence rapporteur
+\DeclareDatamodelFields[type=field,datatype=literal]{relatora}
+\DeclareDatamodelFields[type=field,datatype=literal]{ufrjyear}
 \DeclareDatamodelFields[type=field,datatype=literal]{filingdate}  % patente: deposito
 \DeclareDatamodelFields[type=field,datatype=literal]{grantdate}   % patente: concessao
 \DeclareDatamodelFields[type=list,datatype=name]{attorney}      % patente: procurador
@@ -51,7 +53,7 @@
   {artist,platform,director,producer,version}
 \DeclareDatamodelEntryfields[map]{scale}
 \DeclareDatamodelEntryfields[article]{caderno}
-\DeclareDatamodelEntryfields[jurisdiction]{relator}
+\DeclareDatamodelEntryfields[jurisdiction]{relator,relatora}
 \DeclareDatamodelEntryfields[patent]{filingdate,grantdate,attorney}
 
 %% 

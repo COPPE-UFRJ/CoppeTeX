@@ -6,10 +6,11 @@
 %%
 %% ufrj-poli.dtx  (with options: `package')
 %% 
-%% This is the `ufrj-poli' unit style of the `ufrj' document class: the data
+%% This is the `ufrj-poli' unit style of the `ufrj' document class -- the data
 %% and texts of the Escola Politecnica (POLI) of the Federal University of Rio
-%% de Janeiro, for its undergraduate projects. It is generated from
-%% ufrj-poli.dtx by docstrip; edit the .dtx source, not this file.
+%% de Janeiro, for its undergraduate projects -- and the `poli' compatibility
+%% class, which loads the `ufrj' class with this style. Both are generated from
+%% ufrj-poli.dtx by docstrip; edit the .dtx source, not these files.
 %% 
 %% Copyright (C) 2008-2026 Vicente Helano F. Batista, George O. Ainsworth Jr.,
 %% Geraldo Xexéo and Eduardo Mangeli.
@@ -41,12 +42,55 @@
 \newif\if@ufrjpolidepcivil \@ufrjpolidepcivilfalse
 \DeclareOption{civilporcurso}{\@ufrjpolidepcivilfalse}
 \DeclareOption{civilpordepartamento}{\@ufrjpolidepciviltrue}
+\newif\if@ufrjpolitimes \@ufrjpolitimesfalse
+\newif\if@ufrjpoliarial \@ufrjpoliarialfalse
+\DeclareOption{times}{\@ufrjpolitimestrue}
+\DeclareOption{arial}{\@ufrjpoliarialtrue}
 \ProcessOptions\relax
+\if@ufrjpolitimes
+  \RequirePackage{newtxtext}
+  \RequirePackage{newtxmath}
+\fi
+\if@ufrjpoliarial
+  \RequirePackage[scaled]{helvet}
+  \renewcommand\familydefault{\sfdefault}
+\fi
 \ufrjdeclareunit{Escola Politécnica}{Escola Politécnica}{POLI}
-\IfFileExists{poli-logo.pdf}
+\IfFileExists{logos/poli-logo.pdf}
   {\ufrjdeclarelogo[2cm]{poli-logo}}
-  {\PackageWarningNoLine{ufrj-poli}{poli-logo.pdf nao encontrado: a capa sai
-     so com o logotipo da UFRJ}}
+  {\IfFileExists{poli-logo.pdf}
+    {\ufrjdeclarelogo[2cm]{poli-logo}}
+    {\PackageWarningNoLine{ufrj-poli}{poli-logo.pdf nao encontrado: a capa sai
+       so com o logotipo da UFRJ}}}
+\ufrjdeclareplace{Rio de Janeiro}{RJ}{Brasil}
+\ufrjdeclareprogram[Engenheiro Ambiental]{AMBIENTAL}
+  {Engenharia Ambiental}{Environmental Engineering}
+\ufrjdeclareprogram[Engenheiro Civil]{CIVIL}
+  {Engenharia Civil}{Civil Engineering}
+\ufrjdeclareprogram[Engenheiro de Computação e Informação]{COMPUTACAO}
+  {Engenharia de Computação e Informação}{Computer and Information Engineering}
+\ufrjdeclareprogram[Engenheiro de Controle e Automação]{CONTROLE}
+  {Engenharia de Controle e Automação}{Control and Automation Engineering}
+\ufrjdeclareprogram[Engenheiro Elétrico]{ELETRICA}
+  {Engenharia Elétrica}{Electrical Engineering}
+\ufrjdeclareprogram[Engenheiro Eletrônico e de Computação]{ELETRONICA}
+  {Engenharia Eletrônica e de Computação}{Electronic and Computer Engineering}
+\ufrjdeclareprogram[Engenheiro de Materiais]{MATERIAIS}
+  {Engenharia de Materiais}{Materials Engineering}
+\ufrjdeclareprogram[Engenheiro Mecânico]{MECANICA}
+  {Engenharia Mecânica}{Mechanical Engineering}
+\ufrjdeclareprogram[Engenheiro Metalúrgico]{METALURGICA}
+  {Engenharia Metalúrgica}{Metallurgical Engineering}
+\ufrjdeclareprogram[Engenheiro Naval]{NAVAL}
+  {Engenharia Naval e Oceânica}{Naval and Ocean Engineering}
+\ufrjdeclareprogram[Engenheiro Nuclear]{NUCLEAR}
+  {Engenharia Nuclear}{Nuclear Engineering}
+\ufrjdeclareprogram[Engenheiro de Petróleo]{PETROLEO}
+  {Engenharia de Petróleo}{Petroleum Engineering}
+\ufrjdeclareprogram[Engenheiro de Produção]{PRODUCAO}
+  {Engenharia de Produção}{Production Engineering}
+\ufrjdeclareprogram{NANOTECNOLOGIA}
+  {Nanotecnologia}{Nanotechnology}
 \if@ufrjpolidepcivil
   \ufrjdeclareprogram[Engenheiro Civil]{DCC}{Construção Civil}{Civil Engineering}
   \ufrjdeclareprogram[Engenheiro Civil]{DES}{Estruturas}{Civil Engineering}

@@ -34,6 +34,9 @@
 %% 
 \ProvidesFile{ufrj.cbx}[2026/09/15 v5.0 CoppeTeX ABNT author-date citations]
 \RequireCitationStyle{authoryear-comp}
+\AtEveryCite{%
+  \let\mkbibdatelong\ufrj@abntdate
+  \let\mkbibdateshort\ufrj@abntdate}
 
 \DeclareDelimFormat{multinamedelim}{\addsemicolon\space}
 \DeclareDelimFormat{finalnamedelim}{\addsemicolon\space}
