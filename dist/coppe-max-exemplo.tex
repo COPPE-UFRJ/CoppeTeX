@@ -1,5 +1,5 @@
 %%
-%% This is file `max-exemplo.tex',
+%% This is file `coppe-max-exemplo.tex',
 %% generated with the docstrip utility.
 %%
 %% The original source files were:
@@ -22,8 +22,8 @@
 %% linha por: % !TeX program = latexmk -pdf -synctex=1
 \documentclass[dsc,setavermelha]{ufrj}
 \usepackage{ufrj-coppe}
-%% max-exemplo.tex -- tudo o que a classe oferece e o Manual prevê, inclusive o
-%% opcional. Para só o obrigatório, veja o min-exemplo.tex.
+%% coppe-max-exemplo.tex -- tudo o que a classe oferece e o Manual prevê, inclusive o
+%% opcional. Para só o obrigatório, veja o coppe-min-exemplo.tex.
 %%
 %% Opções de classe que não cabem num documento só, porque escolhem uma entre
 %% várias: o tipo (msc, dsc, mscexam, dscexam, mscsem), o idioma (english,
@@ -1348,7 +1348,7 @@ use \verb|\href{https://exemplo.org}{texto}|. Evite digitar URLs como texto comu
   \end{verbatim}
   O \verb|\index| não imprime nada no texto: registra a página em que está. Ponha-o colado à palavra, sem espaço antes, para que a página seja a da palavra e não a da linha seguinte. As remissivas ``ver'' e ``ver também'' são as que a \mbox{NBR~6034} prevê, e saem com as palavras do idioma do trabalho. A \textbf{ordem alfabética respeita os acentos}: a classe dá a cada entrada acentuada uma chave sem acento, e ``ação'' fica antes de ``acaso'', ``índice'' entre ``hyperref'' e ``lema''. Sem isso, o programa que monta o índice poria toda palavra acentuada depois do ``z''. Uma chave escrita por você, com \verb|@|, sempre vence: é o jeito de mandar ``\LaTeX'' para a letra L.
 
-  \textbf{Como o índice é montado.} Quem ordena as entradas é o programa \verb|makeindex|, que roda entre uma compilação e a seguinte. A classe o roda sozinha no fim de cada compilação, e por isso o índice aparece a partir da \textbf{segunda} compilação em qualquer editor --- \hologo{TeX}studio, \hologo{TeX}works, Overleaf. O \verb|latexmk| também o roda, pelo \texttt{latexmkrc}. Para rodá-lo à mão, é \verb|makeindex max-exemplo| e compilar de novo; a opção de classe \verb|semmakeindex| impede a classe de rodá-lo.
+  \textbf{Como o índice é montado.} Quem ordena as entradas é o programa \verb|makeindex|, que roda entre uma compilação e a seguinte. A classe o roda sozinha no fim de cada compilação, e por isso o índice aparece a partir da \textbf{segunda} compilação em qualquer editor --- \hologo{TeX}studio, \hologo{TeX}works, Overleaf. O \verb|latexmk| também o roda, pelo \texttt{latexmkrc}. Para rodá-lo à mão, é \verb|makeindex coppe-max-exemplo| e compilar de novo; a opção de classe \verb|semmakeindex| impede a classe de rodá-lo.
 
   \textbf{Mais de um índice.} Um trabalho pode ter índice de assuntos e índice onomástico. O pacote \verb|imakeidx|, no lugar do \verb|makeidx|, dá um arquivo para cada um:
   \begin{verbatim}
@@ -1503,4 +1503,4 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor i
 
 %% 
 %%
-%% End of file `max-exemplo.tex'.
+%% End of file `coppe-max-exemplo.tex'.

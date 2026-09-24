@@ -63,8 +63,8 @@ duas coisas e avisa, no `.log`, que as duas linhas podem ser trocadas.
 
 É o caso de quase todo trabalho da COPPE, e não há nada a fazer. Copie **todos
 os arquivos da raiz, mais a pasta `logos/`**, para a pasta do seu trabalho, abra
-o `min-exemplo.tex` e comece a trocar o conteúdo. Ele traz só o que a norma
-exige; o `max-exemplo.tex` mostra tudo o que a classe oferece, para você copiar
+o `coppe-min-exemplo.tex` e comece a trocar o conteúdo. Ele traz só o que a norma
+exige; o `coppe-max-exemplo.tex` mostra tudo o que a classe oferece, para você copiar
 o que precisar.
 
 ## Vou escrever em inglês
@@ -108,8 +108,8 @@ isso que não há exemplo pronto para eles.
 | `brazilian-ufrj.lbx`, `english-ufrj.lbx` | Os termos de bibliografia em português e em inglês. **Os dois são necessários em qualquer trabalho**, por causa do resumo em idioma estrangeiro. |
 | `ufrj.ist` | O estilo de ordenação das listas de abreviaturas, de siglas e de símbolos e do glossário automático. |
 | `latexmkrc` | A receita de compilação, para quem usa `latexmk` ou o Overleaf. |
-| `min-exemplo.tex` | **O exemplo mínimo, em português**: tudo o que a norma exige e nada além disso. É o ponto de partida. |
-| `max-exemplo.tex` | **O exemplo máximo, em português**: tudo o que a classe oferece e o Manual prevê, inclusive o opcional, comentado linha a linha. |
+| `coppe-min-exemplo.tex` | **O exemplo mínimo, em português**: tudo o que a norma exige e nada além disso. É o ponto de partida. |
+| `coppe-max-exemplo.tex` | **O exemplo máximo, em português**: tudo o que a classe oferece e o Manual prevê, inclusive o opcional, comentado linha a linha. |
 | `exemplo.bib` | A base de referências dos exemplos, com uma entrada de **cada tipo** de referência da seção 4.2 do Manual. |
 | `ufrj.bib` | A base com as referências da própria classe e da norma. |
 | `ufrj.dtx`, `ufrj.ins`, `ufrj-coppe.dtx`, `ufrj-coppe.ins`, `manual.tex`, `manual.bib` | As **fontes** dos manuais. Não são necessárias para escrever; estão aqui para que a entrega baste também para refazer os manuais, a classe e o estilo. Não existe `ufrj.tex`: o manual da classe é o próprio `ufrj.dtx`, e o do estilo, o `ufrj-coppe.dtx`. |
@@ -128,8 +128,11 @@ documento, então funciona com a pasta ou sem ela.
 | `ufrj.pdf` | **O manual da classe.** Todos os comandos, todas as opções, com exemplos. Comece por ele. |
 | `ufrj-coppe.pdf` | **O manual do estilo da COPPE.** O que o estilo declara, a lista dos Programas e o que muda para um trabalho escrito com a classe `coppe`. |
 | `manual.pdf` | **O manual da norma.** O que o trabalho tem de ser — margens, estrutura, ilustrações, citações, referências. Ele é, ele mesmo, a demonstração: foi composto com a classe e obedece a tudo o que enuncia. |
-| `ufrj-quickref.pdf` | Uma referência rápida de uma tabela só, em inglês: comando, exemplo, onde se usa. |
-| `min-exemplo.pdf`, `max-exemplo.pdf` | Os dois exemplos em português, já compilados, para você ver o resultado antes de compilar. |
+| `ufrj-quickref.pdf` | Uma referência rápida da CLASSE, de uma tabela só, em inglês: comando, exemplo, onde se usa. |
+| `coppe-quickref.pdf`, `poli-quickref.pdf` | O mesmo para cada unidade: os Programas da COPPE, e os Cursos da Escola Politécnica com o título que cada um confere. |
+| `ufrj-poli.pdf` | **O manual do estilo da Escola Politécnica.** Os cursos, a marca, as opções de letra e a classe `poli` de compatibilidade. |
+| `coppe-min-exemplo.pdf`, `coppe-max-exemplo.pdf` | Os dois exemplos da COPPE, já compilados, para você ver o resultado antes de compilar. |
+| `poli-min-exemplo.pdf`, `poli-max-exemplo.pdf` | Os dois Projetos de Graduação da Escola Politécnica, também compilados. |
 
 ## Menos arquivos na sua raiz: os `.bib` podem ir para uma subpasta
 
@@ -172,13 +175,13 @@ São três passadas mais o `biber`, porque as referências cruzadas e a
 bibliografia só se acomodam na terceira:
 
 ```
-pdflatex min-exemplo
-biber min-exemplo
-pdflatex min-exemplo
-pdflatex min-exemplo
+pdflatex coppe-min-exemplo
+biber coppe-min-exemplo
+pdflatex coppe-min-exemplo
+pdflatex coppe-min-exemplo
 ```
 
-O `max-exemplo.tex` tem ainda as listas de abreviaturas, siglas e símbolos, o
+O `coppe-max-exemplo.tex` tem ainda as listas de abreviaturas, siglas e símbolos, o
 glossário e o índice, que passam pelo `makeindex`. **A classe o roda sozinha**
 no fim de cada compilação, e eles aparecem a partir da segunda: a mesma
 sequência acima funciona, e o botão de compilar do TeXstudio também. O
@@ -187,7 +190,7 @@ sequência acima funciona, e o botão de compilar do TeXstudio também. O
 Com `latexmk` e o `latexmkrc` desta pasta, uma linha basta:
 
 ```
-latexmk -pdf max-exemplo
+latexmk -pdf coppe-max-exemplo
 ```
 
 Um trabalho que pede todas as listas ao mesmo tempo pode esbarrar no limite de

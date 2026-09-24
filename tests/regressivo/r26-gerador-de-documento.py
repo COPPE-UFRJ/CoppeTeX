@@ -155,7 +155,7 @@ else:
                     "brazilian-ufrj.lbx", "coppe-logo.pdf"):
         if not geradocvazio._serve_para_compilar(precisa):
             problemas.append("o download deixaria de trazer %s" % precisa)
-    for nao_precisa in ("max-exemplo.tex", "min-exemplo.tex", "example_en.pdf",
+    for nao_precisa in ("coppe-max-exemplo.tex", "coppe-min-exemplo.tex", "example_en.pdf",
                         "exemplo.bib",
                         "README.md", "ufrj.dtx", "ufrj-coppe.dtx",
                         "coppe.cls"):

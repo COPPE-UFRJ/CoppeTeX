@@ -95,6 +95,13 @@ PROSA = [
     # O CHANGELOG e o mais novo primeiro, entao o primeiro "## [x.y]" do arquivo
     # e o da versao corrente.
     ("CHANGELOG.md", r"^## \[(\d+\.\d+(?:\.\d+)?)\]"),
+    # As tres folhas de consulta carimbam a versao num \ufrjversion escrito a
+    # mao, e nao num \ProvidesFile: sem esta linha, o ufrj-quickref anunciou a
+    # v4.1 durante toda a 5.0. O lugar de consertar e o .dtx, que e a fonte, e
+    # e por isso que sao os .dtx que estao aqui.
+    ("src/ufrj.dtx", r"\\newcommand\\ufrjversion\{v(\d+\.\d+(?:\.\d+)?)\}"),
+    ("src/ufrj-coppe.dtx", r"\\newcommand\\ufrjversion\{v(\d+\.\d+(?:\.\d+)?)\}"),
+    ("src/ufrj-poli.dtx", r"\\newcommand\\ufrjversion\{v(\d+\.\d+(?:\.\d+)?)\}"),
 ]
 
 RE_PROVIDES = re.compile(

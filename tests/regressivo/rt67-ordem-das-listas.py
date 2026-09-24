@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Teste de conformidade da CoppeTeX.
 
-BUG: (desconformidade, 3.1.2) as listas de quadros, mapas, programas e algoritmos -- que sao listas de ILUSTRACOES -- vinham DEPOIS da lista de tabelas no max-exemplo, no manual.tex e no gerador de documento, e a Norma COPPE (secao 10) mandava poe-las entre a lista de tabelas e a de abreviaturas (#148).
+BUG: (desconformidade, 3.1.2) as listas de quadros, mapas, programas e algoritmos -- que sao listas de ILUSTRACOES -- vinham DEPOIS da lista de tabelas no coppe-max-exemplo, no manual.tex e no gerador de documento, e a Norma COPPE (secao 10) mandava poe-las entre a lista de tabelas e a de abreviaturas (#148).
 
 A 3.1.2 do Manual UFRJ/SiBI da a ordem dos elementos pre-textuais: lista de
 ilustracoes, lista de tabelas, lista de abreviaturas e siglas, lista de
@@ -11,7 +11,7 @@ tabelas. A classe nao impoe ordem: quem ordena e quem escreve o .tex, e os
 modelos da entrega ensinavam a ordem errada.
 
 Cobra-se (sem compilar):
-  1. em src/max-exemplo.tex e src/manual.tex, \\listoftables vem depois de toda
+  1. em src/coppe-max-exemplo.tex e src/manual.tex, \\listoftables vem depois de toda
      \\listof... de ilustracao que o arquivo usa;
   2. em tools/geradocvazio.py, a lista LISTAS poe listoftables depois de
      listofquadros, listofprogramas e listofalgorithms;
@@ -33,7 +33,7 @@ def le(*partes):
     return io.open(os.path.join(RAIZ, *partes), encoding="utf-8").read()
 
 
-for arq in (("src", "max-exemplo.tex"), ("src", "manual.tex")):
+for arq in (("src", "coppe-max-exemplo.tex"), ("src", "manual.tex")):
     texto = le(*arq)
     corpo = texto.split(r"\begin{document}", 1)[-1]
     chamadas = [(m.start(), m.group(1)) for m in

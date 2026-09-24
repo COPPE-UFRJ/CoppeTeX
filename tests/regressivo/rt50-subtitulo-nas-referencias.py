@@ -9,7 +9,7 @@ entrada pelo titulo (4.3.2.14), so a primeira palavra do TITULO vai em caixa
 alta. O biblatex usa \\subtitlepunct (ponto, por padrao) e aplica o formato do
 titulo aos dois campos; o ufrj.bbx nao redefinia nenhum dos dois.
 
-O campo subtitle (e o sinonimo subtitulo) esta documentado no max-exemplo, mas
+O campo subtitle (e o sinonimo subtitulo) esta documentado no coppe-max-exemplo, mas
 nenhuma base da entrega o usava, e por isso o defeito nunca apareceu.
 
 Cobra-se:

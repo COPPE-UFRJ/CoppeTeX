@@ -1,0 +1,134 @@
+%%
+%% This is file `coppe-quickref.tex',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% ufrj-coppe.dtx  (with options: `quickrefcoppe')
+%% 
+%% This is a sample monograph which illustrates the use of the `ufrj' document
+%% class with the `ufrj-coppe' unit style and its biblatex/biber bibliography
+%% style. It is generated from ufrj-coppe.dtx by docstrip.
+%% 
+%% Copyright (C) 2008-2026 Vicente Helano F. Batista, George O. Ainsworth Jr.,
+%% Geraldo Xexéo and Eduardo Mangeli. Released under the GNU General Public
+%% License version 3 (see the COPYING.txt file).
+%% 
+%% coppe-quickref.tex -- CoppeTeX quick reference, COPPE unit style, in English.
+%%
+%% GERADO de ufrj-coppe.dtx. Nao edite este arquivo: edite o modulo
+%% `quickrefcoppe' do ufrj-coppe.dtx e rode `pdflatex ufrj-coppe.ins'.
+\documentclass[a4paper,10pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[margin=2cm]{geometry}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{xcolor}
+\usepackage[colorlinks=true,allbordercolors=white]{hyperref}
+
+\newcommand\ufrjversion{v5.0}
+
+\newcolumntype{C}{>{\ttfamily\raggedright\arraybackslash}p{0.17\textwidth}}
+\newcolumntype{D}{>{\raggedright\arraybackslash}p{0.44\textwidth}}
+\newcolumntype{T}{>{\raggedright\arraybackslash}p{0.30\textwidth}}
+
+\setlength\parindent{0pt}
+
+\begin{document}
+
+\begin{center}
+  {\Large\bfseries CoppeTeX quick reference --- COPPE}\\[2pt]
+  {\normalsize Unit style \texttt{ufrj-coppe}, \ufrjversion}\\[6pt]
+  \begin{minipage}{0.92\textwidth}\small
+  This sheet is the COPPE half. The other half --- every option, command and
+  environment of the class, which is the Manual UFRJ/SiBI and names no unit ---
+  is \texttt{ufrj-quickref.pdf}; the full manual of the style is
+  \texttt{ufrj-coppe.pdf}, in Portuguese.
+
+  \medskip
+  A COPPE thesis is the class plus this style:
+
+  \medskip
+  \verb|\documentclass[dsc]{ufrj}|\\
+  \verb|\usepackage{ufrj-coppe}|
+
+  \medskip
+  The style brings the institute's name on the cover and in the reference above
+  each abstract, its thirteen Programas, the COPPE logo to the right of UFRJ's,
+  the sentence that says to whom the work was presented, the name of the degree
+  (``Mestre/Doutor em Ciências''), the city (Rio de Janeiro, RJ) and the norm
+  quoted in the colophon. Everything else is the class.
+  \end{minipage}
+\end{center}
+
+\vspace{6pt}
+
+\begin{longtable}{@{}CTD@{}}
+\toprule
+\normalfont\bfseries \textbackslash department & \normalfont\bfseries Programa
+& \normalfont\bfseries In English \\
+\midrule
+\endfirsthead
+\toprule
+\normalfont\bfseries \textbackslash department & \normalfont\bfseries Programa
+& \normalfont\bfseries In English \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+PEB  & Engenharia Biomédica & Biomedical Engineering \\
+PEC  & Engenharia Civil & Civil Engineering \\
+PEE  & Engenharia Elétrica & Electrical Engineering \\
+PEM  & Engenharia Mecânica & Mechanical Engineering \\
+PEMM & Engenharia Metalúrgica e de Materiais & Metallurgical and Materials Engineering \\
+PEN  & Engenharia Nuclear & Nuclear Engineering \\
+PENO & Engenharia Oceânica & Ocean Engineering \\
+PENT & Engenharia de Nanotecnologia & Nanotechnology Engineering \\
+PEP  & Engenharia de Produção & Production Engineering \\
+PEQ  & Engenharia Química & Chemical Engineering \\
+PESC & Engenharia de Sistemas e Computação & Systems Engineering and Computer Science \\
+PET  & Engenharia de Transportes & Transportation Engineering \\
+PPE  & Planejamento Energético & Energy Planning \\
+\end{longtable}
+
+\vspace{4pt}
+\begin{center}
+\begin{minipage}{0.92\textwidth}\small
+\textbf{An acronym the style does not declare is a class error}, and not a
+cover without the Programa. A Programa created after this release can be
+declared in the preamble, after the style:
+
+\medskip
+\verb|\ufrjdeclareprogram{PEX}{Engenharia de Exemplo}{Example Engineering}|
+
+\medskip
+\textbf{The COPPE norm.} The colophon says the work follows the
+\emph{Norma para a Elaboração Gráfica de Teses e Dissertações da COPPE/UFRJ}.
+The norm decides only where the Manual does not oblige --- it adds the lists of
+\emph{quadros}, of programs and of algorithms, and keeps the three elements at
+the head of the abstract sheet, which \verb|\setupabstracts| turns on. Where
+the two disagree, the Manual wins.
+
+\medskip
+\textbf{A thesis begun before v4.1} compiles as it is: \texttt{coppe.cls} is a
+compatibility class that loads \texttt{ufrj} with the same options, loads this
+style and warns once. The old public names --- \verb|\coppestring| and its
+brothers, \verb|\usecoppelanguage|, \verb|\newcoppefloat|,
+\verb|\coppetexfinalpage| and the six colophon pieces \verb|\coppefinal...| ---
+go on working, and a \verb|\renewcommand| by the old name still changes the
+colophon. It relaxes no rule of the class.
+
+\medskip
+Worked examples: \texttt{coppe-min-exemplo.tex}, only what is mandatory, and
+\texttt{coppe-max-exemplo.tex}, everything the class composes.\quad
+Problems: \url{https://github.com/COPPE-UFRJ/CoppeTeX/issues}
+\end{minipage}
+\end{center}
+
+\end{document}
+%% 
+%%
+%% End of file `coppe-quickref.tex'.

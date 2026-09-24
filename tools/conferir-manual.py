@@ -3,7 +3,7 @@
 """Confere o manual contra a classe: nenhum comando publico pode ficar de fora.
 
 O manual e o exemplo envelhecem em silencio. Um comando novo entra na classe e
-ninguem o documenta; uma linha do max-exemplo.tex se desloca e a tabela "onde ver
+ninguem o documenta; uma linha do coppe-max-exemplo.tex se desloca e a tabela "onde ver
 cada coisa funcionando" passa a apontar para o lugar errado. Nenhuma das duas
 coisas quebra a compilacao, e por isso nenhuma das duas aparece sozinha.
 
@@ -12,7 +12,7 @@ Este script olha cinco coisas:
   1. Todo comando e ambiente PUBLICO que a classe define aparece no manual,
      marcado com \\DescribeMacro ou \\DescribeEnv?
   2. Toda opcao de classe aparece na secao de opcoes?
-  3. Os numeros de linha da tabela "onde ver" ainda batem com o max-exemplo.tex?
+  3. Os numeros de linha da tabela "onde ver" ainda batem com o coppe-max-exemplo.tex?
   4. Os guardas de macrocode do .dtx estao bem escritos? Um guarda torto nao
      quebra nada: so faz o manual imprimir documentacao como se fosse codigo.
   5. Todo comando publico tem os DOIS NOMES -- o ingles, que tem o codigo, e o
@@ -37,7 +37,7 @@ import sys
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DTX = os.path.join(RAIZ, "src", "ufrj.dtx")
 CLS = os.path.join(RAIZ, "src", "ufrj.cls")
-EXEMPLO = os.path.join(RAIZ, "src", "max-exemplo.tex")
+EXEMPLO = os.path.join(RAIZ, "src", "coppe-max-exemplo.tex")
 # O estilo da COPPE tem fonte e manual proprios. Um comando publico dele pode
 # estar documentado em qualquer dos dois manuais -- os que o estilo redefine sao
 # da classe, e e la que estao descritos --, e os guardas de macrocode dos dois
@@ -174,7 +174,7 @@ def documentados(dtx):
 
 
 def onde_ver(dtx, exemplo):
-    """Confere a tabela de linhas do max-exemplo.tex."""
+    """Confere a tabela de linhas do coppe-max-exemplo.tex."""
     linhas_ex = exemplo.split("\n")
     problemas = []
     # linhas da tabela: ... & |\comando| & 123 \\
@@ -322,12 +322,12 @@ def main():
 
     if desalinhadas:
         erros += len(desalinhadas)
-        print("\nERRO  %d linha(s) da tabela 'onde ver' nao batem com o max-exemplo.tex:"
+        print("\nERRO  %d linha(s) da tabela 'onde ver' nao batem com o coppe-max-exemplo.tex:"
               % len(desalinhadas))
         for cmd, n, obs in desalinhadas:
             print("        \\%-22s manual diz %-5d %s" % (cmd, n, obs))
     else:
-        print("ok    a tabela 'onde ver' bate com o max-exemplo.tex")
+        print("ok    a tabela 'onde ver' bate com o coppe-max-exemplo.tex")
 
     if tortos:
         erros += len(tortos)

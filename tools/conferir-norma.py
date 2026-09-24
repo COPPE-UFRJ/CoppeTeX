@@ -11,7 +11,7 @@ sistema; no Windows, o poppler que vem com o MiKTeX serve.
 
     python3 tools/conferir-norma.py
     python3 tools/conferir-norma.py tests/adversativa/adv_*.pdf
-    python3 tools/conferir-norma.py src/max-exemplo.pdf
+    python3 tools/conferir-norma.py src/coppe-max-exemplo.pdf
 
 Sem argumento, confere os tres exemplos de src/ (o da COPPE, o minimo e o da
 Poli) e os documentos adversativos
@@ -374,8 +374,9 @@ def alvos_padrao():
     LuaLaTeX. A sonda de fluxos (_writes_probe) fica de fora: estoura de
     proposito e o PDF dela nao e documento.
     """
-    alvos = [os.path.join(RAIZ, "src", n) for n in ("max-exemplo.pdf", "min-exemplo.pdf",
-                                                   "poli-exemplo.pdf")]
+    alvos = [os.path.join(RAIZ, "src", n)
+             for n in ("coppe-max-exemplo.pdf", "coppe-min-exemplo.pdf",
+                       "poli-min-exemplo.pdf", "poli-max-exemplo.pdf")]
     alvos += sorted(glob.glob(os.path.join(RAIZ, "tests", "adversativa", "adv_*.pdf")))
     return [a for a in alvos if os.path.exists(a)]
 

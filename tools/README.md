@@ -36,9 +36,9 @@ compilar veio do `.dtx`, e não de um arquivo que ficou para trás.
 | `conferir-norma.py` | Lê um PDF pronto e mede, em centímetros, o que a norma fixa: margens, corpo, recuos, ordem das páginas pré-textuais. |
 | `conferir-referencias.py` | Compõe as referências e as compara, uma a uma, com o texto que o Manual imprime. O gabarito é o `@comment{Manual: …}` antes de cada entrada de `../src/exemplo.bib` e de `../tests/adversativa/referencias-manual.bib`, e a ferramenta confere primeiro que ele é o texto do PDF do Manual em `../specs/`. Divergência aceita só passa com a forma exata da classe, num `@comment{Classe: …}`. |
 | `conferir-referencias-cruzadas.py` | Caça `\ref` e `\cite` sem resolver em todos os `.log`. Nada disso aparece no código de saída do `pdflatex`: sai `??` na página e o PDF é gerado assim mesmo. |
-| `conferir-manual.py` | Cobra que todo comando público, todo ambiente e toda opção da classe estejam documentados, que a tabela "onde ver" do manual ainda bata com o `max-exemplo.tex`, e que os guardas de `macrocode` do `.dtx` estejam bem escritos — o `doc.sty` só fecha um bloco de código com `%` e **quatro** espaços, e um guarda de três espaços fez sessenta linhas de documentação saírem impressas como código no `ufrj.pdf` por várias versões, sem quebrar nada. |
+| `conferir-manual.py` | Cobra que todo comando público, todo ambiente e toda opção da classe estejam documentados, que a tabela "onde ver" do manual ainda bata com o `coppe-max-exemplo.tex`, e que os guardas de `macrocode` do `.dtx` estejam bem escritos — o `doc.sty` só fecha um bloco de código com `%` e **quatro** espaços, e um guarda de três espaços fez sessenta linhas de documentação saírem impressas como código no `ufrj.pdf` por várias versões, sem quebrar nada. |
 | `juntar-master.py` | Junta ao ramo da 5.0 o que o `master` da 4.1 fez depois que o `goufrj` nasceu: tira da `dist/` as cópias das fontes para o git parear `src` com `src`, faz o merge, resolve os conflitos que só existem por causa da troca de nome `coppe` → `ufrj`, leva ao `ufrj-coppe.dtx` o que mudou nos exemplos, renomeia os testes da conferência para `rt` e aponta o que sobrou da 4.1. Testado numa simulação do merge. O passo a passo está em [`JUNTAR_MASTER_GOUFRJ.md`](../JUNTAR_MASTER_GOUFRJ.md). |
-| `atualizar-onde-ver.py` | Reescreve essa tabela a partir do `max-exemplo.tex` atual, quando ela envelhece. |
+| `atualizar-onde-ver.py` | Reescreve essa tabela a partir do `coppe-max-exemplo.tex` atual, quando ela envelhece. |
 
 A suíte de regressão tem rodador próprio, em
 [`../tests/regressivo/run-regressivo.py`](../tests/regressivo/README.md). Ele
@@ -51,7 +51,7 @@ Do mais rápido ao mais completo. Todos começam regenerando a distribuição.
 | Escopo | O que compila |
 |---|---|
 | `class` | Nada. Só regenera a partir do `.dtx`. Segundos. |
-| `example` | Os dois exemplos em português, `min-exemplo` e `max-exemplo`. |
+| `example` | Os dois exemplos em português, `coppe-min-exemplo` e `coppe-max-exemplo`. |
 | `langs` | Os cinco exemplos de idioma. |
 | `tests` | A suíte de regressão de `tests/`. |
 | `docs` | O manual de uso, a norma da COPPE, o manual futuro e a montagem de capas. |

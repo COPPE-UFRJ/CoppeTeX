@@ -1,0 +1,193 @@
+%%
+%% This is file `poli-max-exemplo.tex',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% ufrj-poli.dtx  (with options: `polimaxexemplo')
+%% 
+%% This is a sample undergraduate project which illustrates the use of the
+%% `ufrj' document class with the `ufrj-poli' unit style. It is generated from
+%% ufrj-poli.dtx by docstrip.
+%% 
+%% Copyright (C) 2008-2026 Vicente Helano F. Batista, George O. Ainsworth Jr.,
+%% Geraldo Xexéo and Eduardo Mangeli. Released under the GNU General Public
+%% License version 3 (see the COPYING.txt file).
+%% 
+\documentclass[grad]{ufrj}
+\usepackage[times]{ufrj-poli}
+
+\usepackage{graphicx}
+\usepackage{makeidx}
+
+\addbibresource{exemplo.bib}
+
+\makelosymbols
+\makeloabbreviations
+\makelosiglas
+\makeglossarylist
+\makeindex
+
+\defineacronym{ufrj}{UFRJ}{Universidade Federal do Rio de Janeiro}
+\defineacronym{poli}{Poli}{Escola Politecnica}
+
+\begin{document}
+  \title{Titulo do Projeto de Graduacao}
+  \foreigntitle{Title of the Undergraduate Project}
+  \subtitle{subtitulo, quando houver}
+  \foreignsubtitle{subtitle, if any}
+  \author{Nome do Autor}{Sobrenome}
+  \advisor{Nome do Orientador}{Sobrenome}{D.Sc.}{UFRJ}
+  \coadvisor{Nome do Coorientador}{Sobrenome}{D.Sc.}{UFRJ}
+  % A banca e o que se declara aqui, na ordem: o orientador, que a preside
+  % (3.1.2.1.3e), e o primeiro.
+  \examiner{Nome do Orientador Sobrenome}{D.Sc.}{UFRJ}
+  \examiner{Nome do Coorientador Sobrenome}{D.Sc.}{UFRJ}
+  \examiner{Nome do Primeiro Examinador Sobrenome}{D.Sc.}{UFRJ}
+  \examiner{Nome do Segundo Examinador Sobrenome}{Ph.D.}{UFRJ}
+  % A sigla do curso: ECI, CIVIL, AMBIENTAL, MECANICA, NAVAL, PRODUCAO,
+  % ELETRICA, ELETRONICA, CONTROLE, MATERIAIS, NUCLEAR, PETROLEO, QUIMICA ou
+  % NANOTECNOLOGIA. Com a opcao civilpordepartamento, as cinco siglas de
+  % departamento da Engenharia Civil tambem valem.
+  \department{ECI}
+  \date{01}{2026}
+  \approvaldate{15 de janeiro de 2026}
+  % A cidade e da CLASSE: o estilo declara o Rio de Janeiro, e o autor troca
+  % com \city (ou \place) se o trabalho for feito em Macae ou em Duque de
+  % Caxias.
+  \keyword{primeira palavra-chave}
+  \keyword{segunda palavra-chave}
+  \foreignkeyword{first keyword}
+  \foreignkeyword{second keyword}
+
+  \maketitle
+  \frontmatter
+
+  \dedication{A quem leu a norma antes de escrever.}
+
+  \epigrafe{``A citacao que abre o trabalho, com a mesma
+    formatacao da citacao longa.''}{Autor da epigrafe}
+
+  \begin{abstract}
+    O resumo em portugues, em paragrafo unico, com 150 a 500 palavras
+    (3.1.2.1.4). Ele nao repete o titulo, nao cita referencia e nao traz
+    formula: diz o que foi feito, como, e o que se concluiu. A folha traz a
+    referencia do proprio trabalho no alto e as palavras-chave no pe, como
+    pedem os Anexos E e F do Manual.
+  \end{abstract}
+
+  \begin{foreignabstract}
+    The abstract in English, the version of the abstract in the language of
+    international dissemination (3.1.2.1.5), with the same content as the
+    Portuguese one.
+  \end{foreignabstract}
+
+  % As listas, na ordem da 3.1.2: ilustracoes (figuras, quadros), tabelas,
+  % abreviaturas, siglas e simbolos. O sumario e sempre o ultimo, e a classe
+  % confere a ordem.
+  \listoffigures
+  \listofquadros
+  \listoftables
+  \printloabbreviations
+  \printlosiglas
+  \printlosymbols
+  \tableofcontents
+
+  \mainmatter
+
+  \chapter{Introducao}
+  \label{cap:introducao}
+  O texto do trabalho comeca aqui. A \sigla{poli} e uma unidade da
+  \sigla{ufrj}, e na segunda vez a sigla sai sozinha: a \sigla{poli}.
+
+  A citacao segue o sistema da classe \cite{m-4211}, e a citacao com o autor
+  no texto sai como em \textcite{m-4212}. A citacao de mais de tres linhas vai
+  no ambiente proprio:
+
+  \begin{longquote}
+    A citacao longa entra com recuo de 4 cm da margem esquerda, em corpo
+    menor, sem aspas e com espacamento simples, como pede a 2.5 do Manual.
+    Depois dela, o texto continua no paragrafo seguinte.
+  \end{longquote}
+
+  \section{Uma secao}
+  O simbolo \symbl{$\alpha$}{coeficiente de dilatacao} entra na lista de
+  simbolos na ordem em que aparece, e a abreviatura \abbrev{Prof.}{Professor}
+  e o \acron{PG}{Projeto de Graduacao} entram nas suas. O
+  \glossaryterm{termo tecnico}{a definicao do termo, que sai no glossario}
+  entra no glossario, e esta palavra\index{palavra} entra no indice
+  remissivo.
+
+  \chapter{Ilustracoes, quadros e tabelas}
+  \label{cap:ilustracoes}
+
+  A legenda vem em cima e a fonte embaixo, as duas alinhadas a esquerda, na
+  margem da ilustracao (2.10 e Figura 1 do Manual).
+
+  \begin{figure}[htbp]
+    \caption{Uma figura estreita, com a legenda na largura dela}
+    \illustrationwidth{6cm}
+    \centering
+    \rule{6cm}{3cm}
+    \source{Elaborado pelo autor (2026).}
+  \end{figure}
+
+  \begin{quadro}[htbp]
+    \caption{Um quadro: informacao textual, com as quatro bordas}
+    \centering
+    \begin{tabular}{|l|l|}
+      \hline
+      Elemento & Onde esta \\
+      \hline
+      Capa & 3.1.1.1 \\
+      Folha de rosto & 3.1.2.1.1 \\
+      \hline
+    \end{tabular}
+    \source{Elaborado pelo autor (2026).}
+  \end{quadro}
+
+  \begin{table}[htbp]
+    \caption{Uma tabela: dado numerico, sem as bordas laterais}
+    \centering
+    \begin{tabular}{lr}
+      \hline
+      Curso & Alunos \\
+      \hline
+      Engenharia de Computacao e Informacao & 100 \\
+      Engenharia Civil & 200 \\
+      \hline
+    \end{tabular}
+    \source{IBGE (2026).}
+  \end{table}
+
+  \chapter{Listagem de programa}
+  \label{cap:programa}
+  A listagem sai com o estilo da linguagem, e o flutuante dela tem lista
+  propria:
+
+  \begin{python}[caption={Um programa de exemplo},label={prog:exemplo}]
+def soma(a, b):
+    return a + b
+  \end{python}
+
+  \chapter{Conclusao}
+  \label{cap:conclusao}
+  A conclusao do trabalho, que retoma o que o Capitulo~\ref{cap:introducao}
+  propos.
+
+  \appendix
+  \chapter{Um apendice}
+  O apendice e texto do proprio autor, complementar ao trabalho.
+
+  \annex
+  \chapter{Um anexo}
+  O anexo e documento de terceiro, trazido para o trabalho.
+
+  \backmatter
+  \printbibliography
+  \printglossarylist
+  \printindex
+\end{document}
+%% 
+%%
+%% End of file `poli-max-exemplo.tex'.

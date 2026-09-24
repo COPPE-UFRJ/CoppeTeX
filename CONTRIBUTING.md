@@ -189,7 +189,7 @@ three documented `.dtx` files. Run `pdflatex ufrj.ins`, `pdflatex
 ufrj-coppe.ins` and `pdflatex ufrj-poli.ins` (or `coppetex.bat --regerar` on
 Windows, which runs the three) to regenerate `ufrj.cls`, the `.bbx/.cbx/.dbx`, the `.lbx` files
 and the `.def` files from the first, and `ufrj-coppe.sty`, `coppe.cls` and
-the examples (`min-exemplo.tex`, `max-exemplo.tex`, the language demos) from
+the examples (`coppe-min-exemplo.tex`, `coppe-max-exemplo.tex`, the language demos) from
 the second. The manuals `ufrj.pdf` and `ufrj-coppe.pdf` are also rebuilt from
 the `.dtx` files by running `pdflatex` on them three times with `makeindex`
 in between.
@@ -202,7 +202,7 @@ declaration in the class interface, filled by the unit style.
 
 When you edit a `.dtx`:
 
-- **Behavior changes for pt or en?** Compare a rebuilt `dist/manuais/max-exemplo.pdf`
+- **Behavior changes for pt or en?** Compare a rebuilt `dist/manuais/coppe-max-exemplo.pdf`
   against the previous version page-by-page (`pdftoppm` + `md5sum`).
   Unless you intend a visible change, the diff should be empty.
 - **New macros?** Add a `\changes{vX.Y}{date}{description}` entry near

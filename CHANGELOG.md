@@ -4,7 +4,7 @@ Project changes worth noting, newest first. Follows
 [Keep a Changelog](https://keepachangelog.com/) loosely; dates are
 ISO-8601.
 
-## [Unreleased] — Full check against the UFRJ/SiBI Manual (2026)
+## [5.0] — 2026-09-24 — The check against the Manual, the Escola Politécnica, and the release
 
 On 2026-09-16, version 4.1 was checked in full against the Manual (9th ed.
 rev., 2026) and the CAPES additional-sheet model. Each defect found has one
@@ -17,6 +17,23 @@ Manual's prose and its examples disagree, the prose wins, except for the two
 sheets of the SiBI model, which win over the Manual's examples. No test is
 marked `ABERTO` any more; the status of each issue, with its commit, is at the
 top of `CORRECOES_MANUAL_2026.md`.
+
+### Added
+
+- **Each unit has its own examples and its own quick reference.** The examples
+  carry the unit's name: `max-exemplo` and `min-exemplo` are
+  `coppe-max-exemplo` and `coppe-min-exemplo`, `poli-exemplo` is
+  `poli-min-exemplo`, and the new `poli-max-exemplo` is an undergraduate
+  project with everything the class composes — the pre-textual sheets in the
+  order of 3.1.2, the six lists, the glossary, the index, an illustration with
+  its source and its width, a quadro, a table, a program listing, a long
+  quotation, an appendix and an annex. The quick reference splits the same way:
+  `ufrj-quickref` is the class alone, which names no unit, and the new
+  `coppe-quickref` and `poli-quickref` carry what belongs to each — COPPE's
+  thirteen Programas, the Escola's fourteen Courses with the title each confers
+  and the old department acronyms, the options of each style, the norms and the
+  compatibility classes. All three are in English, and all three are in the
+  distribution.
 
 ### Verification
 

@@ -58,12 +58,14 @@ else:
     # querer nao quebra nada no ato -- a distribuicao simplesmente fica sem ele,
     # e quem descobre e o aluno, depois.
     for preciso in ("ufrj.cls", "ufrj.pdf", "manual.pdf", "ufrj-quickref.pdf",
-                    "min-exemplo.tex", "min-exemplo.pdf",
-                    "max-exemplo.tex", "max-exemplo.pdf", "exemplo.bib",
+                    "coppe-quickref.pdf", "poli-quickref.pdf",
+                    "coppe-min-exemplo.tex", "coppe-min-exemplo.pdf",
+                    "coppe-max-exemplo.tex", "coppe-max-exemplo.pdf", "exemplo.bib",
                     "example_en.tex", "example_en.pdf",
                     "example_es.tex", "example_es.pdf",
                     "latexmkrc", "ufrj.ist", "ufrj-logo.pdf",
-                    "ufrj-poli.sty", "poli-exemplo.tex", "poli-exemplo.pdf"):
+                    "ufrj-poli.sty", "poli-min-exemplo.tex", "poli-min-exemplo.pdf",
+                    "poli-max-exemplo.tex", "poli-max-exemplo.pdf"):
         if '"%s"' % preciso not in lista:
             problemas.append("PARA_DIST nao leva %s" % preciso)
 
@@ -72,8 +74,8 @@ else:
     # example.tex a declara -- quem baixava a entrega recebia um PDF com as
     # citacoes em branco. Perguntar ao proprio .tex e melhor que manter uma
     # segunda lista aqui, que envelheceria do mesmo jeito.
-    for exemplo in ("min-exemplo", "max-exemplo", "poli-exemplo", "example_en",
-                    "example_es"):
+    for exemplo in ("coppe-min-exemplo", "coppe-max-exemplo", "poli-min-exemplo",
+                    "poli-max-exemplo", "example_en", "example_es"):
         fonte = ler("src/%s.tex" % exemplo)
         for base in re.findall(r"\\addbibresource\{([^}]+)\}", fonte):
             if '"%s"' % base not in lista:
@@ -103,7 +105,7 @@ if re.search(r'ErrorActionPreference\s*=\s*"Stop"', runtests):
 
 # 4. dist/ nao pode ter nada fora da lista: o que estiver la vai para o zip do
 #    release. Ja foram o .aux, o .log e o .synctex.gz de quem compilou o
-#    max-exemplo dentro de dist/, e um max-exemplo.pdf repetido na raiz.
+#    coppe-max-exemplo dentro de dist/, e um coppe-max-exemplo.pdf repetido na raiz.
 sys.path.insert(0, os.path.join(RAIZ, "tools"))
 import painel  # noqa: E402
 for rel in painel.dist_sobras():

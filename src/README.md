@@ -38,10 +38,12 @@ Gerado — **não edite**:
 | `ufrj-lang-spanish.def`, `-french.def`, `-italian.def` | Textos fixos da classe nesses idiomas. Português e inglês vivem dentro da classe. |
 | `ufrj.ist` | Estilo de ordenação do glossário e das listas de siglas e símbolos. |
 | `ufrj.bib`, `exemplo.bib` | Bases de referências: a do manual da classe e a dos exemplos. |
-| `min-exemplo.tex`, `max-exemplo.tex` | Os exemplos em português: só o obrigatório, e tudo. Saem do `ufrj-coppe.dtx`. |
+| `coppe-min-exemplo.tex`, `coppe-max-exemplo.tex` | Os exemplos em português: só o obrigatório, e tudo. Saem do `ufrj-coppe.dtx`. |
 | `example_pt`, `_en`, `_es`, `_fr`, `_it` `.tex` | Os demos de idioma. Saem do `ufrj-coppe.dtx`. |
 | `covers_5languages.tex` | A montagem das capas lado a lado. Sai do `ufrj-coppe.dtx`. |
-| `ufrj-quickref.tex` | O guia rápido em inglês. |
+| `ufrj-quickref.tex` | O guia rápido da CLASSE, em inglês. |
+| `coppe-quickref.tex` | O guia rápido da COPPE, em inglês (gerado do `ufrj-coppe.dtx`). |
+| `poli-quickref.tex` | O guia rápido da Escola Politécnica, em inglês (gerado do `ufrj-poli.dtx`). |
 | `latexmkrc.tex` | A receita de compilação (veja a nota sobre o nome, abaixo). |
 | `ufrj.pdf` | O manual de uso da classe, composto do próprio `ufrj.dtx`. |
 | `ufrj-coppe.pdf` | O manual do estilo da COPPE, composto do próprio `ufrj-coppe.dtx`. |
@@ -70,7 +72,7 @@ regras bastam para ler e escrever neles:
    vai para qual arquivo. No `ufrj.ins`, o módulo `class` vira `ufrj.cls` e o
    `bbx` vira `ufrj.bbx`; no `ufrj-coppe.ins`, o `package` vira
    `ufrj-coppe.sty`, o `compat` vira `coppe.cls` e o `maxexemplo` vira
-   `max-exemplo.tex`; e assim por diante.
+   `coppe-max-exemplo.tex`; e assim por diante.
 
 Um trecho típico, dentro do módulo `class`:
 

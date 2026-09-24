@@ -1,0 +1,150 @@
+%%
+%% This is file `poli-quickref.tex',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% ufrj-poli.dtx  (with options: `quickrefpoli')
+%% 
+%% This is a sample undergraduate project which illustrates the use of the
+%% `ufrj' document class with the `ufrj-poli' unit style. It is generated from
+%% ufrj-poli.dtx by docstrip.
+%% 
+%% Copyright (C) 2008-2026 Vicente Helano F. Batista, George O. Ainsworth Jr.,
+%% Geraldo Xexéo and Eduardo Mangeli. Released under the GNU General Public
+%% License version 3 (see the COPYING.txt file).
+%% 
+%% poli-quickref.tex -- CoppeTeX quick reference, Escola Politecnica, in English.
+%%
+%% GERADO de ufrj-poli.dtx. Nao edite este arquivo: edite o modulo
+%% `quickrefpoli' do ufrj-poli.dtx e rode `pdflatex ufrj-poli.ins'.
+\documentclass[a4paper,10pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[margin=2cm]{geometry}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{xcolor}
+\usepackage[colorlinks=true,allbordercolors=white]{hyperref}
+
+\newcommand\ufrjversion{v5.0}
+
+\newcolumntype{C}{>{\ttfamily\raggedright\arraybackslash}p{0.17\textwidth}}
+\newcolumntype{D}{>{\raggedright\arraybackslash}p{0.44\textwidth}}
+\newcolumntype{T}{>{\raggedright\arraybackslash}p{0.30\textwidth}}
+
+\setlength\parindent{0pt}
+
+\begin{document}
+
+\begin{center}
+  {\Large\bfseries CoppeTeX quick reference --- Escola Politécnica}\\[2pt]
+  {\normalsize Unit style \texttt{ufrj-poli}, \ufrjversion}\\[6pt]
+  \begin{minipage}{0.92\textwidth}\small
+  This sheet is the Escola Politécnica half. The other half --- every option,
+  command and environment of the class --- is \texttt{ufrj-quickref.pdf}; the
+  full manual of the style is \texttt{ufrj-poli.pdf}, in Portuguese.
+
+  \medskip
+  A \emph{Projeto de Graduação} is the class with \texttt{grad} plus this
+  style:
+
+  \medskip
+  \verb|\documentclass[grad]{ufrj}|\\
+  \verb|\usepackage{ufrj-poli}|
+
+  \medskip
+  The style brings the school's name and colour mark to the cover, beside
+  UFRJ's, its Courses, the phrase ``Projeto de Graduação apresentado ao Curso
+  de Engenharia X'' and the title each Course confers. Everything else is the
+  class.
+  \end{minipage}
+\end{center}
+
+\vspace{6pt}
+
+\begin{longtable}{@{}CTD@{}}
+\toprule
+\normalfont\bfseries \textbackslash department & \normalfont\bfseries Course
+& \normalfont\bfseries Title conferred \\
+\midrule
+\endfirsthead
+\toprule
+\normalfont\bfseries \textbackslash department & \normalfont\bfseries Course
+& \normalfont\bfseries Title conferred \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+AMBIENTAL      & Engenharia Ambiental & Engenheiro Ambiental \\
+CIVIL          & Engenharia Civil & Engenheiro Civil \\
+COMPUTACAO     & Engenharia de Computação e Informação & Engenheiro de Computação e Informação \\
+CONTROLE       & Engenharia de Controle e Automação & Engenheiro de Controle e Automação \\
+ELETRICA       & Engenharia Elétrica & Engenheiro Elétrico \\
+ELETRONICA     & Engenharia Eletrônica e de Computação & Engenheiro Eletrônico e de Computação \\
+MATERIAIS      & Engenharia de Materiais & Engenheiro de Materiais \\
+MECANICA       & Engenharia Mecânica & Engenheiro Mecânico \\
+METALURGICA    & Engenharia Metalúrgica & Engenheiro Metalúrgico \\
+NAVAL          & Engenharia Naval e Oceânica & Engenheiro Naval \\
+NUCLEAR        & Engenharia Nuclear & Engenheiro Nuclear \\
+PETROLEO       & Engenharia de Petróleo & Engenheiro de Petróleo \\
+PRODUCAO       & Engenharia de Produção & Engenheiro de Produção \\
+NANOTECNOLOGIA & Nanotecnologia & the Course's own (it confers no engineer's title) \\
+\midrule
+\multicolumn{3}{@{}l@{}}{\normalfont\bfseries\small THE OLD DEPARTMENT ACRONYMS,
+  from \texttt{poli.cls}, all still valid}\\[2pt]
+ECI  & Engenharia de Computação e Informação & Engenheiro de Computação e Informação \\
+DEL  & Engenharia Eletrônica e de Computação & Engenheiro Eletrônico e de Computação \\
+DEE  & Engenharia Elétrica & Engenheiro Elétrico \\
+DEM  & Engenharia Mecânica & Engenheiro Mecânico \\
+DMM  & Engenharia Metalúrgica e de Materiais & Engenheiro Metalúrgico e de Materiais \\
+DNC  & Engenharia Nuclear & Engenheiro Nuclear \\
+DENO & Engenharia Naval e Oceânica & Engenheiro Naval \\
+DEI  & Engenharia de Produção & Engenheiro de Produção \\
+DCC, DES, DEG, DET, DHIMA & Engenharia Civil, or the department's own name with the option \texttt{civilpordepartamento} & Engenheiro Civil \\
+\end{longtable}
+
+\vspace{4pt}
+\begin{center}
+\begin{minipage}{0.92\textwidth}\small
+\textbf{Options of the style.}
+\verb|civilporcurso| (the default) makes the five Civil acronyms read
+``Engenharia Civil'', which is the Course; \verb|civilpordepartamento| makes
+each read its department's name, as \texttt{poli.cls} did.
+\verb|times| and \verb|arial| set the family of the letter, which Resolução
+05/2012 leaves to the author --- the SIZE stays 12 in all three, which is what
+the Manual fixes (2.2b); without either, the class's family is used.
+
+\medskip
+\textbf{The school's own rule.} Resolução 05/2012 is older than the Manual and
+contradicts it in thirteen points --- pre-textual folios in roman numerals, the
+sumário before the lists, the caption below the illustration, references based
+on NB-66, an ABNT standard replaced in 1989. Where they disagree the Manual
+wins, and the style implements only what the Resolução \emph{chooses} among
+what the Manual leaves open. The check, item by item, is in
+\texttt{NAO-CONFORMIDADES-POLI.md}, and the minimal norm proposed in its place
+is \texttt{PROPOSTA-DE-RESOLUCAO.pdf}. \textbf{The bibliography follows the
+UFRJ rule strictly}; any difference presented in the Resolução is wrong.
+
+\medskip
+\textbf{A project begun with the old class} compiles as it is: \texttt{poli.cls}
+loads \texttt{ufrj} with \texttt{grad} and this style, accepts the dead options
+(\texttt{pdftex}, \texttt{dvips}, \texttt{dvipdfm}, \texttt{draft}) and the old
+signatures of \verb|\advisor|, \verb|\coadvisor| and \verb|\examiner|, warning
+once that the board comes out without the institution that 3.1.2.1.3(e) asks
+for. It relaxes no rule of the class --- the order of the pre-textual elements
+is an error there too.
+
+\medskip
+Worked examples: \texttt{poli-min-exemplo.tex}, only what is mandatory, and
+\texttt{poli-max-exemplo.tex}, everything the class composes.\quad
+Problems: \url{https://github.com/COPPE-UFRJ/CoppeTeX/issues}
+\end{minipage}
+\end{center}
+
+\end{document}
+%% 
+%%
+%% End of file `poli-quickref.tex'.

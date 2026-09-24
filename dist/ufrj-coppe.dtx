@@ -201,8 +201,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \section{O exemplo máximo}
 %
 % \label{COPPE:SAMPLE}
-% O |max-exemplo.tex| mostra tudo o que a classe oferece e o Manual prevê,
-% inclusive o opcional. O |min-exemplo.tex|, na seção seguinte, é o contrário:
+% O |coppe-max-exemplo.tex| mostra tudo o que a classe oferece e o Manual prevê,
+% inclusive o opcional. O |coppe-min-exemplo.tex|, na seção seguinte, é o contrário:
 % só o que é obrigatório.
 %    \begin{macrocode}
 %<*maxexemplo>
@@ -214,8 +214,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %% linha por: % !TeX program = latexmk -pdf -synctex=1
 \documentclass[dsc,setavermelha]{ufrj}
 \usepackage{ufrj-coppe}
-%% max-exemplo.tex -- tudo o que a classe oferece e o Manual prevê, inclusive o
-%% opcional. Para só o obrigatório, veja o min-exemplo.tex.
+%% coppe-max-exemplo.tex -- tudo o que a classe oferece e o Manual prevê, inclusive o
+%% opcional. Para só o obrigatório, veja o coppe-min-exemplo.tex.
 %%
 %% Opções de classe que não cabem num documento só, porque escolhem uma entre
 %% várias: o tipo (msc, dsc, mscexam, dscexam, mscsem), o idioma (english,
@@ -1552,7 +1552,7 @@ use \verb|\href{https://exemplo.org}{texto}|. Evite digitar URLs como texto comu
   \end{verbatim}
   O \verb|\index| não imprime nada no texto: registra a página em que está. Ponha-o colado à palavra, sem espaço antes, para que a página seja a da palavra e não a da linha seguinte. As remissivas ``ver'' e ``ver também'' são as que a \mbox{NBR~6034} prevê, e saem com as palavras do idioma do trabalho. A \textbf{ordem alfabética respeita os acentos}: a classe dá a cada entrada acentuada uma chave sem acento, e ``ação'' fica antes de ``acaso'', ``índice'' entre ``hyperref'' e ``lema''. Sem isso, o programa que monta o índice poria toda palavra acentuada depois do ``z''. Uma chave escrita por você, com \verb|@|, sempre vence: é o jeito de mandar ``\LaTeX'' para a letra L.
 
-  \textbf{Como o índice é montado.} Quem ordena as entradas é o programa \verb|makeindex|, que roda entre uma compilação e a seguinte. A classe o roda sozinha no fim de cada compilação, e por isso o índice aparece a partir da \textbf{segunda} compilação em qualquer editor --- \hologo{TeX}studio, \hologo{TeX}works, Overleaf. O \verb|latexmk| também o roda, pelo \texttt{latexmkrc}. Para rodá-lo à mão, é \verb|makeindex max-exemplo| e compilar de novo; a opção de classe \verb|semmakeindex| impede a classe de rodá-lo.
+  \textbf{Como o índice é montado.} Quem ordena as entradas é o programa \verb|makeindex|, que roda entre uma compilação e a seguinte. A classe o roda sozinha no fim de cada compilação, e por isso o índice aparece a partir da \textbf{segunda} compilação em qualquer editor --- \hologo{TeX}studio, \hologo{TeX}works, Overleaf. O \verb|latexmk| também o roda, pelo \texttt{latexmkrc}. Para rodá-lo à mão, é \verb|makeindex coppe-max-exemplo| e compilar de novo; a opção de classe \verb|semmakeindex| impede a classe de rodá-lo.
 
   \textbf{Mais de um índice.} Um trabalho pode ter índice de assuntos e índice onomástico. O pacote \verb|imakeidx|, no lugar do \verb|makeidx|, dá um arquivo para cada um:
   \begin{verbatim}
@@ -1719,7 +1719,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor i
 % \section{O exemplo mínimo}
 %
 % \label{COPPE:MIN}
-% O |min-exemplo.tex| traz \textbf{tudo o que é obrigatório e apenas isso}:
+% O |coppe-min-exemplo.tex| traz \textbf{tudo o que é obrigatório e apenas isso}:
 % as folhas que o Manual UFRJ/SiBI chama de elementos essenciais (3.1.2.1), a
 % parte textual com introdução, desenvolvimento e conclusão (3.1.3) e as
 % referências, único pós-textual obrigatório (3.1.4). É o ponto de partida
@@ -1734,7 +1734,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor i
 %% linha por: % !TeX program = latexmk -pdf -synctex=1
 \documentclass[dsc]{ufrj}
 \usepackage{ufrj-coppe}
-%% min-exemplo.tex -- tudo o que a norma exige, e nada além disso.
+%% coppe-min-exemplo.tex -- tudo o que a norma exige, e nada além disso.
 %%
 %% O que está aqui e por quê (Manual UFRJ/SiBI, 9.ª ed. rev., 2026):
 %%  - PDF/A ............... o depósito é em PDF/A (2.2d), e é o padrão da
@@ -1751,7 +1751,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor i
 %%
 %% O que NÃO está, por ser opcional: dedicatória, agradecimentos, epígrafe,
 %% todas as listas além do sumário, coorientador, linha de pesquisa,
-%% glossário, apêndices, anexos e índice. Tudo isso está no max-exemplo.tex.
+%% glossário, apêndices, anexos e índice. Tudo isso está no coppe-max-exemplo.tex.
 
 \addbibresource{exemplo.bib}% a base de referências
 
@@ -1798,7 +1798,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor i
   % que mover. Os obrigatórios são estes, nesta ordem: \maketitle (capa,
   % folha de rosto e folha adicional), \frontmatter (folha de aprovação), o
   % resumo em português, o resumo em língua estrangeira e \tableofcontents
-  % (sumário), sempre o último. O max-exemplo.tex mostra onde entram os
+  % (sumário), sempre o último. O coppe-max-exemplo.tex mostra onde entram os
   % opcionais: errata, dedicatória, agradecimentos, epígrafe e as listas.
   \maketitle
 
@@ -1858,6 +1858,19 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor i
 % |biblatex|. Nada do que ele declara é lido na hora: a classe consulta cada
 % dado quando compõe a folha que precisa dele. Por isso a ordem entre o estilo e
 % o resto do preâmbulo não importa, desde que ele venha depois da classe.
+%
+% \section{Os dois nomes de cada comando}
+%
+% Vale aqui a regra da classe: o nome em inglês carrega o código, o português
+% é apelido dele, e os apelidos ficam em um bloco só --- a tabela inteira está
+% na seção ``Os dois nomes de cada comando'' do manual da classe.
+%
+% Este estilo \textbf{não cria comando público nenhum}: o que ele traz são os
+% dados da COPPE, declarados pela interface da classe. Os treze nomes da
+% seção~\ref{sec:antigos} --- |\coppestring| e os outros --- não são par de
+% idioma: são os nomes que a classe |coppe| tinha até a v4.1, guardados para
+% que um trabalho escrito com eles continue compilando. O par de idioma deles é
+% o do comando da classe que apelidam.
 %
 % \DescribeMacro{\copperdefstring}
 % \DescribeMacro{\coppestring}
@@ -2046,7 +2059,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor i
 % example\_pt.tex -- CoppeTeX 4.1 multilingual demo, main language: brazilian.
 % Short demonstration document (cover + folha + abstracts + 1 chapter) used
 % by the CPGP submission package. The full pt-main example with bibliography
-% and lists is max-exemplo.tex.
+% and lists is coppe-max-exemplo.tex.
 %
 % \iffalse
 %<*examplept>
@@ -2190,7 +2203,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor i
   \emph{b} guarantees faithful visual reproduction. The \texttt{pdfa} option in
   \verb|\documentclass[english,dsc,pdfa]{ufrj}| is all it takes: the class
   loads \texttt{pdfx}, builds the metadata from the title, author and keywords,
-  and embeds the colour profile. Turn it on early, as \texttt{max-exemplo.tex}
+  and embeds the colour profile. Turn it on early, as \texttt{coppe-max-exemplo.tex}
   does: a non-conforming PDF or image shows up the day it is added, not the day
   before the deposit. To check, use the veraPDF validator, PDF/A-2b profile.
 
@@ -2286,7 +2299,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor i
   \texttt{pdfa} en \verb|\documentclass[spanish,dsc,pdfa]{ufrj}|: la clase carga
   \texttt{pdfx}, arma los metadatos a partir del título, el autor y las palabras
   clave, e incrusta el perfil de color. Actívela temprano, como hace
-  \texttt{max-exemplo.tex}: un PDF o una imagen fuera de la norma aparecen el día en
+  \texttt{coppe-max-exemplo.tex}: un PDF o una imagen fuera de la norma aparecen el día en
   que entran, y no la víspera del depósito. Para verificar, use el validador
   veraPDF, perfil PDF/A-2b.
 
@@ -2382,7 +2395,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor i
   graphiques, et le niveau \emph{b} garantit une reproduction visuelle fidèle.
   L'option \texttt{pdfa} suffit : la classe charge \texttt{pdfx}, construit les
   métadonnées à partir du titre, de l'auteur et des mots-clés, et incorpore le
-  profil de couleur. Activez-la tôt, comme le fait \texttt{max-exemplo.tex}. Pour
+  profil de couleur. Activez-la tôt, comme le fait \texttt{coppe-max-exemplo.tex}. Pour
   vérifier, utilisez le validateur veraPDF, profil PDF/A-2b. Le français n'est
   pas une langue de rédaction admise pour une thèse de la COPPE (résolution
   CEPG n.~302/2024, art.~57) : ce document ne fait que démontrer le mécanisme.
@@ -2479,7 +2492,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor i
   \emph{b} garantisce una riproduzione visiva fedele. Basta l'opzione
   \texttt{pdfa}: la classe carica \texttt{pdfx}, costruisce i metadati da
   titolo, autore e parole chiave, e incorpora il profilo colore. Attivatela
-  presto, come fa \texttt{max-exemplo.tex}. Per verificare, usate il validatore
+  presto, come fa \texttt{coppe-max-exemplo.tex}. Per verificare, usate il validatore
   veraPDF, profilo PDF/A-2b. L'italiano non è una lingua ammessa per una tesi
   della COPPE (risoluzione CEPG n.~302/2024, art.~57): questo documento
   dimostra soltanto il meccanismo.
@@ -2567,6 +2580,134 @@ da classe;
 \end{document}
 %</covers>
 % \fi
+%
+% \section{A folha de consulta da COPPE}
+%
+% O |coppe-quickref.tex| é a metade da COPPE de uma folha só, em inglês: os
+% treze Programas com a sigla de cada um, a norma da COPPE, a classe
+% |coppe| de compatibilidade e os exemplos. A outra metade --- a classe
+% inteira, que é o Manual UFRJ/SiBI --- é o |ufrj-quickref.tex|, e a Escola
+% Politécnica tem a sua, o |poli-quickref.tex|.
+%
+%    \begin{macrocode}
+%<*quickrefcoppe>
+%% coppe-quickref.tex -- CoppeTeX quick reference, COPPE unit style, in English.
+%%
+%% GERADO de ufrj-coppe.dtx. Nao edite este arquivo: edite o modulo
+%% `quickrefcoppe' do ufrj-coppe.dtx e rode `pdflatex ufrj-coppe.ins'.
+\documentclass[a4paper,10pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[margin=2cm]{geometry}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{xcolor}
+\usepackage[colorlinks=true,allbordercolors=white]{hyperref}
+
+\newcommand\ufrjversion{v5.0}
+
+\newcolumntype{C}{>{\ttfamily\raggedright\arraybackslash}p{0.17\textwidth}}
+\newcolumntype{D}{>{\raggedright\arraybackslash}p{0.44\textwidth}}
+\newcolumntype{T}{>{\raggedright\arraybackslash}p{0.30\textwidth}}
+
+\setlength\parindent{0pt}
+
+\begin{document}
+
+\begin{center}
+  {\Large\bfseries CoppeTeX quick reference --- COPPE}\\[2pt]
+  {\normalsize Unit style \texttt{ufrj-coppe}, \ufrjversion}\\[6pt]
+  \begin{minipage}{0.92\textwidth}\small
+  This sheet is the COPPE half. The other half --- every option, command and
+  environment of the class, which is the Manual UFRJ/SiBI and names no unit ---
+  is \texttt{ufrj-quickref.pdf}; the full manual of the style is
+  \texttt{ufrj-coppe.pdf}, in Portuguese.
+
+  \medskip
+  A COPPE thesis is the class plus this style:
+
+  \medskip
+  \verb|\documentclass[dsc]{ufrj}|\\
+  \verb|\usepackage{ufrj-coppe}|
+
+  \medskip
+  The style brings the institute's name on the cover and in the reference above
+  each abstract, its thirteen Programas, the COPPE logo to the right of UFRJ's,
+  the sentence that says to whom the work was presented, the name of the degree
+  (``Mestre/Doutor em Ciências''), the city (Rio de Janeiro, RJ) and the norm
+  quoted in the colophon. Everything else is the class.
+  \end{minipage}
+\end{center}
+
+\vspace{6pt}
+
+\begin{longtable}{@{}CTD@{}}
+\toprule
+\normalfont\bfseries \textbackslash department & \normalfont\bfseries Programa
+& \normalfont\bfseries In English \\
+\midrule
+\endfirsthead
+\toprule
+\normalfont\bfseries \textbackslash department & \normalfont\bfseries Programa
+& \normalfont\bfseries In English \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+PEB  & Engenharia Biomédica & Biomedical Engineering \\
+PEC  & Engenharia Civil & Civil Engineering \\
+PEE  & Engenharia Elétrica & Electrical Engineering \\
+PEM  & Engenharia Mecânica & Mechanical Engineering \\
+PEMM & Engenharia Metalúrgica e de Materiais & Metallurgical and Materials Engineering \\
+PEN  & Engenharia Nuclear & Nuclear Engineering \\
+PENO & Engenharia Oceânica & Ocean Engineering \\
+PENT & Engenharia de Nanotecnologia & Nanotechnology Engineering \\
+PEP  & Engenharia de Produção & Production Engineering \\
+PEQ  & Engenharia Química & Chemical Engineering \\
+PESC & Engenharia de Sistemas e Computação & Systems Engineering and Computer Science \\
+PET  & Engenharia de Transportes & Transportation Engineering \\
+PPE  & Planejamento Energético & Energy Planning \\
+\end{longtable}
+
+\vspace{4pt}
+\begin{center}
+\begin{minipage}{0.92\textwidth}\small
+\textbf{An acronym the style does not declare is a class error}, and not a
+cover without the Programa. A Programa created after this release can be
+declared in the preamble, after the style:
+
+\medskip
+\verb|\ufrjdeclareprogram{PEX}{Engenharia de Exemplo}{Example Engineering}|
+
+\medskip
+\textbf{The COPPE norm.} The colophon says the work follows the
+\emph{Norma para a Elaboração Gráfica de Teses e Dissertações da COPPE/UFRJ}.
+The norm decides only where the Manual does not oblige --- it adds the lists of
+\emph{quadros}, of programs and of algorithms, and keeps the three elements at
+the head of the abstract sheet, which \verb|\setupabstracts| turns on. Where
+the two disagree, the Manual wins.
+
+\medskip
+\textbf{A thesis begun before v4.1} compiles as it is: \texttt{coppe.cls} is a
+compatibility class that loads \texttt{ufrj} with the same options, loads this
+style and warns once. The old public names --- \verb|\coppestring| and its
+brothers, \verb|\usecoppelanguage|, \verb|\newcoppefloat|,
+\verb|\coppetexfinalpage| and the six colophon pieces \verb|\coppefinal...| ---
+go on working, and a \verb|\renewcommand| by the old name still changes the
+colophon. It relaxes no rule of the class.
+
+\medskip
+Worked examples: \texttt{coppe-min-exemplo.tex}, only what is mandatory, and
+\texttt{coppe-max-exemplo.tex}, everything the class composes.\quad
+Problems: \url{https://github.com/COPPE-UFRJ/CoppeTeX/issues}
+\end{minipage}
+\end{center}
+
+\end{document}
+%</quickrefcoppe>
+%    \end{macrocode}
 %
 % \Finale
 % \clearpage

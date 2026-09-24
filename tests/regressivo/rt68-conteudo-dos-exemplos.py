@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 """Teste de conformidade da CoppeTeX.
 
-BUG: (conteudo dos exemplos) o max-exemplo.tex e o exemplo.bib -- os modelos que o aluno copia -- contrariavam o Manual em pontos de conteudo: algoritmos sem fonte, nomes de agencia sem acento, capitulo com titulo em ingles, palavras-chave com inicial maiuscula, edicao digitada como ordinal, referencias repetidas e o proprio Manual citado na edicao de 2025 (#149).
+BUG: (conteudo dos exemplos) o coppe-max-exemplo.tex e o exemplo.bib -- os modelos que o aluno copia -- contrariavam o Manual em pontos de conteudo: algoritmos sem fonte, nomes de agencia sem acento, capitulo com titulo em ingles, palavras-chave com inicial maiuscula, edicao digitada como ordinal, referencias repetidas e o proprio Manual citado na edicao de 2025 (#149).
 
 Um por um, com a regra:
   * 2.10 -- a fonte e obrigatoria abaixo de TODA ilustracao; os dois algoritmos
-    do max-exemplo nao tinham \\source;
+    do coppe-max-exemplo nao tinham \\source;
   * a folha adicional mostrava "Cientifico", "Tecnologico", "Fundacao" e
     "Amparo a Pesquisa" sem acento (convencao do projeto: UTF-8 em toda parte);
   * 2.1 -- o trabalho em portugues tinha um capitulo "Using BibLaTeX", e outro
@@ -22,15 +22,15 @@ Um por um, com a regra:
     entrada em caixa alta na lista (#144); um exemplo com a entrada digitada em
     caixa alta ensina a regra antiga, e a chamada sairia "(BRASIL, 1995)".
 
-E os pedidos de 21/09/2026 para o max-exemplo (#166):
+E os pedidos de 21/09/2026 para o coppe-max-exemplo (#166):
   * sem \\coadvisor: na COPPE so ha orientadores, um ou mais; o recurso fica na
     classe para as outras unidades;
   * a banca da folha de aprovacao com cinco membros declarados ("membro da
     banca"), sem os orientadores automaticos (#165);
   * o nome do projeto de pesquisa da folha adicional com "(caso haja)".
 
-Cobra-se tudo isso sem compilar, lendo src/max-exemplo.tex e src/exemplo.bib
-(o max-exemplo sai do ufrj-coppe.dtx, modulo maxexemplo; o exemplo.bib, do
+Cobra-se tudo isso sem compilar, lendo src/coppe-max-exemplo.tex e src/exemplo.bib
+(o coppe-max-exemplo sai do ufrj-coppe.dtx, modulo maxexemplo; o exemplo.bib, do
 ufrj.dtx, modulos examplebib e tiposbib).
 """
 import io
@@ -39,7 +39,7 @@ import re
 import unicodedata
 from medidas import relatar, RAIZ
 
-tex = io.open(os.path.join(RAIZ, "src", "max-exemplo.tex"), encoding="utf-8").read()
+tex = io.open(os.path.join(RAIZ, "src", "coppe-max-exemplo.tex"), encoding="utf-8").read()
 bib = io.open(os.path.join(RAIZ, "src", "exemplo.bib"), encoding="utf-8").read()
 problemas = []
 
@@ -48,23 +48,23 @@ for m in re.finditer(r"\\end\{algorithm\}", tex):
     seguinte = tex[m.end():m.end() + 200].lstrip()
     if not seguinte.startswith((r"\source", r"\fonte", r"\cpsource", r"\cpfonte")):
         linha = tex.count("\n", 0, m.start()) + 1
-        problemas.append("max-exemplo.tex, linha %d: algoritmo sem \\source logo depois" % linha)
+        problemas.append("coppe-max-exemplo.tex, linha %d: algoritmo sem \\source logo depois" % linha)
 
 # acentos na folha adicional
 for errado in ("Cientifico", "Tecnologico", "Fundacao Carlos", "Amparo a Pesquisa"):
     if errado in tex:
-        problemas.append("max-exemplo.tex: %r sem acento" % errado)
+        problemas.append("coppe-max-exemplo.tex: %r sem acento" % errado)
 
 # titulos de capitulo
 for errado in (r"\chapter{Using BibLaTeX}", "exemplo úteis"):
     if errado in tex:
-        problemas.append("max-exemplo.tex: titulo %r" % errado)
+        problemas.append("coppe-max-exemplo.tex: titulo %r" % errado)
 
 # palavras-chave em minuscula -- so as de trabalho em portugues: \keyword e a do
 # idioma principal. (O Anexo E do Manual traz as iniciais maiusculas, contra o
 # texto da 3.1.2.1.4 e da NBR 6028:2021; vale o texto.)
-modelos = [("max-exemplo.tex", tex),
-           ("min-exemplo.tex", io.open(os.path.join(RAIZ, "src", "min-exemplo.tex"), encoding="utf-8").read()),
+modelos = [("coppe-max-exemplo.tex", tex),
+           ("coppe-min-exemplo.tex", io.open(os.path.join(RAIZ, "src", "coppe-min-exemplo.tex"), encoding="utf-8").read()),
            ("example_pt.tex", io.open(os.path.join(RAIZ, "src", "example_pt.tex"), encoding="utf-8").read()),
            ("tools/geradocvazio.py", io.open(os.path.join(RAIZ, "tools", "geradocvazio.py"), encoding="utf-8").read())]
 for nome, fonte in modelos:
@@ -156,18 +156,18 @@ for tipo, chave, corpo in entradas_do_bib(bib):
                              "escreva como se escreve, a classe poe a caixa alta"
                              % (chave, nome[:45]))
 
-# #166: o max-exemplo da COPPE sem coorientador, com a banca de cinco membros
+# #166: o coppe-max-exemplo da COPPE sem coorientador, com a banca de cinco membros
 # declarados e o projeto de pesquisa "(caso haja)"
 codigo = "\n".join(l.split("%", 1)[0] for l in tex.splitlines())
 if "\\coadvisor{" in codigo:
-    problemas.append("max-exemplo.tex: usa \\coadvisor; na COPPE so ha orientadores (#166)")
+    problemas.append("coppe-max-exemplo.tex: usa \\coadvisor; na COPPE so ha orientadores (#166)")
 banca = re.findall(r"\\examiner\{([^}]*)\}", codigo)
 if len(banca) != 5 or not all("membro da banca" in b for b in banca):
-    problemas.append("max-exemplo.tex: a banca deve ter cinco membros declarados, "
+    problemas.append("coppe-max-exemplo.tex: a banca deve ter cinco membros declarados, "
                      "'Nome do Primeiro membro da banca Sobrenome'...; tem %r (#166)" % banca)
 m = re.search(r"\\projectname\{([^}]*)\}", codigo)
 if not m or "(caso haja)" not in m.group(1):
-    problemas.append("max-exemplo.tex: o projeto de pesquisa sem '(caso haja)' (#166)")
+    problemas.append("coppe-max-exemplo.tex: o projeto de pesquisa sem '(caso haja)' (#166)")
 
 # o Manual na edicao vigente
 m = re.search(r"@\w+\{manualbib,(.*?)\n\}", bib, re.S)

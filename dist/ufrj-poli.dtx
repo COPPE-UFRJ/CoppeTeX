@@ -99,7 +99,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % Universidade Federal do Rio de Janeiro''. O resto --- ordem dos elementos,
 % margens, fontes, citações e referências --- é a classe, que segue o Manual.
 %
-% O |poli-exemplo.tex|, gerado deste arquivo, é um trabalho completo com o
+% O |poli-min-exemplo.tex|, gerado deste arquivo, é um trabalho completo com o
 % estilo.
 %
 % \section{De onde vêm os dados}
@@ -182,6 +182,23 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % o PDF/A e com a matemática. O corpo continua 12 nas três: o ``Arial 11'' da
 % Resolução está superado pelo Manual, como diz o
 % |NAO-CONFORMIDADES-POLI.md|.
+%
+% \section{Os dois nomes de cada comando}
+%
+% Vale aqui a regra da classe: todo comando público tem nome em inglês, que
+% carrega o código, e apelido em português, e os apelidos moram todos em um
+% bloco só, no fim do arquivo que os cria --- a seção ``Os dois nomes de cada
+% comando'' do manual da classe traz a tabela inteira.
+%
+% Este estilo \textbf{não cria comando público nenhum}, e por isso não tem bloco
+% de apelidos. O que ele traz são \emph{dados} da Escola --- os cursos, as
+% siglas de departamento, as frases, o logotipo e a família da letra ---,
+% declarados pela interface da classe (|\ufrjdeclareunit|, |\ufrjdeclareprogram|,
+% |\ufrjdeclarelogo|, |\ufrjdeclarenorm|, |\ufrjdeclareplace| e
+% |\ufrjdefunitstring|), que já tem os dois nomes. Quem escreve um Projeto de
+% Graduação na Escola escreve, portanto, com os comandos da classe, no idioma
+% de comando que preferir. O |tools/conferir-manual.py| reprova a entrega se um
+% comando público aparecer aqui sem o seu par.
 %
 % \section{O logotipo}
 %
@@ -419,9 +436,17 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %</compat>
 %    \end{macrocode}
 %
-% \section{O exemplo}
+% \section{Os dois exemplos}
 %
-% O |poli-exemplo.tex| usa os dados de um Projeto de Graduação de Engenharia de
+% São dois, como na COPPE. O |poli-min-exemplo.tex| é o menor Projeto de
+% Graduação que a norma aceita, para começar a escrever; o
+% |poli-max-exemplo.tex| exercita tudo o que a classe compõe num trabalho de
+% graduação --- as folhas pré-textuais na ordem da 3.1.2, as seis listas, o
+% glossário, o índice remissivo, ilustração com fonte e largura, quadro, tabela,
+% listagem de programa, citação longa, apêndice e anexo ---, e serve de
+% conferência: se algo quebrar na classe ou no estilo, quebra nele.
+%
+% Os dois usam os dados de um Projeto de Graduação de Engenharia de
 % Computação e Informação, com nomes genéricos no lugar das pessoas.
 %
 %    \begin{macrocode}
@@ -490,6 +515,339 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \printbibliography
 \end{document}
 %</poliexemplo>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%<*polimaxexemplo>
+% Um Projeto de Graduacao da Escola Politecnica com TUDO o que a classe compoe.
+% Para comecar a escrever, prefira o poli-min-exemplo.tex, que e o menor
+% trabalho que a norma aceita. Este aqui existe para exercitar a classe: cada
+% folha, cada lista e cada tipo de ilustracao aparece uma vez.
+%
+% A familia da letra e escolha da Escola (Resolucao 05/2012): sem opcao, sai a
+% da classe; com [times] ou [arial] no estilo, sai o desenho correspondente. O
+% CORPO e 12 nos tres casos, que e o que o Manual fixa (2.2b).
+\documentclass[grad]{ufrj}
+\usepackage[times]{ufrj-poli}
+
+\usepackage{graphicx}
+% O indice remissivo (3.1.4.5) e do makeidx, e nao da classe.
+\usepackage{makeidx}
+
+\addbibresource{exemplo.bib}
+
+% As listas pre-textuais so coletam se forem ligadas aqui.
+\makelosymbols
+\makeloabbreviations
+\makelosiglas
+\makeglossarylist
+\makeindex
+
+% As siglas declaradas saem por extenso na primeira vez que \sigla as usa.
+\defineacronym{ufrj}{UFRJ}{Universidade Federal do Rio de Janeiro}
+\defineacronym{poli}{Poli}{Escola Politecnica}
+
+\begin{document}
+  \title{Titulo do Projeto de Graduacao}
+  \foreigntitle{Title of the Undergraduate Project}
+  \subtitle{subtitulo, quando houver}
+  \foreignsubtitle{subtitle, if any}
+  \author{Nome do Autor}{Sobrenome}
+  \advisor{Nome do Orientador}{Sobrenome}{D.Sc.}{UFRJ}
+  \coadvisor{Nome do Coorientador}{Sobrenome}{D.Sc.}{UFRJ}
+  % A banca e o que se declara aqui, na ordem: o orientador, que a preside
+  % (3.1.2.1.3e), e o primeiro.
+  \examiner{Nome do Orientador Sobrenome}{D.Sc.}{UFRJ}
+  \examiner{Nome do Coorientador Sobrenome}{D.Sc.}{UFRJ}
+  \examiner{Nome do Primeiro Examinador Sobrenome}{D.Sc.}{UFRJ}
+  \examiner{Nome do Segundo Examinador Sobrenome}{Ph.D.}{UFRJ}
+  % A sigla do curso: ECI, CIVIL, AMBIENTAL, MECANICA, NAVAL, PRODUCAO,
+  % ELETRICA, ELETRONICA, CONTROLE, MATERIAIS, NUCLEAR, PETROLEO, QUIMICA ou
+  % NANOTECNOLOGIA. Com a opcao civilpordepartamento, as cinco siglas de
+  % departamento da Engenharia Civil tambem valem.
+  \department{ECI}
+  \date{01}{2026}
+  \approvaldate{15 de janeiro de 2026}
+  % A cidade e da CLASSE: o estilo declara o Rio de Janeiro, e o autor troca
+  % com \city (ou \place) se o trabalho for feito em Macae ou em Duque de
+  % Caxias.
+  \keyword{primeira palavra-chave}
+  \keyword{segunda palavra-chave}
+  \foreignkeyword{first keyword}
+  \foreignkeyword{second keyword}
+
+  \maketitle
+  \frontmatter
+
+  \dedication{A quem leu a norma antes de escrever.}
+
+  \epigrafe{``A citacao que abre o trabalho, com a mesma
+    formatacao da citacao longa.''}{Autor da epigrafe}
+
+  \begin{abstract}
+    O resumo em portugues, em paragrafo unico, com 150 a 500 palavras
+    (3.1.2.1.4). Ele nao repete o titulo, nao cita referencia e nao traz
+    formula: diz o que foi feito, como, e o que se concluiu. A folha traz a
+    referencia do proprio trabalho no alto e as palavras-chave no pe, como
+    pedem os Anexos E e F do Manual.
+  \end{abstract}
+
+  \begin{foreignabstract}
+    The abstract in English, the version of the abstract in the language of
+    international dissemination (3.1.2.1.5), with the same content as the
+    Portuguese one.
+  \end{foreignabstract}
+
+  % As listas, na ordem da 3.1.2: ilustracoes (figuras, quadros), tabelas,
+  % abreviaturas, siglas e simbolos. O sumario e sempre o ultimo, e a classe
+  % confere a ordem.
+  \listoffigures
+  \listofquadros
+  \listoftables
+  \printloabbreviations
+  \printlosiglas
+  \printlosymbols
+  \tableofcontents
+
+  \mainmatter
+
+  \chapter{Introducao}
+  \label{cap:introducao}
+  O texto do trabalho comeca aqui. A \sigla{poli} e uma unidade da
+  \sigla{ufrj}, e na segunda vez a sigla sai sozinha: a \sigla{poli}.
+
+  A citacao segue o sistema da classe \cite{m-4211}, e a citacao com o autor
+  no texto sai como em \textcite{m-4212}. A citacao de mais de tres linhas vai
+  no ambiente proprio:
+
+  \begin{longquote}
+    A citacao longa entra com recuo de 4 cm da margem esquerda, em corpo
+    menor, sem aspas e com espacamento simples, como pede a 2.5 do Manual.
+    Depois dela, o texto continua no paragrafo seguinte.
+  \end{longquote}
+
+  \section{Uma secao}
+  O simbolo \symbl{$\alpha$}{coeficiente de dilatacao} entra na lista de
+  simbolos na ordem em que aparece, e a abreviatura \abbrev{Prof.}{Professor}
+  e o \acron{PG}{Projeto de Graduacao} entram nas suas. O
+  \glossaryterm{termo tecnico}{a definicao do termo, que sai no glossario}
+  entra no glossario, e esta palavra\index{palavra} entra no indice
+  remissivo.
+
+  \chapter{Ilustracoes, quadros e tabelas}
+  \label{cap:ilustracoes}
+
+  A legenda vem em cima e a fonte embaixo, as duas alinhadas a esquerda, na
+  margem da ilustracao (2.10 e Figura 1 do Manual).
+
+  \begin{figure}[htbp]
+    \caption{Uma figura estreita, com a legenda na largura dela}
+    \illustrationwidth{6cm}
+    \centering
+    \rule{6cm}{3cm}
+    \source{Elaborado pelo autor (2026).}
+  \end{figure}
+
+  \begin{quadro}[htbp]
+    \caption{Um quadro: informacao textual, com as quatro bordas}
+    \centering
+    \begin{tabular}{|l|l|}
+      \hline
+      Elemento & Onde esta \\
+      \hline
+      Capa & 3.1.1.1 \\
+      Folha de rosto & 3.1.2.1.1 \\
+      \hline
+    \end{tabular}
+    \source{Elaborado pelo autor (2026).}
+  \end{quadro}
+
+  \begin{table}[htbp]
+    \caption{Uma tabela: dado numerico, sem as bordas laterais}
+    \centering
+    \begin{tabular}{lr}
+      \hline
+      Curso & Alunos \\
+      \hline
+      Engenharia de Computacao e Informacao & 100 \\
+      Engenharia Civil & 200 \\
+      \hline
+    \end{tabular}
+    \source{IBGE (2026).}
+  \end{table}
+
+  \chapter{Listagem de programa}
+  \label{cap:programa}
+  A listagem sai com o estilo da linguagem, e o flutuante dela tem lista
+  propria:
+
+  \begin{python}[caption={Um programa de exemplo},label={prog:exemplo}]
+def soma(a, b):
+    return a + b
+  \end{python}
+
+  \chapter{Conclusao}
+  \label{cap:conclusao}
+  A conclusao do trabalho, que retoma o que o Capitulo~\ref{cap:introducao}
+  propos.
+
+  \appendix
+  \chapter{Um apendice}
+  O apendice e texto do proprio autor, complementar ao trabalho.
+
+  \annex
+  \chapter{Um anexo}
+  O anexo e documento de terceiro, trazido para o trabalho.
+
+  \backmatter
+  \printbibliography
+  \printglossarylist
+  \printindex
+\end{document}
+%</polimaxexemplo>
+%    \end{macrocode}
+%
+% \section{A folha de consulta da Escola}
+%
+% O |poli-quickref.tex| é a metade da Escola de uma folha só, em inglês: os
+% cursos com a sigla e o título de cada um, as siglas antigas de departamento,
+% as opções do estilo, o que a Resolução 05/2012 ainda decide e a classe
+% |poli| de compatibilidade. A outra metade é o |ufrj-quickref.tex|.
+%
+%    \begin{macrocode}
+%<*quickrefpoli>
+%% poli-quickref.tex -- CoppeTeX quick reference, Escola Politecnica, in English.
+%%
+%% GERADO de ufrj-poli.dtx. Nao edite este arquivo: edite o modulo
+%% `quickrefpoli' do ufrj-poli.dtx e rode `pdflatex ufrj-poli.ins'.
+\documentclass[a4paper,10pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[margin=2cm]{geometry}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{xcolor}
+\usepackage[colorlinks=true,allbordercolors=white]{hyperref}
+
+\newcommand\ufrjversion{v5.0}
+
+\newcolumntype{C}{>{\ttfamily\raggedright\arraybackslash}p{0.17\textwidth}}
+\newcolumntype{D}{>{\raggedright\arraybackslash}p{0.44\textwidth}}
+\newcolumntype{T}{>{\raggedright\arraybackslash}p{0.30\textwidth}}
+
+\setlength\parindent{0pt}
+
+\begin{document}
+
+\begin{center}
+  {\Large\bfseries CoppeTeX quick reference --- Escola Politécnica}\\[2pt]
+  {\normalsize Unit style \texttt{ufrj-poli}, \ufrjversion}\\[6pt]
+  \begin{minipage}{0.92\textwidth}\small
+  This sheet is the Escola Politécnica half. The other half --- every option,
+  command and environment of the class --- is \texttt{ufrj-quickref.pdf}; the
+  full manual of the style is \texttt{ufrj-poli.pdf}, in Portuguese.
+
+  \medskip
+  A \emph{Projeto de Graduação} is the class with \texttt{grad} plus this
+  style:
+
+  \medskip
+  \verb|\documentclass[grad]{ufrj}|\\
+  \verb|\usepackage{ufrj-poli}|
+
+  \medskip
+  The style brings the school's name and colour mark to the cover, beside
+  UFRJ's, its Courses, the phrase ``Projeto de Graduação apresentado ao Curso
+  de Engenharia X'' and the title each Course confers. Everything else is the
+  class.
+  \end{minipage}
+\end{center}
+
+\vspace{6pt}
+
+\begin{longtable}{@{}CTD@{}}
+\toprule
+\normalfont\bfseries \textbackslash department & \normalfont\bfseries Course
+& \normalfont\bfseries Title conferred \\
+\midrule
+\endfirsthead
+\toprule
+\normalfont\bfseries \textbackslash department & \normalfont\bfseries Course
+& \normalfont\bfseries Title conferred \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+AMBIENTAL      & Engenharia Ambiental & Engenheiro Ambiental \\
+CIVIL          & Engenharia Civil & Engenheiro Civil \\
+COMPUTACAO     & Engenharia de Computação e Informação & Engenheiro de Computação e Informação \\
+CONTROLE       & Engenharia de Controle e Automação & Engenheiro de Controle e Automação \\
+ELETRICA       & Engenharia Elétrica & Engenheiro Elétrico \\
+ELETRONICA     & Engenharia Eletrônica e de Computação & Engenheiro Eletrônico e de Computação \\
+MATERIAIS      & Engenharia de Materiais & Engenheiro de Materiais \\
+MECANICA       & Engenharia Mecânica & Engenheiro Mecânico \\
+METALURGICA    & Engenharia Metalúrgica & Engenheiro Metalúrgico \\
+NAVAL          & Engenharia Naval e Oceânica & Engenheiro Naval \\
+NUCLEAR        & Engenharia Nuclear & Engenheiro Nuclear \\
+PETROLEO       & Engenharia de Petróleo & Engenheiro de Petróleo \\
+PRODUCAO       & Engenharia de Produção & Engenheiro de Produção \\
+NANOTECNOLOGIA & Nanotecnologia & the Course's own (it confers no engineer's title) \\
+\midrule
+\multicolumn{3}{@{}l@{}}{\normalfont\bfseries\small THE OLD DEPARTMENT ACRONYMS,
+  from \texttt{poli.cls}, all still valid}\\[2pt]
+ECI  & Engenharia de Computação e Informação & Engenheiro de Computação e Informação \\
+DEL  & Engenharia Eletrônica e de Computação & Engenheiro Eletrônico e de Computação \\
+DEE  & Engenharia Elétrica & Engenheiro Elétrico \\
+DEM  & Engenharia Mecânica & Engenheiro Mecânico \\
+DMM  & Engenharia Metalúrgica e de Materiais & Engenheiro Metalúrgico e de Materiais \\
+DNC  & Engenharia Nuclear & Engenheiro Nuclear \\
+DENO & Engenharia Naval e Oceânica & Engenheiro Naval \\
+DEI  & Engenharia de Produção & Engenheiro de Produção \\
+DCC, DES, DEG, DET, DHIMA & Engenharia Civil, or the department's own name with the option \texttt{civilpordepartamento} & Engenheiro Civil \\
+\end{longtable}
+
+\vspace{4pt}
+\begin{center}
+\begin{minipage}{0.92\textwidth}\small
+\textbf{Options of the style.}
+\verb|civilporcurso| (the default) makes the five Civil acronyms read
+``Engenharia Civil'', which is the Course; \verb|civilpordepartamento| makes
+each read its department's name, as \texttt{poli.cls} did.
+\verb|times| and \verb|arial| set the family of the letter, which Resolução
+05/2012 leaves to the author --- the SIZE stays 12 in all three, which is what
+the Manual fixes (2.2b); without either, the class's family is used.
+
+\medskip
+\textbf{The school's own rule.} Resolução 05/2012 is older than the Manual and
+contradicts it in thirteen points --- pre-textual folios in roman numerals, the
+sumário before the lists, the caption below the illustration, references based
+on NB-66, an ABNT standard replaced in 1989. Where they disagree the Manual
+wins, and the style implements only what the Resolução \emph{chooses} among
+what the Manual leaves open. The check, item by item, is in
+\texttt{NAO-CONFORMIDADES-POLI.md}, and the minimal norm proposed in its place
+is \texttt{PROPOSTA-DE-RESOLUCAO.pdf}. \textbf{The bibliography follows the
+UFRJ rule strictly}; any difference presented in the Resolução is wrong.
+
+\medskip
+\textbf{A project begun with the old class} compiles as it is: \texttt{poli.cls}
+loads \texttt{ufrj} with \texttt{grad} and this style, accepts the dead options
+(\texttt{pdftex}, \texttt{dvips}, \texttt{dvipdfm}, \texttt{draft}) and the old
+signatures of \verb|\advisor|, \verb|\coadvisor| and \verb|\examiner|, warning
+once that the board comes out without the institution that 3.1.2.1.3(e) asks
+for. It relaxes no rule of the class --- the order of the pre-textual elements
+is an error there too.
+
+\medskip
+Worked examples: \texttt{poli-min-exemplo.tex}, only what is mandatory, and
+\texttt{poli-max-exemplo.tex}, everything the class composes.\quad
+Problems: \url{https://github.com/COPPE-UFRJ/CoppeTeX/issues}
+\end{minipage}
+\end{center}
+
+\end{document}
+%</quickrefpoli>
 %    \end{macrocode}
 %
 % \Finale

@@ -86,7 +86,7 @@ doc: $(PACKAGE_NAME).dtx
 class: $(PACKAGE_NAME).cls ufrj-coppe.sty coppe.cls
 
 
-install: doc class max-exemplo.pdf min-exemplo.pdf
+install: doc class coppe-max-exemplo.pdf coppe-min-exemplo.pdf
 	@if [ "$(DESTDIR)" == "" ]; then \
 	  $(_printf) "error: empty detination directory.\n"; \
 	  make help; \
@@ -112,9 +112,9 @@ install: doc class max-exemplo.pdf min-exemplo.pdf
 	mkdir -vp $(DOCDIR)
 	@${_printf} "Copying files from root directory.\n"
 	cp -vp ../README.md ../COPYING.txt $(PACKAGE_NAME).pdf \
-		max-exemplo.tex max-exemplo.pdf min-exemplo.tex min-exemplo.pdf exemplo.bib $(DOCDIR)
+		coppe-max-exemplo.tex coppe-max-exemplo.pdf coppe-min-exemplo.tex coppe-min-exemplo.pdf exemplo.bib $(DOCDIR)
 
-build: doc class max-exemplo.pdf min-exemplo.pdf
+build: doc class coppe-max-exemplo.pdf coppe-min-exemplo.pdf
 	@if [ "$(BUILDDIR)" == "" ]; then \
 	  $(_printf) "error: empty build directory.\n"; \
 	  make help; \
@@ -152,7 +152,7 @@ help:
 		          ${PACKAGE_NAME} 
 	@${_printf} "from \`%s'\n" ${DOC_SOURCE}
 	@${_printf} "%s\n" \
-           "  max-exemplo.pdf  generate a PDF file from \`max-exemplo.tex'" \
+           "  coppe-max-exemplo.pdf  generate a PDF file from \`coppe-max-exemplo.tex'" \
            "  build        build class files in BUILDDIR [../dist]"\
            "  clean        remove auxiliary archives" \
 	       "  install      install class in DESTDIR" \
@@ -177,7 +177,7 @@ $(PACKAGE_NAME).cls: $(PACKAGE_NAME).ins
 
 # O estilo da COPPE, a classe coppe de compatibilidade e os exemplos saem do
 # ufrj-coppe.ins, e nao do ufrj.ins.
-ufrj-coppe.sty coppe.cls max-exemplo.tex min-exemplo.tex: ufrj-coppe.ins
+ufrj-coppe.sty coppe.cls coppe-max-exemplo.tex coppe-min-exemplo.tex: ufrj-coppe.ins
 	@$(TEX) $(TEXFLAGS) $<
 	
 %.ist: $(PACKAGE_NAME).ins
@@ -218,5 +218,5 @@ ufrj-coppe.sty coppe.cls max-exemplo.tex min-exemplo.tex: ufrj-coppe.ins
 clean:
 	@$(_rm) -f *.log *.aux *.ist *.idx *.blg *.bbl *.glo *.bz2 \
 		         *.toc *.lof *.lot *.syx *.abx *.sgx *.gsx *.lab *.lsg *.lgs *.ilg *.los *.ind \
-						 *.gls *.out *~ ufrj.pdf ufrj.cls max-exemplo.pdf max-exemplo.tex min-exemplo.pdf min-exemplo.tex
+						 *.gls *.out *~ ufrj.pdf ufrj.cls coppe-max-exemplo.pdf coppe-max-exemplo.tex coppe-min-exemplo.pdf coppe-min-exemplo.tex
 

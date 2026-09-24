@@ -155,7 +155,7 @@ que a norma pede e os cinco capítulos de sempre — Introdução, Fundamentaç�
 Teórica, Materiais e Métodos, Resultados e Conclusões —, com texto de
 preenchimento para que o documento compile e mostre cada folha.
 
-Existe porque começar do `max-exemplo.tex` significa **apagar**: aquele é um
+Existe porque começar do `coppe-max-exemplo.tex` significa **apagar**: aquele é um
 documento de demonstração, cheio de figuras, tabelas e comentários que ensinam,
 e quem vai escrever passa a primeira hora limpando o que não vai usar. Aqui é o
 contrário: sai o esqueleto, e você escreve por cima.

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Teste de conformidade da CoppeTeX.
 
-BUG: (desconformidade por padrao, 2.2d) sem a opcao pdfa, a classe gera PDF comum, e o arquivo de deposito tem de ser PDF/A; o gerador de documento vazio tambem vem com pdfa DESLIGADO e diz "ligue ao depositar", o contrario do que o max-exemplo recomenda (#124).
+BUG: (desconformidade por padrao, 2.2d) sem a opcao pdfa, a classe gera PDF comum, e o arquivo de deposito tem de ser PDF/A; o gerador de documento vazio tambem vem com pdfa DESLIGADO e diz "ligue ao depositar", o contrario do que o coppe-max-exemplo recomenda (#124).
 
 A 2.2(d) do Manual UFRJ/SiBI exige a versao digital final em PDF/A. A opcao
 `pdfa' ja produz PDF/A-2b conforme pelo veraPDF, o custo de tempo e desprezivel

@@ -10,7 +10,7 @@ ja preenchidos com a estrutura que a norma pede e com os cinco capitulos de
 sempre: Introducao, Fundamentacao Teorica, Materiais e Metodos, Resultados e
 Conclusoes.
 
-Existe porque comecar do max-exemplo.tex significa APAGAR: ele e um documento de
+Existe porque comecar do coppe-max-exemplo.tex significa APAGAR: ele e um documento de
 demonstracao, cheio de figuras, tabelas, quadros e comentarios que ensinam, e
 quem vai escrever a tese passa a primeira hora limpando o que nao vai usar.
 Aqui e o contrario -- o documento sai com o esqueleto e com o texto de
@@ -101,7 +101,7 @@ MESES = [("%02d" % i, n) for i, n in enumerate(
 #
 # tipo: "texto", "escolha", "sim/nao", "inteiro", "multilinha"
 #
-# O padrao de tudo e o padrao COMPLETO da COPPE, como no max-exemplo.tex: quem
+# O padrao de tudo e o padrao COMPLETO da COPPE, como no coppe-max-exemplo.tex: quem
 # aperta Gerar sem mexer em nada recebe um trabalho com todas as folhas que a
 # norma preve. Tirar e escolha de quem gera, e nao o contrario.
 CAMPOS = [
@@ -305,7 +305,7 @@ def monta_tex(v, nome_bib):
     A("")
     if v["matematica"]:
         # A fonte matematica e escolha do autor, e a classe nao carrega
-        # nenhuma. Sai o mesmo bloco do max-exemplo.tex, que escolhe pelo motor.
+        # nenhuma. Sai o mesmo bloco do coppe-max-exemplo.tex, que escolhe pelo motor.
         A("%% Fontes matematicas: escolha sua, a classe nao carrega nenhuma.")
         A("%% pdfLaTeX usa amssymb; LuaLaTeX/XeLaTeX, unicode-math com uma fonte")
         A("%% OpenType. Nunca os dois juntos. Sem matematica, apague o bloco.")

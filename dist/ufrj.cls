@@ -296,7 +296,6 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
 \newcommand\ufrj@ilwidth{}
 \newcommand\illustrationwidth[1]{%
   \captionsetup{width=#1}\def\ufrj@ilwidth{#1}}
-\let\largurailustracao\illustrationwidth
 \newcommand{\cpsource}[1]{%
   \par\addvspace{\smallskipamount}%
   \ifx\ufrj@ilwidth\@empty
@@ -306,9 +305,6 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
       \parbox{\ufrj@ilwidth}{%
         \footnotesize\singlespacing\raggedright\cpsourcename: #1\par}\par}%
   \fi}
-\let\cpfonte\cpsource
-\@ifundefined{source}{\let\source\cpsource}{}%
-\@ifundefined{fonte}{\let\fonte\cpsource}{}%
 \newcommand{\newufrjfloat}[3]{%
   \floatstyle{plaintop}\newfloat{#1}{htbp}{lo#1}[chapter]%
   \floatname{#1}{#2}%
@@ -1030,7 +1026,6 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \newcommand\volume[1]{\gdef\ufrj@thisvolume{#1}}
 \newcommand\ufrj@volfiles{}
 \newcommand\volumefiles[1]{\gdef\ufrj@volfiles{#1}}
-\let\arquivosdosvolumes\volumefiles
 \newcommand\ufrj@volstart{0}
 \newcommand\ufrj@setvolstart[1]{\gdef\ufrj@volstart{#1}}
 \newcommand\ufrj@forvolumes[1]{%
@@ -1145,19 +1140,19 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     .\par}%
   \fi}
 \newcommand\ufrj@areaconc{}
-\newcommand\areaconcentracao[1]{\gdef\ufrj@areaconc{#1}}
+\newcommand\concentrationarea[1]{\gdef\ufrj@areaconc{#1}}
 \newcommand\ufrj@dataaprov{}
-\newcommand\dataaprovacao[1]{\gdef\ufrj@dataaprov{#1}}
+\newcommand\approvaldate[1]{\gdef\ufrj@dataaprov{#1}}
 \newcommand\ufrj@linhapesq{}
-\newcommand\linhapesquisa[1]{\gdef\ufrj@linhapesq{#1}}
+\newcommand\researchline[1]{\gdef\ufrj@linhapesq{#1}}
 \newcommand\ufrj@tipoproducao{}
 \newcommand\tipoproducao[1]{\gdef\ufrj@tipoproducao{#1}}
 \newcommand\ufrj@projetovinc{}
 \newcommand\projetovinculado[1]{\gdef\ufrj@projetovinc{#1}}
 \newcommand\ufrj@nomeprojeto{}
-\newcommand\nomeprojeto[1]{\gdef\ufrj@nomeprojeto{#1}}
+\newcommand\projectname[1]{\gdef\ufrj@nomeprojeto{#1}}
 \newcounter{ufrjagencias}
-\newcommand\agenciafomento[2]{%
+\newcommand\fundingagency[2]{%
   \global\@namedef{UfrjAgencia:\expandafter\the\c@ufrjagencias}{#1}%
   \global\@namedef{UfrjAgenciaSigla:\expandafter\the\c@ufrjagencias}{#2}%
   \global\addtocounter{ufrjagencias}{1}}
@@ -1677,7 +1672,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \vspace*{\fill}}
 \newcommand\ufrj@fichafile{}
 \newcommand\ufrj@fichapage{1}
-\newcommand\fichacatalografica[2][1]{%
+\newcommand\catalogcard[2][1]{%
   \gdef\ufrj@fichapage{#1}\gdef\ufrj@fichafile{#2}}
 \newcommand\ufrj@marcatipo[1]{%
   \ifthenelse{\equal{\ufrj@tipoproducao}{#1}}{$\times$}{\phantom{$\times$}}}
@@ -1832,12 +1827,12 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
       \csname @ufrj#1false\endcsname
     \else
       \ClassError{ufrj}{%
-        \string\configuraresumos: argumento `#2' invalido}{%
-        Cada um dos quatro argumentos de \string\configuraresumos\space tem
+        \string\setupabstracts: argumento `#2' invalido}{%
+        Cada um dos quatro argumentos de \string\setupabstracts\space tem
         de ser `true' ou `false'.}%
     \fi
   \fi}
-\newcommand\configuraresumos[4]{%
+\newcommand\setupabstracts[4]{%
   \ufrj@setresflag{residpag}{#1}%
   \ufrj@setresflag{restitulo}{#2}%
   \ufrj@setresflag{resorient}{#3}%
@@ -2020,13 +2015,13 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \endgroup%
   \@esphack}
 \newif\if@ufrjsiglas \@ufrjsiglasfalse
-\def\makelosiglas{%
+\def\makeloacronyms{%
   \newwrite\@lsgfile
   \immediate\openout\@lsgfile=\jobname.sgx
   \global\@ufrjsiglastrue
   \typeout{Writing index of acronyms file \jobname.sgx}%
-  \let\makelosiglas\@empty}
-\@onlypreamble\makelosiglas
+  \let\makeloacronyms\@empty}
+\@onlypreamble\makeloacronyms
 \newcommand\@wrsgx[3]{%
   \protected@write\@lsgfile{}%
     {\string\indexentry{#1[#2] #3|ufrj@semfolio}{\thepage}}%
@@ -2041,8 +2036,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \else
     \@ifundefined{abbrev}{}{\abbrev[#1]{#2}{#3}}%
   \fi}
-\newcommand\printlosiglas{%
-\ufrj@ordem{11}{lista de abreviaturas e siglas}{\string\printlosiglas}%
+\newcommand\printloacronyms{%
+\ufrj@ordem{11}{lista de abreviaturas e siglas}{\string\printloacronyms}%
 \begingroup\@ufrjglosspretrue
 \renewcommand\glossaryname{\listsiglaname}%
 \@input@{\jobname.lsg}\endgroup}
@@ -2185,7 +2180,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
       }
   }
 \ExplSyntaxOff
-\newcommand\newsigla[3]{%
+\newcommand\defineacronym[3]{%
   \@namedef{ufrj@sigla@s@#1}{#2}%
   \@namedef{ufrj@sigla@l@#1}{#3}}
 \newcommand\ufrj@sigla@reg[1]{%
@@ -2193,7 +2188,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \newcommand\ufrj@sigla@full[1]{%
   \@nameuse{ufrj@sigla@l@#1}\space(\@nameuse{ufrj@sigla@s@#1})}
 \newcommand\ufrj@sigla@undef[1]{%
-  \PackageWarning{ufrj}{Sigla '#1' nao declarada com \string\newsigla}%
+  \PackageWarning{ufrj}{Sigla '#1' nao declarada com \string\defineacronym}%
   \textbf{??#1??}}
 \newcommand\ufrj@sigla@first[1]{%
   \global\@namedef{ufrj@sigla@done@#1}{}\ufrj@sigla@reg{#1}\ufrj@sigla@full{#1}}
@@ -2204,7 +2199,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \newcommand\ufrj@sigla@star[1]{%
   \@ifundefined{ufrj@sigla@s@#1}{\ufrj@sigla@undef{#1}}%
     {\global\@namedef{ufrj@sigla@done@#1}{}\ufrj@sigla@full{#1}}}
-\newcommand\sigla{\@ifstar\ufrj@sigla@star\ufrj@sigla@norm}
+\newcommand\useacronym{\@ifstar\ufrj@sigla@star\ufrj@sigla@norm}
 \AtBeginDocument{%
   \ltx@ifpackageloaded{hyperref}{%
     \def\ufrj@bibEnd{%
@@ -2471,20 +2466,6 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \renewcommand\printbibliography[1][]{%
   \ufrj@orig@printbibliography[#1]%
   \ufrj@bibEnd}
-\let\defineacronym\newsigla
-\let\useacronym\sigla
-\let\makeloacronyms\makelosiglas
-\@onlypreamble\makeloacronyms
-\let\printloacronyms\printlosiglas
-\let\approvaldate\dataaprovacao
-\let\concentrationarea\areaconcentracao
-\let\researchline\linhapesquisa
-\let\projectname\nomeprojeto
-\let\fundingagency\agenciafomento
-\let\catalogcard\fichacatalografica
-\let\setupabstracts\configuraresumos
-\let\listofframes\listofquadros
-\let\listofprograms\listofprogramas
 \newenvironment{framefloat}[1][htbp]{\begin{quadro}[#1]}{\end{quadro}}
 \newcommand\ufrj@valorpt[3]{%
   \def\ufrj@ptval{#3}%
@@ -2496,7 +2477,6 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \newcommand\productiontype[1]{\ufrj@valorpt\tipoproducao
   {bibliographic/bibliografica,artistic/artistica,technological/tecnologica,technical/tecnica}{#1}}
 \newcommand\linkedproject[1]{\ufrj@valorpt\projetovinculado{yes/sim,no/nao}{#1}}
-\AtBeginDocument{\providecommand\epigraph{\epigrafe}}
 \newcommand{\annex}{
     \renewcommand{\appendixname}{\ufrjstring{annex}}%
     \appendix
@@ -2504,6 +2484,83 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \def\theHchapter{annex.\Alph{chapter}}%
     \ufrj@appendixheadings
 }
+\let\orientador\advisor
+\let\coorientador\coadvisor
+\let\examinador\examiner
+\let\departamento\department
+\let\tituloestrangeiro\foreigntitle
+\let\subtitulo\subtitle
+\let\subtituloestrangeiro\foreignsubtitle
+\let\tituloem\titlein
+\let\subtituloem\subtitlein
+\let\palavrachave\keyword
+\let\palavrachaveestrangeira\foreignkeyword
+\let\palavrachavebrasileira\braziliankeyword
+\let\dataaprovacao\approvaldate
+\let\areaconcentracao\concentrationarea
+\let\linhapesquisa\researchline
+\let\nomeprojeto\projectname
+\let\agenciafomento\fundingagency
+\let\fichacatalografica\catalogcard
+\let\configuraresumos\setupabstracts
+\let\dedicatoria\dedication
+\let\configuracaolivre\freeconfig
+\let\anexo\annex
+\let\universidade\university
+\let\cidade\city
+\let\estado\state
+\let\pais\country
+\let\arquivosdosvolumes\volumefiles
+\@ifundefined{local}{\let\local\place}{}%
+\let\newsigla\defineacronym
+\let\sigla\useacronym
+\let\makelosiglas\makeloacronyms
+\@onlypreamble\makelosiglas
+\let\printlosiglas\printloacronyms
+\let\makeloabreviaturas\makeloabbreviations
+\@onlypreamble\makeloabreviaturas
+\let\printloabreviaturas\printloabbreviations
+\let\makelosimbolos\makelosymbols
+\@onlypreamble\makelosimbolos
+\let\printlosimbolos\printlosymbols
+\let\makelistaglossario\makeglossarylist
+\@onlypreamble\makelistaglossario
+\let\printlistaglossario\printglossarylist
+\AtBeginDocument{%
+  \@ifundefined{abbrev}{}{\let\abreviatura\abbrev}%
+  \@ifundefined{acron}{}{\let\acronimo\acron}%
+  \@ifundefined{symbl}{}{\let\simbolo\symbl}%
+  \@ifundefined{glossaryterm}{}{\let\termoglossario\glossaryterm}}
+\let\novofloatufrj\newufrjfloat
+\let\largurailustracao\illustrationwidth
+\let\cpfonte\cpsource
+\@ifundefined{source}{\let\source\cpsource}{}%
+\@ifundefined{fonte}{\let\fonte\cpsource}{}%
+\let\estilojava\javastyle
+\let\javaembutido\javainline
+\let\javaexterno\javaexternal
+\let\estilopython\pythonstyle
+\let\pythonembutido\pythoninline
+\let\pythonexterno\pythonexternal
+\let\estilohtml\htmlstyle
+\let\estiloxml\xmlstyle
+\let\estiloprolog\prologstyle
+\let\ufrjdeclaraunidade\ufrjdeclareunit
+\let\ufrjdeclaraprograma\ufrjdeclareprogram
+\let\ufrjdeclaralogotipo\ufrjdeclarelogo
+\let\ufrjdeclaralogotipos\ufrjdeclarelogos
+\let\ufrjdeclaranorma\ufrjdeclarenorm
+\let\ufrjdeclaralocal\ufrjdeclareplace
+\let\ufrjdefinetextodaunidade\ufrjdefunitstring
+\let\ufrjdefinetexto\ufrjdefstring
+\let\ufrjtexto\ufrjstring
+\let\ufrjtextoprincipal\ufrjmainstring
+\let\ufrjtextoestrangeiro\ufrjforeignstring
+\let\usaidiomaufrj\useufrjlanguage
+\let\ufrjpaginafinal\ufrjfinalpage
+\let\listofframes\listofquadros
+\let\listofprograms\listofprogramas
+\AtBeginDocument{\providecommand\epigraph{\epigrafe}}
 
 %% 
 %%

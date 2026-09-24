@@ -87,7 +87,7 @@ PARA_DIST = [
     # (#102). Toda base que um exemplo declarar tem
     # de estar nesta lista -- tests/regressivo/r92 cobra isso lendo os proprios
     # \addbibresource dos exemplos, e r93 cobra compilando.
-    ("", "min-exemplo.tex"), ("", "max-exemplo.tex"), ("", "exemplo.bib"),
+    ("", "coppe-min-exemplo.tex"), ("", "coppe-max-exemplo.tex"), ("", "exemplo.bib"),
     ("", "ufrj.bib"),
     # Nao ha `ufrj.tex': o manual da classe e o proprio ufrj.dtx, e quem o
     # compoe e o ufrj.ins. Os dois vao para que a entrega baste tambem para
@@ -103,16 +103,19 @@ PARA_DIST = [
     # --- o estilo da Escola Politecnica (#170) --------------------------------
     # Tambem na raiz, pela mesma razao, com o exemplo dele.
     ("", "ufrj-poli.sty"), ("", "ufrj-poli.dtx"), ("", "ufrj-poli.ins"),
-    ("", "poli-exemplo.tex"),
+    ("", "coppe-quickref.tex"), ("", "poli-quickref.tex"),
+    ("", "poli-min-exemplo.tex"), ("", "poli-max-exemplo.tex"),
     # --- logos/ -------------------------------------------------------------
     ("logos", "coppe-logo.eps"), ("logos", "coppe-logo.pdf"),
     ("logos", "ufrj-logo.pdf"),
     # --- manuais/ -----------------------------------------------------------
     ("manuais", "ufrj.pdf"), ("manuais", "ufrj-coppe.pdf"),
-    ("manuais", "ufrj-quickref.pdf"),
-    ("manuais", "manual.pdf"), ("manuais", "min-exemplo.pdf"),
-    ("manuais", "max-exemplo.pdf"),
-    ("manuais", "ufrj-poli.pdf"), ("manuais", "poli-exemplo.pdf"),
+    ("manuais", "ufrj-quickref.pdf"), ("manuais", "coppe-quickref.pdf"),
+    ("manuais", "poli-quickref.pdf"),
+    ("manuais", "manual.pdf"), ("manuais", "coppe-min-exemplo.pdf"),
+    ("manuais", "coppe-max-exemplo.pdf"),
+    ("manuais", "ufrj-poli.pdf"), ("manuais", "poli-min-exemplo.pdf"),
+    ("manuais", "poli-max-exemplo.pdf"),
     # --- en/ e es/: traga para a raiz para usar -----------------------------
     ("en", "example_en.tex"), ("en", "example_en.pdf"),
     ("es", "example_es.tex"), ("es", "example_es.pdf"),
@@ -287,8 +290,8 @@ def acao_dist(saida):
         return False
     # Copiar nao basta: o que ja estava la e nao esta na lista ficava para
     # sempre, e ia para o zip. Foi assim que o release levou o .aux, o .log e o
-    # .synctex.gz de quem compilou o max-exemplo dentro de dist/, e um
-    # max-exemplo.pdf na raiz, repetido do de manuais/.
+    # .synctex.gz de quem compilou o coppe-max-exemplo dentro de dist/, e um
+    # coppe-max-exemplo.pdf na raiz, repetido do de manuais/.
     for rel in dist_sobras():
         os.remove(os.path.join(DIST, *rel.split("/")))
         saida("   REMOVIDO  %s" % rel)

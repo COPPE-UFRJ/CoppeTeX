@@ -14,14 +14,15 @@
 
 .PARAMETER Scope
     class    - só regenera ufrj.cls e companhia a partir de ufrj.ins (rápido)
-    example  - class + max-exemplo.tex, min-exemplo.tex e poli-exemplo.tex, e o
+    example  - class + os quatro exemplos (coppe-max, coppe-min, poli-max,
+               poli-min) e o
                conferir-norma nos tres PDFs
     langs    - class + os cinco example_<lang>.tex
     tests    - class + a suíte tests/run-tests.ps1
     docs     - class + ufrj.pdf (manual), NORMA_COPPE_2026.pdf,
                PROPOSTA-DE-RESOLUCAO.pdf (a proposta da Escola Politecnica),
                manual.pdf e covers_5languages.pdf
-    pdfa     - class + max-exemplo.tex e min-exemplo.tex (que usam pdfa), tests/test_pdfa.tex e
+    pdfa     - class + coppe-max-exemplo.tex e coppe-min-exemplo.tex (que usam pdfa), tests/test_pdfa.tex e
                tests/test_comserifa.tex, e passa os tres
                pelo veraPDF no perfil 2b. Precisa do veraPDF instalado (o
                script procura em %USERPROFILE%\verapdf e no PATH); sem ele o
@@ -329,12 +330,13 @@ if (Test-Path $mkrcGen) {
 }
 
 if ($Scope -in @("example", "all")) {
-    Build-Tex -Stem "max-exemplo" -Dir $src -WithBiber
-    Build-Tex -Stem "min-exemplo" -Dir $src -WithBiber
-    Build-Tex -Stem "poli-exemplo" -Dir $src -WithBiber
+    Build-Tex -Stem "coppe-max-exemplo" -Dir $src -WithBiber
+    Build-Tex -Stem "coppe-min-exemplo" -Dir $src -WithBiber
+    Build-Tex -Stem "poli-min-exemplo" -Dir $src -WithBiber
+    Build-Tex -Stem "poli-max-exemplo" -Dir $src -WithBiber
     Invoke-Conferir "conferir-norma-exemplos" "conferir-norma.py" @(
-        (Join-Path $src "max-exemplo.pdf"), (Join-Path $src "min-exemplo.pdf"),
-        (Join-Path $src "poli-exemplo.pdf"))
+        (Join-Path $src "coppe-max-exemplo.pdf"), (Join-Path $src "coppe-min-exemplo.pdf"),
+        (Join-Path $src "poli-min-exemplo.pdf"), (Join-Path $src "poli-max-exemplo.pdf"))
 }
 
 if ($Scope -in @("langs", "all")) {
@@ -385,7 +387,7 @@ if ($Scope -in @("docs", "all")) {
     # O manual envelhece em silencio: um comando novo entra na classe e ninguem o
     # documenta, e nada quebra. Este passo cobra isso, e tambem confere se a
     # tabela "onde ver cada coisa" ainda aponta para as linhas certas do
-    # max-exemplo.tex. Sem python instalado o passo e PULADO, nao falha.
+    # coppe-max-exemplo.tex. Sem python instalado o passo e PULADO, nao falha.
     if (Get-Command python -ErrorAction SilentlyContinue) {
         Invoke-Step "conferir-manual" $root { & python (Join-Path $root "tools\conferir-manual.py") }
     } else {
@@ -394,8 +396,11 @@ if ($Scope -in @("docs", "all")) {
 
     # A referencia rapida em ingles. Duas passadas, e nao uma: e uma longtable,
     # que so acerta a largura das colunas depois de se ver por inteiro.
-    Invoke-Step "quickref-1" $src { & pdflatex -interaction=nonstopmode -halt-on-error ufrj-quickref.tex }
-    Invoke-Step "quickref-2" $src { & pdflatex -interaction=nonstopmode -halt-on-error ufrj-quickref.tex }
+    # Tres folhas de consulta: a da classe e a de cada unidade.
+    foreach ($q in @("ufrj-quickref", "coppe-quickref", "poli-quickref")) {
+        Invoke-Step "$q-1" $src { & pdflatex -interaction=nonstopmode -halt-on-error "$q.tex" }
+        Invoke-Step "$q-2" $src { & pdflatex -interaction=nonstopmode -halt-on-error "$q.tex" }
+    }
 
     Build-Tex -Stem "manual"     -Dir $src -WithBiber
     Build-Tex -Stem "NORMA_COPPE_2026"     -Dir $src
@@ -510,8 +515,8 @@ if ($Scope -in @("pdfa", "all")) {
     # Os dois exemplos ja compilam com a opcao pdfa (#99, #102); no escopo all
     # eles ja sairam no passo "example", e compila-los de novo so gastaria tempo.
     if ($Scope -eq "pdfa") {
-        Build-Tex -Stem "max-exemplo" -Dir $src -WithBiber
-        Build-Tex -Stem "min-exemplo" -Dir $src -WithBiber
+        Build-Tex -Stem "coppe-max-exemplo" -Dir $src -WithBiber
+        Build-Tex -Stem "coppe-min-exemplo" -Dir $src -WithBiber
     }
     Build-Tex -Stem "test_pdfa"    -Dir $testDir -WithBiber
     # A opcao `comserifa' volta o documento para a familia serifada. A pergunta que
@@ -540,8 +545,8 @@ if ($Scope -in @("pdfa", "all")) {
         Add-Line ""
         Add-Line "veraPDF: $vera"
         $veraTargets = @(
-            @{ Stem = "max-exemplo";    Dir = $src },
-            @{ Stem = "min-exemplo";    Dir = $src },
+            @{ Stem = "coppe-max-exemplo";    Dir = $src },
+            @{ Stem = "coppe-min-exemplo";    Dir = $src },
             @{ Stem = "test_pdfa";      Dir = $testDir },
             @{ Stem = "test_comserifa"; Dir = $testDir })
         # todo documento adversativo e compilado com a opcao pdfa: se algum

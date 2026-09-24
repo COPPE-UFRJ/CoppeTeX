@@ -1,13 +1,16 @@
 <!-- AVISO-CPGP:INICIO — apagar deste comentário até AVISO-CPGP:FIM depois da aprovação -->
 > ## ⚠️ Versão nova, ainda não aprovada
 >
-> **Esta é a CoppeTeX 5.0, e ela ainda não foi aprovada.** A proposta que vai à
-> próxima reunião da Comissão de Programas de Pós-Graduação (CPGP) da COPPE/UFRJ
-> foi escrita para a 4.1; a 5.0 separa a classe da UFRJ, `ufrj`, do estilo da
-> COPPE, `ufrj-coppe`.
+> **Esta é a CoppeTeX 5.0, e ela ainda não foi aprovada.** É ela, e não mais a
+> 4.1, a versão que vai à próxima reunião da Comissão de Programas de
+> Pós-Graduação (CPGP) da COPPE/UFRJ, e é ela que será a versão oficial quando
+> aprovada: a 5.0 separa a classe da UFRJ, `ufrj`, do estilo da unidade —
+> `ufrj-coppe` na COPPE, `ufrj-poli` na Escola Politécnica —, e traz a
+> conferência inteira contra o Manual UFRJ/SiBI de 2026.
 >
 > Enquanto isso: use-a para escrever e para experimentar, mas confirme com a
-> secretaria do seu Programa antes de depositar um trabalho com ela.
+> secretaria do seu Programa — ou, na graduação, com a coordenação do seu Curso
+> — antes de depositar um trabalho com ela.
 >
 > **O `master` carrega esta versão, e não a aprovada.** A decisão de trazê-la
 > para o `master` antes da votação foi deliberada: é assim que os Programas e os
@@ -21,12 +24,15 @@
 >
 > ---
 >
-> **New version, not yet approved.** This is CoppeTeX 5.0. The proposal going to
-> the next meeting of COPPE/UFRJ's graduate programme committee (CPGP) was
-> written for 4.1; 5.0 splits the UFRJ class, `ufrj`, from the COPPE style,
-> `ufrj-coppe`. Write and experiment with it, but check with your Programa's
-> office before depositing a thesis. **`master` carries this version, not the
-> approved one**; the last state the CPGP approved is the tag `coppetex-3.5.1`.
+> **New version, not yet approved.** This is CoppeTeX 5.0, and it is the
+> version going to the next meeting of COPPE/UFRJ's graduate programme committee
+> (CPGP) — the one that becomes the official release once approved. It splits
+> the UFRJ class, `ufrj`, from the unit style (`ufrj-coppe` at COPPE,
+> `ufrj-poli` at the Escola Politécnica) and carries the full check against the
+> 2026 UFRJ/SiBI Manual. Write and experiment with it, but check with your
+> Programa's office before depositing a thesis. **`master` carries this version,
+> not the approved one**; the last state the CPGP approved is the tag
+> `coppetex-3.5.1`.
 <!-- AVISO-CPGP:FIM -->
 
 # CoppeTeX
@@ -86,38 +92,45 @@ and start from [`PAINEL.md`](./PAINEL.md).*
 
 This project provides a LaTeX document class suitable for writing academic
 dissertations and thesis according to the formatting rules of the Federal
-University of Rio de Janeiro (UFRJ), and a unit style for the Alberto Luiz
-Coimbra Institute for Graduate Studies and Research in Engineering
-(COPPE/UFRJ), where the project was born.
+University of Rio de Janeiro (UFRJ), and one unit style per academic unit: the
+Alberto Luiz Coimbra Institute for Graduate Studies and Research in Engineering
+(COPPE/UFRJ), where the project was born, and the Escola Politécnica, whose
+style composes the undergraduate project.
 
 The `ufrj` class implements the UFRJ Library System's manual and knows no
 academic unit. Everything a unit fixes on its own — the institute's name on the
 cover, its graduate programmes, the right-hand logo, the phrases of its norm —
 comes from a **unit style** loaded right after the class. `ufrj-coppe` is
-COPPE's, and it is the model for any other unit: a new unit is a new
-`ufrj-<unit>.dtx`, and the class does not change.
+COPPE's and `ufrj-poli` is the Escola Politécnica's; either is the model for any
+other unit, since a new unit is a new `ufrj-<unit>.dtx` and the class does not
+change.
 
 The class contains a minimalist set of macro commands which allows its users to
 create the required textual elements: a front cover, a title page, cataloging
 details, native and foreign languages abstracts, table of contents, and list of
 bibliographic references.
 
-This version follows the [document](https://registro.daac.coppe.ufrj.br/wp-content/uploads/2020/09/Normas-de-Elaboracao.pdf):
+**What this version follows.** The class implements the UFRJ/SiBI *Manual para
+Elaboração e Normalização de Trabalhos Acadêmicos*, **9th edition revised
+(2026)**, checked against it item by item (issues #112–#170). A unit's norm
+decides only where the Manual does not oblige: COPPE's is
+[`NORMA_COPPE_2026.md`](./NORMA_COPPE_2026.md), which replaces the *Norma para a
+Elaboração Gráfica de Teses/Dissertações COPPE/UFRJ* approved by the CPGP in
+2008 and revised in 2009, 2010 and 2019; the Escola Politécnica's Resolução
+05/2012 is older than the Manual and is superseded in thirteen points, listed in
+[`NAO-CONFORMIDADES-POLI.md`](./NAO-CONFORMIDADES-POLI.md).
 
-> Original: Norma para a Elaboração Gráfica de Teses/Dissertações COPPE/UFRJ
->  Aprovada pela CPGP em 15 de julho de 2008 
-> Com correção no Anexo III, páginas 19 e 20, em 01/10/2009
-> (Revisada em 10/09/2010)
-> (Revisada em 26/11/2019 – Alteração da Folha Aprovação, Anexo III, páginas 22 e 23) 
 
+## The proposal for CPGP (v5.0)
 
-## The proposal for CPGP (v4.1)
-
-CoppeTeX **4.1** is the version submitted for evaluation by the Comissão de
-Programas de Pós-Graduação (CPGP) of COPPE/UFRJ. Subject to CPGP review and
-approval, it becomes the next official release of the `coppe` class. It was
-developed on the `nlinguas` branch and merged so that Programas and students can
-try it and so that the delivery in [`dist/`](./dist) comes from one place.
+CoppeTeX **5.0** is the version submitted for evaluation by the Comissão de
+Programas de Pós-Graduação (CPGP) of COPPE/UFRJ, and the one that **becomes the
+official release** once approved. It supersedes the 4.1 proposal, which it
+contains: 4.1 was the conformance work, and 5.0 adds the split between the UFRJ
+class and the unit styles, the Escola Politécnica, and the rest of the check
+against the 2026 Manual (issues #112–#170). It was developed on the
+`V05-unificada` branch and merged so that Programas, Courses and students can
+try it, and so that the delivery in [`dist/`](./dist) comes from one place.
 
 **Until the vote, `master` is a proposal, not an approved norm.** The last state
 the CPGP approved is the tag
@@ -208,7 +221,7 @@ The manual (`coppe.pdf`) gains a new "Multilingual support" subsection
 key list + the deferred `\DeclareLanguageMapping` idiom) and a complete
 Spanish-main worked example.
 
-### Conformance with the 2026 Manual (v4.1)
+### Conformance with the 2026 Manual (v4.1, completed in 5.0)
 
 The revised 9th edition (2026) of the UFRJ/SiBI Manual absorbed three
 institutional decisions — exclusively digital deposit (CEPG Res. 246/2023), the
@@ -430,14 +443,19 @@ write every file that is distributed:
 | `ufrj.cls` | the document class |
 | `ufrj-coppe.sty` | the COPPE unit style: the institute, its thirteen programmes, the logo and the COPPE phrases |
 | `coppe.cls` | compatibility class for theses started with `\documentclass{coppe}` up to v4.1 |
+| `ufrj-poli.sty` | the Escola Politécnica unit style: its Courses, the colour mark, the font options |
+| `poli.cls` | compatibility class for projects started with `\documentclass{poli}` |
 | `ufrj.bbx`, `ufrj.cbx`, `ufrj.dbx` | ABNT author--date biblatex style and data model |
 | `ufrj-numeric.bbx`, `ufrj-numeric.cbx` | the numeric variant (class option `numbers`) |
 | `brazilian-ufrj.lbx`, `english-ufrj.lbx`, `spanish-ufrj.lbx`, `french-ufrj.lbx`, `italian-ufrj.lbx` | biblatex localization strings |
 | `ufrj-lang-spanish.def`, `ufrj-lang-french.def`, `ufrj-lang-italian.def` | class-level string packs |
 | `ufrj.ist` | makeindex style for the lists of symbols and abbreviations |
 | `ufrj.bib`, `manual.bib`, `exemplo.bib` | the bibliographies of the class manual, of `manual.tex`, and of the examples |
-| `min-exemplo.tex` | the minimal sample thesis: only what the norm makes mandatory |
-| `max-exemplo.tex` | the maximal sample thesis: everything the class offers |
+| `coppe-min-exemplo.tex` | the minimal sample thesis: only what the norm makes mandatory |
+| `coppe-max-exemplo.tex` | the maximal sample thesis: everything the class offers |
+| `poli-min-exemplo.tex`, `poli-max-exemplo.tex` | the same two, for an undergraduate project at the Escola Politécnica |
+| `ufrj-quickref.tex` | the quick reference of the CLASS, in English |
+| `coppe-quickref.tex`, `poli-quickref.tex` | the quick reference of each unit: its Programas or Courses, its options and its norm |
 | `example_pt.tex`, `example_en.tex`, `example_es.tex`, `example_fr.tex`, `example_it.tex` | one short demonstration per main language |
 | `covers_5languages.tex` | the side-by-side cover sheet |
 | `latexmkrc` | latexmk configuration (biber + the makeindex runs) |
