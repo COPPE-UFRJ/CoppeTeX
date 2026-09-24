@@ -4,19 +4,19 @@
 %%
 %% The original source files were:
 %%
-%% coppe.dtx  (with options: `exampleen')
+%% ufrj-coppe.dtx  (with options: `exampleen')
 %% 
-%% This is one of the demonstration documents of the `coppe' document class:
-%% the five main-language demos, the PDF/A build of the full example and the
-%% side-by-side cover sheet.  It is generated from coppe.dtx by docstrip; edit
-%% the .dtx source, not this file.
+%% This is one of the demonstration documents of the `ufrj' document class with
+%% the `ufrj-coppe' unit style: the five main-language demos and the
+%% side-by-side cover sheet.  It is generated from ufrj-coppe.dtx by docstrip;
+%% edit the .dtx source, not this file.
 %% 
 %% Copyright (C) 2008-2026 Vicente Helano F. Batista, George O. Ainsworth Jr.,
 %% Geraldo Xexéo and Eduardo Mangeli. Released under the GNU General Public
 %% License version 3 (see the COPYING.txt file).
 %% 
-
-\documentclass[english,dsc]{coppe}
+\documentclass[english,dsc]{ufrj}
+\usepackage{ufrj-coppe}
 \addbibresource{exemplo.bib}
 \begin{document}
   \title{Título do Trabalho}
@@ -31,21 +31,26 @@
   \date{05}{2026}
   \keyword{Multilingual}
   \keyword{Demonstration}
-  %% palavras-chave do resumo em idioma estrangeiro (3.1.2.1.5, Anexo F)
-  \foreignkeyword{Multilíngue}
-  \foreignkeyword{Demonstração}
+  %% palavras-chave do resumo em português, a língua vernácula (3.1.2.1.4)
+  \foreignkeyword{multilíngue}
+  \foreignkeyword{demonstração}
+  % Pre-textual order (UFRJ Manual 3.1.2), checked by the class: \maketitle,
+  % \frontmatter, the abstract in Portuguese -- the vernacular language,
+  % always the first one; here it is foreignabstract --, the abstract in
+  % English (abstract), the lists and \tableofcontents, always the last.
   \maketitle
   \frontmatter
-  \begin{abstract}
-    This is the main abstract in English, used when the class is loaded
-    with the \texttt{english} option. Lorem ipsum dolor sit amet,
-    consectetur adipiscing elit.
-  \end{abstract}
   \begin{foreignabstract}
-    Este é o resumo em língua estrangeira, que aqui é o português. Quem o
-    produz é o ambiente \texttt{foreignabstract}, quando o idioma principal
-    do trabalho é o inglês.
+    Este é o resumo em português, a língua vernácula, que vem antes do
+    abstract qualquer que seja o idioma do trabalho (Manual 3.1.2). Num
+    trabalho em inglês, quem o produz é o ambiente \texttt{foreignabstract}.
   \end{foreignabstract}
+  \begin{abstract}
+    This is the abstract in English, the main language of this work, used
+    when the class is loaded with the \texttt{english} option. It comes after
+    the abstract in Portuguese. Lorem ipsum dolor sit amet, consectetur
+    adipiscing elit.
+  \end{abstract}
   % Front-matter lists: only the table of contents is mandatory (UFRJ
   % Manual 3.1.2.1.6). The lists of figures, tables, abbreviations and
   % symbols are optional (3.1.2.2); the lists of quadros, programs and
@@ -69,7 +74,7 @@
   The class uses \textbf{PDF/A-2b}: part 2 allows transparency, which part 1
   forbids and which coloured boxes and graphics often produce, and level
   \emph{b} guarantees faithful visual reproduction. The \texttt{pdfa} option in
-  \verb|\documentclass[english,dsc,pdfa]{coppe}| is all it takes: the class
+  \verb|\documentclass[english,dsc,pdfa]{ufrj}| is all it takes: the class
   loads \texttt{pdfx}, builds the metadata from the title, author and keywords,
   and embeds the colour profile. Turn it on early, as \texttt{max-exemplo.tex}
   does: a non-conforming PDF or image shows up the day it is added, not the day

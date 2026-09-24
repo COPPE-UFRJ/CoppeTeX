@@ -1,12 +1,14 @@
 %% Teste de regressao da CoppeTeX. NAO roda na suite normal.
 %% Rode com: python tests/regressivo/run-regressivo.py
 %% BUG: o outro lado do r11. A 3.1.2.1.3(e) manda que o orientador apareca em
-%% primeiro lugar na banca da folha de aprovacao, como presidente -- e a classe o
-%% deixava de fora por padrao. Desde a revisao da v4.1 ele esta la SEM opcao
-%% nenhuma, na frente dos examinadores.
+%% primeiro lugar na banca da folha de aprovacao, como presidente. Desde a #165
+%% (21/09/2026) quem o poe la e o autor, como primeiro \examiner; a opcao
+%% orientadorexamina faz isso sozinha, e poe os orientadores na frente dos
+%% examinadores. E ela que este teste cobra.
 %% ESPERA-TEXTO-PAGINA: 4::Zebedeu
 %% ESPERA-TEXTO-PAGINA: 4::Examinador Zacarias
-\documentclass[dsc]{coppe}
+\documentclass[dsc,orientadorexamina]{ufrj}
+\usepackage{ufrj-coppe}
 \title{Quem assina tambem examina}
 \foreigntitle{The advisor on the board}
 \author{Nome}{Sobrenome}

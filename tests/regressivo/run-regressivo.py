@@ -33,6 +33,16 @@ Diretivas aceitas no cabecalho do .tex (uma por linha, comecando com %%):
     %% ESPERA-ARQUIVO: <ext>::<texto>      (o .<ext> gerado contem o texto)
     %% NAO-ESPERA-ARQUIVO: <ext>::<texto>  (o .<ext> gerado NAO contem)
     %% ESPERA-BYTES: <texto>               (os bytes crus do PDF contem)
+    %% ABERTO: #<issue>                    (defeito ainda aberto; ver abaixo)
+
+ABERTO marca um teste que MOSTRA um defeito que ainda nao foi corrigido -- os da
+conferencia contra o Manual 2026 (r33 em diante) nasceram assim. Ele falha, e
+de proposito. Na rodada sem filtro ele NAO roda: a suite normal continua
+dizendo se algum defeito CORRIGIDO voltou, e nao se enche de falhas conhecidas
+nem do tempo delas. Rode-o pelo nome (`run-regressivo.py r38`), aos poucos,
+enquanto a correcao e feita; a correcao tira a linha ABERTO no mesmo commit, e
+dali em diante o teste entra na rodada normal. Nos .py a marca e uma linha
+`ABERTO: #<issue>` no docstring, logo depois da linha BUG.
 
 O texto do PDF sai do pdftotext, que vem com o MiKTeX e com o TeX Live. Sem ele
 as cobrancas de texto sao PULADAS, e o teste avisa -- nao passa calado.
@@ -48,6 +58,7 @@ auxiliar, onde o texto esta como o LaTeX o escreveu.
 import io
 import os
 import re
+import shutil
 import subprocess
 import sys
 import unicodedata
@@ -66,8 +77,11 @@ RAIZ = os.path.dirname(os.path.dirname(AQUI))
 SRC = os.path.join(RAIZ, "src")
 
 DIRETIVA = re.compile(r"^%%\s*([A-Z-]+):\s*(.*?)\s*$")
-# r<numero>-<apelido>.tex ou .py. Ver o comentario em main().
-RE_NOME = re.compile(r"^r\d+-.*\.(tex|py)$")
+# <prefixo><numero>-<apelido>.tex ou .py. Ver o comentario em main(). Os
+# prefixos dizem de onde o teste veio: r, os defeitos da classe ate a 4.1; rt, os
+# da conferencia contra o Manual UFRJ/SiBI 2026 (issue #112), feita no master;
+# rtu, os da classe ufrj e do estilo de unidade, da 5.0.
+RE_NOME = re.compile(r"^r(?:tu?)?\d+-.*\.(tex|py)$")
 
 
 def ler_diretivas(caminho):
@@ -151,7 +165,7 @@ def um_teste(tex, manter):
     if d.get("BIBER", "").lower() in ("sim", "yes", "1"):
         rodar(["biber", nome], AQUI)
     if d.get("MAKEINDEX", "").lower() in ("sim", "yes", "1"):
-        ist = os.path.join(SRC, "coppe.ist")
+        ist = os.path.join(SRC, "ufrj.ist")
         for ext, saida in (("abx", "lab"), ("syx", "los"), ("sgx", "lsg"), ("gsx", "lgs")):
             if os.path.exists(os.path.join(AQUI, nome + "." + ext)):
                 rodar(["makeindex", "-s", ist, "-o", nome + "." + saida,
@@ -286,21 +300,79 @@ def um_teste_python(caminho):
     return bug, ["saiu com codigo %d" % p.returncode] + saida[-6:], []
 
 
+def aberto(caminho):
+    """A issue de um teste que ainda mostra defeito aberto (marca ABERTO), ou None."""
+    with io.open(caminho, encoding="utf-8") as f:
+        for i, linha in enumerate(f):
+            if i > 40 or linha.startswith("\\documentclass"):
+                break
+            m = re.match(r"^(?:%%\s*)?ABERTO:\s*(.*?)\s*$", linha)
+            if m:
+                return m.group(1) or "?"
+    return None
+
+
+def conferir_ferramentas():
+    """As ferramentas que os testes usam para ler o PDF, conferidas uma vez.
+
+    O -bbox e do poppler. O pdftotext do Xpdf -- o que vem com o Git for
+    Windows -- nao o tem, e quando ele esta na frente do PATH os testes de
+    medida recebem lista vazia e passam SEM MEDIR NADA (#156). Aqui isso vira
+    uma linha no cabecalho da rodada, e nao um `ok' mentiroso trinta vezes."""
+    linhas = []
+    problema = False
+    for nome, args, marca in (("pdftotext", ["-v"], "poppler"),
+                              ("pdftohtml", ["-v"], "poppler"),
+                              ("pdfinfo", ["-v"], "poppler")):
+        caminho = shutil.which(nome)
+        if caminho is None:
+            linhas.append("%-10s NAO ACHEI no PATH" % nome)
+            problema = True
+            continue
+        p = subprocess.run([nome] + args, stdout=subprocess.PIPE,
+                           stderr=subprocess.STDOUT)
+        saida = p.stdout.decode("utf-8", "replace").strip().split("\n")
+        versao = saida[0] if saida else ""
+        eh_poppler = any(marca in l.lower() for l in saida)
+        linhas.append("%-10s %s%s" % (nome, versao, "" if eh_poppler else
+                                      "   <- NAO e o do poppler: %s" % caminho))
+        if not eh_poppler:
+            problema = True
+    print("\n".join(linhas))
+    if problema:
+        print("ATENCAO: os testes de medida precisam do poppler (pdftotext -bbox).\n"
+              "         No Windows com Git instalado, rode pelo PowerShell.")
+    print()
+    return not problema
+
+
 def main():
     argv = [a for a in sys.argv[1:] if not a.startswith("-")]
     manter = "--manter" in sys.argv
-    # O nome de um teste e r<numero>-<apelido>. O numero nao e enfeite: sem ele,
+    # O nome de um teste e r, rt ou rtu, um numero e um apelido. O numero nao e
+    # enfeite: sem ele,
     # "r" no comeco do nome bastava, e este proprio arquivo -- run-regressivo.py
     # -- se enquadrava. O rodador achava a si mesmo, rodava a si mesmo, e cada
     # copia achava a si mesma outra vez: uma recursao que so parou quando alguem
     # foi matar os processos na mao.
     testes = sorted(f for f in os.listdir(AQUI)
                     if RE_NOME.match(f))
+    abertos = []
     if argv:
         testes = [t for t in testes if any(a in t for a in argv)]
+    else:
+        # sem filtro, os testes de defeito ABERTO ficam de fora: ver o docstring
+        todos, testes = testes, []
+        for t in todos:
+            issue = aberto(os.path.join(AQUI, t))
+            if issue:
+                abertos.append((t, issue))
+            else:
+                testes.append(t)
     if not testes:
         print("nenhum teste casou com o filtro")
         return 1
+    conferir_ferramentas()
 
     # O pdflatex precisa achar a classe em src/ e as bases .bib de la.
     for var in ("TEXINPUTS", "BIBINPUTS"):
@@ -326,6 +398,9 @@ def main():
             print("        aviso: %s" % a)
 
     print("")
+    if abertos:
+        print("%d teste(s) de defeito ABERTO fora desta rodada; rode pelo nome: %s"
+              % (len(abertos), " ".join("%s(%s)" % (t.split("-")[0], i) for t, i in abertos)))
     print("=== %d teste(s), %d falha(s), %d aviso(s) ===" % (len(testes), ruins, avisos))
     return 1 if ruins else 0
 

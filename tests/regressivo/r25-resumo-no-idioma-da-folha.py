@@ -40,7 +40,8 @@ AQUI = os.path.dirname(os.path.abspath(__file__))
 RAIZ = os.path.dirname(os.path.dirname(AQUI))
 SRC = os.path.join(RAIZ, "src")
 
-MODELO = r"""\documentclass[dsc,%(idioma)s]{coppe}
+MODELO = r"""\documentclass[dsc,%(idioma)s]{ufrj}
+\usepackage{ufrj-coppe}
 \title{Titulo em portugues}
 \foreigntitle{Title in English}
 %(titulo_proprio)s
@@ -52,12 +53,13 @@ MODELO = r"""\documentclass[dsc,%(idioma)s]{coppe}
 \keyword{Uma}
 \foreignkeyword{One}
 \braziliankeyword{Uma}
+%% A frase de abertura, o titulo e a orientacao sao opcao desde a #157 (a folha
+%% do Anexo E nao os tem); ligados aqui, porque sao eles que este teste cobra.
+\configuraresumos{true}{true}{true}{true}
 \begin{document}
   \maketitle
   \frontmatter
-  \begin{abstract}Corpo do resumo principal.\end{abstract}
-  \begin{foreignabstract}Corpo do resumo estrangeiro.\end{foreignabstract}
-  %(terceiro)s
+  %(resumos)s
   \mainmatter
   \chapter{Um capitulo}
   Texto.
@@ -73,14 +75,16 @@ MARCAS = {
     "spanish":   ("resumen de la tesis presentada a la coppe/ufrj", "director:", "mayo/2026"),
 }
 
-# idioma principal -> (opcao, titulo proprio, terceiro resumo, folhas esperadas)
-# A ordem das folhas e a ordem em que os ambientes aparecem no documento.
+# idioma principal -> (titulo proprio, resumos na ordem, folhas esperadas)
+# O resumo em portugues vem sempre primeiro (3.1.2; #158), e a classe confere.
+ABS = r"\begin{abstract}Corpo do resumo principal.\end{abstract}"
+EST = r"\begin{foreignabstract}Corpo do resumo estrangeiro.\end{foreignabstract}"
+BRA = r"\begin{brazilianabstract}Corpo em portugues.\end{brazilianabstract}"
 CASOS = [
-    ("brazilian", "", "", ["brazilian", "english"]),
-    ("english", "", "", ["english", "brazilian"]),
-    ("spanish", "\\titlein{spanish}{Titulo en espanol}",
-     "\\begin{brazilianabstract}Corpo em portugues.\\end{brazilianabstract}",
-     ["spanish", "english", "brazilian"]),
+    ("brazilian", "", ABS + EST, ["brazilian", "english"]),
+    ("english", "", EST + ABS, ["brazilian", "english"]),
+    ("spanish", "\\titlein{spanish}{Titulo en espanol}", BRA + EST + ABS,
+     ["brazilian", "english", "spanish"]),
 ]
 
 
@@ -114,10 +118,10 @@ ambiente["TEXINPUTS"] = pasta + os.pathsep + SRC + ";"
 ambiente["BIBINPUTS"] = pasta + os.pathsep + SRC + ";"
 
 try:
-    for idioma, titulo, terceiro, esperadas in CASOS:
+    for idioma, titulo, resumos, esperadas in CASOS:
         stem = "res_" + idioma
         fonte = MODELO % dict(idioma=idioma, titulo_proprio=titulo,
-                              terceiro=terceiro)
+                              resumos=resumos)
         io.open(os.path.join(pasta, stem + ".tex"), "w",
                 encoding="utf-8").write(fonte)
         for _ in range(2):
@@ -127,8 +131,10 @@ try:
         log = os.path.join(pasta, stem + ".log")
         registro = io.open(log, encoding="utf-8", errors="replace").read() \
             if os.path.exists(log) else ""
-        if "Output written on" not in registro:
-            erros = [l for l in registro.splitlines() if l.startswith("!")][:2]
+        # O PDF sai mesmo com erro, em nonstopmode: erro no log reprova, e nao
+        # so a falta de PDF. Sem isto a ordem errada dos resumos (#158) passava.
+        erros = [l for l in registro.splitlines() if l.startswith("!")][:2]
+        if "Output written on" not in registro or erros:
             problemas.append("%s: nao compilou -- %s"
                              % (idioma, "; ".join(erros) or "sem PDF"))
             continue

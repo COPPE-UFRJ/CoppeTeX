@@ -1,0 +1,77 @@
+%%
+%% This is file `poli-exemplo.tex',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% ufrj-poli.dtx  (with options: `poliexemplo')
+%% 
+%% This is a sample undergraduate project which illustrates the use of the
+%% `ufrj' document class with the `ufrj-poli' unit style. It is generated from
+%% ufrj-poli.dtx by docstrip.
+%% 
+%% Copyright (C) 2008-2026 Vicente Helano F. Batista, George O. Ainsworth Jr.,
+%% Geraldo Xexéo and Eduardo Mangeli. Released under the GNU General Public
+%% License version 3 (see the COPYING.txt file).
+%% 
+\documentclass[grad]{ufrj}
+\usepackage{ufrj-poli}
+\addbibresource{exemplo.bib}
+
+\begin{document}
+  \title{Título do Projeto de Graduação}
+  \foreigntitle{Title of the Undergraduate Project}
+  \author{Nome do Autor}{Sobrenome}
+  \advisor{Nome do Orientador}{Sobrenome}{D.Sc.}{UFRJ}
+  % A folha de aprovacao lista a banca declarada aqui, na ordem: o orientador,
+  % que preside a banca, e o primeiro (3.1.2.1.3e).
+  \examiner{Nome do Orientador Sobrenome}{D.Sc.}{UFRJ}
+  \examiner{Nome do Primeiro Examinador Sobrenome}{D.Sc.}{UFRJ}
+  \examiner{Nome do Segundo Examinador Sobrenome}{Ph.D.}{UFRJ}
+  % A sigla do departamento: DCC, DES, DEG, DET, DHIMA, DEE, DEM, DMM, DNC,
+  % DENO, DEI, ECI ou DEL.
+  \department{ECI}
+  \date{01}{2026}
+  \approvaldate{15 de janeiro de 2026}
+  \keyword{primeira palavra-chave}
+  \keyword{segunda palavra-chave}
+  \foreignkeyword{first keyword}
+  \foreignkeyword{second keyword}
+
+  % Ordem dos elementos pre-textuais (Manual 3.1.2), que a classe confere:
+  % \maketitle, \frontmatter, o resumo em portugues, o abstract, as listas e
+  % \tableofcontents, sempre o ultimo.
+  \maketitle
+  \frontmatter
+  \begin{abstract}
+    O resumo em português, em parágrafo único, com até 500 palavras
+    (3.1.2.1.4).
+  \end{abstract}
+  \begin{foreignabstract}
+    The abstract in English, the version of the abstract in the language of
+    international dissemination (3.1.2.1.5).
+  \end{foreignabstract}
+  \listoffigures
+  \tableofcontents
+
+  \mainmatter
+  \chapter{Introdução}
+  O texto do trabalho começa aqui, e as citações seguem a classe
+  \cite{m-4211}.
+
+  \begin{figure}[ht]
+    \caption{Uma figura de exemplo}
+    \centering
+    \rule{6cm}{3cm}
+    \source{Elaborado pelo autor (2026).}
+  \end{figure}
+
+  \chapter{Conclusão}
+  A conclusão do trabalho.
+
+  \backmatter
+  \printbibliography
+\end{document}
+%% 
+%%
+%% End of file `poli-exemplo.tex'.

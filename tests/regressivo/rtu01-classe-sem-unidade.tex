@@ -1,0 +1,50 @@
+%% BUG: nao havia defeito antigo aqui -- este teste guarda a separacao em camadas
+%% da v5.0. A classe ufrj implementa o Manual da UFRJ/SiBI e nao conhece unidade
+%% nenhuma: sem estilo de unidade, compoe o trabalho inteiro com os textos da
+%% UFRJ. Se um dado da COPPE voltar para dentro da classe -- o Instituto, a
+%% sigla, o grau "em Ciencias", a norma do colofao --, ele aparece aqui.
+%%
+%% Os proibidos sao trechos, e nao a palavra COPPE sozinha, porque o colofao cita
+%% o repositorio, github.com/COPPE-UFRJ/CoppeTeX, e a marca do projeto.
+%% PASSADAS: 2
+%% ESPERA-TEXTO-PAGINA: 1::UNIVERSIDADE FEDERAL DO RIO DE JANEIRO PROGRAMA DE POS-GRADUACAO EM INFORMATICA
+%% ESPERA-TEXTO: apresentada ao Programa de Pos-Graduacao em Informatica, Universidade Federal do Rio de Janeiro, como requisito parcial a obtencao do titulo de Doutor em Informatica
+%% ESPERA-TEXTO: Resumo da Tese apresentada a UFRJ como parte dos requisitos necessarios para a obtencao do grau de Doutor (D.Sc.)
+%% ESPERA-TEXTO: Abstract of Thesis presented to UFRJ as a partial fulfillment of the requirements for the degree of Doctor (D.Sc.)
+%% ESPERA-TEXTO: (Doutorado em Informatica) - Universidade Federal do Rio de Janeiro, Rio de Janeiro
+%% ESPERA-TEXTO: em conformidade com o Manual para elaboracao e normalizacao de trabalhos academicos da UFRJ/SiBI
+%% NAO-ESPERA-TEXTO: COPPE/UFRJ
+%% NAO-ESPERA-TEXTO: Alberto Luiz Coimbra
+%% NAO-ESPERA-TEXTO: em Ciencias
+%% NAO-ESPERA-TEXTO: Norma para a Elaboracao Grafica
+%% NAO-ESPERA-LOG: Undefined control sequence
+\documentclass[dsc]{ufrj}
+% Um Programa declarado no proprio preambulo, como faria o aluno de uma unidade
+% que ainda nao tem estilo.
+\ufrjdeclareprogram{PPGI}{Informática}{Informatics}
+% Os tres elementos de cima da folha de resumo estao desligados por padrao desde
+% a #157 (a folha do Anexo E); ligados aqui, para cobrar o texto da UFRJ neles.
+\configuraresumos{true}{true}{true}{true}
+\begin{document}
+\title{Um trabalho sem unidade}
+\foreigntitle{A work with no unit}
+\author{Fulana}{de Tal}
+\department{PPGI}
+\advisor{Sicrano}{Souza}{D.Sc.}{UFRJ}
+\examiner{Beltrano Silva}{D.Sc.}{UFRJ}
+\date{9}{2026}
+\keyword{classe}
+\foreignkeyword{class}
+\maketitle
+\frontmatter
+\begin{abstract}
+Texto do resumo.
+\end{abstract}
+\begin{foreignabstract}
+Abstract text.
+\end{foreignabstract}
+\mainmatter
+\chapter{Introdução}
+Texto.
+\ufrjfinalpage
+\end{document}

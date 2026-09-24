@@ -71,16 +71,16 @@ TOOLS = os.path.join(RAIZ, "tools")
 #     e para esses tres que ha exemplo aqui.
 PARA_DIST = [
     # --- raiz: a classe, os estilos e o exemplo em portugues ----------------
-    ("", "coppe.cls"), ("", "coppe.dbx"), ("", "coppe.bbx"), ("", "coppe.cbx"),
-    ("", "coppe-numeric.bbx"), ("", "coppe-numeric.cbx"),
+    ("", "ufrj.cls"), ("", "ufrj.dbx"), ("", "ufrj.bbx"), ("", "ufrj.cbx"),
+    ("", "ufrj-numeric.bbx"), ("", "ufrj-numeric.cbx"),
     # Os termos de bibliografia em portugues E EM INGLES ficam os dois na raiz,
     # e o ingles nao e engano: TODA tese da COPPE tem um resumo em idioma
     # estrangeiro, que por convencao e o ingles, e o biblatex carrega o arquivo
-    # de idioma de cada idioma que o documento usa. Com o english-coppe.lbx
+    # de idioma de cada idioma que o documento usa. Com o english-ufrj.lbx
     # dentro de en/, um trabalho em PORTUGUES ja saia com "File
-    # 'english-coppe.lbx' not found".
-    ("", "brazilian-coppe.lbx"), ("", "english-coppe.lbx"),
-    ("", "coppe.ist"), ("", "latexmkrc"),
+    # 'english-ufrj.lbx' not found".
+    ("", "brazilian-ufrj.lbx"), ("", "english-ufrj.lbx"),
+    ("", "ufrj.ist"), ("", "latexmkrc"),
     # A tipos.bib ja ficou fora desta lista, e o exemplo a declarava: quem
     # baixava a entrega recebia um PDF com as citacoes em branco e o biber
     # dizendo "Cannot find 'tipos.bib'". Hoje ha uma base so, a exemplo.bib
@@ -88,28 +88,40 @@ PARA_DIST = [
     # de estar nesta lista -- tests/regressivo/r92 cobra isso lendo os proprios
     # \addbibresource dos exemplos, e r93 cobra compilando.
     ("", "min-exemplo.tex"), ("", "max-exemplo.tex"), ("", "exemplo.bib"),
-    ("", "coppe.bib"),
-    # Nao ha `coppe.tex': o manual da classe e o proprio coppe.dtx, e quem o
-    # compoe e o coppe.ins. Os dois vao para que a entrega baste tambem para
+    ("", "ufrj.bib"),
+    # Nao ha `ufrj.tex': o manual da classe e o proprio ufrj.dtx, e quem o
+    # compoe e o ufrj.ins. Os dois vao para que a entrega baste tambem para
     # REFAZER o manual e a classe, e nao so para usa-los -- e porque o
-    # coppe.dtx e o unico lugar onde o codigo esta comentado.
-    ("", "coppe.dtx"), ("", "coppe.ins"), ("", "manual.tex"), ("", "manual.bib"),
+    # ufrj.dtx e o unico lugar onde o codigo esta comentado.
+    ("", "ufrj.dtx"), ("", "ufrj.ins"), ("", "manual.tex"), ("", "manual.bib"),
+    # --- o estilo da COPPE --------------------------------------------------
+    # Vai na raiz, ao lado da classe: um trabalho da COPPE carrega os dois. A
+    # classe coppe.cls e so a de compatibilidade, para trabalho escrito ate a
+    # v4.1; o .dtx e o .ins do estilo vao pela mesma razao dos da classe.
+    ("", "ufrj-coppe.sty"), ("", "coppe.cls"),
+    ("", "ufrj-coppe.dtx"), ("", "ufrj-coppe.ins"),
+    # --- o estilo da Escola Politecnica (#170) --------------------------------
+    # Tambem na raiz, pela mesma razao, com o exemplo dele.
+    ("", "ufrj-poli.sty"), ("", "ufrj-poli.dtx"), ("", "ufrj-poli.ins"),
+    ("", "poli-exemplo.tex"),
     # --- logos/ -------------------------------------------------------------
     ("logos", "coppe-logo.eps"), ("logos", "coppe-logo.pdf"),
     ("logos", "ufrj-logo.pdf"),
     # --- manuais/ -----------------------------------------------------------
-    ("manuais", "coppe.pdf"), ("manuais", "coppe-quickref.pdf"),
+    ("manuais", "ufrj.pdf"), ("manuais", "ufrj-coppe.pdf"),
+    ("manuais", "ufrj-quickref.pdf"),
     ("manuais", "manual.pdf"), ("manuais", "min-exemplo.pdf"),
     ("manuais", "max-exemplo.pdf"),
+    ("manuais", "ufrj-poli.pdf"), ("manuais", "poli-exemplo.pdf"),
     # --- en/ e es/: traga para a raiz para usar -----------------------------
     ("en", "example_en.tex"), ("en", "example_en.pdf"),
     ("es", "example_es.tex"), ("es", "example_es.pdf"),
-    ("es", "spanish-coppe.lbx"), ("es", "coppe-lang-spanish.def"),
+    ("es", "spanish-ufrj.lbx"), ("es", "ufrj-lang-spanish.def"),
     # --- outraslinguas/ -----------------------------------------------------
-    ("outraslinguas", "french-coppe.lbx"),
-    ("outraslinguas", "italian-coppe.lbx"),
-    ("outraslinguas", "coppe-lang-french.def"),
-    ("outraslinguas", "coppe-lang-italian.def"),
+    ("outraslinguas", "french-ufrj.lbx"),
+    ("outraslinguas", "italian-ufrj.lbx"),
+    ("outraslinguas", "ufrj-lang-french.def"),
+    ("outraslinguas", "ufrj-lang-italian.def"),
 ]
 
 # O que dist/ tem alem da lista: o README.md dela, a licenca, e o .gitignore,
@@ -186,7 +198,8 @@ def powershell(script, saida, *args):
 # As acoes
 # --------------------------------------------------------------------------
 def acao_regerar(saida):
-    """O src inteiro sai do coppe.dtx e do coppe.ins. So isso, e e rapido."""
+    """O src inteiro sai do ufrj.dtx e do ufrj-coppe.dtx, pelos dois .ins. So isso,
+    e e rapido."""
     return powershell("build-check.ps1", saida, "-Scope", "class")
 
 
@@ -226,10 +239,17 @@ def acao_prova(saida):
 
 
 def acao_conferir(saida):
-    """Os verificadores que nao compilam nada: so leem o que foi produzido."""
+    """Os verificadores que nao compilam nada: so leem o que foi produzido.
+
+    Os dois ultimos comparam o PDF pronto com o Manual -- conferir-norma mede
+    folha, folio, margem e sumario; conferir-referencias compara cada referencia
+    com o gabarito -- e, sem argumento, cada um sabe quais PDFs ler. Ficaram
+    fora daqui ate a 4.1, e a m-diss saiu errada com o verificador acusando a
+    divergencia para ninguem (#151).
+    """
     ok = True
     for script in ("conferir-referencias-cruzadas.py", "conferir-manual.py",
-                   "versao.py"):
+                   "versao.py", "conferir-norma.py", "conferir-referencias.py"):
         saida("")
         ok = roda([sys.executable, os.path.join(TOOLS, script)], RAIZ, saida) and ok
     return ok
@@ -375,7 +395,7 @@ def acao_versao3(saida):
 # nome de linha de comando, rotulo na janela, funcao, explicacao de uma linha
 ACOES = [
     ("regerar", "Regerar o src a partir do .dtx", acao_regerar,
-     "coppe.ins gera a classe, os estilos, os exemplos e o latexmkrc"),
+     "ufrj.ins e ufrj-coppe.ins geram a classe, os estilos, os exemplos e o latexmkrc"),
     ("docs", "Compilar os PDFs da entrega", acao_docs,
      "manual da classe, exemplo, os cinco idiomas, manual da norma, capas"),
     ("testes", "Testes - primeira camada", acao_testes,
@@ -387,7 +407,7 @@ ACOES = [
     ("pdfa", "Validar PDF/A", acao_pdfa,
      "veraPDF no perfil 2b; pulado se o veraPDF nao estiver instalado"),
     ("conferir", "Conferir sem compilar", acao_conferir,
-     "referencias cruzadas, cobertura do manual e versao sincronizada"),
+     "referencias cruzadas, cobertura do manual, versao, e os PDFs contra o Manual"),
     ("tudo", "TUDO, com veredito", acao_prova,
      "a prova completa; e o que tem de sair limpo antes de marcar uma versao"),
     ("dist", "Copiar para dist/", acao_dist,
@@ -464,8 +484,8 @@ def ajuda():
         print("  --%-14s %s" % (nome, explica))
     print("")
     print("Versao:")
-    print("  --versao 2       sobe o segundo nivel (4.1 -> 4.2)")
-    print("  --versao 3       sobe o terceiro nivel (4.1 -> 4.1.1)")
+    print("  --versao 2       sobe o segundo nivel (5.0 -> 5.1)")
+    print("  --versao 3       sobe o terceiro nivel (5.0 -> 5.0.1)")
     print("                   o primeiro nivel nao e oferecido: ver tools/versao.py")
     print("")
     print("Outras:")
@@ -528,7 +548,7 @@ def abrir_janela(pedidas=(), versao=0):
     topo.pack(fill="x")
     ttk.Label(topo, text="CoppeTeX %s" % atual,
               font=("Segoe UI", 14, "bold")).pack(side="left")
-    ttk.Label(topo, text="   fonte unica: src/coppe.dtx").pack(side="left")
+    ttk.Label(topo, text="   fonte unica: src/ufrj.dtx").pack(side="left")
 
     corpo = ttk.Frame(janela, padding=(10, 0))
     corpo.pack(fill="x")
@@ -627,7 +647,7 @@ def abrir_janela(pedidas=(), versao=0):
 
 def versao_atual():
     import re
-    texto = io.open(os.path.join(SRC, "coppe.dtx"),
+    texto = io.open(os.path.join(SRC, "ufrj.dtx"),
                     encoding="utf-8", errors="replace").read()
     m = re.search(r"\\def\\fileversion\{v([0-9.]+)\}", texto)
     return m.group(1) if m else "?"

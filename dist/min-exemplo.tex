@@ -4,10 +4,11 @@
 %%
 %% The original source files were:
 %%
-%% coppe.dtx  (with options: `minexemplo')
+%% ufrj-coppe.dtx  (with options: `minexemplo')
 %% 
-%% This is a sample monograph which illustrates the use of the `coppe' document
-%% class and its biblatex/biber bibliography style.
+%% This is a sample monograph which illustrates the use of the `ufrj' document
+%% class with the `ufrj-coppe' unit style and its biblatex/biber bibliography
+%% style. It is generated from ufrj-coppe.dtx by docstrip.
 %% 
 %% Copyright (C) 2008-2026 Vicente Helano F. Batista, George O. Ainsworth Jr.,
 %% Geraldo Xexéo and Eduardo Mangeli. Released under the GNU General Public
@@ -19,11 +20,13 @@
 %% !BIB program = biber
 %% Com o latexmk funcionando (no Windows ele pede o Perl), troque a primeira
 %% linha por: % !TeX program = latexmk -pdf -synctex=1
-\documentclass[dsc,pdfa]{coppe}
+\documentclass[dsc]{ufrj}
+\usepackage{ufrj-coppe}
 %% min-exemplo.tex -- tudo o que a norma exige, e nada além disso.
 %%
 %% O que está aqui e por quê (Manual UFRJ/SiBI, 9.ª ed. rev., 2026):
-%%  - pdfa ................ o depósito é em PDF/A (2.2d);
+%%  - PDF/A ............... o depósito é em PDF/A (2.2d), e é o padrão da
+%%    classe: não se escreve opção nenhuma para ter;
 %%  - \maketitle .......... capa, folha de rosto (3.1.2.1.1) e folha adicional
 %%    com a Coleta CAPES e a ficha catalográfica (3.1.2.1.2);
 %%  - \frontmatter ........ folha de aprovação (3.1.2.1.3), com o orientador
@@ -49,7 +52,10 @@
   \foreignsubtitle{a minimal example of use of CoppeTeX}
   \author{Nome do Autor}{Sobrenome}
   \advisor{Nome do Orientador}{Sobrenome}{D.Sc.}{UFRJ}
-  % A composição da banca é regra do Programa, não da formatação.
+  % A composição da banca é regra do Programa, não da formatação. A folha de
+  % aprovação lista o que você declara aqui, na ordem: o orientador, que
+  % preside a banca, é o primeiro (3.1.2.1.3e).
+  \examiner{Nome do Orientador Sobrenome}{D.Sc.}{UFRJ}
   \examiner{Nome do Primeiro Examinador Sobrenome}{D.Sc.}{UFRJ}
   \examiner{Nome do Segundo Examinador Sobrenome}{D.Sc.}{UFRJ}
   \examiner{Nome do Terceiro Examinador Sobrenome}{D.Sc.}{UFF}
@@ -59,21 +65,29 @@
   \approvaldate{15 de setembro de 2026}
 
   % Palavras-chave, ao final de cada resumo (3.1.2.1.4 e 3.1.2.1.5).
-  \keyword{Primeira palavra-chave}
-  \keyword{Segunda palavra-chave}
-  \keyword{Terceira palavra-chave}
+  \keyword{primeira palavra-chave}
+  \keyword{segunda palavra-chave}
+  \keyword{terceira palavra-chave}
   \foreignkeyword{First keyword}
   \foreignkeyword{Second keyword}
   \foreignkeyword{Third keyword}
 
-  % Folha de rosto e folha adicional: área de concentração (3.1.2.1.1e) e os
-  % campos da Coleta CAPES (3.1.2.1.2). A ficha catalográfica vem do gerador do
-  % SiBI; com o arquivo em mãos, descomente a linha \catalogcard.
+  % Folha adicional: a área de concentração e os demais campos da Coleta CAPES
+  % (3.1.2.1.2). A área não sai na folha de rosto -- é o modelo do SiBI, e a
+  % COPPE não liga a opção areanafolhaderosto. A ficha catalográfica vem do
+  % gerador do SiBI; com o arquivo em mãos, descomente a linha \catalogcard.
   \concentrationarea{Engenharia de Sistemas e Computação}
   \productiontype{bibliographic}
   \linkedproject{no}
   % \catalogcard{ficha.pdf}
 
+  % A ordem dos elementos pré-textuais é a da 3.1.2 do Manual, e a classe a
+  % confere: um elemento fora dela é erro de compilação, e a mensagem diz o
+  % que mover. Os obrigatórios são estes, nesta ordem: \maketitle (capa,
+  % folha de rosto e folha adicional), \frontmatter (folha de aprovação), o
+  % resumo em português, o resumo em língua estrangeira e \tableofcontents
+  % (sumário), sempre o último. O max-exemplo.tex mostra onde entram os
+  % opcionais: errata, dedicatória, agradecimentos, epígrafe e as listas.
   \maketitle
 
   \frontmatter
@@ -114,7 +128,6 @@
   \printbibliography
 
 \end{document}
-
 %% 
 %%
 %% End of file `min-exemplo.tex'.

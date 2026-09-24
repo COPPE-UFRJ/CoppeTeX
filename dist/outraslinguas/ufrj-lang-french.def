@@ -1,0 +1,113 @@
+%%
+%% This is file `ufrj-lang-french.def',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% ufrj.dtx  (with options: `langfr')
+%% 
+%% This is the `ufrj' document class used for composition of LaTeX
+%% monographs (master's dissertations, PhD theses and qualifying exams)
+%% satisfying the requirements of the Federal University of Rio de
+%% Janeiro (UFRJ), specialized for each academic unit by a unit style.
+%% 
+%% Copyright (C) 2008-2026 Vicente Helano F. Batista, George O. Ainsworth Jr.,
+%% Geraldo Xexéo and Eduardo Mangeli.
+%% 
+%% This program is free software; you can redistribute it and/or modify
+%% it under the terms of the GNU General Public License version 3 as
+%% published by the Free Software Foundation.
+%% 
+%% This program is distributed in the hope that it will be useful,
+%% but WITHOUT ANY WARRANTY; without even the implied warranty of
+%% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+%% GNU General Public License version 3 for more details.
+%% 
+%% You should have received a copy of the GNU General Public License
+%% version 3 along with this package (see the COPYING.txt file).
+%% If not, see <http://www.gnu.org/licenses/>.
+%% 
+%% Author(s): Vicente Helano F. Batista
+%%            George O. Ainsworth Jr.
+%%            Geraldo Xexéo
+%%            Eduardo Mangeli
+%% 
+%% ufrj-lang-french.def -- CoppeTeX 4.x French class-string pack.
+%% See ufrj-lang-spanish.def for the structure. Nothing institutional lives
+%% here; only document-content strings translate.
+\ProvidesFile{ufrj-lang-french.def}[2026/09/15 v5.0 CoppeTeX french class strings]
+%% --- A folha de resumo ------------------------------------------------------
+%% Tudo o que a classe escreve numa folha de resumo sai no idioma daquela folha.
+%% A frase de abertura e montada de pedacos porque a concordancia muda de idioma
+%% para idioma; ver o comentario no ufrj.dtx, na tabela de portugues e ingles.
+%%
+%% O NOME do Programa nao entra aqui: a unidade o declara em portugues e em
+%% ingles, e so. Numa folha neste idioma vai o nome em portugues, que e o nome
+%% proprio do Programa. O `tounit' daqui e o da classe sem unidade.
+\ufrjdefstring{french}{abstractname}     {Résumé}
+\ufrjdefstring{french}{abstractofmale}   {du}
+\ufrjdefstring{french}{abstractoffemale} {de la}
+\ufrjdefstring{french}{presentedmale}    {présenté}
+\ufrjdefstring{french}{presentedfemale}  {présentée}
+\ufrjdefstring{french}{tounit}           {à l'UFRJ}
+\ufrjdefstring{french}{abstracttail}{comme partie des
+  exigences requises pour l'obtention du grade de}
+\ufrjdefstring{french}{doctypemsc}  {Mémoire}
+\ufrjdefstring{french}{doctypedsc}  {Thèse}
+\ufrjdefstring{french}{doctypeexam} {Examen de Qualification}
+\ufrjdefstring{french}{doctypesem}  {Séminaire}
+\ufrjdefstring{french}{doctypegrad} {Mémoire de fin d'études}
+\ufrjdefstring{french}{degnamegrad} {\ufrj@coursetitle}
+\ufrjdefstring{french}{degnamemsc}  {Maître}
+\ufrjdefstring{french}{degnamedsc}  {Docteur}
+\ufrjdefstring{french}{appendix}        {Annexe}
+\ufrjdefstring{french}{annex}           {Annexe}
+\ufrjdefstring{french}{frame}           {Encadré}
+\ufrjdefstring{french}{listframe}       {Liste des encadrés}
+\ufrjdefstring{french}{source}          {Source}
+\ufrjdefstring{french}{program}         {Programme}
+\ufrjdefstring{french}{listprogram}     {Liste des programmes}
+\ufrjdefstring{french}{references}      {Références}
+\ufrjdefstring{french}{in:}             {dans}
+\ufrjdefstring{french}{art}             {Illustration}
+\ufrjdefstring{french}{platform}        {Plateforme}
+\ufrjdefstring{french}{directedby}      {Réalisation}
+\ufrjdefstring{french}{producedby}      {Production}
+\ufrjdefstring{french}{listabbreviation}{Liste des abréviations et acronymes}
+\ufrjdefstring{french}{listabbreviationonly}{Liste des abréviations}
+\ufrjdefstring{french}{listsigla}       {Liste des sigles}
+\ufrjdefstring{french}{listsymbol}      {Liste des symboles}
+\ufrjdefstring{french}{glossary}        {Glossaire}
+\ufrjdefstring{french}{advisor}         {Directeur}
+\ufrjdefstring{french}{advisors}        {Directeurs}
+\ufrjdefstring{french}{dept}            {Programme}
+\ufrjdefstring{french}{approvedmale}    {Approuvé par}
+\ufrjdefstring{french}{approvedfemale}  {Approuvée par}
+\ufrjdefstring{french}{approvedonmale}  {Approuvé le}
+\ufrjdefstring{french}{approvedonfemale}{Approuvée le}
+\ufrjdefstring{french}{keywordsname} {Mots-clés}
+\ufrjdefstring{french}{volumename} {Volume}
+\ufrjdefstring{french}{coadvisor}  {Co-directeur}
+\ufrjdefstring{french}{coadvisors} {Co-directeurs}
+\ufrjdefstring{french}{ofname}     {de}
+\ufrjdefstring{french}{researchline}{Axe de recherche}
+\ufrjdefstring{french}{tbddate}     {à déterminer}
+\ufrjdefstring{french}{monthname1} {janvier}
+\ufrjdefstring{french}{monthname2} {février}
+\ufrjdefstring{french}{monthname3} {mars}
+\ufrjdefstring{french}{monthname4} {avril}
+\ufrjdefstring{french}{monthname5} {mai}
+\ufrjdefstring{french}{monthname6} {juin}
+\ufrjdefstring{french}{monthname7} {juillet}
+\ufrjdefstring{french}{monthname8} {août}
+\ufrjdefstring{french}{monthname9} {septembre}
+\ufrjdefstring{french}{monthname10}{octobre}
+\ufrjdefstring{french}{monthname11}{novembre}
+\ufrjdefstring{french}{monthname12}{décembre}
+\ufrjdefstring{french}{algorithm2eopt}{french}
+\ufrjdefstring{french}{babelname}     {french}
+\AtBeginDocument{\DeclareLanguageMapping{french}{french-ufrj}}
+
+%% 
+%%
+%% End of file `ufrj-lang-french.def'.

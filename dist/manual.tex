@@ -4,23 +4,26 @@
 % !BIB TS-program = biber
 %% manual.tex
 %%
-%% Manual de elaboração gráfica de teses e dissertações COPPE/UFRJ, escrito com
-%% a própria classe coppe e seus estilos BibLaTeX/biber.
+%% Manual de elaboração gráfica de teses e dissertações da UFRJ, escrito com a
+%% própria classe ufrj, com o estilo da COPPE, e seus estilos BibLaTeX/biber.
 %%
-%% NÃO confundir com coppe.pdf: aquele é o manual da CLASSE, que ensina os
-%% comandos; este é o manual da NORMA, que diz como o trabalho tem de sair. Este
-%% documento é, ele mesmo, a demonstração: ele obedece a tudo o que enuncia.
+%% NÃO confundir com ufrj.pdf: aquele é o manual da CLASSE, que ensina os
+%% comandos; este é o manual da NORMA, que diz como o trabalho tem de sair. Nem
+%% com ufrj-coppe.pdf, que é o manual do estilo da COPPE. Este documento é, ele
+%% mesmo, a demonstração: ele obedece a tudo o que enuncia, e é um trabalho da
+%% COPPE, que é a unidade que serve de exemplo ao capítulo sobre as unidades.
 %%
 %% Conforme o Manual para elaboração e normalização de trabalhos acadêmicos,
-%% UFRJ/SiBI, 9.ª ed. rev. (2026), e a Norma para a Elaboração Gráfica de Teses
-%% e Dissertações da COPPE/UFRJ.
+%% UFRJ/SiBI, 9.ª ed. rev. (2026), e, no que é da unidade, a Norma para a
+%% Elaboração Gráfica de Teses e Dissertações da COPPE/UFRJ.
 %%
 %% Compilação:  pdflatex manual ; biber manual ;
-%%              makeindex -s coppe.ist -o manual.lab manual.abx ;
-%%              makeindex -s coppe.ist -o manual.los manual.syx ;
+%%              makeindex -s ufrj.ist -o manual.lab manual.abx ;
+%%              makeindex -s ufrj.ist -o manual.los manual.syx ;
 %%              pdflatex manual ; pdflatex manual
 %% Ou, mais curto:  latexmk -pdf manual
-\documentclass[dsc]{coppe}
+\documentclass[dsc]{ufrj}
+\usepackage{ufrj-coppe}
 
 %% A classe já carrega booktabs e hyperref. Carregá-los de novo aqui era o que
 %% este documento fazia, e é exatamente o que o manual da classe diz para não
@@ -47,9 +50,11 @@
 \begin{document}
 
   \title{Manual de elaboração gráfica de teses e dissertações}
-  \subtitle{a norma da COPPE/UFRJ, demonstrada por um documento que a obedece}
+  \subtitle{a norma da UFRJ e a das unidades, demonstradas por um documento que
+    as obedece}
   \foreigntitle{Manual for the graphic preparation of theses and dissertations}
-  \foreignsubtitle{the COPPE/UFRJ norm, demonstrated by a document that obeys it}
+  \foreignsubtitle{the UFRJ norm and the units' norms, demonstrated by a
+    document that obeys them}
 
   \author{Comissão de Programas de}{Pós-Graduação e Pesquisa de Engenharia}
 
@@ -75,6 +80,12 @@
   \foreignkeyword{Academic works}
   \foreignkeyword{LaTeX}
 
+  % A ordem dos elementos pré-textuais é a da 3.1.2 do Manual, e a classe a
+  % confere: \maketitle (capa, folha de rosto e folha adicional), errata,
+  % \frontmatter (folha de aprovação), dedicatória, agradecimentos, epígrafe,
+  % resumo em português, resumo em língua estrangeira, listas de ilustrações,
+  % de tabelas, de abreviaturas e siglas e de símbolos, e \tableofcontents
+  % (sumário), sempre o último. Fora dela, o documento não compila sem erro.
   \maketitle
 
   \frontmatter
@@ -92,28 +103,32 @@
   \begin{abstract}
     \label{norma:resumo}%
     Este manual reúne as regras de apresentação gráfica de teses, dissertações e
-    exames de qualificação defendidos na \useacronym{coppe} da \useacronym{ufrj}, na forma
-    em que elas valem depois da 9.ª edição revista (2026) do \emph{Manual para
-    elaboração e normalização de trabalhos acadêmicos} do \useacronym{sibi}. Trata do
-    formato da página, da estrutura do trabalho, das ilustrações, das citações,
-    das referências, das siglas e dos elementos pré e pós-textuais. Cada regra é
-    enunciada e, em seguida, demonstrada: este documento foi composto com a
-    classe \CoppeTeX\ e obedece a tudo o que enuncia, de modo que a sua margem, a
-    sua paginação, as suas legendas e as suas referências servem de exemplo
-    verificável. Registram-se também as três decisões institucionais que a edição
-    de 2026 absorveu e que mudaram a forma do trabalho: o depósito exclusivamente
-    digital, os idiomas de redação admitidos e a folha adicional de coleta de
-    dados.
+    exames de qualificação defendidos na \useacronym{ufrj}, na forma em que elas
+    valem depois da 9.ª edição revista (2026) do \emph{Manual para elaboração e
+    normalização de trabalhos acadêmicos} do \useacronym{sibi}. Trata do formato
+    da página, da estrutura do trabalho, das ilustrações, das citações, das
+    referências, das siglas e dos elementos pré e pós-textuais, e do que cada
+    unidade acadêmica acrescenta por conta própria, com a \useacronym{coppe} como
+    exemplo. Cada regra é enunciada e, em seguida, demonstrada: este documento
+    foi composto com a classe \texttt{ufrj}, do projeto \CoppeTeX, e obedece a
+    tudo o que enuncia, de modo
+    que a sua margem, a sua paginação, as suas legendas e as suas referências
+    servem de exemplo verificável. Registram-se também as três decisões
+    institucionais que a edição de 2026 absorveu e que mudaram a forma do
+    trabalho: o depósito exclusivamente digital, os idiomas de redação admitidos
+    e a folha adicional de coleta de dados.
   \end{abstract}
 
   \begin{foreignabstract}
     This manual collects the rules for the graphic presentation of theses,
-    dissertations and qualifying exams defended at COPPE/UFRJ, as they stand
-    after the revised 9th edition (2026) of the UFRJ Library System's manual for
-    the preparation and standardisation of academic works. It covers page
-    format, document structure, illustrations, citations, references, acronyms
-    and the pre- and post-textual elements. Every rule is stated and then
-    demonstrated: this document was typeset with the CoppeTeX class and obeys
+    dissertations and qualifying exams defended at UFRJ, as they stand after the
+    revised 9th edition (2026) of the UFRJ Library System's manual for the
+    preparation and standardisation of academic works. It covers page format,
+    document structure, illustrations, citations, references, acronyms, the pre-
+    and post-textual elements, and what each academic unit adds on its own, with
+    COPPE as the example. Every rule is stated and then
+    demonstrated: this document was typeset with the ufrj class, from the
+    CoppeTeX project, and obeys
     everything it states, so that its own margins, pagination, captions and
     references serve as a verifiable example. It also records the three
     institutional decisions absorbed by the 2026 edition that changed the shape
@@ -122,10 +137,10 @@
   \end{foreignabstract}
 
   \listoffigures
-  \listoftables
   \listofframes
   \listofprograms
   \listofalgorithms
+  \listoftables
   \printloabbreviations
   \printlosymbols
   \tableofcontents
@@ -135,8 +150,12 @@
   \chapter{Introdução}
 
   Este manual estabelece as regras de apresentação gráfica de teses,
-  dissertações e exames de qualificação defendidos na \useacronym{coppe} da
-  \useacronym{ufrj}, e as demonstra usando a classe \CoppeTeX.
+  dissertações e exames de qualificação defendidos na \useacronym{ufrj}, e as
+  demonstra usando a classe \texttt{ufrj}, do projeto \CoppeTeX. O que é de
+  cada unidade acadêmica ---
+  o logotipo, o nome da instituição na capa, os Programas --- fica para o
+  capítulo~\ref{cap:unidade}, que usa a \useacronym{coppe} como exemplo; este
+  documento é, ele mesmo, um trabalho da \useacronym{coppe}.
 
   Ele está alinhado ao \emph{Manual para elaboração e normalização de trabalhos
   acadêmicos} do \useacronym{sibi}, 9.ª edição revista, de 2026, que é a norma
@@ -177,13 +196,18 @@
   espelhadas; a folha adicional, que não existia; e o formato do arquivo, que
   agora é PDF/A.
 
-  \section{Como usar a classe \CoppeTeX}
+  \section{Como usar a classe \texttt{ufrj}}
 
-  Basta declarar a classe e o tipo do trabalho:
+  Basta declarar a classe, com o tipo do trabalho, e o estilo da unidade:
 
 \begin{verbatim}
-\documentclass[dsc]{coppe}
+\documentclass[dsc]{ufrj}
+\usepackage{ufrj-coppe}
 \end{verbatim}
+
+  \noindent A classe é a da \useacronym{ufrj} inteira; a segunda linha traz o que é
+  da unidade, e muda de uma unidade para outra. O capítulo~\ref{cap:unidade}
+  explica o que ela decide.
 
   \section{Os arquivos, e onde eles ficam}
 
@@ -193,9 +217,9 @@
   procura a classe, os estilos e as bases de referências \emph{ao lado do
   documento que está compilando}, e não dentro de subpastas.
 
-  Na raiz estão a classe, os estilos de bibliografia, os termos em português e
-  em inglês --- os dois, porque toda tese tem resumo em idioma estrangeiro --- e
-  o exemplo em português. Em \verb|logos| estão os logotipos da capa; em
+  Na raiz estão a classe, o estilo da \useacronym{coppe}, os estilos de bibliografia, os
+  termos em português e em inglês --- os dois, porque toda tese tem resumo em
+  idioma estrangeiro --- e o exemplo em português. Em \verb|logos| estão os logotipos da capa; em
   \verb|manuais|, os PDFs para ler. As pastas \verb|en| e \verb|es| trazem o
   exemplo naquele idioma e o que só ele precisa, e \verb|outraslinguas| traz
   francês e italiano, que não são idiomas admitidos para redigir tese.
@@ -213,9 +237,9 @@
 
   As opções mais usadas são \verb|numbers|, que troca as citações autor-data
   pelo sistema numérico; \verb|english| ou \verb|spanish|, para o idioma de
-  redação; \verb|pdfa|, que produz o arquivo no formato exigido para depósito;
-  e \verb|comserifa|, para quem prefere a fonte serifada à sem serifa que a
-  classe usa por padrão.
+  redação; e \verb|comserifa|, para quem prefere a fonte serifada à sem serifa
+  que a classe usa por padrão. O PDF/A que o depósito exige não precisa de
+  opção: é o padrão.
 
   A bibliografia usa BibLaTeX com o motor \texttt{biber}, e não BibTeX. Declare
   a base no preâmbulo com \verb|\addbibresource{arquivo.bib}| e imprima a lista
@@ -238,7 +262,7 @@
   do \TeX.
 
   O manual da classe, que descreve todos os comandos um a um, é o
-  \texttt{coppe.pdf}, distribuído junto. Este aqui descreve a norma; aquele
+  \texttt{ufrj.pdf}, distribuído junto. Este aqui descreve a norma; aquele
   descreve a ferramenta.
 
   \chapter{Formato gráfico}
@@ -436,19 +460,23 @@
   Com o depósito digital, a aprovação é registrada por outros meios, e a folha
   apenas lista quem examinou.
 
-  A folha lista os \textbf{examinadores}. Nos Programas em que o orientador
-  integra a banca, ele entra na lista também, à frente dos examinadores, como
-  presidência; na classe, isso é a opção \verb|orientadorexamina|.
+  A folha lista a \textbf{banca}, na ordem em que o trabalho a declara. O
+  orientador preside a banca e aparece em primeiro lugar (3.1.2.1.3e): declare-o
+  como o primeiro membro, com o nome, a titulação e a instituição. A classe não o
+  põe lá sozinha; a opção \verb|orientadorexamina| faz isso, pondo os
+  orientadores à frente dos examinadores.
 
   \section{Os resumos}
 
   São dois, no mínimo: um no idioma do trabalho e um em idioma estrangeiro. Cada
-  um cabe em \textbf{uma folha}, em espaço 1,5, num parágrafo só, de
+  um começa numa folha própria e vem em espaço 1,5, num parágrafo só, de
   \textbf{150 a 500 palavras}, de preferência na terceira pessoa do singular e
   com o verbo na voz ativa.
 
-  Cada resumo começa pela \textbf{referência do próprio trabalho} e termina com
-  as \textbf{palavras-chave}.
+  Cada folha abre com o título centralizado --- \textbf{RESUMO}, ou
+  \textbf{ABSTRACT} na folha em inglês ---, como todo título sem indicativo
+  numérico (2.6). O resumo começa pela \textbf{referência do próprio trabalho} e
+  termina com as \textbf{palavras-chave}.
 
   A referência é a mesma que apareceria numa bibliografia que citasse a tese:
 
@@ -468,8 +496,8 @@
 
   Na classe, você não escreve nada: ela monta a referência com o que a folha de
   rosto já exige. A opção \verb|resumosemreferencia| a retira, e serve a quem
-  tem um resumo no limite das 500 palavras e não quer empurrá-lo para uma
-  segunda folha.
+  quer o resumo numa folha só. O Manual não exige isso, e um resumo de 500
+  palavras em espaço 1,5, com todos os elementos da folha, passa de uma folha.
 
   Num trabalho redigido em espanhol, são \textbf{três}: o espanhol, o inglês e um
   em português, para a banca da \useacronym{ufrj}.
@@ -492,11 +520,12 @@
   produzem com frequência; o nível \emph{b} garante a reprodução visual fiel,
   que é o que o depósito pede. O Anexo I do Manual aceita 1b e 2b.
 
-  Na classe, é a opção \verb|pdfa|: ela carrega o pacote \verb|pdfx|, monta os
-  metadados a partir dos dados do próprio trabalho e embute o perfil de cor. A
-  opção fica desligada por padrão, mas o \verb|max-exemplo.tex| já a traz ligada, e é
-  o que se recomenda: um problema de PDF/A --- quase sempre um PDF ou uma imagem
-  incluídos que não obedecem à norma --- aparece no dia em que o arquivo entra no
+  Na classe, é o padrão: ela carrega o pacote \verb|pdfx|, monta os metadados a
+  partir dos dados do próprio trabalho e embute o perfil de cor em todo
+  documento, sem que você peça. A opção \verb|sempdfa| desliga, para uma
+  compilação de rascunho ou para um pacote que o PDF/A não aceite --- e quem
+  desligar deve lembrar que um problema de PDF/A, quase sempre um PDF ou uma
+  imagem incluídos fora da norma, aparece no dia em que o arquivo entra no
   trabalho, e não na véspera do depósito. Para conferir, use o validador
   gratuito veraPDF, no perfil PDF/A-2b.
 
@@ -595,7 +624,7 @@
   categoria própria --- ele pode ter numeração e lista próprias:
 
 \begin{verbatim}
-\newcoppefloat{mapa}{Mapa}{Lista de Mapas}
+\newufrjfloat{mapa}{Mapa}{Lista de Mapas}
 \end{verbatim}
 
   O novo flutuante segue a mesma regra: legenda no topo, fonte abaixo, numeração
@@ -968,11 +997,86 @@ public class Saudacao {
   leitura. O lugar dele é o apêndice, e o corpo fica com o trecho que interessa à
   argumentação.
 
+  \chapter{O que é de cada unidade}\label{cap:unidade}
+
+  Tudo o que os capítulos anteriores enunciaram vale para a \useacronym{ufrj} inteira.
+  Mas o manual do \useacronym{sibi} deixa escolhas em aberto e pede dados que só a
+  unidade acadêmica tem: o logotipo do Programa, o nome da instituição na capa,
+  a lista dos Programas. Cada unidade fixa esses pontos na sua própria norma, e
+  a classe os recebe de um \textbf{estilo de unidade}, carregado logo depois
+  dela. Este documento usa o da \useacronym{coppe}, que é o exemplo deste capítulo.
+
+  \section{O que o estilo da unidade decide}
+
+  O \autoref{qua:unidade} lista os pontos em que a unidade decide, e o que a
+  \useacronym{coppe} decidiu em cada um. Todos são dado ou texto: nenhum mexe na margem,
+  na paginação ou no formato das folhas.
+
+  \begin{framefloat}[ht]
+    \centering
+    \caption{O que o estilo da unidade fixa, e o que a COPPE fixou}
+    \label{qua:unidade}
+    \small
+    \begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}p{0.27\textwidth}|>{\raggedright\arraybackslash}X|}
+      \hline
+      \textbf{Ponto do manual} & \textbf{Na \useacronym{coppe}} \\
+      \hline
+      Logotipos no alto da capa e da folha de rosto (Anexo~A) & o da
+        \useacronym{ufrj} à esquerda e o da \useacronym{coppe} à direita, com 2\,cm de altura \\
+      \hline
+      Nome da instituição na capa (3.1.1) & três linhas: a universidade, o
+        Instituto e o Programa, este pelo nome oficial --- ``Programa de
+        Engenharia Civil'' \\
+      \hline
+      Programas (3.1.1 e 3.1.2.1.1) & treze, cada um com sigla, nome em
+        português e nome em inglês, este só para a folha do \emph{abstract} \\
+      \hline
+      Natureza do trabalho (3.1.2.1.1e) & ``apresentada ao Programa de
+        Pós-Graduação em \dots, Instituto Alberto Luiz Coimbra de Pós-Graduação
+        e Pesquisa de Engenharia, Universidade Federal do Rio de Janeiro, como
+        requisito parcial\dots'', como o modelo do SiBI \\
+      \hline
+      Abertura da folha de resumo & ``apresentada à COPPE/UFRJ'' e o grau
+        ``em Ciências (D.Sc.)'' \\
+      \hline
+      Norma citada no colofão & a \emph{Norma para a Elaboração Gráfica de
+        Teses e Dissertações da COPPE/UFRJ} \\
+      \hline
+    \end{tabularx}
+    \source{Norma COPPE, seções 1, 2, 3 e 16; estilo \texttt{ufrj-coppe}.}
+  \end{framefloat}
+
+  \section{O que o estilo da unidade não decide}
+
+  A página, a estrutura, as ilustrações, as citações e as referências são as
+  do manual do \useacronym{sibi}, iguais para qualquer unidade. As outras escolhas da
+  norma da \useacronym{coppe} --- os orientadores e o Programa nas folhas de resumo, o
+  terceiro resumo, a referência do trabalho no alto de cada resumo, as listas
+  de quadros, de programas e de algoritmos --- são comportamento, e a classe as
+  oferece a toda unidade, como padrão ou como opção.
+
+  \section{Uma unidade sem estilo}
+
+  Sem estilo nenhum, a classe compõe o trabalho com os textos da
+  \useacronym{ufrj}: a capa traz ``Programa de Pós-Graduação em'', o resumo diz que o
+  trabalho foi apresentado ``à UFRJ'' e o colofão cita o manual do
+  \useacronym{sibi}. O aluno declara o próprio Programa no preâmbulo:
+
+\begin{verbatim}
+\documentclass[dsc]{ufrj}
+\ufrjdeclareprogram{PPGI}{Informática}{Informatics}
+\end{verbatim}
+
+  \noindent A unidade que quiser o seu estilo escreve um arquivo como o
+  \texttt{ufrj-coppe.sty}, que é o modelo, e o descreve no manual dele, como o
+  \texttt{ufrj-coppe.pdf} descreve o da \useacronym{coppe}.
+
   \chapter{Conclusão}
 
-  Este manual enunciou as regras de apresentação gráfica da \useacronym{coppe}, na
+  Este manual enunciou as regras de apresentação gráfica da \useacronym{ufrj}, na
   forma em que elas valem depois da edição de 2026 do manual do \useacronym{sibi}, e
-  as demonstrou no próprio formato: cada regra sobre margem, paginação, legenda,
+  o que uma unidade acrescenta a elas, com a \useacronym{coppe} como exemplo, e as
+  demonstrou no próprio formato: cada regra sobre margem, paginação, legenda,
   citação e referência pode ser conferida olhando para a folha em que está
   escrita.
 
@@ -991,8 +1095,8 @@ public class Saudacao {
 
   \chapter{Referência rápida de comandos}
 
-  Os comandos da classe \CoppeTeX\ que este manual usou, por assunto. A descrição
-  completa de cada um está no \texttt{coppe.pdf}.
+  Os comandos da classe \texttt{ufrj} que este manual usou, por assunto. A descrição
+  completa de cada um está no \texttt{ufrj.pdf}.
 
   % Alinhadas à esquerda: justificadas, as linhas cheias de nomes de comando,
   % que não se hifenizam, estouravam a margem.
@@ -1006,7 +1110,7 @@ public class Saudacao {
     \item estrutura: \verb|\maketitle|, \verb|\frontmatter|, \verb|\mainmatter|,
       \verb|\backmatter|, \verb|\dedication|, \verb|\appendix|, \verb|\annex|;
     \item ilustrações: \verb|\source|, ambiente \verb|framefloat|,
-      \verb|\listofframes|, \verb|\newcoppefloat|;
+      \verb|\listofframes|, \verb|\newufrjfloat|;
     \item siglas e símbolos: \verb|\defineacronym|, \verb|\useacronym|, \verb|\useacronym*|,
       \verb|\abbrev|, \verb|\symbl|;
     \item listas: ambiente \verb|alineas|, \verb|\listofprograms|,

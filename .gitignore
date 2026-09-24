@@ -1,6 +1,17 @@
 *.lab
 dist/example.los
 dist/exemple.los
+src/ufrj.glo
+src/ufrj.idx
+src/ufrj-coppe.glo
+src/ufrj-coppe.idx
+src/ufrj-poli.glo
+src/ufrj-poli.idx
+src/ufrj.ist
+src/ufrj.out
+src/ufrj.aux
+# os mesmos artefatos com o nome da classe ate a v4.1, que ficam na pasta de
+# quem compilou antes da troca de nome
 src/coppe.glo
 src/coppe.idx
 src/coppe.ist
@@ -72,7 +83,7 @@ __pycache__/
 *.xmpdata
 *.xmpi
 
-# gerado pelo coppe.ins; o build-check o copia para latexmkrc
+# gerado pelo ufrj.ins; o build-check o copia para latexmkrc
 src/latexmkrc.tex
 
 # tests/adversativa/: prova de funcionamento, nao distribuida. Entram no git as
@@ -83,7 +94,7 @@ tests/adversativa/*
 !tests/adversativa/*.bib
 !tests/adversativa/README.md
 
-# listas de floats criados pelo autor com \newcoppefloat (o exemplo cria "mapa")
+# listas de floats criados pelo autor com \newufrjfloat (o exemplo cria "mapa")
 *.lomapa
 # subprodutos do synctex, inclusive o arquivo parcial que fica durante o build
 *.synctex

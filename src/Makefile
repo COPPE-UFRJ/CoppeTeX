@@ -27,8 +27,8 @@
 #
 SHELL := /bin/bash
 PROGRAM_NAME=CoppeTeX Makefile
-PACKAGE_NAME=coppe
-DOC_SOURCE=coppe.dtx
+PACKAGE_NAME=ufrj
+DOC_SOURCE=ufrj.dtx
 VERSION="3.2"
 AUTHORS=Vicente H. F. Batista and George O. Ainsworth Jr. and Geraldo Xexéo and Eduardo Mangeli
 COPYRIGHT_YEAR=2026
@@ -45,19 +45,19 @@ _printf=printf
 _rm=rm
 _tar=tar
 
-CLSDIR=$(DESTDIR)/tex/latex/coppe
-BSTDIR=$(DESTDIR)/bibtex/bst/coppe
-ISTDIR=$(DESTDIR)/makeindex/coppe
-DOCDIR=$(DESTDIR)/doc/latex/coppe
+CLSDIR=$(DESTDIR)/tex/latex/ufrj
+BSTDIR=$(DESTDIR)/bibtex/bst/ufrj
+ISTDIR=$(DESTDIR)/makeindex/ufrj
+DOCDIR=$(DESTDIR)/doc/latex/ufrj
 
 TEXFLAGS  =
 IDXFLAGS = -q -s gind.ist
 GLOFLAGS = -q -s gglo.ist
-LSTFLAGS = -q -s coppe.ist
+LSTFLAGS = -q -s ufrj.ist
 
 
-#DIST_CONTENT=coppe.cls coppe.ist coppe.pdf coppe-plain.bst coppe-unsrt.bst COPYING example.bib example.tex coppe-logo.eps coppe-logo.pdf README en-coppe-plain.bst en-coppe-unsrt.bst
-#DISTSRC_CONTENT=coppe.bib coppe.dtx coppe.ins coppe-plain.bst coppe-unsrt.bst COPYING example.bib Makefile coppe-logo.eps coppe-logo.pdf README en-coppe-plain.bst en-coppe-unsrt.bst
+#DIST_CONTENT=ufrj.cls ufrj.ist ufrj.pdf coppe-plain.bst coppe-unsrt.bst COPYING example.bib example.tex coppe-logo.eps coppe-logo.pdf README en-coppe-plain.bst en-coppe-unsrt.bst
+#DISTSRC_CONTENT=ufrj.bib ufrj.dtx ufrj.ins coppe-plain.bst coppe-unsrt.bst COPYING example.bib Makefile coppe-logo.eps coppe-logo.pdf README en-coppe-plain.bst en-coppe-unsrt.bst
 
 .SUFFIXES: .tex .dtx
 
@@ -83,7 +83,7 @@ doc: $(PACKAGE_NAME).dtx
 	mkdir -vp "${BUILDDIR}"
 	cp $(basename $<).pdf "${BUILDDIR}/"
 
-class: $(PACKAGE_NAME).cls
+class: $(PACKAGE_NAME).cls ufrj-coppe.sty coppe.cls
 
 
 install: doc class max-exemplo.pdf min-exemplo.pdf
@@ -96,7 +96,8 @@ install: doc class max-exemplo.pdf min-exemplo.pdf
 	  rm -rf $(CLSDIR); \
 	fi
 	mkdir -vp $(CLSDIR)
-	cp -vp $(PACKAGE_NAME).cls coppe-logo.eps coppe-logo.pdf ufrj-logo.pdf coppe.ist \
+	cp -vp $(PACKAGE_NAME).cls ufrj-coppe.sty coppe.cls \
+		coppe-logo.eps coppe-logo.pdf ufrj-logo.pdf ufrj.ist \
 		$(PACKAGE_NAME).bbx $(PACKAGE_NAME).cbx $(PACKAGE_NAME).dbx \
 		$(PACKAGE_NAME)-numeric.bbx $(PACKAGE_NAME)-numeric.cbx \
 		brazilian-$(PACKAGE_NAME).lbx english-$(PACKAGE_NAME).lbx $(CLSDIR)/
@@ -174,7 +175,9 @@ $(PACKAGE_NAME).cls: $(PACKAGE_NAME).ins
 	mkdir -vp "${BUILDDIR}"
 	cp $(basename $<).cls "${BUILDDIR}/" 
 
-max-exemplo.tex min-exemplo.tex: $(PACKAGE_NAME).ins
+# O estilo da COPPE, a classe coppe de compatibilidade e os exemplos saem do
+# ufrj-coppe.ins, e nao do ufrj.ins.
+ufrj-coppe.sty coppe.cls max-exemplo.tex min-exemplo.tex: ufrj-coppe.ins
 	@$(TEX) $(TEXFLAGS) $<
 	
 %.ist: $(PACKAGE_NAME).ins
@@ -215,5 +218,5 @@ max-exemplo.tex min-exemplo.tex: $(PACKAGE_NAME).ins
 clean:
 	@$(_rm) -f *.log *.aux *.ist *.idx *.blg *.bbl *.glo *.bz2 \
 		         *.toc *.lof *.lot *.syx *.abx *.sgx *.gsx *.lab *.lsg *.lgs *.ilg *.los *.ind \
-						 *.gls *.out *~ coppe.pdf coppe.cls max-exemplo.pdf max-exemplo.tex min-exemplo.pdf min-exemplo.tex
+						 *.gls *.out *~ ufrj.pdf ufrj.cls max-exemplo.pdf max-exemplo.tex min-exemplo.pdf min-exemplo.tex
 

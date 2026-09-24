@@ -1,10 +1,10 @@
-# run-tests.ps1 -- regression runner for the coppe class.
+# run-tests.ps1 -- regression runner for the ufrj class.
 #
 # Usage:
 #   .\run-tests.ps1                         # run every test_*.tex in this folder
 #   .\run-tests.ps1 test_brazilian_one_advisor  # run a single test (stem name)
 #
-# The script sets TEXINPUTS so pdflatex finds coppe.cls (and friends) in
+# The script sets TEXINPUTS so pdflatex finds ufrj.cls (and friends) in
 # ..\src, runs pdflatex -> biber -> pdflatex -> pdflatex, and reports a
 # pass/fail summary based on pdflatex's exit code. Aux files stay in this
 # folder; clean them with `Remove-Item *.aux,*.bbl,*.bcf,*.blg,*.log,*.out,*.run.xml,*.toc,*.lof,*.lot,*.loa,*.loq,*.lol`.
@@ -59,10 +59,10 @@ foreach ($t in $tests) {
             if ($LASTEXITCODE -ne 0) { $ok = $false }
         }
         # As listas de abreviaturas e de simbolos so aparecem depois do
-        # makeindex com o estilo coppe.ist, entre a primeira passada, que
+        # makeindex com o estilo ufrj.ist, entre a primeira passada, que
         # escreve o .abx e o .syx, e a segunda, que os imprime. Sem isto, um
         # teste dessas listas passava com elas VAZIAS.
-        $ist = Join-Path $here "..\src\coppe.ist"
+        $ist = Join-Path $here "..\src\ufrj.ist"
         if ($ok -and (Test-Path (Join-Path $here "$stem.abx"))) {
             & makeindex -s $ist -o "$stem.lab" "$stem.abx" | Out-Null
         }

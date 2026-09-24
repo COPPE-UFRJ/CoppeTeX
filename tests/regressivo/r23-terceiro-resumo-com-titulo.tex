@@ -6,11 +6,15 @@
 %% aparece em trabalho escrito em espanhol, vem depois e compoe o titulo com
 %% \local@title, que acabara de ser apagado. Ia para o deposito assim.
 %%
-%% O resumo em portugues e a TERCEIRA folha de resumo: capa, rosto, adicional,
-%% aprovacao, resumo em espanhol, abstract, resumo em portugues.
-%% ESPERA-TEXTO-PAGINA: 7::TITULO DO TRABALHO EM PORTUGUES
+%% Desde a #158 o resumo em portugues vem PRIMEIRO (3.1.2), e o que vem depois
+%% do foreignabstract e o resumo no idioma do trabalho: capa, rosto,
+%% adicional, aprovacao, resumo em portugues, abstract, resumen en espanol. O
+%% teste cobra o titulo das tres folhas; a terceira e a que a faxina apagaria.
+%% ESPERA-TEXTO-PAGINA: 5::TITULO DO TRABALHO EM PORTUGUES
 %% ESPERA-TEXTO-PAGINA: 6::THE WORK TITLE IN ENGLISH
-\documentclass[dsc,spanish]{coppe}
+%% ESPERA-TEXTO-PAGINA: 7::EL TITULO DEL TRABAJO EN ESPANOL
+\documentclass[dsc,spanish]{ufrj}
+\usepackage{ufrj-coppe}
 \title{Titulo do trabalho em portugues}
 \foreigntitle{The work title in English}
 \titlein{spanish}{El titulo del trabajo en espanol}
@@ -23,12 +27,15 @@
 \keyword{Regresion}
 \foreignkeyword{Regression}
 \braziliankeyword{Regressao}
+% O titulo do trabalho na folha de resumo e opcao desde a #157 (a folha do
+% Anexo E nao o tem); ligado aqui, porque e ele que a faxina apagava.
+\configuraresumos{true}{true}{true}{true}
 \begin{document}
   \maketitle
   \frontmatter
-  \begin{abstract}Resumen en espanol.\end{abstract}
-  \begin{foreignabstract}Abstract in English.\end{foreignabstract}
   \begin{brazilianabstract}Resumo em portugues.\end{brazilianabstract}
+  \begin{foreignabstract}Abstract in English.\end{foreignabstract}
+  \begin{abstract}Resumen en espanol.\end{abstract}
   \tableofcontents
   \mainmatter
   \chapter{Un capitulo}

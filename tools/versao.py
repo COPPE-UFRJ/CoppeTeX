@@ -3,10 +3,10 @@
 
     python tools/versao.py                 # confere; sai 1 se algo divergir
     python tools/versao.py --detalhe       # confere e lista as mencoes historicas
-    python tools/versao.py --subir 2       # 4.1 -> 4.2
-    python tools/versao.py --subir 3       # 4.1 -> 4.1.1
+    python tools/versao.py --subir 2       # 5.0 -> 5.1
+    python tools/versao.py --subir 3       # 5.0 -> 5.0.1
 
-A versao canonica e a do `\\def\\fileversion` em src/coppe.dtx. Tudo o mais e
+A versao canonica e a do `\\def\\fileversion` em src/ufrj.dtx. Tudo o mais e
 conferido contra ela.
 
 Por que existe, e por que o nivel 1 nao existe
@@ -16,9 +16,10 @@ docstrip gera a partir dele, nos avisos dos dois README e no topo do CHANGELOG
 -- e basta um deles ficar para tras para que a distribuicao se contradiga: o
 usuario le 4.1 no README e o LaTeX escreve v4.0 no log.
 
-Subir o primeiro nivel (de 4 para 5) NAO e oferecido de proposito. A troca de
-major na CoppeTeX significou, historicamente, mudanca de modelo: a 4.0 trouxe o
-modelo multilingue e a 3.0 a reescrita da classe. Isso e decisao de quem
+Subir o primeiro nivel (de 5 para 6) NAO e oferecido de proposito. A troca de
+major na CoppeTeX significou, historicamente, mudanca de modelo: a 5.0 separou a
+classe da UFRJ do estilo da unidade, a 4.0 trouxe o modelo multilingue e a 3.0 a
+reescrita da classe. Isso e decisao de quem
 mantem o projeto e da CPGP, nao de um script -- e um clique errado num painel
 nao pode anunciar uma versao que nao existe.
 """
@@ -29,7 +30,11 @@ import sys
 import datetime
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DTX = os.path.join(RAIZ, "src", "coppe.dtx")
+DTX = os.path.join(RAIZ, "src", "ufrj.dtx")
+# As fontes que carimbam versao. A canonica e a do ufrj.dtx; o estilo da COPPE
+# sai no mesmo pacote e com o mesmo numero, e um estilo de unidade que ficasse
+# para tras contradiria a distribuicao do mesmo jeito que um .lbx.
+FONTES = [DTX, os.path.join(RAIZ, "src", "ufrj-coppe.dtx")]
 
 # O console do Windows e cp1252 e nao sabe escrever uma seta, um travessao nem
 # um til combinante. Sem isto, o script MORRE no meio ao imprimir uma linha de
@@ -43,20 +48,21 @@ if hasattr(sys.stdout, "reconfigure"):
 
 # Arquivos gerados pelo docstrip que carimbam a versao num \ProvidesFile ou
 # \ProvidesClass. Divergencia aqui quase sempre quer dizer a mesma coisa: o
-# coppe.ins nao foi rodado depois da ultima mudanca no .dtx.
+# ufrj.ins nao foi rodado depois da ultima mudanca no .dtx.
 #
 # Os de src/ estao escritos aqui; os de dist/ NAO, e sao deduzidos da lista do
 # painel. A razao: dist/ tem subpastas -- es/, outraslinguas/ --, e a lista de
 # quem vai para onde ja existe em tools/painel.py. Escrever os caminhos aqui de
 # novo criaria a segunda copia da mesma lista, e ela divergiu no dia seguinte a
-# reorganizacao: este verificador cobrava dist/spanish-coppe.lbx, que tinha
-# passado a ser dist/es/spanish-coppe.lbx.
+# reorganizacao: este verificador cobrava dist/spanish-ufrj.lbx, que tinha
+# passado a ser dist/es/spanish-ufrj.lbx.
 ESTILOS = [
-    "coppe.cls", "coppe.dbx", "coppe.bbx", "coppe.cbx",
-    "coppe-numeric.bbx", "coppe-numeric.cbx",
-    "brazilian-coppe.lbx", "english-coppe.lbx", "spanish-coppe.lbx",
-    "french-coppe.lbx", "italian-coppe.lbx",
-    "coppe-lang-spanish.def", "coppe-lang-french.def", "coppe-lang-italian.def",
+    "ufrj.cls", "ufrj.dbx", "ufrj.bbx", "ufrj.cbx",
+    "ufrj-numeric.bbx", "ufrj-numeric.cbx",
+    "brazilian-ufrj.lbx", "english-ufrj.lbx", "spanish-ufrj.lbx",
+    "french-ufrj.lbx", "italian-ufrj.lbx",
+    "ufrj-lang-spanish.def", "ufrj-lang-french.def", "ufrj-lang-italian.def",
+    "ufrj-coppe.sty", "coppe.cls", "ufrj-poli.sty",
 ]
 
 GERADOS = ["src/" + n for n in ESTILOS]
@@ -77,8 +83,10 @@ for subpasta, nome in PARA_DIST:
 PROSA = [
     ("README.md", r"Esta é a CoppeTeX (\d+\.\d+(?:\.\d+)?)"),
     ("README.md", r"This is CoppeTeX (\d+\.\d+(?:\.\d+)?)"),
-    ("README.md", r"proposal for CPGP \(v(\d+\.\d+(?:\.\d+)?)\)"),
-    ("README.md", r"carries CoppeTeX \*\*(\d+\.\d+(?:\.\d+)?)\*\*"),
+    # A secao "The proposal for CPGP (v4.1)" do README NAO esta aqui: ela descreve
+    # a proposta levada a CPGP, que foi escrita para a 4.1, e nao a versao do
+    # checkout. Conferida contra a canonica, ela obrigaria cada versao nova a
+    # dizer que foi ela a submetida.
     ("dist/README.md", r"Esta é a CoppeTeX (\d+\.\d+(?:\.\d+)?)"),
     # O CHANGELOG e o mais novo primeiro, entao o primeiro "## [x.y]" do arquivo
     # e o da versao corrente.
@@ -86,7 +94,7 @@ PROSA = [
 ]
 
 RE_PROVIDES = re.compile(
-    r"(\\Provides(?:File|Class)\{[^}]+\}\[)(\d{4}/\d{2}/\d{2})( v)(\d+\.\d+(?:\.\d+)?)")
+    r"(\\Provides(?:File|Class|Package)\{[^}]+\}\[)(\d{4}/\d{2}/\d{2})( v)(\d+\.\d+(?:\.\d+)?)")
 RE_FILEVERSION = re.compile(r"(\\def\\fileversion\{v)(\d+\.\d+(?:\.\d+)?)(\})")
 RE_FILEDATE = re.compile(r"(\\def\\filedate\{)(\d{4}/\d{2}/\d{2})(\})")
 
@@ -98,32 +106,34 @@ def ler(caminho):
 def canonica():
     m = RE_FILEVERSION.search(ler(DTX))
     if not m:
-        raise SystemExit("nao achei \\def\\fileversion em src/coppe.dtx")
+        raise SystemExit("nao achei \\def\\fileversion em src/ufrj.dtx")
     return m.group(2)
 
 
 def conferir(detalhe=False):
     alvo = canonica()
-    print("versao canonica (src/coppe.dtx): %s" % alvo)
+    print("versao canonica (src/ufrj.dtx): %s" % alvo)
     problemas = []
 
-    # 1. O proprio .dtx: todo \ProvidesFile/\ProvidesClass, inclusive o que fica
-    #    em comentario e alimenta o \GetFileInfo do manual.
-    texto = ler(DTX)
-    for m in RE_PROVIDES.finditer(texto):
-        if m.group(4) != alvo:
-            linha = texto[:m.start()].count("\n") + 1
-            problemas.append("src/coppe.dtx:%d  %s (esperado %s)"
-                             % (linha, m.group(0).strip(), alvo))
+    # 1. Os proprios .dtx: todo \ProvidesFile/\ProvidesClass/\ProvidesPackage,
+    #    inclusive o que fica em comentario e alimenta o \GetFileInfo do manual.
+    for fonte in FONTES:
+        texto = ler(fonte)
+        for m in RE_PROVIDES.finditer(texto):
+            if m.group(4) != alvo:
+                linha = texto[:m.start()].count("\n") + 1
+                problemas.append("src/%s:%d  %s (esperado %s)"
+                                 % (os.path.basename(fonte), linha,
+                                    m.group(0).strip(), alvo))
 
-    # 2. Os gerados. Divergir aqui costuma ser o coppe.ins nao rodado.
+    # 2. Os gerados. Divergir aqui costuma ser o ufrj.ins nao rodado.
     for rel in GERADOS:
         caminho = os.path.join(RAIZ, rel.replace("/", os.sep))
         if not os.path.exists(caminho):
             problemas.append("%s  nao existe" % rel)
             continue
         conteudo = ler(caminho)
-        # O coppe.cls nao carimba a versao literalmente: o \ProvidesClass dele
+        # O ufrj.cls nao carimba a versao literalmente: o \ProvidesClass dele
         # usa \filedate e \fileversion, que sao definidos duas linhas acima. Por
         # isso os dois padroes, e nao so o \ProvidesFile.
         achou = None
@@ -209,7 +219,7 @@ def conferir(detalhe=False):
 def subir(nivel):
     """Sobe o segundo ou o terceiro nivel. O primeiro nunca."""
     if nivel not in (2, 3):
-        print("nivel tem de ser 2 (4.1 -> 4.2) ou 3 (4.1 -> 4.1.1).")
+        print("nivel tem de ser 2 (5.0 -> 5.1) ou 3 (5.0 -> 5.0.1).")
         print("O nivel 1 nao e oferecido: trocar de major e decisao do projeto")
         print("e da CPGP, nao de um script.")
         return 2
@@ -228,13 +238,14 @@ def subir(nivel):
     hoje = datetime.date.today().strftime("%Y/%m/%d")
     print("%s  ->  %s   (data %s)" % (velha, nova, hoje))
 
-    texto = ler(DTX)
-    texto = RE_FILEVERSION.sub(lambda m: m.group(1) + nova + m.group(3), texto)
-    texto = RE_FILEDATE.sub(lambda m: m.group(1) + hoje + m.group(3), texto)
-    texto = RE_PROVIDES.sub(
-        lambda m: m.group(1) + hoje + m.group(3) + nova, texto)
-    io.open(DTX, "w", encoding="utf-8", newline="\n").write(texto)
-    print("src/coppe.dtx atualizado")
+    for fonte in FONTES:
+        texto = ler(fonte)
+        texto = RE_FILEVERSION.sub(lambda m: m.group(1) + nova + m.group(3), texto)
+        texto = RE_FILEDATE.sub(lambda m: m.group(1) + hoje + m.group(3), texto)
+        texto = RE_PROVIDES.sub(
+            lambda m: m.group(1) + hoje + m.group(3) + nova, texto)
+        io.open(fonte, "w", encoding="utf-8", newline="\n").write(texto)
+        print("src/%s atualizado" % os.path.basename(fonte))
 
     # A prosa NAO e reescrita por conta propria. O aviso do README e o titulo do
     # CHANGELOG nao sao so um numero: sao uma frase sobre o que aquela versao e,

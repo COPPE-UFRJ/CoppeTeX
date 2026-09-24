@@ -9,12 +9,13 @@
 %% follows the language of the work. The subtitle is given as well, because it
 %% is the one optional piece of the reference.
 %%
-%% NAO e gerado pelo coppe.dtx e NAO e distribuido: a suite prova que a
+%% NAO e gerado pelo ufrj.dtx e NAO e distribuido: a suite prova que a
 %% classe funciona, nao faz parte dela. Rode por tools\prova.ps1, ou por
 %% tests\run-tests.ps1 para so esta pasta.
 %%
 
-\documentclass[dsc,spanish]{coppe}
+\documentclass[dsc,spanish]{ufrj}
+\usepackage{ufrj-coppe}
 
 \title{Título de teste da referência no resumo}
 \foreigntitle{Reference on the abstract page test}
@@ -40,15 +41,16 @@
 \begin{document}
   \maketitle
   \frontmatter
-  \begin{abstract}
-    Resumen de prueba en español.
-  \end{abstract}
-  \begin{foreignabstract}
-    Test abstract in English.
-  \end{foreignabstract}
+  % o resumo em portugues vem primeiro (3.1.2; #158)
   \begin{brazilianabstract}
     Resumo de teste em português.
   \end{brazilianabstract}
+  \begin{foreignabstract}
+    Test abstract in English.
+  \end{foreignabstract}
+  \begin{abstract}
+    Resumen de prueba en español.
+  \end{abstract}
   \tableofcontents
   \mainmatter
   \chapter{Introducción}

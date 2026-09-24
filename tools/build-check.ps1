@@ -13,11 +13,13 @@
     pelo git.
 
 .PARAMETER Scope
-    class    - só regenera coppe.cls e companhia a partir de coppe.ins (rápido)
-    example  - class + max-exemplo.tex e min-exemplo.tex
+    class    - só regenera ufrj.cls e companhia a partir de ufrj.ins (rápido)
+    example  - class + max-exemplo.tex, min-exemplo.tex e poli-exemplo.tex, e o
+               conferir-norma nos tres PDFs
     langs    - class + os cinco example_<lang>.tex
     tests    - class + a suíte tests/run-tests.ps1
-    docs     - class + coppe.pdf (manual), NORMA_COPPE_2026.pdf,
+    docs     - class + ufrj.pdf (manual), NORMA_COPPE_2026.pdf,
+               PROPOSTA-DE-RESOLUCAO.pdf (a proposta da Escola Politecnica),
                manual.pdf e covers_5languages.pdf
     pdfa     - class + max-exemplo.tex e min-exemplo.tex (que usam pdfa), tests/test_pdfa.tex e
                tests/test_comserifa.tex, e passa os tres
@@ -27,7 +29,9 @@
     adversativa - os 6 documentos de tests\adversativa\ (quatro em portugues,
                um em ingles e um em espanhol, cada um de um tipo diferente),
                com o ciclo completo: biber, makeindex das listas e do indice
-               remissivo, tres passadas, e veraPDF em cada um.
+               remissivo, tres passadas, e veraPDF em cada um; depois, o
+               conferir-norma em todos e o conferir-referencias nos que trazem
+               o gabarito.
     regressivo - a suite de regressao de tests\regressivo\: um teste minimo
                para cada defeito ja corrigido. NAO entra no `all'; rode-a
                antes de marcar uma versao.
@@ -54,7 +58,7 @@ if ($prova) { $Scope = "all" }
 
 $root    = Split-Path -Parent (Split-Path -Parent $MyInvocation.MyCommand.Path)
 $src     = Join-Path $root "src"
-# tests/ fica FORA de src/, e nada dele e distribuido nem sai do coppe.dtx. A
+# tests/ fica FORA de src/, e nada dele e distribuido nem sai do ufrj.dtx. A
 # pasta prova que a classe funciona; nao faz parte dela. Dentro dela,
 # tests\adversativa\ traz os documentos extremos e tests\regressivo\ um teste
 # minimo para cada defeito ja corrigido.
@@ -120,6 +124,31 @@ function Invoke-Step {
     } finally { Pop-Location }
 }
 
+# Os verificadores que comparam o PDF pronto com o Manual: conferir-norma mede
+# folha, folio, margem e sumario; conferir-referencias compara cada referencia
+# com o gabarito. Rodam logo depois de o escopo compilar o que eles leem. Ficaram
+# fora da prova ate a 4.1, e a m-diss saiu errada com o verificador acusando a
+# divergencia para ninguem (#151). Sem python o passo e PULADO, como o
+# conferir-manual. Na falha, as linhas do que foi acusado vao para o
+# RESULTADO.txt: "exit 1" sozinho nao diz qual folha nem qual referencia.
+function Invoke-Conferir {
+    param([string]$Name, [string]$Script, [string[]]$Pdfs = @())
+    if (-not (Get-Command python -ErrorAction SilentlyContinue)) {
+        Add-Line "pulado   $Name (python nao encontrado)"
+        return
+    }
+    $py = Join-Path $root "tools\$Script"
+    $antes = $script:failed
+    Invoke-Step $Name $root { & python $py @Pdfs }
+    if ($script:failed -gt $antes) {
+        $log = Join-Path $logDir "$Name.log"
+        Get-Content $log -Encoding utf8 |
+            Select-String -Pattern '^\s*(ERRO|DIFERE|AUSENTE|manual:|classe:|=== )' |
+            Select-Object -First 15 |
+            ForEach-Object { Add-Line ("         " + $_.Line.Trim()) }
+    }
+}
+
 # Le o .log inteiro.
 #
 # Aqui houve um erro que vale registrar, porque ele APROVAVA errado. A versao
@@ -145,7 +174,7 @@ function Get-LogTexto([string]$caminho) {
 
 # As listas de abreviaturas e de simbolos NAO saem de uma passada do pdflatex:
 # a primeira passada escreve .abx e .syx, o makeindex os ordena com o estilo
-# coppe.ist em .lab e .los, e so a passada seguinte os imprime. Sem esse passo
+# ufrj.ist em .lab e .los, e so a passada seguinte os imprime. Sem esse passo
 # as listas saem do que estivesse em disco -- ou seja, do build anterior, ou de
 # uma versao da classe que ja mudou. Era o caso do exemplo ate aqui: o
 # escopo `adversativa' rodava o makeindex e os demais nao, e a lista de
@@ -156,20 +185,20 @@ function Build-Tex {
     Invoke-Step "$Stem-1" $Dir { & pdflatex -interaction=nonstopmode -halt-on-error "$Stem.tex" }
     if ($WithBiber) { Invoke-Step "$Stem-biber" $Dir { & biber $Stem } }
     if (Test-Path (Join-Path $Dir "$Stem.abx")) {
-        Invoke-Step "$Stem-lab" $Dir { & makeindex -s (Join-Path $script:src "coppe.ist") -o "$Stem.lab" "$Stem.abx" }
+        Invoke-Step "$Stem-lab" $Dir { & makeindex -s (Join-Path $script:src "ufrj.ist") -o "$Stem.lab" "$Stem.abx" }
     }
     if (Test-Path (Join-Path $Dir "$Stem.syx")) {
-        Invoke-Step "$Stem-los" $Dir { & makeindex -s (Join-Path $script:src "coppe.ist") -o "$Stem.los" "$Stem.syx" }
+        Invoke-Step "$Stem-los" $Dir { & makeindex -s (Join-Path $script:src "ufrj.ist") -o "$Stem.los" "$Stem.syx" }
     }
     # O indice remissivo (makeidx) passa pelo makeindex com o estilo padrao.
     if (Test-Path (Join-Path $Dir "$Stem.idx")) {
         Invoke-Step "$Stem-ind" $Dir { & makeindex "$Stem.idx" }
     }
     if (Test-Path (Join-Path $Dir "$Stem.sgx")) {
-        Invoke-Step "$Stem-lsg" $Dir { & makeindex -s (Join-Path $script:src "coppe.ist") -o "$Stem.lsg" "$Stem.sgx" }
+        Invoke-Step "$Stem-lsg" $Dir { & makeindex -s (Join-Path $script:src "ufrj.ist") -o "$Stem.lsg" "$Stem.sgx" }
     }
     if (Test-Path (Join-Path $Dir "$Stem.gsx")) {
-        Invoke-Step "$Stem-lgs" $Dir { & makeindex -s (Join-Path $script:src "coppe.ist") -o "$Stem.lgs" "$Stem.gsx" }
+        Invoke-Step "$Stem-lgs" $Dir { & makeindex -s (Join-Path $script:src "ufrj.ist") -o "$Stem.lgs" "$Stem.gsx" }
     }
     Invoke-Step "$Stem-2" $Dir { & pdflatex -interaction=nonstopmode -halt-on-error "$Stem.tex" }
 
@@ -253,7 +282,9 @@ if ($prova) {
         $gitAntes = @(& git status --porcelain -- src 2>$null)
         Pop-Location
         Push-Location $src
-        & pdflatex -interaction=nonstopmode coppe.ins 2>&1 | Out-Null
+        & pdflatex -interaction=nonstopmode ufrj.ins 2>&1 | Out-Null
+        & pdflatex -interaction=nonstopmode ufrj-coppe.ins 2>&1 | Out-Null
+        & pdflatex -interaction=nonstopmode ufrj-poli.ins 2>&1 | Out-Null
         Pop-Location
         Push-Location $root
         $gitDepois = @(& git status --porcelain -- src 2>$null)
@@ -277,11 +308,15 @@ Add-Line "pdflatex: $((Get-Command pdflatex -ErrorAction SilentlyContinue).Sourc
 Add-Line "biber:    $((Get-Command biber -ErrorAction SilentlyContinue).Source)"
 Add-Line ""
 
-# 1. Regenerar TUDO a partir do .dtx -- sempre, porque tudo depende disso.
-# O coppe.ins gera a classe, os estilos biblatex, os pacotes de idioma, as
-# bases .bib, os exemplos nos cinco idiomas, a montagem das
-# capas, a suite de testes e o latexmkrc.
-Invoke-Step "coppe.ins" $src { & pdflatex -interaction=nonstopmode coppe.ins }
+# 1. Regenerar TUDO a partir dos dois .dtx -- sempre, porque tudo depende disso.
+# O ufrj.ins gera a classe, os estilos biblatex, os pacotes de idioma, as
+# bases .bib, a referencia rapida e o latexmkrc. O ufrj-coppe.ins gera o estilo
+# da COPPE, a classe coppe de compatibilidade, os exemplos nos cinco idiomas e a
+# montagem das capas -- tudo o que depende de uma unidade.
+Invoke-Step "ufrj.ins" $src { & pdflatex -interaction=nonstopmode ufrj.ins }
+Invoke-Step "ufrj-coppe.ins" $src { & pdflatex -interaction=nonstopmode ufrj-coppe.ins }
+# O estilo da Escola Politecnica e o exemplo dele (#170).
+Invoke-Step "ufrj-poli.ins" $src { & pdflatex -interaction=nonstopmode ufrj-poli.ins }
 
 # O latexmkrc sai do docstrip como latexmkrc.tex: o \openout do TeX acrescenta
 # .tex a todo nome sem extensao, e nao ha como pedir a ele o nome exato. Poe no
@@ -296,6 +331,10 @@ if (Test-Path $mkrcGen) {
 if ($Scope -in @("example", "all")) {
     Build-Tex -Stem "max-exemplo" -Dir $src -WithBiber
     Build-Tex -Stem "min-exemplo" -Dir $src -WithBiber
+    Build-Tex -Stem "poli-exemplo" -Dir $src -WithBiber
+    Invoke-Conferir "conferir-norma-exemplos" "conferir-norma.py" @(
+        (Join-Path $src "max-exemplo.pdf"), (Join-Path $src "min-exemplo.pdf"),
+        (Join-Path $src "poli-exemplo.pdf"))
 }
 
 if ($Scope -in @("langs", "all")) {
@@ -305,7 +344,7 @@ if ($Scope -in @("langs", "all")) {
 }
 
 if ($Scope -in @("docs", "all")) {
-    # O manual sai do .dtx, nao de um .tex: o proprio coppe.dtx traz a secao
+    # O manual sai do .dtx, nao de um .tex: o proprio ufrj.dtx traz a secao
     # driver. Precisa de makeindex para o indice remissivo e para o glossario
     # de comandos, e de tres passadas para as referencias cruzadas.
     #
@@ -317,13 +356,31 @@ if ($Scope -in @("docs", "all")) {
     # ninguem escreveu, e so saia depois de alguem apagar o arquivo na mao.
     # Os dois sao regerados logo abaixo, nesta mesma sequencia: apagar nao custa
     # nada e tira o modo de falha inteiro.
-    Remove-Item (Join-Path $src "coppe.gls"), (Join-Path $src "coppe.ind") `
+    Remove-Item (Join-Path $src "ufrj.gls"), (Join-Path $src "ufrj.ind") `
         -ErrorAction SilentlyContinue
-    Invoke-Step "coppe-1" $src { & pdflatex -interaction=nonstopmode coppe.dtx }
-    Invoke-Step "coppe-idx" $src { & makeindex -s gind.ist -o coppe.ind coppe.idx }
-    Invoke-Step "coppe-glo" $src { & makeindex -s gglo.ist -o coppe.gls coppe.glo }
-    Invoke-Step "coppe-2" $src { & pdflatex -interaction=nonstopmode coppe.dtx }
-    Invoke-Step "coppe-3" $src { & pdflatex -interaction=nonstopmode coppe.dtx }
+    Invoke-Step "ufrj-1" $src { & pdflatex -interaction=nonstopmode ufrj.dtx }
+    Invoke-Step "ufrj-idx" $src { & makeindex -s gind.ist -o ufrj.ind ufrj.idx }
+    Invoke-Step "ufrj-glo" $src { & makeindex -s gglo.ist -o ufrj.gls ufrj.glo }
+    Invoke-Step "ufrj-2" $src { & pdflatex -interaction=nonstopmode ufrj.dtx }
+    Invoke-Step "ufrj-3" $src { & pdflatex -interaction=nonstopmode ufrj.dtx }
+
+    # O manual do estilo da COPPE, do mesmo jeito e pela mesma razao.
+    Remove-Item (Join-Path $src "ufrj-coppe.gls"), (Join-Path $src "ufrj-coppe.ind") `
+        -ErrorAction SilentlyContinue
+    Invoke-Step "ufrj-coppe-1" $src { & pdflatex -interaction=nonstopmode ufrj-coppe.dtx }
+    Invoke-Step "ufrj-coppe-idx" $src { & makeindex -s gind.ist -o ufrj-coppe.ind ufrj-coppe.idx }
+    Invoke-Step "ufrj-coppe-glo" $src { & makeindex -s gglo.ist -o ufrj-coppe.gls ufrj-coppe.glo }
+    Invoke-Step "ufrj-coppe-2" $src { & pdflatex -interaction=nonstopmode ufrj-coppe.dtx }
+    Invoke-Step "ufrj-coppe-3" $src { & pdflatex -interaction=nonstopmode ufrj-coppe.dtx }
+
+    # O manual do estilo da Escola Politecnica (#170).
+    Remove-Item (Join-Path $src "ufrj-poli.gls"), (Join-Path $src "ufrj-poli.ind") `
+        -ErrorAction SilentlyContinue
+    Invoke-Step "ufrj-poli-1" $src { & pdflatex -interaction=nonstopmode ufrj-poli.dtx }
+    Invoke-Step "ufrj-poli-idx" $src { & makeindex -s gind.ist -o ufrj-poli.ind ufrj-poli.idx }
+    Invoke-Step "ufrj-poli-glo" $src { & makeindex -s gglo.ist -o ufrj-poli.gls ufrj-poli.glo }
+    Invoke-Step "ufrj-poli-2" $src { & pdflatex -interaction=nonstopmode ufrj-poli.dtx }
+    Invoke-Step "ufrj-poli-3" $src { & pdflatex -interaction=nonstopmode ufrj-poli.dtx }
 
     # O manual envelhece em silencio: um comando novo entra na classe e ninguem o
     # documenta, e nada quebra. Este passo cobra isso, e tambem confere se a
@@ -337,11 +394,13 @@ if ($Scope -in @("docs", "all")) {
 
     # A referencia rapida em ingles. Duas passadas, e nao uma: e uma longtable,
     # que so acerta a largura das colunas depois de se ver por inteiro.
-    Invoke-Step "quickref-1" $src { & pdflatex -interaction=nonstopmode -halt-on-error coppe-quickref.tex }
-    Invoke-Step "quickref-2" $src { & pdflatex -interaction=nonstopmode -halt-on-error coppe-quickref.tex }
+    Invoke-Step "quickref-1" $src { & pdflatex -interaction=nonstopmode -halt-on-error ufrj-quickref.tex }
+    Invoke-Step "quickref-2" $src { & pdflatex -interaction=nonstopmode -halt-on-error ufrj-quickref.tex }
 
     Build-Tex -Stem "manual"     -Dir $src -WithBiber
     Build-Tex -Stem "NORMA_COPPE_2026"     -Dir $src
+    # A proposta de norma da Escola Politecnica, no mesmo desenho (#170).
+    Build-Tex -Stem "PROPOSTA-DE-RESOLUCAO" -Dir $src
 
     # covers_5languages monta uma montagem das cinco capas a partir de PNGs
     # extraidos dos example_<lang>.pdf. Sem pdftoppm (poppler) nao ha como
@@ -398,11 +457,11 @@ if ($Scope -in @("adversativa", "all")) {
         Invoke-Step "$stem-1"    $advDir { & pdflatex -interaction=nonstopmode -halt-on-error "$stem.tex" }
         Invoke-Step "$stem-biber" $advDir { & biber $stem }
         # as listas de abreviaturas e de simbolos passam pelo makeindex com o
-        # estilo coppe.ist; o indice remissivo, pelo makeindex padrao
-        Invoke-Step "$stem-lab" $advDir { & makeindex -s (Join-Path $src "coppe.ist") -o "$stem.lab" "$stem.abx" }
-        Invoke-Step "$stem-los" $advDir { & makeindex -s (Join-Path $src "coppe.ist") -o "$stem.los" "$stem.syx" }
+        # estilo ufrj.ist; o indice remissivo, pelo makeindex padrao
+        Invoke-Step "$stem-lab" $advDir { & makeindex -s (Join-Path $src "ufrj.ist") -o "$stem.lab" "$stem.abx" }
+        Invoke-Step "$stem-los" $advDir { & makeindex -s (Join-Path $src "ufrj.ist") -o "$stem.los" "$stem.syx" }
         if (Test-Path (Join-Path $advDir "$stem.sgx")) {
-            Invoke-Step "$stem-lsg" $advDir { & makeindex -s (Join-Path $src "coppe.ist") -o "$stem.lsg" "$stem.sgx" }
+            Invoke-Step "$stem-lsg" $advDir { & makeindex -s (Join-Path $src "ufrj.ist") -o "$stem.lsg" "$stem.sgx" }
         }
         Invoke-Step "$stem-idx" $advDir { & makeindex "$stem.idx" }
         Invoke-Step "$stem-2"    $advDir { & pdflatex -interaction=nonstopmode -halt-on-error "$stem.tex" }
@@ -419,10 +478,10 @@ if ($Scope -in @("adversativa", "all")) {
             $lj = "${stem}_lua"
             Invoke-Step "$lj-1"     $advDir { & lualatex -interaction=nonstopmode -halt-on-error -jobname $lj "$stem.tex" }
             Invoke-Step "$lj-biber" $advDir { & biber $lj }
-            Invoke-Step "$lj-lab"   $advDir { & makeindex -s (Join-Path $src "coppe.ist") -o "$lj.lab" "$lj.abx" }
-            Invoke-Step "$lj-los"   $advDir { & makeindex -s (Join-Path $src "coppe.ist") -o "$lj.los" "$lj.syx" }
+            Invoke-Step "$lj-lab"   $advDir { & makeindex -s (Join-Path $src "ufrj.ist") -o "$lj.lab" "$lj.abx" }
+            Invoke-Step "$lj-los"   $advDir { & makeindex -s (Join-Path $src "ufrj.ist") -o "$lj.los" "$lj.syx" }
             if (Test-Path (Join-Path $advDir "$lj.sgx")) {
-                Invoke-Step "$lj-lsg" $advDir { & makeindex -s (Join-Path $src "coppe.ist") -o "$lj.lsg" "$lj.sgx" }
+                Invoke-Step "$lj-lsg" $advDir { & makeindex -s (Join-Path $src "ufrj.ist") -o "$lj.lsg" "$lj.sgx" }
             }
             Invoke-Step "$lj-idx"   $advDir { & makeindex "$lj.idx" }
             Invoke-Step "$lj-2"     $advDir { & lualatex -interaction=nonstopmode -halt-on-error -jobname $lj "$stem.tex" }
@@ -431,6 +490,15 @@ if ($Scope -in @("adversativa", "all")) {
         }
     } else {
         Add-Line "pulado   adversativa/lualatex (lualatex nao encontrado)"
+    }
+
+    # Os PDFs que este escopo acabou de compilar, nos dois motores. O
+    # conferir-referencias escolhe sozinho os que trazem o gabarito.
+    $advPdfs = @(Get-ChildItem -Path $advDir -Filter "adv_*.pdf" -ErrorAction SilentlyContinue |
+        Sort-Object Name | ForEach-Object { $_.FullName })
+    if ($advPdfs.Count -gt 0) {
+        Invoke-Conferir "conferir-norma-adversativa" "conferir-norma.py" $advPdfs
+        Invoke-Conferir "conferir-referencias" "conferir-referencias.py"
     }
 }
 

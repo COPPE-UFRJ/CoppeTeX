@@ -3,7 +3,7 @@
 
 BUG: a largura da coluna de indicativos do sumario, salva no .aux, alternava a cada passada (42,4 pt, 13,2 pt, 42,4 pt...) e o latexmk rodava o pdflatex ate o limite, terminando com "pdflatex needed too many passes" (#98).
 
-\\coppe@tocnumberline mede cada indicativo enquanto o sumario e composto e guarda
+\\ufrj@tocnumberline mede cada indicativo enquanto o sumario e composto e guarda
 o maior no .aux, para a passada seguinte. Ela nao era protegida, e as entradas
 de capitulo passam por \\MakeUppercase, que EXPANDE o argumento: a medicao ficava
 embaralhada de um jeito que dependia do valor da passada anterior. O PDF saia
@@ -26,7 +26,8 @@ import tempfile
 AQUI = os.path.dirname(os.path.abspath(__file__))
 RAIZ = os.path.dirname(os.path.dirname(AQUI))
 SRC = os.path.join(RAIZ, "src")
-DOC = r"""\documentclass[dsc]{coppe}
+DOC = r"""\documentclass[dsc]{ufrj}
+\usepackage{ufrj-coppe}
 \title{Sumario estavel}
 \foreigntitle{Stable table of contents}
 \author{Nome}{Sobrenome}
@@ -74,10 +75,10 @@ try:
         aux = os.path.join(pasta, "estavel.aux")
         texto = io.open(aux, encoding="utf-8", errors="replace").read() \
             if os.path.exists(aux) else ""
-        m = re.search(r"\\gdef\\coppe@tocnumsaved\{([^}]*)\}", texto)
+        m = re.search(r"\\gdef\\ufrj@tocnumsaved\{([^}]*)\}", texto)
         valores.append(m.group(1) if m else None)
     if valores[2] is None or valores[3] is None:
-        problemas.append("o .aux nao traz \\coppe@tocnumsaved: %r" % valores)
+        problemas.append("o .aux nao traz \\ufrj@tocnumsaved: %r" % valores)
     elif valores[2] != valores[3]:
         problemas.append("a largura do sumario nao estabiliza: %s" % " -> ".join(
             str(v) for v in valores))

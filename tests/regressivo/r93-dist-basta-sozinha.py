@@ -40,8 +40,8 @@ RAIZ = os.path.dirname(os.path.dirname(AQUI))
 DIST = os.path.join(RAIZ, "dist")
 
 # (documento, pasta cujo conteudo tem de vir para a raiz antes de compilar)
-EXEMPLOS = [("min-exemplo", None), ("max-exemplo", None), ("example_en", "en"),
-            ("example_es", "es")]
+EXEMPLOS = [("min-exemplo", None), ("max-exemplo", None), ("poli-exemplo", None),
+            ("example_en", "en"), ("example_es", "es")]
 
 problemas = []
 
@@ -72,8 +72,11 @@ def compila(pasta, stem, ambiente):
         if os.path.exists(log) else ""
     # O PDF pode ja existir, vindo copiado da entrega, entao a presenca dele nao
     # prova nada. O que prova e o log da compilacao que acabou de rodar.
-    if "Output written on" not in texto:
-        erros = [l for l in texto.splitlines() if l.startswith("!")][:3]
+    # O PDF sai mesmo com erro, em nonstopmode: erro no log reprova, e nao
+    # so a falta de PDF. O r24 e o r25 passavam assim com os resumos fora da
+    # ordem (#158).
+    erros = [l for l in texto.splitlines() if l.startswith("!")][:3]
+    if "Output written on" not in texto or erros:
         achados.append("%s nao compilou so com o que ha em dist/: %s"
                        % (stem, "; ".join(erros) or "sem PDF de saida"))
 

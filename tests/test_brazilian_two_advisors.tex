@@ -1,10 +1,10 @@
 %%
-%% test_brazilian_two_advisors.tex -- regression test for the coppe class.
+%% test_brazilian_two_advisors.tex -- regression test for the ufrj class.
 %% Brazilian main language, two advisors (the common case; the cover label
 %% should print "Orientadores").
 %%
 %% Run via ../tests/run-tests.ps1, which sets TEXINPUTS so this file finds
-%% coppe.cls and exemplo.bib in ../src/. EXTEND THIS FILE whenever a new
+%% ufrj.cls and exemplo.bib in ../src/. EXTEND THIS FILE whenever a new
 %% bug is found in the two-advisor / common path: keep every existing case
 %% working and add a minimal repro for the new one.
 %%
@@ -13,7 +13,7 @@
 %%               \department, \date, \keyword (x3)
 %%   * \maketitle (cover + folha de rosto + ficha catalografica)
 %%   * \frontmatter: \dedication, agradecimentos chapter*, abstract, foreignabstract
-%%   * lists: \listoffigures, \listoftables, \listofquadros, \listofprogramas,
+%%   * lists: \listoffigures, \listofquadros, \listofprogramas, \listoftables,
 %%            \printloabbreviations, \printlosymbols, \tableofcontents
 %%   * \mainmatter chapters covering: figures with \source/\fonte, booktabs
 %%     table, quadro float, subcaption subfigures, longtable, amsmath +
@@ -25,14 +25,15 @@
 %% Compiles under pdfLaTeX and LuaLaTeX. The class loads no math font; the
 %% block below picks amssymb or unicode-math by engine.
 %%
-%% NAO e gerado pelo coppe.dtx e NAO e distribuido: a suite prova que a
+%% NAO e gerado pelo ufrj.dtx e NAO e distribuido: a suite prova que a
 %% classe funciona, nao faz parte dela. Rode por tools\prova.ps1, ou por
 %% tests\run-tests.ps1 para so esta pasta.
 %%
 
-\documentclass[dsc]{coppe}
+\documentclass[dsc]{ufrj}
+\usepackage{ufrj-coppe}
 
- % Only packages NOT brought in by the class belong here. The coppe class (v4.0)
+ % Only packages NOT brought in by the class belong here. The ufrj class (v4.0)
  % already loads: amsmath, booktabs, longtable,
  % subcaption, hyperref, biblatex, listings, fancyvrb, algorithm2e, setspace,
  % csquotes, xcolor, geometry, fontenc, inputenc (pdfLaTeX), hyphenat,
@@ -101,9 +102,9 @@
   \end{foreignabstract}
 
   \listoffigures
-  \listoftables
   \listofquadros
   \listofprogramas
+  \listoftables
   \printloabbreviations
   \printlosymbols
   \tableofcontents
@@ -238,7 +239,7 @@ def soma(v):
   \label{cap:cite}
 
   Citações com \texttt{biblatex}/\texttt{natbib} (autor-data, estilo
-  \texttt{coppe}): segundo \citet{book-example}, algo importante;
+  \texttt{ufrj}): segundo \citet{book-example}, algo importante;
   \citep{article-example} aponta na mesma direção.
 
   Citação longa com o ambiente \texttt{longquote}:
@@ -279,7 +280,7 @@ def soma(v):
   \chapter{Um anexo}
   Texto de anexo para validar \verb|\annex| (numeração ``ANEXO A'').
 
-  \coppetexfinalpage% colofao institucional, sempre na pagina par final
+  \ufrjfinalpage% colofao institucional, sempre na pagina par final
 \end{document}
 %% 
 %%

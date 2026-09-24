@@ -12,7 +12,7 @@ rem      coppetex.bat --testes              so a primeira camada de testes
 rem      coppetex.bat --adversativo         so os documentos adversativos
 rem      coppetex.bat --regressivo          so a suite de regressao
 rem      coppetex.bat --tudo --dist         a prova inteira e a copia para dist
-rem      coppetex.bat --versao 2            sobe 4.1 para 4.2
+rem      coppetex.bat --versao 2            sobe 5.0 para 5.1
 rem      coppetex.bat --ajuda               a lista completa
 rem
 rem  O manual esta em PAINEL.md, na raiz.

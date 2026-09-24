@@ -9,8 +9,8 @@ folhas de uma vez: capa, folha de rosto, folha de aprovacao e o alto dos
 resumos.
 
 A opcao `mscsem' veio por pedido de fora (PR #61). A implementacao daquele PR
-mexia no coppe.cls, que e gerado e seria apagado na geracao seguinte, e esquecia
-o \\@coppeexametrue -- sem ele o seminario sairia com folha adicional da Coleta
+mexia no ufrj.cls, que e gerado e seria apagado na geracao seguinte, e esquecia
+o \\@ufrjexametrue -- sem ele o seminario sairia com folha adicional da Coleta
 CAPES, ficha catalografica e a referencia no alto do resumo, tres coisas que so
 cabem a trabalho depositado na biblioteca.
 
@@ -46,7 +46,8 @@ IDIOMAS = [
     ("italian", "italian", r"\braziliankeyword{Terceiro}"),
 ]
 
-MODELO = r"""\documentclass[mscsem,%(opcao)s]{coppe}
+MODELO = r"""\documentclass[mscsem,%(opcao)s]{ufrj}
+\usepackage{ufrj-coppe}
 \title{Seminario de teste}
 \foreigntitle{Test seminar}
 %(titulo_proprio)s
@@ -59,12 +60,13 @@ MODELO = r"""\documentclass[mscsem,%(opcao)s]{coppe}
 \keyword{Regressao}
 \foreignkeyword{Regression}
 %(extra)s
+%% A frase de abertura, o titulo e a orientacao sao opcao desde a #157 (a folha
+%% do Anexo E nao os tem); ligados aqui, porque sao eles que este teste cobra.
+\configuraresumos{true}{true}{true}{true}
 \begin{document}
   \maketitle
   \frontmatter
-  \begin{abstract}Resumo de teste.\end{abstract}
-  \begin{foreignabstract}Test abstract.\end{foreignabstract}
-  %(terceiro)s
+  %(resumos)s
   \tableofcontents
   \mainmatter
   \chapter{Um capitulo}
@@ -99,13 +101,18 @@ ambiente["BIBINPUTS"] = pasta + os.pathsep + SRC + ";"
 try:
     for idioma, opcao, extra in IDIOMAS:
         stem = "sem_" + idioma
+        # O resumo em portugues vem sempre primeiro (3.1.2; #158).
+        abs_ = r"\begin{abstract}Resumo de teste.\end{abstract}"
+        est = r"\begin{foreignabstract}Test abstract.\end{foreignabstract}"
         titulo = ""
-        terceiro = ""
+        resumos = abs_ + est
+        if idioma == "english":
+            resumos = est + abs_
         if opcao:
             titulo = "\\titlein{%s}{Seminario de prueba}" % opcao
-            terceiro = "\\begin{brazilianabstract}Resumo.\\end{brazilianabstract}"
+            resumos = r"\begin{brazilianabstract}Resumo.\end{brazilianabstract}" + est + abs_
         fonte = MODELO % dict(opcao=idioma, titulo_proprio=titulo,
-                              extra=extra, terceiro=terceiro)
+                              extra=extra, resumos=resumos)
         io.open(os.path.join(pasta, stem + ".tex"), "w",
                 encoding="utf-8").write(fonte)
 
@@ -117,8 +124,10 @@ try:
         registro = ""
         if os.path.exists(log):
             registro = io.open(log, encoding="utf-8", errors="replace").read()
-        if "Output written on" not in registro:
-            erros = [l for l in registro.splitlines() if l.startswith("!")][:2]
+        # O PDF sai mesmo com erro, em nonstopmode: erro no log reprova, e nao
+        # so a falta de PDF. Sem isto a ordem errada dos resumos (#158) passava.
+        erros = [l for l in registro.splitlines() if l.startswith("!")][:2]
+        if "Output written on" not in registro or erros:
             problemas.append("%s: nao compilou -- %s"
                              % (idioma, "; ".join(erros) or "sem PDF"))
             continue

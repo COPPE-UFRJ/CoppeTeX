@@ -163,7 +163,7 @@ CAMPOS = [
      None, "Vazio deixa a moldura reservada; a ficha vem do gerador do SiBI"),
     # --- Op\u00e7\u00f5es da classe -----------------------------------------------
     ("pdfa", "Op\u00e7\u00f5es", "PDF/A-2b (obrigat\u00f3rio no dep\u00f3sito)", "sim/nao",
-     False, None, "Ligue ao depositar; atrapalha durante a escrita"),
+     True, None, "Padr\u00e3o da classe; desligar gera `sempdfa' e sai da norma"),
     ("numbers", "Op\u00e7\u00f5es", "Cita\u00e7\u00f5es num\u00e9ricas [1]", "sim/nao", False, None,
      "Sem isto, autor-data"),
     ("comserifa", "Op\u00e7\u00f5es", "Com serifa", "sim/nao", False, None,
@@ -180,8 +180,9 @@ CAMPOS = [
      False, None, "S\u00f3 para quem vai imprimir e encadernar"),
     ("coorientador", "Op\u00e7\u00f5es", "Coorientadores nas folhas de resumo",
      "sim/nao", False, None, ""),
-    ("semorientadornabanca", "Op\u00e7\u00f5es", "Banca sem o orientador na folha de aprova\u00e7\u00e3o",
-     "sim/nao", False, None, "A 3.1.2.1.3(e) o p\u00f5e em primeiro, como presidente"),
+    ("orientadorexamina", "Op\u00e7\u00f5es", "Orientadores \u00e0 frente da banca, sozinhos",
+     "sim/nao", False, None,
+     "Sem esta op\u00e7\u00e3o, o orientador \u00e9 o primeiro membro da banca que voc\u00ea declara (3.1.2.1.3e)"),
     ("rascunhoficha", "Op\u00e7\u00f5es", "Ficha de rascunho enquanto escreve",
      "sim/nao", False, None, "Nunca vale para dep\u00f3sito"),
     ("listasnosumario", "Op\u00e7\u00f5es", "Listas pr\u00e9-textuais no sum\u00e1rio", "sim/nao",
@@ -198,10 +199,10 @@ CAMPOS = [
     ("dedicatoria", "Estrutura", "Dedicat\u00f3ria", "sim/nao", True, None, ""),
     ("agradecimentos", "Estrutura", "Agradecimentos", "sim/nao", True, None, ""),
     ("resumo_pt", "Estrutura", "Resumo em portugu\u00eas", "sim/nao", True, None,
-     "Obrigat\u00f3rio; desligue s\u00f3 se souber o que est\u00e1 fazendo"),
+     "Obrigat\u00f3rio e sempre o primeiro resumo (3.1.2); desligue s\u00f3 se souber o que est\u00e1 fazendo"),
     ("resumo_terceiro", "Estrutura",
-     "Terceiro resumo (trabalho em espanhol)", "sim/nao", False, None,
-     "Obrigat\u00f3rio quando nem o principal nem o estrangeiro est\u00e3o em portugu\u00eas"),
+     "Resumo em portugu\u00eas num trabalho em espanhol", "sim/nao", False, None,
+     "O mesmo que o anterior, para trabalho em espanhol, franc\u00eas ou italiano; um dos dois basta"),
     ("listoffigures", "Estrutura", "Lista de figuras", "sim/nao", True, None, ""),
     ("listoftables", "Estrutura", "Lista de tabelas", "sim/nao", True, None, ""),
     ("listofquadros", "Estrutura", "Lista de quadros", "sim/nao", False, None, ""),
@@ -230,16 +231,18 @@ CAMPOS = [
 ABAS = ["Arquivos", "Trabalho", "Banca", "Folha adicional", "Op\u00e7\u00f5es",
         "Estrutura"]
 
-OPCOES_CLASSE = ["pdfa", "numbers", "comserifa", "linkscommoldura", "linkscoloridos", "setavermelha", "doublespacing",
-                 "twoside", "coorientador", "semorientadornabanca",
+OPCOES_CLASSE = ["numbers", "comserifa", "linkscommoldura", "linkscoloridos", "setavermelha", "doublespacing",
+                 "twoside", "coorientador", "orientadorexamina",
                  "rascunhoficha", "listasnosumario", "resumosemreferencia",
                  "semmorewrites"]
 
+# Na ordem da 3.1.2 do Manual: as listas de ILUSTRACAO primeiro -- quadro,
+# programa e algoritmo sao ilustracoes (2.10) --, depois a de tabelas (#148).
 LISTAS = [("listoffigures", "\\listoffigures"),
-          ("listoftables", "\\listoftables"),
           ("listofquadros", "\\listofframes"),
           ("listofprogramas", "\\listofprograms"),
           ("listofalgorithms", "\\listofalgorithms"),
+          ("listoftables", "\\listoftables"),
           ("abreviaturas", "\\printloabbreviations"),
           ("siglas", "\\printloacronyms"),
           ("simbolos", "\\printlosymbols")]
@@ -280,6 +283,10 @@ def monta_tex(v, nome_bib):
     opcoes = [v["tipo"]]
     if v["idioma"] != "brazilian":
         opcoes.append(v["idioma"])
+    # O PDF/A e o padrao da classe desde a v5.0 (#124): o documento so escreve
+    # opcao quando o autor DESLIGA.
+    if not v.get("pdfa"):
+        opcoes.append("sempdfa")
     for o in OPCOES_CLASSE:
         if v.get(o):
             opcoes.append(o)
@@ -291,7 +298,10 @@ def monta_tex(v, nome_bib):
       % (v["tex"][:-4], v["tex"][:-4]))
     A("%% Ou, mais curto:  latexmk -pdf %s" % v["tex"][:-4])
     A("")
-    A("\\documentclass[%s]{coppe}" % ",".join(opcoes))
+    A("\\documentclass[%s]{ufrj}" % ",".join(opcoes))
+    # O estilo da unidade vem logo depois da classe. O gerador e da COPPE, e o
+    # estilo e o dela.
+    A("\\usepackage{ufrj-coppe}")
     A("")
     if v["matematica"]:
         # A fonte matematica e escolha do autor, e a classe nao carrega
@@ -336,11 +346,17 @@ def monta_tex(v, nome_bib):
     for i in range(int(v["n_coorientadores"])):
         A("  \\coadvisor{Nome}{Sobrenome do Coorientador %d}{D.Sc.}{UFRJ}"
           % (i + 1))
-    if int(v["n_examinadores"]):
-        A("")
-        for i in range(int(v["n_examinadores"])):
-            A("  \\examiner{Nome Sobrenome do Examinador %d}{D.Sc.}{UFRJ}"
-              % (i + 1))
+    # A banca da folha de aprovacao e o que o autor declara com \examiner, na
+    # ordem (#165): o orientador, que preside a banca, e o primeiro (3.1.2.1.3e).
+    # Com orientadorexamina, e a classe que o poe la, e ele nao se repete aqui.
+    A("")
+    A("  %% A banca da folha de aprovacao e o que voce declara aqui, na ordem:")
+    A("  %% o orientador, que preside a banca, e o primeiro (3.1.2.1.3e).")
+    if not v.get("orientadorexamina"):
+        A("  \\examiner{Nome Sobrenome do Orientador 1}{D.Sc.}{UFRJ}")
+    for i in range(int(v["n_examinadores"])):
+        A("  \\examiner{Nome Sobrenome do Examinador %d}{D.Sc.}{UFRJ}"
+          % (i + 1))
     A("")
     A("  \\department{%s}" % v["programa"])
     A("  \\date{%s}{%s}" % (v["mes"], v["ano"]))
@@ -350,15 +366,15 @@ def monta_tex(v, nome_bib):
         A("  %% Sem \\approvaldate a folha escreve \"a ser determinada\".")
         A("  %% \\approvaldate{15 de setembro de %s}" % v["ano"])
     A("")
-    A("  \\keyword{Primeira palavra-chave}")
-    A("  \\keyword{Segunda palavra-chave}")
-    A("  \\keyword{Terceira palavra-chave}")
+    A("  \\keyword{primeira palavra-chave}")
+    A("  \\keyword{segunda palavra-chave}")
+    A("  \\keyword{terceira palavra-chave}")
     A("  \\foreignkeyword{First keyword}")
     A("  \\foreignkeyword{Second keyword}")
     A("  \\foreignkeyword{Third keyword}")
     if v["resumo_terceiro"]:
-        A("  \\braziliankeyword{Primeira palavra-chave}")
-        A("  \\braziliankeyword{Segunda palavra-chave}")
+        A("  \\braziliankeyword{primeira palavra-chave}")
+        A("  \\braziliankeyword{segunda palavra-chave}")
     A("")
     A("  %% Folha adicional da Coleta CAPES, obrigatoria desde agosto de 2026.")
     if v["areaconcentracao"].strip():
@@ -380,6 +396,20 @@ def monta_tex(v, nome_bib):
         A("  %% A ficha vem de fichacatalografica.sibi.ufrj.br. Tendo o arquivo:")
         A("  %% \\catalogcard{ficha.pdf}")
     A("")
+    A("  %% ORDEM DOS PRE-TEXTUAIS (Manual 3.1.2). A classe confere esta ordem:")
+    A("  %% um elemento fora dela e erro de compilacao, e a mensagem diz o que")
+    A("  %% mover. Os obrigatorios estao em MAIUSCULAS; os outros sao opcionais.")
+    A("  %%   \\maketitle ......... CAPA, FOLHA DE ROSTO e FOLHA ADICIONAL")
+    A("  %%   errata ............. se houver, antes da folha de aprovacao")
+    A("  %%   \\frontmatter ....... FOLHA DE APROVACAO")
+    A("  %%   \\dedication ........ dedicatoria")
+    A("  %%   agradecimentos ..... \\chapter*{Agradecimentos}")
+    A("  %%   \\epigraph .......... epigrafe")
+    A("  %%   resumos ............ RESUMO EM PORTUGUES, sempre o primeiro, e")
+    A("  %%                        depois o RESUMO EM LINGUA ESTRANGEIRA")
+    A("  %%   listas ............. de ilustracoes, de tabelas, de abreviaturas")
+    A("  %%                        e siglas e de simbolos, nessa ordem")
+    A("  %%   \\tableofcontents ... SUMARIO, sempre o ultimo")
     A("  \\maketitle")
     A("")
     A("  \\frontmatter")
@@ -391,26 +421,31 @@ def monta_tex(v, nome_bib):
         A("")
         A("  " + FILLER)
         A("")
-    if v["resumo_pt"]:
-        A("  \\begin{abstract}")
+    # O resumo em portugues vem sempre primeiro (3.1.2), qualquer que seja o
+    # idioma do trabalho, e a classe confere. Em portugues, ele e o abstract;
+    # em ingles, o foreignabstract; nos demais idiomas, o brazilianabstract.
+    # Depois vem o estrangeiro -- o ingles -- e, por ultimo, o do idioma do
+    # trabalho quando ele nao e nem o portugues nem o ingles.
+    def resumo(amb):
+        A("  \\begin{%s}" % amb)
         A("")
         A("  " + FILLER)
         A("")
-        A("  \\end{abstract}")
+        A("  \\end{%s}" % amb)
         A("")
-    A("  \\begin{foreignabstract}")
-    A("")
-    A("  " + FILLER)
-    A("")
-    A("  \\end{foreignabstract}")
-    A("")
-    if v["resumo_terceiro"]:
-        A("  \\begin{brazilianabstract}")
-        A("")
-        A("  " + FILLER)
-        A("")
-        A("  \\end{brazilianabstract}")
-        A("")
+    if v["idioma"] == "brazilian":
+        if v["resumo_pt"]:
+            resumo("abstract")
+        resumo("foreignabstract")
+    elif v["idioma"] == "english":
+        if v["resumo_pt"]:
+            resumo("foreignabstract")
+        resumo("abstract")
+    else:
+        if v["resumo_pt"] or v["resumo_terceiro"]:
+            resumo("brazilianabstract")
+        resumo("foreignabstract")
+        resumo("abstract")
     marcadas = [cmd for chave, cmd in LISTAS if v.get(chave)]
     if marcadas:
         A("  %% As listas vem ANTES do sumario (3.1.2.1.6).")
@@ -475,7 +510,7 @@ def monta_tex(v, nome_bib):
         A("  \\printindex")
         A("")
     if v["colofao"]:
-        A("  \\coppetexfinalpage")
+        A("  \\ufrjfinalpage")
         A("")
     A("\\end{document}")
     return "\n".join(L) + "\n"
@@ -490,19 +525,22 @@ def monta_capitulo(chave, titulo):
 
 
 def monta_bib(v):
-    return """%% Base de referencias gerada por tools/geradocvazio.py.
-%%
-%% Uma entrada de cada tipo mais comum, para copiar e trocar. A entrega traz,
-%% em exemplo.bib, um exemplo de CADA categoria da secao 4.2 do Manual -- olhe la
-%% quando precisar de um tipo que nao esteja aqui.
-%%
-%% Os nomes de campo podem ser os do biblatex (author, title, year) ou os
-%% sinonimos em portugues que a classe declara (autor, titulo, ano).
+    # So @Comment, e nunca linha comecada por %: o JabRef e os outros
+    # gerenciadores de referencias nao entendem o % como comentario (#164).
+    return """@Comment{ Base de referencias gerada por tools/geradocvazio.py.
+
+  Uma entrada de cada tipo mais comum, para copiar e trocar. A entrega traz,
+  em exemplo.bib, um exemplo de CADA categoria da secao 4.2 do Manual -- olhe
+  la quando precisar de um tipo que nao esteja aqui.
+
+  Os nomes de campo podem ser os do biblatex (author, title, year) ou os
+  sinonimos em portugues que a classe declara (autor, titulo, ano). Escreva os
+  acentos direto, em UTF-8, e os comentarios assim, dentro de um Comment. }
 
 @book{sobrenome2026livro,
   author    = "Sobrenome, Nome do Autor",
-  title     = "T{\\'i}tulo do livro",
-  subtitle  = "subt{\\'i}tulo, se houver",
+  title     = "Título do livro",
+  subtitle  = "subtítulo, se houver",
   edition   = "2",
   location  = "Rio de Janeiro",
   publisher = "Nome da Editora",
@@ -511,8 +549,8 @@ def monta_bib(v):
 
 @article{sobrenome2026artigo,
   author  = "Sobrenome, Nome do Autor and Outro, Nome do",
-  title   = "T{\\'i}tulo do artigo",
-  journal = "Nome do Peri{\\'o}dico",
+  title   = "Título do artigo",
+  journal = "Nome do Periódico",
   volume  = "12",
   number  = "3",
   pages   = "45--67",
@@ -521,7 +559,7 @@ def monta_bib(v):
 
 @inproceedings{sobrenome2026evento,
   author       = "Sobrenome, Nome do Autor",
-  title        = "T{\\'i}tulo do trabalho apresentado",
+  title        = "Título do trabalho apresentado",
   eventtitle   = "Nome do Congresso",
   eventdate    = "2026",
   venue        = "Rio de Janeiro",
@@ -534,7 +572,7 @@ def monta_bib(v):
 
 @thesis{sobrenome2026tese,
   author      = "Sobrenome, Nome do Autor",
-  title       = "T{\\'i}tulo da tese",
+  title       = "Título da tese",
   type        = "Tese (Doutorado em %s)",
   institution = "Universidade Federal do Rio de Janeiro",
   location    = "Rio de Janeiro",
@@ -543,7 +581,7 @@ def monta_bib(v):
 
 @online{sobrenome2026online,
   author      = "Sobrenome, Nome do Autor",
-  title       = "T{\\'i}tulo da p{\\'a}gina",
+  title       = "Título da página",
   location    = "Rio de Janeiro",
   year        = "2026",
   url         = "https://exemplo.ufrj.br/pagina",
@@ -565,10 +603,13 @@ def _serve_para_compilar(relativo):
     nome = relativo.replace("\\", "/").split("/")[-1]
     if (nome.startswith("example") or nome.endswith("-exemplo.tex")
             or nome.endswith("-exemplo.pdf")
-            or nome in ("exemplo.bib", "coppe.bib", "README.md")):
+            or nome in ("exemplo.bib", "ufrj.bib", "README.md")):
         return False
-    if nome in ("coppe.dtx", "coppe.ins", "manual.tex"):
+    if nome in ("ufrj.dtx", "ufrj.ins", "ufrj-coppe.dtx", "ufrj-coppe.ins",
+                "manual.tex"):
         return False   # sao FONTES dos manuais, nao servem para compilar a tese
+    if nome == "coppe.cls":
+        return False   # so existe para trabalho antigo; um novo usa ufrj + ufrj-coppe
     return True
 
 
@@ -633,11 +674,11 @@ def baixar_entrega(pasta, idioma, aviso):
         # unica de dentro; no zip do ramo e <repo>-master/dist.
         base = None
         for raiz, pastas, nomes in os.walk(temp):
-            if "coppe.cls" in nomes:
+            if "ufrj.cls" in nomes:
                 base = raiz
                 break
         if base is None:
-            aviso("   o arquivo baixado nao tem coppe.cls dentro")
+            aviso("   o arquivo baixado nao tem ufrj.cls dentro")
             return False
         if de_dentro_do_repo:
             aviso("   (do ramo master, pasta dist/)")
@@ -865,7 +906,7 @@ def abrir_janela(valores=None):
             "Gerador de documento vazio da CoppeTeX.\n\n"
             "Escreve o .tex e o .bib com que um trabalho comeca, ja com a\n"
             "estrutura que a norma pede e os cinco capitulos de sempre.\n\n"
-            "Os manuais estao em manuais/ na entrega: coppe.pdf ensina os\n"
+            "Os manuais estao em manuais/ na entrega: ufrj.pdf ensina os\n"
             "comandos, manual.pdf diz o que o trabalho tem de ser."))
     menu.add_cascade(label="Ajuda", menu=ajudam)
     janela.config(menu=menu)

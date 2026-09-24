@@ -31,9 +31,15 @@ import re
 import sys
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DTX = os.path.join(RAIZ, "src", "coppe.dtx")
-CLS = os.path.join(RAIZ, "src", "coppe.cls")
+DTX = os.path.join(RAIZ, "src", "ufrj.dtx")
+CLS = os.path.join(RAIZ, "src", "ufrj.cls")
 EXEMPLO = os.path.join(RAIZ, "src", "max-exemplo.tex")
+# O estilo da COPPE tem fonte e manual proprios. Um comando publico dele pode
+# estar documentado em qualquer dos dois manuais -- os que o estilo redefine sao
+# da classe, e e la que estao descritos --, e os guardas de macrocode dos dois
+# .dtx sao conferidos.
+STY = os.path.join(RAIZ, "src", "ufrj-coppe.sty")
+DTX_COPPE = os.path.join(RAIZ, "src", "ufrj-coppe.dtx")
 
 # Logotipos da familia TeX e afins: a classe os define para uso tipografico,
 # nao sao interface de quem escreve uma tese.
@@ -51,9 +57,13 @@ PADRAO_LATEX = {
     "listabbreviationname", "listsymbolname", "listsiglaname", "lstlistingname",
     "lstlistlistingname", "quadroname", "listquadroname",
     "quadroautorefname", "cpsourcename",
+    # o do algorithm2e, com o nome da legenda no lugar do minusculo (#149)
+    "algorithmautorefname",
     # redefinidos localmente: \PackageWarning so durante o carregamento do
-    # pdfx, \thepage so na folha adicional, \theHchapter so nos anexos
-    "PackageWarning", "thepage", "theHchapter",
+    # pdfx, \thepage so na folha adicional, \theHchapter so nos anexos, e o
+    # \contentsline so na leitura do .toc de OUTRO volume, para a linha sair
+    # sem o destino do hyperref (#126)
+    "PackageWarning", "thepage", "theHchapter", "contentsline",
     # nomes do babel: "ver"/"ver tambem" nas remissivas do indice (NBR 6034)
     "seename", "alsoname",
 }
@@ -84,7 +94,7 @@ def documentados(dtx):
     envs = set(re.findall(r"\\DescribeEnv\{([A-Za-z@]+)\}", dtx))
     # A secao "Comandos que voce nao deve chamar" lista os de montagem de folha.
     naochame = set(re.findall(r"\|\\(make[A-Za-z]+)\|", dtx))
-    naochame |= set(re.findall(r"\|\\(coppefinal[a-z]+)\|", dtx))
+    naochame |= set(re.findall(r"\|\\(ufrjfinal[a-z]+)\|", dtx))
     return macros, envs, naochame
 
 
@@ -118,7 +128,7 @@ def guardas(dtx):
     O doc.sty so fecha um bloco de codigo quando a linha e, EXATAMENTE, um '%'
     seguido de QUATRO espacos e do \\end{macrocode}. Com tres espacos o bloco
     nao fecha, e tudo o que vem depois -- documentacao inclusive -- sai
-    impresso como codigo, verbatim, no coppe.pdf. Nada quebra a compilacao, e
+    impresso como codigo, verbatim, no ufrj.pdf. Nada quebra a compilacao, e
     por isso ninguem ve: foi assim que sessenta linhas do manual passaram
     quatro versoes impressas como se fossem codigo.
 
@@ -150,8 +160,12 @@ def guardas(dtx):
 
 def main():
     cls, dtx, exemplo = ler(CLS), ler(DTX), ler(EXEMPLO)
+    sty, dtx_coppe = ler(STY), ler(DTX_COPPE)
     cmds, envs, opts = definidos(cls)
-    docmac, docenv, naochame = documentados(dtx)
+    cmds_sty, envs_sty, _ = definidos(sty)
+    cmds |= cmds_sty
+    envs |= envs_sty
+    docmac, docenv, naochame = documentados(dtx + "\n" + dtx_coppe)
 
     faltam_cmd = sorted(
         c for c in cmds
@@ -161,7 +175,8 @@ def main():
     faltam_env = sorted(e for e in envs if e not in docenv and e not in ENV_INTERNO)
     faltam_opt = sorted(o for o in opts if ("texttt{%s}" % o) not in dtx)
     desalinhadas = onde_ver(dtx, exemplo)
-    tortos = guardas(dtx)
+    tortos = guardas(dtx) + [(n, "ufrj-coppe.dtx: " + obs)
+                             for n, obs in guardas(dtx_coppe)]
 
     erros = 0
     print("=== conferir-manual: %d comandos publicos, %d ambientes, %d opcoes"
@@ -203,7 +218,7 @@ def main():
 
     if tortos:
         erros += len(tortos)
-        print("\nERRO  %d guarda(s) de macrocode mal escrito(s) no coppe.dtx:"
+        print("\nERRO  %d guarda(s) de macrocode mal escrito(s) no ufrj.dtx:"
               % len(tortos))
         for n, obs in tortos:
             print("        linha %-6s %s" % (n or "?", obs))

@@ -4,6 +4,741 @@ Project changes worth noting, newest first. Follows
 [Keep a Changelog](https://keepachangelog.com/) loosely; dates are
 ISO-8601.
 
+## [Unreleased] — Full check against the UFRJ/SiBI Manual (2026)
+
+On 2026-09-16, version 4.1 was checked in full against the Manual (9th ed.
+rev., 2026) and the CAPES additional-sheet model. Each defect found has one
+issue (#113–#153, umbrella #112) and a minimal test in `tests/regressivo/`
+(`rt33`–`rt71`, `rt89`). The check was merged into 5.0 on 2026-09-17, on the
+branch `V05-unificada`, and every issue was fixed there, one commit each —
+together with #155 (the área de concentração, from the SiBI model) and #156
+(measurement tests that passed without measuring), found on the way. Where the
+Manual's prose and its examples disagree, the prose wins, except for the two
+sheets of the SiBI model, which win over the Manual's examples. No test is
+marked `ABERTO` any more; the status of each issue, with its commit, is at the
+top of `CORRECOES_MANUAL_2026.md`.
+
+### Verification
+
+- **`conferir-referencias.py` compares again, and against the Manual itself**
+  (#167). It split the reference list at the `[n]` label; since #140 the
+  numeric list has no brackets, so it found no reference, called the document
+  "skipped" and passed. From 2026-09-17 to 2026-09-21 no reference was
+  compared, and the "no divergence" claims of 9fd755e, 0659f9d and d73c707 were
+  false. It now splits at the number that opens the line, with or without
+  brackets, taking only the next number of the sequence; reads the PDF with
+  `-layout` (without it LuaLaTeX's labels were deleted with the folios); and a
+  document with no numbered reference fails. Two more holes came out. An
+  accepted divergence accepted the whole entry: a wrong comma of the class
+  before the pages hid behind the note about the Manual's "LEVI, G;". And 12
+  of the 34 expected references were not the Manual's text: errata corrected
+  in silence, data the class cannot compose replaced ("[19--?]" became
+  "1990"), elements it lacked left out (the patent's "Procurador:"). The
+  expected text is now the Manual as printed, errata and all, checked against
+  the Manual's PDF in `specs/` on every run; an accepted divergence passes only
+  if the class composes exactly the `@comment{Classe: …}` next to it, and a
+  missing form, a stale note or any other output is a divergence. The first
+  honest run found three defects of the class, fixed below, and two gaps that
+  have their own issues (uncertain dates, #168; the "julgado em" of
+  jurisprudence, #169). Result: 68 checks in each engine, no divergence, 11
+  accepted in each database, each with the reason and the class's exact form.
+  The new test `rt77` covers the splitting, the comparison and the expected
+  text.
+- **The `.bib` files have no `%` comment lines** (#164). JabRef and other
+  reference managers do not read `%` as a comment, and the bases had three
+  kinds: the docstrip preamble and postamble at the top and bottom of
+  `exemplo.bib`, `manual.bib` and `ufrj.bib`; the Manual's expected output for
+  each of the 34 references, as `%%` lines *inside* the entry; and the accepted
+  divergences, as `%%!` lines. BibTeX and biber tolerate them, so nobody saw.
+  The three bases are now generated without preamble — the notice and the
+  licence are a `@Comment` entry at the top —, the expected output is a
+  `@comment{Manual: …}` right before its entry and the accepted divergence a
+  `@comment{Divergencia aceita: …}`, in `exemplo.bib` and in the adversarial
+  `referencias-manual.bib`; `conferir-referencias.py` reads the new form. The
+  `.bib` the document generator writes opens with a `@Comment` too, and writes
+  accents in UTF-8 instead of `{\'i}`. The new test `rt73` checks all of it.
+- **A measurement test can no longer pass without measuring** (#156).
+  `medidas.palavras()` reads `pdftotext -bbox`, a poppler option; the Xpdf
+  `pdftotext` that Git for Windows installs does not have it and returns no
+  words at all, so every test of position on the sheet passed with nothing
+  measured. It now stops with a message naming the `pdftotext` in use, the
+  runner prints the versions of `pdftotext`, `pdftohtml` and `pdfinfo` before
+  the first test and warns when they are not poppler's, and the README says to
+  run the suite from PowerShell on Windows.
+- **The proof now runs the two checkers that compare the finished PDF with the
+  Manual** (#151). `conferir-norma.py` (sheet, folio, margins, sumário) and
+  `conferir-referencias.py` (each reference against the Manual's own
+  examples) were in neither `coppetex.bat --conferir` nor `build-check.ps1`,
+  so the m-diss reference shipped wrong in 4.1 while the checker reported the
+  divergence to no one. Both now run in `--conferir`, and in `build-check.ps1`
+  right after the examples and the adversarial documents are compiled.
+  Without arguments, each knows which PDFs to read. Each reads a document with
+  one `pdftotext` call instead of one per page, which cuts 174 s to about 20 s.
+  On their first run they found the m-diss divergence (#147) and a LuaLaTeX
+  defect (#152).
+- **The Portuguese field names are checked again** (#147). The 34 Manual
+  references exist in two databases: `exemplo.bib`, with English field names,
+  and the adversarial `referencias-manual.bib`, with the Portuguese synonyms
+  (`@livro`, `autor`, `curso`…). They shared their keys. Biber found every
+  citation in the first file and never opened the second, so the Portuguese
+  form was never composed. The keys are now `m-<item>` and `pt-<item>`, and
+  the Portuguese adversarial documents cite both. `conferir-referencias.py`
+  reads the expected text from both databases and ties each `[n]` to its key
+  through the `.bbl`, instead of guessing from the start of the text. The
+  result: 68 checks, no divergence, and the same three accepted ones in each
+  form.
+
+### Added
+
+- **The Escola Politécnica's own rule, read and answered** (#170). The school's
+  graphic norm (Resolução 05/2012, in `specs/`) is older than the Manual and
+  contradicts it in thirteen points — pre-textual folios in roman numerals, the
+  sumário before the lists, figure captions below the illustration, the
+  approval sheet in capitals, the hand-drawn catalog card, a blue hard cover
+  and, above all, references based on NB-66, an ABNT standard replaced in 1989.
+  `NAO-CONFORMIDADES-POLI.md` checks it item by item: where it contradicts the
+  Manual it is superseded, and where it only chooses among what the Manual
+  leaves open the choice stands and is implemented. What stands: the font
+  family (new `times` and `arial` options of `ufrj-poli`, with the body size
+  staying 12, which is what the Manual fixes), the choice between the numeric
+  and the author-date citation systems, the 250-word abstract, the course
+  naming "Curso de Engenharia X" and the school's colour mark on the cover,
+  beside UFRJ's. `src/PROPOSTA-DE-RESOLUCAO.tex` is the minimal norm proposed
+  in its place, in the same shape as the COPPE one. `rtu13` covers the fonts.
+- **The city, the state and the country of the work belong to the class**
+  (#170). UFRJ has campuses in Macaé and in Duque de Caxias, and the city heads
+  the capa and closes the reference on the abstract sheets, so `\city`,
+  `\state`, `\country` and `\place` are class commands now, with
+  `\university` beside them; the unit style declares its own default with
+  `\ufrjdeclareplace` (COPPE and the Escola Politécnica declare Rio de
+  Janeiro), and what the author writes always wins over it. `rtu12` checks a
+  work defended in Macaé.
+- **Every undergraduate course of the Escola Politécnica** (#170): the style
+  declares the thirteen Engineering courses of the school's own list — plus
+  Nanotecnologia — with the title each one confers, and keeps the thirteen
+  department acronyms of the old `poli.cls` working. The new `poli` class loads
+  `ufrj` with `ufrj-poli` and accepts the old signatures (`\advisor` with four
+  arguments, `\examiner` with three), warning once that the board is left
+  without the institution 3.1.2.1.3(e) asks for. `rtu10` and `rtu11` cover
+  them.
+- **The uncertain dates of 4.3.5** (#168): write in `year` the form the Manual
+  shows — `{[1981?]}`, `{[ca. 1977]}`, `{[197-]}`, `{[197-?]}`, `{[19--]}`,
+  `{[19--?]}`, `{[1071 ou 1072]}`, `{[1987]}` — and it comes out as typed, in
+  the reference and in the citation. The literal goes to the new `ufrjyear`
+  field and `year` keeps the number the form contains, so biber sorts the list
+  by it ("[197-]" between 1969 and 1971) and no longer warns "not an integer";
+  the two hyphens are not read as a dash, and the full stop after a bracket
+  closing on a question mark is not swallowed. Only the work's own date is
+  affected: the access date and every other date print as before. The Manual's
+  score example goes back to its own date, `[19--?]`, and the accepted
+  divergence it had is gone. `rt79` covers the eight forms.
+- **Undergraduate work, and the Escola Politécnica style** (#170). The class
+  composed only graduate work. The new `grad` option is the undergraduate
+  work (Trabalho de Conclusão de Curso): presented to a *Course*, with the
+  title the course confers — a new optional argument of
+  `\ufrjdeclareprogram`, "Engenheiro Civil"; without it, "Bacharel em" the
+  course —, deposited (catalog card and reference on the abstract sheets),
+  and with an additional sheet that carries only the catalog card, since the
+  CAPES fields belong to theses and dissertations (3.1.2.1.2). The new unit
+  style `ufrj-poli` (`ufrj-poli.dtx`/`.ins`) declares the Escola Politécnica,
+  its thirteen departments with the course and title of each, and the name it
+  gives the work, "Projeto de Graduação", with the example `poli-exemplo.tex`.
+  The old `poli.cls` served only as information: its layout is not copied,
+  and the five Civil Engineering departments, which it named as courses
+  ("Curso de Estruturas"), take the course Engenharia Civil by default and
+  their own names with the package option `civilpordepartamento` — both forms
+  ship, with the same title and English name (`rtu09`). The Poli logo is
+  used if `poli-logo.pdf` is found; it is not distributed yet. `rtu07` and
+  `rtu08` cover it; `conferir-norma.py` recognises the additional sheet by the
+  catalog card too, and checks the Poli example.
+- **The patent's attorney** (#167): `attorney` (`procurador`), printed in
+  direct order after the depositor — "Procurador: Maria Cristina Valim
+  Lourenço Gomes." —, an essential element of 4.2.5 that had no field.
+- **`\volumefiles` (`\arquivosdosvolumes`)** (#126): the `.tex` names of every
+  volume, in order, in the preamble of all of them. 2.7 requires one sequence
+  of sheets from the first volume to the last, and 3.1.2.1.6 the complete
+  sumário in every volume; each volume is compiled on its own, and
+  `\volumes`/`\volume` only printed "Volume 1 de 2". Now each volume writes a
+  `.vol` file with the sheet where the next one starts and reads the `.toc` of
+  the others, whose lines come out with the right folio and no dangling link.
+  Compile the volumes alternately, twice. Four traps are recorded in the code:
+  `titlepage` resets the page counter when it ends, so the offset goes after
+  the folha de rosto; `\jobname` returns category-12 characters, so file names
+  are compared after `\detokenize`; and both neighbour files hold names with
+  `@`, so they are read under `\makeatletter`.
+- **`\illustrationwidth` (`\largurailustracao`)** (#125): inside a float, it
+  sets the caption and the source line to the width of the illustration. 2.10
+  ends by requiring that "tipo, número de ordem, título, fonte, legenda e notas
+  devem respeitar as margens da ilustração", and a narrow figure had its
+  caption and source across the whole text block. The caption comes *before*
+  the content, so the class cannot know that width — the author gives it once,
+  inside the float, and it lapses with the float.
+
+### Changed
+
+- **The order of the pre-textual elements is an error in every class** (#148,
+  decision of 2026-09-23). The `coppe` compatibility class used to downgrade it
+  to a warning, because the 4.x models taught another order; there is no
+  switch any more, and the new `poli` class never had one. A document that is
+  right in one class is right in all of them, and the message says what to move
+  where.
+- **What the COPPE norm may decide, and which ABNT editions apply** (#161,
+  #163). The COPPE norm does not contradict the Manual: it decides only where
+  the Manual does not oblige, and then sides with the Manual's examples; the
+  two SiBI model sheets are an errata over those examples. The ABNT norms apply
+  in the editions the Manual cites in its own reference list — NBR 6023:2025,
+  NBR 10520:2023, NBR 14724:2024 — and not "the current ones"; where one of
+  them differs from the Manual, the Manual wins and the difference is recorded
+  as a warning in the class manual ("Quem manda, quando as fontes divergem").
+  Section 15 of the COPPE norm, the class manual and `specs/README.md` (which
+  now explains `specs/ABNT/`, kept out of git because the norms are ABNT's
+  copyright) say so.
+- **The UFRJ logo belongs to the class** (#162). It always heads the capa on
+  the left, and a unit style can neither swap it nor remove it. The unit
+  declares only its own logo, on the right, with the new
+  `\ufrjdeclarelogo[height]{file}`: COPPE declares its unified logo, not one
+  per Programa — not every Programa has one. The three-argument
+  `\ufrjdeclarelogos` is still accepted, with a warning, and ignores its left
+  argument. `rtu06` checks it.
+- **Captions and source lines are aligned left** (#160). 2.10 does not fix the
+  alignment; it says caption and source "devem respeitar as margens da
+  ilustração", and the Manual's only illustration, Figure 1, puts both on the
+  left, at the illustration's margin. The class centred them, and section 11
+  of the COPPE norm said to centre the source. With `\illustrationwidth` the
+  box takes the illustration's width and is centred with it, so the text
+  starts at its margin — the layout of Figure 1. `rt74` measures it.
+- **The natureza sentence follows the SiBI model** (#159): "Tese de Doutorado
+  apresentada ao Programa de Pós-Graduação em X, <unit's full name>,
+  Universidade Federal do Rio de Janeiro, como requisito parcial à obtenção do
+  título de…". The two SiBI sheets correct Annex B; the class had the unit's
+  acronym instead of its name, "da" before the university and "como parte dos
+  requisitos necessários". The university stays, though the model leaves it
+  out: 3.1.2.1.1(e) asks for it. `rtu01` and `rtu02` check the sentence.
+- **The abstract sheet is the one of Annexes E and F** (#157): its heading
+  (RESUMO, ABSTRACT…), the reference, the text and the keywords. The opening
+  sentence ("Resumo da Tese apresentada à COPPE/UFRJ…"), the title with author
+  and month and the advising block with the Programa came on by default, and
+  the class manual called that sheet the Annexes' — it was the COPPE
+  tradition, not in the Manual's model. They are off by default, and
+  `\setupabstracts` (`\configuraresumos`) turns them on. Section 6 of the COPPE
+  norm becomes "Folha de resumo — Reafirmação": the COPPE adds nothing to it.
+  `rt76` checks the default; `r27` turns the four on and checks them.
+- **The abstract in Portuguese comes first, whatever the language of the work**
+  (#158). 3.1.2 orders "resumo em língua vernácula, resumo em língua
+  estrangeira", and 3.1.2.1.5 makes the foreign one "a versão do resumo em
+  língua vernácula"; the vernacular is Portuguese. Section 7 of the COPPE norm
+  ordered the abstracts by the main language, so an English work had the
+  English abstract first and a Spanish one had Portuguese last (Spanish,
+  English, Portuguese), and the English, Spanish, French and Italian examples,
+  the document generator and the adversarial generator followed it. Now
+  Portuguese is first: in an English work `foreignabstract` (Portuguese) comes
+  before `abstract`; in a Spanish one `brazilianabstract` opens, then English,
+  then Spanish — the COPPE's third abstract, after the Manual's two. The class
+  checks it with the order guard (#148), by the language of each sheet. `rt75`
+  covers it.
+- **`max-exemplo.tex`: no coadvisor, a five-member board and "(caso haja)"**
+  (#166), at COPPE's request of 2026-09-21. COPPE has advisors only — one or
+  more —, so the COPPE example no longer shows `\coadvisor` (the class keeps it
+  for the units that have coadvisors). The approval sheet shows five declared
+  board members ("Nome do Primeiro membro da banca Sobrenome, D.Sc., UFRJ"…),
+  with no automatic advisors (#165), and the research-project name of the CAPES
+  sheet reads "(caso haja)". The área de concentração the request also asked to
+  remove from the folha de rosto and the folha de aprovação was already gone
+  (#155). `rt68` checks the three.
+- **The advisor no longer enters the board of the folha de aprovação by
+  itself** (#165). 3.1.2.1.3(e) lists "os membros que constituem a Banca
+  Examinadora", with the advisor first "por ser o presidente da banca". Since
+  the v4.1 revision (#102) the class opened that list with every advisor and
+  coadvisor, with no option; the maintainer decided on 2026-09-21 that the
+  board is what the work declares with `\examiner`, in order, the advisor being
+  the first examiner. `orientadorexamina` puts advisors and coadvisors back at
+  its head; `semorientadornabanca` is accepted and now confirms the default.
+  The document generator writes the advisor as the first `\examiner` unless
+  `orientadorexamina` is chosen.
+- **PDF/A-2b is the default output** (#124). 2.2(d) of the Manual requires the
+  final digital version to be PDF/A, and the deposit has been digital only
+  since Resolução CEPG n. 246/2023. The class already produced conformant
+  PDF/A-2b, but only when asked, so a work written without reading the manual
+  was deposited off the norm — and the empty-document generator shipped the
+  field off, with the hint "turn it on when you deposit". The new option
+  `sempdfa` turns it off, for a draft run or a package PDF/A rejects; the v4.1
+  option `pdfa` is still accepted and now does nothing. `min-exemplo.tex`, which
+  is the minimum the norm demands, no longer needs the option to be conformant.
+- **The Norma COPPE drops the acronym from the institute line of the capa**
+  (#129). Section 2 asked for "Instituto Alberto Luiz Coimbra de
+  Pós-Graduação e Pesquisa de Engenharia (COPPE)" and the class composed the
+  line without the acronym, so norm and implementation disagreed. Annex A of
+  the Manual, the model of the capa, writes the unit's name in full and without
+  an acronym ("ESCOLA DE BELAS ARTES"), and the acronym is not lost: it is in
+  the logo at the top of the same sheet and in the natureza sentence of the
+  folha de rosto. The norm follows the model; the class is unchanged.
+- **The logos are printed on the capa only** (#130). The folha de rosto
+  repeated the capa's logo line. Annex A of the Manual puts "Logo da UFRJ" and
+  "Logo do Programa" at the top of the **capa**, and marks both as optional;
+  Annex B, which is the model of the folha de rosto, begins at the author's
+  name, and so do the two sheets of the SiBI model. Section 1 of the Norma
+  COPPE put both logos on both sheets and cited Annex A for it, which is about
+  the capa; it now says the capa. The new test `rt71` measures ink in the top
+  band of each sheet, because the logos are vector art and `pdfimages` does not
+  see them.
+- **The folha de rosto and the folha de aprovação are written entirely in
+  Portuguese** (#128). The research-line label, the coadvisor label and the two
+  approval labels followed the main language, while the natureza and the
+  advisor label did not: an English work had "Research line" and "Co-advisor"
+  over a Portuguese natureza and a Portuguese "Orientador:", and a Spanish one
+  had "Aprobada el" over the same Portuguese block. Both the class manual and
+  section 7 of the Norma COPPE already said these sheets are institutional
+  identity and stay in Portuguese; section 4 of the norm said the natureza
+  follows the main language, and now says what it meant — that the natureza
+  follows the language of each **abstract sheet**. The four labels read the
+  Portuguese key through `\ufrj@unitstr`, which still honours a text the unit
+  declared. The regression test `r19` was rewritten and renamed accordingly.
+- **The area de concentracao leaves the folha de rosto and the folha de
+  aprovacao** (#155). The class used to append "Área de concentração: …" to the
+  natureza block of both identity sheets, on the strength of the prose in
+  3.1.2.1.1(e) and 3.1.2.1.3(c). The SiBI's own model — the two sheets that
+  3.1.2.1.2 links to, kept in `specs/` — carries the area on the **folha
+  adicional**, as the Coleta CAPES field "Área de concentração da produção
+  intelectual", and shows a folha de rosto without it; Annexes B and D end the
+  natureza block at the degree. The model wins. The new option
+  `areanafolhaderosto` brings the sentence back to both sheets for a Programa
+  that requires it, and `ufrj-coppe` does not set it. `\concentrationarea` is
+  unchanged and still mandatory for the folha adicional.
+- **Headings are set in the body size** (#113). 2.2(b) of the UFRJ Manual fixes
+  size 12 for the work and allows only smaller sizes (long quotations, notes,
+  folio, captions and sources, catalogue card). 2.6 builds the gradual emphasis
+  from bold, italic and capitals, not from size. Chapters and unnumbered
+  headings (RESUMO, SUMÁRIO, REFERÊNCIAS…) were `\Large` (17.28 pt), sections
+  `\large` (14.4 pt), and the two headings of the CAPES additional sheet
+  `\large`. The gradation is unchanged: chapter bold capitals, section
+  capitals, subsection bold, subsubsection bold italic, paragraph italic.
+- **One blank line before and after section headings** (#122), as 2.4 asks,
+  for section, subsection, subsubsection and paragraph. titlesec's default
+  left 2.3 ex after the heading, about two thirds of a line at 1.5 spacing.
+  Documents get a little longer, and page breaks move.
+- **Post-textual entries line up with the titles in the sumário** (#115).
+  REFERÊNCIAS, APÊNDICE A – …, ANEXO A – …, the glossary, the index and, under
+  `listasnosumario`, the pre-textual lists started at the left margin. They now
+  start in the column of the numbered titles. 3.1.2.1.6 aligns titles by the
+  longest indicative, post-textual elements included, and the Manual's own
+  sumário does so. Section 14 of the COPPE norm already stated it as a rule.
+- **The em dash (—) between number and title, everywhere** (#150): captions
+  ("Figura 4.1 — Título"), algorithm captions, appendix and annex headings
+  ("APÊNDICE A — Título"), their sumário entries and the lists of
+  illustrations. The Manual calls the sign *travessão* (2.10, 3.1.2.2.4,
+  3.1.4.3, 3.1.4.4), and section 12 of the COPPE norm shows the em dash. The
+  class used the en dash almost everywhere and the em dash in the thesis
+  reference. This was a maintainer's decision recorded in the issue, and it is
+  easy to revert.
+- **Lists of illustrations and of tables name each item** (#116): "Figura 4.1
+  — Título ….. 27" instead of "4.1 Título ….. 27", as 3.1.2.2.4 and 3.1.2.2.5
+  ask, for figures, tables, quadros, programs, algorithms and every float made
+  with `\newufrjfloat`. A long title continues at the left margin, as in the
+  Manual's example.
+- **The lists come in the order of 3.1.2** (#148): every list of illustrations
+  (figures, quadros, maps, programs, algorithms) first, then the list of
+  tables. `max-exemplo.tex`, `manual.tex`, the document generator, the
+  adversarial documents, the class manual and the quick reference had the list
+  of tables second. Section 10 of the COPPE norm placed its three lists between
+  tables and abbreviations; it now places them with the other illustrations,
+  since 2.10 counts quadros, programs and algorithms as illustrations. The class
+  now **checks the order**: between `\maketitle` and `\mainmatter`, the
+  folha de aprovação, the dedication, the epigraph, the lists and the sumário
+  each have their place in 3.1.2, and one out of place is a compilation error
+  that names what to move and where; `\mainmatter` warns when there is no
+  `\tableofcontents`. Through the `\documentclass{coppe}` compatibility class it
+  is a warning instead, because the 4.x models taught another order and an old
+  work must still compile as it is. The class checks rather than reorders: whatever the author
+  wrote between two lists would move without notice. Every model — the
+  examples, `manual.tex` and the document generator — now states the mandatory
+  order in a comment above `\maketitle`. The new test `rt72` covers it.
+- **Abstract sheets have a heading** (#114): RESUMO, ABSTRACT or RESUMEN, in the
+  language of each sheet, centred in bold capitals like every heading without a
+  numeric indicative (2.6). The sheets used to open straight on "Resumo da Tese
+  apresentada à COPPE/UFRJ…". The heading cannot be switched off; the four
+  optional elements below it still can.
+
+### Fixed
+
+- **Jurisprudence follows the text of 4.2.6.2** (#169). The date of judgement
+  now comes right after the rapporteur, preceded by "julgado em" and
+  abbreviated — "Relator: Ministro Rafael Mayer, julgado em 26 fev. 1986" —, as
+  the section's own second example does; it had no place before, and whoever
+  wanted it typed it into the `location` field, as the expected output of
+  `m-4262` did. The label is a language string now, with the feminine form in
+  the new `relatora` field ("Relatora: Min. Ellen Gracie"); it used to be the
+  word "Relator" written in the class code, printed in every language. That
+  second example joins the expected output of both databases (`m-4262b`,
+  `pt-4262b`), so they now hold the 34 categories of 4.2 plus it. `rt78` covers
+  both forms.
+- **The access date is in the language of the work** (#167). Since #146 the
+  month of an entry with `langid` follows Annex A of NBR 6023 in the
+  publication's language, and the access month went along: "Acesso em: 26 May
+  2011". The Manual's own example has "1 June 2010 … Acesso em: 26 maio 2011".
+- **A part of a monograph with pages and no chapter closes the imprint with a
+  full stop** (#167): "Companhia das Letras, 1996. p. 7-16.", as in 4.2.1.3.
+  The comma of "cap. 1, p. 23-64" went in without a chapter too, and took the
+  place of the full stop. The same in the book and report drivers.
+- **The examples in `exemplo.bib` follow the Manual's data** (#167): the full
+  URLs and access dates of the news item and the online patent, the parties of
+  the extradition, `langid = english` on the two English publications, and the
+  NBR 6023 as the Manual cites it, "Rio de Janeiro: ABNT, 2025."
+- **Corporate authors are typed as they are written, and the class sets the
+  capitals** (#144). Up to 4.1 a name with a full stop was printed in the list
+  exactly as typed, so the author had to type the superior entity in capitals —
+  "BRASIL. Ministério da Educação" — and the citation repeated all of it:
+  "(BRASIL. Ministério da Educação, 1995)". Now the author types
+  `{{Brasil. Ministério da Educação}}`, and the style does what the Manual
+  shows. In the list, only the entry element goes to capitals — the name up to
+  the first full stop, without a qualifier in parentheses: "BRASIL. Ministério
+  da Educação", "RIO DE JANEIRO (Estado). Secretaria do Meio Ambiente",
+  "BIBLIOTECA NACIONAL (Brasil)" (4.3.2.13). In the citation, only the entry
+  element, as typed: "(Brasil, 1995)", "(Universidade Federal do Rio de
+  Janeiro, 1998)", and an acronym stays one, "(IBGE, 2011)" (4.1.1.2; NBR
+  10520:2023, 6.1.1.2 and 6.1.1.3). `shortauthor` still wins. A first fix, on
+  2026-09-17, kept the old typing rule and converted the capitals back in the
+  citation, which turned "IBGE" into "Ibge"; the maintainer reversed the rule
+  on 2026-09-18.
+- **A citation by title entry reads "(Inglês, 2012, p. 7)", and a long title is
+  cut** (#138). 4.1.1.1.2 indicates "pelo título de entrada, seguido do ano de
+  publicação do documento, separados por vírgula e entre parênteses", 4.1.1.2(a)
+  writes it with the initial capital only, and its example is "(Inglês, 2012,
+  p. 7)" for "INGLÊS: guia de conversação". `authoryear-comp` set the title in
+  italics (or quotes, by entry type) and separated it from the year with a
+  space: "(Guia 2012, p. 7)". `citetitle` is now plain for every type, and
+  `nonameyeardelim` is a comma. The title is cut as NBR 10520:2023 — the edition
+  the Manual adopts — requires in 6.1.1.4: the only word of a one-word title;
+  the first word and "[...]" of a longer one, "(Anteprojeto [...], 1987)"; and
+  an initial article or monosyllable with the next word and "[...]", "(A flor
+  [...], 1995)", "(Nos canaviais [...], 1995)". The subtitle never enters, in
+  the `subtitle` field or typed after ": " in the title, and `shorttitle` wins.
+  `\citetitle` still prints the whole title.
+- **The month is abbreviated in the language of the publication** (#146).
+  4.3.5.5.1: months "devem ser abreviados no idioma original da publicação, de
+  acordo com o Anexo A da NBR 6023", and 4.3.2.2 shows "Sept. 2021" for an
+  English article; the class used `\mkbibmonth` in the document's language
+  ("set. 2021"). The month now comes from the tables of NBR 6023 Annex A for
+  Portuguese, English, Spanish, French and Italian, chosen by the entry's
+  `langid`. Only the month changes — biblatex's `autolang` would also switch
+  "Disponível em" and "Acesso em", which belong to the work, not to the cited
+  document. Without `langid` the document's language applies, as before. The
+  tables were checked letter by letter against Annex A of NBR 6023:2025, the
+  edition the Manual cites, and the annex's German table was added, for a
+  cited work in German (`langid = {ngerman}`): "März 2021".
+- **Film and game: "Direção: Walter Sales Júnior", and the version in place
+  of the edition** (#143). The examples of 4.2.9 write "Direção: Ridley Scott.
+  Produção: Michael Deeley." in direct order, and 4.3.4 treats the version of
+  an electronic document as its edition, before the imprint. `director` and
+  `producer` were literal lists, printed as typed ("Direção de Sales Júnior,
+  Walter"), and the version closed the entry. The two fields are now name
+  lists, printed in direct order after the label and a colon, with the labels
+  shortened accordingly in the five languages; the version moves before the
+  imprint.
+- **A part of a monograph carries the whole book after "In:"** (#134).
+  4.2.1.3 asks for the complete reference of the monograph — author, title and
+  subtitle, repeating the author when it is the same as the part's — and its
+  examples put the chapter before the pages, after a full stop: "cap. 1, p.
+  23-64". `ufrj:partdriver` printed only the organizer and `booktitle`, so
+  `bookauthor` and `booksubtitle` vanished, and the chapter came after the
+  pages ("1994, cap. 3"). The book title follows the rule of #131 (highlight on
+  the title only, subtitle after a colon), "cap." is lower case, and the entry
+  now ends through `doi+eprint+url`, so a chapter's DOI is printed too.
+- **Theses and dissertations from the standard BibTeX types** (#137).
+  4.3.8.3 asks for the type of work, the degree and course in parentheses, the
+  academic affiliation, place and date — "Dissertação (Mestrado em …) —
+  Vinculação, Local, ano". The `@mastersthesis` and `@phdthesis` entries that
+  Google Scholar, Zotero and JabRef export came out as "Diss. de mestr.
+  COPPE/UFRJ…" and "Tese Universidade…": no degree, no dash; and a type typed
+  in full with a course printed "( em Engenharia …)". Now `mathesis` reads
+  "Dissertação" with the degree "Mestrado" in the five languages; the
+  parenthetical is built by one macro with three cases — degree and course,
+  degree alone ("(Mestrado)"), course alone — and never "( em"; and the em dash
+  before the institution uses `\setunit`, since the starred form only fired
+  when the course had printed something.
+- **Book and report in the ABNT order** (#133): the edition as number, full
+  stop and abbreviation ("3. ed.", 4.3.4; a literal such as "2. ed. rev." is
+  printed as typed), the number of volumes in the physical description after
+  the imprint ("2 v.", 4.3.6.1), and the series at the end, in parentheses,
+  with a comma before its number ("(Coleção Saber, 13)", 4.3.7). The class used
+  biblatex's `book` and `report` drivers, which put volumes and series before
+  the imprint, and `brazilian.lbx` wrote the edition as an ordinal ("3ª ed.").
+  The two drivers are biblatex's own, reordered; in a report the number goes
+  with the series when there is one, and with the type otherwise.
+- **The translator in direct order, and the original title in a note**
+  (#135). 4.3.2.10 transcribes other responsibilities after the title as the
+  title page has them — "Tradução Ruth Rocha", "Tradução de Aurélio Buarque de
+  Holanda" — and 4.3.8.1 closes the reference with the original title,
+  "Tradução de: Moving house.". The translator used the author's name format
+  ("Trad. por ALMEIDA, Julia"), and no driver printed `origtitle`. A name
+  format without the list's capitals serves `bytranslator`, the Portuguese
+  string is "Tradução de", and the `origtitle` note enters before the DOI and
+  the address in the five languages.
+- **The DOI reads "DOI: https://doi.org/<doi>"** (#136), before "Disponível
+  em:", as the examples of 4.2.3.5 and 4.2.4.3 write it. biblatex's format set
+  the acronym with `\mkbibacro` — small caps, which Latin Modern Sans does not
+  have, so the log warned "Font shape T1/lmss/m/sc not available" — and printed
+  only the identifier. A value that already carries the full address is
+  printed as it came.
+- **Numeric system: parentheses, unbracketed list, and a warning with
+  footnotes** (#140). 4.1.1.1.1 gives the number two forms — "entre parênteses
+  (alinhadas ao texto)" or superscript — with the page after a comma, "(1, p.
+  30)"; `ufrj-numeric` inherited `numeric-comp`'s brackets in the citation and
+  in the list labels. `\cite`, `\parencite`, `\smartcite` and `\textcite` now
+  use parentheses (`\supercite` is the superscript form), and the list numbers
+  carry no brackets. The same section says the numeric system "não deve ser
+  utilizado quando há notas de rodapé": under `numbers`, the first footnote
+  raises a class warning citing 4.1.1.1.1. The warning lives in
+  `\@makefntext`, because the class's own `\@footnotetext` never runs —
+  `setspace` replaces it, and that is the one `hyperref` wraps.
+- **Same surname, same year: initials, then the full given name, after the
+  surname** (#139). 4.1.1.2(b) shows "(Braga, O., 1966)" and "(Braga, Orlando,
+  1987)"; the class wrote "(Orlando Braga, 1987)", and disambiguated even when
+  the years differed. The `uniquename=false` of `ufrj.bbx` never took effect,
+  because `authoryear-comp.cbx`, loaded after it, turns `uniquename` back on.
+  The option now lives in `ufrj.cbx` as `minyearfull` — disambiguate only when
+  the year coincides too — with a `labelname` format that writes the surname,
+  a comma and the initial or the full given name.
+- **An initial article or monosyllable does not count in the alphabetical
+  order, and goes to capitals with the next word** (#141). 4.2: "os artigos e
+  palavras monossilábicas não são considerados para efeito de alfabetação",
+  with the example "O PERFIL administrativo brasileiro". The list sorted by the
+  whole title, and that entry fell among the surnames in O, before OLIVEIRA. A
+  style source map stores the title without its initial article or
+  monosyllable — the prepositions, contractions and conjunctions of one
+  syllable — in `sorttitle`, in the five languages of the class; the printed
+  title does not change. The same list now decides the capitals of an entry by
+  title (4.3.2.14; NBR 6023:2025), "NOS CANAVIAIS, mutilações...", where only
+  Portuguese and English articles counted, and the cut of the title in the
+  citation (#138). A monosyllable that is a full word, such as "Sol", counts.
+- **The subtitle follows the title after a colon, out of the highlight**
+  (#131). 4.3.3: "o título deve ser separado do subtítulo por dois pontos. Os
+  títulos dos documentos referenciados devem ser destacados" — the highlight
+  belongs to the title. biblatex's `title` macro separated them with a full
+  stop and printed both inside the title format, which is where the bold and,
+  in an entry by title, the capitals of the first word are applied: the
+  subtitle came out after a full stop, in bold, and in an entry by title in
+  capitals too ("GUIA. PARA desenvolver"). The title now goes alone into its
+  format, and the subtitle follows with `\subtitlepunct` = colon.
+- **"In:", "et al.", "[S. l.]" and "[s. n.]" are set in italics** (#132).
+  4.1.2.2: "todas as expressões latinas e suas abreviaturas devem ser colocadas
+  em itálico"; 4.2.1.3(c) says it of "In:" in particular. All four came out
+  upright. "In:" is the `in:` macro, "et al." the `andothers` string of the
+  five language files, and "[S. l.]"/"[s. n.]" — which the author types in the
+  `.bib` as location and publisher — are wrapped by a
+  `\DeclareStyleSourcemap`, so a map the author declares in the preamble does
+  not interfere.
+- **Date ranges are separated by what they join** (#142): a slash between
+  months of the same year ("jan./jun. 1981", 4.3), a hyphen between years
+  ("1969-1973"), and a current periodical reads "1935- ." — "o ano de início de
+  publicação seguida de hífen, um espaço e ponto" (4.3.5.5.1). The class had a
+  single separator, the slash, and printed "1935/."; its own reference answer
+  key recorded that as an accepted divergence, a mark now removed from
+  `exemplo.bib` and from the adversarial base so the checker enforces the
+  norm. The three cases are told apart by the fields: an open range has
+  `endyear` defined and empty.
+- **Page ranges take a hyphen** (#145), in the list and in the citations, as
+  every example of the Manual writes them ("p. 7-16"; "HANSEN, 1992, p.
+  347-361"). biblatex used an en dash, and redefining `\bibrangedash` in the
+  style was not enough: each biblatex language file sets the en dash in the
+  language's *extras*, which run at every language switch — at the start of the
+  list and in each citation. The hyphen now goes through
+  `\DefineBibliographyExtras`, which runs after them, for the five languages.
+- **The list of references is aligned to the left margin only** (#118). 4.2:
+  "as referências são alinhadas somente à margem esquerda (não utilize o
+  recurso justificar do editor do texto), possibilitando a identificação de
+  cada documento individualmente". The list was justified, and TeX hyphenated
+  to justify — a surname or a title broken at the end of a line hinders exactly
+  the identification the norm asks for. `\AtBeginBibliography` now sets
+  `\raggedright` and infinite hyphenation penalties; long URLs still break
+  where the `url` package lets them.
+- **The examples follow the Manual in their content, too** (#149). The two
+  algorithms of `max-exemplo` had no source line (2.10); the funding agencies
+  on the additional sheet had no accents; a Portuguese work had a chapter
+  "Using BibLaTeX" and another "Alguns outros exemplo úteis"; the keywords of
+  `max-exemplo`, `min-exemplo`, `example_pt` and the generator began with a
+  capital, and 3.1.2.1.4 asks for lower case except proper and scientific
+  names (Annex E shows capitals; the text wins); `exemplo.bib` listed two
+  references twice under different keys; `\TeX Studio`, `\CoppeTeX os` and
+  friends swallowed the space after the logo; the list of abbreviations carried
+  test entries ("IoT ordenado como iot"); the jurisprudence example typed
+  "Brasil." where the jurisdiction as author goes in capitals (the decision of
+  #144); and both `exemplo.bib` and `ufrj.bib` cited the SiBI Manual as the 9th
+  edition of 2025, while the edition in force is the 9th revised, 2026. One
+  item was the class's: `\autoref` to an algorithm read "algoritmo 6.1" under
+  a caption saying "Algoritmo", because `algorithm2e` defines its autoref name
+  in lower case; it now takes the caption name.
+- **Appendices, annexes and alineas go past Z with doubled letters** (#127).
+  3.1.4.4 says that when the alphabet runs out the annexes take doubled capital
+  letters, and 2.6(f) says the same of the alineas; the 27th of any of them
+  stopped the compilation with LaTeX's "Counter too large". The class now
+  patches `\@alph` and `\@Alph` themselves — 27 is AA, 52 is ZZ, then three
+  letters up to ZZZ — instead of putting a new macro in each place that numbers
+  by letter: `enumitem` expands a list label once, when the list is built, so a
+  conditional written in the label froze with the counter still at zero. Inside
+  `\@alph` the count sits where LaTeX already expands it at the right moment,
+  and one fix serves the alinea label, a `\ref` to it, and the appendix and
+  annex letters.
+- **A subalinea is marked with a hyphen, under the first letter of its alinea**
+  (#121). 2.6 asks for three things: the hyphen and nothing else; the hyphen
+  under the first letter of the text of the corresponding alinea, one space
+  from the text; and the following lines of the subalinea under its own first
+  letter. The class used an en dash and a fixed 1.8 em indent, which falls
+  under no letter.
+- **The line numbers of a listing stay inside the margin** (#120). The five
+  language styles (`python`, `java`, `xml`, `html`, `prolog`) number the lines
+  on the left; without `xleftmargin` the `listings` package indents the code
+  and leaves the number where it was, about 2.6 cm from the edge, outside the
+  3 cm margin of 2.3. The global `\lstset` is unchanged, so a plain
+  `lstlisting` still starts at the margin.
+- **Footnotes hang from the mark, and no longer split across sheets** (#117).
+  4.2 says that a reference in a note is aligned to the left margin of the text
+  and that, from its second line on, the text sits under the first letter of
+  the first word, "de forma a destacar o expoente"; what holds for the
+  reference holds for the note. The class used book's `\@makefntext`, which
+  indents the mark by `\parindent` and returns the second line to the margin,
+  so the mark was buried in the block. `\interfootnotelinepenalty` is now
+  infinite: half a note on the next sheet separates the mark from what it
+  explains.
+- **The reference above each abstract is composed like the references in the
+  list** (#119). 4.2 asks for one presentation for every reference in the work,
+  and Annex E shows it aligned to the left margin with the title highlighted.
+  This one was justified, set the title flat and separated the vinculação
+  acadêmica with an en dash, while the `thesis` driver of `ufrj.bbx` sets a
+  thesis title in bold and separates with an em dash: the same reference came
+  out in two shapes in the same work. It is now left-aligned, with the title in
+  bold, the subtitle out of the bold, and the em dash.
+- **LuaLaTeX printed "nº" as "nž"** (#152). The class loaded `fontenc` with T1
+  under every engine. A Unicode engine sends each input character straight to
+  the font, and in T1 the slot of `º` holds `ž`. So under LuaLaTeX, `º ª § ° « »
+  ± × µ · ² ½ ¿ ¡` printed as other letters (`ž ł ğ ř ń ż ś Œ ţ ů š ¡ £ ą`), and
+  `— – “ ” ‘ ’ … € œ Ł ő` vanished, with only a "Missing character" line in the
+  log. Portuguese accented letters were right, because T1 matches Latin-1
+  there, so nobody saw it. Unicode engines now keep TU, LaTeX's default for
+  them, with the same Latin Modern in OpenType. The shape declarations that
+  keep substitution messages out of the log exist for TU too. The fixed
+  typewriter fonts of the language listing styles (`\pythonstyle`,
+  `\xmlstyle`…) use Latin Modern Mono under LuaLaTeX, because txtt has no
+  OpenType version. pdfLaTeX output does not change. The LuaLaTeX adversarial
+  twin now matches the Manual's references with no divergence and is still
+  PDF/A-2b.
+- **`exemplo.bib`: the master's dissertation example** (`m-diss`) printed
+  "1997. 203 f. Memória Social e Documento Centro de Ciências Humanas…",
+  without "Dissertação (Mestrado em …)" or the dash (4.2.1.1). The course was
+  in `type`, and the `mscdiss` type was missing (#147). The comments in
+  `exemplo.bib` and the class manual also said half the entries used the
+  Portuguese synonyms, but none has since the database moved to English names.
+
+### Documentation
+
+- **The abstract does not have to fit on one sheet** (#153). The class manual,
+  `manual.tex`, a regression test and section 8 of the COPPE norm said that
+  3.1.2.1.4 of the UFRJ Manual requires it. The 2026 Manual asks for 1.5
+  spacing, a single paragraph and 150 to 500 words, and says nothing about the
+  number of sheets. A 500-word abstract with all five elements takes more than
+  one A4 sheet anyway. `resumosemreferencia` and `\setupabstracts` remain for
+  whoever prefers a single sheet.
+
+## [5.0] — 2026-09-15 — The UFRJ class and the COPPE unit style
+
+The class that was `coppe` is now **`ufrj`**, and implements the UFRJ/SiBI
+Manual only. Everything that belongs to COPPE — the institute's name, the
+thirteen Programas, the right-hand logo, the phrases the Norma COPPE fixes, the
+norm the colophon cites — moved out of the class into the **unit style
+`ufrj-coppe`**. Another unit of UFRJ gets its own style and the class does not
+change. A COPPE document keeps its pages except for the colophon sentence that
+names the class, and a work begun with `\documentclass{coppe}` compiles as it
+is. What to change, and when, is in
+[`MIGRATION_v4_to_v5.md`](./MIGRATION_v4_to_v5.md).
+
+### Breaking changes
+
+- **The class is `ufrj`, and so is every file generated from it**: `ufrj.cls`,
+  `ufrj.bbx`, `ufrj.cbx`, `ufrj.dbx`, `ufrj-numeric.bbx`/`.cbx`,
+  `brazilian-ufrj.lbx` and the other language packs, `ufrj-lang-spanish.def`
+  and the other two, `ufrj.ist`, `ufrj.bib`, and the manuals `ufrj.pdf` and
+  `ufrj-quickref.pdf`. The sources are `src/ufrj.dtx` and `src/ufrj.ins`.
+- **A COPPE work starts with two lines**:
+
+  ```latex
+  \documentclass[dsc]{ufrj}
+  \usepackage{ufrj-coppe}
+  ```
+
+  Without the style, `\department{PESC}` stops with
+  ``Class ufrj Error: Programa `PESC' nao declarado``: a department code that no
+  unit declared is now an error, where 4.1 printed a cover without the Programa.
+- **`coppe.cls` is now a compatibility class** of a few lines. A 4.1
+  `coppe.cls` left in the work's folder keeps loading 4.1, and must be replaced;
+  so must a 4.1 `latexmkrc`, which runs makeindex with `coppe.ist`.
+- **A language pack written by an author** must be renamed
+  (`ufrj-lang-<language>.def`, `<language>-ufrj.lbx`) and loses what is
+  institutional: the keys `universityname`, `cityname`, `statename` and
+  `countryname`, which no code ever read, are gone, and the start of
+  `abstracttail` ("à COPPE/UFRJ") is the new key `tounit`.
+
+### Added
+
+- **The unit interface**, public and documented in `ufrj.pdf`, section "A
+  instituição e a unidade": `\ufrjdeclareunit`, `\ufrjdeclareprogram`,
+  `\ufrjdeclarelogos`, `\ufrjdeclarenorm` and `\ufrjdefunitstring`. The texts of
+  a unit live in their own table, which wins over the class's and the language
+  packs' whichever was loaded first.
+- **`src/ufrj-coppe.dtx` and `src/ufrj-coppe.ins`**: the COPPE style, the
+  compatibility class, and every example document — `min-exemplo.tex`,
+  `max-exemplo.tex`, the five per-language examples and the covers sheet —,
+  with their own manual, `ufrj-coppe.pdf`. `ufrj.ins` generates no document.
+- **The class alone composes a work of UFRJ**: the cover reads "Programa de
+  Pós-Graduação em …", the abstract says the work was presented "à UFRJ", the
+  colophon cites the SiBI Manual, and the Programa is declared in the preamble
+  with `\ufrjdeclareprogram`. It is the way for a unit that has no style yet.
+- **The old names keep working** while `ufrj-coppe` is loaded:
+  `\copperdefstring`, `\coppestring`, `\coppemainstring`,
+  `\coppeforeignstring`, `\usecoppelanguage`, `\newcoppefloat`,
+  `\coppetexfinalpage`, the six colophon pieces `\coppefinal…` (a
+  `\renewcommand` by the old name still changes the colophon), the page style
+  `coppe`, the `.bib` field `coppedegree`, and the internal names that `.toc`,
+  `.lab` and the list files written by 4.1 contain, so the first compilation
+  after the update reads them without error.
+- **Four regression tests of the split.** `rtu01` composes a work with the class
+  alone and forbids every COPPE phrase in the PDF; `rtu02` composes one with a
+  made-up unit style that uses only the public interface; `rtu03` compiles a 4.1
+  work — `\documentclass{coppe}`, old names, a `.toc` written by the old class;
+  `rtu04` reads the class, the bibliography styles, the language packs and the
+  glossary style that `ufrj.ins` generates, and fails if one names COPPE or any
+  of its data.
+
+### Changed
+
+- **The colophon names the class and the project apart**: "Foi utilizada a
+  classe ufrj, do projeto CoppeTeX, versão v5.0". It said "a classe CoppeTeX",
+  and CoppeTeX is the name of the project, not of a class. `manual.pdf` and
+  `max-exemplo.pdf`, which also said "classe CoppeTeX", say the same.
+- **The norm the colophon cites is the unit's**, declared with
+  `\ufrjdeclarenorm`: the Norma COPPE under `ufrj-coppe`, the UFRJ/SiBI Manual
+  with no unit.
+- **The documentation follows the split.** `ufrj.pdf` is the class and the
+  interface a unit style uses; `ufrj-coppe.pdf` is only what COPPE declares, the
+  table of the thirteen Programas, the old names and how to start a new unit;
+  `manual.pdf` is the norm of UFRJ with COPPE as the example, with a new chapter,
+  "O que é de cada unidade". `CONTRIBUTING.md` has a section on adding a unit
+  style.
+- **`NORMA_COPPE_2026`**, section 16, names the class `ufrj` with the style
+  `ufrj-coppe` as the implementation of reference from 5.0 on.
+- **The tools know both sources**: `tools/build-check.ps1` runs both `.ins` and
+  composes both manuals, and `painel.py`, `versao.py`, `conferir-manual.py`,
+  `geradocvazio.py` and `mk-adversativa.py` handle the style, the compatibility
+  class and the second `.dtx`. The empty-document generator writes
+  `\usepackage{ufrj-coppe}`.
+
+### How it was checked
+
+Three steps, each compared with the state before it through an image of every
+page of the 33 documents built: COPPE isolated in one block of the `.dtx`
+(`22e7dc9`, all 33 identical, and also word by word, with coordinates, and in
+the XMP), the rename (`fc0eb20`, the differences only in text that names the
+class) and the two sources (`547bf45`, only `max-exemplo` differs: the code it
+shows gained the line `\usepackage{ufrj-coppe}`).
+
 ## [4.1] — 2026-09-14 — Revision of the 4.1 release
 
 Still version 4.1: these are corrections to the release published on

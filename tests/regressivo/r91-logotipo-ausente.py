@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Teste de regressao da CoppeTeX. NAO roda na suite normal.
 
-BUG: quem copiava so o coppe.cls para a pasta do trabalho recebia do TeX um
+BUG: quem copiava so o ufrj.cls para a pasta do trabalho recebia do TeX um
 "File `coppe-logo' not found" sem nenhuma pista de que o arquivo vem COM a
 classe. A classe passou a dizer isso, e a nomear o arquivo que falta.
 
@@ -22,7 +22,7 @@ AQUI = os.path.dirname(os.path.abspath(__file__))
 RAIZ = os.path.dirname(os.path.dirname(AQUI))
 SRC = os.path.join(RAIZ, "src")
 
-DOC = r"""\documentclass[dsc]{coppe}
+DOC = r"""\documentclass[dsc]{ufrj}
 \title{Sem logotipo}
 \foreigntitle{Without a logo}
 \author{Nome}{Sobrenome}
@@ -62,7 +62,7 @@ try:
         problemas.append("compilou sem os logotipos, e devia ter parado")
     if "ufrj-logo" not in texto:
         problemas.append("a mensagem nao nomeia o arquivo que falta")
-    if "Class coppe Error" not in texto:
+    if "Class ufrj Error" not in texto:
         problemas.append("o erro nao veio da classe: e o do TeX, sem pista nenhuma")
 finally:
     shutil.rmtree(pasta, ignore_errors=True)

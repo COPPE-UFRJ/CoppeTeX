@@ -1,0 +1,42 @@
+%% Teste de conformidade da CoppeTeX.
+%% Rode com: python tests/regressivo/run-regressivo.py
+%% BUG: (desconformidade, 4.2.6.2) a jurisprudencia saia sem a data do
+%% julgamento, que a 4.2.6.2(i) pede "precedido da expressao 'julgado em' e da
+%% data abreviada", e com o rotulo "Relator" escrito no codigo da classe, em
+%% qualquer idioma e em qualquer genero. Quem quisesse a data a digitava no
+%% campo do local, como o gabarito m-4262 fazia. O segundo exemplo da propria
+%% 4.2.6.2 e o que segue o texto: "Relatora: Min. Ellen Gracie, julgado em 29
+%% nov. 2005." (#169)
+%%
+%% O titulo do documento de teste nao repete nada das referencias cobradas.
+%% BIBER: sim
+%% PASSADAS: 2
+%% ESPERA-TEXTO: Relator: Ministro Rafael Mayer, julgado em 26 fev. 1986. Revista Trimestral de Jurisprudência
+%% ESPERA-TEXTO: Relatora: Min. Ellen Gracie, julgado em 29 nov. 2005. Lex: jurisprudência do Supremo Tribunal Federal
+%% A data do julgamento sai UMA vez: nao pode voltar na imprenta, depois da nota.
+%% NAO-ESPERA-TEXTO: set. 1986. 1986
+%% NAO-ESPERA-TEXTO: 2006. 2005
+\documentclass[dsc]{ufrj}
+\usepackage{ufrj-coppe}
+\addbibresource{exemplo.bib}
+\title{Palavra que so existe no titulo}
+\foreigntitle{Word found only in the title}
+\author{Nome}{Sobrenome}
+\advisor{Primeiro}{Orientador}{D.Sc.}{UFRJ}
+\examiner{Primeiro Examinador}{D.Sc.}{UFRJ}
+\department{PESC}
+\date{09}{2026}
+\keyword{regressao}
+\foreignkeyword{regression}
+\begin{document}
+  \maketitle
+  \frontmatter
+  \begin{abstract}Resumo.\end{abstract}
+  \begin{foreignabstract}Abstract.\end{foreignabstract}
+  \tableofcontents
+  \mainmatter
+  \chapter{Um capitulo}
+  A jurisprudencia com relator \citep{m-4262} e com relatora \citep{m-4262b}.
+  \backmatter
+  \printbibliography
+\end{document}

@@ -7,7 +7,8 @@
 %% primitivas romannumeral e number, e os nomes de rotulo vao detokenizados,
 %% porque ':' e '.' sao abreviacoes ativas em espanhol.
 %% NAO-ESPERA-LOG: Unbalanced write command
-\documentclass[dsc,spanish,rascunhoficha]{coppe}
+\documentclass[dsc,spanish,rascunhoficha]{ufrj}
+\usepackage{ufrj-coppe}
 \title{Escritura desbalanceada}
 \foreigntitle{Unbalanced write}
 \titlein{spanish}{La escritura desbalanceada}
@@ -22,9 +23,10 @@
 \begin{document}
   \maketitle
   \frontmatter
-  \begin{abstract}Resumen.\end{abstract}
-  \begin{foreignabstract}Abstract.\end{foreignabstract}
+  % o resumo em portugues vem primeiro (3.1.2; #158)
   \begin{brazilianabstract}Resumo.\end{brazilianabstract}
+  \begin{foreignabstract}Abstract.\end{foreignabstract}
+  \begin{abstract}Resumen.\end{abstract}
   \tableofcontents
   \mainmatter
   \chapter{Un capitulo}

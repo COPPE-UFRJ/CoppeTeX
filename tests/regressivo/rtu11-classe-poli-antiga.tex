@@ -1,0 +1,48 @@
+%% Teste de regressao da CoppeTeX. NAO roda na suite normal.
+%% Rode com: python tests/regressivo/run-regressivo.py
+%% BUG: nao havia defeito antigo aqui -- este teste guarda a compatibilidade com
+%% a classe poli que a Escola Politecnica usava, derivada da CoppeTeX 2.3 (#170).
+%% Um trabalho assim diz \documentclass[grad,pdftex]{poli} e usa tres comandos
+%% com a assinatura antiga: \advisor e \coadvisor com QUATRO argumentos
+%% obrigatorios (tratamento, nome, sobrenome, grau) e \examiner com TRES
+%% (tratamento, nome completo, grau). Tem tambem \place e \university, que hoje
+%% sao da classe -- a UFRJ tem campus fora do Rio.
+%%
+%% A classe poli nao relaxa regra nenhuma da ufrj: a ordem dos pre-textuais e a
+%% oficial da 3.1.2, e fora dela e erro aqui tambem.
+%% PASSADAS: 2
+%% ESPERA-LOG: A classe poli agora e a classe ufrj
+%% ESPERA-LOG: A forma antiga do \examiner nao tem
+%% NAO-ESPERA-LOG: Class ufrj Error
+%% NAO-ESPERA-LOG: Undefined control sequence
+%% ESPERA-TEXTO-PAGINA: 1::ESCOLA POLITECNICA
+%% ESPERA-TEXTO-PAGINA: 1::CURSO DE ENGENHARIA DE COMPUTACAO E INFORMACAO
+%% ESPERA-TEXTO-PAGINA: 2::Projeto de Graduacao apresentado ao Curso de Engenharia de Computacao e Informacao
+%% Na folha de rosto a classe poe so o nome do orientador; o tratamento e o
+%% grau, que a assinatura antiga traz, aparecem na folha de aprovacao.
+%% ESPERA-TEXTO-PAGINA: 2::Orientador: Nome do Orientador
+%% A banca sai sem instituicao, que e o que a classe antiga imprimia -- e o log
+%% avisa isso.
+%% ESPERA-TEXTO-PAGINA: 4::Prof. Nome do Examinador, Ph.D.
+\documentclass[grad,pdftex]{poli}
+\begin{document}
+\title{Palavra que so existe no titulo}
+\foreigntitle{Word found only in the title}
+\author{Nome do}{Autor}
+\advisor{Prof.}{Nome do}{Orientador}{D.Sc.}
+\examiner{Prof.}{Nome do Examinador}{Ph.D.}
+\department{ECI}
+\university{Universidade Federal do Rio de Janeiro}
+\place{Rio de Janeiro}{RJ}{Brasil}
+\date{1}{2026}
+\keyword{compatibilidade}
+\foreignkeyword{compatibility}
+\maketitle
+\frontmatter
+\begin{abstract}Resumo do trabalho.\end{abstract}
+\begin{foreignabstract}Abstract of the work.\end{foreignabstract}
+\tableofcontents
+\mainmatter
+\chapter{Introducao}
+Texto.
+\end{document}

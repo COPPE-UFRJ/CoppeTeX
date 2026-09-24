@@ -1,9 +1,10 @@
-# Regression tests for the coppe class
+# Regression tests for the ufrj class
 
-> **`src/coppe.dtx` is the single source of the class.** The tests in this
-> folder are the exception: they are written by hand and are NOT generated from
-> it. But the `coppe.cls` they exercise IS generated — so a fix you make while
-> chasing a failing test goes into `src/coppe.dtx`, never into `src/coppe.cls`,
+> **`src/ufrj.dtx` is the single source of the class, and `src/ufrj-coppe.dtx`
+> of the COPPE unit style.** The tests in this folder are the exception: they
+> are written by hand and are NOT generated from them. But the `ufrj.cls` and
+> `ufrj-coppe.sty` they exercise ARE generated — so a fix you make while
+> chasing a failing test goes into the `.dtx`, never into `src/ufrj.cls`,
 > which is overwritten at the next generation. See
 > [`../src/README.md`](../src/README.md).
 
@@ -19,7 +20,10 @@
 and `dist/`, which are the deliverable. These are proof of work: they change on
 every compile and only matter to whoever is running the tests at that moment.
 
-This directory holds smoke tests that exercise public APIs of `coppe.cls`.
+This directory holds smoke tests that exercise public APIs of `ufrj.cls`.
+Every one of them is a COPPE document: it loads `\usepackage{ufrj-coppe}` right
+after the class. The class alone, with no unit style, is proved by
+`regressivo/rtu01`, and a made-up unit by `regressivo/rtu02`.
 Each `.tex` file is meant to compile cleanly (no LaTeX errors, no new warnings)
 under the standard pipeline:
 
@@ -60,7 +64,7 @@ that test and is reported in the summary at the end.
 | `test_semrefresumo.tex`             | The other side: the `resumosemreferencia` option takes that reference back out, for an abstract already at the 500-word ceiling that would otherwise spill onto a second sheet. |
 | `test_pdfa.tex`                     | The pre-textual pages reshaped for the 2026 manual — folha adicional with the Coleta CAPES fields, approval sheet of 3.1.2.1.3, mandatory institution argument — under the `pdfa` option. Validated by veraPDF in the harness. |
 | `test_sumario.tex`                  | The sumário: the graphic treatment of all five levels, the single title column, what a two-line title does, and a block that forces two-digit indicatives at every level — the shape that used to print the number over the title. |
-| `test_listas.tex`                   | The lists of abbreviations and of symbols: **no page numbers and no dot leaders** (4.1.1), the optional sort key that puts `IoT` and `eMBB` in alphabetical order, and a description long enough to wrap, which used to break badly before a trailing folio. Needs `makeindex -s ../src/coppe.ist`; `build-check.ps1` runs it. |
+| `test_listas.tex`                   | The lists of abbreviations and of symbols: **no page numbers and no dot leaders** (4.1.1), the optional sort key that puts `IoT` and `eMBB` in alphabetical order, and a description long enough to wrap, which used to break badly before a trailing folio. Needs `makeindex -s ../src/ufrj.ist`; `build-check.ps1` runs it. |
 | `test_comserifa.tex`                | The `comserifa` option together with `pdfa`. Sans serif is the default since v4.1, so this test guards the other road: the question is not whether a serif document compiles but whether it is still PDF/A. Validated by veraPDF in the harness. |
 
 ## Adding new tests
@@ -87,5 +91,5 @@ that asks for the `pdfa` class option belongs on that list — add it to the
 `Build-Tex` calls and to `$veraTargets` there.
 
 None of this is distributed. The suite proves the class works; it is not part
-of it, and it does not come out of `coppe.dtx`. The whole proof runs from
+of it, and it does not come out of either `.dtx`. The whole proof runs from
 [`tools/prova.ps1`](../tools/prova.ps1).

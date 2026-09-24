@@ -127,7 +127,12 @@ SUB = {"pt":"tudo o que a classe oferece, ao mesmo tempo",
        "es":"todo lo que ofrece la clase, a la vez"}
 
 # As categorias de referencia da secao 4.2 do Manual UFRJ/SiBI 2026, na ordem
-# do Manual, e a chave da entrada correspondente em referencias-manual.bib.
+# do Manual, e a chave da entrada correspondente no exemplo.bib (m-<item>, com os
+# nomes de campo em ingles). A mesma entrada, com os sinonimos em portugues, esta
+# em referencias-manual.bib com a chave pt-<item>, e os documentos em portugues
+# citam as duas. As chaves ja foram iguais nos dois arquivos: o biber achava
+# todas no exemplo.bib, nem abria o referencias-manual.bib, e a forma em
+# portugues ficou sem conferencia sem que nada avisasse (#147).
 PROVA_REFS = [
     ("m-4211",  "4.2.1.1 monografia no todo"),
     ("m-4212",  "4.2.1.2 monografia em meio eletrônico"),
@@ -149,6 +154,9 @@ PROVA_REFS = [
     ("m-4251",  "4.2.5.1 patente em meio eletrônico"),
     ("m-4261",  "4.2.6.1 legislação"),
     ("m-4262",  "4.2.6.2 jurisprudência"),
+    # O segundo exemplo da 4.2.6.2, o que segue o texto da norma: relatora e a
+    # data do julgamento com "julgado em" (#169).
+    ("m-4262b", "4.2.6.2 jurisprudência, segundo exemplo"),
     ("m-4263",  "4.2.6.3 ato administrativo normativo"),
     ("m-427",   "4.2.7 documento jurídico em meio eletrônico"),
     ("m-428",   "4.2.8 documento civil e de cartório"),
@@ -194,7 +202,8 @@ def doc(i, linha, tiponome):
     A("%% Documento da revisao adversativa -- GERADO por tools/mk-adversativa.py.")
     A("%%%% tipo=%s idioma=%s programa=%s" % (tipo, lang, dept))
     A("%% Opcoes: " + ", ".join(opts))
-    A("\\documentclass[" + ",".join(opts) + "]{coppe}")
+    A("\\documentclass[" + ",".join(opts) + "]{ufrj}")
+    A("\\usepackage{ufrj-coppe}")
     A("")
     A("\\usepackage[most]{tcolorbox}")
     A("\\usepackage{makeidx}\\makeindex")
@@ -268,24 +277,30 @@ def doc(i, linha, tiponome):
     A("  \\chapter*{%s}" % d["ack"])
     A("  %s" % d["body"])
     A("")
-    A("  \\begin{abstract}")
-    A("  %s" % d["abs_"])
-    A("  \\end{abstract}")
-    A("")
-    A("  \\begin{foreignabstract}")
-    A("  %s" % (L["pt"]["abs_"] if lang == "en" else L["en"]["abs_"]))
-    A("  \\end{foreignabstract}")
-    if lang == "es":
+    # O resumo em portugues vem sempre primeiro (3.1.2), e a classe confere
+    # (#158): em ingles ele e o foreignabstract; em espanhol, o
+    # brazilianabstract, antes do ingles e do espanhol.
+    def resumo(amb, texto):
+        A("  \\begin{%s}" % amb)
+        A("  %s" % texto)
+        A("  \\end{%s}" % amb)
         A("")
-        A("  \\begin{brazilianabstract}")
-        A("  %s" % L["pt"]["abs_"])
-        A("  \\end{brazilianabstract}")
-    A("")
+    if lang == "en":
+        resumo("foreignabstract", L["pt"]["abs_"])
+        resumo("abstract", d["abs_"])
+    elif lang == "es":
+        resumo("brazilianabstract", L["pt"]["abs_"])
+        resumo("foreignabstract", L["en"]["abs_"])
+        resumo("abstract", d["abs_"])
+    else:
+        resumo("abstract", d["abs_"])
+        resumo("foreignabstract", L["en"]["abs_"])
+    # na ordem da 3.1.2: listas de ilustracao, depois a de tabelas (#148)
     A("  \\listoffigures")
-    A("  \\listoftables")
     A("  \\listofquadros")
     A("  \\listofprogramas")
     A("  \\listofalgorithms")
+    A("  \\listoftables")
     A("  \\printloabbreviations")
     A("  \\printlosymbols")
     A("  \\tableofcontents")
@@ -351,7 +366,7 @@ def doc(i, linha, tiponome):
         A("    \\end{subfigure}\\hfill")
         A("    \\begin{subfigure}[b]{0.35\\textwidth}")
         A("      \\centering\\includegraphics[height=2cm]{coppe-logo}")
-        A("      \\caption{A marca do Instituto}\\label{fig:sub-coppe}")
+        A("      \\caption{A marca do Instituto}\\label{fig:sub-ufrj}")
         A("    \\end{subfigure}")
         A("    \\caption{Duas subfiguras numa figura só}\\label{fig:subs}")
         A("    \\source{Elaboração própria.}")
@@ -517,7 +532,7 @@ def doc(i, linha, tiponome):
         A("    Duas caixas, porque uma só não mostra que o estilo se repete.")
         A("  \\end{tcolorbox}")
         A("  \\begin{Verbatim}[frame=single]")
-        A("  pdflatex coppe.ins   % gera todos os arquivos derivados")
+        A("  pdflatex ufrj.ins   % gera todos os arquivos derivados")
         A("  \\end{Verbatim}")
         A("  Uma nota de rodapé com citação dentro.\\footnote{Como em")
         A("  \\citet{m-norma}, a nota sai em corpo menor, 2.2(b).}")
@@ -530,12 +545,14 @@ def doc(i, linha, tiponome):
         A("  \\chapter{Prova de referências}")
         A("  Um exemplo de cada categoria de referência da seção 4.2 do Manual")
         A("  UFRJ/SiBI, 9.\\textsuperscript{a} ed. rev. (2026), com os dados do")
-        A("  próprio Manual. A referência composta pela classe está na lista de")
-        A("  referências; o gabarito, como o Manual a imprime, está no comentário")
-        A("  de cada entrada de \\texttt{referencias-manual.bib}.")
+        A("  próprio Manual, em duas formas: com os nomes de campo em inglês, do")
+        A("  \\texttt{exemplo.bib}, e com os sinônimos em português, do")
+        A("  \\texttt{referencias-manual.bib}. A referência composta pela classe")
+        A("  está na lista de referências; o gabarito, como o Manual a imprime,")
+        A("  está no comentário de cada entrada dos dois arquivos.")
         A("  \\begin{itemize}")
         for chave, rot in PROVA_REFS:
-            A("    \\item %s \\citep{%s}" % (rot, chave))
+            A("    \\item %s \\citep{%s,%s}" % (rot, chave, "pt-" + chave[2:]))
         A("  \\end{itemize}")
         A("")
     A("  \\backmatter")
@@ -608,7 +625,7 @@ def doc(i, linha, tiponome):
         A("  \\includepdf[pages=-,scale=0.85,pagecommand={\\thispagestyle{fancy}}]{coppe-logo.pdf}")
     A("")
     A("  \\printindex")
-    A("  \\coppetexfinalpage")
+    A("  \\ufrjfinalpage")
     A("\\end{document}")
     return "\n".join(t) + "\n"
 

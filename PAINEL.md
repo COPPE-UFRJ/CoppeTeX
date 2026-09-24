@@ -5,7 +5,7 @@ testar, conferir, distribuir e versionar a CoppeTeX.
 
 > Este documento é para quem **mexe na classe**. Quem só quer escrever uma tese
 > não precisa de nada disto: leia o [`README.md`](./README.md) e o manual da
-> classe, `src/coppe.pdf`.
+> classe, `src/ufrj.pdf`.
 
 ---
 
@@ -38,15 +38,15 @@ coppetex.bat --ajuda
 
 | Opção | O que faz |
 |---|---|
-| `--regerar` | Roda o `coppe.ins`: a classe, os estilos BibLaTeX, os pacotes de idioma, as bases `.bib`, os cinco exemplos por idioma, a montagem das capas e o `latexmkrc` saem todos do `src/coppe.dtx`. É rápido, e é o primeiro passo de qualquer coisa. |
-| `--docs` | Compila os PDFs da entrega: o manual da classe (`coppe.pdf`), o guia rápido em inglês, o exemplo completo, os cinco exemplos por idioma, o manual da norma (`manual.pdf`), a Norma COPPE e a folha de capas. |
+| `--regerar` | Roda o `ufrj.ins` e o `ufrj-coppe.ins`. A classe, os estilos BibLaTeX, os pacotes de idioma, as bases `.bib`, o guia rápido e o `latexmkrc` saem do `src/ufrj.dtx`; o estilo da COPPE, a classe `coppe` de compatibilidade, os exemplos e a montagem das capas saem do `src/ufrj-coppe.dtx`. É rápido, e é o primeiro passo de qualquer coisa. |
+| `--docs` | Compila os PDFs da entrega: o manual da classe (`ufrj.pdf`), o manual do estilo da COPPE (`ufrj-coppe.pdf`), o guia rápido em inglês, o exemplo completo, os cinco exemplos por idioma, o manual da norma (`manual.pdf`), a Norma COPPE e a folha de capas. |
 | `--testes` | A **primeira camada**: a suíte de `tests/`. Pergunta *a classe compila?* |
 | `--adversativo` | A **segunda camada**: os seis documentos de `tests/adversativa/`, que acionam tudo ao mesmo tempo, nos dois motores, validados pelo veraPDF. |
 | `--regressivo` | A **terceira camada**: `tests/regressivo/`, um teste mínimo para cada defeito já corrigido. Não roda junto com as outras, de propósito. |
 | `--pdfa` | Passa os PDF/A pelo veraPDF no perfil 2b. Sem o veraPDF instalado o passo é **pulado**, não falha. |
-| `--conferir` | Os verificadores que não compilam nada: referências cruzadas em todos os `.log`, cobertura do manual (todo comando, ambiente e opção documentado) e versão sincronizada. |
+| `--conferir` | Os verificadores que não compilam nada: referências cruzadas em todos os `.log`, cobertura do manual (todo comando, ambiente e opção documentado), versão sincronizada, e os PDFs prontos contra o Manual — `conferir-norma.py` (folha, fólio, margem, sumário) nos exemplos e nos adversativos, e `conferir-referencias.py` (cada referência contra o gabarito) nos adversativos com `numbers`, nos dois motores. O `build-check.ps1` roda esses dois também, logo depois de compilar os exemplos e os adversativos. |
 | `--tudo` | A prova completa, com veredito no fim. É o que tem de sair limpo antes de marcar uma versão. |
-| `--dist` | Copia para `dist/` os 31 arquivos que o aluno precisa: a classe, os estilos, os logotipos, os dois manuais, o guia rápido, um exemplo por idioma admitido e a licença. **Só copia; nunca compila.** A lista está em `PARA_DIST`, em `tools/painel.py`, e existe só lá. |
+| `--dist` | Copia para `dist/` o que o aluno precisa: a classe, o estilo da COPPE e a classe `coppe` de compatibilidade, os estilos de bibliografia, os logotipos, os três manuais, o guia rápido, um exemplo por idioma admitido e a licença. **Só copia; nunca compila.** A lista está em `PARA_DIST`, em `tools/painel.py`, e existe só lá. |
 | `--pacote` | Fecha `dist/` num `.zip` com o número da versão, em `_scratch/`, pronto para anexar ao *release*. O zip leva uma pasta dentro, `CoppeTeX-<versão>/`, e não os arquivos soltos. |
 | `--gerador` | Abre o **gerador de documento vazio**, que escreve o `.tex` e o `.bib` de um trabalho novo. Tem porta própria, o `coppetex-novo.bat`, porque o público é outro: esta ação existe para quem já está com o painel aberto. |
 | `--limpar` | Tira `.aux`, `.log` e companhia de `src/` e de `tests/`. Não toca em nenhum PDF. |
@@ -64,19 +64,21 @@ fazer.
 ## Versão
 
 ```bat
-coppetex.bat --versao 2      REM  4.1  ->  4.2
-coppetex.bat --versao 3      REM  4.1  ->  4.1.1
+coppetex.bat --versao 2      REM  5.0  ->  5.1
+coppetex.bat --versao 3      REM  5.0  ->  5.0.1
 ```
 
-A versão canônica é a do `\def\fileversion` em `src/coppe.dtx`. Subir a versão
-reescreve esse número, a data, e **todo** `\ProvidesFile` e `\ProvidesClass` do
-`.dtx` — e em seguida o painel acrescenta `--regerar` por conta própria, porque
+A versão canônica é a do `\def\fileversion` em `src/ufrj.dtx`. Subir a versão
+reescreve esse número, a data, e **todo** `\ProvidesFile`, `\ProvidesClass` e
+`\ProvidesPackage` dos dois `.dtx`, o da classe e o do estilo da COPPE — e em
+seguida o painel acrescenta `--regerar` por conta própria, porque
 o número novo precisa entrar nos arquivos gerados na mesma rodada. Uma
 distribuição com metade de cada versão é pior que uma versão velha.
 
 **O primeiro nível não é oferecido, nem na janela nem na linha de comando.** Na
-CoppeTeX a troca de *major* sempre significou mudança de modelo — a 4.0 trouxe o
-modelo multilíngue, a 3.0 foi a reescrita da classe. Isso é decisão de quem
+CoppeTeX a troca de *major* sempre significou mudança de modelo — a 5.0 separou
+a classe da UFRJ do estilo da unidade, a 4.0 trouxe o modelo multilíngue, a 3.0
+foi a reescrita da classe. Isso é decisão de quem
 mantém o projeto e da CPGP, e um clique errado num painel não pode anunciar uma
 versão que não existe.
 
@@ -167,7 +169,7 @@ vem preenchido com `referencias`, e o `.bib` gerado vai para lá em vez da raiz.
 O exemplo tem os `.bib` na raiz por história, não por norma, e a subpasta é a
 recomendação desde a 4.1 — ela tira arquivo da raiz do trabalho e, de quebra,
 impede que um `.bib` da distribuição do TeX se passe pelo seu. Apague o campo
-para voltar à raiz. A justificativa está no `src/coppe.pdf`, na seção *Onde por
+para voltar à raiz. A justificativa está no `src/ufrj.pdf`, na seção *Onde por
 os `.bib`*, e o teste é o `tests/regressivo/r31`.
 
 ### Ele também busca a classe

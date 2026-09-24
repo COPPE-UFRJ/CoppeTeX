@@ -4,19 +4,19 @@
 %%
 %% The original source files were:
 %%
-%% coppe.dtx  (with options: `examplept')
+%% ufrj-coppe.dtx  (with options: `examplept')
 %% 
-%% This is one of the demonstration documents of the `coppe' document class:
-%% the five main-language demos, the PDF/A build of the full example and the
-%% side-by-side cover sheet.  It is generated from coppe.dtx by docstrip; edit
-%% the .dtx source, not this file.
+%% This is one of the demonstration documents of the `ufrj' document class with
+%% the `ufrj-coppe' unit style: the five main-language demos and the
+%% side-by-side cover sheet.  It is generated from ufrj-coppe.dtx by docstrip;
+%% edit the .dtx source, not this file.
 %% 
 %% Copyright (C) 2008-2026 Vicente Helano F. Batista, George O. Ainsworth Jr.,
 %% Geraldo Xexéo and Eduardo Mangeli. Released under the GNU General Public
 %% License version 3 (see the COPYING.txt file).
 %% 
-
-\documentclass[dsc]{coppe}
+\documentclass[dsc]{ufrj}
+\usepackage{ufrj-coppe}
 \addbibresource{exemplo.bib}
 \begin{document}
   \title{Título do Trabalho}
@@ -29,16 +29,19 @@
   \examiner{Segundo Examinador}{D.Sc.}{UFRJ}
   \department{PESC}
   \date{05}{2026}
-  \keyword{Multilíngue}
-  \keyword{Demonstração}
+  \keyword{multilíngue}
+  \keyword{demonstração}
   %% palavras-chave do resumo em idioma estrangeiro (3.1.2.1.5, Anexo F)
   \foreignkeyword{Multilingual}
   \foreignkeyword{Demonstration}
+  % Ordem dos pré-textuais (Manual 3.1.2), que a classe confere: \maketitle,
+  % \frontmatter, o resumo em português, o resumo em língua estrangeira, as
+  % listas e \tableofcontents, sempre o último.
   \maketitle
   \frontmatter
   \begin{abstract}
     Este é o resumo principal em português, idioma escolhido por padrão
-    quando nenhuma opção de idioma é passada para a classe \texttt{coppe}.
+    quando nenhuma opção de idioma é passada para a classe \texttt{ufrj}.
     Lorem ipsum dolor sit amet, consectetur adipiscing elit.
   \end{abstract}
   \begin{foreignabstract}
@@ -68,12 +71,12 @@
 
   A classe usa a variante \textbf{PDF/A-2b}: a parte 2 admite transparência,
   que a parte 1 proíbe e que caixas coloridas e gráficos produzem, e o nível
-  \emph{b} garante a reprodução visual fiel. Basta a opção \texttt{pdfa} em
-  \verb|\documentclass[dsc,pdfa]{coppe}|: a classe carrega o \texttt{pdfx},
-  monta os metadados a partir do título, do autor e das palavras-chave, e
-  embute o perfil de cor. Ligue-a cedo, como faz o \texttt{max-exemplo.tex}: um PDF
-  ou uma imagem incluídos fora da norma aparecem no dia em que entram, e não na
-  véspera do depósito. Para conferir, use o validador veraPDF, perfil PDF/A-2b.
+  \emph{b} garante a reprodução visual fiel. Não é preciso pedir: a classe
+  carrega o \texttt{pdfx}, monta os metadados a partir do título, do autor e
+  das palavras-chave, e embute o perfil de cor em todo documento. A opção
+  \texttt{sempdfa} desliga, para um rascunho ou para um pacote que o PDF/A não
+  aceite; se você desligar, lembre que um PDF ou uma imagem incluídos fora da
+  norma aparecem no dia em que entram, e não na véspera do depósito. Para conferir, use o validador veraPDF, perfil PDF/A-2b.
 
   \section{Fluxos de escrita}
   O \hologo{pdfLaTeX} mantém no máximo dezesseis arquivos abertos para escrita,

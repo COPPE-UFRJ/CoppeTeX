@@ -1,0 +1,44 @@
+%% Teste de regressao da CoppeTeX. NAO roda na suite normal.
+%% Rode com: python tests/regressivo/run-regressivo.py
+%% BUG: nao havia defeito antigo aqui -- a cidade do trabalho estava escrita na
+%% classe como "Rio de Janeiro", e a UFRJ tem campus em Macae, em Duque de
+%% Caxias (Xerem) e fora da capital. A cidade sai na capa, na folha de rosto, na
+%% ficha, na referencia do alto dos resumos e no colofao, e agora e a classe que
+%% a guarda: \city, \state, \country e \place trocam, o estilo da unidade
+%% declara o padrao dela com \ufrjdeclareplace, e o que o AUTOR escreve
+%% prevalece sobre a declaracao da unidade (decisao de 23/09/2026).
+%%
+%% O estilo da COPPE declara o Rio de Janeiro; este documento pede Macae, e e o
+%% de Macae que tem de sair -- em toda folha em que a cidade aparece.
+%% PASSADAS: 2
+%% A cidade sai na capa, na folha de rosto e na referencia do alto do resumo. A
+%% capa tambem diz "UNIVERSIDADE FEDERAL DO RIO DE JANEIRO", que e o nome da
+%% universidade e nao a cidade: por isso a cobranca e pela cidade que SAI, e
+%% nao pela ausencia do "Rio de Janeiro" na folha.
+%% ESPERA-TEXTO-PAGINA: 1::MACAE
+%% ESPERA-TEXTO-PAGINA: 2::Macae
+%% ESPERA-TEXTO-PAGINA: 5::Macae, 2026
+%% ESPERA-TEXTO-PAGINA: 5::Universidade Federal do Rio de Janeiro, Macae, 2026
+%% NAO-ESPERA-LOG: Class ufrj Error
+\documentclass[dsc]{ufrj}
+\usepackage{ufrj-coppe}
+\city{Macaé}
+\begin{document}
+\title{Palavra que so existe no titulo}
+\foreigntitle{Word found only in the title}
+\author{Nome do}{Autor}
+\advisor{Primeiro}{Orientador}{D.Sc.}{UFRJ}
+\examiner{Primeiro Examinador}{D.Sc.}{UFRJ}
+\department{PESC}
+\date{09}{2026}
+\keyword{regressao}
+\foreignkeyword{regression}
+\maketitle
+\frontmatter
+\begin{abstract}Resumo.\end{abstract}
+\begin{foreignabstract}Abstract.\end{foreignabstract}
+\tableofcontents
+\mainmatter
+\chapter{Um capitulo}
+Texto.
+\end{document}

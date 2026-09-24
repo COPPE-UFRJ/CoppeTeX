@@ -1,0 +1,283 @@
+% PROPOSTA-DE-RESOLUCAO.tex -- proposta de norma da Escola Politecnica/UFRJ
+% para o Projeto de Graduacao, no lugar do Anexo da Resolucao n. 05/2012.
+%
+% O documento de apoio e o NAO-CONFORMIDADES-POLI.md, na raiz do repositorio:
+% ele confere a Resolucao 05/2012 contra o Manual UFRJ 2026, item a item, e e
+% de la que sai o que esta proposta guarda e o que ela descarta.
+%
+% Usa a classe article de proposito, e o mesmo desenho da NORMA_COPPE_2026.tex:
+% e um documento normativo SOBRE a classe, nao um Projeto de Graduacao, e
+% aplicar a propria classe a ele confundiria.
+%
+% NAO sai do ufrj.dtx nem do ufrj-poli.dtx: a norma tem ciclo de vida proprio,
+% decidido pela Congregacao da Escola, e nao e artefato da classe.
+
+\documentclass[a4paper,11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[brazilian]{babel}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{microtype}
+\usepackage{url}
+\usepackage{parskip}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage[hidelinks]{hyperref}
+
+\titleformat{\section}{\large\bfseries}{\thesection}{1ex}{}
+\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection}{1ex}{}
+
+% Cada secao normativa declara de que tipo e a diferenca em relacao ao Manual.
+\newcommand\tipo[1]{\normalfont\textit{--- #1}}
+
+\title{\bfseries Norma para a Elaboração Gráfica do Projeto de Graduação
+       da Escola Politécnica/UFRJ\\[2mm]
+       \large Edição 2026 -- Proposta para apreciação da Congregação}
+\author{}
+\date{Setembro de 2026}
+
+\begin{document}
+\maketitle
+
+\noindent\textit{Esta Norma, quando aprovada, substitui o Anexo da} Resolução
+n.\textsuperscript{o} 05, de 2012 \textit{--- Estabelece Normas de Elaboração
+Gráfica do Projeto de Graduação.}
+
+\hrulefill
+
+\section*{Como ler esta Norma}
+
+Esta Norma \textbf{não descreve como se formata um Projeto de Graduação}. Quem
+faz isso é o \textbf{Manual para Elaboração e Normalização de Trabalhos
+Acadêmicos} da UFRJ/SiBI, 9.\textsuperscript{a} edição revista (Rio de Janeiro,
+2026) --- daqui em diante \textit{Manual UFRJ 2026} ---, que vale integralmente
+na Escola Politécnica.
+
+O que esta Norma faz é registrar, ponto a ponto, \textbf{onde a Escola
+especializa o Manual}: onde ele deixa uma escolha em aberto e a Escola escolhe,
+onde ele pede um dado que só a Escola tem, e onde a Escola acrescenta um
+elemento que ele não prevê. Fora do que está escrito aqui, vale o Manual ---
+formato do papel, margens, espaçamento, ordem dos elementos pré-textuais,
+numeração das folhas, ilustrações, citações e referências.
+
+Cada seção abaixo diz de que tipo é a diferença:
+
+\begin{description}[leftmargin=2.6cm,style=nextline,font=\bfseries]
+  \item[Escolha] O Manual admite mais de uma forma; a Escola fixa uma.
+  \item[Dado próprio] O Manual pede a informação; o valor é da Escola.
+  \item[Acréscimo] Elemento que o Manual não prevê e a Escola exige ou admite,
+    onde o Manual não obriga e sem contrariar exemplo dele.
+  \item[Reafirmação] Nada é acrescentado; repete-se um ponto do Manual por ser
+    fonte frequente de erro.
+\end{description}
+
+\textbf{O que esta Norma pode decidir.} Ela \textbf{não contraria o Manual}:
+onde o Manual obriga, vale o Manual. Ela decide \textbf{só onde o Manual não
+obriga} --- onde ele deixa uma escolha em aberto ou pede um dado que só a
+Escola tem ---, e, ao decidir, \textbf{fica com o que os exemplos do Manual
+mostram}. As duas folhas do modelo que o SiBI distribui --- a folha de rosto e
+a folha adicional, que a 3.1.2.1.2 manda baixar --- valem como \textbf{errata}
+sobre os exemplos do Manual. As normas da ABNT valem nas edições que o Manual
+cita, e por meio dele (Seção~\ref{norma:citacoes}).
+
+\textbf{Por que uma Norma nova.} O Anexo da Resolução 05/2012 é anterior ao
+Manual vigente e o contraria em treze pontos --- entre eles a numeração das
+folhas pré-textuais, a ordem dos elementos, a posição da legenda das figuras, a
+folha de aprovação e, sobretudo, o formato das referências, que ele baseia na
+NB-66, norma da ABNT substituída em 1989. Cada um desses pontos está conferido
+no documento \texttt{NAO-CONFORMIDADES-POLI.md} que acompanha esta proposta.
+Desta Norma consta apenas o que continua sendo decisão da Escola.
+
+\subsection*{Mapa das diferenças}
+
+\begin{longtable}{@{}p{0.42\linewidth}p{0.28\linewidth}p{0.22\linewidth}@{}}
+\toprule
+\textbf{Seção desta Norma} & \textbf{Item do Manual} & \textbf{Tipo} \\
+\midrule
+\endhead
+1. Logotipos & Anexo A & Escolha\\
+2. Nome da instituição na capa & Anexo A, 3.1.2.1.1 & Escolha\\
+3. Cursos de graduação da Escola & 3.1.2.1.1(e) & Dado próprio\\
+4. Título conferido & 3.1.2.1.1(e) & Dado próprio\\
+5. Identidade institucional em português & 3.1.2.1.1, 3.1.2.1.3 & Escolha\\
+6. Folha de resumo & 3.1.2.1.4, Anexos E e F & Reafirmação\\
+7. Resumo em português e em inglês & 3.1.2, 3.1.2.1.4, 3.1.2.1.5 & Escolha\\
+8. Extensão do resumo & 3.1.2.1.4 & Escolha\\
+9. Família da letra & 2.2 & Escolha\\
+10. Folha adicional e ficha catalográfica & 3.1.2.1.2 & Reafirmação\\
+11. Citações e referências & 4.1, 4.2 & Escolha\\
+12. Idioma do trabalho & 2.1 & Escolha\\
+\bottomrule
+\end{longtable}
+
+\section{Logotipos \tipo{Escolha}}
+
+O Anexo A do Manual põe, no alto da capa, o \textbf{logotipo da UFRJ à
+esquerda} e o \textbf{logotipo da unidade à direita}, ambos marcados como
+opcionais.
+
+\textbf{A Escola adota os dois}, e o da direita é a \textbf{marca principal da
+Escola Politécnica, colorida}, e não a versão em preto e branco que circula em
+documentos impressos --- o preto e branco é limitação da impressão, e não a
+marca. Os dois logotipos têm a mesma altura e figuram \textbf{somente na capa}:
+a folha de rosto não os repete, como mostram o Anexo B do Manual e as duas
+folhas do modelo do SiBI.
+
+\section{Nome da instituição na capa \tipo{Escolha}}
+
+A capa nomeia, em três linhas centralizadas e em caixa alta: a
+\textbf{Universidade Federal do Rio de Janeiro}, a \textbf{Escola Politécnica} e
+o \textbf{Curso}. O nome do Curso segue a forma da Seção~\ref{norma:cursos}.
+
+\section{Cursos de graduação da Escola \tipo{Dado próprio}}
+\label{norma:cursos}
+
+O Manual pede o nome do curso a que o trabalho é submetido, e não tem como
+saber quais são. São os treze cursos de Engenharia da Escola e o curso de
+Nanotecnologia:
+
+\begin{center}
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Curso} & \textbf{Título conferido} \\
+\midrule
+Engenharia Ambiental & Engenheiro Ambiental\\
+Engenharia Civil & Engenheiro Civil\\
+Engenharia de Computação e Informação & Engenheiro de Computação e Informação\\
+Engenharia de Controle e Automação & Engenheiro de Controle e Automação\\
+Engenharia Elétrica & Engenheiro Elétrico\\
+Engenharia Eletrônica e de Computação & Engenheiro Eletrônico e de Computação\\
+Engenharia de Materiais & Engenheiro de Materiais\\
+Engenharia Mecânica & Engenheiro Mecânico\\
+Engenharia Metalúrgica & Engenheiro Metalúrgico\\
+Engenharia Naval e Oceânica & Engenheiro Naval\\
+Engenharia Nuclear & Engenheiro Nuclear\\
+Engenharia de Petróleo & Engenheiro de Petróleo\\
+Engenharia de Produção & Engenheiro de Produção\\
+Nanotecnologia & \textit{a definir}\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{A forma do nome é ``Curso de Engenharia X''}, onde X é o nome do curso,
+e ela é a mesma em toda folha em que o curso aparece: na capa
+(``CURSO DE ENGENHARIA DE PETRÓLEO''), na frase da natureza (``apresentado ao
+Curso de Engenharia de Petróleo''), na ficha catalográfica
+(``UFRJ/Escola Politécnica/Curso de Engenharia de Petróleo'') e na referência
+do alto do resumo (``Graduação em Engenharia de Petróleo'').
+
+\section{Título conferido \tipo{Dado próprio}}
+
+A 3.1.2.1.1(e) pede o \textbf{objetivo} do trabalho --- o grau pretendido ---, e
+ele é o título que o curso confere, na tabela da Seção~\ref{norma:cursos}. A
+frase da natureza fecha com ele: ``\ldots\ como requisito parcial à obtenção do
+título de Engenheiro de Petróleo''.
+
+\section{Identidade institucional em português \tipo{Escolha}}
+
+A capa, a folha de rosto, a folha adicional e a folha de aprovação são
+\textbf{identidade institucional} e ficam \textbf{em português}, mesmo quando o
+trabalho é escrito em outro idioma. Acompanham o idioma do trabalho apenas o
+título e o subtítulo. É a mesma escolha da COPPE, e pela mesma razão: são
+folhas que a Universidade lê.
+
+\section{Folha de resumo \tipo{Reafirmação}}
+
+Cada folha de resumo segue o modelo dos Anexos E e F do Manual: o título da
+folha (RESUMO, \textit{ABSTRACT}), a referência do trabalho, o texto do resumo
+e as palavras-chave. \textbf{A Escola não acrescenta nada a ela.}
+
+A Resolução 05/2012 acrescentava a frase de abertura (``Resumo do Projeto de
+Graduação apresentado à Escola Politécnica/UFRJ\ldots''), o título com o nome
+do autor e o mês, o orientador e o curso. Nada disso está no modelo do Manual,
+e a referência já traz o autor, o título, a natureza, o curso e o ano. A
+implementação de referência continua a oferecer esses elementos como opção,
+desligada por padrão, para o caso de a Escola voltar a exigi-los.
+
+\section{Resumo em português e em inglês \tipo{Escolha}}
+
+O Manual prevê dois resumos, nesta ordem (3.1.2): o \textbf{resumo em língua
+vernácula} (3.1.2.1.4), que é o português, e o \textbf{resumo em língua
+estrangeira} (3.1.2.1.5). A Escola fixa o \textbf{inglês} como a língua
+estrangeira, como já fazia. \textbf{O resumo em português vem sempre primeiro},
+qualquer que seja o idioma do trabalho.
+
+\section{Extensão do resumo \tipo{Escolha}}
+
+O Manual admite até 500 palavras (3.1.2.1.4). A Escola pede \textbf{até 250},
+como na Resolução 05/2012: é uma restrição dentro do limite do Manual, e não o
+contraria.
+
+\section{Família da letra \tipo{Escolha}}
+
+O Manual fixa o \textbf{corpo 12} (2.2b) e não nomeia família. A Escola admite
+\textbf{Times New Roman ou Arial}, e admite também a fonte padrão da
+implementação de referência. O corpo é 12 em todas: o ``Arial 11'' da Resolução
+05/2012 está superado pelo Manual.
+
+\section{Folha adicional e ficha catalográfica \tipo{Reafirmação}}
+
+A ficha catalográfica vem na \textbf{folha adicional}, gerada pelo Gerador de
+Fichas Catalográficas do SiBI (\url{http://fichacatalografica.sibi.ufrj.br/}),
+como manda a 3.1.2.1.2, e não desenhada à mão. Os campos da Coleta CAPES dessa
+folha são das teses e dissertações, e não do Projeto de Graduação: a folha do
+Projeto de Graduação traz \textbf{apenas a ficha}.
+
+\section{Citações e referências \tipo{Escolha}}
+\label{norma:citacoes}
+
+Valem as normas da ABNT \textbf{nas edições que o Manual cita} na sua lista de
+referências --- \textbf{NBR 6023:2025} (Referências) e \textbf{NBR 10520:2023}
+(Citações) ---, e não ``as edições vigentes''. Onde uma delas diverge do
+Manual, vale o Manual.
+
+Qualquer dos dois sistemas de chamada que o Manual prevê --- autor-data ou
+numérico (4.1.1.1) --- é admitido, \textbf{a critério do autor}, desde que
+usado de forma consistente em todo o trabalho; o numérico não se usa em
+trabalho com notas de rodapé (4.1.1.1.1). É a mesma liberdade que a Resolução
+05/2012 dava.
+
+\textbf{O que não vale mais é o formato das referências daquela Resolução},
+baseado na NB-66: o número entre colchetes precedido do sobrenome, o ``pp.''
+antes das páginas, o título entre aspas, o grifo do título do periódico, o
+``et al.'' a partir do quarto autor e o endereço eletrônico entre
+\texttt{<\,>}. Todos esses pontos passam a seguir a NBR 6023:2025, pelo Manual.
+
+\section{Idioma do trabalho \tipo{Escolha}}
+
+O trabalho é escrito em português. Inglês ou espanhol são admitidos mediante
+justificativa ao Curso, o que está de acordo com o art.~57 da Resolução CEPG
+n.\textsuperscript{o} 302/2024 e com a 2.1 do Manual. A escolha afeta o corpo
+textual, as legendas, os títulos das seções pré-textuais e o título do trabalho
+na capa e na folha de rosto; não afeta a identidade institucional (Seção 5).
+
+\section{Implementação de referência}
+
+A Escola distribui, como implementação de referência desta Norma, a classe
+\texttt{ufrj} com o estilo \texttt{ufrj-poli}, das versões 5.0 e posteriores do
+\textbf{CoppeTeX}, em \url{https://github.com/COPPE-UFRJ/CoppeTeX}. Ela compõe
+o Projeto de Graduação segundo o Manual UFRJ 2026 e as decisões acima:
+
+\begin{verbatim}
+  \documentclass[grad]{ufrj}
+  \usepackage{ufrj-poli}
+  ...
+  \department{PETROLEO}
+\end{verbatim}
+
+O trabalho escrito com a classe \texttt{poli} anterior continua compilando: a
+classe \texttt{poli} passa a ser a classe \texttt{ufrj} com este estilo, e
+aceita as assinaturas antigas de \verb|\advisor|, \verb|\coadvisor| e
+\verb|\examiner|.
+
+\subsection{O que a implementação não faz}
+
+A lombada (NBR 12225), a contagem de palavras do resumo e o que é da via
+impressa --- papel, gramatura, encadernação e cor da capa --- ficam por conta
+do autor e da Secretaria de Graduação.
+
+\end{document}

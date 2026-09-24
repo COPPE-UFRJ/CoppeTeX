@@ -1,0 +1,120 @@
+%%
+%% This is file `ufrj-lang-spanish.def',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% ufrj.dtx  (with options: `langes')
+%% 
+%% This is the `ufrj' document class used for composition of LaTeX
+%% monographs (master's dissertations, PhD theses and qualifying exams)
+%% satisfying the requirements of the Federal University of Rio de
+%% Janeiro (UFRJ), specialized for each academic unit by a unit style.
+%% 
+%% Copyright (C) 2008-2026 Vicente Helano F. Batista, George O. Ainsworth Jr.,
+%% Geraldo Xexéo and Eduardo Mangeli.
+%% 
+%% This program is free software; you can redistribute it and/or modify
+%% it under the terms of the GNU General Public License version 3 as
+%% published by the Free Software Foundation.
+%% 
+%% This program is distributed in the hope that it will be useful,
+%% but WITHOUT ANY WARRANTY; without even the implied warranty of
+%% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+%% GNU General Public License version 3 for more details.
+%% 
+%% You should have received a copy of the GNU General Public License
+%% version 3 along with this package (see the COPYING.txt file).
+%% If not, see <http://www.gnu.org/licenses/>.
+%% 
+%% Author(s): Vicente Helano F. Batista
+%%            George O. Ainsworth Jr.
+%%            Geraldo Xexéo
+%%            Eduardo Mangeli
+%% 
+%% ufrj-lang-spanish.def -- CoppeTeX 4.x Spanish class-string pack.
+%% Loaded by ufrj.cls when \documentclass[spanish]{ufrj} (or any other
+%% spanish slot) is active. Populates the dispatcher table for the
+%% spanish language and registers the biblatex language mapping.
+%% Nothing institutional lives here: the names of the university, the unit and
+%% the Programa do not translate, and a unit style declares its own texts with
+%% \ufrjdefunitstring, which takes precedence over this table.
+\ProvidesFile{ufrj-lang-spanish.def}[2026/09/15 v5.0 CoppeTeX spanish class strings]
+%% --- A folha de resumo ------------------------------------------------------
+%% Tudo o que a classe escreve numa folha de resumo sai no idioma daquela folha.
+%% A frase de abertura e montada de pedacos porque a concordancia muda de idioma
+%% para idioma; ver o comentario no ufrj.dtx, na tabela de portugues e ingles.
+%%
+%% O NOME do Programa nao entra aqui: a unidade o declara em portugues e em
+%% ingles, e so. Numa folha neste idioma vai o nome em portugues, que e o nome
+%% proprio do Programa. O `tounit' daqui e o da classe sem unidade.
+\ufrjdefstring{spanish}{abstractname}     {Resumen}
+\ufrjdefstring{spanish}{abstractofmale}   {del}
+\ufrjdefstring{spanish}{abstractoffemale} {de la}
+\ufrjdefstring{spanish}{presentedmale}    {presentado}
+\ufrjdefstring{spanish}{presentedfemale}  {presentada}
+\ufrjdefstring{spanish}{tounit}           {a la UFRJ}
+\ufrjdefstring{spanish}{abstracttail}{como parte de los
+  requisitos necesarios para la obtención del grado de}
+\ufrjdefstring{spanish}{doctypemsc}  {Disertación}
+\ufrjdefstring{spanish}{doctypedsc}  {Tesis}
+\ufrjdefstring{spanish}{doctypeexam} {Examen de Calificación}
+\ufrjdefstring{spanish}{doctypesem}  {Seminario}
+\ufrjdefstring{spanish}{doctypegrad} {Trabajo de Conclusión de Curso}
+\ufrjdefstring{spanish}{degnamegrad} {\ufrj@coursetitle}
+\ufrjdefstring{spanish}{degnamemsc}  {Maestro}
+\ufrjdefstring{spanish}{degnamedsc}  {Doctor}
+\ufrjdefstring{spanish}{appendix}        {Apéndice}
+\ufrjdefstring{spanish}{annex}           {Anexo}
+\ufrjdefstring{spanish}{frame}           {Cuadro}
+\ufrjdefstring{spanish}{listframe}       {Lista de Cuadros}
+\ufrjdefstring{spanish}{source}          {Fuente}
+\ufrjdefstring{spanish}{program}         {Programa}
+\ufrjdefstring{spanish}{listprogram}     {Lista de Programas}
+\ufrjdefstring{spanish}{references}      {Referencias}
+\ufrjdefstring{spanish}{in:}             {en}
+\ufrjdefstring{spanish}{art}             {Arte}
+\ufrjdefstring{spanish}{platform}        {Plataforma}
+\ufrjdefstring{spanish}{directedby}      {Dirección}
+\ufrjdefstring{spanish}{producedby}      {Producción}
+\ufrjdefstring{spanish}{listabbreviation}{Lista de Abreviaturas y Siglas}
+\ufrjdefstring{spanish}{listabbreviationonly}{Lista de Abreviaturas}
+\ufrjdefstring{spanish}{listsigla}       {Lista de Siglas}
+\ufrjdefstring{spanish}{listsymbol}      {Lista de Símbolos}
+\ufrjdefstring{spanish}{glossary}        {Glosario}
+\ufrjdefstring{spanish}{advisor}         {Director}
+\ufrjdefstring{spanish}{advisors}        {Directores}
+\ufrjdefstring{spanish}{dept}            {Programa}
+\ufrjdefstring{spanish}{approvedmale}    {Aprobado por}
+\ufrjdefstring{spanish}{approvedfemale}  {Aprobada por}
+\ufrjdefstring{spanish}{approvedonmale}  {Aprobado el}
+\ufrjdefstring{spanish}{approvedonfemale}{Aprobada el}
+\ufrjdefstring{spanish}{keywordsname} {Palabras clave}
+\ufrjdefstring{spanish}{volumename} {Volumen}
+\ufrjdefstring{spanish}{coadvisor}  {Codirector}
+\ufrjdefstring{spanish}{coadvisors} {Codirectores}
+\ufrjdefstring{spanish}{ofname}     {de}
+\ufrjdefstring{spanish}{researchline}{Línea de investigación}
+\ufrjdefstring{spanish}{tbddate}     {por determinar}
+\ufrjdefstring{spanish}{monthname1} {enero}
+\ufrjdefstring{spanish}{monthname2} {febrero}
+\ufrjdefstring{spanish}{monthname3} {marzo}
+\ufrjdefstring{spanish}{monthname4} {abril}
+\ufrjdefstring{spanish}{monthname5} {mayo}
+\ufrjdefstring{spanish}{monthname6} {junio}
+\ufrjdefstring{spanish}{monthname7} {julio}
+\ufrjdefstring{spanish}{monthname8} {agosto}
+\ufrjdefstring{spanish}{monthname9} {septiembre}
+\ufrjdefstring{spanish}{monthname10}{octubre}
+\ufrjdefstring{spanish}{monthname11}{noviembre}
+\ufrjdefstring{spanish}{monthname12}{diciembre}
+\ufrjdefstring{spanish}{algorithm2eopt}{spanish}
+\ufrjdefstring{spanish}{babelname}     {spanish}
+%% biblatex is loaded by ufrj.cls AFTER this .def file is read; defer the
+%% language-mapping registration until \begin{document} so biblatex's
+%% \DeclareLanguageMapping is available.
+\AtBeginDocument{\DeclareLanguageMapping{spanish}{spanish-ufrj}}
+
+%% 
+%%
+%% End of file `ufrj-lang-spanish.def'.

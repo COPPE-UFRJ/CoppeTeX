@@ -1,0 +1,45 @@
+%% Teste de regressao da CoppeTeX. NAO roda na suite normal.
+%% Rode com: python tests/regressivo/run-regressivo.py
+%% BUG: a folha de rosto de um trabalho em ingles ou espanhol saia com metade
+%% dos rotulos no idioma do trabalho e metade em portugues: "Research line" e
+%% "Co-advisor" em cima de uma natureza e de um "Orientador:" em portugues
+%% (#128). A folha de rosto e identidade institucional e fica INTEIRA em
+%% portugues, como dizem o manual da classe e a secao 7 da Norma COPPE.
+%%
+%% Este teste nasceu ao contrario: ate a v5.0 ele cobrava que o rotulo da linha
+%% de pesquisa acompanhasse o idioma do trabalho, defeito da v4.1 corrigido
+%% naquela versao. A decisao (A) da #128 desfez a regra, e nao a correcao: o
+%% rotulo volta ao portugues porque a FOLHA e em portugues, e nao porque
+%% alguem o esqueceu preso la.
+%%
+%% A folha de rosto e a SEGUNDA folha.
+%% ESPERA-TEXTO-PAGINA: 2::Linha de pesquisa: Data and Knowledge Engineering
+%% ESPERA-TEXTO-PAGINA: 2::Coorientador
+%% ESPERA-TEXTO-PAGINA: 2::Orientador
+%% NAO-ESPERA-TEXTO-PAGINA: 2::Research line
+%% NAO-ESPERA-TEXTO-PAGINA: 2::Co-advisor
+%% NAO-ESPERA-TEXTO-PAGINA: 2::Advisor
+\documentclass[dsc,english]{ufrj}
+\usepackage{ufrj-coppe}
+\title{Rotulo no idioma do trabalho}
+\foreigntitle{The label in the main language}
+\author{Name}{Surname}
+\advisor{Ana}{Silva}{D.Sc.}{UFRJ}
+\coadvisor{Bruno}{Souza}{D.Sc.}{UFF}
+\examiner{Carla Lima}{D.Sc.}{UFRJ}
+\department{PESC}
+\date{09}{2026}
+\linhapesquisa{Data and Knowledge Engineering}
+\keyword{Regression}
+\foreignkeyword{Regressao}
+\begin{document}
+  \maketitle
+  \frontmatter
+  % o resumo em portugues vem primeiro (3.1.2; #158)
+  \begin{foreignabstract}Resumo.\end{foreignabstract}
+  \begin{abstract}Abstract.\end{abstract}
+  \tableofcontents
+  \mainmatter
+  \chapter{A chapter}
+  Text.
+\end{document}

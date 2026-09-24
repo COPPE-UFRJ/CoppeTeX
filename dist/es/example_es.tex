@@ -4,19 +4,19 @@
 %%
 %% The original source files were:
 %%
-%% coppe.dtx  (with options: `examplees')
+%% ufrj-coppe.dtx  (with options: `examplees')
 %% 
-%% This is one of the demonstration documents of the `coppe' document class:
-%% the five main-language demos, the PDF/A build of the full example and the
-%% side-by-side cover sheet.  It is generated from coppe.dtx by docstrip; edit
-%% the .dtx source, not this file.
+%% This is one of the demonstration documents of the `ufrj' document class with
+%% the `ufrj-coppe' unit style: the five main-language demos and the
+%% side-by-side cover sheet.  It is generated from ufrj-coppe.dtx by docstrip;
+%% edit the .dtx source, not this file.
 %% 
 %% Copyright (C) 2008-2026 Vicente Helano F. Batista, George O. Ainsworth Jr.,
 %% Geraldo Xexéo and Eduardo Mangeli. Released under the GNU General Public
 %% License version 3 (see the COPYING.txt file).
 %% 
-
-\documentclass[spanish,dsc]{coppe}
+\documentclass[spanish,dsc]{ufrj}
+\usepackage{ufrj-coppe}
 \addbibresource{exemplo.bib}
 \begin{document}
   \title{Título do Trabalho}
@@ -36,26 +36,32 @@
   %% palavras-chave do resumo em idioma estrangeiro (3.1.2.1.5, Anexo F)
   \foreignkeyword{Multilingual}
   \foreignkeyword{Demonstration}
-  %% palavras-chave do terceiro resumo, em português (Norma COPPE, secao 3)
-  \braziliankeyword{Multilíngue}
-  \braziliankeyword{Demonstração}
+  %% palavras-chave do resumo em português, a língua vernácula (3.1.2.1.4)
+  \braziliankeyword{multilíngue}
+  \braziliankeyword{demonstração}
+  % Orden de los elementos pretextuales (Manual UFRJ 3.1.2), que la clase
+  % verifica: \maketitle, \frontmatter, el resumen en portugués -- la lengua
+  % vernácula, siempre el primero; aquí es brazilianabstract --, el resumen
+  % en inglés (foreignabstract), el resumen en español (abstract, adición de
+  % la norma COPPE), las listas y \tableofcontents, siempre el último.
   \maketitle
   \frontmatter
-  \begin{abstract}
-    Este es el resumen principal en español. La tesis está escrita
-    en español como idioma principal, con la portada conservada en
-    portugués por convención institucional de la UFRJ. Lorem ipsum
-    dolor sit amet, consectetur adipiscing elit.
-  \end{abstract}
+  \begin{brazilianabstract}
+    Este é o resumo em português, a língua vernácula, que abre os resumos
+    qualquer que seja o idioma do trabalho (Manual 3.1.2). Quem o produz é o
+    ambiente \texttt{brazilianabstract}, quando o idioma principal não é nem
+    o português nem o inglês.
+  \end{brazilianabstract}
   \begin{foreignabstract}
     This is the English foreign abstract. Mandatory in CoppeTeX whichever
     the main language is, for international readability.
   \end{foreignabstract}
-  \begin{brazilianabstract}
-    Este é o resumo em português, oferecido pelo ambiente
-    \texttt{brazilianabstract} para a leitura da banca brasileira quando o
-    idioma principal não é o português.
-  \end{brazilianabstract}
+  \begin{abstract}
+    Este es el resumen en español, idioma principal de la tesis, que viene
+    después de los resúmenes en portugués y en inglés; la portada se conserva
+    en portugués por convención institucional de la UFRJ. Lorem ipsum dolor
+    sit amet, consectetur adipiscing elit.
+  \end{abstract}
   % Listas pretextuales: solo el sumario es obligatorio (Manual UFRJ
   % 3.1.2.1.6). Las listas de figuras, tablas, abreviaturas y símbolos son
   % opcionales (3.1.2.2); las de cuadros, programas y algoritmos aparecen
@@ -80,7 +86,7 @@
   La clase usa la variante \textbf{PDF/A-2b}: la parte 2 admite transparencia,
   que la parte 1 prohíbe y que producen las cajas de color y los gráficos, y el
   nivel \emph{b} garantiza la reproducción visual fiel. Basta la opción
-  \texttt{pdfa} en \verb|\documentclass[spanish,dsc,pdfa]{coppe}|: la clase carga
+  \texttt{pdfa} en \verb|\documentclass[spanish,dsc,pdfa]{ufrj}|: la clase carga
   \texttt{pdfx}, arma los metadatos a partir del título, el autor y las palabras
   clave, e incrusta el perfil de color. Actívela temprano, como hace
   \texttt{max-exemplo.tex}: un PDF o una imagen fuera de la norma aparecen el día en

@@ -7,9 +7,10 @@
 %% MAKEINDEX: sim
 %% PASSADAS: 2
 %% NAO-ESPERA-LOG: No room for a new
-\documentclass[dsc]{coppe}
+\documentclass[dsc]{ufrj}
+\usepackage{ufrj-coppe}
 \usepackage{makeidx}\makeindex
-\newcoppefloat{mapa}{Mapa}{Lista de Mapas}
+\newufrjfloat{mapa}{Mapa}{Lista de Mapas}
 \makelosymbols
 \makeloabbreviations
 \title{Todas as listas ao mesmo tempo}
@@ -25,12 +26,14 @@
   \frontmatter
   \begin{abstract}Resumo.\end{abstract}
   \begin{foreignabstract}Abstract.\end{foreignabstract}
+  % na ordem da 3.1.2, que a classe confere (#148): as listas de ilustracao,
+  % depois a de tabelas
   \listoffigures
-  \listoftables
   \listofquadros
   \listofprogramas
   \listofalgorithms
   \listofmapas
+  \listoftables
   \printloabbreviations
   \printlosymbols
   \tableofcontents

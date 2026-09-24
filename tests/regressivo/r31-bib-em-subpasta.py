@@ -53,7 +53,8 @@ BIB = u"""@book{livro-da-subpasta,
 }
 """
 
-MODELO = r"""\documentclass[dsc]{coppe}
+MODELO = r"""\documentclass[dsc]{ufrj}
+\usepackage{ufrj-coppe}
 %(recursos)s
 \title{Bibliografia em subpasta}
 \foreigntitle{Bibliography in a subfolder}
@@ -149,8 +150,13 @@ try:
         problemas.append("biber falhou com o .bib na subpasta (codigo %d)" % rc)
     if "Cannot find" in saida:
         problemas.append("biber nao achou o .bib na subpasta")
-    if "Output written on" not in registro:
-        problemas.append("o documento com .bib em subpasta nao compilou")
+    # O PDF sai mesmo com erro, em nonstopmode: erro no log reprova, e nao
+    # so a falta de PDF. O r24 e o r25 passavam assim com os resumos fora da
+    # ordem (#158).
+    erros = [l for l in registro.splitlines() if l.startswith("!")][:3]
+    if "Output written on" not in registro or erros:
+        problemas.append("o documento com .bib em subpasta nao compilou: %s"
+                         % ("; ".join(erros) or "sem PDF"))
     if "There were undefined references" in registro:
         problemas.append("citacao sem resolver com o .bib na subpasta")
     texto = texto_do_pdf(os.path.join(pasta, "sub.pdf"))

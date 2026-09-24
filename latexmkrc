@@ -42,8 +42,8 @@ if (scalar(@ist) > 0) {
 # list of symbols #
 #    coppeTex     #
 ###################
-system("makeindex -s coppe.ist -o output.los output.syx");
-system("makeindex -s coppe.ist -o output.lab output.abx");
+system("makeindex -s ufrj.ist -o output.los output.syx");
+system("makeindex -s ufrj.ist -o output.lab output.abx");
 
 ################
 # nomenclature #
