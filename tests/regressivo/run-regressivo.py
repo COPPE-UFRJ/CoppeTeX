@@ -4,6 +4,22 @@
     python tests/regressivo/run-regressivo.py
     python tests/regressivo/run-regressivo.py r04
     python tests/regressivo/run-regressivo.py --manter
+    python tests/regressivo/run-regressivo.py --tarefas 1   (um de cada vez)
+    python tests/regressivo/run-regressivo.py --sem-cache   (recompila tudo)
+
+Compilar e o que custa: sao quase cem chamadas do motor numa rodada completa,
+e em quase todas a classe e a mesma. Duas coisas cortam esse custo, e nenhuma
+delas muda o que um teste cobra (#154):
+
+  - CACHE. O resultado de cada compilacao fica em _scratch/cache-regressivo,
+    com a chave do que entra nela -- o documento, a base, o motor, as passadas
+    -- mais o hash dos arquivos GERADOS da classe. Mexeu no .dtx, so os
+    documentos afetados voltam ao motor; nao mexeu, a segunda rodada nao chama
+    o motor nenhuma vez. `--sem-cache' desliga, e a linha do teste diz
+    "(cache)" quando o resultado veio de la.
+  - PARALELISMO. Um processo do motor por teste, ate o numero de nucleos.
+    `--tarefas <n>' escolhe quantos; `--tarefas 1' volta ao de antes, que e o
+    que se quer quando se esta olhando uma falha.
 
 NAO roda na suite normal. A primeira camada (tests/*.tex) pergunta "a classe
 compila?"; esta pergunta "aquele defeito voltou?", e cada arquivo aqui e a menor
@@ -55,6 +71,7 @@ conteudo, e nao a tipografia, e o que faz o teste falhar so quando o defeito
 volta. Quem precisar cobrar caixa alta cobra pelo .log ou por um arquivo
 auxiliar, onde o texto esta como o LaTeX o escreveu.
 """
+import concurrent.futures
 import io
 import os
 import re
@@ -62,6 +79,11 @@ import shutil
 import subprocess
 import sys
 import unicodedata
+
+# O cache mora no medidas.py, que e o outro lugar que compila -- os testes .py
+# de medida --, para que a chave seja a mesma nos dois.
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from medidas import cache_gravar, cache_ler, chave_de_compilacao  # noqa: E402
 
 # O console do Windows e cp1252, e as cobrancas que este rodador imprime saem
 # do texto do PDF, que tem acento, travessao e aspas tipograficas. Sem isto o
@@ -149,6 +171,13 @@ def normaliza(s):
     return re.sub(r"\s+", " ", s).strip().lower()
 
 
+class _Retorno(object):
+    """O que sobrou de uma compilacao que veio do cache: o codigo de saida."""
+
+    def __init__(self, returncode):
+        self.returncode = returncode
+
+
 def um_teste(tex, manter):
     nome = os.path.splitext(os.path.basename(tex))[0]
     d = ler_diretivas(tex)
@@ -161,17 +190,28 @@ def um_teste(tex, manter):
         return rodar([motor, "-interaction=nonstopmode", os.path.basename(tex)],
                      AQUI)
 
-    p = compilar()
-    if d.get("BIBER", "").lower() in ("sim", "yes", "1"):
-        rodar(["biber", nome], AQUI)
-    if d.get("MAKEINDEX", "").lower() in ("sim", "yes", "1"):
-        ist = os.path.join(SRC, "ufrj.ist")
-        for ext, saida in (("abx", "lab"), ("syx", "los"), ("sgx", "lsg"), ("gsx", "lgs")):
-            if os.path.exists(os.path.join(AQUI, nome + "." + ext)):
-                rodar(["makeindex", "-s", ist, "-o", nome + "." + saida,
-                       nome + "." + ext], AQUI)
-    for _ in range(passadas - 1):
+    # O mesmo documento, com a mesma classe, ja compilado antes (#154). A chave
+    # leva o texto do teste e os gerados da classe: o cache nao sobrevive a uma
+    # mudanca no .dtx.
+    fonte = io.open(tex, encoding="utf-8").read()
+    chave = chave_de_compilacao([fonte, motor, passadas, d.get("BIBER", ""),
+                                 d.get("MAKEINDEX", "")])
+    achou, retorno = cache_ler(chave, AQUI, nome)
+    if achou:
+        p = _Retorno(retorno)
+    else:
         p = compilar()
+        if d.get("BIBER", "").lower() in ("sim", "yes", "1"):
+            rodar(["biber", nome], AQUI)
+        if d.get("MAKEINDEX", "").lower() in ("sim", "yes", "1"):
+            ist = os.path.join(SRC, "ufrj.ist")
+            for ext, saida in (("abx", "lab"), ("syx", "los"), ("sgx", "lsg"), ("gsx", "lgs")):
+                if os.path.exists(os.path.join(AQUI, nome + "." + ext)):
+                    rodar(["makeindex", "-s", ist, "-o", nome + "." + saida,
+                           nome + "." + ext], AQUI)
+        for _ in range(passadas - 1):
+            p = compilar()
+        cache_gravar(chave, AQUI, nome, p.returncode)
 
     log = os.path.join(AQUI, nome + ".log")
     texto_log = ""
@@ -261,7 +301,7 @@ def um_teste(tex, manter):
 
     if not manter:
         limpar(nome)
-    return d.get("BUG", "(sem descricao)"), falhas, pulados
+    return d.get("BUG", "(sem descricao)"), falhas, pulados, achou
 
 
 # O PDF fica, porque e ele que se olha quando um teste falha; o resto sai. Os
@@ -295,9 +335,9 @@ def um_teste_python(caminho):
             break
     p = rodar([sys.executable, caminho], AQUI)
     if p.returncode == 0:
-        return bug, [], []
+        return bug, [], [], False
     saida = p.stdout.decode("utf-8", "replace").strip().splitlines()
-    return bug, ["saiu com codigo %d" % p.returncode] + saida[-6:], []
+    return bug, ["saiu com codigo %d" % p.returncode] + saida[-6:], [], False
 
 
 def aberto(caminho):
@@ -346,9 +386,26 @@ def conferir_ferramentas():
     return not problema
 
 
+def tarefas_pedidas():
+    """Quantos testes de cada vez. O motor e monotarefa, entao vale um por
+    nucleo; mais do que isso so disputa disco."""
+    for i, a in enumerate(sys.argv):
+        if a == "--tarefas" and i + 1 < len(sys.argv):
+            return max(1, int(sys.argv[i + 1]))
+        if a.startswith("--tarefas="):
+            return max(1, int(a.split("=", 1)[1]))
+    return max(1, min(8, os.cpu_count() or 4))
+
+
 def main():
-    argv = [a for a in sys.argv[1:] if not a.startswith("-")]
+    argv = [a for a in sys.argv[1:]
+            if not a.startswith("-") and not a.isdigit()]
     manter = "--manter" in sys.argv
+    tarefas = tarefas_pedidas()
+    if "--sem-cache" in sys.argv:
+        os.environ["COPPE_SEM_CACHE"] = "1"
+        import medidas
+        medidas.SEM_CACHE = True
     # O nome de um teste e r, rt ou rtu, um numero e um apelido. O numero nao e
     # enfeite: sem ele,
     # "r" no comeco do nome bastava, e este proprio arquivo -- run-regressivo.py
@@ -380,28 +437,49 @@ def main():
 
     ruins = 0
     avisos = 0
-    for t in testes:
+    docache = 0
+
+    def rodar_um(t):
         if t.endswith(".py"):
-            bug, falhas, pulados = um_teste_python(os.path.join(AQUI, t))
-        else:
-            bug, falhas, pulados = um_teste(os.path.join(AQUI, t), manter)
+            return t, um_teste_python(os.path.join(AQUI, t))
+        return t, um_teste(os.path.join(AQUI, t), manter)
+
+    def relatar(t, resultado):
+        """Uma linha por teste, na ordem em que cada um termina."""
+        bug, falhas, pulados, veio_do_cache = resultado
         nome = os.path.splitext(t)[0]
+        marca = " (cache)" if veio_do_cache else ""
         if falhas:
-            ruins += 1
-            print("FALHOU  %s  -- %s" % (nome, bug))
+            print("FALHOU  %s%s  -- %s" % (nome, marca, bug))
             for f in falhas:
                 print("        %s" % f)
         else:
-            print("ok      %s  -- %s" % (nome, bug))
+            print("ok      %s%s  -- %s" % (nome, marca, bug))
         for a in pulados:
-            avisos += 1
             print("        aviso: %s" % a)
+        return len(falhas) > 0, len(pulados), veio_do_cache
+
+    if tarefas == 1:
+        for t in testes:
+            _, resultado = rodar_um(t)
+            falhou, n_avisos, veio = relatar(t, resultado)
+            ruins += falhou
+            avisos += n_avisos
+            docache += veio
+    else:
+        with concurrent.futures.ThreadPoolExecutor(max_workers=tarefas) as piscina:
+            for t, resultado in piscina.map(rodar_um, testes):
+                falhou, n_avisos, veio = relatar(t, resultado)
+                ruins += falhou
+                avisos += n_avisos
+                docache += veio
 
     print("")
     if abertos:
         print("%d teste(s) de defeito ABERTO fora desta rodada; rode pelo nome: %s"
               % (len(abertos), " ".join("%s(%s)" % (t.split("-")[0], i) for t, i in abertos)))
-    print("=== %d teste(s), %d falha(s), %d aviso(s) ===" % (len(testes), ruins, avisos))
+    print("=== %d teste(s), %d falha(s), %d aviso(s), %d do cache, %d tarefa(s) ==="
+          % (len(testes), ruins, avisos, docache, tarefas))
     return 1 if ruins else 0
 
 

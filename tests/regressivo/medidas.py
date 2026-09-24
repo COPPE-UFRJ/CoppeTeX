@@ -22,6 +22,8 @@ Uso tipico:
         for pal in d.palavras(9): ...
         for frag in d.fragmentos(9): ...
 """
+import glob
+import hashlib
 import html
 import io
 import os
@@ -30,6 +32,7 @@ import shutil
 import subprocess
 import sys
 import tempfile
+import time
 import unicodedata
 import xml.etree.ElementTree as ET
 
@@ -38,6 +41,132 @@ RAIZ = os.path.dirname(os.path.dirname(AQUI))
 # COPPE_SRC aponta para outra copia da classe -- serve para provar uma correcao
 # numa pasta de rascunho antes de leva-la ao .dtx.
 SRC = os.environ.get("COPPE_SRC") or os.path.join(RAIZ, "src")
+
+
+# ---------------------------------------------------------------- cache -----
+# Compilar e o que custa. Uma rodada completa do regressivo chama o motor perto
+# de cem vezes, e em quase todas a classe e a MESMA: o que muda e o documento
+# de dez linhas em volta. O cache guarda o resultado de cada compilacao pela
+# chave do que ENTRA nela -- o .tex, a base, os arquivos ao lado, o motor, as
+# passadas -- mais o hash dos arquivos GERADOS da classe. Mexeu no .dtx, so os
+# documentos afetados voltam ao motor; nao mexeu, a segunda rodada nao chama o
+# motor nenhuma vez (#154).
+#
+# A chave inclui os gerados da classe justamente para o cache nao mascarar uma
+# mudanca: e o risco que a issue aponta, e e por isso que a chave nao e so a do
+# .tex do teste.
+CACHE = os.path.join(RAIZ, "_scratch", "cache-regressivo")
+SEM_CACHE = bool(os.environ.get("COPPE_SEM_CACHE"))
+# Sete dias: o bastante para uma semana de trabalho na mesma issue, e pouco o
+# bastante para a pasta nao crescer sem fim.
+CACHE_DIAS = 7
+_HASH_CLASSE = None
+_PODADO = False
+
+
+def hash_da_classe():
+    """O hash dos arquivos gerados da classe, calculado uma vez por processo."""
+    global _HASH_CLASSE
+    if _HASH_CLASSE is None:
+        h = hashlib.sha256()
+        alvos = []
+        for padrao in ("*.cls", "*.sty", "*.bbx", "*.cbx", "*.dbx", "*.lbx",
+                       "*.def", "*.ist", "*.bib"):
+            alvos += glob.glob(os.path.join(SRC, padrao))
+        alvos += glob.glob(os.path.join(SRC, "logos", "*.pdf"))
+        for caminho in sorted(alvos):
+            h.update(os.path.basename(caminho).encode("utf-8"))
+            try:
+                h.update(io.open(caminho, "rb").read())
+            except OSError:
+                h.update(b"?")
+        _HASH_CLASSE = h.hexdigest()
+    return _HASH_CLASSE
+
+
+def chave_de_compilacao(partes, arquivos=None):
+    """A chave do cache: o que entra na compilacao, e a classe."""
+    h = hashlib.sha256()
+    for parte in partes:
+        h.update(("%s\0" % parte).encode("utf-8"))
+    for nome in sorted(arquivos or {}):
+        h.update(("%s\0" % nome).encode("utf-8"))
+        h.update(("%s\0" % (arquivos[nome],)).encode("utf-8"))
+    h.update(hash_da_classe().encode("ascii"))
+    return h.hexdigest()[:32]
+
+
+def _podar_cache():
+    """Apaga o que passou de CACHE_DIAS. Roda uma vez por processo."""
+    global _PODADO
+    if _PODADO or not os.path.isdir(CACHE):
+        _PODADO = True
+        return
+    _PODADO = True
+    limite = time.time() - CACHE_DIAS * 86400
+    for nome in os.listdir(CACHE):
+        caminho = os.path.join(CACHE, nome)
+        try:
+            if os.path.isdir(caminho) and os.path.getmtime(caminho) < limite:
+                shutil.rmtree(caminho, ignore_errors=True)
+        except OSError:
+            pass
+
+
+def cache_ler(chave, destino, nome):
+    """Copia o resultado guardado para a pasta de trabalho. Achou? True.
+
+    Devolve tambem o codigo de saida da compilacao guardada, porque ha teste
+    que espera FALHA: o cache tem de lembrar disso, e nao so do PDF.
+    """
+    if SEM_CACHE or not chave:
+        return False, None
+    pasta = os.path.join(CACHE, chave)
+    marca = os.path.join(pasta, "retorno.txt")
+    if not os.path.exists(marca):
+        return False, None
+    try:
+        retorno = int(io.open(marca, encoding="utf-8").read().strip())
+        for arquivo in os.listdir(pasta):
+            if arquivo == "retorno.txt":
+                continue
+            shutil.copy2(os.path.join(pasta, arquivo), os.path.join(destino, arquivo))
+    except (OSError, ValueError):
+        return False, None
+    # O cache vale por sete dias a contar do ultimo uso, e nao da criacao.
+    try:
+        os.utime(pasta, None)
+    except OSError:
+        pass
+    return True, retorno
+
+
+def cache_gravar(chave, origem, nome, retorno):
+    """Guarda <nome>.* da pasta de trabalho, e o codigo de saida."""
+    if SEM_CACHE or not chave:
+        return
+    _podar_cache()
+    destino = os.path.join(CACHE, chave)
+    try:
+        os.makedirs(CACHE, exist_ok=True)
+        # Pasta provisoria com nome unico: dois testes do mesmo grupo podem
+        # gravar a mesma chave ao mesmo tempo, em paralelo.
+        provisoria = tempfile.mkdtemp(prefix=chave + ".", dir=CACHE)
+        for arquivo in os.listdir(origem):
+            if arquivo.startswith(nome + "."):
+                shutil.copy2(os.path.join(origem, arquivo),
+                             os.path.join(provisoria, arquivo))
+        io.open(os.path.join(provisoria, "retorno.txt"), "w",
+                encoding="utf-8").write("%d\n" % retorno)
+        if os.path.isdir(destino):
+            # Outro processo chegou primeiro: o resultado e o mesmo, e o dele
+            # serve.
+            shutil.rmtree(provisoria, ignore_errors=True)
+            return
+        os.replace(provisoria, destino)
+    except OSError:
+        shutil.rmtree(provisoria, ignore_errors=True)
+
 
 PT_POR_CM = 72.0 / 2.54
 
@@ -199,6 +328,11 @@ class Documento(object):
         return subprocess.run(cmd, cwd=self.pasta, env=amb,
                               stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 
+    def _chave(self):
+        return chave_de_compilacao(
+            [self.tex, self.bib or "", self.nome, self.motor, self.passadas,
+             self.biber, self.makeindex], self.arquivos)
+
     def compila(self):
         io.open(os.path.join(self.pasta, self.nome + ".tex"), "w",
                 encoding="utf-8").write(self.tex)
@@ -209,6 +343,16 @@ class Documento(object):
             io.open(os.path.join(self.pasta, nome), "w",
                     encoding="utf-8").write(conteudo)
         tex = self.nome + ".tex"
+        # O mesmo documento, com a mesma classe, ja foi compilado antes (#154).
+        chave = self._chave()
+        achou, retorno = cache_ler(chave, self.pasta, self.nome)
+        if achou:
+            self.doCache = True
+            self.retorno = retorno
+            self._paginas_xml = {}
+            self._palavras = {}
+            return
+        self.doCache = False
         self.ultima = self._rodar([self.motor, "-interaction=nonstopmode", tex])
         if self.biber:
             self._rodar(["biber", self.nome])
@@ -223,6 +367,8 @@ class Documento(object):
                 self._rodar(["makeindex", self.nome + ".idx"])
         for _ in range(self.passadas):
             self.ultima = self._rodar([self.motor, "-interaction=nonstopmode", tex])
+        self.retorno = self.ultima.returncode
+        cache_gravar(chave, self.pasta, self.nome, self.retorno)
         self._paginas_xml = {}
         self._palavras = {}
 
