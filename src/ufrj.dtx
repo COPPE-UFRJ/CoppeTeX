@@ -1461,55 +1461,130 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % anuncia como \emph{experimental e sem suporte}, com um aviso em toda
 % compilação, e só resolve as listas, não os índices. A classe não o usa.
 %
-% \section{Os nomes em inglês}\label{sec:nomesingles}
+% \section{Os dois nomes de cada comando}\label{sec:nomesingles}
 %
-% Todo comando da classe tem nome em inglês, e os documentos da entrega ---
-% |min-exemplo.tex|, |max-exemplo.tex|, |manual.tex| e o que o gerador de
-% documento vazio escreve --- usam esses nomes. Os comandos que nasceram em
-% português continuam valendo, com o mesmo efeito, para não quebrar trabalho
-% escrito antes. O texto que sai no PDF segue o idioma do trabalho, qualquer
-% que seja o nome do comando.
+% Todo comando que a classe cria tem dois nomes: um em \textbf{inglês} e um em
+% \textbf{português}. Os dois valem para sempre e fazem exatamente a mesma
+% coisa --- o segundo é um |\let| do primeiro ---, e o texto que sai no PDF
+% segue o idioma do trabalho, e não o nome do comando. Escolha um e seja
+% coerente; os documentos da entrega (|coppe-min-exemplo.tex|,
+% |coppe-max-exemplo.tex|, |manual.tex| e o que o gerador de documento vazio
+% escreve) usam o inglês.
 %
-% \DescribeMacro{\defineacronym}
-% \DescribeMacro{\useacronym}
-% \DescribeMacro{\makeloacronyms}
-% \DescribeMacro{\printloacronyms}
-% \DescribeMacro{\approvaldate}
-% \DescribeMacro{\concentrationarea}
-% \DescribeMacro{\researchline}
-% \DescribeMacro{\productiontype}
-% \DescribeMacro{\linkedproject}
-% \DescribeMacro{\projectname}
-% \DescribeMacro{\fundingagency}
-% \DescribeMacro{\catalogcard}
-% \DescribeMacro{\setupabstracts}
-% \DescribeMacro{\epigraph}
-% \DescribeMacro{\listofframes}
-% \DescribeMacro{\listofprograms}
+% \textbf{Onde está o código.} O nome em inglês é o que carrega a definição; o
+% português é apelido dele. Isso é regra, e não gosto: os apelidos moram todos
+% em um bloco só, no fim do código da classe, e o |tools/conferir-manual.py|
+% reprova a entrega quando um comando público novo aparece sem o seu par ou
+% com o par declarado fora do bloco. Espalhados pelo código, como estavam até a
+% 5.0, um comando novo nascia com um nome só e ninguém percebia.
+%
+% Três grupos ficam de fora, de propósito. \textbf{O que é do \LaTeX\ ou de um
+% pacote} --- |\title|, |\author|, |\date|, |\appendix|, |\index|,
+% |\tableofcontents|, |\listoffigures|, |\listoftables|, |\maketitle|,
+% |\frontmatter|, |\mainmatter|, |\backmatter|, |\printbibliography|,
+% |\printindex|, |\listofalgorithms|, |\enquote| ---, porque o nome não é
+% nosso para traduzir; |\citacao| existe como nome português de |\enquote| por
+% ser citação, que é palavra do Manual. Depois, |\volume| e |\volumes|, iguais
+% nos dois idiomas, e |\citepapud| e |\citetapud|, cujo nome é o da
+% família do |biblatex| mais o latim \emph{apud}. E \textbf{os três da última
+% linha da tabela}, em que o código está no nome em português: |\listofquadros|
+% e |\listofprogramas|, porque quadro e programa são os nomes do Manual, e
+% |\epigrafe|, que só cede o nome inglês a quem não carregou o pacote
+% |epigraph| --- veja o aviso no fim desta seção.
+%
 % \DescribeEnv{framefloat}
 % \begin{center}\small
 % \begin{tabular}{@{}ll@{}}
 % \hline
-% \textbf{Em inglês} & \textbf{Em português} \\
-% \hline
-% |\defineacronym|, |\useacronym| & |\newsigla|, |\sigla| \\
-% |\makeloacronyms|, |\printloacronyms| & |\makelosiglas|, |\printlosiglas| \\
+% \textbf{Em inglês (tem o código)} & \textbf{Em português (apelido)} \\
+% \multicolumn{2}{@{}l@{}}{\itshape A capa, a folha de rosto e os dados do trabalho} \\
+% |\advisor| & |\orientador| \\
+% |\coadvisor| & |\coorientador| \\
+% |\examiner| & |\examinador| \\
+% |\department| & |\departamento| \\
+% |\foreigntitle| & |\tituloestrangeiro| \\
+% |\subtitle| & |\subtitulo| \\
+% |\foreignsubtitle| & |\subtituloestrangeiro| \\
+% |\titlein| & |\tituloem| \\
+% |\subtitlein| & |\subtituloem| \\
+% |\keyword| & |\palavrachave| \\
+% |\foreignkeyword| & |\palavrachaveestrangeira| \\
+% |\braziliankeyword| & |\palavrachavebrasileira| \\
 % |\approvaldate| & |\dataaprovacao| \\
-% |\concentrationarea|, |\researchline| & |\areaconcentracao|, |\linhapesquisa| \\
-% |\productiontype|, |\linkedproject| & |\tipoproducao|, |\projetovinculado| \\
-% |\projectname|, |\fundingagency| & |\nomeprojeto|, |\agenciafomento| \\
+% |\concentrationarea| & |\areaconcentracao| \\
+% |\researchline| & |\linhapesquisa| \\
+% |\projectname| & |\nomeprojeto| \\
+% |\fundingagency| & |\agenciafomento| \\
 % |\catalogcard| & |\fichacatalografica| \\
 % |\setupabstracts| & |\configuraresumos| \\
-% |\epigraph| & |\epigrafe| \\
-% |\listofframes|, ambiente |framefloat| & |\listofquadros|, ambiente |quadro| \\
+% |\dedication| & |\dedicatoria| \\
+% |\freeconfig| & |\configuracaolivre| \\
+% |\annex| & |\anexo| \\
+% |\university| & |\universidade| \\
+% |\city| & |\cidade| \\
+% |\state| & |\estado| \\
+% |\country| & |\pais| \\
+% |\place| & |\local| \\
+% |\volumefiles| & |\arquivosdosvolumes| \\
+% \hline
+% \multicolumn{2}{@{}l@{}}{\itshape As listas, as siglas, os símbolos e o glossário} \\
+% |\defineacronym| & |\newsigla| \\
+% |\useacronym| & |\sigla| \\
+% |\makeloacronyms| & |\makelosiglas| \\
+% |\printloacronyms| & |\printlosiglas| \\
+% |\makeloabbreviations| & |\makeloabreviaturas| \\
+% |\printloabbreviations| & |\printloabreviaturas| \\
+% |\makelosymbols| & |\makelosimbolos| \\
+% |\printlosymbols| & |\printlosimbolos| \\
+% |\makeglossarylist| & |\makelistaglossario| \\
+% |\printglossarylist| & |\printlistaglossario| \\
+% |\abbrev| & |\abreviatura| \\
+% |\acron| & |\acronimo| \\
+% |\symbl| & |\simbolo| \\
+% |\glossaryterm| & |\termoglossario| \\
+% |\newufrjfloat| & |\novofloatufrj| \\
+% |\illustrationwidth| & |\largurailustracao| \\
+% |\cpsource| & |\cpfonte| \\
+% |\source| & |\fonte| \\
+% \hline
+% \multicolumn{2}{@{}l@{}}{\itshape As listagens de programa} \\
+% |\javastyle| & |\estilojava| \\
+% |\javainline| & |\javaembutido| \\
+% |\javaexternal| & |\javaexterno| \\
+% |\pythonstyle| & |\estilopython| \\
+% |\pythoninline| & |\pythonembutido| \\
+% |\pythonexternal| & |\pythonexterno| \\
+% |\htmlstyle| & |\estilohtml| \\
+% |\xmlstyle| & |\estiloxml| \\
+% |\prologstyle| & |\estiloprolog| \\
+% \hline
+% \multicolumn{2}{@{}l@{}}{\itshape A interface que o estilo de unidade usa} \\
+% |\ufrjdeclareunit| & |\ufrjdeclaraunidade| \\
+% |\ufrjdeclareprogram| & |\ufrjdeclaraprograma| \\
+% |\ufrjdeclarelogo| & |\ufrjdeclaralogotipo| \\
+% |\ufrjdeclarelogos| & |\ufrjdeclaralogotipos| \\
+% |\ufrjdeclarenorm| & |\ufrjdeclaranorma| \\
+% |\ufrjdeclareplace| & |\ufrjdeclaralocal| \\
+% |\ufrjdefunitstring| & |\ufrjdefinetextodaunidade| \\
+% |\ufrjdefstring| & |\ufrjdefinetexto| \\
+% |\ufrjstring| & |\ufrjtexto| \\
+% |\ufrjmainstring| & |\ufrjtextoprincipal| \\
+% |\ufrjforeignstring| & |\ufrjtextoestrangeiro| \\
+% |\useufrjlanguage| & |\usaidiomaufrj| \\
+% |\ufrjfinalpage| & |\ufrjpaginafinal| \\
+% \hline
+% \multicolumn{2}{@{}l@{}}{\itshape Os três em que o código está no nome em português} \\
+% |\listofframes| & |\listofquadros| \\
 % |\listofprograms| & |\listofprogramas| \\
-% |\source|, |\cpsource| & |\fonte|, |\cpfonte| \\
-% |\enquote| & |\citacao| \\
-% |\For|, |\While|, |\If|, |\KwData|, |\KwResult|, |\KwTo|, |\KwRet| &
-%   |\Para|, |\Enquanto|, |\Se|, |\Dados|, |\Resultado|, |\Ate|, |\Retorna| \\
+% |\epigraph| & |\epigrafe| \\
 % \hline
 % \end{tabular}
 % \end{center}
+%
+% Os comandos de algoritmo seguem o mesmo par --- |\For|, |\While|, |\If|,
+% |\KwData|, |\KwResult|, |\KwTo| e |\KwRet| são |\Para|, |\Enquanto|,
+% |\Se|, |\Dados|, |\Resultado|, |\Ate| e |\Retorna| ---, e o ambiente
+% |framefloat| é o ambiente |quadro|.
 %
 % Os \textbf{valores} também: |\productiontype| aceita |bibliographic|,
 % |artistic|, |technological| e |technical| (ou |bibliografica|, |artistica|,
@@ -1529,8 +1604,11 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % São poucos, porque a classe foi feita para que quase tudo vá depois.
 %
 % \DescribeMacro{\makelosymbols}
+% \DescribeMacro{\makelosimbolos}
 % \DescribeMacro{\makeloabbreviations}
+% \DescribeMacro{\makeloabreviaturas}
 % \DescribeMacro{\makelosiglas}
+% \DescribeMacro{\makeloacronyms}
 % Ligam a coleta da lista de símbolos, da lista de abreviaturas e da lista de
 % siglas. Sem eles, |\symbl|, |\abbrev| e |\acron| não registram nada e as
 % listas saem vazias. Vão no preâmbulo, uma vez cada. |\makelosiglas| é
@@ -1538,21 +1616,25 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % então ``Lista de Abreviaturas e Siglas''.
 %
 % \DescribeMacro{\newufrjfloat}
+% \DescribeMacro{\novofloatufrj}
 % |\newufrjfloat{ambiente}{Nome}{Título da lista}| cria um flutuante seu, com
 % a mesma regra dos demais: legenda em cima, |\source| embaixo, numeração por
 % capítulo e uma lista própria, chamada |\listof<ambiente>s|. Veja a
 % seção~\ref{sec:floats}.
 %
 % \DescribeMacro{\useufrjlanguage}
+% \DescribeMacro{\usaidiomaufrj}
 % Carrega um pacote de idioma a mais, sem torná-lo principal nem estrangeiro.
 % Serve para citar ou transcrever num terceiro idioma. Veja a
 % seção~\ref{sec:multilingual}.
 %
 % \DescribeMacro{\newsigla}
+% \DescribeMacro{\defineacronym}
 % |\newsigla{chave}{sigla}{significado}| declara uma sigla para uso com
 % |\sigla|. Veja a seção~\ref{sec:siglas}.
 %
 % \DescribeMacro{\freeconfig}
+% \DescribeMacro{\configuracaolivre}
 % Escapatória para um tipo de trabalho que a classe não prevê. Recebe seis
 % argumentos --- grau, nome do grau, título obtido no idioma principal, o mesmo
 % no estrangeiro, tipo do documento e tipo no estrangeiro --- e sobrescreve o que
@@ -1572,15 +1654,20 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %
 % \DescribeMacro{\title}
 % \DescribeMacro{\foreigntitle}
+% \DescribeMacro{\tituloestrangeiro}
 % \DescribeMacro{\titlein}
+% \DescribeMacro{\tituloem}
 % O título. |\title| é o português, |\foreigntitle| é o inglês, e
 % |\titlein{idioma}{texto}| registra o título em qualquer outro. A capa e a
 % folha de rosto imprimem o do idioma principal; a página de |abstract| imprime
 % o do estrangeiro.
 %
 % \DescribeMacro{\subtitle}
+% \DescribeMacro{\subtitulo}
 % \DescribeMacro{\foreignsubtitle}
+% \DescribeMacro{\subtituloestrangeiro}
 % \DescribeMacro{\subtitlein}
+% \DescribeMacro{\subtituloem}
 % O subtítulo, opcional, nos mesmos três sabores. Sai depois do título,
 % separado por dois pontos, em caixa normal --- o título vai em maiúsculas e o
 % subtítulo não, como os Anexos A e B do Manual mostram.
@@ -1590,8 +1677,11 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % existe porque a ficha catalográfica e a bibliografia precisam inverter o nome.
 %
 % \DescribeMacro{\advisor}
+% \DescribeMacro{\orientador}
 % \DescribeMacro{\coadvisor}
+% \DescribeMacro{\coorientador}
 % \DescribeMacro{\examiner}
+% \DescribeMacro{\examinador}
 % A orientação e a banca:
 %
 % \begin{verbatim}
@@ -1626,6 +1716,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % |semorientadornabanca| deixa só os examinadores.
 %
 % \DescribeMacro{\department}
+% \DescribeMacro{\departamento}
 % A sigla do Programa: |\department{PESC}|. A classe escreve o nome por extenso
 % onde ele é preciso, e o nome vem do estilo da unidade, que declara os
 % Programas dela: o |ufrj-coppe| declara os treze da COPPE, listados no
@@ -1638,8 +1729,11 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % |\dataaprovacao|.
 %
 % \DescribeMacro{\keyword}
+% \DescribeMacro{\palavrachave}
 % \DescribeMacro{\foreignkeyword}
+% \DescribeMacro{\palavrachaveestrangeira}
 % \DescribeMacro{\braziliankeyword}
+% \DescribeMacro{\palavrachavebrasileira}
 % As palavras-chave, uma chamada por palavra. |\keyword| é a do idioma
 % principal, |\foreignkeyword| a do estrangeiro, e |\braziliankeyword| a do
 % português quando o trabalho não é em português. Fecham os três resumos
@@ -1678,6 +1772,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \subsection{Folha de rosto e folha da Coleta CAPES}\label{sec:folha-adicional}
 %
 % \DescribeMacro{\areaconcentracao}
+% \DescribeMacro{\concentrationarea}
 % A área de concentração, obrigatória: é um dos campos da Coleta CAPES, e sai
 % na \textbf{folha adicional}. \textbf{Não} sai na folha de rosto nem na de
 % aprovação --- o modelo oficial do SiBI e os Anexos B e D não a põem no bloco
@@ -1685,12 +1780,14 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % |areanafolhaderosto|, e a frase volta às duas folhas.
 %
 % \DescribeMacro{\linhapesquisa}
+% \DescribeMacro{\researchline}
 % A linha de pesquisa, impressa na folha de rosto à margem esquerda, logo acima
 % dos orientadores, como o modelo do SiBI mostra. O rótulo segue o idioma do
 % trabalho. Deixando-a de fora, ou com o argumento vazio, a folha sai sem a linha
 % e sem erro nenhum.
 %
 % \DescribeMacro{\dataaprovacao}
+% \DescribeMacro{\approvaldate}
 % A data em que a banca aprovou o trabalho, por extenso:
 % |\dataaprovacao{15 de setembro de 2026}|. Sai na folha de aprovação.
 % \textbf{Sem ela, a folha escreve ``a ser determinada''}, no idioma do trabalho
@@ -1698,20 +1795,25 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % é digital.
 %
 % \DescribeMacro{\tipoproducao}
+% \DescribeMacro{\productiontype}
 % O tipo de produção intelectual, um de |bibliografica|, |artistica|,
 % |tecnologica| ou |tecnica|. Qualquer outro valor gera aviso e nenhum quadrinho
 % marcado. São os quatro do Anexo H.
 %
 % \DescribeMacro{\projetovinculado}
+% \DescribeMacro{\linkedproject}
 % \DescribeMacro{\nomeprojeto}
+% \DescribeMacro{\projectname}
 % Se o trabalho se vincula a um projeto de pesquisa (|sim| ou |nao|) e, em caso
 % afirmativo, o nome do projeto.
 %
 % \DescribeMacro{\agenciafomento}
+% \DescribeMacro{\fundingagency}
 % |\agenciafomento{Nome por extenso}{SIGLA}|, uma chamada por agência. O Anexo H
 % pede ``Agência(s)'', no plural.
 %
 % \DescribeMacro{\fichacatalografica}
+% \DescribeMacro{\catalogcard}
 % |\fichacatalografica{ficha.pdf}| inclui a ficha oficial, gerada em
 % \url{http://fichacatalografica.sibi.ufrj.br/}. O argumento opcional é a
 % página do PDF, quando ele tiver mais de uma: |\fichacatalografica[2]{doc.pdf}|.
@@ -1732,10 +1834,12 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % folha de aprovação. Sem eles, a numeração das folhas sai errada.
 %
 % \DescribeMacro{\dedication}
+% \DescribeMacro{\dedicatoria}
 % A dedicatória, numa folha só para ela, embaixo, num bloco que vai do meio da
 % mancha à margem direita, com o texto começando no meio da mancha (3.1.2.2.1).
 %
 % \DescribeMacro{\epigrafe}
+% \DescribeMacro{\epigraph}
 % |\epigrafe{citação}{autoria}| compõe a epígrafe (3.1.2.2.3), numa folha
 % própria, depois dos agradecimentos, no mesmo lugar da dedicatória; a autoria
 % vai embaixo do texto, alinhada à direita. Opcional.
@@ -1799,6 +1903,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % |resumosemreferencia|.
 %
 % \DescribeMacro{\configuraresumos}
+% \DescribeMacro{\setupabstracts}
 % \par\textbf{Os cinco elementos da folha.} A folha abre com o \textbf{título}
 % --- RESUMO, ABSTRACT, RESUMEN, no idioma daquele resumo ---, centralizado
 % como todo título sem indicativo numérico (2.6). O título não se desliga.
@@ -1850,6 +1955,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % quatro.
 %
 % \DescribeMacro{\ufrjfinalpage}
+% \DescribeMacro{\ufrjpaginafinal}
 % A folha de colófon, no fim de tudo: diz com que versão da classe, em que
 % motor, em que fonte, em que máquina, em que dia e a que hora o documento foi
 % composto, e contra qual norma. \textbf{Tudo é medido na hora de compilar}
@@ -1867,11 +1973,16 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \DescribeMacro{\listoffigures}
 % \DescribeMacro{\listoftables}
 % \DescribeMacro{\listofquadros}
+% \DescribeMacro{\listofframes}
 % \DescribeMacro{\listofprogramas}
+% \DescribeMacro{\listofprograms}
 % \DescribeMacro{\listofalgorithms}
 % \DescribeMacro{\printloabbreviations}
+% \DescribeMacro{\printloabreviaturas}
 % \DescribeMacro{\printlosiglas}
+% \DescribeMacro{\printloacronyms}
 % \DescribeMacro{\printlosymbols}
+% \DescribeMacro{\printlosimbolos}
 % A ordem é a da 3.1.2: primeiro as listas de \textbf{ilustração} --- figuras,
 % quadros, programas, algoritmos e as dos tipos criados com |\newufrjfloat|,
 % porque quadro, programa e algoritmo são ilustrações (2.10) ---, depois a de
@@ -2011,18 +2122,27 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \end{verbatim}
 %
 % \DescribeMacro{\pythoninline}
+% \DescribeMacro{\pythonembutido}
 % \DescribeMacro{\javainline}
+% \DescribeMacro{\javaembutido}
 % Código no meio do texto, sem quebrar o parágrafo.
 %
 % \DescribeMacro{\pythonexternal}
+% \DescribeMacro{\pythonexterno}
 % \DescribeMacro{\javaexternal}
+% \DescribeMacro{\javaexterno}
 % Listagem lida de um arquivo, em vez de digitada no |.tex|.
 %
 % \DescribeMacro{\pythonstyle}
+% \DescribeMacro{\estilopython}
 % \DescribeMacro{\javastyle}
+% \DescribeMacro{\estilojava}
 % \DescribeMacro{\xmlstyle}
+% \DescribeMacro{\estiloxml}
 % \DescribeMacro{\htmlstyle}
+% \DescribeMacro{\estilohtml}
 % \DescribeMacro{\prologstyle}
+% \DescribeMacro{\estiloprolog}
 % Aplicam o estilo de uma linguagem sem abrir o ambiente. Servem para ajustar uma
 % listagem específica.
 %
@@ -2041,8 +2161,11 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \section{Siglas, símbolos e abreviaturas}\label{sec:siglas}
 %
 % \DescribeMacro{\abbrev}
+% \DescribeMacro{\abreviatura}
 % \DescribeMacro{\acron}
+% \DescribeMacro{\acronimo}
 % \DescribeMacro{\symbl}
+% \DescribeMacro{\simbolo}
 % |\abbrev{abreviatura}{significado}|, |\acron{sigla}{significado}| e
 % |\symbl{símbolo}{significado}| registram uma entrada na lista correspondente,
 % no ponto do texto em que você a escreve. Exigem |\makeloabbreviations|,
@@ -2080,6 +2203,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %
 % \DescribeMacro{\newsigla}
 % \DescribeMacro{\sigla}
+% \DescribeMacro{\useacronym}
 % A 2.8 do Manual manda que a sigla, na primeira vez em que aparece no texto,
 % venha precedida da forma completa. Fazer isso à mão em trinta siglas é
 % garantir que uma vai escapar. Declare cada uma no preâmbulo e use |\sigla|:
@@ -2099,6 +2223,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %
 % \DescribeMacro{\appendix}
 % \DescribeMacro{\annex}
+% \DescribeMacro{\anexo}
 % |\appendix| abre os apêndices --- texto que \textbf{você} escreveu, para
 % complementar a argumentação. |\annex| abre os anexos --- documento que
 % você \textbf{não} escreveu, que serve de fundamentação, comprovação
@@ -2120,8 +2245,11 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % no capítulo ``Glossário e índice'' do |manual.pdf|.
 %
 % \DescribeMacro{\makeglossarylist}
+% \DescribeMacro{\makelistaglossario}
 % \DescribeMacro{\glossaryterm}
+% \DescribeMacro{\termoglossario}
 % \DescribeMacro{\printglossarylist}
+% \DescribeMacro{\printlistaglossario}
 % \textbf{Glossário.} |\makeglossarylist| no preâmbulo;
 % |\glossaryterm{termo}{definição}| onde o termo aparece, sem imprimir nada;
 % |\printglossarylist| depois de |\printbibliography|. Os termos saem em ordem
@@ -2768,9 +2896,13 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % |italian|.
 %
 % \DescribeMacro{\ufrjdefstring}
+% \DescribeMacro{\ufrjdefinetexto}
 % \DescribeMacro{\ufrjstring}
+% \DescribeMacro{\ufrjtexto}
 % \DescribeMacro{\ufrjmainstring}
+% \DescribeMacro{\ufrjtextoprincipal}
 % \DescribeMacro{\ufrjforeignstring}
+% \DescribeMacro{\ufrjtextoestrangeiro}
 % Esses quatro são a tabela de textos por dentro: o primeiro declara um valor,
 % os outros três o leem --- no idioma corrente, no principal e no estrangeiro.
 % Você só precisa deles se estiver escrevendo um pacote de idioma.
@@ -4373,7 +4505,6 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
 \newcommand\ufrj@ilwidth{}
 \newcommand\illustrationwidth[1]{%
   \captionsetup{width=#1}\def\ufrj@ilwidth{#1}}
-\let\largurailustracao\illustrationwidth
 \newcommand{\cpsource}[1]{%
   \par\addvspace{\smallskipamount}%
   \ifx\ufrj@ilwidth\@empty
@@ -4383,9 +4514,6 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
       \parbox{\ufrj@ilwidth}{%
         \footnotesize\singlespacing\raggedright\cpsourcename: #1\par}\par}%
   \fi}
-\let\cpfonte\cpsource
-\@ifundefined{source}{\let\source\cpsource}{}%
-\@ifundefined{fonte}{\let\fonte\cpsource}{}%
 % \newufrjfloat{env}{caption name}{list title}: declare an extra caption-on-top
 % float (e.g. "picture") that supports \source and gains a \listof<env>s command.
 % \floatstyle is NOT wrapped in a group here: \newfloat defines the environment
@@ -5632,6 +5760,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % nenhuma, e sem estilo nenhum ela compõe um trabalho com os textos da UFRJ.
 %
 % \DescribeMacro{\ufrjdeclareunit}
+% \DescribeMacro{\ufrjdeclaraunidade}
 % |\ufrjdeclareunit|\marg{nome por extenso}\marg{nome na capa}\marg{sigla}
 % declara a unidade. O nome por extenso vai, numa linha só, na referência do
 % trabalho que abre as folhas de resumo; o nome na capa é o mesmo nome com as
@@ -5639,6 +5768,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % folha de rosto, nos metadados do PDF e na ficha em rascunho.
 %
 % \DescribeMacro{\ufrjdeclareprogram}
+% \DescribeMacro{\ufrjdeclaraprograma}
 % |\ufrjdeclareprogram|\marg{sigla}\marg{nome em português}\marg{nome em
 % inglês} declara um Programa, que o autor escolhe com |\department|\marg{sigla}.
 % O nome em inglês só aparece na folha do \emph{abstract}; em todo o resto, e nas
@@ -5649,7 +5779,9 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % confere: |[Engenheiro Civil]|.
 %
 % \DescribeMacro{\ufrjdeclarelogo}
+% \DescribeMacro{\ufrjdeclaralogotipo}
 % \DescribeMacro{\ufrjdeclarelogos}
+% \DescribeMacro{\ufrjdeclaralogotipos}
 % |\ufrjdeclarelogo|\oarg{altura}\marg{arquivo} declara o logotipo da
 % \emph{unidade}, que vai no alto da capa, à direita, pelo nome do arquivo
 % |.pdf| sem a extensão; a altura, 2\,cm por padrão, vale para os dois
@@ -5662,10 +5794,15 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %
 %
 % \DescribeMacro{\city}
+% \DescribeMacro{\cidade}
 % \DescribeMacro{\state}
+% \DescribeMacro{\estado}
 % \DescribeMacro{\country}
+% \DescribeMacro{\pais}
 % \DescribeMacro{\place}
+% \DescribeMacro{\local}
 % \DescribeMacro{\university}
+% \DescribeMacro{\universidade}
 % \textbf{Onde o trabalho é defendido.} A UFRJ não é só o Rio de Janeiro: há
 % campus em Macaé, em Duque de Caxias (Xerém) e fora da capital, e a cidade
 % aparece na capa, na folha de rosto, na ficha, na referência do alto dos
@@ -5686,16 +5823,19 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % quem chega de outra classe.
 %
 % \DescribeMacro{\ufrjdeclareplace}
+% \DescribeMacro{\ufrjdeclaralocal}
 % Do lado da unidade, |\ufrjdeclareplace| é a declaração do padrão dela, e não
 % uma imposição: se o autor já tiver escolhido a cidade, ela fica com a dele.
 %
 % \DescribeMacro{\ufrjdeclarenorm}
+% \DescribeMacro{\ufrjdeclaranorma}
 % |\ufrjdeclarenorm|\marg{artigo}\marg{título} troca a norma que o colofão diz
 % seguir. O artigo vem à parte porque a frase é ``em conformidade com
 % \meta{artigo} \meta{título}'', e \emph{o} Manual e \emph{a} Norma pedem
 % artigos diferentes.
 %
 % \DescribeMacro{\ufrjdefunitstring}
+% \DescribeMacro{\ufrjdefinetextodaunidade}
 % |\ufrjdefunitstring|\marg{idioma}\marg{chave}\marg{texto} define um texto da
 % unidade num idioma, com precedência sobre a tabela da classe e dos pacotes de
 % idioma, não importa qual dos dois foi carregado antes. As chaves que uma
@@ -5992,7 +6132,6 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % classe avisa e segue; na segunda tudo esta no lugar.
 \newcommand\ufrj@volfiles{}
 \newcommand\volumefiles[1]{\gdef\ufrj@volfiles{#1}}
-\let\arquivosdosvolumes\volumefiles
 % A folha em que ESTE volume comeca, lida do .vol do volume anterior.
 \newcommand\ufrj@volstart{0}
 \newcommand\ufrj@setvolstart[1]{\gdef\ufrj@volstart{#1}}
@@ -6220,19 +6359,19 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % ``a ser determinada''.
 %    \begin{macrocode}
 \newcommand\ufrj@areaconc{}
-\newcommand\areaconcentracao[1]{\gdef\ufrj@areaconc{#1}}
+\newcommand\concentrationarea[1]{\gdef\ufrj@areaconc{#1}}
 \newcommand\ufrj@dataaprov{}
-\newcommand\dataaprovacao[1]{\gdef\ufrj@dataaprov{#1}}
+\newcommand\approvaldate[1]{\gdef\ufrj@dataaprov{#1}}
 \newcommand\ufrj@linhapesq{}
-\newcommand\linhapesquisa[1]{\gdef\ufrj@linhapesq{#1}}
+\newcommand\researchline[1]{\gdef\ufrj@linhapesq{#1}}
 \newcommand\ufrj@tipoproducao{}
 \newcommand\tipoproducao[1]{\gdef\ufrj@tipoproducao{#1}}
 \newcommand\ufrj@projetovinc{}
 \newcommand\projetovinculado[1]{\gdef\ufrj@projetovinc{#1}}
 \newcommand\ufrj@nomeprojeto{}
-\newcommand\nomeprojeto[1]{\gdef\ufrj@nomeprojeto{#1}}
+\newcommand\projectname[1]{\gdef\ufrj@nomeprojeto{#1}}
 \newcounter{ufrjagencias}
-\newcommand\agenciafomento[2]{%
+\newcommand\fundingagency[2]{%
   \global\@namedef{UfrjAgencia:\expandafter\the\c@ufrjagencias}{#1}%
   \global\@namedef{UfrjAgenciaSigla:\expandafter\the\c@ufrjagencias}{#2}%
   \global\addtocounter{ufrjagencias}{1}}
@@ -7108,7 +7247,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %    \begin{macrocode}
 \newcommand\ufrj@fichafile{}
 \newcommand\ufrj@fichapage{1}
-\newcommand\fichacatalografica[2][1]{%
+\newcommand\catalogcard[2][1]{%
   \gdef\ufrj@fichapage{#1}\gdef\ufrj@fichafile{#2}}
 \newcommand\ufrj@marcatipo[1]{%
   \ifthenelse{\equal{\ufrj@tipoproducao}{#1}}{$\times$}{\phantom{$\times$}}}
@@ -7381,12 +7520,12 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
       \csname @ufrj#1false\endcsname
     \else
       \ClassError{ufrj}{%
-        \string\configuraresumos: argumento `#2' invalido}{%
-        Cada um dos quatro argumentos de \string\configuraresumos\space tem
+        \string\setupabstracts: argumento `#2' invalido}{%
+        Cada um dos quatro argumentos de \string\setupabstracts\space tem
         de ser `true' ou `false'.}%
     \fi
   \fi}
-\newcommand\configuraresumos[4]{%
+\newcommand\setupabstracts[4]{%
   \ufrj@setresflag{residpag}{#1}%
   \ufrj@setresflag{restitulo}{#2}%
   \ufrj@setresflag{resorient}{#3}%
@@ -7730,13 +7869,13 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % alfabetica".
 %    \begin{macrocode}
 \newif\if@ufrjsiglas \@ufrjsiglasfalse
-\def\makelosiglas{%
+\def\makeloacronyms{%
   \newwrite\@lsgfile
   \immediate\openout\@lsgfile=\jobname.sgx
   \global\@ufrjsiglastrue
   \typeout{Writing index of acronyms file \jobname.sgx}%
-  \let\makelosiglas\@empty}
-\@onlypreamble\makelosiglas
+  \let\makeloacronyms\@empty}
+\@onlypreamble\makeloacronyms
 \newcommand\@wrsgx[3]{%
   \protected@write\@lsgfile{}%
     {\string\indexentry{#1[#2] #3|ufrj@semfolio}{\thepage}}%
@@ -7751,8 +7890,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \else
     \@ifundefined{abbrev}{}{\abbrev[#1]{#2}{#3}}%
   \fi}
-\newcommand\printlosiglas{%
-\ufrj@ordem{11}{lista de abreviaturas e siglas}{\string\printlosiglas}%
+\newcommand\printloacronyms{%
+\ufrj@ordem{11}{lista de abreviaturas e siglas}{\string\printloacronyms}%
 \begingroup\@ufrjglosspretrue
 \renewcommand\glossaryname{\listsiglaname}%
 \@input@{\jobname.lsg}\endgroup}
@@ -7945,7 +8084,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % |\sigla*{key}| forces the full form. The first-use flag is set globally so it
 % survives groups (floats, footnotes).
 %    \begin{macrocode}
-\newcommand\newsigla[3]{%
+\newcommand\defineacronym[3]{%
   \@namedef{ufrj@sigla@s@#1}{#2}%
   \@namedef{ufrj@sigla@l@#1}{#3}}
 \newcommand\ufrj@sigla@reg[1]{%
@@ -7953,7 +8092,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \newcommand\ufrj@sigla@full[1]{%
   \@nameuse{ufrj@sigla@l@#1}\space(\@nameuse{ufrj@sigla@s@#1})}
 \newcommand\ufrj@sigla@undef[1]{%
-  \PackageWarning{ufrj}{Sigla '#1' nao declarada com \string\newsigla}%
+  \PackageWarning{ufrj}{Sigla '#1' nao declarada com \string\defineacronym}%
   \textbf{??#1??}}
 \newcommand\ufrj@sigla@first[1]{%
   \global\@namedef{ufrj@sigla@done@#1}{}\ufrj@sigla@reg{#1}\ufrj@sigla@full{#1}}
@@ -7964,7 +8103,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \newcommand\ufrj@sigla@star[1]{%
   \@ifundefined{ufrj@sigla@s@#1}{\ufrj@sigla@undef{#1}}%
     {\global\@namedef{ufrj@sigla@done@#1}{}\ufrj@sigla@full{#1}}}
-\newcommand\sigla{\@ifstar\ufrj@sigla@star\ufrj@sigla@norm}
+\newcommand\useacronym{\@ifstar\ufrj@sigla@star\ufrj@sigla@norm}
 %    \end{macrocode}
 % \end{macro}
 % \end{macro}
@@ -8496,25 +8635,10 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \renewcommand\printbibliography[1][]{%
   \ufrj@orig@printbibliography[#1]%
   \ufrj@bibEnd}
-% Os nomes em ingles (issue 102). Todo comando da classe que so tinha nome em
-% portugues ganha um em ingles, e os dois valem para sempre: o de portugues nao
-% sai, para nao quebrar trabalho escrito antes. Os documentos da entrega usam o
-% ingles. \newacronym e \acronym foram evitados de proposito: sao dos pacotes
+% O nome em portugues de cada comando esta no bloco unico de apelidos, no fim
+% do codigo da classe; aqui ficam so o ambiente e os VALORES em ingles.
+% \newacronym e \acronym foram evitados de proposito: sao dos pacotes
 % glossaries e acronym, e colidiriam com quem os carrega.
-\let\defineacronym\newsigla
-\let\useacronym\sigla
-\let\makeloacronyms\makelosiglas
-\@onlypreamble\makeloacronyms
-\let\printloacronyms\printlosiglas
-\let\approvaldate\dataaprovacao
-\let\concentrationarea\areaconcentracao
-\let\researchline\linhapesquisa
-\let\projectname\nomeprojeto
-\let\fundingagency\agenciafomento
-\let\catalogcard\fichacatalografica
-\let\setupabstracts\configuraresumos
-\let\listofframes\listofquadros
-\let\listofprograms\listofprogramas
 % O ambiente em ingles do quadro nao pode se chamar `frame': \frame e
 % comando do proprio LaTeX (uma moldura no modo picture).
 \newenvironment{framefloat}[1][htbp]{\begin{quadro}[#1]}{\end{quadro}}
@@ -8530,9 +8654,6 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \newcommand\productiontype[1]{\ufrj@valorpt\tipoproducao
   {bibliographic/bibliografica,artistic/artistica,technological/tecnologica,technical/tecnica}{#1}}
 \newcommand\linkedproject[1]{\ufrj@valorpt\projetovinculado{yes/sim,no/nao}{#1}}
-% \epigraph so se ninguem o tiver definido: o pacote epigraph tem um comando com
-% o mesmo nome e os mesmos dois argumentos, e quem o carrega fica com o dele.
-\AtBeginDocument{\providecommand\epigraph{\epigrafe}}
 %    \end{macrocode}
 %
 %    \begin{macrocode}
@@ -8593,6 +8714,122 @@ postamble
 % the \appendixname of that moment. Re-issue it now that the name is "Anexo".
     \ufrj@appendixheadings
 }
+% ---------------------------------------------------------------------------
+% OS APELIDOS EM PORTUGUES. Todo comando publico que a classe cria -- os que
+% nao existem no LaTeX -- tem dois nomes: o ingles, que e o que carrega o
+% CODIGO, e o portugues, que e apelido \let dele. Os dois valem para sempre e
+% fazem exatamente a mesma coisa; o texto que sai no PDF segue o idioma do
+% trabalho, e nao o nome do comando.
+%
+% Os apelidos moram TODOS aqui, e nao ao lado de cada definicao: espalhados,
+% um comando novo nascia com um nome so e ninguem percebia. Com a lista em um
+% lugar, a falta salta aos olhos -- e o tools/conferir-manual.py reprova a
+% entrega quando um comando publico novo aparece sem o seu par.
+%
+% Tres grupos ficam de fora, de proposito:
+%   1. o que e do LaTeX ou de um pacote (\title, \author, \date, \appendix,
+%      \index, \tableofcontents, \listoffigures, \listoftables, \maketitle,
+%      \frontmatter, \mainmatter, \backmatter, \printbibliography, \printindex,
+%      \listofalgorithms, \enquote): o nome nao e nosso para traduzir;
+%   2. o que ja nasceu em portugues por ser nome do Manual -- \listofquadros,
+%      \listofprogramas -- e \epigrafe, que so cede o nome ingles a quem nao
+%      carregou o pacote epigraph. Nesses tres o codigo esta no nome em
+%      portugues e o ingles e o apelido, que e a excecao a regra;
+%   3. \volume e \volumes, iguais nos dois idiomas, e \citepapud e \citetapud,
+%      cujo nome e o da familia do biblatex mais o latim `apud'.
+% ---------------------------------------------------------------------------
+% A capa, a folha de rosto e os dados do trabalho
+\let\orientador\advisor
+\let\coorientador\coadvisor
+\let\examinador\examiner
+\let\departamento\department
+\let\tituloestrangeiro\foreigntitle
+\let\subtitulo\subtitle
+\let\subtituloestrangeiro\foreignsubtitle
+\let\tituloem\titlein
+\let\subtituloem\subtitlein
+\let\palavrachave\keyword
+\let\palavrachaveestrangeira\foreignkeyword
+\let\palavrachavebrasileira\braziliankeyword
+\let\dataaprovacao\approvaldate
+\let\areaconcentracao\concentrationarea
+\let\linhapesquisa\researchline
+\let\nomeprojeto\projectname
+\let\agenciafomento\fundingagency
+\let\fichacatalografica\catalogcard
+\let\configuraresumos\setupabstracts
+\let\dedicatoria\dedication
+\let\configuracaolivre\freeconfig
+\let\anexo\annex
+\let\universidade\university
+\let\cidade\city
+\let\estado\state
+\let\pais\country
+\let\arquivosdosvolumes\volumefiles
+% \local e nome curto demais para ser tomado sem cuidado: se outro pacote ja o
+% definiu, o dele fica, como em \source e \fonte.
+\@ifundefined{local}{\let\local\place}{}%
+% As listas, as siglas, os simbolos e o glossario
+\let\newsigla\defineacronym
+\let\sigla\useacronym
+\let\makelosiglas\makeloacronyms
+\@onlypreamble\makelosiglas
+\let\printlosiglas\printloacronyms
+\let\makeloabreviaturas\makeloabbreviations
+\@onlypreamble\makeloabreviaturas
+\let\printloabreviaturas\printloabbreviations
+\let\makelosimbolos\makelosymbols
+\@onlypreamble\makelosimbolos
+\let\printlosimbolos\printlosymbols
+\let\makelistaglossario\makeglossarylist
+\@onlypreamble\makelistaglossario
+\let\printlistaglossario\printglossarylist
+% Estes quatro nao existem aqui: cada um nasce DENTRO do \makelo...
+% correspondente, quando o trabalho liga a lista. Os apelidos esperam o
+% \begin{document} e so entram se o original tiver nascido.
+\AtBeginDocument{%
+  \@ifundefined{abbrev}{}{\let\abreviatura\abbrev}%
+  \@ifundefined{acron}{}{\let\acronimo\acron}%
+  \@ifundefined{symbl}{}{\let\simbolo\symbl}%
+  \@ifundefined{glossaryterm}{}{\let\termoglossario\glossaryterm}}
+\let\novofloatufrj\newufrjfloat
+\let\largurailustracao\illustrationwidth
+\let\cpfonte\cpsource
+\@ifundefined{source}{\let\source\cpsource}{}%
+\@ifundefined{fonte}{\let\fonte\cpsource}{}%
+% As listagens de programa
+\let\estilojava\javastyle
+\let\javaembutido\javainline
+\let\javaexterno\javaexternal
+\let\estilopython\pythonstyle
+\let\pythonembutido\pythoninline
+\let\pythonexterno\pythonexternal
+\let\estilohtml\htmlstyle
+\let\estiloxml\xmlstyle
+\let\estiloprolog\prologstyle
+% A interface que o estilo de unidade usa
+\let\ufrjdeclaraunidade\ufrjdeclareunit
+\let\ufrjdeclaraprograma\ufrjdeclareprogram
+\let\ufrjdeclaralogotipo\ufrjdeclarelogo
+\let\ufrjdeclaralogotipos\ufrjdeclarelogos
+\let\ufrjdeclaranorma\ufrjdeclarenorm
+\let\ufrjdeclaralocal\ufrjdeclareplace
+\let\ufrjdefinetextodaunidade\ufrjdefunitstring
+\let\ufrjdefinetexto\ufrjdefstring
+\let\ufrjtexto\ufrjstring
+\let\ufrjtextoprincipal\ufrjmainstring
+\let\ufrjtextoestrangeiro\ufrjforeignstring
+\let\usaidiomaufrj\useufrjlanguage
+\let\ufrjpaginafinal\ufrjfinalpage
+% Os tres da excecao 2: o codigo esta no nome em portugues, e e o ingles que e
+% apelido. \epigraph so se ninguem o tiver definido: o pacote epigraph tem um
+% comando com o mesmo nome e os mesmos dois argumentos, e quem o carrega fica
+% com o dele.
+\let\listofframes\listofquadros
+\let\listofprograms\listofprogramas
+\AtBeginDocument{\providecommand\epigraph{\epigrafe}}
+% FIM DOS APELIDOS EM PORTUGUES.
+% ---------------------------------------------------------------------------
 %</class>
 %    \end{macrocode}
 %

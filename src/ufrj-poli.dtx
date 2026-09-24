@@ -183,6 +183,23 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % Resolução está superado pelo Manual, como diz o
 % |NAO-CONFORMIDADES-POLI.md|.
 %
+% \section{Os dois nomes de cada comando}
+%
+% Vale aqui a regra da classe: todo comando público tem nome em inglês, que
+% carrega o código, e apelido em português, e os apelidos moram todos em um
+% bloco só, no fim do arquivo que os cria --- a seção ``Os dois nomes de cada
+% comando'' do manual da classe traz a tabela inteira.
+%
+% Este estilo \textbf{não cria comando público nenhum}, e por isso não tem bloco
+% de apelidos. O que ele traz são \emph{dados} da Escola --- os cursos, as
+% siglas de departamento, as frases, o logotipo e a família da letra ---,
+% declarados pela interface da classe (|\ufrjdeclareunit|, |\ufrjdeclareprogram|,
+% |\ufrjdeclarelogo|, |\ufrjdeclarenorm|, |\ufrjdeclareplace| e
+% |\ufrjdefunitstring|), que já tem os dois nomes. Quem escreve um Projeto de
+% Graduação na Escola escreve, portanto, com os comandos da classe, no idioma
+% de comando que preferir. O |tools/conferir-manual.py| reprova a entrega se um
+% comando público aparecer aqui sem o seu par.
+%
 % \section{O logotipo}
 %
 % O logotipo da UFRJ, à esquerda da capa, é da classe. O da Escola, à direita,

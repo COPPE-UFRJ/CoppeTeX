@@ -7,7 +7,7 @@ ninguem o documenta; uma linha do max-exemplo.tex se desloca e a tabela "onde ve
 cada coisa funcionando" passa a apontar para o lugar errado. Nenhuma das duas
 coisas quebra a compilacao, e por isso nenhuma das duas aparece sozinha.
 
-Este script olha quatro coisas:
+Este script olha cinco coisas:
 
   1. Todo comando e ambiente PUBLICO que a classe define aparece no manual,
      marcado com \\DescribeMacro ou \\DescribeEnv?
@@ -15,6 +15,10 @@ Este script olha quatro coisas:
   3. Os numeros de linha da tabela "onde ver" ainda batem com o max-exemplo.tex?
   4. Os guardas de macrocode do .dtx estao bem escritos? Um guarda torto nao
      quebra nada: so faz o manual imprimir documentacao como se fosse codigo.
+  5. Todo comando publico tem os DOIS NOMES -- o ingles, que tem o codigo, e o
+     apelido em portugues --, e o par esta declarado no bloco unico de apelidos
+     do fim da classe? Espalhados pelo codigo, um comando novo nascia com um
+     nome so e ninguem percebia.
 
 O que NAO e cobrado: comandos internos (os que levam @ no nome), os quatro
 comandos de montagem de folha que o manual lista de proposito na secao
@@ -40,6 +44,11 @@ EXEMPLO = os.path.join(RAIZ, "src", "max-exemplo.tex")
 # .dtx sao conferidos.
 STY = os.path.join(RAIZ, "src", "ufrj-coppe.sty")
 DTX_COPPE = os.path.join(RAIZ, "src", "ufrj-coppe.dtx")
+# O estilo da Escola Politecnica entra pela mesma razao: hoje ele nao cria
+# comando publico nenhum -- so declara dados pela interface da classe --, e e
+# justamente isso que a conferencia mantem verdadeiro.
+STY_POLI = os.path.join(RAIZ, "src", "ufrj-poli.sty")
+DTX_POLI = os.path.join(RAIZ, "src", "ufrj-poli.dtx")
 
 # Logotipos da familia TeX e afins: a classe os define para uso tipografico,
 # nao sao interface de quem escreve uma tese.
@@ -72,8 +81,74 @@ PADRAO_LATEX = {
 ENV_INTERNO = {"theglossary", "theindex"}
 
 
+# Os comandos que a classe cria e que NAO tem par, com a razao. Sao poucos, e
+# cada um esta explicado na secao "Os dois nomes de cada comando" do manual.
+SEM_PAR = {
+    # iguais nos dois idiomas
+    "volume", "volumes",
+    # o nome e o da familia do biblatex mais o latim `apud'
+    "citepapud", "citetapud",
+    # ja e o nome portugues de um comando do csquotes (\enquote)
+    "citacao",
+    # do proprio LaTeX ou de um pacote: a classe os REDEFINE, e o nome nao e
+    # nosso para traduzir
+    "title", "author", "date", "appendix", "frontmatter", "mainmatter",
+    "backmatter", "listoffigures", "listoftables", "printbibliography",
+    # o par traduz os VALORES do argumento, e por isso e um comando proprio e
+    # nao um \let: \productiontype{technical} e \tipoproducao{tecnica}
+    "productiontype", "tipoproducao", "linkedproject", "projetovinculado",
+    # o estilo ufrj-coppe guarda os nomes da v4.1 para o trabalho escrito ate
+    # la: sao apelidos de COMPATIBILIDADE, de um nome velho para um novo, e nao
+    # o par de idiomas -- o par deles e o do comando da classe que apelidam
+    "coppefinalengine", "coppefinalfont", "coppefinalmanual",
+    "coppefinalsystem", "coppefinaltexsystem", "coppefinaltime",
+    "coppeforeignstring", "coppemainstring", "copperdefstring", "coppestring",
+    "coppetexfinalpage", "newcoppefloat", "usecoppelanguage",
+    # os quatro de montagem de folha que o manual manda nao chamar entram pela
+    # lista `naochame', e os enfeites tipograficos pela ENFEITE
+}
+
+# O bloco unico: comeca no cabecalho e termina na linha de tracos seguinte.
+INICIO_APELIDOS = "% OS APELIDOS EM PORTUGUES."
+FIM_APELIDOS = "% FIM DOS APELIDOS"
+
+
 def ler(caminho):
     return io.open(caminho, encoding="utf-8", errors="replace").read()
+
+
+def bloco_de_apelidos(dtx):
+    """O texto do bloco unico de apelidos, tal como esta no .dtx."""
+    i = dtx.find(INICIO_APELIDOS)
+    if i < 0:
+        return None
+    f = dtx.find(FIM_APELIDOS, i)
+    return dtx[i:f if f > 0 else len(dtx)]
+
+
+def pares(bloco):
+    """{nome: parceiro} dos dois lados de cada apelido do bloco."""
+    tabela = {}
+    if not bloco:
+        return tabela
+    for apelido, original in re.findall(r"\\let\\([A-Za-z]+)\\([A-Za-z]+)", bloco):
+        tabela[apelido] = original
+        tabela[original] = apelido
+    for apelido, original in re.findall(
+            r"\\@ifundefined\{([A-Za-z]+)\}\{\}\{\\let\\([A-Za-z]+)\\[A-Za-z]+\}", bloco):
+        tabela[apelido] = original
+        tabela[original] = apelido
+    for apelido, original in re.findall(
+            r"\\@ifundefined\{([A-Za-z]+)\}\{\\let\\[A-Za-z]+\\([A-Za-z]+)\}", bloco):
+        tabela[apelido] = original
+        tabela[original] = apelido
+    # \epigraph nao pode ser um \let: o pacote epigraph tem um comando com o
+    # mesmo nome, e quem o carrega fica com o dele.
+    for apelido, original in re.findall(
+            r"\\providecommand\\([A-Za-z]+)\{\\([A-Za-z]+)\}", bloco):
+        tabela[apelido] = original
+        tabela[original] = apelido
+    return tabela
 
 
 def definidos(cls):
@@ -161,11 +236,14 @@ def guardas(dtx):
 def main():
     cls, dtx, exemplo = ler(CLS), ler(DTX), ler(EXEMPLO)
     sty, dtx_coppe = ler(STY), ler(DTX_COPPE)
+    sty_poli, dtx_poli = ler(STY_POLI), ler(DTX_POLI)
     cmds, envs, opts = definidos(cls)
-    cmds_sty, envs_sty, _ = definidos(sty)
-    cmds |= cmds_sty
-    envs |= envs_sty
-    docmac, docenv, naochame = documentados(dtx + "\n" + dtx_coppe)
+    for outro in (sty, sty_poli):
+        cmds_sty, envs_sty, _ = definidos(outro)
+        cmds |= cmds_sty
+        envs |= envs_sty
+    docmac, docenv, naochame = documentados(
+        dtx + "\n" + dtx_coppe + "\n" + dtx_poli)
 
     faltam_cmd = sorted(
         c for c in cmds
@@ -174,9 +252,25 @@ def main():
     )
     faltam_env = sorted(e for e in envs if e not in docenv and e not in ENV_INTERNO)
     faltam_opt = sorted(o for o in opts if ("texttt{%s}" % o) not in dtx)
+    bloco = bloco_de_apelidos(dtx)
+    dupla = pares(bloco)
+    sem_par = sorted(
+        c for c in cmds
+        if c not in dupla and c not in SEM_PAR and c not in ENFEITE
+        and c not in PADRAO_LATEX and c not in naochame
+    )
+    # Um apelido declarado FORA do bloco e o defeito que a regra existe para
+    # impedir: ele funciona, e some da tabela do manual.
+    fora = []
+    if bloco:
+        resto = dtx.replace(bloco, "")
+        for apelido, original in re.findall(r"\n\\let\\([A-Za-z]+)\\([A-Za-z]+)", resto):
+            if apelido in cmds and original in cmds and apelido not in dupla:
+                fora.append(apelido)
     desalinhadas = onde_ver(dtx, exemplo)
     tortos = guardas(dtx) + [(n, "ufrj-coppe.dtx: " + obs)
-                             for n, obs in guardas(dtx_coppe)]
+                             for n, obs in guardas(dtx_coppe)] \
+        + [(n, "ufrj-poli.dtx: " + obs) for n, obs in guardas(dtx_poli)]
 
     erros = 0
     print("=== conferir-manual: %d comandos publicos, %d ambientes, %d opcoes"
@@ -206,6 +300,25 @@ def main():
             print("        %s" % o)
     else:
         print("ok    toda opcao de classe esta documentada")
+
+    if bloco is None:
+        erros += 1
+        print("\nERRO  nao achei o bloco unico de apelidos no ufrj.dtx"
+              " (procurei por '%s')" % INICIO_APELIDOS)
+    elif sem_par:
+        erros += len(sem_par)
+        print("\nERRO  %d comando(s) publico(s) com um nome so:" % len(sem_par))
+        for c in sorted(sem_par):
+            print("        \\%s -- declare o par no bloco de apelidos, ou"
+                  " justifique a excecao em SEM_PAR" % c)
+    elif fora:
+        erros += len(fora)
+        print("\nERRO  %d apelido(s) declarado(s) fora do bloco unico:" % len(fora))
+        for c in sorted(set(fora)):
+            print("        \\%s" % c)
+    else:
+        print("ok    todo comando publico tem os dois nomes, no bloco unico"
+              " (%d nomes)" % len(dupla))
 
     if desalinhadas:
         erros += len(desalinhadas)

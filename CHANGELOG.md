@@ -20,6 +20,40 @@ top of `CORRECOES_MANUAL_2026.md`.
 
 ### Verification
 
+- **One compilation serves many tests, and the tests run side by side** (#154).
+  A full `tests/regressivo` run called the engine close to a hundred times, and
+  in almost all of them with the same class: only the ten-line document around
+  it changed. Each compilation's result is now kept in
+  `_scratch/cache-regressivo`, under the key of what goes INTO it — the
+  document, the database, the files beside it, the engine, the number of passes
+  — plus the hash of the class's generated files. Touch the `.dtx` and only the
+  affected documents go back to the engine; touch nothing and the second run
+  calls the engine not once. The class's files are in the key precisely so the
+  cache cannot mask a change, which is the risk the issue names, and the cache
+  remembers a FAILURE as a failure, because some tests require one. The runner
+  also spawns one engine per test, up to the number of cores. `--tarefas <n>`
+  chooses how many (`--tarefas 1` is the old behaviour, which is what one wants
+  while looking at a failure), `--sem-cache` recompiles everything, and the
+  line of a test that came from the cache says `(cache)`. The new test `rt80`
+  covers the cache, including the case that matters: another class, another
+  key.
+- **Every public command has its two names, in one block** (#171 review). The
+  English name carries the code and the Portuguese one is a `\let` alias of it
+  — until 5.0 eleven commands had the code in the Portuguese name, and the
+  aliases were scattered beside each definition, so a new command was born with
+  one name and nobody noticed. The aliases now live in a single block at the
+  end of the class, `tools/conferir-manual.py` fails the release when a public
+  command appears without its pair or with the pair declared outside the block,
+  and the manual's section "Os dois nomes de cada comando" carries the whole
+  table, with the exceptions and their reasons: what belongs to LaTeX or to a
+  package, `\volume` and `\volumes`, `\citepapud` and `\citetapud`, and the
+  three whose code stays in the Portuguese name (`\listofquadros`,
+  `\listofprogramas` and `\epigrafe`). Fifty-three commands gained the
+  Portuguese name they did not have, among them `\orientador`, `\examinador`,
+  `\palavrachave`, `\cidade`, `\universidade`, `\anexo`, `\simbolo` and the
+  whole unit interface (`\ufrjdeclaraunidade`, `\ufrjdeclaraprograma`, …). The
+  new test `rtu15` compiles the same work written entirely in each language of
+  command and requires the same text, sheet by sheet.
 - **`conferir-referencias.py` compares again, and against the Manual itself**
   (#167). It split the reference list at the `[n]` label; since #140 the
   numeric list has no brackets, so it found no reference, called the document
