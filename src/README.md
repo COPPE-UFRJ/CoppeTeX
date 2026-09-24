@@ -2,14 +2,15 @@
 
 ## Leia isto antes de editar qualquer coisa
 
-**Os dois `.dtx` são a fonte única.** Tudo o que a CoppeTeX distribui sai
+**Os três `.dtx` são a fonte única.** Tudo o que a CoppeTeX distribui sai
 deles. Do `ufrj.dtx`, por `pdflatex ufrj.ins`: a classe, os estilos de
 bibliografia, os pacotes de idioma, as bases `.bib`, o estilo do glossário, o
 guia rápido e a receita de compilação. Do `ufrj-coppe.dtx`, por
 `pdflatex ufrj-coppe.ins`: o estilo da COPPE, a classe `coppe` de
-compatibilidade, os exemplos e a montagem das capas. Nenhum desses arquivos é
-escrito à mão, e **toda edição feita neles se perde na próxima geração, sem
-aviso**.
+compatibilidade, os exemplos e a montagem das capas. Do `ufrj-poli.dtx`, por
+`pdflatex ufrj-poli.ins`: o estilo da Escola Politécnica, a classe `poli` de
+compatibilidade e o exemplo dela. Nenhum desses arquivos é escrito à mão, e
+**toda edição feita neles se perde na próxima geração, sem aviso**.
 
 Se você quer mudar o comportamento da classe, mude o `ufrj.dtx`. Se quer mudar
 o que é da COPPE — um Programa, o logotipo, uma frase —, mude o

@@ -38,7 +38,7 @@ coppetex.bat --ajuda
 
 | Opção | O que faz |
 |---|---|
-| `--regerar` | Roda o `ufrj.ins` e o `ufrj-coppe.ins`. A classe, os estilos BibLaTeX, os pacotes de idioma, as bases `.bib`, o guia rápido e o `latexmkrc` saem do `src/ufrj.dtx`; o estilo da COPPE, a classe `coppe` de compatibilidade, os exemplos e a montagem das capas saem do `src/ufrj-coppe.dtx`. É rápido, e é o primeiro passo de qualquer coisa. |
+| `--regerar` | Roda o `ufrj.ins`, o `ufrj-coppe.ins` e o `ufrj-poli.ins`. A classe, os estilos BibLaTeX, os pacotes de idioma, as bases `.bib`, o guia rápido e o `latexmkrc` saem do `src/ufrj.dtx`; o estilo da COPPE, a classe `coppe` de compatibilidade, os exemplos e a montagem das capas saem do `src/ufrj-coppe.dtx`. É rápido, e é o primeiro passo de qualquer coisa. |
 | `--docs` | Compila os PDFs da entrega: o manual da classe (`ufrj.pdf`), o manual do estilo da COPPE (`ufrj-coppe.pdf`), o guia rápido em inglês, o exemplo completo, os cinco exemplos por idioma, o manual da norma (`manual.pdf`), a Norma COPPE e a folha de capas. |
 | `--testes` | A **primeira camada**: a suíte de `tests/`. Pergunta *a classe compila?* |
 | `--adversativo` | A **segunda camada**: os seis documentos de `tests/adversativa/`, que acionam tudo ao mesmo tempo, nos dois motores, validados pelo veraPDF. |

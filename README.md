@@ -291,8 +291,9 @@ against it), [`MIGRATION_v4_to_v5.md`](./MIGRATION_v4_to_v5.md),
 `pdflatex ufrj.ins` in `src/` generates the class, the biblatex styles, the
 language packs, the `.bib` bases, the `.ist`, the English quick reference and
 the `latexmkrc`; `pdflatex ufrj-coppe.ins` generates the COPPE unit style, the
-`coppe` compatibility class, the examples and the cover montage. No derived
-file is edited by hand. The class generates no document and names no unit, and
+`coppe` compatibility class, the examples and the cover montage; `pdflatex
+ufrj-poli.ins` generates the Escola Politécnica style, the `poli`
+compatibility class and its example. No derived file is edited by hand. The class generates no document and names no unit, and
 `tests/regressivo/rtu01` to `rtu04` hold that line.
 
 What exists only to *prove* the class works is not distributed and is not in
@@ -411,14 +412,15 @@ the string files described above.
 ### Content
 
 The development of this class follows the Comprehensive TeX Archive Network
-(CTAN) standards. **Two pairs of files are the whole source**: `src/ufrj.dtx`
-and `src/ufrj.ins` for the class, and `src/ufrj-coppe.dtx` and
-`src/ufrj-coppe.ins` for the COPPE unit style and the demonstration documents.
+(CTAN) standards. **Three pairs of files are the whole source**: `src/ufrj.dtx`
+and `src/ufrj.ins` for the class, `src/ufrj-coppe.dtx` and
+`src/ufrj-coppe.ins` for the COPPE unit style and the demonstration documents,
+and `src/ufrj-poli.dtx` and `src/ufrj-poli.ins` for the Escola Politécnica.
 Each `.dtx` carries code and documentation, and each `.ins` is its docstrip
-script. Two runs,
+script. Three runs,
 
 ```bash
-cd src && pdflatex ufrj.ins && pdflatex ufrj-coppe.ins
+cd src && pdflatex ufrj.ins && pdflatex ufrj-coppe.ins && pdflatex ufrj-poli.ins
 ```
 
 write every file that is distributed:
@@ -473,11 +475,11 @@ visible to your compiler.
 ### From sources
 
 ```bash
-cd src && pdflatex ufrj.ins && pdflatex ufrj-coppe.ins
+cd src && pdflatex ufrj.ins && pdflatex ufrj-coppe.ins && pdflatex ufrj-poli.ins
 ```
 
-gives you the same files, freshly generated from `ufrj.dtx` and
-`ufrj-coppe.dtx`. Then follow the section above.
+gives you the same files, freshly generated from `ufrj.dtx`, `ufrj-coppe.dtx`
+and `ufrj-poli.dtx`. Then follow the section above.
 
 ### Compiling a thesis
 

@@ -31,10 +31,14 @@ import datetime
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DTX = os.path.join(RAIZ, "src", "ufrj.dtx")
-# As fontes que carimbam versao. A canonica e a do ufrj.dtx; o estilo da COPPE
-# sai no mesmo pacote e com o mesmo numero, e um estilo de unidade que ficasse
-# para tras contradiria a distribuicao do mesmo jeito que um .lbx.
-FONTES = [DTX, os.path.join(RAIZ, "src", "ufrj-coppe.dtx")]
+# As fontes que carimbam versao. A canonica e a do ufrj.dtx; os estilos de
+# unidade saem no mesmo pacote e com o mesmo numero, e um estilo que ficasse
+# para tras contradiria a distribuicao do mesmo jeito que um .lbx -- e o
+# proprio --subir reprovaria na conferencia seguinte, porque o .sty gerado
+# viria com o numero velho. TODO estilo de unidade novo entra nesta lista.
+FONTES = [DTX,
+          os.path.join(RAIZ, "src", "ufrj-coppe.dtx"),
+          os.path.join(RAIZ, "src", "ufrj-poli.dtx")]
 
 # O console do Windows e cp1252 e nao sabe escrever uma seta, um travessao nem
 # um til combinante. Sem isto, o script MORRE no meio ao imprimir uma linha de

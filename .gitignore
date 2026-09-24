@@ -7,14 +7,12 @@ src/ufrj-coppe.glo
 src/ufrj-coppe.idx
 src/ufrj-poli.glo
 src/ufrj-poli.idx
-src/ufrj.ist
 src/ufrj.out
 src/ufrj.aux
 # os mesmos artefatos com o nome da classe ate a v4.1, que ficam na pasta de
 # quem compilou antes da troca de nome
 src/coppe.glo
 src/coppe.idx
-src/coppe.ist
 src/coppe.out
 src/coppe.aux
 *.bak

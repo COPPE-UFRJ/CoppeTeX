@@ -183,10 +183,11 @@ cites the COPPE norm section by section.
 
 ## Fixing the class or the manual
 
-The class lives in `src/ufrj.dtx` and the COPPE unit style in
-`src/ufrj-coppe.dtx` — two documented `.dtx` files. Run `pdflatex ufrj.ins`
-and `pdflatex ufrj-coppe.ins` (or `coppetex.bat --regerar` on Windows, which
-runs both) to regenerate `ufrj.cls`, the `.bbx/.cbx/.dbx`, the `.lbx` files
+The class lives in `src/ufrj.dtx`, the COPPE unit style in
+`src/ufrj-coppe.dtx` and the Escola Politécnica one in `src/ufrj-poli.dtx` —
+three documented `.dtx` files. Run `pdflatex ufrj.ins`, `pdflatex
+ufrj-coppe.ins` and `pdflatex ufrj-poli.ins` (or `coppetex.bat --regerar` on
+Windows, which runs the three) to regenerate `ufrj.cls`, the `.bbx/.cbx/.dbx`, the `.lbx` files
 and the `.def` files from the first, and `ufrj-coppe.sty`, `coppe.cls` and
 the examples (`min-exemplo.tex`, `max-exemplo.tex`, the language demos) from
 the second. The manuals `ufrj.pdf` and `ufrj-coppe.pdf` are also rebuilt from
