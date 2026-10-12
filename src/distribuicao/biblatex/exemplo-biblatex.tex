@@ -1,0 +1,39 @@
+% exemplo-biblatex.tex -- os estilos biblatex da CoppeTeX fora da classe ufrj.
+%
+% Compile com:  pdflatex exemplo-biblatex ; biber exemplo-biblatex ;
+%               pdflatex exemplo-biblatex ; pdflatex exemplo-biblatex
+% ou:           latexmk -pdf exemplo-biblatex
+%
+% Os arquivos ufrj.dbx, ufrj.bbx, ufrj.cbx, ufrj-numeric.bbx, ufrj-numeric.cbx
+% e os .lbx dos idiomas usados tem de estar ao lado deste arquivo (ou na arvore
+% do TeX). Gerado de src/distribuicao/biblatex no repositorio CoppeTeX.
+\documentclass[12pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english,brazilian]{babel}   % o ultimo e o idioma do documento
+\usepackage{csquotes}
+
+% Os estilos usam um unico texto fixo da classe ufrj, "em" em
+% "Tese (Doutorado em ...)". Fora da classe, defina-o assim:
+\providecommand*\ufrjstring[1]{\ifstrequal{#1}{in:}{em}{#1}}
+
+% Autor-data (o padrao do Manual UFRJ/SiBI). Para o sistema numerico, troque
+% os dois "ufrj" por "ufrj-numeric".
+\usepackage[backend=biber,datamodel=ufrj,
+            bibstyle=ufrj,citestyle=ufrj,natbib=true]{biblatex}
+\addbibresource{exemplo.bib}
+
+\begin{document}
+
+\section*{Citações}
+
+Citação no texto: \citet{book-example}. Entre parênteses: \citep{article-example}.
+Com página: \citep[p.~45]{book-example}. Relatório: \citet{techreport-exampleIn}.
+
+Citação de citação (\emph{apud}):
+\citetapud{Drumond}{1953}{article-example}.
+
+\nocite{*}
+\printbibliography[title={Referências}]
+
+\end{document}

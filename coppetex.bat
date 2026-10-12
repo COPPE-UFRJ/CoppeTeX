@@ -15,7 +15,9 @@ rem      coppetex.bat --tudo --dist         a prova inteira e a copia para dist
 rem      coppetex.bat --versao 2            sobe 5.0 para 5.1
 rem      coppetex.bat --ajuda               a lista completa
 rem
-rem  O manual esta em PAINEL.md, na raiz.
+rem  O manual esta em tools\PAINEL.md.
+rem
+rem      coppetex.bat --distribuir          do .dtx as tres dist-* e as normas
 rem
 rem  Este arquivo e so o lancador. Quem faz e tools\painel.py, e quem compila e
 rem  tools\build-check.ps1 -- que ja existia e continua sendo o unico lugar do

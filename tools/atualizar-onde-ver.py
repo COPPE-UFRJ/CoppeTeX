@@ -20,7 +20,7 @@ import sys
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DTX = os.path.join(RAIZ, "src", "ufrj.dtx")
-EXEMPLO = os.path.join(RAIZ, "src", "coppe-max-exemplo.tex")
+EXEMPLO = os.path.join(RAIZ, "build", "coppe-max-exemplo.tex")
 
 
 def main():

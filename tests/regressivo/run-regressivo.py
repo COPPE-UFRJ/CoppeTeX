@@ -11,7 +11,7 @@ Compilar e o que custa: sao quase cem chamadas do motor numa rodada completa,
 e em quase todas a classe e a mesma. Duas coisas cortam esse custo, e nenhuma
 delas muda o que um teste cobra (#154):
 
-  - CACHE. O resultado de cada compilacao fica em _scratch/cache-regressivo,
+  - CACHE. O resultado de cada compilacao fica em build/cache-regressivo,
     com a chave do que entra nela -- o documento, a base, o motor, as passadas
     -- mais o hash dos arquivos GERADOS da classe. Mexeu no .dtx, so os
     documentos afetados voltam ao motor; nao mexeu, a segunda rodada nao chama
@@ -96,7 +96,7 @@ if hasattr(sys.stdout, "reconfigure"):
 
 AQUI = os.path.dirname(os.path.abspath(__file__))
 RAIZ = os.path.dirname(os.path.dirname(AQUI))
-SRC = os.path.join(RAIZ, "src")
+SRC = os.path.join(RAIZ, "build")  # a classe gerada
 
 DIRETIVA = re.compile(r"^%%\s*([A-Z-]+):\s*(.*?)\s*$")
 # <prefixo><numero>-<apelido>.tex ou .py. Ver o comentario em main(). Os

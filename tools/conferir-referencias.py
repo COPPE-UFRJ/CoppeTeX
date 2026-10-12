@@ -3,7 +3,7 @@
 """Confere a lista de referencias contra os exemplos do Manual UFRJ/SiBI 2026.
 
 O gabarito nao e inventado: as 34 categorias da secao 4.2 estao em duas bases,
-`src/exemplo.bib' (nomes de campo em ingles, chaves m-<item>) e
+`build/exemplo.bib' (nomes de campo em ingles, chaves m-<item>) e
 `tests/adversativa/referencias-manual.bib' (sinonimos em portugues, chaves
 pt-<item>), e cada entrada vem logo depois de um @comment{Manual: ...} com a
 referencia EXATAMENTE como o Manual a imprime. Este script le o que a classe
@@ -51,7 +51,7 @@ ADVERSATIVA = os.path.join(RAIZ, "tests", "adversativa")
 BIB = os.path.join(ADVERSATIVA, "referencias-manual.bib")
 # As duas bases com gabarito: a que acompanha a classe, com os nomes de campo em
 # ingles (chaves m-<item>), e a da prova, com os sinonimos em portugues (pt-<item>).
-BASES = [os.path.join(RAIZ, "src", "exemplo.bib"), BIB]
+BASES = [os.path.join(RAIZ, "build", "exemplo.bib"), BIB]
 # O Manual, de onde o gabarito sai. Esta no repositorio.
 MANUAL = os.path.join(RAIZ, "specs",
                       "Manual para elaboração e normalização de trabalhos acadêmicos 2024.pdf")

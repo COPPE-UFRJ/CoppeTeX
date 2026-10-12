@@ -7,7 +7,7 @@ A lista e a da propria Escola (poli.ufrj.br/ensino/graduacao/cursos), conferida
 em 23/09/2026. Este teste a guarda: se a Escola criar um curso, ele falha ate
 alguem declarar o curso novo -- e e esse o ponto.
 
-Cobra-se, sem compilar, lendo o src/ufrj-poli.sty gerado:
+Cobra-se, sem compilar, lendo o build/ufrj-poli.sty gerado:
   1. cada curso da lista tem um \\ufrjdeclareprogram, com o nome do curso;
   2. todo curso de Engenharia confere um titulo declarado (o argumento
      opcional), e o titulo comeca por "Engenheiro";
@@ -48,7 +48,7 @@ DEPARTAMENTOS = ["DCC", "DES", "DEG", "DET", "DHIMA", "DEE", "DEM", "DMM",
 
 problemas = []
 if not os.path.exists(STY):
-    problemas.append("o ufrj-poli.sty nao foi gerado: rode pdflatex ufrj-poli.ins em src/")
+    problemas.append("o ufrj-poli.sty nao foi gerado: rode python tools/distribuicoes.py --regerar")
     relatar(problemas)
 
 texto = io.open(STY, encoding="utf-8").read()

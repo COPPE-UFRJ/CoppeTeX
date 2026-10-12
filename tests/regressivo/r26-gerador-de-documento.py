@@ -32,8 +32,8 @@ if hasattr(sys.stdout, "reconfigure"):
 
 AQUI = os.path.dirname(os.path.abspath(__file__))
 RAIZ = os.path.dirname(os.path.dirname(AQUI))
-DIST = os.path.join(RAIZ, "dist")
-GERADOR = os.path.join(RAIZ, "tools", "geradocvazio.py")
+DIST = os.path.join(RAIZ, "dist-coppe")
+GERADOR = os.path.join(RAIZ, "src", "gerador", "geradocvazio.py")
 
 # Avisos que a classe emitiria de proposito. Desde que saiu o "you should try
 # compiling with LuaLaTeX" (#89), nenhum: o documento gerado sai sem aviso.
@@ -143,7 +143,7 @@ for nome, extras in CASOS:
 # O que da para cobrar sem rede e a REGRA de o que vem e o que nao vem -- se ela
 # mudar sem querer, o aluno recebe um exemplo junto do documento em branco que
 # pediu, ou pior, fica sem a classe.
-sys.path.insert(0, os.path.join(RAIZ, "tools"))
+sys.path.insert(0, os.path.join(RAIZ, "src", "gerador"))
 try:
     import geradocvazio
 except ImportError as e:

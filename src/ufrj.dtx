@@ -418,8 +418,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \subsection{O caminho curto: tudo na pasta do trabalho}
 %
 % O jeito mais simples de usar a classe é não instalar nada. Baixe a entrega
-% --- o |CoppeTeX-|\meta{versão}|.zip| do \emph{release}, que é a pasta
-% |dist/| do repositório ---, descompacte na pasta do seu trabalho e compile
+% --- o |.zip| da sua unidade no \emph{release}, que é a pasta
+% |dist-coppe/| (ou |dist-poli/|) do repositório ---, descompacte na pasta do seu trabalho e compile
 % ali. Funciona do mesmo jeito no Overleaf: suba os arquivos junto com o seu
 % |.tex|.
 %
@@ -519,7 +519,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %
 % Se você escreve vários trabalhos, ou não quer o |ufrj.cls| repetido em
 % cada pasta, instale a classe na sua árvore local do \TeX. Pônha todos os
-% arquivos da |dist/| em |tex/latex/ufrj| dessa árvore e mande o sistema
+% arquivos da |dist-coppe/| (ou |dist-poli/|) em |tex/latex/ufrj| dessa árvore e mande o sistema
 % reindexar: |texhash| no \TeX~Live, |initexmf --update-fndb| no \MiKTeX.
 %
 % \textbf{Os logotipos têm de ir junto, na mesma pasta.} A classe os procura
@@ -658,7 +658,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %
 % \begin{enumerate}
 %   \item Crie um projeto em branco.
-%   \item Suba \textbf{todos} os arquivos da pasta |dist/| para a raiz do
+%   \item Suba \textbf{todos} os arquivos da pasta |dist-coppe/| (ou |dist-poli/|) para a raiz do
 %     projeto. Não os ponha numa subpasta: o Overleaf procura a classe ao lado
 %     do |.tex| principal.
 %   \item Suba o seu |.tex| e o seu |.bib|.
@@ -694,7 +694,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %   \item Instale o \MiKTeX. Na primeira compilação ele oferece baixar os
 %     pacotes que faltam; aceite, ou marque ``sempre'' para não ser perguntado a
 %     cada vez.
-%   \item Copie a pasta |dist/| para junto do seu |.tex|, ou instale-a na
+%   \item Copie a pasta |dist-coppe/| (ou |dist-poli/|) para junto do seu |.tex|, ou instale-a na
 %     árvore local (seção~\ref{sec:arquivos}).
 %   \item Compile pelo terminal, ou por um editor como o TeXstudio.
 % \end{enumerate}
@@ -731,7 +731,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %
 % \begin{verbatim}
 %   mkdir -p ~/texmf/tex/latex/ufrj
-%   cp dist/* ~/texmf/tex/latex/ufrj/
+%   cp dist-coppe/* ~/texmf/tex/latex/ufrj/
 %   texhash ~/texmf
 % \end{verbatim}
 %
@@ -3145,7 +3145,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \end{center}
 %
 % Baixe o repositório (botão \emph{Code} $\to$ \emph{Download ZIP}), abra a
-% pasta |dist/| e copie o conteúdo dela por cima do que você tem. Se você
+% pasta |dist-coppe/| (ou |dist-poli/|) e copie o conteúdo dela por cima do que você tem. Se você
 % usa |git|, |git pull| basta.
 %
 % \textbf{Confira qual versão você está usando.} O número aparece na
@@ -3201,7 +3201,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %     com o |ufrj.ist| entre a primeira e a segunda passada. Veja a
 %     seção~\ref{sec:compilar}, ou use |latexmk|.
 %   \item[``Logotipo \texttt{coppe-logo.pdf} não encontrado''.] Os logotipos
-%     não estão na pasta. Copie a pasta |logos/| da |dist/| para junto do
+%     não estão na pasta. Copie a pasta |logos/| da distribuição para junto do
 %     trabalho.
 %   \item[``Programa \texttt{PESC} não declarado''.] Falta o estilo da unidade:
 %     acrescente |\usepackage{ufrj-coppe}| logo depois do |\documentclass|.
@@ -3359,13 +3359,20 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \subsection{As pastas}
 %
 % \begin{description}
-%   \item[\texttt{src/}] a fonte. \texttt{ufrj.dtx} e \texttt{ufrj.ins}, a
-%     classe; \texttt{ufrj-coppe.dtx} e \texttt{ufrj-coppe.ins}, o estilo da
-%     COPPE e os exemplos; mais os três logotipos, que são binários e não saem
-%     de |.dtx| nenhum. Todo o resto que está ali é gerado. Tem |README.md|
-%     próprio, com o guia de programação.
-%   \item[\texttt{dist/}] a entrega: o mínimo para instalar a classe e escrever. É o
-%     que se copia para a pasta do trabalho ou para o Overleaf.
+%   \item[\texttt{src/}] a fonte, e só ela. \texttt{ufrj.dtx} e \texttt{ufrj.ins},
+%     a classe; \texttt{ufrj-coppe.dtx} e \texttt{ufrj-poli.dtx}, com os seus
+%     |.ins|, os estilos das unidades e os exemplos; os logotipos, que são
+%     binários; as normas em Word (|src/normas|); o que cada distribuição leva
+%     além do gerado (|src/distribuicao|); e o gerador de trabalho novo
+%     (|src/gerador|). Tem |README.md| próprio, com o guia de programação.
+%   \item[\texttt{build/}] onde tudo é gerado e compilado: cópia das fontes,
+%     o que os |.ins| geram, os PDFs, os logs. Ignorada pelo git.
+%   \item[\texttt{dist-coppe/}, \texttt{dist-poli/}, \texttt{dist-biblatex/}] as
+%     entregas: o necessário para escrever na COPPE, na Escola Politécnica, ou
+%     só para usar os estilos biblatex em outro documento. Geradas por
+%     |tools/distribuicoes.py|, versionadas.
+%   \item[\texttt{normas/}] as normas de cada unidade, em Word e PDF, geradas
+%     de |src/normas|.
 %   \item[\texttt{tests/}] as três camadas de prova, em subpastas. A de cima
 %     pergunta \emph{a classe compila?}, e é um |.tex| por comportamento,
 %     escritos à mão e \textbf{não} gerados do |.dtx|. Nenhum PDF de
@@ -3386,8 +3393,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %     |README.md| próprio.
 %   \item[\texttt{specs/}] os documentos normativos que a classe implementa: o Manual do
 %     SiBI e a folha adicional da Coleta CAPES.
-%   \item[\texttt{\_scratch/}] toda a saída do harness. Ignorada pelo git; nenhuma
-%     ferramenta escreve fora dela.
+%   \item[\texttt{claude/}] notas de trabalho e histórico do desenvolvimento.
+%     Nada ali é lido por ferramenta nenhuma.
 % \end{description}
 %
 % \subsection{Como o \texttt{.dtx} é organizado}
@@ -3413,12 +3420,13 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %   coppetex.bat                    abre a janela e pergunta o que fazer
 %   coppetex.bat --regerar --testes mexi na classe, quebrei algo?
 %   coppetex.bat --tudo --regressivo --conferir --dist
+%   coppetex.bat --distribuir       do .dtx às distribuições, de uma vez
 % \end{verbatim}
 %
 % Tudo o que a janela faz tem opção equivalente de linha de comando, e
 % não por educação: cada botão chama a mesma função que a opção
 % chama, para que não existam duas implementações da mesma coisa,
-% uma delas sempre um pouco atrasada. O manual do painel é o |PAINEL.md|.
+% uma delas sempre um pouco atrasada. O manual do painel é o |tools/PAINEL.md|.
 %
 % O painel não compila nada por conta própria: quem compila é o
 % |tools/build-check.ps1|, que sabe o ciclo completo de cada documento ---
@@ -3451,7 +3459,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \begin{description}
 %   \item[\texttt{painel.py}] o painel do desenvolvedor, janela e linha de
 %     comando na mesma lista de ações. Decide o que roda e em que ordem, e
-%     é dono da lista única de arquivos da entrega (|PARA_DIST|).
+%     chama o \texttt{distribuicoes.py}, dono da lista única de arquivos de
+%     cada distribuição.
 %   \item[\texttt{build-check.ps1}] o motor. Regera a distribuição e compila o que o
 %     escopo pedir.
 %   \item[\texttt{prova.ps1}] atalho para o escopo \texttt{prova}.
@@ -3465,10 +3474,11 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %     as confere no PDF, no |.log| e nos auxiliares.
 %   \item[\texttt{geradocvazio.py}] o gerador de documento vazio, que escreve o
 %     |.tex| e o |.bib| de um trabalho novo. É para quem vai \emph{escrever},
-%     e tem porta própria na raiz, o |coppetex-novo.bat|.
+%     e mora em |src/gerador/|, com a porta própria, o |coppetex-novo.bat|;
+%     vai para a |dist-coppe/gerador/|.
 %   \item[\texttt{versao.py}] sobe e confere o número de versão. A versão
 %     canônica é o |\fileversion| do |.dtx|, e ele a cobra em todos os
-%     arquivos gerados e nos lugares em prosa --- e compara |dist/| com |src/|
+%     arquivos gerados e nos lugares em prosa --- e compara as |dist-*| com |build/|
 %     byte a byte, porque o número é o mesmo nos dois mesmo quando a
 %     cópia ficou para trás.
 %   \item[\texttt{conferir-norma.py}] lê um PDF pronto e mede, em centímetros, o que
@@ -3925,7 +3935,7 @@ Problems: \url{https://github.com/COPPE-UFRJ/CoppeTeX/issues}
          em logos/#2.pdf e em #2.pdf, e nao achei em nenhum dos dois.\MessageBreak
          Copie a pasta logos/ para junto do seu trabalho, ou ponha\MessageBreak
          #2.pdf ao lado do ufrj.cls na arvore do TeX. Os logotipos\MessageBreak
-         estao em dist/logos/ no repositorio.}%
+         estao em dist-coppe/logos/ no repositorio.}%
        \framebox[3cm][c]{\rule{0pt}{#1}\ttfamily #2?}}}}
 \RequirePackage{tabularx}
 \RequirePackage{booktabs}      % regras de tabela profissionais (toprule/midrule/bottomrule)

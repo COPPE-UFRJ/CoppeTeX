@@ -71,9 +71,9 @@ está no manual da classe, na seção "Quem manda, quando as fontes divergem".
 numeração das folhas pré-textuais, a ordem dos elementos, a posição da legenda
 das figuras e o formato das referências, que ela baseia na NB-66 — norma da
 ABNT substituída em 1989. A conferência item a item está no
-[`NAO-CONFORMIDADES-POLI.md`](../NAO-CONFORMIDADES-POLI.md), e o que continua
+[`NAO-CONFORMIDADES-POLI.md`](../src/normas/norma-poli/NAO-CONFORMIDADES-POLI.md), e o que continua
 valendo dela está na proposta de norma nova,
-[`src/PROPOSTA-DE-RESOLUCAO.tex`](../src/PROPOSTA-DE-RESOLUCAO.tex).
+[`src/normas/norma-poli/NORMA_POLI_2026.docx`](../src/normas/norma-poli/NORMA_POLI_2026.docx).
 
 ## Também nesta pasta
 
@@ -89,10 +89,10 @@ ser refeitas a qualquer momento com `pdftotext -layout`.
 
 ## Documentos relacionados, fora desta pasta
 
-- `../NORMA_COPPE_2026.md` — a norma própria da COPPE, que complementa o manual
-  do SiBI. É o documento que a CoppeTeX implementa em conjunto com ele.
-- `../REVISAO_SIBI.md` — verificação item a item da classe contra a edição 2026,
-  e o plano de trabalho decorrente.
+- `../src/normas/` — as normas próprias da COPPE e da Escola Politécnica (fonte
+  em Word), que complementam o manual do SiBI; versões em PDF em `../normas/`.
+- `../claude/historico/REVISAO_SIBI.md` — verificação item a item da classe
+  contra a edição 2026, e o plano de trabalho decorrente.
 
 ## Resoluções citadas pelo manual
 

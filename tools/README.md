@@ -26,18 +26,17 @@ compilar veio do `.dtx`, e não de um arquivo que ficou para trás.
 
 | Arquivo | O que faz |
 |---|---|
-| `build-check.ps1` | O motor. Regenera a distribuição e compila o que o escopo pedir, deixando os logs em `_scratch/build-logs/` e um resumo legível em `_scratch/RESULTADO.txt`. |
+| `build-check.ps1` | O motor. Regenera a distribuição e compila o que o escopo pedir, deixando os logs em `build/logs/` e um resumo legível em `build/RESULTADO.txt`. |
 | `prova.ps1` | Atalho para `build-check.ps1 -Scope prova`. É o que tem de sair limpo antes de marcar uma versão. |
-| `watch-build.ps1` | Fica observando `_scratch/BUILD_REQUEST` e roda o `build-check` quando o arquivo aparece. Deixe rodando numa janela enquanto trabalha. |
+| `watch-build.ps1` | Fica observando `build/BUILD_REQUEST` e roda o `build-check` quando o arquivo aparece. Deixe rodando numa janela enquanto trabalha. |
 | `mk-adversativa.py` | Gera os seis documentos de `../tests/adversativa/`. Eles não são escritos à mão: para mudar o que provam, mude a matriz no topo do gerador. |
-| `painel.py` | O painel do desenvolvedor, com janela e linha de comando. É o que o `coppetex.bat` da raiz chama. Manual em [`../PAINEL.md`](../PAINEL.md). |
-| `geradocvazio.py` | O gerador de documento vazio, com janela e linha de comando: escreve o `.tex` e o `.bib` de um trabalho novo, com os cinco capítulos e o texto de preenchimento. O `.bib` vai para `referencias/` por padrão, que é a recomendação desde a 4.1; o campo **Pasta das referências** vazio o devolve à raiz. É o que o `coppetex-novo.bat` da raiz chama. É a única ferramenta daqui feita para o ALUNO, e não para quem mantém a classe. |
+| `painel.py` | O painel do desenvolvedor, com janela e linha de comando. É o que o `coppetex.bat` da raiz chama. Manual em [`PAINEL.md`](./PAINEL.md). |
+| `distribuicoes.py` | **O gerador das distribuições.** Copia as fontes de `src/` para `build/` e roda os três `.ins` (`--regerar`), converte as normas de `src/normas` em PDF (`--normas`) e monta `dist-coppe`, `dist-poli` e `dist-biblatex` (`--montar`); `--pacote` fecha um `.zip` por distribuição. É o **único lugar** que sabe o que vai em cada distribuição: o painel, o `versao.py` e os testes `r92`/`r93`/`rtu14` leem as listas daqui. Roda em qualquer sistema. |
 | `versao.py` | Confere se a versão está sincronizada nos 28 arquivos gerados e nos 6 lugares em prosa, e sobe o segundo ou o terceiro nível. Nunca o primeiro. |
 | `conferir-norma.py` | Lê um PDF pronto e mede, em centímetros, o que a norma fixa: margens, corpo, recuos, ordem das páginas pré-textuais. |
 | `conferir-referencias.py` | Compõe as referências e as compara, uma a uma, com o texto que o Manual imprime. O gabarito é o `@comment{Manual: …}` antes de cada entrada de `../src/exemplo.bib` e de `../tests/adversativa/referencias-manual.bib`, e a ferramenta confere primeiro que ele é o texto do PDF do Manual em `../specs/`. Divergência aceita só passa com a forma exata da classe, num `@comment{Classe: …}`. |
 | `conferir-referencias-cruzadas.py` | Caça `\ref` e `\cite` sem resolver em todos os `.log`. Nada disso aparece no código de saída do `pdflatex`: sai `??` na página e o PDF é gerado assim mesmo. |
 | `conferir-manual.py` | Cobra que todo comando público, todo ambiente e toda opção da classe estejam documentados, que a tabela "onde ver" do manual ainda bata com o `coppe-max-exemplo.tex`, e que os guardas de `macrocode` do `.dtx` estejam bem escritos — o `doc.sty` só fecha um bloco de código com `%` e **quatro** espaços, e um guarda de três espaços fez sessenta linhas de documentação saírem impressas como código no `ufrj.pdf` por várias versões, sem quebrar nada. |
-| `juntar-master.py` | Junta ao ramo da 5.0 o que o `master` da 4.1 fez depois que o `goufrj` nasceu: tira da `dist/` as cópias das fontes para o git parear `src` com `src`, faz o merge, resolve os conflitos que só existem por causa da troca de nome `coppe` → `ufrj`, leva ao `ufrj-coppe.dtx` o que mudou nos exemplos, renomeia os testes da conferência para `rt` e aponta o que sobrou da 4.1. Testado numa simulação do merge. O passo a passo está em [`JUNTAR_MASTER_GOUFRJ.md`](../JUNTAR_MASTER_GOUFRJ.md). |
 | `atualizar-onde-ver.py` | Reescreve essa tabela a partir do `coppe-max-exemplo.tex` atual, quando ela envelhece. |
 
 A suíte de regressão tem rodador próprio, em
@@ -87,11 +86,11 @@ resolve isso: deixe-o rodando numa janela do PowerShell,
 .\tools\watch-build.ps1
 ```
 
-e peça uma compilação escrevendo o escopo em `_scratch/BUILD_REQUEST`. Quando
-terminar, ele escreve `_scratch/BUILD_DONE` e o resultado legível em
-`_scratch/RESULTADO.txt`.
+e peça uma compilação escrevendo o escopo em `build/BUILD_REQUEST`. Quando
+terminar, ele escreve `build/BUILD_DONE` e o resultado legível em
+`build/RESULTADO.txt`.
 
-Tudo isso vive em `_scratch/`, que o git ignora. **Nenhuma ferramenta daqui
+Tudo isso vive em `build/`, que o git ignora. **Nenhuma ferramenta daqui
 escreve em arquivo versionado**, com uma exceção declarada: `mk-adversativa.py`
 reescreve os seis `.tex` de `../tests/adversativa/`, porque é para isso que ele
 existe.
@@ -116,7 +115,7 @@ referências tinham sido corrigidas ou ajustadas no próprio gabarito, e a
 comparação passava sem provar nada. Hoje a ferramenta confere o gabarito
 contra o PDF do Manual antes de comparar a classe com ele.
 
-**Ela não escreve em arquivo versionado.** Saída vai para `_scratch/`.
+**Ela não escreve em arquivo versionado.** Saída vai para `build/`. (A exceção é o `distribuicoes.py`, cujo trabalho é justamente escrever as `dist-*` e `normas/`.)
 
 **Ela roda sem instalação.** PowerShell e Python 3 estão pressupostos; o resto —
 poppler, `pypdf`, veraPDF — é procurado, e a ausência vira um passo **pulado com

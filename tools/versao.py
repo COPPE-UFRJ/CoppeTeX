@@ -54,11 +54,11 @@ if hasattr(sys.stdout, "reconfigure"):
 # \ProvidesClass. Divergencia aqui quase sempre quer dizer a mesma coisa: o
 # ufrj.ins nao foi rodado depois da ultima mudanca no .dtx.
 #
-# Os de src/ estao escritos aqui; os de dist/ NAO, e sao deduzidos da lista do
-# painel. A razao: dist/ tem subpastas -- es/, outraslinguas/ --, e a lista de
-# quem vai para onde ja existe em tools/painel.py. Escrever os caminhos aqui de
-# novo criaria a segunda copia da mesma lista, e ela divergiu no dia seguinte a
-# reorganizacao: este verificador cobrava dist/spanish-ufrj.lbx, que tinha
+# Os de build/ estao escritos aqui; os das dist-* NAO, e sao deduzidos da lista
+# de tools/distribuicoes.py. A razao: as distribuicoes tem subpastas -- es/,
+# outraslinguas/ --, e a lista de quem vai para onde ja existe la. Escrever os
+# caminhos aqui de novo criaria a segunda copia da mesma lista, e ela ja
+# divergiu uma vez: este verificador cobrava dist/spanish-ufrj.lbx, que tinha
 # passado a ser dist/es/spanish-ufrj.lbx.
 ESTILOS = [
     "ufrj.cls", "ufrj.dbx", "ufrj.bbx", "ufrj.cbx",
@@ -69,16 +69,17 @@ ESTILOS = [
     "ufrj-coppe.sty", "coppe.cls", "ufrj-poli.sty",
 ]
 
-GERADOS = ["src/" + n for n in ESTILOS]
+GERADOS = ["build/" + n for n in ESTILOS]
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 try:
-    from painel import PARA_DIST
-except ImportError:                      # sem o painel, confere so o src/
-    PARA_DIST = []
-for subpasta, nome in PARA_DIST:
-    if nome in ESTILOS:
-        GERADOS.append("dist/" + (subpasta + "/" + nome if subpasta else nome))
+    from distribuicoes import DISTRIBUICOES
+except ImportError:                      # sem o gerador, confere so o build/
+    DISTRIBUICOES = {}
+for _dist, _entradas in sorted(DISTRIBUICOES.items()):
+    for subpasta, nome, _origem in _entradas:
+        if nome in ESTILOS:
+            GERADOS.append(_dist + "/" + (subpasta + "/" + nome if subpasta else nome))
 
 # Lugares em prosa que TEM de trazer a versao corrente. A lista e explicita, e
 # nao uma varredura, porque o repositorio esta cheio de mencoes historicas
@@ -91,7 +92,7 @@ PROSA = [
     # a proposta levada a CPGP, que foi escrita para a 4.1, e nao a versao do
     # checkout. Conferida contra a canonica, ela obrigaria cada versao nova a
     # dizer que foi ela a submetida.
-    ("dist/README.md", r"Esta é a CoppeTeX (\d+\.\d+(?:\.\d+)?)"),
+    ("src/distribuicao/coppe/README.md", r"Esta é a CoppeTeX (\d+\.\d+(?:\.\d+)?)"),
     # O CHANGELOG e o mais novo primeiro, entao o primeiro "## [x.y]" do arquivo
     # e o da versao corrente.
     ("CHANGELOG.md", r"^## \[(\d+\.\d+(?:\.\d+)?)\]"),
@@ -172,14 +173,14 @@ def conferir(detalhe=False):
         elif m.group(1) != alvo:
             problemas.append("%s  diz %s (esperado %s)" % (rel, m.group(1), alvo))
 
-    # 4. dist/ e COPIA de src/. Se um arquivo divergir, a distribuicao nao e
-    #    mais a classe que acabou de ser provada -- e o numero de versao, que e
-    #    o mesmo nos dois, nao denuncia isso.
+    # 4. As dist-* sao COPIA de build/. Se um arquivo divergir, a distribuicao
+    #    nao e mais a classe que acabou de ser provada -- e o numero de versao,
+    #    que e o mesmo nos dois, nao denuncia isso.
     for rel in GERADOS:
-        if not rel.startswith("dist/"):
+        if not rel.startswith("dist-"):
             continue
         emdist = os.path.join(RAIZ, rel.replace("/", os.sep))
-        emsrc = os.path.join(RAIZ, "src", os.path.basename(rel))
+        emsrc = os.path.join(RAIZ, "build", os.path.basename(rel))
         if os.path.exists(emdist) and os.path.exists(emsrc):
             # Fim de linha nao conta: com core.autocrlf=true o git entrega CRLF
             # no checkout, e o docstrip escreve LF ao regerar. O conteudo
@@ -187,7 +188,7 @@ def conferir(detalhe=False):
             def bytes_lf(caminho):
                 return io.open(caminho, "rb").read().replace(b"\r\n", b"\n")
             if bytes_lf(emdist) != bytes_lf(emsrc):
-                problemas.append("%s  difere de src/%s -- falta copiar para dist"
+                problemas.append("%s  difere de build/%s -- rode tools/distribuicoes.py --montar"
                                  % (rel, os.path.basename(rel)))
 
     if detalhe:
@@ -202,7 +203,7 @@ def conferir(detalhe=False):
             r"|CoppeTeX\s+(\d+\.\d+(?:\.\d+)?)\b"
             r"|[Vv]ers[aã]o\D{0,12}?(\d+\.\d+(?:\.\d+)?)\b)")
         for raiz, _, arquivos in os.walk(RAIZ):
-            if any(p in raiz for p in (".git", "_scratch", "specs", "dist")):
+            if any(p in raiz for p in (".git", "build", "specs", "dist-", "claude")):
                 continue
             for a in sorted(arquivos):
                 if not a.endswith(".md"):

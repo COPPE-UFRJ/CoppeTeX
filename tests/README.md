@@ -16,8 +16,8 @@
 | [`tests/adversativa/`](./adversativa/README.md) | **Does it survive everything at once?** Six documents that fire every feature together, under both engines, validated by veraPDF. | `coppetex.bat --adversativo` |
 | [`tests/regressivo/`](./regressivo/README.md) | **Did an old defect come back?** One minimal test per bug already fixed, each asserting what must and must not appear. Opt-in: it is *not* part of the normal run. | `coppetex.bat --regressivo` |
 
-**No PDF in this tree is versioned.** The versioned PDFs are the ones in `src/`
-and `dist/`, which are the deliverable. These are proof of work: they change on
+**No PDF in this tree is versioned.** The versioned PDFs are the ones in the `dist-*`
+folders and in `normas/`, which are the deliverable. These are proof of work: they change on
 every compile and only matter to whoever is running the tests at that moment.
 
 This directory holds smoke tests that exercise public APIs of `ufrj.cls`.

@@ -40,7 +40,9 @@ AQUI = os.path.dirname(os.path.abspath(__file__))
 RAIZ = os.path.dirname(os.path.dirname(AQUI))
 # COPPE_SRC aponta para outra copia da classe -- serve para provar uma correcao
 # numa pasta de rascunho antes de leva-la ao .dtx.
-SRC = os.environ.get("COPPE_SRC") or os.path.join(RAIZ, "src")
+# SRC e a pasta onde esta a classe GERADA. Desde a reorganizacao de outubro de
+# 2026 ela e build/ (src/ so tem fonte); a variavel manteve o nome.
+SRC = os.environ.get("COPPE_SRC") or os.path.join(RAIZ, "build")
 
 
 # ---------------------------------------------------------------- cache -----
@@ -55,7 +57,7 @@ SRC = os.environ.get("COPPE_SRC") or os.path.join(RAIZ, "src")
 # A chave inclui os gerados da classe justamente para o cache nao mascarar uma
 # mudanca: e o risco que a issue aponta, e e por isso que a chave nao e so a do
 # .tex do teste.
-CACHE = os.path.join(RAIZ, "_scratch", "cache-regressivo")
+CACHE = os.path.join(RAIZ, "build", "cache-regressivo")
 SEM_CACHE = bool(os.environ.get("COPPE_SEM_CACHE"))
 # Sete dias: o bastante para uma semana de trabalho na mesma issue, e pouco o
 # bastante para a pasta nao crescer sem fim.

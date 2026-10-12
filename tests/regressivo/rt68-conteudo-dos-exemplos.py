@@ -29,7 +29,7 @@ E os pedidos de 21/09/2026 para o coppe-max-exemplo (#166):
     banca"), sem os orientadores automaticos (#165);
   * o nome do projeto de pesquisa da folha adicional com "(caso haja)".
 
-Cobra-se tudo isso sem compilar, lendo src/coppe-max-exemplo.tex e src/exemplo.bib
+Cobra-se tudo isso sem compilar, lendo build/coppe-max-exemplo.tex e build/exemplo.bib
 (o coppe-max-exemplo sai do ufrj-coppe.dtx, modulo maxexemplo; o exemplo.bib, do
 ufrj.dtx, modulos examplebib e tiposbib).
 """
@@ -39,8 +39,8 @@ import re
 import unicodedata
 from medidas import relatar, RAIZ
 
-tex = io.open(os.path.join(RAIZ, "src", "coppe-max-exemplo.tex"), encoding="utf-8").read()
-bib = io.open(os.path.join(RAIZ, "src", "exemplo.bib"), encoding="utf-8").read()
+tex = io.open(os.path.join(RAIZ, "build", "coppe-max-exemplo.tex"), encoding="utf-8").read()
+bib = io.open(os.path.join(RAIZ, "build", "exemplo.bib"), encoding="utf-8").read()
 problemas = []
 
 # 2.10: fonte abaixo de todo algoritmo
@@ -64,9 +64,9 @@ for errado in (r"\chapter{Using BibLaTeX}", "exemplo úteis"):
 # idioma principal. (O Anexo E do Manual traz as iniciais maiusculas, contra o
 # texto da 3.1.2.1.4 e da NBR 6028:2021; vale o texto.)
 modelos = [("coppe-max-exemplo.tex", tex),
-           ("coppe-min-exemplo.tex", io.open(os.path.join(RAIZ, "src", "coppe-min-exemplo.tex"), encoding="utf-8").read()),
-           ("example_pt.tex", io.open(os.path.join(RAIZ, "src", "example_pt.tex"), encoding="utf-8").read()),
-           ("tools/geradocvazio.py", io.open(os.path.join(RAIZ, "tools", "geradocvazio.py"), encoding="utf-8").read())]
+           ("coppe-min-exemplo.tex", io.open(os.path.join(RAIZ, "build", "coppe-min-exemplo.tex"), encoding="utf-8").read()),
+           ("example_pt.tex", io.open(os.path.join(RAIZ, "build", "example_pt.tex"), encoding="utf-8").read()),
+           ("src/gerador/geradocvazio.py", io.open(os.path.join(RAIZ, "src", "gerador", "geradocvazio.py"), encoding="utf-8").read())]
 for nome, fonte in modelos:
     for kw in re.findall(r"\\\\?keyword\{([^}]*)\}", fonte):
         if kw[:1].isupper():

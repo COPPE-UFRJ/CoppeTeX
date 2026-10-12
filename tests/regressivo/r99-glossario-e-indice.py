@@ -27,7 +27,7 @@ import tempfile
 
 AQUI = os.path.dirname(os.path.abspath(__file__))
 RAIZ = os.path.dirname(os.path.dirname(AQUI))
-SRC = os.path.join(RAIZ, "src")
+SRC = os.path.join(RAIZ, "build")  # a classe gerada
 
 DOC = r"""\documentclass[dsc%(opcoes)s]{ufrj}
 \usepackage{ufrj-coppe}

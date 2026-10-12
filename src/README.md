@@ -18,14 +18,16 @@ o que é da COPPE — um Programa, o logotipo, uma frase —, mude o
 cobrado: `tests/regressivo/rtu04` lê o código que o `ufrj.ins` gera e reprova
 qualquer menção à COPPE.
 
-Isso é verificado, e não é honra. `tools\prova.ps1` roda os dois `.ins` e pergunta
-ao git se algum arquivo que estava limpo mudou. Se mudou, alguém editou um
-derivado à mão, a edição acaba de ser perdida, e a prova falha antes de deixar
-marcar uma versão.
+**Nada do que é gerado mora aqui.** Desde outubro de 2026, `src/` só tem fonte:
+o `tools/distribuicoes.py` copia as fontes para `../build/`, roda os três `.ins`
+lá, e é de `build/` que saem as distribuições (`../dist-coppe`, `../dist-poli`,
+`../dist-biblatex`) e as normas (`../normas`). `build/` fica fora do git. O
+teste `tests/regressivo/rtu14` reprova qualquer arquivo gerado que volte a ser
+versionado em `src/`.
 
-## O que é gerado e o que é fonte
+## O que é fonte e o que é gerado
 
-Gerado — **não edite**:
+Gerado em `../build/` — **não edite, e não traga para cá**:
 
 | Arquivo | O que é |
 |---|---|
@@ -45,8 +47,9 @@ Gerado — **não edite**:
 | `coppe-quickref.tex` | O guia rápido da COPPE, em inglês (gerado do `ufrj-coppe.dtx`). |
 | `poli-quickref.tex` | O guia rápido da Escola Politécnica, em inglês (gerado do `ufrj-poli.dtx`). |
 | `latexmkrc.tex` | A receita de compilação (veja a nota sobre o nome, abaixo). |
-| `ufrj.pdf` | O manual de uso da classe, composto do próprio `ufrj.dtx`. |
-| `ufrj-coppe.pdf` | O manual do estilo da COPPE, composto do próprio `ufrj-coppe.dtx`. |
+| `ufrj.pdf`, `ufrj-coppe.pdf`, `ufrj-poli.pdf` | Os manuais da classe e de cada estilo, compostos dos próprios `.dtx`. |
+| `poli.cls`, `ufrj-poli.sty`, `poli-*-exemplo.tex` | O estilo da Escola Politécnica, a classe de compatibilidade e os exemplos. Saem do `ufrj-poli.dtx`. |
+| `manual.pdf`, os PDFs dos exemplos e das folhas de consulta | Compilados pelo `tools/build-check.ps1`. |
 
 Fonte — **é aqui que se mexe**:
 
@@ -56,9 +59,12 @@ Fonte — **é aqui que se mexe**:
 | `ufrj.ins` | A lista do que gerar do `ufrj.dtx`. Só muda quando nasce um arquivo novo. |
 | `ufrj-coppe.dtx` | O estilo da COPPE, a classe `coppe` de compatibilidade e os exemplos. É também o modelo do estilo de outra unidade. |
 | `ufrj-coppe.ins` | A lista do que gerar do `ufrj-coppe.dtx`. |
-| `logos/ufrj-logo.pdf`, `logos/coppe-logo.pdf`, `logos/coppe-logo.eps` | Logotipos da capa: o da UFRJ é da classe, o da COPPE é do estilo. Binários, não saem de `.dtx` nenhum. |
-| `NORMA_COPPE_2026.tex` | A norma da COPPE, documento próprio. |
+| `ufrj-poli.dtx`, `ufrj-poli.ins` | O estilo da Escola Politécnica, a classe `poli` de compatibilidade e os exemplos dela. |
+| `logos/` | Logotipos da capa: o da UFRJ é da classe; o da COPPE e o da Poli, dos estilos. Binários, não saem de `.dtx` nenhum. |
 | `manual.tex` | O manual da NORMA: como o trabalho tem de sair. Não confundir com `ufrj.pdf`, que é o manual da classe. |
+| `normas/` | As normas de cada unidade, **em Word** (`norma-coppe/NORMA_COPPE_2026.docx`, `norma-poli/NORMA_POLI_2026.docx`) — o `.docx` é a fonte; o gerador faz o PDF. Em `norma-coppe/cpgp/`, os documentos do processo na CPGP. |
+| `distribuicao/` | O que cada distribuição leva além do gerado: o `README.md` de cada uma, os guias de migração (`coppe/`) e o documento de exemplo do biblatex avulso (`biblatex/`). |
+| `gerador/` | O gerador de trabalho novo, `coppetex-novo.bat` + `geradocvazio.py`. É ferramenta do ALUNO e vai na `dist-coppe`. |
 
 ## Como os `.dtx` são organizados
 
@@ -95,10 +101,15 @@ do estilo, que é uma lista de declarações.
 ## O ciclo de trabalho
 
 ```powershell
-# 1. edite src\ufrj.dtx (a classe) ou src\ufrj-coppe.dtx (o estilo da COPPE)
-# 2. gere os derivados e compile o que interessa
+# 1. edite src\ufrj.dtx (a classe), src\ufrj-coppe.dtx ou src\ufrj-poli.dtx
+# 2. gere os derivados em build\ e compile o que interessa
 .\tools\build-check.ps1 -Scope example
+# 3. quando estiver pronto, refaça as distribuições
+.\coppetex.bat --distribuir
 ```
+
+Fora do Windows, `python3 tools/distribuicoes.py --regerar` faz o passo do
+docstrip, e `python3 tools/distribuicoes.py` faz docstrip, normas e montagem.
 
 Os escopos do `build-check.ps1` vão do mais rápido ao mais completo: `class` só
 regenera; `example` compila os dois exemplos; `langs`, os cinco idiomas; `tests`, a
@@ -107,7 +118,7 @@ veraPDF; `adversativa`, os seis documentos de prova nos dois motores; `all`,
 tudo; `prova`, tudo mais a verificação de fonte única e um veredito.
 
 Enquanto se trabalha, `tools\watch-build.ps1` fica observando e compila sozinho
-a cada pedido. Nada disso escreve fora de `_scratch\`, que o git ignora.
+a cada pedido. Nada disso escreve fora de `build\`, que o git ignora.
 
 Antes de marcar uma versão, uma vez só:
 
@@ -133,12 +144,12 @@ desses, e é o que torna possível mexer nele anos depois.
 
 **Nada de mudar aparência sem norma que sustente.** A classe implementa o
 *Manual para elaboração e normalização de trabalhos acadêmicos* da UFRJ/SiBI,
-9.ª ed. rev. (2026), que está em `specs/`, mais a norma própria da COPPE, em
-`NORMA_COPPE_2026.md`. Onde a norma não manda nada, a escolha é do autor da tese
+9.ª ed. rev. (2026), que está em `specs/`, mais a norma própria de cada
+unidade, em `src/normas/`. Onde a norma não manda nada, a escolha é do autor da tese
 e deve virar opção de classe, não decisão embutida.
 
 **Quebrou compatibilidade? Escreva onde se lê.** Vai no histórico do `.dtx`, no
-`CHANGELOG.md` e no guia de migração da versão (`MIGRATION_v4_to_v5.md` é o
+`CHANGELOG.md` e no guia de migração da versão (`distribuicao/coppe/MIGRATION_v4_to_v5.md` é o
 mais recente), com a regra de conversão. Quem está
 escrevendo uma tese há dois anos não lê commit.
 
@@ -152,7 +163,7 @@ O teste tem de falhar antes da correção e passar depois.
 **O `latexmkrc` sai com o nome errado, de propósito.** O `\openout` do TeX
 acrescenta `.tex` a todo nome sem extensão e recusa nome começado por ponto, de
 modo que não há como pedir a ele um arquivo chamado exatamente `latexmkrc`. O
-módulo gera `latexmkrc.tex`, e o `build-check.ps1` copia por cima do
+módulo gera `latexmkrc.tex`, e o `tools/distribuicoes.py` copia por cima do
 `latexmkrc`. Quem roda o `ufrj.ins` à mão copia também.
 
 **`\newfloat` define o ambiente localmente.** Se você envolver a criação de um
@@ -160,32 +171,12 @@ flutuante num grupo, ele desaparece quando o grupo fecha, e o documento falha co
 "ambiente indefinido" longe dali. Isso já aconteceu uma vez, com
 `\newufrjfloat`; o comentário no `.dtx` guarda a história.
 
-## O que está aqui e não deveria
-
-`baseline.pdf`, `example0.pdf`, `example1.*`, `example2.*`,
-`documento da COPPE com o formato válido nessa classe e estilo.pdf` e o
-`examples.md` que os descreve são material de trabalho da migração para o
-`biblatex`, em 2026. Não saem do `.dtx`, não são distribuídos e nenhuma
-ferramenta os cita. Estão registrados no
-[issue #79](https://github.com/COPPE-UFRJ/CoppeTeX/issues/79), à espera de quem
-decida se saem ou mudam de pasta.
-
-O `Makefile` é de antes do harness em PowerShell e ainda declara a versão 3.2;
-quem trabalha no Unix costuma rodar o `ufrj.ins` e o `ufrj-coppe.ins` direto. O `doall.bat` virou um
-atalho para `..\coppetex.bat --regerar --docs --dist`, porque a lista de arquivos
-que vão para `dist/` estava escrita nele **e** no `Makefile`, e as duas versões
-divergiram. No Windows, o caminho é o painel:
-
-```bat
-..\coppetex.bat
-```
-
 ## Onde fica o resto
 
-- `../tests/` — a suíte de regressão.
-- `../tests/adversativa/` — seis documentos que acionam tudo ao mesmo tempo.
-- `../tools/` — o harness. Tem README próprio.
-- `../dist/` — a entrega.
-- `../specs/` — a norma que tudo isto implementa.
-- `../CONTRIBUTING.md` — como acrescentar um pacote de idioma, e como contribuir
-  vindo de fora.
+- `../build/` — onde tudo é gerado e compilado (fora do git).
+- `../dist-coppe/`, `../dist-poli/`, `../dist-biblatex/` — as distribuições, geradas.
+- `../normas/` — as normas em Word e PDF, geradas de `normas/`.
+- `../tools/` — o harness e o gerador das distribuições (`distribuicoes.py`). Tem README próprio.
+- `../tests/` — a suíte de regressão; `../tests/adversativa/`, os seis documentos que acionam tudo.
+- `../specs/` — as especificações que tudo isto implementa.
+- `../CONTRIBUTING.md` — como acrescentar um pacote de idioma ou uma unidade.

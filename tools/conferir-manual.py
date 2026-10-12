@@ -36,18 +36,18 @@ import sys
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DTX = os.path.join(RAIZ, "src", "ufrj.dtx")
-CLS = os.path.join(RAIZ, "src", "ufrj.cls")
-EXEMPLO = os.path.join(RAIZ, "src", "coppe-max-exemplo.tex")
+CLS = os.path.join(RAIZ, "build", "ufrj.cls")
+EXEMPLO = os.path.join(RAIZ, "build", "coppe-max-exemplo.tex")
 # O estilo da COPPE tem fonte e manual proprios. Um comando publico dele pode
 # estar documentado em qualquer dos dois manuais -- os que o estilo redefine sao
 # da classe, e e la que estao descritos --, e os guardas de macrocode dos dois
 # .dtx sao conferidos.
-STY = os.path.join(RAIZ, "src", "ufrj-coppe.sty")
+STY = os.path.join(RAIZ, "build", "ufrj-coppe.sty")
 DTX_COPPE = os.path.join(RAIZ, "src", "ufrj-coppe.dtx")
 # O estilo da Escola Politecnica entra pela mesma razao: hoje ele nao cria
 # comando publico nenhum -- so declara dados pela interface da classe --, e e
 # justamente isso que a conferencia mantem verdadeiro.
-STY_POLI = os.path.join(RAIZ, "src", "ufrj-poli.sty")
+STY_POLI = os.path.join(RAIZ, "build", "ufrj-poli.sty")
 DTX_POLI = os.path.join(RAIZ, "src", "ufrj-poli.dtx")
 
 # Logotipos da familia TeX e afins: a classe os define para uso tipografico,

@@ -11,7 +11,7 @@ divergencia aceita um @comment{Divergencia aceita: ...}.
 Cobra-se, sem compilar:
   1. nenhuma linha comecada por % nos tres .bib que o ufrj.ins gera
      (exemplo.bib, manual.bib, ufrj.bib), na base das adversativas e no .bib
-     que o tools/geradocvazio.py escreve;
+     que o src/gerador/geradocvazio.py escreve;
   2. que o tools/conferir-referencias.py leia o gabarito novo: as 34 categorias
      da secao 4.2 em cada uma das duas bases, e as divergencias aceitas;
   3. que o .bib do gerador escreva os acentos em UTF-8, e nao como \\'i.
@@ -36,7 +36,7 @@ problemas = []
 
 # 1. nenhuma linha de comentario com %
 bases = [os.path.join(SRC, n) for n in ("exemplo.bib", "manual.bib", "ufrj.bib")] + [ADV]
-gera = carrega("geradocvazio", os.path.join(RAIZ, "tools", "geradocvazio.py"))
+gera = carrega("geradocvazio", os.path.join(RAIZ, "src", "gerador", "geradocvazio.py"))
 textos = [(os.path.basename(b), open(b, encoding="utf-8").read()) for b in bases]
 textos.append(("o .bib do gerador", gera.monta_bib(gera.padroes())))
 for nome, texto in textos:

@@ -11,9 +11,9 @@ sistema; no Windows, o poppler que vem com o MiKTeX serve.
 
     python3 tools/conferir-norma.py
     python3 tools/conferir-norma.py tests/adversativa/adv_*.pdf
-    python3 tools/conferir-norma.py src/coppe-max-exemplo.pdf
+    python3 tools/conferir-norma.py build/coppe-max-exemplo.pdf
 
-Sem argumento, confere os tres exemplos de src/ (o da COPPE, o minimo e o da
+Sem argumento, confere os tres exemplos de build/ (o da COPPE, o minimo e o da
 Poli) e os documentos adversativos
 que ja tiverem sido compilados, nos dois motores -- e o que o `--conferir' do
 painel faz. O build-check.ps1 chama este script logo depois de compilar os
@@ -374,7 +374,7 @@ def alvos_padrao():
     LuaLaTeX. A sonda de fluxos (_writes_probe) fica de fora: estoura de
     proposito e o PDF dela nao e documento.
     """
-    alvos = [os.path.join(RAIZ, "src", n)
+    alvos = [os.path.join(RAIZ, "build", n)
              for n in ("coppe-max-exemplo.pdf", "coppe-min-exemplo.pdf",
                        "poli-min-exemplo.pdf", "poli-max-exemplo.pdf")]
     alvos += sorted(glob.glob(os.path.join(RAIZ, "tests", "adversativa", "adv_*.pdf")))

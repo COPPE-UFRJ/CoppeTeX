@@ -4,6 +4,43 @@ Project changes worth noting, newest first. Follows
 [Keep a Changelog](https://keepachangelog.com/) loosely; dates are
 ISO-8601.
 
+## [Unreleased] — 2026-10-12 — Repository reorganisation
+
+No change to what the class produces: the files generated from the three
+`.dtx` are byte-identical to the ones previously versioned in `src/`.
+
+- **`src/` holds only source.** The three `.dtx`/`.ins` pairs, `manual.tex`,
+  the logos, the unit norms (`src/normas`, now **Word documents** — the `.docx`
+  is the source), the extra files of each distribution (`src/distribuicao`)
+  and the new-thesis generator (`src/gerador`). The 63 generated files that
+  were versioned in `src/` left git; `src/Makefile`, `src/doall.bat` and
+  `src/LEIAME` were removed.
+- **`build/`** (ignored by git) is the working folder: a copy of the sources,
+  what the `.ins` generate, the compiled PDFs, the logs (formerly in
+  `_scratch/`), the regression cache and the release zips.
+- **Three distributions** replace `dist/`: `dist-coppe` (theses and
+  dissertations at COPPE), `dist-poli` (Projeto de Graduação at the Escola
+  Politécnica, now with `poli.cls` and its own README) and `dist-biblatex`
+  (the ABNT biblatex styles alone, with a standalone example, for any
+  document). Each one is self-sufficient, so files repeat between them on
+  purpose.
+- **`normas/`** holds the latest norm of each unit, in Word and PDF:
+  `norma-coppe/NORMA_COPPE_2026` (proposal to the CPGP) and
+  `norma-poli/NORMA_POLI_2026` (proposal to the Congregação).
+- **One generator.** `tools/distribuicoes.py` copies `src/` to `build/`, runs
+  the `.ins`, converts the norms (LibreOffice or Word) and assembles the three
+  distributions; it is the only place that lists what goes into each one.
+  `coppetex.bat --distribuir` does everything, from the `.dtx` to what is
+  downloaded. `painel.py`, `versao.py`, `build-check.ps1` and the tests
+  `r92`, `r93` and `rtu14` now read that list; `rtu14` now checks the
+  opposite of before — that no generated file is versioned in `src/`.
+- **Root reduced** to `README.md`, `CHANGELOG.md`, `CONTRIBUTING.md`,
+  `COPYING.txt` and `coppetex.bat`. Working notes, reviews and historical
+  guides (`TODO`, `REVISAO_SIBI`, `CORRECOES_MANUAL_2026`,
+  `JUNTAR_MASTER_GOUFRJ`, `CHANGES`, the explanatory versions of both norms
+  and the previous README) moved to `claude/`; `PAINEL.md` to `tools/`;
+  the migration guides to `dist-coppe/migracao`.
+
 ## [5.0] — 2026-09-24 — The check against the Manual, the Escola Politécnica, and the release
 
 On 2026-09-16, version 4.1 was checked in full against the Manual (9th ed.

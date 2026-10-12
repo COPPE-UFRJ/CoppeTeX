@@ -13,7 +13,7 @@ exemplos.
 
 A documentacao atual do pacote doc lista \\CharacterTable e \\CheckSum como
 obsoletos ("neither should be used in new developments"), e os dois sairam do
-.dtx. Este teste cobra que nao voltem -- nem ao .dtx, nem a src/, nem a dist/.
+.dtx. Este teste cobra que nao voltem -- nem ao .dtx, nem a build/, nem as dist-*.
 
 O mesmo conversor estragou a tabela literate do listings, que troca UTF-8 por
 sequencias de acento DE PROPOSITO (o listings nao le UTF-8 no pdfLaTeX): virou
@@ -31,7 +31,7 @@ RAIZ = os.path.dirname(os.path.dirname(AQUI))
 problemas = []
 USO = re.compile(r"\\(CharacterTable|CheckSum)\b")
 
-for pasta in ("src", "dist"):
+for pasta in ("src", "build", "dist-coppe", "dist-poli", "dist-biblatex"):
     for raiz, _, nomes in os.walk(os.path.join(RAIZ, pasta)):
         for nome in nomes:
             if os.path.splitext(nome)[1] not in (".dtx", ".ins", ".tex", ".cls",

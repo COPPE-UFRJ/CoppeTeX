@@ -13,7 +13,7 @@ Cobra-se:
   1. um documento SEM opcao nenhuma alem do tipo sai com a identificacao PDF/A
      (pdfaid) no XMP;
   2. a opcao `sempdfa' desliga (o PDF sai sem pdfaid);
-  3. no gerador (tools/geradocvazio.py), o campo pdfa vem ligado por padrao.
+  3. no gerador (src/gerador/geradocvazio.py), o campo pdfa vem ligado por padrao.
 """
 import io
 import os
@@ -33,10 +33,10 @@ for opcoes, espera in (("dsc", True), ("dsc,sempdfa", False)):
             problemas.append("[%s] PDF/A: %s, esperado %s"
                              % (opcoes, "sim" if tem else "nao", "sim" if espera else "nao"))
 
-gerador = io.open(os.path.join(RAIZ, "tools", "geradocvazio.py"), encoding="utf-8").read()
+gerador = io.open(os.path.join(RAIZ, "src", "gerador", "geradocvazio.py"), encoding="utf-8").read()
 m = re.search(r'\("pdfa",.*?"sim/nao",\s*(True|False)', gerador, re.S)
 if not m:
-    problemas.append("gerador: nao achei o campo pdfa em tools/geradocvazio.py")
+    problemas.append("gerador: nao achei o campo pdfa em src/gerador/geradocvazio.py")
 elif m.group(1) != "True":
     problemas.append("gerador: o campo pdfa vem desligado por padrao")
 

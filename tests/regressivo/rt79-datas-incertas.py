@@ -33,7 +33,7 @@ if hasattr(sys.stdout, "reconfigure"):
 
 AQUI = os.path.dirname(os.path.abspath(__file__))
 RAIZ = os.path.dirname(os.path.dirname(AQUI))
-SRC = os.environ.get("COPPE_SRC") or os.path.join(RAIZ, "src")
+SRC = os.environ.get("COPPE_SRC") or os.path.join(RAIZ, "build")
 
 # forma da 4.3.5 -> ano que ela contem, e que ordena
 FORMAS = [

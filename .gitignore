@@ -1,20 +1,4 @@
 *.lab
-dist/example.los
-dist/exemple.los
-src/ufrj.glo
-src/ufrj.idx
-src/ufrj-coppe.glo
-src/ufrj-coppe.idx
-src/ufrj-poli.glo
-src/ufrj-poli.idx
-src/ufrj.out
-src/ufrj.aux
-# os mesmos artefatos com o nome da classe ate a v4.1, que ficam na pasta de
-# quem compilou antes da troca de nome
-src/coppe.glo
-src/coppe.idx
-src/coppe.out
-src/coppe.aux
 *.bak
 *.aux
 *.blg
@@ -38,11 +22,14 @@ src/coppe.aux
 *.lgs
 *.hd
 *.hd
-src/*.synctex.gz
-src/*.fdb_latexmk
-src/*.fls
+*.fdb_latexmk
+*.fls
 
-# CoppeTeX 4.0 working artifacts
+# Pasta de trabalho: copia das fontes, o que os .ins geram, os PDFs compilados,
+# logs, cache do regressivo e os zips. src/ so tem fonte; o que se baixa sao as
+# dist-* e normas/, versionadas.
+/build/
+# restos de versoes anteriores do harness
 _scratch/
 specs/*.txt
 *.log
@@ -51,9 +38,9 @@ specs/*.txt
 *page-*.png
 *.synctex.gz
 
-# Os PDFs versionados sao os de src/ e os de dist/, e so esses. Eles sao a
+# Os PDFs versionados sao os das dist-* e de normas/, e so esses. Eles sao a
 # ENTREGA: quem abre o repositorio no GitHub tem de conseguir ver o manual, o
-# exemplo e a norma sem instalar TeX. Os de dist/ sao copia dos de src/.
+# exemplo e a norma sem instalar TeX. Sao copia dos de build/.
 #
 # Os de tests/ NAO entram, e a razao e outra: eles sao prova de funcionamento,
 # mudam a cada compilacao e so interessam a quem esta rodando os testes naquele
@@ -81,8 +68,6 @@ __pycache__/
 *.xmpdata
 *.xmpi
 
-# gerado pelo ufrj.ins; o build-check o copia para latexmkrc
-src/latexmkrc.tex
 
 # tests/adversativa/: prova de funcionamento, nao distribuida. Entram no git as
 # fontes e a base de referencias do Manual; os PDFs e os auxiliares de build,

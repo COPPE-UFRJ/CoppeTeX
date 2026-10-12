@@ -42,7 +42,7 @@ if hasattr(sys.stdout, "reconfigure"):
 
 AQUI = os.path.dirname(os.path.abspath(__file__))
 RAIZ = os.path.dirname(os.path.dirname(AQUI))
-SRC = os.path.join(RAIZ, "src")
+SRC = os.path.join(RAIZ, "build")  # a classe gerada
 
 BIB = u"""@book{livro-da-subpasta,
   author    = {Sobrenome, Autor da Base},

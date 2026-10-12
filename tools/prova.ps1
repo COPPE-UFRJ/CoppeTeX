@@ -29,7 +29,7 @@
     tests\ nao e distribuido, e nada dele sai do ufrj.dtx: prova que a classe
     funciona, nao faz parte dela.
 
-    O veredito fica no fim de _scratch\RESULTADO.txt; o codigo de saida e o
+    O veredito fica no fim de build\RESULTADO.txt; o codigo de saida e o
     numero de falhas.
 
 .EXAMPLE

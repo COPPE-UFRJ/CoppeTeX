@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 """Teste de regressao da CoppeTeX. NAO roda na suite normal.
 
-BUG: a pasta dist/ e a unica coisa que o aluno baixa, e nada garantia que ela
+BUG: a distribuicao (hoje dist-coppe, dist-poli e dist-biblatex) e a unica
+coisa que o aluno baixa, e nada garantia que ela
 bastasse. Ela ja saiu incompleta mais de uma vez -- sem os pacotes de idioma,
 sem o latexmkrc, sem o guia rapido, sem a tipos.bib --, e o defeito so aparecia
 do lado de la, na maquina de quem foi escrever a tese. Aqui, no repositorio,
@@ -37,17 +38,19 @@ if hasattr(sys.stdout, "reconfigure"):
 
 AQUI = os.path.dirname(os.path.abspath(__file__))
 RAIZ = os.path.dirname(os.path.dirname(AQUI))
-DIST = os.path.join(RAIZ, "dist")
-
-# (documento, pasta cujo conteudo tem de vir para a raiz antes de compilar)
-EXEMPLOS = [("coppe-min-exemplo", None), ("coppe-max-exemplo", None),
-            ("poli-min-exemplo", None), ("poli-max-exemplo", None),
-            ("example_en", "en"), ("example_es", "es")]
+# Por distribuicao: (documento, pasta cujo conteudo tem de vir para a raiz
+# antes de compilar). Cada dist-* tem de bastar sozinha.
+EXEMPLOS = {
+    "dist-coppe": [("coppe-min-exemplo", None), ("coppe-max-exemplo", None),
+                   ("example_en", "en"), ("example_es", "es")],
+    "dist-poli": [("poli-min-exemplo", None), ("poli-max-exemplo", None)],
+    "dist-biblatex": [("exemplo-biblatex", None)],
+}
 
 problemas = []
 
 
-def compila(pasta, stem, ambiente):
+def compila(pasta, stem, ambiente, nome="dist"):
     """Compila e devolve a lista de problemas daquele documento."""
     achados = []
     for passo in (["pdflatex", "-interaction=nonstopmode", stem + ".tex"],
@@ -78,7 +81,7 @@ def compila(pasta, stem, ambiente):
     # ordem (#158).
     erros = [l for l in texto.splitlines() if l.startswith("!")][:3]
     if "Output written on" not in texto or erros:
-        achados.append("%s nao compilou so com o que ha em dist/: %s"
+        achados.append(("%s nao compilou so com o que ha em " + nome + "/: %s")
                        % (stem, "; ".join(erros) or "sem PDF de saida"))
 
     # Um "not found" que nomeie um arquivo NOSSO e arquivo que faltou na
@@ -97,52 +100,54 @@ def compila(pasta, stem, ambiente):
     citacoes = re.findall(
         r"Citation [`'\"]([^'\"]+)['\"] on page \S+ undefined", texto)
     if citacoes:
-        achados.append("%s: %d citacao(oes) sem resolver so com o que ha em"
-                       " dist/ -- a primeira e `%s'"
+        achados.append(("%s: %d citacao(oes) sem resolver so com o que ha em"
+                        " " + nome + "/ -- a primeira e `%s'")
                        % (stem, len(citacoes), citacoes[0]))
     return achados
 
 
-if not os.path.isdir(DIST):
-    problemas.append("nao existe a pasta dist/")
-else:
-    for stem, subpasta in EXEMPLOS:
-        pasta = tempfile.mkdtemp(prefix="coppe-r93-")
-        try:
-            # A arvore INTEIRA, e nao so os arquivos da raiz: os logotipos, os
-            # manuais e os exemplos por idioma estao em subpastas.
-            for raiz, _, nomes in os.walk(DIST):
-                destino = os.path.join(pasta, os.path.relpath(raiz, DIST))
-                if not os.path.isdir(destino):
-                    os.makedirs(destino)
-                for nome in nomes:
-                    shutil.copy2(os.path.join(raiz, nome),
-                                 os.path.join(destino, nome))
+for nome_dist, exemplos in sorted(EXEMPLOS.items()):
+    DIST = os.path.join(RAIZ, nome_dist)
+    if not os.path.isdir(DIST):
+        problemas.append("nao existe a pasta %s/" % nome_dist)
+    else:
+        for stem, subpasta in exemplos:
+            pasta = tempfile.mkdtemp(prefix="coppe-r93-")
+            try:
+                # A arvore INTEIRA, e nao so os arquivos da raiz: os logotipos, os
+                # manuais e os exemplos por idioma estao em subpastas.
+                for raiz, _, nomes in os.walk(DIST):
+                    destino = os.path.join(pasta, os.path.relpath(raiz, DIST))
+                    if not os.path.isdir(destino):
+                        os.makedirs(destino)
+                    for nome in nomes:
+                        shutil.copy2(os.path.join(raiz, nome),
+                                     os.path.join(destino, nome))
 
-            # A instrucao que a documentacao da: traga para a raiz o conteudo da
-            # pasta do idioma.
-            if subpasta:
-                de = os.path.join(pasta, subpasta)
-                if not os.path.isdir(de):
-                    problemas.append("dist/ nao traz a pasta %s/" % subpasta)
+                # A instrucao que a documentacao da: traga para a raiz o conteudo da
+                # pasta do idioma.
+                if subpasta:
+                    de = os.path.join(pasta, subpasta)
+                    if not os.path.isdir(de):
+                        problemas.append("%s/ nao traz a pasta %s/" % (nome_dist, subpasta))
+                        continue
+                    for nome in os.listdir(de):
+                        shutil.copy2(os.path.join(de, nome),
+                                     os.path.join(pasta, nome))
+
+                if not os.path.exists(os.path.join(pasta, stem + ".tex")):
+                    problemas.append("%s/ nao traz %s.tex" % (nome_dist, stem))
                     continue
-                for nome in os.listdir(de):
-                    shutil.copy2(os.path.join(de, nome),
-                                 os.path.join(pasta, nome))
 
-            if not os.path.exists(os.path.join(pasta, stem + ".tex")):
-                problemas.append("dist/ nao traz %s.tex" % stem)
-                continue
-
-            ambiente = dict(os.environ)
-            # SO a pasta temporaria. O ";" no fim ainda deixa o TeX ver a arvore
-            # da instalacao (babel, biblatex e os demais pacotes de CTAN); o que
-            # fica de fora e o src/ deste repositorio, que e a muleta.
-            ambiente["TEXINPUTS"] = pasta + ";"
-            ambiente["BIBINPUTS"] = pasta + ";"
-            problemas += compila(pasta, stem, ambiente)
-        finally:
-            shutil.rmtree(pasta, ignore_errors=True)
+                ambiente = dict(os.environ)
+                # SO a pasta temporaria. O ";" no fim ainda deixa o TeX ver a arvore
+                # da instalacao (babel, biblatex e os demais pacotes de CTAN); o que
+                # fica de fora e o src/ deste repositorio, que e a muleta.
+                ambiente["TEXINPUTS"] = pasta + ";"
+                ambiente["BIBINPUTS"] = pasta + ";"
+                problemas += compila(pasta, stem, ambiente, nome_dist)
+            finally:
+                shutil.rmtree(pasta, ignore_errors=True)
 
 for x in problemas:
     print(x)

@@ -24,10 +24,10 @@ param(
 # chamada, e para isso "Stop" nao acrescenta nada.
 $ErrorActionPreference = "Continue"
 
-# Make pdflatex see ../src/. The trailing ; matters on Windows -- it tells
+# Make pdflatex see ../build/ (where the class is generated). The trailing ; matters on Windows -- it tells
 # kpathsea "and then the normal TEXINPUTS path after this".
 $here   = Split-Path -Parent $MyInvocation.MyCommand.Path
-$srcDir = Resolve-Path (Join-Path $here "..\src")
+$srcDir = Resolve-Path (Join-Path $here "..\build")
 $env:TEXINPUTS = "$srcDir;$here;$env:TEXINPUTS"
 $env:BIBINPUTS = "$srcDir;$here;$env:BIBINPUTS"
 
@@ -62,7 +62,7 @@ foreach ($t in $tests) {
         # makeindex com o estilo ufrj.ist, entre a primeira passada, que
         # escreve o .abx e o .syx, e a segunda, que os imprime. Sem isto, um
         # teste dessas listas passava com elas VAZIAS.
-        $ist = Join-Path $here "..\src\ufrj.ist"
+        $ist = Join-Path $here "..\build\ufrj.ist"
         if ($ok -and (Test-Path (Join-Path $here "$stem.abx"))) {
             & makeindex -s $ist -o "$stem.lab" "$stem.abx" | Out-Null
         }

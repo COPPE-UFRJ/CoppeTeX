@@ -16,9 +16,9 @@ Este script le os .log e cobra os quatro:
   * Rerun to get cross-references right   (faltou uma passada)
 
     python3 tools/conferir-referencias-cruzadas.py
-    python3 tools/conferir-referencias-cruzadas.py src/manual.log
+    python3 tools/conferir-referencias-cruzadas.py build/manual.log
 
-Sem argumento, varre src/, tests/, tests/adversativa/ e tests/regressivo/. Sai
+Sem argumento, varre build/, tests/, tests/adversativa/ e tests/regressivo/. Sai
 com codigo 1 se achar qualquer coisa.
 """
 import glob
@@ -41,7 +41,7 @@ def logs(argv):
     if argv:
         return argv
     achados = []
-    for pasta in ("src", "tests", os.path.join("tests", "adversativa"),
+    for pasta in ("build", "tests", os.path.join("tests", "adversativa"),
                   os.path.join("tests", "regressivo")):
         achados += sorted(glob.glob(os.path.join(RAIZ, pasta, "*.log")))
     return achados

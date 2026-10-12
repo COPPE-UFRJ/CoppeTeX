@@ -1,7 +1,7 @@
 ﻿<#
 .SYNOPSIS
     Verificação de build da CoppeTeX. Regenera a classe, compila os exemplos
-    e roda a suíte de testes, deixando todos os logs em _scratch/build-logs/.
+    e roda a suíte de testes, deixando todos os logs em build/logs/.
 
 .DESCRIPTION
     Existe porque o ambiente onde o Claude edita os arquivos não tem um TeX
@@ -9,8 +9,8 @@
     Windows. Este script roda no Windows, no TeX de verdade, e escreve um
     resultado em texto que pode ser lido de volta do lado de lá.
 
-    Não altera nada versionado: toda a saída vai para _scratch/, que é ignorado
-    pelo git.
+    Não altera nada versionado: tudo é gerado e compilado em build/, que é
+    ignorado pelo git. src/ só tem fonte e não é tocado.
 
 .PARAMETER Scope
     class    - só regenera ufrj.cls e companhia a partir de ufrj.ins (rápido)
@@ -58,15 +58,19 @@ $prova = ($Scope -eq "prova")
 if ($prova) { $Scope = "all" }
 
 $root    = Split-Path -Parent (Split-Path -Parent $MyInvocation.MyCommand.Path)
-$src     = Join-Path $root "src"
+$fonte   = Join-Path $root "src"
+# Desde a reorganizacao de outubro de 2026, tudo e gerado e compilado em
+# build/: o tools/distribuicoes.py copia as fontes de src/ para la e roda os
+# tres .ins. A variavel $src manteve o nome, mas aponta para build/.
+$src     = Join-Path $root "build"
 # tests/ fica FORA de src/, e nada dele e distribuido nem sai do ufrj.dtx. A
 # pasta prova que a classe funciona; nao faz parte dela. Dentro dela,
 # tests\adversativa\ traz os documentos extremos e tests\regressivo\ um teste
 # minimo para cada defeito ja corrigido.
 $testDir = Join-Path $root "tests"
 $advDir  = Join-Path $root "tests\adversativa"
-$logDir  = Join-Path $root "_scratch\build-logs"
-$result  = Join-Path $root "_scratch\RESULTADO.txt"
+$logDir  = Join-Path $root "build\logs"
+$result  = Join-Path $root "build\RESULTADO.txt"
 
 New-Item -ItemType Directory -Force -Path $logDir | Out-Null
 
@@ -282,10 +286,8 @@ if ($prova) {
         Push-Location $root
         $gitAntes = @(& git status --porcelain -- src 2>$null)
         Pop-Location
-        Push-Location $src
-        & pdflatex -interaction=nonstopmode ufrj.ins 2>&1 | Out-Null
-        & pdflatex -interaction=nonstopmode ufrj-coppe.ins 2>&1 | Out-Null
-        & pdflatex -interaction=nonstopmode ufrj-poli.ins 2>&1 | Out-Null
+        Push-Location $root
+        & python (Join-Path $root "tools\distribuicoes.py") --regerar 2>&1 | Out-Null
         Pop-Location
         Push-Location $root
         $gitDepois = @(& git status --porcelain -- src 2>$null)
@@ -297,7 +299,7 @@ if ($prova) {
             $script:failed++
             $provaProblemas += "fonte unica"
         } else {
-            Add-Line "ok       fonte unica (nenhum derivado divergia do .dtx)"
+            Add-Line "ok       fonte unica (regerar nao tocou em src/)"
         }
     } else {
         Add-Line "pulado   fonte unica (git nao encontrado)"
@@ -314,18 +316,16 @@ Add-Line ""
 # bases .bib, a referencia rapida e o latexmkrc. O ufrj-coppe.ins gera o estilo
 # da COPPE, a classe coppe de compatibilidade, os exemplos nos cinco idiomas e a
 # montagem das capas -- tudo o que depende de uma unidade.
-Invoke-Step "ufrj.ins" $src { & pdflatex -interaction=nonstopmode ufrj.ins }
-Invoke-Step "ufrj-coppe.ins" $src { & pdflatex -interaction=nonstopmode ufrj-coppe.ins }
-# O estilo da Escola Politecnica e o exemplo dele (#170).
-Invoke-Step "ufrj-poli.ins" $src { & pdflatex -interaction=nonstopmode ufrj-poli.ins }
+# Quem sabe o que copiar de src/ para build/ e como rodar os tres .ins e o
+# tools/distribuicoes.py; ele tambem poe o latexmkrc.tex no lugar do latexmkrc.
+New-Item -ItemType Directory -Force -Path $src | Out-Null
+Invoke-Step "regerar" $root { & python (Join-Path $root "tools\distribuicoes.py") --regerar }
 
 # O latexmkrc sai do docstrip como latexmkrc.tex: o \openout do TeX acrescenta
 # .tex a todo nome sem extensao, e nao ha como pedir a ele o nome exato. Poe no
 # lugar aqui, para que a geracao continue sendo um comando so para quem usa o
 # harness.
-$mkrcGen = Join-Path $src "latexmkrc.tex"
-if (Test-Path $mkrcGen) {
-    Copy-Item $mkrcGen (Join-Path $src "latexmkrc") -Force
+if (Test-Path (Join-Path $src "latexmkrc")) {
     Add-Line "ok       latexmkrc (de latexmkrc.tex)"
 }
 
@@ -403,9 +403,8 @@ if ($Scope -in @("docs", "all")) {
     }
 
     Build-Tex -Stem "manual"     -Dir $src -WithBiber
-    Build-Tex -Stem "NORMA_COPPE_2026"     -Dir $src
-    # A proposta de norma da Escola Politecnica, no mesmo desenho (#170).
-    Build-Tex -Stem "PROPOSTA-DE-RESOLUCAO" -Dir $src
+    # As normas sao .docx (src/normas) e nao se compilam: o
+    # tools/distribuicoes.py --normas as converte em PDF.
 
     # covers_5languages monta uma montagem das cinco capas a partir de PNGs
     # extraidos dos example_<lang>.pdf. Sem pdftoppm (poppler) nao ha como
@@ -646,5 +645,5 @@ if ($prova) {
 
 $lines | Out-File -FilePath $result -Encoding utf8
 Write-Host ""
-Write-Host "Resultado em _scratch\RESULTADO.txt e logs em _scratch\build-logs\"
+Write-Host "Resultado em build\RESULTADO.txt e logs em build\logs\"
 exit $failed

@@ -32,7 +32,7 @@ names, and the table keys all use this single string.
 ### 2. Write `ufrj-lang-<lang>.def`
 
 Take an existing pack as your template. The simplest reference is
-[`dist/es/ufrj-lang-spanish.def`](./dist/es/ufrj-lang-spanish.def).
+[`dist-coppe/es/ufrj-lang-spanish.def`](./dist-coppe/es/ufrj-lang-spanish.def).
 
 The file consists of:
 
@@ -73,7 +73,7 @@ institution the work was presented to — comes from the unit style.
 ### 3. Write `<lang>-ufrj.lbx`
 
 This is the biblatex localization file. Template:
-[`dist/es/spanish-ufrj.lbx`](./dist/es/spanish-ufrj.lbx).
+[`dist-coppe/es/spanish-ufrj.lbx`](./dist-coppe/es/spanish-ufrj.lbx).
 
 It consists of:
 
@@ -107,11 +107,11 @@ If you would like the pack to ship with the official CoppeTeX:
 1. Open a pull request adding the two new docstrip modules
    (`<*lang<xx>>...</lang<xx>>` and `<*lbx<xx>>...</lbx<xx>>`) inside
    `src/ufrj.dtx`, plus the matching `\file{...}` entries in
-   `src/ufrj.ins` and the `PARA_DIST` list in `tools/painel.py`.
-2. Run `pdflatex ufrj.ins` once to regenerate everything.
+   `src/ufrj.ins` and the lists in `tools/distribuicoes.py`.
+2. Run `python tools/distribuicoes.py --regerar` once to regenerate everything into `build/`.
 3. Include the example file. The examples use the COPPE style, so they live in
    `src/ufrj-coppe.dtx`, with a `\file{...}` entry in `src/ufrj-coppe.ins`.
-   It goes to `dist/` only for a language art. 57 of CEPG Res. 302/2024
+   It goes to `dist-coppe/` only for a language art. 57 of CEPG Res. 302/2024
    admits for writing a thesis — Portuguese, English and Spanish. A new
    language pack is a demonstration of the extension mechanism until that
    changes.
@@ -174,8 +174,9 @@ colophon. `tests/regressivo/rtu02-unidade-ficticia.tex` shows what to check.
 
 ### 5. Submit (optional)
 
-Add the new `.ins` to `tools/build-check.ps1`, the new files to the
-`PARA_DIST` list in `tools/painel.py`, and open a pull request. The review
+Add the new `.ins` to `INS` in `tools/distribuicoes.py`, describe a new
+`dist-<unit>` in `DISTRIBUICOES` there (with its README in
+`src/distribuicao/<unit>/`), and open a pull request. The review
 checks the data against the unit's own norm, the way `ufrj-coppe.dtx`
 cites the COPPE norm section by section.
 
@@ -202,7 +203,7 @@ declaration in the class interface, filled by the unit style.
 
 When you edit a `.dtx`:
 
-- **Behavior changes for pt or en?** Compare a rebuilt `dist/manuais/coppe-max-exemplo.pdf`
+- **Behavior changes for pt or en?** Compare a rebuilt `build/coppe-max-exemplo.pdf`
   against the previous version page-by-page (`pdftoppm` + `md5sum`).
   Unless you intend a visible change, the diff should be empty.
 - **New macros?** Add a `\changes{vX.Y}{date}{description}` entry near
@@ -210,8 +211,9 @@ When you edit a `.dtx`:
   in `ufrj.pdf` or `ufrj-coppe.pdf`.
 - **Anything affecting documentation?** Update the relevant section of
   the documentation prose in the `.dtx` (the lines starting with `%`).
-- **dist/ in sync?** When you finalise, copy the generated files to
-  `dist/` (or run `coppetex.bat --dist` on Windows, which does it).
+- **Distributions in sync?** When you finalise, rebuild them with
+  `coppetex.bat --distribuir` (or `python tools/distribuicoes.py` after compiling).
+  Never edit `build/`, `dist-*` or `normas/` by hand: `src/` is the only source.
 
 For larger restructurings, see how the v4.0 multilingual refactor was
 sequenced (commits `775db80`, `a363bc6`, `466302a`, `bfd0b5d`) — three

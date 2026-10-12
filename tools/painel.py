@@ -2,7 +2,8 @@
 """Painel de controle do desenvolvedor da CoppeTeX.
 
     coppetex.bat                      abre a janela
-    coppetex.bat --regerar --dist     faz so isso, sem janela
+    coppetex.bat --distribuir         do .dtx as tres dist-* e as normas
+    coppetex.bat --regerar --dist     so regera build/ e monta, sem compilar
     coppetex.bat --tudo               a prova inteira
     coppetex.bat --ajuda              a lista completa
 
@@ -34,121 +35,17 @@ if hasattr(sys.stdout, "reconfigure"):
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SRC = os.path.join(RAIZ, "src")
-DIST = os.path.join(RAIZ, "dist")
+BUILD = os.path.join(RAIZ, "build")
 TESTES = os.path.join(RAIZ, "tests")
 TOOLS = os.path.join(RAIZ, "tools")
+GERADOR = os.path.join(SRC, "gerador", "geradocvazio.py")
 
-# O que o aluno precisa para escrever e depositar, e nada alem disso, com a
-# subpasta de cada arquivo dentro de dist/.
-#
-# A ARRUMACAO tem uma regra so, e ela e a chave para entender a lista: o que
-# esta na RAIZ de dist/ e o que funciona sem voce mexer em nada -- a classe, os
-# estilos, e os exemplos em PORTUGUES, que e o caso de quase todo trabalho da
-# COPPE. Quem vai escrever em outro idioma tem de TRAZER PARA A RAIZ o conteudo
-# da pasta daquele idioma; o LaTeX procura os arquivos ao lado do documento, e
-# nao dentro de subpastas.
-#
-#   raiz            a classe, os estilos, e o exemplo em portugues
-#   logos/          os tres logotipos da capa
-#   manuais/        os PDFs: manual da classe, da norma, guia rapido, exemplo
-#   en/             o exemplo em ingles e o que ele precisa
-#   es/             o exemplo em espanhol e o que ele precisa
-#   outraslinguas/  frances e italiano, que NAO sao admitidos para redigir tese
-#
-# A lista existe em UM lugar -- aqui -- e o src/doall.bat e o alvo `build' do
-# Makefile chamam este passo. Ela ja esteve escrita em tres lugares, e os tres
-# divergiram; tests/regressivo/r92 cobra que nao volte a acontecer.
-#
-# Duas ausencias sao deliberadas:
-#
-#   * o README.md. O de dist/ e um guia de instalacao e NAO vem da raiz -- uma
-#     versao antiga deste passo copiava o da raiz por cima dele a cada
-#     execucao, apagando o guia (issue #75);
-#   * os exemplos em frances e italiano. Os pacotes desses dois idiomas vao,
-#     porque sao demonstracao do mecanismo de extensao e alguem pode querer
-#     usa-los; os documentos de exemplo, nao. O art. 57 da Resolucao CEPG
-#     n. 302/2024 admite portugues, ingles e espanhol para redigir uma tese, e
-#     e para esses tres que ha exemplo aqui.
-PARA_DIST = [
-    # --- raiz: a classe, os estilos e o exemplo em portugues ----------------
-    ("", "ufrj.cls"), ("", "ufrj.dbx"), ("", "ufrj.bbx"), ("", "ufrj.cbx"),
-    ("", "ufrj-numeric.bbx"), ("", "ufrj-numeric.cbx"),
-    # Os termos de bibliografia em portugues E EM INGLES ficam os dois na raiz,
-    # e o ingles nao e engano: TODA tese da COPPE tem um resumo em idioma
-    # estrangeiro, que por convencao e o ingles, e o biblatex carrega o arquivo
-    # de idioma de cada idioma que o documento usa. Com o english-ufrj.lbx
-    # dentro de en/, um trabalho em PORTUGUES ja saia com "File
-    # 'english-ufrj.lbx' not found".
-    ("", "brazilian-ufrj.lbx"), ("", "english-ufrj.lbx"),
-    ("", "ufrj.ist"), ("", "latexmkrc"),
-    # A tipos.bib ja ficou fora desta lista, e o exemplo a declarava: quem
-    # baixava a entrega recebia um PDF com as citacoes em branco e o biber
-    # dizendo "Cannot find 'tipos.bib'". Hoje ha uma base so, a exemplo.bib
-    # (#102). Toda base que um exemplo declarar tem
-    # de estar nesta lista -- tests/regressivo/r92 cobra isso lendo os proprios
-    # \addbibresource dos exemplos, e r93 cobra compilando.
-    ("", "coppe-min-exemplo.tex"), ("", "coppe-max-exemplo.tex"), ("", "exemplo.bib"),
-    ("", "ufrj.bib"),
-    # Nao ha `ufrj.tex': o manual da classe e o proprio ufrj.dtx, e quem o
-    # compoe e o ufrj.ins. Os dois vao para que a entrega baste tambem para
-    # REFAZER o manual e a classe, e nao so para usa-los -- e porque o
-    # ufrj.dtx e o unico lugar onde o codigo esta comentado.
-    ("", "ufrj.dtx"), ("", "ufrj.ins"), ("", "manual.tex"), ("", "manual.bib"),
-    # --- o estilo da COPPE --------------------------------------------------
-    # Vai na raiz, ao lado da classe: um trabalho da COPPE carrega os dois. A
-    # classe coppe.cls e so a de compatibilidade, para trabalho escrito ate a
-    # v4.1; o .dtx e o .ins do estilo vao pela mesma razao dos da classe.
-    ("", "ufrj-coppe.sty"), ("", "coppe.cls"),
-    ("", "ufrj-coppe.dtx"), ("", "ufrj-coppe.ins"),
-    # --- o estilo da Escola Politecnica (#170) --------------------------------
-    # Tambem na raiz, pela mesma razao, com o exemplo dele.
-    ("", "ufrj-poli.sty"), ("", "ufrj-poli.dtx"), ("", "ufrj-poli.ins"),
-    ("", "coppe-quickref.tex"), ("", "poli-quickref.tex"),
-    ("", "poli-min-exemplo.tex"), ("", "poli-max-exemplo.tex"),
-    # --- logos/ -------------------------------------------------------------
-    ("logos", "coppe-logo.eps"), ("logos", "coppe-logo.pdf"),
-    ("logos", "ufrj-logo.pdf"),
-    # --- manuais/ -----------------------------------------------------------
-    ("manuais", "ufrj.pdf"), ("manuais", "ufrj-coppe.pdf"),
-    ("manuais", "ufrj-quickref.pdf"), ("manuais", "coppe-quickref.pdf"),
-    ("manuais", "poli-quickref.pdf"),
-    ("manuais", "manual.pdf"), ("manuais", "coppe-min-exemplo.pdf"),
-    ("manuais", "coppe-max-exemplo.pdf"),
-    ("manuais", "ufrj-poli.pdf"), ("manuais", "poli-min-exemplo.pdf"),
-    ("manuais", "poli-max-exemplo.pdf"),
-    # --- en/ e es/: traga para a raiz para usar -----------------------------
-    ("en", "example_en.tex"), ("en", "example_en.pdf"),
-    ("es", "example_es.tex"), ("es", "example_es.pdf"),
-    ("es", "spanish-ufrj.lbx"), ("es", "ufrj-lang-spanish.def"),
-    # --- outraslinguas/ -----------------------------------------------------
-    ("outraslinguas", "french-ufrj.lbx"),
-    ("outraslinguas", "italian-ufrj.lbx"),
-    ("outraslinguas", "ufrj-lang-french.def"),
-    ("outraslinguas", "ufrj-lang-italian.def"),
-]
-
-# O que dist/ tem alem da lista: o README.md dela, a licenca, e o .gitignore,
-# que e do repositorio e nao vai no zip.
-DIST_EXTRAS = ["README.md", "COPYING.txt", ".gitignore"]
-
-
-def dist_esperado():
-    """Os caminhos, relativos a dist/ e com '/', que a entrega deve ter."""
-    return set([(sub + "/" + nome) if sub else nome for sub, nome in PARA_DIST]
-               + DIST_EXTRAS)
-
-
-def dist_sobras():
-    """Tudo o que esta em dist/ e nao devia: restos de alguem compilar ali
-    dentro, um PDF que mudou de pasta, um arquivo que saiu da lista."""
-    esperado = dist_esperado()
-    sobras = []
-    for raiz, pastas, nomes in os.walk(DIST):
-        for nome in nomes:
-            rel = os.path.relpath(os.path.join(raiz, nome), DIST).replace(os.sep, "/")
-            if rel not in esperado:
-                sobras.append(rel)
-    return sorted(sobras)
+# O que vai em cada distribuicao (dist-coppe, dist-poli, dist-biblatex) e as
+# normas estao em UM lugar so: tools/distribuicoes.py. O painel nao tem lista
+# propria -- ja teve, e ela divergiu das outras duas copias (#75);
+# tests/regressivo/r92 cobra que nao volte.
+sys.path.insert(0, TOOLS)
+import distribuicoes  # noqa: E402
 
 
 # Restos de compilacao. O .pdf nunca entra nesta lista: e o produto.
@@ -201,9 +98,9 @@ def powershell(script, saida, *args):
 # As acoes
 # --------------------------------------------------------------------------
 def acao_regerar(saida):
-    """O src inteiro sai do ufrj.dtx e do ufrj-coppe.dtx, pelos dois .ins. So isso,
-    e e rapido."""
-    return powershell("build-check.ps1", saida, "-Scope", "class")
+    """Copia as fontes de src/ para build/ e roda os tres .ins la. Rapido, e
+    nao depende de PowerShell: e o tools/distribuicoes.py."""
+    return distribuicoes.regerar(saida)
 
 
 def acao_docs(saida):
@@ -259,101 +156,30 @@ def acao_conferir(saida):
 
 
 def acao_dist(saida):
-    """dist/ recebe COPIA do que esta em src/. Nunca compila nada por conta."""
+    """Converte as normas e monta dist-coppe, dist-poli e dist-biblatex a partir
+    de build/ e de src/. Nunca compila nada por conta: o que faltar em build/ e
+    apontado, e nada e montado."""
     saida("")
-    saida("copiando para dist/")
-    faltando = []
-    for subpasta, nome in PARA_DIST:
-        de = os.path.join(SRC, "logos", nome) if subpasta == "logos" \
-            else os.path.join(SRC, nome)
-        if not os.path.exists(de):
-            faltando.append(nome)
-            continue
-        destino = os.path.join(DIST, subpasta) if subpasta else DIST
-        if not os.path.isdir(destino):
-            os.makedirs(destino)
-        shutil.copy2(de, os.path.join(destino, nome))
-        saida("   %s" % (subpasta + "/" + nome if subpasta else nome))
-    # A licenca vem da RAIZ, e nao de src/, e por isso esta fora da lista. Ela
-    # tem de ir junto: a GPL exige que o texto acompanhe o que se distribui.
-    # COPYING.txt, e nao COPYING: o Overleaf nao abre arquivo sem extensao.
-    licenca = os.path.join(RAIZ, "COPYING.txt")
-    if os.path.exists(licenca):
-        shutil.copy2(licenca, os.path.join(DIST, "COPYING.txt"))
-        saida("   COPYING.txt")
-    else:
-        faltando.append("COPYING.txt")
-    if faltando:
-        saida("")
-        for nome in faltando:
-            saida("   FALTOU  %s -- compile antes" % nome)
-        return False
-    # Copiar nao basta: o que ja estava la e nao esta na lista ficava para
-    # sempre, e ia para o zip. Foi assim que o release levou o .aux, o .log e o
-    # .synctex.gz de quem compilou o coppe-max-exemplo dentro de dist/, e um
-    # coppe-max-exemplo.pdf na raiz, repetido do de manuais/.
-    for rel in dist_sobras():
-        os.remove(os.path.join(DIST, *rel.split("/")))
-        saida("   REMOVIDO  %s" % rel)
-    for raiz, pastas, nomes in os.walk(DIST, topdown=False):
-        if raiz != DIST and not os.listdir(raiz):
-            os.rmdir(raiz)
-    saida("   %d arquivo(s) copiado(s)" % (len(PARA_DIST) + 1))
-    saida("   (dist/ fica com esses mais o README.md dela, que nao e copiado)")
-    return True
+    saida("normas/")
+    ok = distribuicoes.normas(saida)
+    saida("")
+    saida("montando as distribuicoes")
+    return distribuicoes.montar(saida) and ok
 
 
 def acao_pacote(saida):
-    """Fecha dist/ num .zip com o numero da versao, pronto para o release.
+    """Fecha cada dist-* num .zip com o numero da versao, em build/pacotes/,
+    pronto para anexar ao release. O zip leva uma pasta dentro, e nao arquivos
+    soltos."""
+    return distribuicoes.pacote(saida)
 
-    O zip leva uma pasta dentro, CoppeTeX-<versao>, e nao os arquivos soltos:
-    quem descompacta na pasta do proprio trabalho nao quer trinta e dois
-    arquivos misturados com os dele.
 
-    Sai em _scratch/, que o git ignora. O pacote e produto de build -- o que
-    fica versionado e a pasta dist/, de onde ele sai.
-    """
-    import zipfile
-    versao = versao_atual()
-    destino = os.path.join(RAIZ, "_scratch", "CoppeTeX-%s.zip" % versao)
-    if not os.path.isdir(DIST):
-        saida("nao existe a pasta dist/")
-        return False
-    # A arvore inteira, e nao so os arquivos da raiz: desde a reorganizacao a
-    # entrega tem subpastas -- logos/, manuais/, en/, es/, outraslinguas/ --, e
-    # um zip so com a raiz sairia sem os logotipos e sem os manuais.
-    #
-    # Sem os arquivos que comecam por ponto: o .gitignore de dist/ e plumbing do
-    # repositorio e nao tem o que fazer na mao de quem baixa a entrega.
-    # So o que esta na lista: uma sobra em dist/ nao pode ir para o release.
-    sobras = dist_sobras()
-    if sobras:
-        for rel in sobras:
-            saida("   SOBRA  %s" % rel)
-        saida("dist/ tem arquivo fora da lista -- rode --dist, que limpa")
-        return False
-    arquivos = []
-    for raiz, pastas, nomes in os.walk(DIST):
-        pastas[:] = [p for p in pastas if not p.startswith(".")]
-        for nome in sorted(nomes):
-            if nome.startswith("."):
-                continue
-            caminho = os.path.join(raiz, nome)
-            arquivos.append((caminho,
-                             os.path.relpath(caminho, DIST).replace(os.sep, "/")))
-    arquivos.sort(key=lambda x: x[1])
-    if not arquivos:
-        saida("dist/ esta vazia -- rode --dist antes")
-        return False
-    if not os.path.isdir(os.path.dirname(destino)):
-        os.makedirs(os.path.dirname(destino))
-    with zipfile.ZipFile(destino, "w", zipfile.ZIP_DEFLATED) as z:
-        for caminho, relativo in arquivos:
-            z.write(caminho, "CoppeTeX-%s/%s" % (versao, relativo))
-    tamanho = os.path.getsize(destino)
-    saida("%s" % destino)
-    saida("   %d arquivo(s), %.1f MB" % (len(arquivos), tamanho / 1048576.0))
-    return True
+def acao_distribuir(saida):
+    """Do .dtx ao que se baixa, de uma vez: regerar, compilar os PDFs da
+    entrega, converter as normas e montar as tres distribuicoes."""
+    ok = acao_regerar(saida)
+    ok = acao_docs(saida) and ok
+    return acao_dist(saida) and ok
 
 
 def acao_gerador(saida):
@@ -363,14 +189,13 @@ def acao_gerador(saida):
     painel e de quem mexe na classe. Esta acao existe para quem ja esta com o
     painel aberto e nao quer procurar o outro atalho.
     """
-    return roda([sys.executable, os.path.join(TOOLS, "geradocvazio.py")],
-                RAIZ, saida)
+    return roda([sys.executable, GERADOR], RAIZ, saida)
 
 
 def acao_limpar(saida):
-    """Tira os restos de compilacao de src/ e de tests/. Nao toca em PDF."""
+    """Tira os restos de compilacao de build/ e de tests/. Nao toca em PDF."""
     n = 0
-    for pasta in (SRC, TESTES, os.path.join(TESTES, "adversativa"),
+    for pasta in (BUILD, TESTES, os.path.join(TESTES, "adversativa"),
                   os.path.join(TESTES, "regressivo")):
         if not os.path.isdir(pasta):
             continue
@@ -397,8 +222,10 @@ def acao_versao3(saida):
 
 # nome de linha de comando, rotulo na janela, funcao, explicacao de uma linha
 ACOES = [
-    ("regerar", "Regerar o src a partir do .dtx", acao_regerar,
-     "ufrj.ins e ufrj-coppe.ins geram a classe, os estilos, os exemplos e o latexmkrc"),
+    ("distribuir", "TUDO o que se baixa: regerar, compilar, montar", acao_distribuir,
+     "do .dtx as tres dist-* e as normas, de uma vez"),
+    ("regerar", "Regerar build/ a partir do .dtx", acao_regerar,
+     "copia src/ para build/ e roda os tres .ins: classe, estilos, exemplos, latexmkrc"),
     ("docs", "Compilar os PDFs da entrega", acao_docs,
      "manual da classe, exemplo, os cinco idiomas, manual da norma, capas"),
     ("testes", "Testes - primeira camada", acao_testes,
@@ -413,14 +240,14 @@ ACOES = [
      "referencias cruzadas, cobertura do manual, versao, e os PDFs contra o Manual"),
     ("tudo", "TUDO, com veredito", acao_prova,
      "a prova completa; e o que tem de sair limpo antes de marcar uma versao"),
-    ("dist", "Copiar para dist/", acao_dist,
-     "dist/ e copia do que esta em src/, e nada mais"),
-    ("pacote", "Fechar o zip da entrega", acao_pacote,
-     "empacota dist/ em _scratch/CoppeTeX-<versao>.zip, para anexar ao release"),
+    ("dist", "Montar dist-coppe, dist-poli, dist-biblatex e normas/", acao_dist,
+     "copia de build/ e de src/ o que a lista de tools/distribuicoes.py manda"),
+    ("pacote", "Fechar os zips da entrega", acao_pacote,
+     "um .zip por distribuicao em build/pacotes/, para anexar ao release"),
     ("gerador", "Abrir o gerador de documento", acao_gerador,
      "a janela que escreve o .tex e o .bib de um trabalho novo"),
     ("limpar", "Limpar intermediarios", acao_limpar,
-     "tira .aux, .log e companhia de src/ e de tests/; nao toca em PDF"),
+     "tira .aux, .log e companhia de build/ e de tests/; nao toca em PDF"),
 ]
 
 # A ordem em que as acoes rodam quando mais de uma e pedida. Nao e a ordem em
@@ -438,7 +265,7 @@ ACOES = [
 #   * `conferir' por ultimo entre os que leem, porque ele le os .log que a
 #     compilacao acabou de escrever e a copia que o dist acabou de fazer;
 #   * `limpar' no fim de tudo, senao apaga o que ainda nao foi lido nem copiado.
-ORDEM = ["regerar", "tudo", "docs", "testes", "adversativo", "regressivo",
+ORDEM = ["distribuir", "regerar", "tudo", "docs", "testes", "adversativo", "regressivo",
          "pdfa", "dist", "conferir", "pacote", "gerador", "limpar"]
 
 
@@ -551,7 +378,7 @@ def abrir_janela(pedidas=(), versao=0):
     topo.pack(fill="x")
     ttk.Label(topo, text="CoppeTeX %s" % atual,
               font=("Segoe UI", 14, "bold")).pack(side="left")
-    ttk.Label(topo, text="   fonte unica: src/ufrj.dtx").pack(side="left")
+    ttk.Label(topo, text="   fonte: src/   gerado: build/   entrega: dist-*").pack(side="left")
 
     corpo = ttk.Frame(janela, padding=(10, 0))
     corpo.pack(fill="x")
