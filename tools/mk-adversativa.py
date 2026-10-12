@@ -366,7 +366,7 @@ def doc(i, linha, tiponome):
         A("    \\end{subfigure}\\hfill")
         A("    \\begin{subfigure}[b]{0.35\\textwidth}")
         A("      \\centering\\includegraphics[height=2cm]{coppe-logo}")
-        A("      \\caption{A marca do Instituto}\\label{fig:sub-ufrj}")
+        A("      \\caption{A marca do Instituto}\\label{fig:sub-coppe}")
         A("    \\end{subfigure}")
         A("    \\caption{Duas subfiguras numa figura só}\\label{fig:subs}")
         A("    \\source{Elaboração própria.}")
