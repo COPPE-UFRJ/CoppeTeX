@@ -11,7 +11,7 @@ exemplos dele misturem sinais. A Norma COPPE, secao 12, mostra
 teste cobra so que TODOS usem o mesmo -- inclusive o exemplo da Norma.
 
 Cobra-se que o sinal seja o mesmo em: legenda de figura, titulo de apendice,
-entrada do apendice no sumario, e o exemplo da secao 12 de NORMA_COPPE_2026.md.
+entrada do apendice no sumario, e o exemplo de Apendices e anexos da Norma COPPE (src/normas).
 """
 import io
 import os
@@ -46,11 +46,14 @@ with Documento(pre=r"\tableofcontents", corpo=CORPO) as d:
             chave = "sumario" if "SUMÁRIO" in t else "titulo do apendice"
             achados.setdefault(chave, sinal(t, "APÊNDICE A", "APENDICE DE PROVA"))
 
-norma = io.open(os.path.join(RAIZ, "NORMA_COPPE_2026.md"), encoding="utf-8").read()
-m = re.search(r"## 12\..*?APÊNDICE A\s*([" + TRACOS + r"])", norma, re.S)
-achados["Norma COPPE, secao 12"] = m.group(1) if m else None
+# A Norma COPPE e um .docx desde outubro de 2026; o exemplo esta na secao
+# "Apendices e anexos".
+from medidas import NORMA_COPPE, texto_docx  # noqa: E402
+norma = texto_docx(NORMA_COPPE)
+m = re.search(r"APÊNDICE A\s*([" + TRACOS + r"])", norma)
+achados["Norma COPPE, Apendices e anexos"] = m.group(1) if m else None
 
-for onde in ("legenda", "titulo do apendice", "sumario", "Norma COPPE, secao 12"):
+for onde in ("legenda", "titulo do apendice", "sumario", "Norma COPPE, Apendices e anexos"):
     if achados.get(onde) is None:
         problemas.append("nao achei o sinal em: %s" % onde)
 sinais = {k: v for k, v in achados.items() if v}

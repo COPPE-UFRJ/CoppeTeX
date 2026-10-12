@@ -58,6 +58,23 @@ SRC = os.environ.get("COPPE_SRC") or os.path.join(RAIZ, "build")
 # mudanca: e o risco que a issue aponta, e e por isso que a chave nao e so a do
 # .tex do teste.
 CACHE = os.path.join(RAIZ, "build", "cache-regressivo")
+
+# A Norma de cada unidade e um .docx desde outubro de 2026 (src/normas); os
+# testes que conferem a classe contra a Norma leem o texto dele por aqui.
+NORMA_COPPE = os.path.join(RAIZ, "src", "normas", "norma-coppe", "NORMA_COPPE_2026.docx")
+
+
+def texto_docx(caminho):
+    """O texto de um .docx, um paragrafo por linha, tabulacao como \t."""
+    import html
+    import re as _re
+    import zipfile
+    xml = zipfile.ZipFile(caminho).read("word/document.xml").decode("utf-8")
+    linhas = []
+    for p in _re.findall(r"<w:p[ >].*?</w:p>", xml, _re.S):
+        p = p.replace("<w:tab/>", "<w:t>\t</w:t>")
+        linhas.append("".join(_re.findall(r"<w:t(?: [^>]*)?>([^<]*)</w:t>", p)))
+    return html.unescape("\n".join(linhas))
 SEM_CACHE = bool(os.environ.get("COPPE_SEM_CACHE"))
 # Sete dias: o bastante para uma semana de trabalho na mesma issue, e pouco o
 # bastante para a pasta nao crescer sem fim.

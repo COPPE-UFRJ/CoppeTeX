@@ -35,6 +35,19 @@
 \ProvidesFile{ufrj.bbx}[2026/09/15 v5.0 CoppeTeX ABNT bibliography style]
 \RequirePackage{setspace}
 \RequireBibliographyStyle{standard}
+\providecommand*{\ufrjstring}[1]{%
+  \ifcsdef{ufrj@str@\languagename @#1}
+    {\csuse{ufrj@str@\languagename @#1}}
+    {\ifstrequal{#1}{in:}{\ufrj@bbx@em}{#1}}}
+\providecommand*{\ufrj@bbx@em}{%
+  \ifboolexpr{test {\ifdefstring{\languagename}{spanish}}}
+    {en}
+    {\ifboolexpr{test {\ifdefstring{\languagename}{english}}
+                 or test {\ifdefstring{\languagename}{american}}
+                 or test {\ifdefstring{\languagename}{british}}
+                 or test {\ifdefstring{\languagename}{USenglish}}
+                 or test {\ifdefstring{\languagename}{UKenglish}}}
+       {in}{em}}}
 
 \ExecuteBibliographyOptions{%
   maxbibnames=99,      % ABNT 4.3.1.3: list all authors by default

@@ -8,20 +8,19 @@ aberto; a secao 2 da Norma COPPE fixa as tres linhas. Classe e Norma tem de dize
 a mesma coisa -- qual das duas muda e decisao da issue. O teste le a Norma e
 confere a capa contra ela, entao passa com qualquer das duas correcoes.
 
-Cobra-se: o texto do item 2 da secao 2 de NORMA_COPPE_2026.md (sem a marcacao
-markdown) aparece na capa.
+Cobra-se: a linha do Instituto que a Norma COPPE manda pôr na capa (item 3.3,
+alinea b, de src/normas/norma-coppe/NORMA_COPPE_2026.docx) aparece na capa.
 """
 import io
 import os
 import re
-from medidas import Documento, relatar, normaliza, RAIZ
+from medidas import Documento, relatar, normaliza, RAIZ, NORMA_COPPE, texto_docx
 
-norma = io.open(os.path.join(RAIZ, "NORMA_COPPE_2026.md"), encoding="utf-8").read()
-m = re.search(r"## 2\..*?\n2\.\s+(.*?)\n3\.", norma, re.S)
+norma = texto_docx(NORMA_COPPE)
+m = re.search(r"(?m)^b\)\s*(INSTITUTO ALBERTO LUIZ COIMBRA[^;\n]*)", norma)
 if not m:
-    relatar(["nao achei o item 2 da secao 2 da Norma COPPE"])
-esperado = re.sub(r"\*\*", "", m.group(1))
-esperado = re.sub(r"\s+", " ", esperado).strip()
+    relatar(["nao achei, na Norma COPPE, a linha do Instituto na capa"])
+esperado = re.sub(r"\s+", " ", m.group(1)).strip()
 
 problemas = []
 with Documento(pre=r"\begin{abstract}Resumo.\end{abstract}", corpo=r"\chapter{Um}Texto.") as d:
@@ -29,7 +28,7 @@ with Documento(pre=r"\begin{abstract}Resumo.\end{abstract}", corpo=r"\chapter{Um
         relatar(["nao compilou: %s" % d.erros_do_log()])
     capa = normaliza(d.texto(1))
     if normaliza(esperado) not in capa:
-        problemas.append("a capa nao traz %r, como manda a secao 2 da Norma COPPE; traz %r"
+        problemas.append("a capa nao traz %r, como manda o item 3.3 da Norma COPPE; traz %r"
                          % (esperado, d.texto(1).split("\n")[1:4]))
 
 relatar(problemas)

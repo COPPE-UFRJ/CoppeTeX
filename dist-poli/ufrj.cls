@@ -57,7 +57,7 @@
          em logos/#2.pdf e em #2.pdf, e nao achei em nenhum dos dois.\MessageBreak
          Copie a pasta logos/ para junto do seu trabalho, ou ponha\MessageBreak
          #2.pdf ao lado do ufrj.cls na arvore do TeX. Os logotipos\MessageBreak
-         estao em dist-coppe/logos/ no repositorio.}%
+         estao na pasta logos/ da distribuicao.}%
        \framebox[3cm][c]{\rule{0pt}{#1}\ttfamily #2?}}}}
 \RequirePackage{tabularx}
 \RequirePackage{booktabs}      % regras de tabela profissionais (toprule/midrule/bottomrule)

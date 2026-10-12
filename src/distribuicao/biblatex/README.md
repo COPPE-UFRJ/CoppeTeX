@@ -35,7 +35,6 @@ pasta dele (ou para `tex/latex/ufrj-biblatex` na sua árvore do TeX, seguido de
 ```latex
 \usepackage[english,brazilian]{babel}
 \usepackage{csquotes}
-\providecommand*\ufrjstring[1]{\ifstrequal{#1}{in:}{em}{#1}}
 \usepackage[backend=biber,datamodel=ufrj,
             bibstyle=ufrj,citestyle=ufrj,natbib=true]{biblatex}
 \addbibresource{minhas-referencias.bib}
@@ -43,14 +42,14 @@ pasta dele (ou para `tex/latex/ufrj-biblatex` na sua árvore do TeX, seguido de
 
 e, no fim do texto, `\printbibliography`.
 
-Três detalhes que não são opcionais:
+Dois detalhes que não são opcionais:
 
 1. **`datamodel=ufrj`** — sem ele o biber não conhece os tipos e campos do
    Manual, e as entradas em português somem com aviso.
 2. **`backend=biber`** — os estilos não funcionam com o BibTeX.
-3. **`\ufrjstring`** — os estilos usam um único texto fixo da classe `ufrj`, o
-   "em" de "Tese (Doutorado em Engenharia)". A linha do exemplo o define fora
-   da classe. Em documento em inglês, troque `{em}` por `{in}`.
+
+O idioma das referências segue o do `babel`: o "em" de "Tese (Doutorado em
+Engenharia)" sai "in" em inglês e "en" em espanhol.
 
 Para o **sistema numérico**, use `bibstyle=ufrj-numeric,citestyle=ufrj-numeric`.
 O Manual não admite o numérico em trabalho com notas de rodapé.

@@ -211,6 +211,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \changes{v5.0}{2026/09/17}{A subalinea is marked with a hyphen placed under the first letter of the text of its alinea, one space from the text, and its continuation lines start under its own first letter -- the three things 2.6 asks for. The class used an en dash and a fixed 1.8 em indent, which falls under no letter.}
 % \changes{v5.0}{2026/09/17}{The line numbers of a listing stay inside the margin. The five language styles number the lines on the left, and without xleftmargin the listings package indents the code and leaves the number outside the 3 cm margin of 2.3.}
 % \changes{v5.0}{2026/09/17}{Footnotes start at the left margin and hang: from the second line the text aligns under the first letter, not under the mark, as 4.2 asks of a reference in a note -- the class used book's makefntext, which indented the mark by parindent and returned the second line to the margin. A footnote no longer splits across sheets either.}
+% \changes{v5.0}{2026/10/12}{ufrj.bbx carries its own fallback for ufrjstring, the only text of the class the styles use (the em of Tese (Doutorado em ...)): the biblatex styles now work in any document, without the class, as the dist-biblatex distributes them.}
 % \changes{v5.0}{2026/09/17}{PDF/A-2b is the default output, and the new option sempdfa turns it off. 2.2(d) of the Manual requires the final digital version to be PDF/A, the deposit has been digital only since Resolucao CEPG n. 246/2023, and the class already produced conformant PDF/A -- but only when asked, so a work written without reading the manual was deposited off the norm. The v4.1 option pdfa is still accepted and now does nothing.}
 % \changes{v5.0}{2026/09/23}{The order of the pre-textual elements of 3.1.2 is an error in every class of the project, the compatibility ones included: the coppe class no longer downgrades it to a warning, and there is no switch. A document that is right in one class is right in all of them.}
 % \changes{v5.0}{2026/09/23}{The city, the state and the country of the work are the class's, not the unit's: UFRJ has campuses in Macae and in Duque de Caxias, and the city heads the capa and the reference of the abstract sheets. city, state, country and place set them, university sets the university's name, and the unit declares its own default with ufrjdeclareplace, which never overrides what the author chose.}
@@ -3935,7 +3936,7 @@ Problems: \url{https://github.com/COPPE-UFRJ/CoppeTeX/issues}
          em logos/#2.pdf e em #2.pdf, e nao achei em nenhum dos dois.\MessageBreak
          Copie a pasta logos/ para junto do seu trabalho, ou ponha\MessageBreak
          #2.pdf ao lado do ufrj.cls na arvore do TeX. Os logotipos\MessageBreak
-         estao em dist-coppe/logos/ no repositorio.}%
+         estao na pasta logos/ da distribuicao.}%
        \framebox[3cm][c]{\rule{0pt}{#1}\ttfamily #2?}}}}
 \RequirePackage{tabularx}
 \RequirePackage{booktabs}      % regras de tabela profissionais (toprule/midrule/bottomrule)
@@ -8932,6 +8933,25 @@ postamble
 % ABNT reference list keeps the date at the end (imprenta), same for author-date
 % and numeric modes, so we derive from the standard style, not authoryear.
 \RequireBibliographyStyle{standard}
+% Fora da classe ufrj -- o estilo avulso da dist-biblatex, num article -- o
+% \ufrjstring nao existe. O estilo usa um texto so dele, o "em" de "Tese
+% (Doutorado em ...)", e por isso traz aqui a sua propria reserva: se a classe
+% estiver carregada, o \providecommand nao faz nada e vale o texto dela; se nao,
+% "in:" sai pelo idioma corrente do babel -- in, en, em -- e qualquer outra
+% chave sai como esta.
+\providecommand*{\ufrjstring}[1]{%
+  \ifcsdef{ufrj@str@\languagename @#1}
+    {\csuse{ufrj@str@\languagename @#1}}
+    {\ifstrequal{#1}{in:}{\ufrj@bbx@em}{#1}}}
+\providecommand*{\ufrj@bbx@em}{%
+  \ifboolexpr{test {\ifdefstring{\languagename}{spanish}}}
+    {en}
+    {\ifboolexpr{test {\ifdefstring{\languagename}{english}}
+                 or test {\ifdefstring{\languagename}{american}}
+                 or test {\ifdefstring{\languagename}{british}}
+                 or test {\ifdefstring{\languagename}{USenglish}}
+                 or test {\ifdefstring{\languagename}{UKenglish}}}
+       {in}{em}}}
 
 % Note: standard style never dashes repeated authors, which already matches the
 % post-2020 ABNT rule (repeat the entry in full), so no 'dashed' option is needed.

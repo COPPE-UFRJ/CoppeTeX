@@ -211,14 +211,33 @@ def _soffice():
 
 
 def _word_para_pdf(docx, pdf, diz):
-    """Word -> PDF: LibreOffice, ou o proprio Word no Windows."""
+    """Word -> PDF: LibreOffice, ou o proprio Word no Windows. So conta como
+    convertido se o PDF for escrito AGORA: um PDF velho no lugar nao prova nada."""
+    antes = os.path.getmtime(pdf) if os.path.exists(pdf) else 0
+
+    def novo():
+        return os.path.exists(pdf) and os.path.getmtime(pdf) > antes
+
     soffice = _soffice()
     if soffice:
         r = subprocess.run([soffice, "--headless", "--convert-to", "pdf",
                             "--outdir", os.path.dirname(pdf), docx],
                            stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        return r.returncode == 0 and os.path.exists(pdf)
+        if r.returncode == 0 and novo():
+            return True
     if os.name == "nt":
+        # O Word pela automacao COM, chamada do PowerShell: nao precisa de
+        # pywin32, que quase ninguem tem instalado.
+        script = ("$w = New-Object -ComObject Word.Application; $w.Visible = $false; "
+                  "$d = $w.Documents.Open('%s', $false, $true); "
+                  "$d.SaveAs([ref]'%s', [ref]17); $d.Close($false); $w.Quit()"
+                  % (os.path.abspath(docx).replace("'", "''"),
+                     os.path.abspath(pdf).replace("'", "''")))
+        r = subprocess.run(["powershell", "-NoProfile", "-ExecutionPolicy", "Bypass",
+                            "-Command", script],
+                           stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        if novo():
+            return True
         try:
             import win32com.client  # pywin32
             word = win32com.client.Dispatch("Word.Application")
@@ -226,7 +245,7 @@ def _word_para_pdf(docx, pdf, diz):
             doc.SaveAs(os.path.abspath(pdf), FileFormat=17)
             doc.Close()
             word.Quit()
-            return os.path.exists(pdf)
+            return novo()
         except Exception as e:                       # sem pywin32 ou sem Word
             diz("   Word nao converteu (%s)" % e)
     return False

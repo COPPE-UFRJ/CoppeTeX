@@ -40,6 +40,17 @@ No change to what the class produces: the files generated from the three
   `JUNTAR_MASTER_GOUFRJ`, `CHANGES`, the explanatory versions of both norms
   and the previous README) moved to `claude/`; `PAINEL.md` to `tools/`;
   the migration guides to `dist-coppe/migracao`.
+- **biblatex without the class.** `ufrj.bbx` now carries its own fallback for
+  `\ufrjstring`, the only text of the class the styles used (the "em" of "Tese
+  (Doutorado em ...)", "in" in English, "en" in Spanish). The styles work in any
+  document, as `dist-biblatex` distributes them; `r93` compiles its example
+  with nothing else on the path.
+- **Norms converted on Windows without LibreOffice**: `tools/distribuicoes.py`
+  drives Word through PowerShell (no `pywin32` needed), and only counts a PDF
+  written in that run as converted.
+- Tests `rt49` and `rt69` read the COPPE norm from the `.docx`
+  (`medidas.texto_docx`); the logo warning of the class no longer names a
+  unit's folder (`rtu04`).
 
 ## [5.0] — 2026-09-24 — The check against the Manual, the Escola Politécnica, and the release
 
