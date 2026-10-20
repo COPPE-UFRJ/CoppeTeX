@@ -4,6 +4,19 @@ Project changes worth noting, newest first. Follows
 [Keep a Changelog](https://keepachangelog.com/) loosely; dates are
 ISO-8601.
 
+## [Unreleased] — 2026-10-20 — `src/` holds only source
+
+- **`src/` really holds only source now.** The reorganisation of 2026-10-12
+  moved the generated files out of git, but 146 of them were still sitting in
+  the working copy, from the days when the `.ins` ran inside `src/`. They are
+  gone, and `src/.gitignore` was inverted: it now ignores **nothing**, so a
+  generated file that turns up in `src/` shows in `git status` instead of
+  hiding. The old rule ignored `*.log`, which is why those 146 leftovers went
+  unnoticed for a month — the only ones anybody saw were the six whose
+  extension the root `.gitignore` does not list. The only exception is
+  `__pycache__/`, which the generator in `src/gerador/` writes next to its
+  `.py`.
+
 ## [Unreleased] — 2026-10-12 — Repository reorganisation
 
 No change to what the class produces: the files generated from the three

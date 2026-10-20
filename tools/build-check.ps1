@@ -58,7 +58,6 @@ $prova = ($Scope -eq "prova")
 if ($prova) { $Scope = "all" }
 
 $root    = Split-Path -Parent (Split-Path -Parent $MyInvocation.MyCommand.Path)
-$fonte   = Join-Path $root "src"
 # Desde a reorganizacao de outubro de 2026, tudo e gerado e compilado em
 # build/: o tools/distribuicoes.py copia as fontes de src/ para la e roda os
 # tres .ins. A variavel $src manteve o nome, mas aponta para build/.

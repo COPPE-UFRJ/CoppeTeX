@@ -1,1 +1,19 @@
-*.log
+# src/ so tem fonte. Nada e gerado aqui desde outubro de 2026: o
+# tools/distribuicoes.py copia as fontes para build/ e roda os tres .ins la, e
+# e de build/ que saem as dist-* e as normas. Ver src/README.md; o teste
+# tests/regressivo/rtu14 reprova arquivo gerado que volte a ser versionado aqui.
+#
+# Por isso nada em src/ e ignorado -- nem .log, nem .aux, nem o resto do que o
+# .gitignore da raiz esconde no repositorio inteiro. Um arquivo gerado que
+# apareca em src/ e engano, e engano tem de aparecer no git status.
+#
+# A regra anterior deste arquivo era uma linha, "*.log", da epoca em que a
+# geracao acontecia dentro de src/. Foi assim que 146 sobras daquela
+# arquitetura ficaram um mes paradas aqui sem ninguem ver: as unicas seis que
+# alguem notou foram as de extensao que a raiz nao lista (.glo, .ist e um .tex
+# gerado). Inverter a regra e o que faz a proxima sobra aparecer no mesmo dia.
+!*
+
+# A excecao: o gerador de documento vazio mora em src/gerador/, e o Python
+# escreve o cache ao lado do .py quando ele roda.
+__pycache__/

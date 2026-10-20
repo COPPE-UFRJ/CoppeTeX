@@ -25,6 +25,11 @@
 *.fdb_latexmk
 *.fls
 
+# As regras de extensao acima valem no repositorio inteiro, MENOS em src/: la
+# nada e gerado, e o src/.gitignore as desfaz de proposito, para que um arquivo
+# gerado que apareca em src/ seja visivel no git status em vez de ficar parado
+# anos sem ninguem ver.
+
 # Pasta de trabalho: copia das fontes, o que os .ins geram, os PDFs compilados,
 # logs, cache do regressivo e os zips. src/ so tem fonte; o que se baixa sao as
 # dist-* e normas/, versionadas.
