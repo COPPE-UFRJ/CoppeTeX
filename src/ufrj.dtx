@@ -212,6 +212,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \changes{v5.0}{2026/09/17}{The line numbers of a listing stay inside the margin. The five language styles number the lines on the left, and without xleftmargin the listings package indents the code and leaves the number outside the 3 cm margin of 2.3.}
 % \changes{v5.0}{2026/09/17}{Footnotes start at the left margin and hang: from the second line the text aligns under the first letter, not under the mark, as 4.2 asks of a reference in a note -- the class used book's makefntext, which indented the mark by parindent and returned the second line to the margin. A footnote no longer splits across sheets either.}
 % \changes{v5.0}{2026/10/12}{ufrj.bbx carries its own fallback for ufrjstring, the only text of the class the styles use (the em of Tese (Doutorado em ...)): the biblatex styles now work in any document, without the class, as the dist-biblatex distributes them.}
+% \changes{v5.0}{2026/10/20}{The three blocks of the institution on the capa -- the university, the unit and the Programa -- are separated by extra space, and the lines inside the unit's own name are not: they are one name broken to fit the width, and the COPPE cover had the four lines equally spaced, so nothing said which two were a single block. Measured on the UFRJ models, in the same scale: the gap between blocks is 1.4 times the leading inside a block, which is 0.4 line of air. ufrj@coverskip holds it as a fraction of the leading, and not in points, so it follows the body size. The class composes the capa alone and no unit style redefines it, so COPPE, Poli and any new unit get the same cover. Test rtu16.}
 % \changes{v5.0}{2026/09/17}{PDF/A-2b is the default output, and the new option sempdfa turns it off. 2.2(d) of the Manual requires the final digital version to be PDF/A, the deposit has been digital only since Resolucao CEPG n. 246/2023, and the class already produced conformant PDF/A -- but only when asked, so a work written without reading the manual was deposited off the norm. The v4.1 option pdfa is still accepted and now does nothing.}
 % \changes{v5.0}{2026/09/23}{The order of the pre-textual elements of 3.1.2 is an error in every class of the project, the compatibility ones included: the coppe class no longer downgrades it to a warning, and there is no switch. A document that is right in one class is right in all of them.}
 % \changes{v5.0}{2026/09/23}{The city, the state and the country of the work are the class's, not the unit's: UFRJ has campuses in Macae and in Duque de Caxias, and the city heads the capa and the reference of the abstract sheets. city, state, country and place set them, university sets the university's name, and the unit declares its own default with ufrjdeclareplace, which never overrides what the author chose.}
@@ -6814,7 +6815,18 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % |\ufrjdeclarelogo|, on the right, head the page. The
 % capa is not counted: it precedes the (roman) front matter and is produced
 % before the |titlepage| (folha de rosto).
+%
+% Os três blocos da instituição --- a universidade, a unidade e o Programa ---
+% são separados por um respiro a mais, e só eles: as linhas de dentro do nome
+% da unidade, que vêm do |\\| do |\ufrjdeclareunit|, continuam juntas, porque
+% são um nome só partido para caber na largura. É o que os modelos da UFRJ
+% mostram.
 %    \begin{macrocode}
+% O respiro ENTRE os blocos da capa. Medido nos modelos da UFRJ: o vao de um
+% bloco para o outro e 1,4 vez o de uma linha para a seguinte dentro do mesmo
+% bloco, o que da 0,4 linha a mais. Em fracao da entrelinha, e nao em pontos,
+% para acompanhar o corpo do texto se ele mudar.
+\newcommand*\ufrj@coverskip{\vspace{0.4\baselineskip}}
 \newcommand\makecover{%
   \begin{titlepage}%
 % A capa e um modelo institucional, e sai em espaco simples qualquer que seja o
@@ -6828,10 +6840,12 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \ufrj@logoline\par
   \vspace{1.5cm}
   {\singlespacing
- \MakeUppercase{\local@universityname}\par
+   \MakeUppercase{\local@universityname}\par
    \ifx\ufrj@unitcover\@empty\else
+     \ufrj@coverskip
      \nohyphens{\MakeUppercase{\ufrj@unitcover}}\par
    \fi
+   \ufrj@coverskip
    \ufrj@letunitstr\ufrj@tmpcover{brazilian}{coverprogram}%
    \MakeUppercase{\ufrj@tmpcover}\par}
   \vspace{\stretch{2}}

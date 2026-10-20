@@ -4,6 +4,19 @@ Project changes worth noting, newest first. Follows
 [Keep a Changelog](https://keepachangelog.com/) loosely; dates are
 ISO-8601.
 
+## [Unreleased] — 2026-10-20 — The institution block on the cover
+
+- **The three blocks of the capa are set apart.** The university, the unit and
+  the Programa are separated by extra space; the lines *inside* the unit's own
+  name are not, because they are one name broken to fit the width. The COPPE
+  cover had its four lines equally spaced, so nothing told which two of them
+  were a single block. The gap between blocks is 1.4 times the leading inside a
+  block — 0.4 line of air — which is the proportion measured on the UFRJ
+  models, and `\ufrj@coverskip` holds it as a fraction of the leading, not in
+  points, so it follows the body size. The class composes the capa alone and no
+  unit style redefines it: COPPE, Poli and any new unit get the same cover.
+  Guarded by `tests/regressivo/rtu16`.
+
 ## [Unreleased] — 2026-10-20 — `src/` holds only source
 
 - **`src/` really holds only source now.** The reorganisation of 2026-10-12
