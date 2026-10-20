@@ -13,12 +13,15 @@ ISO-8601.
   of sending — versioning them would be a fourth and a fifth copy of the same
   files, going stale between one upload and the next. `tools/distribuicoes.py`
   remains the single place that knows what goes in each one.
-  - **CTAN** — `coppetex-<version>.zip`, a `coppetex/` folder with the sources
+  - **CTAN** — `ufrj-<version>.zip`, a `ufrj/` folder with the sources
     (`ufrj.dtx`/`.ins` and `ufrj-coppe.dtx`/`.ins`), the manuals, the examples,
     the logos, an English README, the licence, and a TDS tree ready in
-    `coppetex.tds.zip` (`tex/latex/`, `source/latex/`, `doc/latex/`,
-    `makeindex/`, `bibtex/bib/`). Proven: unzipped into an empty folder, the
-    two `.ins` generate the class and the minimal example compiles.
+    `ufrj.tds.zip` (`tex/latex/`, `source/latex/`, `doc/latex/`, `makeindex/`,
+    `bibtex/bib/`). The package is named after the **class**, which is what one
+    looks for on CTAN and what goes in the `\documentclass` and in the installed
+    `texmf`; CoppeTeX stays the name of the project. Proven: unzipped into an
+    empty folder, the two `.ins` generate the class and the minimal example
+    compiles.
   - **Overleaf** — `CoppeTeX-overleaf-coppe-<version>.zip`, a **flat** project
     for *Upload Project*: no folder inside the zip, one single main document
     (so Overleaf does not have to guess which to compile), and the files of

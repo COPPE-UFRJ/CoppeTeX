@@ -1,8 +1,12 @@
-# CoppeTeX — LaTeX classes for theses and dissertations at UFRJ
+# ufrj — LaTeX class for theses and dissertations at UFRJ
 
 Version @VERSAO@. Licence: GNU General Public License version 3 (see
 `COPYING.txt`). Maintainers: Geraldo Xexéo and Eduardo Mangeli; originally
 written by Vicente Helano F. Batista and George O. Ainsworth Jr.
+
+The package is named after the class it provides, `ufrj`. It is the work of
+the **CoppeTeX** project, which is the name the colophon of every thesis
+carries and the name of the repository where it is developed.
 
 Development, issues and the full repository:
 <https://github.com/COPPE-UFRJ/CoppeTeX>
@@ -48,7 +52,7 @@ plug-in mechanism for any other Babel language.
 | `manual.pdf` | The norm itself, as a document that obeys it: every rule is stated and then demonstrated. |
 | `coppe-min-exemplo.tex`, `coppe-max-exemplo.tex`, `exemplo.bib` | A minimal work and a work that uses everything the class offers. |
 | `logos/` | The logos the cover may carry. |
-| `coppetex.tds.zip` | The same files in a TDS tree, ready to unzip into a `texmf` root. |
+| `ufrj.tds.zip` | The same files in a TDS tree, ready to unzip into a `texmf` root. |
 
 To generate the class and the styles from source:
 
@@ -63,11 +67,11 @@ and refuses a name beginning with a dot, so docstrip cannot write it under its
 own name. It is the recipe that makes `latexmk` — and Overleaf — run biber and
 the four makeindex passes that the lists of abbreviations, of symbols, the
 glossary and the index need. In the TDS tree it is already installed as
-`doc/latex/coppetex/latexmkrc`.
+`doc/latex/ufrj/latexmkrc`.
 
 ## Installation
 
-Unzip `coppetex.tds.zip` into a local `texmf` tree and refresh the filename
+Unzip `ufrj.tds.zip` into a local `texmf` tree and refresh the filename
 database (`mktexlsr`, or `initexmf --update-fndb` on MiKTeX). The logos are
 installed next to the class, so a document finds them without copying anything.
 

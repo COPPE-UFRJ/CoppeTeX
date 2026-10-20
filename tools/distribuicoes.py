@@ -149,9 +149,12 @@ DISTRIBUICOES = {
 # ---------------------------------------------------------------------------
 IDIOMAS = ESPANHOL + OUTRAS
 
-# O nome do pacote no CTAN e a marca do projeto; os arquivos dentro dele levam
-# o prefixo ufrj, que e o que evita colisao com outro pacote da TeX Live.
-CTAN_NOME = "coppetex"
+# O nome do pacote no CTAN e o nome da CLASSE, e nao o do projeto: quem procura
+# no CTAN procura ufrj.cls, e e esse nome que aparece no \documentclass, na
+# arvore TDS e no texmf de quem instala. CoppeTeX continua sendo a marca do
+# projeto, no README e no colofao. O prefixo ufrj em todo arquivo e o que evita
+# colisao com outro pacote da TeX Live.
+CTAN_NOME = "ufrj"
 
 PACOTES = {
     # O CTAN recebe a FONTE e a documentacao, numa pasta com o nome do pacote,
@@ -478,7 +481,7 @@ def _tds(base, versao, diz):
     """A arvore TDS do CTAN, num .zip DENTRO do pacote.
 
     O CTAN pede a arvore como um .zip so, e nao solta: quem instala descompacta
-    o coppetex.tds.zip na raiz de um texmf e roda o mktexlsr.
+    o <pacote>.tds.zip na raiz de um texmf e roda o mktexlsr.
     """
     arvore = os.path.join(base, "_tds")
     if os.path.isdir(arvore):
