@@ -1366,6 +1366,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \end{otherlanguage}%
   \vspace*{2cm}%
   \clearpage}
+\newcommand*\ufrj@coverskip{\vspace{0.4\baselineskip}}
 \newcommand\makecover{%
   \begin{titlepage}%
   \pagestyle{empty}%
@@ -1374,10 +1375,12 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \ufrj@logoline\par
   \vspace{1.5cm}
   {\singlespacing
- \MakeUppercase{\local@universityname}\par
+   \MakeUppercase{\local@universityname}\par
    \ifx\ufrj@unitcover\@empty\else
+     \ufrj@coverskip
      \nohyphens{\MakeUppercase{\ufrj@unitcover}}\par
    \fi
+   \ufrj@coverskip
    \ufrj@letunitstr\ufrj@tmpcover{brazilian}{coverprogram}%
    \MakeUppercase{\ufrj@tmpcover}\par}
   \vspace{\stretch{2}}
