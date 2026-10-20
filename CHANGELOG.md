@@ -4,6 +4,31 @@ Project changes worth noting, newest first. Follows
 [Keep a Changelog](https://keepachangelog.com/) loosely; dates are
 ISO-8601.
 
+## [Unreleased] — 2026-10-20 — Packages for CTAN and for Overleaf
+
+- **Two submission packages, both COPPE's, both outside git.**
+  `coppetex.bat --envio` (or `tools/distribuicoes.py --ctan --overleaf`) builds
+  them in `build/`, with the zips in `build/pacotes/`. They are not versioned
+  on purpose: they exist to be uploaded elsewhere, and are made at the moment
+  of sending — versioning them would be a fourth and a fifth copy of the same
+  files, going stale between one upload and the next. `tools/distribuicoes.py`
+  remains the single place that knows what goes in each one.
+  - **CTAN** — `coppetex-<version>.zip`, a `coppetex/` folder with the sources
+    (`ufrj.dtx`/`.ins` and `ufrj-coppe.dtx`/`.ins`), the manuals, the examples,
+    the logos, an English README, the licence, and a TDS tree ready in
+    `coppetex.tds.zip` (`tex/latex/`, `source/latex/`, `doc/latex/`,
+    `makeindex/`, `bibtex/bib/`). Proven: unzipped into an empty folder, the
+    two `.ins` generate the class and the minimal example compiles.
+  - **Overleaf** — `CoppeTeX-overleaf-coppe-<version>.zip`, a **flat** project
+    for *Upload Project*: no folder inside the zip, one single main document
+    (so Overleaf does not have to guess which to compile), and the files of
+    **every** language at the root — the language subfolders of `dist-coppe`
+    exist because LaTeX looks beside the document, and on Overleaf there is
+    nothing to tidy. Proven: unzipped into an empty folder, with `TEXINPUTS`
+    and `BIBINPUTS` cleared, the full cycle (pdflatex → biber → pdflatex ×2)
+    compiles.
+  - Guarded by `tests/regressivo/rtu17`.
+
 ## [Unreleased] — 2026-10-20 — The institution block on the cover
 
 - **The three blocks of the capa are set apart.** The university, the unit and

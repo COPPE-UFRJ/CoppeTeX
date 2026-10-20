@@ -174,12 +174,25 @@ def acao_pacote(saida):
     return distribuicoes.pacote(saida)
 
 
+def acao_envio(saida):
+    """Monta em build/ os dois pacotes de ENVIO, os dois da COPPE: o do CTAN
+    (fonte, documentacao e a arvore TDS num .zip de dentro) e o do Overleaf (um
+    projeto plano, pronto para Upload Project). Nenhum dos dois e versionado:
+    eles existem para subir em outro lugar, e se fazem na hora de enviar."""
+    saida("")
+    saida("pacotes de envio")
+    ok = distribuicoes.montar_pacote("ctan", saida)
+    return distribuicoes.montar_pacote("overleaf", saida) and ok
+
+
 def acao_distribuir(saida):
     """Do .dtx ao que se baixa, de uma vez: regerar, compilar os PDFs da
-    entrega, converter as normas e montar as tres distribuicoes."""
+    entrega, converter as normas, montar as tres distribuicoes e fechar os
+    dois pacotes de envio."""
     ok = acao_regerar(saida)
     ok = acao_docs(saida) and ok
-    return acao_dist(saida) and ok
+    ok = acao_dist(saida) and ok
+    return acao_envio(saida) and ok
 
 
 def acao_gerador(saida):
@@ -244,6 +257,8 @@ ACOES = [
      "copia de build/ e de src/ o que a lista de tools/distribuicoes.py manda"),
     ("pacote", "Fechar os zips da entrega", acao_pacote,
      "um .zip por distribuicao em build/pacotes/, para anexar ao release"),
+    ("envio", "Pacotes de envio: CTAN e Overleaf", acao_envio,
+     "os dois da COPPE, em build/ e em build/pacotes/; ficam fora do git"),
     ("gerador", "Abrir o gerador de documento", acao_gerador,
      "a janela que escreve o .tex e o .bib de um trabalho novo"),
     ("limpar", "Limpar intermediarios", acao_limpar,
@@ -265,8 +280,10 @@ ACOES = [
 #   * `conferir' por ultimo entre os que leem, porque ele le os .log que a
 #     compilacao acabou de escrever e a copia que o dist acabou de fazer;
 #   * `limpar' no fim de tudo, senao apaga o que ainda nao foi lido nem copiado.
+#   * `envio' depois de `dist', pela mesma razao: os dois pacotes saem de
+#     build/, e so depois de a compilacao ter provado o que esta la.
 ORDEM = ["distribuir", "regerar", "tudo", "docs", "testes", "adversativo", "regressivo",
-         "pdfa", "dist", "conferir", "pacote", "gerador", "limpar"]
+         "pdfa", "dist", "conferir", "pacote", "envio", "gerador", "limpar"]
 
 
 def executar(pedidas, versao, saida):

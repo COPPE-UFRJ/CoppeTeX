@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
 """Gera as distribuicoes da CoppeTeX a partir de src/.
 
-    python tools/distribuicoes.py              regera build/, as normas e as tres dist-*
+    python tools/distribuicoes.py              regera build/, as normas, as tres
+                                               dist-* e os dois pacotes de envio
     python tools/distribuicoes.py --regerar    so prepara build/ e roda os tres .ins
     python tools/distribuicoes.py --normas     so converte as normas de src/normas
     python tools/distribuicoes.py --montar     so monta dist-coppe, dist-poli e dist-biblatex
+    python tools/distribuicoes.py --ctan       so o pacote do CTAN (da COPPE), em build/
+    python tools/distribuicoes.py --overleaf   so o projeto do Overleaf (da COPPE), em build/
     python tools/distribuicoes.py --pacote     fecha cada dist-* num .zip em build/pacotes
     python tools/distribuicoes.py --conferir   so diz o que falta em build/ para montar
 
@@ -17,6 +20,12 @@ O caminho inteiro, do .dtx ao que se baixa, e:
 src/ so tem fonte. build/ e a pasta de trabalho: recebe uma copia das fontes,
 os arquivos que os .ins geram e os PDFs que a compilacao produz, e fica fora do
 git. As dist-* e normas/ sao versionadas: sao o que se baixa.
+
+Os dois pacotes de ENVIO -- o do CTAN e o do Overleaf, os dois da COPPE so --
+saem em build/ctan/ e build/overleaf/, com o .zip em build/pacotes/, e NAO sao
+versionados: eles existem para subir no CTAN e no Overleaf, e sao feitos na
+hora de enviar. Versiona-los seria uma quarta e uma quinta copia dos mesmos
+arquivos, que envelheceriam entre um envio e outro.
 
 Este arquivo e o UNICO lugar que sabe o que vai em cada distribuicao. O painel
 (coppetex.bat), o build-check.ps1, o versao.py e os testes r92/r93/rtu14 leem
@@ -130,6 +139,77 @@ DISTRIBUICOES = {
         + [_b("spanish-ufrj.lbx"), _b("french-ufrj.lbx"), _b("italian-ufrj.lbx")]
     ),
 }
+
+# ---------------------------------------------------------------------------
+# Pacotes de ENVIO: da COPPE so, e FORA do git. Saem em build/, que o
+# repositorio ignora, porque sao feitos para subir em outro lugar -- o CTAN e o
+# Overleaf -- e nao para alguem baixar daqui. Quem baixa daqui pega a dist-*.
+# Por isso tambem nao repetem a lista das dist-*: o que cada um dos dois
+# servicos espera e diferente do que se copia para uma pasta de trabalho.
+# ---------------------------------------------------------------------------
+IDIOMAS = ESPANHOL + OUTRAS
+
+# O nome do pacote no CTAN e a marca do projeto; os arquivos dentro dele levam
+# o prefixo ufrj, que e o que evita colisao com outro pacote da TeX Live.
+CTAN_NOME = "coppetex"
+
+PACOTES = {
+    # O CTAN recebe a FONTE e a documentacao, numa pasta com o nome do pacote,
+    # mais a arvore TDS pronta num .zip de dentro. Os .cls e .sty nao vao soltos
+    # no alto: quem baixa do CTAN roda os .ins, e quem instala usa o TDS.
+    "ctan": {
+        "dentro": CTAN_NOME,
+        "arquivos": (
+            [_s("distribuicao/ctan/README.md"), _r("COPYING.txt")]
+            + [_s(n) for n in ("ufrj.dtx", "ufrj.ins",
+                               "ufrj-coppe.dtx", "ufrj-coppe.ins")]
+            + [_b(n) for n in ("ufrj.pdf", "ufrj-coppe.pdf", "ufrj-quickref.pdf",
+                               "coppe-quickref.pdf", "manual.pdf")]
+            + [_b("coppe-min-exemplo.tex"), _b("coppe-max-exemplo.tex"),
+               _b("exemplo.bib")]
+            + [_s("logos/coppe-logo.pdf", "logos"),
+               _s("logos/coppe-logo.eps", "logos"),
+               _s("logos/ufrj-logo.pdf", "logos")]
+        ),
+    },
+    # O Overleaf abre o .zip COMO PROJETO: o que estiver na raiz do zip vira a
+    # raiz do projeto, e por isso aqui nao ha pasta de dentro. Vai um documento
+    # principal so -- o minimo --, senao o Overleaf fica com dois candidatos a
+    # documento principal e escolhe um deles sozinho. E os arquivos de TODO
+    # idioma vao na raiz: subpasta de idioma existe na dist-* porque o LaTeX
+    # procura ao lado do documento, e no Overleaf nao ha o que arrumar.
+    "overleaf": {
+        "dentro": "",
+        "arquivos": (
+            [_s("distribuicao/overleaf/README.md"), _r("COPYING.txt")]
+            + [_b(n) for n in CLASSE + BIBLATEX + IDIOMAS]
+            + [_b("ufrj-coppe.sty"), _b("coppe.cls"),
+               _b("coppe-min-exemplo.tex"), _b("exemplo.bib")]
+            + [_s("logos/coppe-logo.pdf", "logos"),
+               _s("logos/ufrj-logo.pdf", "logos")]
+        ),
+    },
+}
+
+# A arvore TDS que vai dentro do pacote do CTAN: onde cada arquivo mora num
+# texmf. Os logotipos ficam junto da classe, em tex/latex/, para o documento
+# acha-los instalados, sem copiar nada.
+TDS = (
+    [("tex/latex/" + CTAN_NOME, _b(n)) for n in
+     ["ufrj.cls", "coppe.cls", "ufrj-coppe.sty"] + BIBLATEX + IDIOMAS]
+    + [("tex/latex/" + CTAN_NOME, _s("logos/coppe-logo.pdf")),
+       ("tex/latex/" + CTAN_NOME, _s("logos/ufrj-logo.pdf"))]
+    + [("makeindex/" + CTAN_NOME, _b("ufrj.ist"))]
+    + [("bibtex/bib/" + CTAN_NOME, _b(n)) for n in ("exemplo.bib", "ufrj.bib")]
+    + [("source/latex/" + CTAN_NOME, _s(n)) for n in
+       ("ufrj.dtx", "ufrj.ins", "ufrj-coppe.dtx", "ufrj-coppe.ins")]
+    + [("doc/latex/" + CTAN_NOME, _s("distribuicao/ctan/README.md")),
+       ("doc/latex/" + CTAN_NOME, _r("COPYING.txt"))]
+    + [("doc/latex/" + CTAN_NOME, _b(n)) for n in
+       ("ufrj.pdf", "ufrj-coppe.pdf", "ufrj-quickref.pdf", "coppe-quickref.pdf",
+        "manual.pdf", "coppe-min-exemplo.tex", "coppe-max-exemplo.tex",
+        "latexmkrc")]
+)
 
 # As normas: a fonte e o .docx em src/normas; em normas/ vao o .docx e o .pdf.
 NORMAS_FONTE = [
@@ -353,6 +433,103 @@ def pacote(diz=_diz):
     return ok
 
 
+# ---------------------------------------------------------------------------
+# Os pacotes de envio (CTAN e Overleaf), que nao sao versionados
+# ---------------------------------------------------------------------------
+ZIP = {
+    "ctan": CTAN_NOME + "-%s.zip",
+    "overleaf": "CoppeTeX-overleaf-coppe-%s.zip",
+}
+
+
+def faltando_pacote(nome):
+    """O que ainda nao existe para montar o pacote de envio `nome'."""
+    falta = []
+    for _, n, o in PACOTES[nome]["arquivos"]:
+        if not os.path.exists(_origem(o)):
+            falta.append("%s: %s (de %s/%s)" % (nome, n, o[0], o[1]))
+    if nome == "ctan":
+        for tdsdir, (_, n, o) in TDS:
+            if not os.path.exists(_origem(o)):
+                falta.append("%s: %s/%s (de %s/%s)"
+                             % (nome, tdsdir, n, o[0], o[1]))
+    return falta
+
+
+def _carimba_versao(caminho, versao):
+    """Troca @VERSAO@ pelo numero da versao, para ele nunca envelhecer no texto."""
+    texto = io.open(caminho, encoding="utf-8").read()
+    if "@VERSAO@" in texto:
+        io.open(caminho, "w", encoding="utf-8", newline="").write(
+            texto.replace("@VERSAO@", versao))
+
+
+def _zipar(pasta, zipado, dentro=""):
+    """Tudo o que esta em `pasta', num .zip, na ordem dos nomes."""
+    with zipfile.ZipFile(zipado, "w", zipfile.ZIP_DEFLATED) as z:
+        for raiz, _, arquivos in os.walk(pasta):
+            for a in sorted(arquivos):
+                caminho = os.path.join(raiz, a)
+                rel = os.path.relpath(caminho, pasta).replace(os.sep, "/")
+                z.write(caminho, (dentro + "/" + rel) if dentro else rel)
+
+
+def _tds(base, versao, diz):
+    """A arvore TDS do CTAN, num .zip DENTRO do pacote.
+
+    O CTAN pede a arvore como um .zip so, e nao solta: quem instala descompacta
+    o coppetex.tds.zip na raiz de um texmf e roda o mktexlsr.
+    """
+    arvore = os.path.join(base, "_tds")
+    if os.path.isdir(arvore):
+        shutil.rmtree(arvore)
+    for tdsdir, (_, n, o) in TDS:
+        destino = os.path.join(arvore, *tdsdir.split("/"))
+        if not os.path.isdir(destino):
+            os.makedirs(destino)
+        alvo = os.path.join(destino, n)
+        shutil.copy2(_origem(o), alvo)
+        if n.endswith(".md"):
+            _carimba_versao(alvo, versao)
+    _zipar(arvore, os.path.join(base, CTAN_NOME + ".tds.zip"))
+    shutil.rmtree(arvore)
+    diz("   %s/%s.tds.zip: %d arquivo(s)" % (CTAN_NOME, CTAN_NOME, len(TDS)))
+
+
+def montar_pacote(nome, diz=_diz):
+    """Monta build/<nome>/ e fecha o .zip de envio em build/pacotes/."""
+    falta = faltando_pacote(nome)
+    if falta:
+        for f in falta:
+            diz("   FALTOU  %s" % f)
+        diz("   %s nao foi montado: compile antes (coppetex.bat --docs)" % nome)
+        return False
+    versao = versao_atual()
+    raiz = os.path.join(BUILD, nome)
+    if os.path.isdir(raiz):
+        shutil.rmtree(raiz)
+    dentro = PACOTES[nome]["dentro"]
+    base = os.path.join(raiz, dentro) if dentro else raiz
+    for sub, n, o in PACOTES[nome]["arquivos"]:
+        destino = os.path.join(base, sub) if sub else base
+        if not os.path.isdir(destino):
+            os.makedirs(destino)
+        alvo = os.path.join(destino, n)
+        shutil.copy2(_origem(o), alvo)
+        if n.endswith(".md"):
+            _carimba_versao(alvo, versao)
+    diz("   %s: %d arquivo(s)" % (nome, len(PACOTES[nome]["arquivos"])))
+    if nome == "ctan":
+        _tds(base, versao, diz)
+    saida = os.path.join(BUILD, "pacotes")
+    if not os.path.isdir(saida):
+        os.makedirs(saida)
+    zipado = os.path.join(saida, ZIP[nome] % versao)
+    _zipar(raiz, zipado)
+    diz("   %s" % os.path.relpath(zipado, RAIZ).replace(os.sep, "/"))
+    return True
+
+
 def main(argv):
     if "--ajuda" in argv or "-h" in argv:
         print(__doc__)
@@ -360,6 +537,8 @@ def main(argv):
     passos = [a for a in argv if a.startswith("--")]
     if "--conferir" in passos:
         falta = faltando()
+        for nome in sorted(PACOTES):
+            falta += faltando_pacote(nome)
         for f in falta:
             print("FALTA  " + f)
         return 1 if falta else 0
@@ -371,6 +550,10 @@ def main(argv):
         ok = normas() and ok
     if tudo or "--montar" in passos:
         ok = montar() and ok
+    if tudo or "--ctan" in passos:
+        ok = montar_pacote("ctan") and ok
+    if tudo or "--overleaf" in passos:
+        ok = montar_pacote("overleaf") and ok
     if "--pacote" in passos:
         ok = pacote() and ok
     return 0 if ok else 1

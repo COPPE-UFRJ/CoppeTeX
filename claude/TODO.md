@@ -33,12 +33,23 @@ a classe; não falta documento normativo.
 
 ## 2. Distribuição
 
-- **CTAN** — pacote a partir de `dist/` mais os dois `.dtx` e os dois `.ins`
-  (`src/ufrj.*` e `src/ufrj-coppe.*`), que bastam para reconstruir a
-  distribuição. Os nomes da 5.0 já têm o prefixo `ufrj`, que evita colisão com
-  outro pacote da TeX Live. Issue #14.
-- **Overleaf** — modelo público com o conteúdo de `dist/` e botão "Open in
-  Overleaf" no `README.md`. O `latexmkrc` já configura biber e makeindex.
+Os dois pacotes já se **geram**, pelo `coppetex.bat --envio`, em `build/` e
+fora do git: `build/pacotes/coppetex-<versão>.zip` e
+`build/pacotes/CoppeTeX-overleaf-coppe-<versão>.zip`. O que falta nos dois é o
+**envio**, que é trabalho humano e feito uma vez.
+
+- **CTAN** — subir o `coppetex-<versão>.zip` em <https://ctan.org/upload>. Ele
+  leva a fonte (os `.dtx` e `.ins` da classe e do estilo da COPPE), os manuais,
+  os exemplos, os logotipos e a árvore TDS pronta no `coppetex.tds.zip`. Três
+  decisões antes de subir: **o nome do pacote** (hoje `coppetex`, a marca; os
+  arquivos de dentro levam o prefixo `ufrj`, que evita colisão na TeX Live), a
+  **licença** declarada no formulário (o projeto é GPL v3, que o CTAN aceita,
+  embora a LPPL seja a usual em classe LaTeX) e **quem assina** o envio. Issue #14.
+- **Overleaf** — criar o projeto público a partir do
+  `CoppeTeX-overleaf-coppe-<versão>.zip` (New Project → Upload Project →
+  Publish as Template) e pôr o botão "Open in Overleaf" no `README.md`. O zip
+  já é plano, com todos os idiomas na raiz e um documento principal só, e o
+  `latexmkrc` já configura o biber e o makeindex.
 
 ## 3. Classe e documentação
 

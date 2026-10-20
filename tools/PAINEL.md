@@ -49,6 +49,7 @@ coppetex.bat --ajuda
 | `--tudo` | A prova completa, com veredito no fim. É o que tem de sair limpo antes de marcar uma versão. |
 | `--dist` | Converte as normas de `src/normas` (Word → PDF) em `normas/` e monta, do zero, `dist-coppe`, `dist-poli` e `dist-biblatex` com o que está em `build/` e em `src/distribuicao`. **Só copia e converte; nunca compila.** As listas estão em `tools/distribuicoes.py`, e existem só lá. |
 | `--pacote` | Fecha cada `dist-*` num `.zip` com o número da versão, em `build/pacotes/`, pronto para anexar ao *release*. Cada zip leva uma pasta dentro, `CoppeTeX-<unidade>-<versão>/`, e não os arquivos soltos. |
+| `--envio` | Monta os dois **pacotes de envio**, os dois da COPPE: o do **CTAN**, em `build/ctan/coppetex/` — fonte (`.dtx` e `.ins`), manuais, exemplos, logotipos e a árvore TDS pronta no `coppetex.tds.zip` —, e o do **Overleaf**, em `build/overleaf/`, que é um projeto plano, com todos os idiomas na raiz e um documento principal só. Os `.zip` saem em `build/pacotes/`. **Nada disso é versionado**: os dois existem para subir no CTAN e no Overleaf, e se fazem na hora de enviar. |
 | `--gerador` | Abre o **gerador de documento vazio**, que escreve o `.tex` e o `.bib` de um trabalho novo. Tem porta própria, o `coppetex-novo.bat` (em `dist-coppe/gerador/`), porque o público é outro: esta ação existe para quem já está com o painel aberto. |
 | `--limpar` | Tira `.aux`, `.log` e companhia de `build/` e de `tests/`. Não toca em nenhum PDF. |
 
