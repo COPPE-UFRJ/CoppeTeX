@@ -1,23 +1,9 @@
-<!-- AVISO-CPGP:INICIO — apagar deste comentário até AVISO-CPGP:FIM depois da aprovação -->
-> ## ⚠️ Versão nova, ainda não aprovada
->
-> **Esta é a CoppeTeX 5.0, e ela ainda não foi aprovada** pela Comissão de
-> Programas de Pós-Graduação (CPGP) da COPPE/UFRJ. Use-a para escrever e para
-> experimentar, mas confirme com a secretaria do seu Programa — ou, na
-> graduação, com a coordenação do seu Curso — antes de depositar um trabalho
-> com ela. O último estado que a CPGP aprovou é a tag
-> [`coppetex-3.5.1`](https://github.com/COPPE-UFRJ/CoppeTeX/tree/coppetex-3.5.1).
->
-> *This is CoppeTeX 5.0, not yet approved by COPPE/UFRJ's graduate committee (CPGP).
-> Write and experiment with it, but check with your Programa before depositing.*
-<!-- AVISO-CPGP:FIM -->
-
 # CoppeTeX
 
 Classe LaTeX para teses, dissertações e Projetos de Graduação da UFRJ, conforme
 o *Manual para Elaboração e Normalização de Trabalhos Acadêmicos* da UFRJ/SiBI
 (9.ª ed. rev., 2026), com os estilos da COPPE e da Escola Politécnica e estilos
-biblatex ABNT.
+biblatex ABNT. 
 
 ## O que eu baixo?
 
