@@ -1,0 +1,33 @@
+%% Teste de regressao da CoppeTeX. NAO roda na suite normal.
+%% Rode com: python tests/regressivo/run-regressivo.py
+%% PEDIDO: a area de concentracao, a do diploma, no LUGAR da linha de
+%% pesquisa da folha de rosto, com o valor do \areaconcentracao. A linha de
+%% pesquisa esta informada e nao sai: o lugar tem uma coisa so.
+%%
+%% A folha de rosto e a SEGUNDA folha.
+%% ESPERA-TEXTO-PAGINA: 2::Área de concentração: Area Unica Prova
+%% NAO-ESPERA-TEXTO-PAGINA: 2::Linha de pesquisa
+\documentclass[dsc]{ufrj}
+\usepackage{ufrj-coppe}
+\title{Area no lugar da linha}
+\foreigntitle{Area in place of the line}
+\author{Nome}{Sobrenome}
+\advisor{Ana}{Silva}{D.Sc.}{UFRJ}
+\examiner{Carla Lima}{D.Sc.}{UFRJ}
+\department{PESC}
+\date{09}{2026}
+\areaconcentracao{Area Unica Prova}
+\linhapesquisa{Linha Que Nao Sai}
+\areaconcentracaonafolharosto
+\keyword{Regressao}
+\foreignkeyword{Regression}
+\begin{document}
+  \maketitle
+  \frontmatter
+  \begin{abstract}Resumo.\end{abstract}
+  \begin{foreignabstract}Abstract.\end{foreignabstract}
+  \tableofcontents
+  \mainmatter
+  \chapter{Um capitulo}
+  Texto.
+\end{document}

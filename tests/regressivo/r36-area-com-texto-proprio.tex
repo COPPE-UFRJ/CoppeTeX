@@ -1,0 +1,31 @@
+%% Teste de regressao da CoppeTeX. NAO roda na suite normal.
+%% Rode com: python tests/regressivo/run-regressivo.py
+%% PEDIDO: a area de concentracao na folha de rosto, no lugar da linha de
+%% pesquisa, com um texto so dela, entre colchetes, e nao o da folha adicional.
+%%
+%% A folha de rosto e a SEGUNDA folha.
+%% ESPERA-TEXTO-PAGINA: 2::Área de concentração: Texto Entre Colchetes
+%% NAO-ESPERA-TEXTO-PAGINA: 2::Area Unica Prova
+\documentclass[dsc]{ufrj}
+\usepackage{ufrj-coppe}
+\title{Area com texto proprio}
+\foreigntitle{Area with its own text}
+\author{Nome}{Sobrenome}
+\advisor{Ana}{Silva}{D.Sc.}{UFRJ}
+\examiner{Carla Lima}{D.Sc.}{UFRJ}
+\department{PESC}
+\date{09}{2026}
+\areaconcentracao{Area Unica Prova}
+\areaconcentracaonafolharosto[Texto Entre Colchetes]
+\keyword{Regressao}
+\foreignkeyword{Regression}
+\begin{document}
+  \maketitle
+  \frontmatter
+  \begin{abstract}Resumo.\end{abstract}
+  \begin{foreignabstract}Abstract.\end{foreignabstract}
+  \tableofcontents
+  \mainmatter
+  \chapter{Um capitulo}
+  Texto.
+\end{document}

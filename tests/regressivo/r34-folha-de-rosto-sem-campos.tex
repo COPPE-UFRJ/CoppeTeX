@@ -1,0 +1,33 @@
+%% Teste de regressao da CoppeTeX. NAO roda na suite normal.
+%% Rode com: python tests/regressivo/run-regressivo.py
+%% PEDIDO: sem linha de pesquisa e sem pedir a area de concentracao, a folha
+%% de rosto nao poe campo nenhum entre a natureza e o orientador -- como no
+%% exemplo minimo. A area de concentracao tem valor (e obrigatoria na folha
+%% adicional), e mesmo assim nao sai aqui: sai so quando pedida.
+%%
+%% A folha de rosto e a SEGUNDA folha.
+%% ESPERA-TEXTO-PAGINA: 2::Orientador
+%% NAO-ESPERA-TEXTO-PAGINA: 2::Linha de pesquisa
+%% NAO-ESPERA-TEXTO-PAGINA: 2::concentração
+\documentclass[dsc]{ufrj}
+\usepackage{ufrj-coppe}
+\title{Folha de rosto sem campos}
+\foreigntitle{Title page without fields}
+\author{Nome}{Sobrenome}
+\advisor{Ana}{Silva}{D.Sc.}{UFRJ}
+\examiner{Carla Lima}{D.Sc.}{UFRJ}
+\department{PESC}
+\date{09}{2026}
+\areaconcentracao{Engenharia de Sistemas}
+\keyword{Regressao}
+\foreignkeyword{Regression}
+\begin{document}
+  \maketitle
+  \frontmatter
+  \begin{abstract}Resumo.\end{abstract}
+  \begin{foreignabstract}Abstract.\end{foreignabstract}
+  \tableofcontents
+  \mainmatter
+  \chapter{Um capitulo}
+  Texto.
+\end{document}

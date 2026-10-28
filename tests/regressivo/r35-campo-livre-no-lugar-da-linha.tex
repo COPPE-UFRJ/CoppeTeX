@@ -1,0 +1,35 @@
+%% Teste de regressao da CoppeTeX. NAO roda na suite normal.
+%% Rode com: python tests/regressivo/run-regressivo.py
+%% PEDIDO: um campo com rotulo e valor do autor no lugar da linha de
+%% pesquisa da folha de rosto. Pedido depois da area de concentracao, e e ele
+%% que sai: dos dois pedidos vale o ultimo.
+%%
+%% A folha de rosto e a SEGUNDA folha.
+%% ESPERA-TEXTO-PAGINA: 2::Grupo de pesquisa: Grupo Prova
+%% NAO-ESPERA-TEXTO-PAGINA: 2::Linha de pesquisa
+%% NAO-ESPERA-TEXTO-PAGINA: 2::concentração
+\documentclass[dsc]{ufrj}
+\usepackage{ufrj-coppe}
+\title{Campo livre no lugar da linha}
+\foreigntitle{Free field in place of the line}
+\author{Nome}{Sobrenome}
+\advisor{Ana}{Silva}{D.Sc.}{UFRJ}
+\examiner{Carla Lima}{D.Sc.}{UFRJ}
+\department{PESC}
+\date{09}{2026}
+\areaconcentracao{Area Unica Prova}
+\linhapesquisa{Linha Que Nao Sai}
+\areaconcentracaonafolharosto
+\campofolharosto{Grupo de pesquisa}{Grupo Prova}
+\keyword{Regressao}
+\foreignkeyword{Regression}
+\begin{document}
+  \maketitle
+  \frontmatter
+  \begin{abstract}Resumo.\end{abstract}
+  \begin{foreignabstract}Abstract.\end{foreignabstract}
+  \tableofcontents
+  \mainmatter
+  \chapter{Um capitulo}
+  Texto.
+\end{document}

@@ -4,6 +4,23 @@ Project changes worth noting, newest first. Follows
 [Keep a Changelog](https://keepachangelog.com/) loosely; dates are
 ISO-8601.
 
+## [Unreleased] — 2026-10-28 — The research-line place on the folha de rosto
+
+- **One place, one thing.** The line between the natureza block and the
+  advisors on the folha de rosto holds the linha de pesquisa (`\linhapesquisa`,
+  as before, optional), **or**, in its place, the área de concentração — the
+  one on the diploma — with `\areaconcentracaonafolharosto`
+  (`\titlepageconcentrationarea`), which takes the value of `\areaconcentracao`
+  or the text in its optional argument, **or** any label and value of the
+  author's with `\campofolharosto{<label>}{<value>}` (`\titlepagefield`). Of the
+  two requests the last counts. Without a linha de pesquisa and without a
+  request, nothing is printed, as in the minimal example.
+- New language key `concentrationarea` in all five language tables; the label
+  of the area in the natureza block (option `areanafolhaderosto`) now comes
+  from it instead of a fixed Portuguese string.
+- Regression tests r33–r36 cover the area in place of the line, the free field
+  winning over the area, the area with its own text, and no field at all.
+
 ## [Unreleased] — 2026-10-20 — Packages for CTAN and for Overleaf
 
 - **Two submission packages, both COPPE's, both outside git.**
