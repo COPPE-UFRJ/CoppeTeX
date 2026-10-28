@@ -13,12 +13,12 @@ aponta o TEXINPUTS SO para ela, e compila. Se algum arquivo estiver faltando na
 entrega, falha aqui.
 
 E cobra tambem a ARRUMACAO, que tem uma regra so: o que esta na raiz de dist/
-funciona sem voce mexer em nada, e quem vai escrever em outro idioma tem de
-TRAZER PARA A RAIZ o conteudo da pasta daquele idioma -- o LaTeX procura os
-arquivos ao lado do documento, e nao dentro de subpastas. O teste faz
-exatamente isso: compila os dois exemplos em portugues onde eles estao, e os outros dois
-depois de mover a pasta deles para a raiz, que e o que a documentacao manda
-fazer. Se a instrucao estiver errada, falha aqui.
+funciona sem voce mexer em nada. O resto da classe mora em coppetex/, que a
+propria classe poe no \\input@path -- o TEXINPUTS daqui aponta so para a raiz,
+sem //, e por isso o teste cobra tambem esse mecanismo. Os exemplos em ingles e
+espanhol estao em exemplos/, e a documentacao manda trazer o .tex para a raiz:
+o teste compila os dois exemplos em portugues onde eles estao, e os outros dois
+depois de fazer isso. Se a instrucao estiver errada, falha aqui.
 
 Demora mais que os outros: sao tres documentos com biber e duas passadas cada.
 """
@@ -42,7 +42,7 @@ RAIZ = os.path.dirname(os.path.dirname(AQUI))
 # antes de compilar). Cada dist-* tem de bastar sozinha.
 EXEMPLOS = {
     "dist-coppe": [("coppe-min-exemplo", None), ("coppe-max-exemplo", None),
-                   ("example_en", "en"), ("example_es", "es")],
+                   ("example_en", "exemplos"), ("example_es", "exemplos")],
     "dist-poli": [("poli-min-exemplo", None), ("poli-max-exemplo", None)],
     "dist-biblatex": [("exemplo-biblatex", None)],
 }

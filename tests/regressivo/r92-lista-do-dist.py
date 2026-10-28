@@ -43,28 +43,30 @@ def ler(*partes):
 
 PRECISA = {
     "dist-coppe": ["README.md", "COPYING.txt", "ufrj.cls", "ufrj-coppe.sty",
-                   "coppe.cls", "latexmkrc", "ufrj.ist", "exemplo.bib",
+                   "migracao/coppe.cls", "latexmkrc", "ufrj.ist", "exemplo.bib",
                    "coppe-min-exemplo.tex", "coppe-max-exemplo.tex",
-                   "logos/ufrj-logo.pdf", "logos/coppe-logo.pdf",
+                   "coppetex/logos/ufrj-logo.pdf", "coppetex/logos/coppe-logo.pdf",
                    "manuais/ufrj.pdf", "manuais/ufrj-coppe.pdf", "manuais/manual.pdf",
                    "manuais/ufrj-quickref.pdf", "manuais/coppe-quickref.pdf",
                    "manuais/coppe-min-exemplo.pdf", "manuais/coppe-max-exemplo.pdf",
-                   "en/example_en.tex", "es/example_es.tex",
-                   "es/spanish-ufrj.lbx", "es/ufrj-lang-spanish.def",
+                   "exemplos/example_en.tex", "exemplos/example_es.tex",
+                   "coppetex/spanish-ufrj.lbx", "coppetex/ufrj-lang-spanish.def",
                    "norma/NORMA_COPPE_2026.pdf"],
     "dist-poli": ["README.md", "COPYING.txt", "ufrj.cls", "ufrj-poli.sty",
-                  "poli.cls", "latexmkrc", "ufrj.ist", "exemplo.bib",
+                  "migracao/poli.cls", "latexmkrc", "ufrj.ist", "exemplo.bib",
                   "poli-min-exemplo.tex", "poli-max-exemplo.tex",
-                  "logos/ufrj-logo.pdf", "logos/poli-logo.pdf",
+                  "coppetex/logos/ufrj-logo.pdf", "coppetex/logos/poli-logo.pdf",
                   "manuais/ufrj.pdf", "manuais/ufrj-poli.pdf",
                   "manuais/poli-quickref.pdf",
                   "norma/NORMA_POLI_2026.pdf"],
     "dist-biblatex": ["README.md", "COPYING.txt", "exemplo-biblatex.tex",
                       "exemplo.bib"],
 }
-# O biblatex inteiro vai em todas, na raiz.
+# O biblatex inteiro vai em todas: em coppetex/ nas da COPPE e da Poli, e na
+# raiz na do biblatex, que e feita para copiar para o projeto de outra pessoa.
 for d in PRECISA:
-    PRECISA[d] += D.BIBLATEX
+    PRECISA[d] += [("coppetex/" + n) if d != "dist-biblatex" else n
+                   for n in D.BIBLATEX]
 
 for d, entradas in sorted(D.DISTRIBUICOES.items()):
     esperado = D.esperado(d)

@@ -4,6 +4,32 @@ Project changes worth noting, newest first. Follows
 [Keep a Changelog](https://keepachangelog.com/) loosely; dates are
 ISO-8601.
 
+## [Unreleased] — 2026-10-28 — A lighter root: the `coppetex/` folder
+
+- **The class finds its own files in `coppetex/`.** Right after loading, `ufrj`
+  appends `coppetex/` to `\input@path` and `coppetex/` and `coppetex/logos/`
+  to `\graphicspath`. Everything TeX opens after that — the biblatex
+  `.dbx`/`.bbx`/`.cbx`, every `.lbx`, the `ufrj-lang-*.def` language packs, the
+  logos — is found there. No `latexmkrc`, no `TEXINPUTS`: `pdflatex` by hand,
+  the editor's button, `latexmk` and Overleaf all work. Files beside the
+  document still win, so a flat layout keeps working.
+- **dist-coppe and dist-poli reorganized.** The root keeps only what must be
+  beside the `.tex`: the class, the unit style, `ufrj.ist` (read by
+  `makeindex`), `latexmkrc`, the two Portuguese examples and `exemplo.bib`
+  (read by biber), plus README and licence. `en/`, `es/`, `outraslinguas/`,
+  `logos/` and the loose biblatex files went into `coppetex/`; the English
+  and Spanish examples into `exemplos/`; `coppe.cls`/`poli.cls` into
+  `migracao/`, beside the migration guides.
+- **Overleaf package.** Same root, both examples (minimal as the main
+  document, maximal to consult), `coppetex/` with every language and the
+  logos; no `coppe.cls`. Proven from an empty folder without latexmk: minimal
+  11 pages and maximal 70 pages, no errors; the minimal in Spanish picks the
+  language files from `coppetex/`.
+- **5.0 is approved.** The "not yet approved by the CPGP" notice left the
+  COPPE README.
+- READMEs, the class manual ("A regra da arrumação"), `manual.tex` and the
+  distribution tests r92, r93 and rtu17 follow the new layout.
+
 ## [Unreleased] — 2026-10-28 — The research-line place on the folha de rosto
 
 - **One place, one thing.** The line between the natureza block and the

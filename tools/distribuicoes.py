@@ -93,42 +93,55 @@ def _n(caminho, destino="norma"):
 
 
 # Cada entrada: (subpasta dentro da dist, nome final, (origem, caminho)).
-# O que esta na RAIZ de cada dist e o que funciona sem mexer em nada: o LaTeX
-# procura classe, estilos e .lbx ao lado do documento, e nao em subpastas.
+# Ao lado do documento ficam so a classe, o estilo da unidade, os exemplos, o
+# .bib, o ufrj.ist e o latexmkrc. O resto da classe -- os estilos do biblatex,
+# os .lbx e os pacotes de TODO idioma, e os logotipos -- vai para coppetex/, que
+# a propria classe poe no \input@path e no \graphicspath: compila sem latexmk e
+# sem TEXINPUTS. Ficam fora de coppetex/ so os arquivos que um programa de fora
+# do TeX le (o .bib, pelo biber, e o ufrj.ist, pelo makeindex) e os que o TeX
+# procura ANTES de a classe rodar (o .cls, e o estilo, que o documento chama).
+PASTA = "coppetex"
+
+
+def _pasta(logos):
+    """O conteudo de coppetex/: biblatex, todos os idiomas e os logotipos."""
+    return ([_b(n, PASTA) for n in BIBLATEX + ESPANHOL + OUTRAS]
+            + [_s("logos/" + n, PASTA + "/logos") for n in logos])
+
+
 DISTRIBUICOES = {
     "dist-coppe": (
         [_s("distribuicao/coppe/README.md"), _r("COPYING.txt")]
-        + [_b(n) for n in CLASSE + BIBLATEX]
-        + [_b("ufrj-coppe.sty"), _b("coppe.cls"),
+        + [_b(n) for n in CLASSE]
+        + [_b("ufrj-coppe.sty"),
            _b("coppe-min-exemplo.tex"), _b("coppe-max-exemplo.tex"),
            _b("exemplo.bib")]
-        + [_s("logos/coppe-logo.pdf", "logos"), _s("logos/coppe-logo.eps", "logos"),
-           _s("logos/ufrj-logo.pdf", "logos")]
+        + _pasta(["coppe-logo.pdf", "coppe-logo.eps", "ufrj-logo.pdf"])
         + [_b(n, "manuais") for n in (
             "ufrj.pdf", "ufrj-coppe.pdf", "ufrj-quickref.pdf", "coppe-quickref.pdf",
             "manual.pdf", "coppe-min-exemplo.pdf", "coppe-max-exemplo.pdf")]
-        + [_b("example_en.tex", "en"), _b("example_en.pdf", "en"),
-           _b("example_es.tex", "es"), _b("example_es.pdf", "es")]
-        + [_b(n, "es") for n in ESPANHOL]
-        + [_b(n, "outraslinguas") for n in OUTRAS]
+        + [_b(n, "exemplos") for n in (
+            "example_en.tex", "example_en.pdf", "example_es.tex", "example_es.pdf")]
         + [_s("gerador/coppetex-novo.bat", "gerador"),
            _s("gerador/geradocvazio.py", "gerador")]
+        # A coppe.cls so serve a trabalho comecado com \documentclass{coppe}, e
+        # e quem migra que a traz para junto do documento.
         + [_s("distribuicao/coppe/MIGRATION_v3_to_v4.md", "migracao"),
-           _s("distribuicao/coppe/MIGRATION_v4_to_v5.md", "migracao")]
+           _s("distribuicao/coppe/MIGRATION_v4_to_v5.md", "migracao"),
+           _b("coppe.cls", "migracao")]
         + [_n("norma-coppe/NORMA_COPPE_2026.pdf")]
     ),
     "dist-poli": (
         [_s("distribuicao/poli/README.md"), _r("COPYING.txt")]
-        + [_b(n) for n in CLASSE + BIBLATEX]
-        + [_b("ufrj-poli.sty"), _b("poli.cls"),
+        + [_b(n) for n in CLASSE]
+        + [_b("ufrj-poli.sty"),
            _b("poli-min-exemplo.tex"), _b("poli-max-exemplo.tex"),
            _b("exemplo.bib")]
-        + [_s("logos/poli-logo.pdf", "logos"), _s("logos/ufrj-logo.pdf", "logos")]
+        + _pasta(["poli-logo.pdf", "ufrj-logo.pdf"])
         + [_b(n, "manuais") for n in (
             "ufrj.pdf", "ufrj-poli.pdf", "ufrj-quickref.pdf", "poli-quickref.pdf",
             "poli-min-exemplo.pdf", "poli-max-exemplo.pdf")]
-        + [_b(n, "es") for n in ESPANHOL]
-        + [_b(n, "outraslinguas") for n in OUTRAS]
+        + [_b("poli.cls", "migracao")]
         + [_n("norma-poli/NORMA_POLI_2026.pdf")]
     ),
     "dist-biblatex": (
@@ -176,20 +189,20 @@ PACOTES = {
         ),
     },
     # O Overleaf abre o .zip COMO PROJETO: o que estiver na raiz do zip vira a
-    # raiz do projeto, e por isso aqui nao ha pasta de dentro. Vai um documento
-    # principal so -- o minimo --, senao o Overleaf fica com dois candidatos a
-    # documento principal e escolhe um deles sozinho. E os arquivos de TODO
-    # idioma vao na raiz: subpasta de idioma existe na dist-* porque o LaTeX
-    # procura ao lado do documento, e no Overleaf nao ha o que arrumar.
+    # raiz do projeto, e por isso aqui nao ha pasta de dentro. A raiz e a mesma
+    # da dist-coppe, com os dois exemplos -- o minimo e o maximo --, e o
+    # coppe-min-exemplo.tex e o documento principal, que o README manda
+    # confirmar em Menu > Main document. A coppe.cls nao vai: projeto novo nao
+    # comeca com \documentclass{coppe}.
     "overleaf": {
         "dentro": "",
         "arquivos": (
             [_s("distribuicao/overleaf/README.md"), _r("COPYING.txt")]
-            + [_b(n) for n in CLASSE + BIBLATEX + IDIOMAS]
-            + [_b("ufrj-coppe.sty"), _b("coppe.cls"),
-               _b("coppe-min-exemplo.tex"), _b("exemplo.bib")]
-            + [_s("logos/coppe-logo.pdf", "logos"),
-               _s("logos/ufrj-logo.pdf", "logos")]
+            + [_b(n) for n in CLASSE]
+            + [_b("ufrj-coppe.sty"),
+               _b("coppe-min-exemplo.tex"), _b("coppe-max-exemplo.tex"),
+               _b("exemplo.bib")]
+            + _pasta(["coppe-logo.pdf", "ufrj-logo.pdf"])
         ),
     },
 }

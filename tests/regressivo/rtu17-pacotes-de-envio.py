@@ -6,12 +6,13 @@ BUG: nao havia defeito antigo aqui -- este teste guarda os dois pacotes de ENVIO
 Cobra-se, sem compilar nada:
   1. todo arquivo das duas listas ou e fonte de src/, ou esta na raiz, ou e
      gerado por um dos .ins -- nenhum nome que nao possa existir nunca;
-  2. o projeto do Overleaf basta sozinho e e PLANO: classe, estilo da unidade,
-     estilos de bibliografia, os .lbx e .def de TODO idioma, o ufrj.ist, o
-     latexmkrc, a base e os logotipos, sem subpasta de idioma -- no Overleaf
-     nao ha o que arrumar, e o aluno nao tem de mover arquivo nenhum;
-  3. o projeto do Overleaf tem UM documento principal so, senao o Overleaf
-     escolhe sozinho qual compilar;
+  2. o projeto do Overleaf basta sozinho e tem a arrumacao da dist-coppe: na
+     raiz a classe, o estilo da unidade, o ufrj.ist, o latexmkrc e a base; em
+     coppetex/ os estilos de bibliografia, os .lbx e .def de TODO idioma e os
+     logotipos, e nenhuma outra subpasta -- o aluno nao tem de mover arquivo
+     nenhum, porque a classe poe coppetex/ no \\input@path;
+  3. o projeto do Overleaf tem os dois exemplos, o minimo e o maximo, e nenhum
+     outro documento principal;
   4. o pacote do CTAN leva o README e a licenca, as quatro fontes (.dtx e .ins)
      e os manuais, e a arvore TDS poe cada arquivo no lugar que o TDS manda;
   5. nenhum dos dois leva nada da Poli: sao da COPPE;
@@ -74,25 +75,27 @@ for pacote, (sub, nome, (origem, caminho)) in entradas:
 # 2. O Overleaf e plano e basta sozinho.
 over = D.PACOTES["overleaf"]["arquivos"]
 na_raiz = set(n for sub, n, _ in over if not sub)
-for n in (["ufrj.cls", "ufrj-coppe.sty", "coppe.cls", "ufrj.ist", "latexmkrc",
-           "exemplo.bib", "README.md", "COPYING.txt"]
-          + D.BIBLATEX + D.IDIOMAS):
+for n in ["ufrj.cls", "ufrj-coppe.sty", "ufrj.ist", "latexmkrc",
+          "exemplo.bib", "README.md", "COPYING.txt"]:
     if n not in na_raiz:
         problemas.append("overleaf: falta %s na raiz do projeto" % n)
+na_pasta = set(n for sub, n, _ in over if sub == D.PASTA)
+for n in D.BIBLATEX + D.IDIOMAS:
+    if n not in na_pasta:
+        problemas.append("overleaf: falta %s em %s/" % (n, D.PASTA))
 subpastas = set(sub for sub, _, _ in over if sub)
-if subpastas - {"logos"}:
-    problemas.append("overleaf: o projeto tem subpasta alem de logos/ (%s); "
+if subpastas - {D.PASTA, D.PASTA + "/logos"}:
+    problemas.append("overleaf: o projeto tem subpasta alem de %s/ (%s); "
                      "no Overleaf o aluno nao deve ter de mover arquivo"
-                     % ", ".join(sorted(subpastas - {"logos"})))
-if not any(n.endswith("logo.pdf") for _, n, _ in over):
-    problemas.append("overleaf: faltam os logotipos")
+                     % (D.PASTA, ", ".join(sorted(subpastas - {D.PASTA, D.PASTA + "/logos"}))))
+if not any(n.endswith("logo.pdf") for s, n, _ in over if s == D.PASTA + "/logos"):
+    problemas.append("overleaf: faltam os logotipos em %s/logos/" % D.PASTA)
 
-# 3. Um documento principal so.
-principais = [n for _, n, _ in over if n.endswith("-exemplo.tex")]
-if principais != ["coppe-min-exemplo.tex"]:
-    problemas.append("overleaf: o projeto tem %d documento(s) principal(is) (%s); "
-                     "com mais de um o Overleaf escolhe sozinho qual compilar"
-                     % (len(principais), ", ".join(principais) or "nenhum"))
+# 3. Os dois exemplos, e nenhum outro documento principal.
+principais = sorted(n for _, n, _ in over if n.endswith(".tex"))
+if principais != ["coppe-max-exemplo.tex", "coppe-min-exemplo.tex"]:
+    problemas.append("overleaf: o projeto devia ter o exemplo minimo e o maximo, "
+                     "e tem %s" % (", ".join(principais) or "nenhum"))
 
 # 4. O CTAN leva fonte, licenca e documentacao, e o TDS poe cada um no lugar.
 ctan = set(n for _, n, _ in D.PACOTES["ctan"]["arquivos"])

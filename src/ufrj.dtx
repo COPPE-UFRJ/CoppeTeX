@@ -233,6 +233,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \changes{v5.0}{2026/09/17}{The logos are printed on the capa only. The folha de rosto repeated the capa's logo line; Annex B, which is the model of the folha de rosto, and the two sheets of the SiBI model carry no image there. Annex A puts the two logos on the CAPA and marks both as optional.}
 % \changes{v5.0}{2026/09/17}{The folha de rosto and the folha de aprovacao are written entirely in Portuguese, whatever the language of the work. The research-line label, the coadvisor label and the two approval labels followed the main language while the natureza and the advisor label did not, so an English or Spanish work came out with half of each sheet in each language. The class manual and section 7 of the Norma COPPE already stated the rule: these sheets are institutional identity. The four now read the Portuguese key through ufrj@unitstr, which still honours a text the unit declared.}
 % \changes{v5.0}{2026/09/17}{The reference above each abstract is composed like the references in the list: aligned to the left margin only, the title in bold and the subtitle out of it, and an em dash before the vinculacao academica. 4.2 asks for one presentation for every reference in the work; this one was justified, set the title flat and used an en dash, so the same reference had two shapes in the same work.}
+% \changes{v5.0}{2026/10/28}{The delivery keeps beside the document only the class, the unit style, the examples, the .bib, ufrj.ist and latexmkrc; the biblatex styles, every language file and the logos go to a coppetex/ folder, which the class adds to input@path and to the graphicspath. It compiles with pdflatex by hand, the editor's button, latexmk or Overleaf, without latexmkrc or TEXINPUTS. The language folders are gone, since every language is in coppetex/.}
 % \changes{v5.0}{2026/10/28}{The place of the linha de pesquisa on the folha de rosto gains two alternatives: titlepageconcentrationarea (areaconcentracaonafolharosto) puts the area de concentracao, the one on the diploma, in place of the linha de pesquisa, labelled from a new key, concentrationarea, in every language pack, with the value of concentrationarea or the one in its optional argument; and titlepagefield (campofolharosto) puts there a label and a value given by the author. The place holds one thing; of the two requests the last one counts. Without a linha de pesquisa and without a request, or with an empty value, nothing is printed. The label of the area in the natureza block, under areanafolhaderosto, comes from the same key.}
 % \changes{v5.0}{2026/09/17}{The area de concentracao leaves the natureza block of the folha de rosto and of the folha de aprovacao, and the new option areanafolhaderosto brings it back. The SiBI model that 3.1.2.1.2 links to carries it on the folha adicional, as a Coleta CAPES field, and Annexes B and D end the natureza block at the degree; only the prose of 3.1.2.1.1(e) and 3.1.2.1.3(c) lists it among the elements of the two sheets. The data is untouched: areaconcentracao still feeds the folha adicional, where it is mandatory.}
 % \changes{v5.0}{2026/09/15}{tests/regressivo gains four tests of the split: rtu01 composes a work with the class alone and forbids every COPPE phrase, rtu02 composes one with a made-up unit style that uses only the public interface, rtu03 compiles a work of the class coppe with the old names and a .toc written by the old class, and rtu04 reads the class, the bibliography styles, the language packs and the glossary style and fails if one names COPPE or any of its data.}
@@ -426,14 +427,22 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % ali. Funciona do mesmo jeito no Overleaf: suba os arquivos junto com o seu
 % |.tex|.
 %
-% \textbf{A regra da arrumação, em uma frase.} \textbf{O que está na
-% raiz da entrega funciona sem você mexer em nada, e quem vai escrever em
-% inglês, espanhol ou outro idioma traz o conteúdo da pasta daquele idioma
-% para a raiz.} O \LaTeX{} procura a classe e os estilos \emph{ao lado do
-% documento que está compilando}, e não dentro de subpastas: um arquivo que
-% fique em |es/| é um arquivo que o \LaTeX{} não vê. As duas exceções
-% são os logotipos, que a classe sabe procurar em |logos/|, e os |.bib|, que
-% você mesmo aponta com um caminho --- veja a seção~\ref{sec:bibsubpasta}.
+% \textbf{A regra da arrumação, em uma frase.} \textbf{Ao lado do seu
+% |.tex| ficam a classe, o estilo da unidade, o |ufrj.ist| e o |latexmkrc|; o
+% resto da classe fica na pasta |coppetex/|, que vai junto, sem abrir.} O
+% \LaTeX{} procura os arquivos \emph{ao lado do documento que está
+% compilando}, e não dentro de subpastas --- por isso a própria classe, logo
+% que carrega, acrescenta |coppetex/| ao caminho em que o \TeX{} procura (o
+% |\input@path|) e ao das imagens. Daí em diante tudo o que o \TeX{} abre ---
+% os estilos do biblatex, os |.lbx|, os pacotes de idioma, os logotipos --- é
+% achado lá. Compila de qualquer jeito: |pdflatex| à mão, o botão do editor,
+% |latexmk| ou Overleaf, sem |latexmkrc| e sem |TEXINPUTS|.
+%
+% Ficam fora de |coppetex/| os arquivos que o \TeX{} procura \emph{antes} de
+% a classe rodar --- a própria classe e o estilo da unidade --- e os que um
+% programa de fora do \TeX{} lê: o |ufrj.ist|, que o |makeindex| abre, e os
+% |.bib|, que o biber abre e que você mesmo aponta com um caminho --- veja a
+% seção~\ref{sec:bibsubpasta}.
 %
 % Chamando de |raiz/| a pasta onde está o seu |.tex|, o mínimo é este:
 %
@@ -442,15 +451,17 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %     minha-tese.tex          <- o seu trabalho
 %     ufrj.cls                <- a classe
 %     ufrj-coppe.sty          <- o estilo da unidade (aqui, o da COPPE)
-%     ufrj.dbx                <- tipos de entrada bibliografica
-%     ufrj.bbx  ufrj.cbx      <- estilo de bibliografia e de citacao
 %     ufrj.ist                <- ordenacao das listas e do glossario
-%     brazilian-ufrj.lbx      <- termos de bibliografia em portugues
-%     english-ufrj.lbx        <- termos de bibliografia em ingles
 %     latexmkrc               <- receita de compilacao (se voce usa latexmk)
-%     logos/
-%       ufrj-logo.pdf         <- logotipo da UFRJ, na capa
-%       coppe-logo.pdf        <- logotipo da unidade, na capa
+%     coppetex/
+%       ufrj.dbx              <- tipos de entrada bibliografica
+%       ufrj.bbx  ufrj.cbx    <- estilo de bibliografia e de citacao
+%       brazilian-ufrj.lbx    <- termos de bibliografia em portugues
+%       english-ufrj.lbx      <- termos de bibliografia em ingles
+%       ...                   <- os outros idiomas e o sistema numerico
+%       logos/
+%         ufrj-logo.pdf       <- logotipo da UFRJ, na capa
+%         coppe-logo.pdf      <- logotipo da unidade, na capa
 %     referencias/
 %       minha-tese.bib        <- as suas referencias
 % \end{verbatim}
@@ -459,21 +470,21 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % escrito em português: toda tese da UFRJ tem um resumo em idioma
 % estrangeiro, que por convenção é o inglês.
 %
-% \textbf{Os logotipos.} A classe procura primeiro em |logos/| e depois ao
-% lado do documento, nesta ordem, de modo que as duas arrumações funcionam
-% --- a da entrega, com a subpasta, e a de quem prefere tudo solto. Faltando os
-% dois lugares, a compilação para com um recado que nomeia os dois
-% caminhos, e não com o ``File not found'' genérico do \TeX.
+% \textbf{Quem prefere tudo solto} também pode: os arquivos de |coppetex/|
+% funcionam do mesmo jeito ao lado do documento, porque o \TeX{} procura ali
+% antes de tentar a pasta. \textbf{Os logotipos} a classe procura em |logos/|
+% (e, pela pasta, em |coppetex/logos/|) e depois ao lado do documento.
+% Faltando todos, a compilação para com um recado que diz onde eles deviam
+% estar, e não com o ``File not found'' genérico do \TeX.
 %
 % \textbf{O resto da entrega.} A entrega traz mais do que este mínimo, e
 % nada do que sobra é necessário para compilar: |manuais/| tem os PDF para
-% ler, |en/| e |es/| têm o exemplo naquele idioma, |outraslinguas/| tem
-% francês e italiano, e a raiz traz os exemplos em português
-% (|coppe-min-exemplo.tex| e |coppe-max-exemplo.tex|), as bases |exemplo.bib| e
-% |ufrj.bib|, a classe |coppe.cls|, que só serve a trabalho escrito até a
-% versão~4.1, e as fontes |ufrj.dtx|, |ufrj.ins|, |ufrj-coppe.dtx|,
-% |ufrj-coppe.ins| e |manual.tex|, que estão lá para que a entrega baste também
-% para refazer a classe, o estilo e os manuais.
+% ler, |exemplos/| tem o exemplo em inglês e o em espanhol (para usar um,
+% traga o |.tex| para a raiz), a raiz traz os exemplos em português
+% (|coppe-min-exemplo.tex| e |coppe-max-exemplo.tex|) e a base |exemplo.bib|, e
+% |migracao/| traz os guias de quem começou nas versões~3 e~4 e a classe
+% |coppe.cls|, que só serve a trabalho escrito até a versão~4.1 --- quem
+% precisar dela a traz para a raiz.
 %
 % \subsection{Arquivos que só algumas opções exigem}
 %
@@ -3231,8 +3242,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %     com o |ufrj.ist| entre a primeira e a segunda passada. Veja a
 %     seção~\ref{sec:compilar}, ou use |latexmk|.
 %   \item[``Logotipo \texttt{coppe-logo.pdf} não encontrado''.] Os logotipos
-%     não estão na pasta. Copie a pasta |logos/| da distribuição para junto do
-%     trabalho.
+%     não estão na pasta. Copie a pasta |coppetex/| da distribuição, que os
+%     traz em |coppetex/logos/|, para junto do trabalho.
 %   \item[``Programa \texttt{PESC} não declarado''.] Falta o estilo da unidade:
 %     acrescente |\usepackage{ufrj-coppe}| logo depois do |\documentclass|.
 %   \item[``No room for a new \texttt{write}''.] O \hologo{pdfTeX} ficou sem
@@ -3892,6 +3903,22 @@ Problems: \url{https://github.com/COPPE-UFRJ/CoppeTeX/issues}
 % \ufrjfinalpage) should reference.
 \let\ufrj@version\fileversion
 \let\ufrj@date\filedate
+% A pasta coppetex/. Na entrega, so a classe e o estilo da unidade ficam ao lado
+% do documento; o resto -- os estilos do biblatex, os .lbx, os pacotes de
+% idioma e os logotipos -- mora em coppetex/, ao lado deles. O LaTeX nao procura
+% em subpastas, e por isso a classe acrescenta essa ao \input@path, que vale
+% para tudo o que se carrega depois dela pelo proprio TeX: \usepackage,
+% \input, \IfFileExists e os .bbx, .cbx, .dbx e .lbx que o biblatex abre.
+% Assim compila com qualquer coisa -- pdflatex na mao, o botao do editor,
+% latexmk, Overleaf --, sem latexmkrc e sem TEXINPUTS. Ficam de fora so os
+% programas de fora do TeX: o biber le o .bib, e o makeindex o ufrj.ist, e os
+% dois continuam ao lado do documento.
+%
+% Quem ja tem um \input@path o conserva: a pasta entra no fim. E quem achata a
+% arvore, ou instala na arvore do TeX, nao perde nada -- o TeX procura no lugar
+% de sempre antes de tentar o \input@path.
+\providecommand\input@path{}
+\edef\input@path{\unexpanded\expandafter{\input@path}{coppetex/}}
 % Document date stored in private slots so \date can set them without ever
 % touching TeX's \month/\year primitives (which would break \today). They
 % default to the current system month/year, so a document without \date
@@ -3924,13 +3951,15 @@ Problems: \url{https://github.com/COPPE-UFRJ/CoppeTeX/issues}
 % logotipos passaram a morar numa subpasta, um \includegraphics{coppe-logo}
 % escrito no documento -- e o manual da norma tem um -- nao os achava mais. Com
 % a linha abaixo, o nome simples volta a funcionar, venha o arquivo da subpasta
-% ou de junto do documento.
+% ou de junto do documento. As duas entradas de coppetex/ sao a mesma coisa
+% para a pasta da entrega (veja o \input@path, no inicio da classe): o
+% \includegraphics segue o \graphicspath, e nao o \input@path, quando ha um.
 %
 % A ordem importa: `./' primeiro, para que uma figura DO AUTOR com o mesmo nome
 % ganhe da nossa. E isto NAO substitui a busca do \ufrj@logo, que usa
 % \IfFileExists -- o \graphicspath vale para o \includegraphics e nao para o
 % \IfFileExists, que procura pelo kpathsea.
-\graphicspath{{./}{logos/}}
+\graphicspath{{./}{logos/}{coppetex/}{coppetex/logos/}}
 % Os logotipos da capa. Nao ha \graphicspath que resolva o caso da INSTALACAO:
 % quando a classe e instalada na arvore do TeX, o kpathsea a encontra sem dizer
 % a ninguem ONDE a encontrou -- \CurrentFilePath vem vazio e \@filef@und devolve
@@ -3950,7 +3979,9 @@ Problems: \url{https://github.com/COPPE-UFRJ/CoppeTeX/issues}
 % arvore, e quem instala na arvore do TeX poe os arquivos ao lado do .cls. Os
 % tres arranjos sao legitimos, e procurar nos tres custa duas linhas:
 %
-%   1. logos/<nome>.pdf  -- a subpasta, que e como o repositorio e a entrega vem
+%   1. logos/<nome>.pdf  -- a subpasta, que e como o repositorio vem; o
+%                           \input@path faz o mesmo nome achar coppetex/logos/,
+%                           que e como a entrega vem
 %   2. <nome>.pdf        -- ao lado do documento, ou ao lado do ufrj.cls na
 %                           arvore do TeX, que o kpathsea acha sozinho
 %
@@ -3965,9 +3996,9 @@ Problems: \url{https://github.com/COPPE-UFRJ/CoppeTeX/issues}
       {\ClassError{ufrj}{Logotipo `#2.pdf' nao encontrado}%
         {Ele vem junto com a classe ou com o estilo da unidade. Procurei\MessageBreak
          em logos/#2.pdf e em #2.pdf, e nao achei em nenhum dos dois.\MessageBreak
-         Copie a pasta logos/ para junto do seu trabalho, ou ponha\MessageBreak
-         #2.pdf ao lado do ufrj.cls na arvore do TeX. Os logotipos\MessageBreak
-         estao na pasta logos/ da distribuicao.}%
+         Copie a pasta coppetex/ da distribuicao, que tem os\MessageBreak
+         logotipos em coppetex/logos/, para junto do seu trabalho,\MessageBreak
+         ou ponha #2.pdf ao lado do ufrj.cls na arvore do TeX.}%
        \framebox[3cm][c]{\rule{0pt}{#1}\ttfamily #2?}}}}
 \RequirePackage{tabularx}
 \RequirePackage{booktabs}      % regras de tabela profissionais (toprule/midrule/bottomrule)

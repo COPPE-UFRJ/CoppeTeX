@@ -212,21 +212,20 @@
   \section{Os arquivos, e onde eles ficam}
 
   A entrega da classe vem arrumada por uma regra só: \textbf{o que está na raiz
-  dela funciona sem você mexer em nada; o que está numa pasta de idioma só
-  funciona depois de você trazer o conteúdo dela para a raiz}. O \LaTeX{}
-  procura a classe, os estilos e as bases de referências \emph{ao lado do
-  documento que está compilando}, e não dentro de subpastas.
+  dela funciona sem você mexer em nada, junto com a pasta \texttt{coppetex}}.
+  O \LaTeX{} procura os arquivos \emph{ao lado do documento que está
+  compilando}, e não dentro de subpastas; a classe, logo que carrega, ensina
+  o \TeX{} a procurar também em \verb|coppetex|.
 
-  Na raiz estão a classe, o estilo da \useacronym{coppe}, os estilos de bibliografia, os
-  termos em português e em inglês --- os dois, porque toda tese tem resumo em
-  idioma estrangeiro --- e o exemplo em português. Em \verb|logos| estão os logotipos da capa; em
-  \verb|manuais|, os PDFs para ler. As pastas \verb|en| e \verb|es| trazem o
-  exemplo naquele idioma e o que só ele precisa, e \verb|outraslinguas| traz
-  francês e italiano, que não são idiomas admitidos para redigir tese.
+  Na raiz estão a classe, o estilo da \useacronym{coppe}, a ordenação das listas,
+  a receita do \verb|latexmk|, a base de referências e os exemplos em
+  português. Em \verb|coppetex| estão os estilos de bibliografia, os arquivos
+  de todo idioma e os logotipos da capa; em \verb|manuais|, os PDFs para ler; em
+  \verb|exemplos|, o exemplo em inglês e o em espanhol.
 
-  Quem vai escrever em português não faz nada. Quem vai escrever em inglês ou
-  em espanhol copia o conteúdo da pasta daquele idioma para a raiz, e só então
-  compila.
+  Ninguém move arquivo nenhum para escrever em inglês ou em espanhol: basta a
+  opção de idioma na classe. Para compilar um dos exemplos de \verb|exemplos|,
+  traga o \verb|.tex| dele para a raiz.
 
   \section{A opção de tipo de trabalho}
 

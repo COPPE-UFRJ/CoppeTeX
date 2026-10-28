@@ -39,6 +39,8 @@
 \ProvidesClass{ufrj}[\filedate\ \fileversion\ UFRJ Dissertations and Theses]
 \let\ufrj@version\fileversion
 \let\ufrj@date\filedate
+\providecommand\input@path{}
+\edef\input@path{\unexpanded\expandafter{\input@path}{coppetex/}}
 \edef\ufrj@docmonth{\the\month}
 \edef\ufrj@docyear{\the\year}
 \LoadClass[12pt,a4paper,oneside]{book}
@@ -46,7 +48,7 @@
 \RequirePackage{lastpage}
 \RequirePackage{ifthen}
 \RequirePackage{graphicx}
-\graphicspath{{./}{logos/}}
+\graphicspath{{./}{logos/}{coppetex/}{coppetex/logos/}}
 \newcommand\ufrj@logo[2][2cm]{%
   \IfFileExists{logos/#2.pdf}
     {\includegraphics[height=#1]{logos/#2}}
@@ -55,9 +57,9 @@
       {\ClassError{ufrj}{Logotipo `#2.pdf' nao encontrado}%
         {Ele vem junto com a classe ou com o estilo da unidade. Procurei\MessageBreak
          em logos/#2.pdf e em #2.pdf, e nao achei em nenhum dos dois.\MessageBreak
-         Copie a pasta logos/ para junto do seu trabalho, ou ponha\MessageBreak
-         #2.pdf ao lado do ufrj.cls na arvore do TeX. Os logotipos\MessageBreak
-         estao na pasta logos/ da distribuicao.}%
+         Copie a pasta coppetex/ da distribuicao, que tem os\MessageBreak
+         logotipos em coppetex/logos/, para junto do seu trabalho,\MessageBreak
+         ou ponha #2.pdf ao lado do ufrj.cls na arvore do TeX.}%
        \framebox[3cm][c]{\rule{0pt}{#1}\ttfamily #2?}}}}
 \RequirePackage{tabularx}
 \RequirePackage{booktabs}      % regras de tabela profissionais (toprule/midrule/bottomrule)
@@ -725,6 +727,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \ufrjdefstring{brazilian}{coadvisors} {Coorientadores}
 \ufrjdefstring{brazilian}{ofname}     {de}
 \ufrjdefstring{brazilian}{researchline}{Linha de pesquisa}
+\ufrjdefstring{brazilian}{concentrationarea}{Área de concentração}
 \ufrjdefstring{brazilian}{tbddate}   {a ser determinada}
 \ufrjdefstring{english}  {approvedmale}  {Approved by}
 \ufrjdefstring{english}  {approvedfemale}{Approved by}
@@ -736,6 +739,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \ufrjdefstring{english}  {coadvisors} {Co-advisors}
 \ufrjdefstring{english}  {ofname}     {of}
 \ufrjdefstring{english}  {researchline}{Research line}
+\ufrjdefstring{english}  {concentrationarea}{Concentration area}
 \ufrjdefstring{english}  {tbddate}    {to be determined}
 \ufrjdefstring{brazilian}{monthname1} {Janeiro}
 \ufrjdefstring{brazilian}{monthname2} {Fevereiro}
@@ -1145,6 +1149,30 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \newcommand\approvaldate[1]{\gdef\ufrj@dataaprov{#1}}
 \newcommand\ufrj@linhapesq{}
 \newcommand\researchline[1]{\gdef\ufrj@linhapesq{#1}}
+\newcommand\ufrj@rostotroca{}
+\newcommand\ufrj@arearostotexto{}
+\newcommand\titlepageconcentrationarea[1][]{%
+  \gdef\ufrj@arearostotexto{#1}%
+  \gdef\ufrj@rostotroca{%
+    \ifx\ufrj@arearostotexto\@empty
+      \let\ufrj@arearostovalor\ufrj@areaconc
+    \else
+      \let\ufrj@arearostovalor\ufrj@arearostotexto
+    \fi
+    \ufrj@rostofield{\ufrj@unitstr{brazilian}{concentrationarea}}%
+      {\ufrj@arearostovalor}}}
+\newcommand\titlepagefield[2]{%
+  \gdef\ufrj@rostotroca{\ufrj@rostofield{#1}{#2}}}
+\newcommand\ufrj@rostofield[2]{%
+  \ifthenelse{\equal{#2}{}}{}{%
+    \noindent#1: #2\par
+    \vspace*{5mm}}}
+\newcommand\ufrj@rostofields{%
+  \ifx\ufrj@rostotroca\@empty
+    \ufrj@rostofield{\ufrj@unitstr{brazilian}{researchline}}{\ufrj@linhapesq}%
+  \else
+    \ufrj@rostotroca
+  \fi}
 \newcommand\ufrj@tipoproducao{}
 \newcommand\tipoproducao[1]{\gdef\ufrj@tipoproducao{#1}}
 \newcommand\ufrj@projetovinc{}
@@ -1417,9 +1445,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \end{flushright}
   \vspace*{12mm}
   {\singlespacing
-  \ifthenelse{\equal{\ufrj@linhapesq}{}}{}{%
-    \noindent\ufrj@unitstr{brazilian}{researchline}: \ufrj@linhapesq\par
-    \vspace*{5mm}}%
+  \ufrj@rostofields
   \nohyphens{%
   \noindent\begin{tabularx}{\textwidth}[b]{@{}l@{ }>{\raggedright\arraybackslash}X@{}}
     \local@advisorstring: &
@@ -2340,7 +2366,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \if@ufrjarearosto
     \ifthenelse{\equal{\ufrj@areaconc}{}}{}{%
       \par\vspace{1ex}%
-      \sloppy\nohyphens{Área de concentração: \ufrj@areaconc.}}%
+      \sloppy\nohyphens{\ufrj@unitstr{brazilian}{concentrationarea}: \ufrj@areaconc.}}%
   \fi
 }
 \newcommand\ufrj@toptext[1]{%
@@ -2502,6 +2528,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \let\dataaprovacao\approvaldate
 \let\areaconcentracao\concentrationarea
 \let\linhapesquisa\researchline
+\let\areaconcentracaonafolharosto\titlepageconcentrationarea
+\let\campofolharosto\titlepagefield
 \let\nomeprojeto\projectname
 \let\agenciafomento\fundingagency
 \let\fichacatalografica\catalogcard
