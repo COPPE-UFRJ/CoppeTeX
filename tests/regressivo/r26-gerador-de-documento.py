@@ -47,6 +47,7 @@ CASOS = [
                   "--listofquadros=sim", "--listofprogramas=sim",
                   "--listofalgorithms=sim"]),
     ("glossariomanual", ["--glossario=sim", "--glossario_manual=sim"]),
+    ("arearosto", ["--folharosto=area"]),
 ]
 
 problemas = []
@@ -65,18 +66,22 @@ for nome, extras in CASOS:
             problemas.append("%s: nao saiu o main.tex" % nome)
             continue
 
-        # A entrega inteira ao lado, que e o que a documentacao manda fazer.
-        for raiz, _, nomes in os.walk(DIST):
-            destino = os.path.join(pasta, os.path.relpath(raiz, DIST))
-            if not os.path.isdir(destino):
-                os.makedirs(destino)
-            for arq in nomes:
-                shutil.copy2(os.path.join(raiz, arq),
-                             os.path.join(destino, arq))
+        # Da entrega, so o que o download do gerador traria (_espalhar): a
+        # regra do que vem e do que fica e cobrada compilando. Sem TEXINPUTS:
+        # a classe acha a coppetex/ sozinha, e e isso que se cobra.
+        sys.path.insert(0, os.path.dirname(GERADOR))
+        import geradocvazio as _g
+        _g._espalhar(DIST, pasta, "brazilian", aviso=lambda *a: None)
+        for sobra in _g.SO_PARA_LER:
+            if os.path.exists(os.path.join(pasta, sobra)):
+                problemas.append("%s: o download traria a pasta %s/"
+                                 % (nome, sobra))
+        if not os.path.isdir(os.path.join(pasta, "coppetex", "logos")):
+            problemas.append("%s: o download nao traria coppetex/logos/" % nome)
 
         ambiente = dict(os.environ)
-        ambiente["TEXINPUTS"] = pasta + ";"
-        ambiente["BIBINPUTS"] = pasta + ";"
+        ambiente.pop("TEXINPUTS", None)
+        ambiente.pop("BIBINPUTS", None)
 
         def roda(*cmd):
             return subprocess.run(list(cmd), cwd=pasta, env=ambiente,

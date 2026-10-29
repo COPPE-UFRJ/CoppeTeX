@@ -55,8 +55,8 @@ if hasattr(sys.stdout, "reconfigure"):
 # ufrj.ins nao foi rodado depois da ultima mudanca no .dtx.
 #
 # Os de build/ estao escritos aqui; os das dist-* NAO, e sao deduzidos da lista
-# de tools/distribuicoes.py. A razao: as distribuicoes tem subpastas -- es/,
-# outraslinguas/ --, e a lista de quem vai para onde ja existe la. Escrever os
+# de tools/distribuicoes.py. A razao: as distribuicoes tem subpastas --
+# coppetex/, migracao/ --, e a lista de quem vai para onde ja existe la. Escrever os
 # caminhos aqui de novo criaria a segunda copia da mesma lista, e ela ja
 # divergiu uma vez: este verificador cobrava dist/spanish-ufrj.lbx, que tinha
 # passado a ser dist/es/spanish-ufrj.lbx.

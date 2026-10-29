@@ -117,7 +117,7 @@ CAMPOS = [
      "sim/nao", False, None,
      "Cria conteudo/ com os cinco capitulos e os traz com \\input"),
     ("baixar", "Arquivos", "Baixar a classe do GitHub", "sim/nao", False, None,
-     "Traz a classe, os estilos e os logotipos, ja no idioma escolhido"),
+     "Traz a classe e a pasta coppetex/, com os idiomas e os logotipos"),
     # --- Trabalho -----------------------------------------------------------
     ("tipo", "Trabalho", "Tipo do trabalho", "escolha", "dsc", TIPOS, ""),
     ("idioma", "Trabalho", "Idioma de reda\u00e7\u00e3o", "escolha", "brazilian",
@@ -149,6 +149,11 @@ CAMPOS = [
      "\u00c1rea de Concentra\u00e7\u00e3o", None, ""),
     ("linhapesquisa", "Folha adicional", "Linha de pesquisa", "texto",
      "Linha de Pesquisa", None, "Vazio n\u00e3o imprime a linha"),
+    ("folharosto", "Folha adicional", "Na folha de rosto, abaixo da natureza",
+     "escolha", "linha",
+     [("linha", "A linha de pesquisa"),
+      ("area", "A \u00e1rea de concentra\u00e7\u00e3o (a do diploma)")],
+     "A \u00e1rea ali sai da Norma COPPE 2026 (4.4); use s\u00f3 se o Programa pedir"),
     ("tipoproducao", "Folha adicional", "Tipo de produ\u00e7\u00e3o", "escolha",
      "bibliografica",
      [("bibliografica", "Bibliogr\u00e1fica"), ("artistica", "Art\u00edstica"),
@@ -381,6 +386,9 @@ def monta_tex(v, nome_bib):
         A("  \\concentrationarea{%s}" % v["areaconcentracao"])
     if v["linhapesquisa"].strip():
         A("  \\researchline{%s}" % v["linhapesquisa"])
+    if v.get("folharosto") == "area":
+        A("  %% Na folha de rosto, a area de concentracao no lugar da linha.")
+        A("  \\titlepageconcentrationarea")
     A("  \\productiontype{%s}" % {"bibliografica": "bibliographic", "artistica": "artistic",
                                   "tecnologica": "technological", "tecnica": "technical"}
       .get(v["tipoproducao"], v["tipoproducao"]))
@@ -614,13 +622,10 @@ def _serve_para_compilar(relativo):
 
 
 def baixar_entrega(pasta, idioma, aviso):
-    """Traz a entrega do GitHub e a espalha na pasta, ja no idioma escolhido.
+    """Traz a entrega do GitHub e a espalha na pasta.
 
-    Faz de uma vez o que o README manda fazer a mao: baixa, poe a classe e os
-    estilos na raiz, a pasta logos junto, e -- se o trabalho nao for em
-    portugues -- TRAZ PARA A RAIZ o conteudo da pasta daquele idioma, que e o
-    passo que todo mundo esquece e que faz o LaTeX reclamar de arquivo que
-    esta ali do lado.
+    Faz de uma vez o que o README manda fazer a mao: baixa e poe a raiz da
+    entrega e a pasta coppetex/ junto do documento (veja _espalhar).
 
     Tenta o release mais recente; se nao houver, o zip do ramo master.
     """
@@ -688,46 +693,58 @@ def baixar_entrega(pasta, idioma, aviso):
         if de_dentro_do_repo:
             aviso("   (do ramo master, pasta dist-coppe/)")
 
-        trazidos = 0
-        for raiz, pastas, nomes in os.walk(base):
-            rel_pasta = os.path.relpath(raiz, base)
-            # As pastas de OUTROS idiomas nao vem; a do idioma escolhido vem, e
-            # vem PARA A RAIZ.
-            topo = rel_pasta.split(os.sep)[0]
-            if topo in ("en", "es", "outraslinguas", "manuais", "norma",
-                        "gerador", "migracao"):
-                continue
-            for nome in nomes:
-                if not _serve_para_compilar(nome):
-                    continue
-                destino_pasta = pasta if rel_pasta == "." \
-                    else os.path.join(pasta, rel_pasta)
-                if not os.path.isdir(destino_pasta):
-                    os.makedirs(destino_pasta)
-                shutil.copy2(os.path.join(raiz, nome),
-                             os.path.join(destino_pasta, nome))
-                trazidos += 1
-
-        # O idioma escolhido, direto para a raiz.
-        qual = {"english": "en", "spanish": "es"}.get(idioma)
-        if idioma in ("french", "italian"):
-            qual = "outraslinguas"
-        if qual:
-            de = os.path.join(base, qual)
-            if os.path.isdir(de):
-                for nome in os.listdir(de):
-                    if not _serve_para_compilar(nome):
-                        continue
-                    shutil.copy2(os.path.join(de, nome),
-                                 os.path.join(pasta, nome))
-                    trazidos += 1
-                aviso("   %s/ veio para a raiz, que e onde o LaTeX procura"
-                      % qual)
-
-        aviso("   %d arquivo(s) trazidos" % trazidos)
+        _espalhar(base, pasta, idioma, aviso)
         return True
     finally:
         shutil.rmtree(temp, ignore_errors=True)
+
+
+# Pastas da entrega que sao para ler, e nao para compilar.
+SO_PARA_LER = ("manuais", "norma", "gerador", "migracao", "exemplos")
+
+
+def _espalhar(base, pasta, idioma, aviso=print):
+    """Copia de uma entrega (a pasta `base') o que serve para compilar.
+
+    A raiz vem para a raiz e coppetex/ vem inteira, como pasta: a classe a
+    acrescenta ao caminho do TeX, e todo idioma ja esta la. As pastas de
+    leitura (manuais, exemplos, ...) nao vem.
+
+    Uma entrega de antes da coppetex/ (a 5.0 do release) tem os idiomas em
+    en/, es/ e outraslinguas/; a do idioma escolhido vem PARA A RAIZ, que e
+    onde a classe daquela versao os procurava.
+    """
+    antigas = ("en", "es", "outraslinguas")
+    trazidos = 0
+    for raiz, pastas, nomes in os.walk(base):
+        rel_pasta = os.path.relpath(raiz, base)
+        topo = rel_pasta.split(os.sep)[0]
+        if topo in SO_PARA_LER or topo in antigas:
+            continue
+        for nome in nomes:
+            if not _serve_para_compilar(nome):
+                continue
+            destino_pasta = pasta if rel_pasta == "." \
+                else os.path.join(pasta, rel_pasta)
+            if not os.path.isdir(destino_pasta):
+                os.makedirs(destino_pasta)
+            shutil.copy2(os.path.join(raiz, nome),
+                         os.path.join(destino_pasta, nome))
+            trazidos += 1
+
+    qual = {"english": "en", "spanish": "es", "french": "outraslinguas",
+            "italian": "outraslinguas"}.get(idioma)
+    de = os.path.join(base, qual) if qual else None
+    if de and os.path.isdir(de):
+        for nome in os.listdir(de):
+            if not _serve_para_compilar(nome):
+                continue
+            shutil.copy2(os.path.join(de, nome), os.path.join(pasta, nome))
+            trazidos += 1
+        aviso("   %s/ veio para a raiz, que e onde o LaTeX procura" % qual)
+
+    aviso("   %d arquivo(s) trazidos" % trazidos)
+    return trazidos
 
 
 def gerar(v, aviso=print):
@@ -778,11 +795,12 @@ def gerar(v, aviso=print):
     if baixou:
         aviso("%d arquivo(s) escritos, e a classe ja esta na pasta."
               % len(escritos))
-        aviso("Compile com:  latexmk -pdf %s" % nome_tex[:-4])
+        aviso("Compile com:  latexmk -pdf %s  (ou pdflatex, biber, pdflatex)"
+              % nome_tex[:-4])
     else:
         aviso("%d arquivo(s). Copie para esta pasta a raiz da entrega e a"
               % len(escritos))
-        aviso("pasta logos/, e compile. A entrega esta em")
+        aviso("pasta coppetex/, e compile. A entrega esta em")
         aviso("https://github.com/%s/releases/latest" % REPO)
     return escritos
 

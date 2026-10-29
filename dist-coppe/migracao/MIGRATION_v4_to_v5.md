@@ -52,7 +52,10 @@ Os arquivos que o seu trabalho usa:
 | `manuais/coppe.pdf` | `manuais/ufrj.pdf` (a classe) e `manuais/ufrj-coppe.pdf` (o estilo da COPPE) |
 | `manuais/coppe-quickref.pdf` | `manuais/ufrj-quickref.pdf` |
 
-Os logotipos não mudam: `logos/ufrj-logo.pdf` e `logos/coppe-logo.pdf`.
+Os logotipos, os estilos de bibliografia e os arquivos de idioma ficam agora
+na pasta `coppetex/`, que vai junto do trabalho sem abrir: `coppetex/logos/ufrj-logo.pdf`
+e `coppetex/logos/coppe-logo.pdf`. A classe procura lá sozinha. Quem já tem
+`logos/` na pasta do trabalho não precisa mudar nada: a classe procura ali também.
 
 Os arquivos antigos que ficarem na pasta do trabalho não atrapalham, com uma
 exceção: o **`coppe.cls`**. O da 4.1 era a classe inteira; o da 5.0 é uma classe

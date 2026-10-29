@@ -5,7 +5,7 @@ disponível. **A fonte de cada uma é o `.docx`**: edite o Word e regere.
 
 | Pasta | Norma | Situação |
 |---|---|---|
-| `norma-coppe/` | Norma para a Elaboração Gráfica de Teses e Dissertações da COPPE/UFRJ — Edição 2026 | Proposta à CPGP. Em vigor até a aprovação: a norma de 2008, revista em 2019. |
+| `norma-coppe/` | Norma para a Elaboração Gráfica de Teses e Dissertações da COPPE/UFRJ — Edição 2026 | Aprovada pela CPGP. Substitui a norma de 2008, revista em 2019. |
 | `norma-poli/` | Norma para a Elaboração Gráfica do Projeto de Graduação da Escola Politécnica/UFRJ — Edição 2026 | Proposta à Congregação. Em vigor: Anexo da Resolução n.º 05/2012 (em `specs/`). |
 
 As duas especializam o *Manual para Elaboração e Normalização de Trabalhos

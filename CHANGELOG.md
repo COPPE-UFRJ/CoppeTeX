@@ -29,6 +29,18 @@ ISO-8601.
   COPPE README.
 - READMEs, the class manual ("A regra da arrumação"), `manual.tex` and the
   distribution tests r92, r93 and rtu17 follow the new layout.
+- **The gerador follows the layout.** Its download brings the root and
+  `coppetex/` as a folder, and leaves the reading folders (`manuais/`,
+  `exemplos/`, `migracao/`, ...); a delivery from before `coppetex/` still
+  works the old way. New field: what goes in the place of the linha de
+  pesquisa on the folha de rosto (the line, or the área de concentração).
+  r26 now compiles each generated document with exactly what the download
+  would bring, with no `TEXINPUTS`, and covers the área on the folha de rosto.
+- **The área on the folha de rosto is outside the COPPE norm.** 4.4 of the
+  Norma COPPE 2026 keeps it on the folha adicional; the manual, the maximal
+  example and the gerador now say so beside `\titlepageconcentrationarea`.
+- The Norma COPPE 2026 is listed as approved by the CPGP in `normas/README.md`;
+  `MIGRATION_v4_to_v5.md` points at `coppetex/logos/`.
 
 ## [Unreleased] — 2026-10-28 — The research-line place on the folha de rosto
 
