@@ -105,6 +105,15 @@ arquivos da raiz e a pasta `coppetex/` junto com o seu `.tex`.
 - Inclua a ficha catalográfica real, de <http://fichacatalografica.sibi.ufrj.br/>:
   `\catalogcard{ficha.pdf}`.
 
+## Pedidos e defeitos
+
+O projeto mora no GitHub: <https://github.com/COPPE-UFRJ/CoppeTeX>.
+
+Para **pedir uma melhoria** ou **avisar de um defeito**, abra uma *issue* em
+<https://github.com/COPPE-UFRJ/CoppeTeX/issues>. Num defeito, diga a versão
+da classe (a linha `Document Class: ufrj` do `.log`), mande o menor `.tex` que o
+reproduz e, se houver, o `.log` da compilação.
+
 ## Licença
 
 GNU General Public License, versão 3 (`COPYING.txt`). As fontes comentadas

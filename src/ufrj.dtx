@@ -234,6 +234,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \changes{v5.0}{2026/09/17}{The folha de rosto and the folha de aprovacao are written entirely in Portuguese, whatever the language of the work. The research-line label, the coadvisor label and the two approval labels followed the main language while the natureza and the advisor label did not, so an English or Spanish work came out with half of each sheet in each language. The class manual and section 7 of the Norma COPPE already stated the rule: these sheets are institutional identity. The four now read the Portuguese key through ufrj@unitstr, which still honours a text the unit declared.}
 % \changes{v5.0}{2026/09/17}{The reference above each abstract is composed like the references in the list: aligned to the left margin only, the title in bold and the subtitle out of it, and an em dash before the vinculacao academica. 4.2 asks for one presentation for every reference in the work; this one was justified, set the title flat and used an en dash, so the same reference had two shapes in the same work.}
 % \changes{v5.0}{2026/10/28}{The delivery keeps beside the document only the class, the unit style, the examples, the .bib, ufrj.ist and latexmkrc; the biblatex styles, every language file and the logos go to a coppetex/ folder, which the class adds to input@path and to the graphicspath. It compiles with pdflatex by hand, the editor's button, latexmk or Overleaf, without latexmkrc or TEXINPUTS. The language folders are gone, since every language is in coppetex/.}
+% \changes{v5.0}{2026/10/29}{Equations follow the same option as the floats: numbered through the whole work by default, (1), (2), as in the only example, that of 5.7 of NBR 14724; within the chapter, (4.1), under numeracaoporcapitulo. The Manual (2.9) and the NBR ask only for the number in parentheses, on the right.}
+% \changes{v5.0}{2026/10/29}{Floats are numbered continuously through the whole work (Figura 1, 2, 3...), as 2.10 and 2.11 of the Manual and 5.8 of NBR 14724 ask: the number of order of occurrence in the text, and every example there is Figura 1, Quadro 1, Tabela 1. The new option numeracaoporcapitulo brings back the numbering within the chapter (Figura 4.1); numeracaocontinua names the default. It covers figure, table, quadro, the programs of listings, the algorithms of algorithm2e and the floats of newufrjfloat. Equations keep the chapter.}
 % \changes{v5.0}{2026/10/29}{The linha de pesquisa leaves the folha de rosto by default, and the new option linhanafolhaderosto brings it back. The body of the Manual does not list it among the elements of the folha de rosto; only the SiBI model carries it. researchline still records the value, and titlepageconcentrationarea and titlepagefield still fill the place without the option.}
 % \changes{v5.0}{2026/10/28}{The place of the linha de pesquisa on the folha de rosto gains two alternatives: titlepageconcentrationarea (areaconcentracaonafolharosto) puts the area de concentracao, the one on the diploma, in place of the linha de pesquisa, labelled from a new key, concentrationarea, in every language pack, with the value of concentrationarea or the one in its optional argument; and titlepagefield (campofolharosto) puts there a label and a value given by the author. The place holds one thing; of the two requests the last one counts. Without a linha de pesquisa and without a request, or with an empty value, nothing is printed. The label of the area in the natureza block, under areanafolhaderosto, comes from the same key.}
 % \changes{v5.0}{2026/09/17}{The area de concentracao leaves the natureza block of the folha de rosto and of the folha de aprovacao, and the new option areanafolhaderosto brings it back. The SiBI model that 3.1.2.1.2 links to carries it on the folha adicional, as a Coleta CAPES field, and Annexes B and D end the natureza block at the degree; only the prose of 3.1.2.1.1(e) and 3.1.2.1.3(c) lists it among the elements of the two sheets. The data is untouched: areaconcentracao still feeds the folha adicional, where it is mandatory.}
@@ -1127,6 +1129,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % Listas no sumário & fora dele & \texttt{listasnosumario} \\
 % Área de concentração nas folhas de identidade & \textbf{fora delas} & \texttt{areanafolhaderosto} \\
 % Linha de pesquisa na folha de rosto & \textbf{fora dela} & \texttt{linhanafolhaderosto} \\
+% Numeração de figuras, tabelas e demais ilustrações & \textbf{contínua no trabalho} & \texttt{numeracaoporcapitulo} \texttt{numeracaocontinua} \\
 % Seta da linha quebrada nas listagens & preta & \texttt{setavermelha} \\
 % Lista de símbolos & ordem de aparição & \texttt{simbolosalfabeticos} \\
 % Orientador na banca & em primeiro lugar & \texttt{semorientadornabanca} \\
@@ -1303,6 +1306,17 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %     |\linhapesquisa|. O corpo do Manual não a lista entre os elementos da
 %     folha de rosto; só o modelo do SiBI a traz. Ligue-a se o seu Programa
 %     a quiser ali: ela sai à margem esquerda, logo acima dos orientadores.
+%   \item[\texttt{numeracaoporcapitulo}] \textbf{Desligada por padrão}:
+%     figuras, tabelas, quadros, programas, algoritmos e os flutuantes de
+%     |\newufrjfloat| são numerados \textbf{em sequência no trabalho todo}
+%     (Figura~1, Figura~2, \dots), pela ``ordem de ocorrência no texto'' da 2.10
+%     e da 2.11 do Manual e da 5.8 da NBR~14724, cujos exemplos são todos
+%     ``Figura~1'', ``Quadro~1'', ``Tabela~1''. Ligue-a para numerar dentro do
+%     capítulo (Figura~4.1), como a classe fazia até outubro de 2026. Cada
+%     espécie tem a sua sequência. As \textbf{equações} seguem a mesma
+%     opção: (1), (2), \dots{} por padrão, como no exemplo da 5.7 da
+%     NBR~14724, e (4.1) com ela. |numeracaocontinua| dá nome ao padrão e pode ser
+%     escrita para deixá-lo explícito.
 %   \item[\texttt{simbolosalfabeticos}] \textbf{Desligada por padrão}: a lista
 %     de símbolos sai na \textbf{ordem em que cada símbolo aparece pela
 %     primeira vez no texto}, como pede a 3.1.2.2.7. Ligue-a para ordenar em
@@ -3098,54 +3112,54 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \textbf{Recurso} & \textbf{Comando} & \textbf{Linha} \\
 % \hline
 % Opções de classe        & |\documentclass|        & 23 \\
-% Base de referências        & |\addbibresource|       & 97 \\
-% Coleta da lista de símbolos& |\makelosymbols|        & 100 \\
-% Coleta das abreviaturas      & |\makeloabbreviations|  & 101 \\
-% Flutuante criado pelo autor  & |\newufrjfloat|        & 107 \\
-% Título                     & |\title|                & 116 \\
-% Título no estrangeiro      & |\foreigntitle|         & 117 \\
-% Autor                        & |\author|               & 121 \\
-% Orientação              & |\advisor|              & 125 \\
-% Coorientação            & |\coadvisor|            & 131 \\
-% Banca                        & |\examiner|             & 141 \\
-% Programa                     & |\department|           & 147 \\
-% Data do depósito           & |\date|                 & 148 \\
-% Data da defesa               & |\approvaldate|        & 152 \\
-% Palavras-chave               & |\keyword|              & 155 \\
-% Área de concentração  & |\concentrationarea|     & 165 \\
-% Linha de pesquisa            & |\researchline|        & 168 \\
-% Coleta CAPES                 & |\productiontype|         & 173 \\
-% Projeto vinculado            & |\linkedproject|     & 174 \\
-% Nome do projeto              & |\projectname|          & 175 \\
-% Agência de fomento         & |\fundingagency|       & 176 \\
-% Ficha catalográfica        & |\catalogcard|   & 182 \\
-% Capa e folha de rosto        & |\maketitle|            & 187 \\
-% Parte pré-textual          & |\frontmatter|          & 189 \\
-% Dedicatória                & |\dedication|           & 190 \\
+% Base de referências        & |\addbibresource|       & 102 \\
+% Coleta da lista de símbolos& |\makelosymbols|        & 105 \\
+% Coleta das abreviaturas      & |\makeloabbreviations|  & 106 \\
+% Flutuante criado pelo autor  & |\newufrjfloat|        & 112 \\
+% Título                     & |\title|                & 121 \\
+% Título no estrangeiro      & |\foreigntitle|         & 122 \\
+% Autor                        & |\author|               & 126 \\
+% Orientação              & |\advisor|              & 130 \\
+% Coorientação            & |\coadvisor|            & 136 \\
+% Banca                        & |\examiner|             & 146 \\
+% Programa                     & |\department|           & 152 \\
+% Data do depósito           & |\date|                 & 153 \\
+% Data da defesa               & |\approvaldate|        & 157 \\
+% Palavras-chave               & |\keyword|              & 160 \\
+% Área de concentração  & |\concentrationarea|     & 170 \\
+% Linha de pesquisa            & |\researchline|        & 173 \\
+% Coleta CAPES                 & |\productiontype|         & 178 \\
+% Projeto vinculado            & |\linkedproject|     & 179 \\
+% Nome do projeto              & |\projectname|          & 180 \\
+% Agência de fomento         & |\fundingagency|       & 181 \\
+% Ficha catalográfica        & |\catalogcard|   & 187 \\
+% Capa e folha de rosto        & |\maketitle|            & 192 \\
+% Parte pré-textual          & |\frontmatter|          & 194 \\
+% Dedicatória                & |\dedication|           & 195 \\
 % Resumo                       & |abstract|              & 112 \\
 % Abstract                     & |foreignabstract|       & 128 \\
 % Listas pré-textuais        & |\listoffigures| \dots  & 146 \\
-% Sumário                    & |\tableofcontents|      & 197 \\
-% Parte textual                & |\mainmatter|           & 280 \\
-% Símbolo                    & |\symbl|                & 348 \\
+% Sumário                    & |\tableofcontents|      & 202 \\
+% Parte textual                & |\mainmatter|           & 285 \\
+% Símbolo                    & |\symbl|                & 353 \\
 % Citação longa           & |longquote|             & 236 \\
-% Fonte da ilustração     & |\source|               & 439 \\
+% Fonte da ilustração     & |\source|               & 444 \\
 % Quadro                       & |quadro|                & 300 \\
-% Bibliografia                 & |\printbibliography|    & 929 \\
-% Código no texto            & |\pythoninline|         & 1077 \\
-% Código Java no texto       & |\javainline|           & 1114 \\
-% Sigla declarada              & |\defineacronym|             & 1450 \\
-% Sigla usada                  & |\useacronym|                & 1453 \\
-% Abreviatura                  & |\abbrev|               & 1447 \\
-% Parte pós-textual          & |\backmatter|           & 1459 \\
-% Apêndices                  & |\appendix|             & 1475 \\
-% Anexos                       & |\annex|                & 1487 \\
-% Glossário automático        & |\makeglossarylist|     & 59 \\
-% Termo do glossário          & |\glossaryterm|         & 55 \\
-% Glossário                    & |\printglossarylist|    & 56 \\
-% Entrada do índice            & |\index|                & 391 \\
-% Índice                       & |\printindex|           & 1353 \\
-% Colófon                    & |\ufrjfinalpage|    & 1506 \\
+% Bibliografia                 & |\printbibliography|    & 934 \\
+% Código no texto            & |\pythoninline|         & 1082 \\
+% Código Java no texto       & |\javainline|           & 1119 \\
+% Sigla declarada              & |\defineacronym|             & 1455 \\
+% Sigla usada                  & |\useacronym|                & 1458 \\
+% Abreviatura                  & |\abbrev|               & 1452 \\
+% Parte pós-textual          & |\backmatter|           & 1464 \\
+% Apêndices                  & |\appendix|             & 1480 \\
+% Anexos                       & |\annex|                & 1492 \\
+% Glossário automático        & |\makeglossarylist|     & 64 \\
+% Termo do glossário          & |\glossaryterm|         & 60 \\
+% Glossário                    & |\printglossarylist|    & 61 \\
+% Entrada do índice            & |\index|                & 396 \\
+% Índice                       & |\printindex|           & 1358 \\
+% Colófon                    & |\ufrjfinalpage|    & 1511 \\
 % \end{tabular}
 % \end{center}
 %
@@ -3735,6 +3749,7 @@ orientadorexamina & [dsc,orientadorexamina] & \pre & Puts the advisors and coadv
 coorientador & [dsc,coorientador] & \pre & List coadvisors on the abstract pages too. \\
 rascunhoficha & [dsc,rascunhoficha] & \pre & Draft catalogue card while writing. \textbf{Never valid for deposit.} \\
 resumosemreferencia & [dsc,resumosemreferencia] & \pre & Drop the work's own reference from the top of the three abstracts. It is printed by default (3.1.2.1.4, Annexes E and F). \\
+numeracaoporcapitulo & [dsc,numeracaoporcapitulo] & \pre & Number figures, tables, quadros, programs, algorithms and equations within the chapter (Figure 4.1, equation (4.1)). By default they run through the whole work (Figure 1, 2, 3; (1), (2)), as the UFRJ manual (2.10, 2.11) and NBR 14724 (5.7, 5.8) show. \\
 linhanafolhaderosto & [dsc,linhanafolhaderosto] & \pre & Print the research line (linhapesquisa) on the title page, above the advisors, as in the SiBI model. Off by default. \\
 listasnosumario & [dsc,listasnosumario] & \pre & Put the pre-textual lists in the table of contents. Against NBR 6027 and the UFRJ manual (3.1.2.1.6): use only if your Programa requires it. \\
 simbolosalfabeticos & [dsc,simbolosalfabeticos] & \pre & List of symbols in alphabetical order instead of order of appearance. \\
@@ -4620,12 +4635,14 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
 % closed and the document then failed with "Environment undefined". plaintop is
 % the class-wide style anyway, set once above and never changed, so leaving it
 % selected costs nothing.
-% The new float is numbered WITHIN THE CHAPTER, like figure, table and quadro,
+% The new float is numbered like figure, table and quadro -- through the whole
+% work by default, within the chapter under numeracaoporcapitulo --
 % and its list entries are laid out by \l@figure -- float's own \l@<env> runs
 % the number into the title and drops the leaders, which is what the Lista de
 % Mapas of the example showed the first time.
 \newcommand{\newufrjfloat}[3]{%
   \floatstyle{plaintop}\newfloat{#1}{htbp}{lo#1}[chapter]%
+  \if@ufrjfloatcap\else\counterwithout{#1}{chapter}\fi
   \floatname{#1}{#2}%
   \expandafter\let\csname l@#1\endcsname\l@figure
   \expandafter\def\csname ufrj@listname@lo#1\endcsname{#2}%
@@ -5213,6 +5230,12 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % pede pelo nome; \linhapesquisa guarda o valor de qualquer jeito.
 \newif\if@ufrjlinharosto \@ufrjlinharostofalse
 \DeclareOption{linhanafolhaderosto}{\@ufrjlinharostotrue}
+% Ilustracoes e tabelas: "numero de ordem de ocorrencia no texto" (2.10, 2.11;
+% NBR 14724 5.8), e os exemplos sao Figura 1, Quadro 1, Tabela 1. A numeracao
+% corre no trabalho todo; numeracaoporcapitulo devolve a do capitulo (4.1).
+\newif\if@ufrjfloatcap \@ufrjfloatcapfalse
+\DeclareOption{numeracaocontinua}{\@ufrjfloatcapfalse}
+\DeclareOption{numeracaoporcapitulo}{\@ufrjfloatcaptrue}
 % A 3.1.2.2.7 pede a lista de simbolos "de acordo com a ordem que aparece no
 % texto". E o padrao desde a revisao da v4.1 (#100); `simbolosalfabeticos'
 % devolve a ordem alfabetica de antes, com a chave opcional de \symbl.
@@ -5288,6 +5311,18 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %
 %    \begin{macrocode}
 \ProcessOptions\relax
+% A numeracao das ilustracoes e das equacoes: o book numera figure, table e
+% equation dentro do capitulo, e o quadro nasceu com [chapter]. Na numeracao
+% continua (o padrao) os quatro saem do capitulo; programas e algoritmos sao
+% decididos onde os pacotes deles carregam, e os flutuantes do autor em
+% \newufrjfloat. As equacoes seguem as ilustracoes: o unico exemplo, o da 5.7
+% da NBR 14724, numera (1), (2).
+\if@ufrjfloatcap\else
+  \counterwithout{figure}{chapter}
+  \counterwithout{table}{chapter}
+  \counterwithout{quadro}{chapter}
+  \counterwithout{equation}{chapter}
+\fi
 % O tipo do trabalho e a UNICA opcao sem padrao, e agora ela e cobrada. Nao ha
 % padrao possivel: msc e dsc mudam a capa, o grau, a natureza do trabalho e
 % quantas folhas o trabalho tem, e escolher um dos dois por conta propria
@@ -5672,6 +5707,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %     the language styles below are based on the user's listagens.tex. ---------
 \RequirePackage{xcolor}
 \RequirePackage{listings}
+% Os programas seguem a numeracao das outras ilustracoes (numeracaoporcapitulo).
+\if@ufrjfloatcap\else\lstset{numberbychapter=false}\fi
 \RequirePackage{fancyvrb}
 % As duas fontes fixas dos estilos de linguagem. No pdfTeX, a txtt em T1. Nos
 % motores Unicode nao ha T1 (#152, no bloco das fontes) nem txtt em OpenType, e
@@ -5800,13 +5837,18 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % lookup (key "algorithm2eopt"). Empty means use algorithm2e's default
 % language (English) -- needed because algorithm2e errors on an empty option.
 \edef\ufrj@@algolang{\ufrjmainstring{algorithm2eopt}}
+% algochapter numera dentro do capitulo; sem ele, o algorithm2e numera no
+% trabalho todo, como as outras ilustracoes no padrao (numeracaoporcapitulo).
+\if@ufrjfloatcap\def\ufrj@@algocap{algochapter,}\else\def\ufrj@@algocap{}\fi
 \ifx\ufrj@@algolang\@empty
-  \RequirePackage[linesnumbered,lined,algochapter,ruled]{algorithm2e}
+  \edef\ufrj@@algoopts{linesnumbered,lined,\ufrj@@algocap ruled}%
+  \expandafter\RequirePackage\expandafter[\ufrj@@algoopts]{algorithm2e}
 \else
   % onelanguage: os comandos em ingles (\For, \While, \KwData...) passam a
   % imprimir as palavras do idioma do trabalho, e o .tex pode usa-los sem que o
   % PDF saia com "for" e "while" no meio do portugues.
-  \expandafter\RequirePackage\expandafter[\ufrj@@algolang,onelanguage,linesnumbered,lined,algochapter,ruled]{algorithm2e}
+  \edef\ufrj@@algoopts{\ufrj@@algolang,onelanguage,linesnumbered,lined,\ufrj@@algocap ruled}%
+  \expandafter\RequirePackage\expandafter[\ufrj@@algoopts]{algorithm2e}
 \fi
 % algorithm2e composes its own caption and therefore ignores the class-wide
 % \captionsetup{font=footnotesize,labelsep=emdash}. Left alone it printed

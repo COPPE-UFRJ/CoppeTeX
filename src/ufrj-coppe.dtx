@@ -212,7 +212,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %% !BIB program = biber
 %% Com o latexmk funcionando (no Windows ele pede o Perl), troque a primeira
 %% linha por: % !TeX program = latexmk -pdf -synctex=1
-\documentclass[dsc,setavermelha]{ufrj}
+\documentclass[dsc,setavermelha,numeracaoporcapitulo]{ufrj}
 \usepackage{ufrj-coppe}
 %% coppe-max-exemplo.tex -- tudo o que a classe oferece e o Manual prevê, inclusive o
 %% opcional. Para só o obrigatório, veja o coppe-min-exemplo.tex.
@@ -234,6 +234,11 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %%  - setavermelha: nas listagens de programa, a linha longa demais quebra
 %%    sozinha e continua embaixo depois de uma seta curva; por padrão ela é
 %%    preta, e esta opção a deixa vermelha.
+%%  - numeracaoporcapitulo: figuras, tabelas, quadros, programas, algoritmos e
+%%    equações numerados dentro do capítulo (Figura 4.1, equação (4.1)). Sem
+%%    ela, a numeração corre no trabalho todo (Figura 1, 2, 3...; (1), (2)),
+%%    como nos exemplos do Manual (2.10, 2.11) e da NBR 14724 (5.7, 5.8). Este
+%%    exemplo a usa para mostrá-la; apague-a para a numeração contínua.
 %%  - semmorewrites: não carrega o pacote morewrites. Compila meio segundo mais
 %%    rápido por passada, mas só serve a trabalho SEM índice remissivo, sem
 %%    vários índices e sem glossário, e com menos listas que este exemplo, que

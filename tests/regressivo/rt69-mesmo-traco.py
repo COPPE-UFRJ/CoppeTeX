@@ -41,7 +41,7 @@ with Documento(pre=r"\tableofcontents", corpo=CORPO) as d:
     for pg in range(1, d.n_paginas() + 1):
         t = compacta(d.texto(pg))
         if "Legenda de prova" in t and "legenda" not in achados:
-            achados["legenda"] = sinal(t, "Figura 1.1", "Legenda de prova")
+            achados["legenda"] = sinal(t, "Figura 1", "Legenda de prova")
         if "APÊNDICE A" in t and "APENDICE DE PROVA" in t:
             chave = "sumario" if "SUMÁRIO" in t else "titulo do apendice"
             achados.setdefault(chave, sinal(t, "APÊNDICE A", "APENDICE DE PROVA"))

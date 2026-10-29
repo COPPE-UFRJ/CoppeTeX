@@ -142,10 +142,18 @@ the string files described above.
 
 
 
-## Licença e contato
+## Pedidos e defeitos
 
-GNU General Public License, versão 3 (`COPYING.txt`). Dúvidas, sugestões e
-defeitos: <https://github.com/COPPE-UFRJ/CoppeTeX/issues>.
+O projeto mora no GitHub: <https://github.com/COPPE-UFRJ/CoppeTeX>.
+
+Para **pedir uma melhoria** ou **avisar de um defeito**, abra uma *issue* em
+<https://github.com/COPPE-UFRJ/CoppeTeX/issues>. Num defeito, diga a versão
+da classe (a linha `Document Class: ufrj` do `.log`), mande o menor `.tex` que o
+reproduz e, se houver, o `.log` da compilação.
+
+## Licença
+
+GNU General Public License, versão 3 (`COPYING.txt`).
 
 <!-- registro de build -->
-_Último build exportado: 29/10/2026 10:41 (build/, dist-coppe, dist-poli, dist-biblatex, Overleaf e CTAN)._
+_Último build exportado: 29/10/2026 12:48 (build/, dist-coppe, dist-poli, dist-biblatex, Overleaf e CTAN)._

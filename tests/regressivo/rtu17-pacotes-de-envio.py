@@ -83,11 +83,17 @@ na_pasta = set(n for sub, n, _ in over if sub == D.PASTA)
 for n in D.BIBLATEX + D.IDIOMAS:
     if n not in na_pasta:
         problemas.append("overleaf: falta %s em %s/" % (n, D.PASTA))
+# Alem de coppetex/, so manuais/, que se le e de que nenhum documento depende.
+permitidas = {D.PASTA, D.PASTA + "/logos", "manuais"}
 subpastas = set(sub for sub, _, _ in over if sub)
-if subpastas - {D.PASTA, D.PASTA + "/logos"}:
-    problemas.append("overleaf: o projeto tem subpasta alem de %s/ (%s); "
+if subpastas - permitidas:
+    problemas.append("overleaf: o projeto tem subpasta alem de %s/ e manuais/ (%s); "
                      "no Overleaf o aluno nao deve ter de mover arquivo"
-                     % (D.PASTA, ", ".join(sorted(subpastas - {D.PASTA, D.PASTA + "/logos"}))))
+                     % (D.PASTA, ", ".join(sorted(subpastas - permitidas))))
+na_manuais = set(n for sub, n, _ in over if sub == "manuais")
+for n in D.MANUAIS_COPPE:
+    if n not in na_manuais:
+        problemas.append("overleaf: falta manuais/%s" % n)
 if not any(n.endswith("logo.pdf") for s, n, _ in over if s == D.PASTA + "/logos"):
     problemas.append("overleaf: faltam os logotipos em %s/logos/" % D.PASTA)
 

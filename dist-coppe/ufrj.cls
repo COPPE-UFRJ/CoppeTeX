@@ -309,6 +309,7 @@ top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
   \fi}
 \newcommand{\newufrjfloat}[3]{%
   \floatstyle{plaintop}\newfloat{#1}{htbp}{lo#1}[chapter]%
+  \if@ufrjfloatcap\else\counterwithout{#1}{chapter}\fi
   \floatname{#1}{#2}%
   \expandafter\let\csname l@#1\endcsname\l@figure
   \expandafter\def\csname ufrj@listname@lo#1\endcsname{#2}%
@@ -562,6 +563,9 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \DeclareOption{areanafolhaderosto}{\@ufrjarearostotrue}
 \newif\if@ufrjlinharosto \@ufrjlinharostofalse
 \DeclareOption{linhanafolhaderosto}{\@ufrjlinharostotrue}
+\newif\if@ufrjfloatcap \@ufrjfloatcapfalse
+\DeclareOption{numeracaocontinua}{\@ufrjfloatcapfalse}
+\DeclareOption{numeracaoporcapitulo}{\@ufrjfloatcaptrue}
 \newif\if@ufrjsimbalfa \@ufrjsimbalfafalse
 \DeclareOption{simbolosalfabeticos}{\@ufrjsimbalfatrue}
 \newif\if@ufrjrascunho \@ufrjrascunhofalse
@@ -579,6 +583,12 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \DeclareOption{semserifa}{\@ufrjsansseriftrue}
 \DeclareOption{comserifa}{\@ufrjsansseriffalse}
 \ProcessOptions\relax
+\if@ufrjfloatcap\else
+  \counterwithout{figure}{chapter}
+  \counterwithout{table}{chapter}
+  \counterwithout{quadro}{chapter}
+  \counterwithout{equation}{chapter}
+\fi
 \@ifundefined{ufrj@doctypekey}{%
   \ClassError{ufrj}{Falta dizer o tipo do trabalho}{%
     A classe ufrj precisa de exatamente uma opcao de tipo: msc, dsc,
@@ -785,6 +795,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \newcommand{\citacao}[1]{\enquote{#1}}
 \RequirePackage{xcolor}
 \RequirePackage{listings}
+\if@ufrjfloatcap\else\lstset{numberbychapter=false}\fi
 \RequirePackage{fancyvrb}
 \ifPDFTeX
   \DeclareFixedFont{\ttb}{T1}{txtt}{bx}{n}{10}
@@ -865,13 +876,16 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \newcommand\javaexternal[2][]{{\javastyle\lstinputlisting[#1]{#2}}}
 \renewcommand{\theFancyVerbLine}{{\small\ttfamily\arabic{FancyVerbLine}}}
 \edef\ufrj@@algolang{\ufrjmainstring{algorithm2eopt}}
+\if@ufrjfloatcap\def\ufrj@@algocap{algochapter,}\else\def\ufrj@@algocap{}\fi
 \ifx\ufrj@@algolang\@empty
-  \RequirePackage[linesnumbered,lined,algochapter,ruled]{algorithm2e}
+  \edef\ufrj@@algoopts{linesnumbered,lined,\ufrj@@algocap ruled}%
+  \expandafter\RequirePackage\expandafter[\ufrj@@algoopts]{algorithm2e}
 \else
   % onelanguage: os comandos em ingles (\For, \While, \KwData...) passam a
   % imprimir as palavras do idioma do trabalho, e o .tex pode usa-los sem que o
   % PDF saia com "for" e "while" no meio do portugues.
-  \expandafter\RequirePackage\expandafter[\ufrj@@algolang,onelanguage,linesnumbered,lined,algochapter,ruled]{algorithm2e}
+  \edef\ufrj@@algoopts{\ufrj@@algolang,onelanguage,linesnumbered,lined,\ufrj@@algocap ruled}%
+  \expandafter\RequirePackage\expandafter[\ufrj@@algoopts]{algorithm2e}
 \fi
 \SetAlgoCaptionSeparator{\ \textemdash}
 \AtBeginDocument{\def\algorithmautorefname{\algorithmcfname}}

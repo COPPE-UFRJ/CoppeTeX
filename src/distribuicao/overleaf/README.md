@@ -64,13 +64,21 @@ só trocar a opção da classe:
 
 ## Os manuais
 
-Os manuais em PDF estão na distribuição completa:
+Os manuais em PDF estão na pasta `manuais/` deste projeto: o `ufrj.pdf` (o
+manual da classe, com toda opção e todo comando), o `ufrj-coppe.pdf` (o que é
+da COPPE), o `manual.pdf` (a norma demonstrada por um documento que a
+obedece), as duas folhas de consulta rápida (`ufrj-quickref.pdf` e
+`coppe-quickref.pdf`) e os dois exemplos já compilados. Nenhum documento
+depende dessa pasta; apague-a se quiser um projeto mais leve.
 
-<https://github.com/COPPE-UFRJ/CoppeTeX/tree/master/dist-coppe>
+## Pedidos e defeitos
 
-Lá estão o `ufrj.pdf` (o manual da classe, com toda opção e todo comando), o
-`ufrj-coppe.pdf` (o que é da COPPE) e o `manual.pdf` (a norma demonstrada por
-um documento que a obedece).
+O projeto mora no GitHub: <https://github.com/COPPE-UFRJ/CoppeTeX>.
+
+Para **pedir uma melhoria** ou **avisar de um defeito**, abra uma *issue* em
+<https://github.com/COPPE-UFRJ/CoppeTeX/issues>. Num defeito, diga a versão
+da classe (a linha `Document Class: ufrj` do `.log`), mande o menor `.tex` que o
+reproduz e, se houver, o `.log` da compilação.
 
 ## Licença
 

@@ -4,6 +4,28 @@ Project changes worth noting, newest first. Follows
 [Keep a Changelog](https://keepachangelog.com/) loosely; dates are
 ISO-8601.
 
+## [Unreleased] — 2026-10-29 — Continuous numbering of illustrations
+
+- **Floats are numbered through the whole work by default** (Figura 1, 2,
+  3…), as 2.10 and 2.11 of the UFRJ Manual and 5.8 of NBR 14724 show: the
+  "número de ordem de ocorrência no texto", with every example numbered
+  "Figura 1", "Quadro 1", "Tabela 1". New option `numeracaoporcapitulo` brings
+  back the chapter numbering (Figura 4.1); `numeracaocontinua` names the
+  default. Covers figure, table, quadro, programs (listings), algorithms
+  (algorithm2e) and `\newufrjfloat` floats.
+- **Equations follow the same option**: (1), (2) by default, as in the only
+  example, that of NBR 14724 5.7; (4.1) under `numeracaoporcapitulo`.
+- The COPPE maximal example uses `numeracaoporcapitulo`, to show it.
+- **Every README points to GitHub and to the issues** — root, dist-coppe,
+  dist-poli, dist-biblatex, Overleaf and CTAN — in a "Pedidos e defeitos"
+  ("Requests and bugs") section: open an issue to ask for something or report
+  a bug, with the class version, a minimal `.tex` and the `.log`.
+- **The Overleaf project carries the manuals** in `manuais/`, the same seven
+  PDFs as dist-coppe; its README points there instead of to GitHub. rtu17
+  allows that folder and requires the seven PDFs.
+- New regression test rtu18 (both modes, six kinds of float and equations); r01, r18,
+  rt36, rt69 and rt74 expect the continuous numbers.
+
 ## [Unreleased] — 2026-10-29 — The linha de pesquisa off by default
 
 - **New option `linhanafolhaderosto`, off by default.** `\linhapesquisa`

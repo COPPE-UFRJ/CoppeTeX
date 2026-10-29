@@ -10,7 +10,7 @@ para toda lista de ilustracao que a classe gera: figuras, quadros, programas,
 algoritmos e os flutuantes criados com \\newufrjfloat.
 
 Cobra-se, na folha de cada lista, a entrada no formato
-"<Nome> 1.1 - <titulo>" (o traco e comparado sem distinguir a largura).
+"<Nome> 1 - <titulo>" (o traco e comparado sem distinguir a largura).
 """
 from medidas import Documento, relatar, normaliza
 
@@ -38,12 +38,12 @@ x = 1
 \begin{table}[h]\centering\caption{Titulo da tabela}\begin{tabular}{c}\hline a\\\hline\end{tabular}\source{Elaboracao propria.}\end{table}
 """
 LISTAS = [
-    ("LISTA DE FIGURAS", "Figura 1.1 - Titulo da figura"),
-    ("LISTA DE QUADROS", "Quadro 1.1 - Titulo do quadro"),
-    ("LISTA DE MAPAS", "Mapa 1.1 - Titulo do mapa"),
-    ("LISTA DE PROGRAMAS", "Programa 1.1 - Titulo do programa"),
-    ("LISTA DE ALGORITMOS", "Algoritmo 1.1 - Titulo do algoritmo"),
-    ("LISTA DE TABELAS", "Tabela 1.1 - Titulo da tabela"),
+    ("LISTA DE FIGURAS", "Figura 1 - Titulo da figura"),
+    ("LISTA DE QUADROS", "Quadro 1 - Titulo do quadro"),
+    ("LISTA DE MAPAS", "Mapa 1 - Titulo do mapa"),
+    ("LISTA DE PROGRAMAS", "Programa 1 - Titulo do programa"),
+    ("LISTA DE ALGORITMOS", "Algoritmo 1 - Titulo do algoritmo"),
+    ("LISTA DE TABELAS", "Tabela 1 - Titulo da tabela"),
 ]
 
 problemas = []

@@ -78,6 +78,15 @@ installed next to the class, so a document finds them without copying anything.
 To use the class in a single folder instead, run the two `.ins` above and keep
 the generated files beside your document, together with `logos/`.
 
+## Requests and bugs
+
+The project lives on GitHub: <https://github.com/COPPE-UFRJ/CoppeTeX>.
+
+To **request a feature** or **report a bug**, open an issue at
+<https://github.com/COPPE-UFRJ/CoppeTeX/issues>. For a bug, give the class
+version (the `Document Class: ufrj` line of the `.log`), the smallest `.tex` that reproduces
+it and, if there is one, the `.log` of the run.
+
 ## The documentation is in Portuguese
 
 The manuals, the examples and the error messages are written in Portuguese:

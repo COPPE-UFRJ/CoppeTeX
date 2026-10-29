@@ -51,7 +51,7 @@ with Documento(corpo=CORPO) as d:
                                     ("Primeira", margem, "fonte sem largura"),
                                     ("Estreita", estreita, "legenda de 6 cm"),
                                     ("Segunda", estreita, "fonte de 6 cm")):
-        # a palavra da legenda vem depois de "Figura 1.1 --"; mede-se o comeco
+        # a palavra da legenda vem depois de "Figura 1 --"; mede-se o comeco
         # da LINHA: a primeira palavra dela, "Figura" ou "Fonte:"
         linhas = d.linhas(pg)
         x = None

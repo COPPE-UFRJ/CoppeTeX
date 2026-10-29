@@ -109,6 +109,12 @@ def _pasta(logos):
             + [_s("logos/" + n, PASTA + "/logos") for n in logos])
 
 
+# Os manuais da COPPE, em PDF: na dist-coppe e no projeto do Overleaf, numa
+# pasta manuais/ que so se le -- nenhum documento depende dela.
+MANUAIS_COPPE = ("ufrj.pdf", "ufrj-coppe.pdf", "ufrj-quickref.pdf",
+                 "coppe-quickref.pdf", "manual.pdf", "coppe-min-exemplo.pdf",
+                 "coppe-max-exemplo.pdf")
+
 DISTRIBUICOES = {
     "dist-coppe": (
         [_s("distribuicao/coppe/README.md"), _r("COPYING.txt")]
@@ -117,9 +123,7 @@ DISTRIBUICOES = {
            _b("coppe-min-exemplo.tex"), _b("coppe-max-exemplo.tex"),
            _b("exemplo.bib")]
         + _pasta(["coppe-logo.pdf", "coppe-logo.eps", "ufrj-logo.pdf"])
-        + [_b(n, "manuais") for n in (
-            "ufrj.pdf", "ufrj-coppe.pdf", "ufrj-quickref.pdf", "coppe-quickref.pdf",
-            "manual.pdf", "coppe-min-exemplo.pdf", "coppe-max-exemplo.pdf")]
+        + [_b(n, "manuais") for n in MANUAIS_COPPE]
         + [_b(n, "exemplos") for n in (
             "example_en.tex", "example_en.pdf", "example_es.tex", "example_es.pdf")]
         + [_s("gerador/coppetex-novo.bat", "gerador"),
@@ -193,7 +197,8 @@ PACOTES = {
     # da dist-coppe, com os dois exemplos -- o minimo e o maximo --, e o
     # coppe-min-exemplo.tex e o documento principal, que o README manda
     # confirmar em Menu > Main document. A coppe.cls nao vai: projeto novo nao
-    # comeca com \documentclass{coppe}.
+    # comeca com \documentclass{coppe}. Os manuais em PDF vao em manuais/, como
+    # na dist-coppe: o aluno le sem sair do projeto.
     "overleaf": {
         "dentro": "",
         "arquivos": (
@@ -203,6 +208,7 @@ PACOTES = {
                _b("coppe-min-exemplo.tex"), _b("coppe-max-exemplo.tex"),
                _b("exemplo.bib")]
             + _pasta(["coppe-logo.pdf", "ufrj-logo.pdf"])
+            + [_b(n, "manuais") for n in MANUAIS_COPPE]
         ),
     },
 }
