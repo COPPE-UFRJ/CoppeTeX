@@ -182,7 +182,9 @@ def acao_envio(saida):
     saida("")
     saida("pacotes de envio")
     ok = distribuicoes.montar_pacote("ctan", saida)
-    return distribuicoes.montar_pacote("overleaf", saida) and ok
+    for nome in distribuicoes.OVERLEAF:
+        ok = distribuicoes.montar_pacote(nome, saida) and ok
+    return ok
 
 
 def acao_distribuir(saida):

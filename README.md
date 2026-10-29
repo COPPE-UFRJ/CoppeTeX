@@ -2,8 +2,8 @@
 
 Classe LaTeX para teses, dissertações e Projetos de Graduação da UFRJ, conforme
 o *Manual para Elaboração e Normalização de Trabalhos Acadêmicos* da UFRJ/SiBI
-(9.ª ed. rev., 2026), com os estilos da COPPE e da Escola Politécnica e estilos
-biblatex ABNT. 
+(9.ª ed. rev., 2026), com os estilos da COPPE, da Escola Politécnica e do
+Instituto de Computação e estilos biblatex ABNT. 
 
 ## O que eu baixo?
 
@@ -11,6 +11,7 @@ biblatex ABNT.
 |---|---|---|
 | Aluno da **COPPE** (tese ou dissertação) | [`dist-coppe/`](./dist-coppe) | [`dist-coppe/README.md`](./dist-coppe/README.md) |
 | Aluno da **Escola Politécnica** (Projeto de Graduação) | [`dist-poli/`](./dist-poli) | [`dist-poli/README.md`](./dist-poli/README.md) |
+| Aluno do **Instituto de Computação** (PPGI ou Ciência da Computação) | [`dist-ic/`](./dist-ic) | [`dist-ic/README.md`](./dist-ic/README.md) |
 | Quem só quer **referências ABNT com biblatex** em outro documento | [`dist-biblatex/`](./dist-biblatex) | [`dist-biblatex/README.md`](./dist-biblatex/README.md) |
 | Quem quer ler a **norma** da unidade | [`normas/`](./normas) | `normas/norma-coppe/`, `normas/norma-poli/` |
 
@@ -18,16 +19,20 @@ Cada `dist-*` basta sozinha: tem a classe, os estilos, o biblatex, os logotipos,
 os exemplos, os manuais em PDF e um README com as instruções de uso. O `.zip`
 de cada uma está nos *releases*.
 
-*Writing a thesis? Download only `dist-coppe/` (COPPE) or `dist-poli/` (Escola
-Politécnica). Only want the ABNT biblatex styles? Take `dist-biblatex/`.*
+Para o **Overleaf** há um projeto pronto por unidade (COPPE, Escola
+Politécnica e Instituto de Computação), com os manuais em PDF dentro.
+
+*Writing a thesis? Download only `dist-coppe/` (COPPE), `dist-poli/` (Escola
+Politécnica) or `dist-ic/` (Instituto de Computação). Only want the ABNT
+biblatex styles? Take `dist-biblatex/`.*
 
 ## O repositório
 
 | Pasta | O que é | Quem mexe |
 |---|---|---|
-| [`src/`](./src) | **Toda a fonte**: os três `.dtx`/`.ins`, o `manual.tex`, os logotipos, as normas em Word (`src/normas`), os READMEs e extras de cada distribuição (`src/distribuicao`) e o gerador de trabalho novo (`src/gerador`). Guia do programador em [`src/README.md`](./src/README.md). | Quem muda a classe |
+| [`src/`](./src) | **Toda a fonte**: os quatro `.dtx`/`.ins`, o `manual.tex`, os logotipos, as normas em Word (`src/normas`), os READMEs e extras de cada distribuição (`src/distribuicao`) e o gerador de trabalho novo (`src/gerador`). Guia do programador em [`src/README.md`](./src/README.md). | Quem muda a classe |
 | `build/` | Pasta de trabalho, fora do git: cópia das fontes, os arquivos que os `.ins` geram e os PDFs compilados. | Ninguém: é gerada |
-| [`dist-coppe/`](./dist-coppe), [`dist-poli/`](./dist-poli), [`dist-biblatex/`](./dist-biblatex) | As distribuições. Geradas, versionadas, com arquivos repetidos entre elas de propósito. | Ninguém: são geradas |
+| [`dist-coppe/`](./dist-coppe), [`dist-poli/`](./dist-poli), [`dist-ic/`](./dist-ic), [`dist-biblatex/`](./dist-biblatex) | As distribuições. Geradas, versionadas, com arquivos repetidos entre elas de propósito. | Ninguém: são geradas |
 | [`normas/`](./normas) | As normas mais recentes de cada unidade, em Word e PDF, geradas de `src/normas`. | Ninguém: é gerada |
 | [`specs/`](./specs) | As especificações que a classe implementa: Manual UFRJ/SiBI, normas ABNT, modelos do SiBI/CAPES, Resolução 05/2012 da Poli. | Só se a especificação mudar |
 | [`tests/`](./tests) | As três camadas de teste. | Quem muda a classe |
@@ -156,4 +161,4 @@ reproduz e, se houver, o `.log` da compilação.
 GNU General Public License, versão 3 (`COPYING.txt`).
 
 <!-- registro de build -->
-_Último build exportado: 29/10/2026 12:48 (build/, dist-coppe, dist-poli, dist-biblatex, Overleaf e CTAN)._
+_Último build exportado: 29/10/2026 14:53 (build/, dist-coppe, dist-poli, dist-ic, dist-biblatex, Overleaf da COPPE, da Poli e do IC, e CTAN)._

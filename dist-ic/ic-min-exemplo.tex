@@ -1,0 +1,84 @@
+%%
+%% This is file `ic-min-exemplo.tex',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% ufrj-ic.dtx  (with options: `icminexemplo')
+%% 
+%% This is a sample dissertation or thesis which illustrates the use of the `ufrj'
+%% document class with the `ufrj-ic' unit style. It is generated from
+%% ufrj-ic.dtx by docstrip.
+%% 
+%% Copyright (C) 2008-2026 Vicente Helano F. Batista, George O. Ainsworth Jr.,
+%% Geraldo Xexéo and Eduardo Mangeli. Released under the GNU General Public
+%% License version 3 (see the COPYING.txt file).
+%% 
+\documentclass[msc]{ufrj}   % msc = dissertacao; dsc = tese
+\usepackage{ufrj-ic}
+\addbibresource{exemplo.bib}
+
+\begin{document}
+  \title{Título do Trabalho}
+  \foreigntitle{Title of the Work}
+  \author{Nome do Autor}{Sobrenome}
+  \advisor{Nome do Orientador}{Sobrenome}{D.Sc.}{UFRJ}
+  % A folha de aprovacao lista a banca declarada aqui, na ordem: o orientador,
+  % que preside a banca, e o primeiro (3.1.2.1.3e).
+  \examiner{Nome do Orientador Sobrenome}{D.Sc.}{PPGI/UFRJ}
+  \examiner{Nome do Primeiro Examinador Sobrenome}{D.Sc.}{PPGI/UFRJ}
+  \examiner{Nome do Segundo Examinador Sobrenome}{Ph.D.}{UFRJ}
+  \department{PPGI}
+  \date{03}{2026}
+  \approvaldate{30 de março de 2026}
+  \keyword{primeira palavra-chave}
+  \keyword{segunda palavra-chave}
+  \foreignkeyword{first keyword}
+  \foreignkeyword{second keyword}
+
+  % Folha adicional da Coleta CAPES (3.1.2.1.2), obrigatoria em dissertacoes e
+  % teses. A ficha catalografica vem de fichacatalografica.sibi.ufrj.br; com o
+  % arquivo em maos, descomente a linha \catalogcard.
+  \concentrationarea{Ciência da Computação}
+  \productiontype{bibliographic}
+  \linkedproject{no}
+  % \catalogcard{ficha.pdf}
+
+  % Ordem dos elementos pre-textuais (Manual 3.1.2), que a classe confere:
+  % \maketitle, \frontmatter, o resumo em portugues, o abstract, as listas e
+  % \tableofcontents, sempre o ultimo.
+  \maketitle
+  \frontmatter
+  % O resumo e o abstract trazem as instrucoes do Projeto Jacurutu: troque-as
+  % pelo seu texto.
+  \begin{abstract}
+    Utilize, de preferência, um só parágrafo para descrever os objetivos de
+    seu trabalho acadêmico, o método com informações sobre coleta, tratamento
+    e análise dos dados, as técnicas de abordagem, os resultados e suas
+    principais conclusões. Esse resumo deve conter de 150 a 500 palavras. Deve
+    ser evitado o uso de frases negativas, símbolos ou contrações que não
+    sejam de uso corrente, fórmulas, equações, diagramas etc. que não sejam
+    absolutamente necessários; quando for indispensável, defini-los na
+    primeira vez que aparecerem. Texto adaptado do Manual do SiBI da UFRJ pelo
+    Projeto Jacurutu.
+  \end{abstract}
+  \begin{foreignabstract}
+    Translate your abstract into the language of international dissemination
+    chosen by you and your advisor. Translate the keywords as well.
+  \end{foreignabstract}
+  \tableofcontents
+
+  \mainmatter
+  \chapter{Introdução}
+  O texto do trabalho começa aqui, e as citações seguem a classe
+  \cite{m-4211}.
+
+  \chapter{Conclusão}
+  A conclusão do trabalho.
+
+  \backmatter
+  \printbibliography
+\end{document}
+%% 
+%%
+%% End of file `ic-min-exemplo.tex'.

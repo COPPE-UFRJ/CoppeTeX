@@ -1,0 +1,574 @@
+% \iffalse meta-comment
+%
+% This is file `ufrj-ic.dtx'.
+%
+% It uses the doc utility to document the `ufrj-ic' unit style of the
+% `ufrj' document class, and docstrip to generate the style and its example
+% documents.
+%
+% Copyright (C) 2008-2026 Vicente Helano F. Batista, George O. Ainsworth Jr.,
+%                         Geraldo Xexéo and Eduardo Mangeli.
+% CoppeTeX 5.0.
+%
+% This program is free software; you can redistribute it and/or modify
+% it under the terms of the GNU General Public License version 3 as
+% published by the Free Software Foundation.
+%
+% This program is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+% GNU General Public License version 3 for more details.
+%
+% You should have received a copy of the GNU General Public License
+% version 3 along with this package (see the COPYING.txt file).
+% If not, see <http://www.gnu.org/licenses/>.
+%
+% Author(s): Vicente Helano F. Batista
+%            George O. Ainsworth Jr.
+%            Geraldo Xexéo
+%            Eduardo Mangeli
+%
+% The Instituto de Computacao unit style (October 2026) was developed with the
+% support of Claude Opus 5.5 (Anthropic); every change was reviewed by the
+% maintainer.
+%
+% \fi
+%
+% \iffalse
+%<*driver>
+\documentclass[a4paper]{ltxdoc}
+\usepackage[T1]{fontenc}
+\usepackage[colorlinks={true},breaklinks={true}]{hyperref}
+\usepackage{hologo}
+\def\TeX{\hologo{TeX}}
+\def\LaTeX{\hologo{LaTeX}}
+\def\CoppeTeX{{\rmfamily C\kern-.05em{\scshape o\kern-.025em p\kern-.025em
+p\kern-.025em e}}\kern-.08em
+T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
+\setcounter{tocdepth}{2}
+\EnableCrossrefs \CodelineIndex \RecordChanges
+\begin{document}
+  \DocInput{ufrj-ic.dtx}
+\end{document}
+%</driver> \fi
+%
+% \iffalse
+% Este arquivo segue as mesmas regras do ufrj.dtx, do ufrj-coppe.dtx e do
+% ufrj-poli.dtx: linha comecada por um sinal de porcentagem e documentacao,
+% linha sem ele e codigo, e os guardas de modulo dizem para qual arquivo gerado
+% cada trecho vai. O ufrj-ic.ins diz o resto.
+% \fi
+% \changes{v5.0}{2026/10/29}{First version of the Instituto de Computacao unit style. Post-graduation (msc, dsc): the Programa de Pos-Graduacao em Informatica (PPGI), offered by two institutes, both named on the capa and in the natureza, with the PPGI logo on the right of the capa at the height of the UFRJ logo. Undergraduate (grad): the Curso de Bacharelado em Ciencia da Computacao, presented to the Instituto de Computacao alone, with the course's own logo (ic-logo.pdf) when it is available. Two examples, minimal and maximal; the abstracts carry the abstract instructions of the Jacurutu project, where the data come from.}
+%
+% \ProvidesFile{ufrj-ic.dtx}[2026/10/29 v5.0 CoppeTeX]
+% \GetFileInfo{ufrj-ic.dtx}
+%
+% \title{O estilo \texttt{ufrj-ic}\\
+%   \large O Instituto de Computação na classe \texttt{ufrj} ---
+%   versão \fileversion, \filedate}
+% \author{Geraldo Xexéo \and Vicente H. F. Batista \and George O. Ainsworth Jr.
+%   \and Eduardo Mangeli}
+%
+% \maketitle
+%
+% \begin{abstract}
+% \noindent
+% A classe |ufrj| compõe os trabalhos acadêmicos da Universidade Federal do Rio
+% de Janeiro segundo o \emph{Manual para elaboração e normalização de trabalhos
+% acadêmicos} da UFRJ/SiBI. O que é próprio de cada unidade fica num estilo de
+% unidade. Este é o do \textbf{Instituto de Computação} (IC): as dissertações e
+% teses do \textbf{Programa de Pós-Graduação em Informática} (PPGI) e os
+% trabalhos de conclusão do \textbf{Curso de Bacharelado em Ciência da
+% Computação}.
+% \end{abstract}
+%
+% \tableofcontents
+%
+% \section{Como usar}
+%
+% Na pós-graduação, o PPGI:
+%
+% \begin{verbatim}
+%   \documentclass[msc]{ufrj}   % msc = dissertação; dsc = tese
+%   \usepackage{ufrj-ic}
+%   ...
+%   \department{PPGI}
+% \end{verbatim}
+%
+% Na graduação, o Bacharelado em Ciência da Computação:
+%
+% \begin{verbatim}
+%   \documentclass[grad]{ufrj}
+%   \usepackage{ufrj-ic}
+%   ...
+%   \department{BCC}
+% \end{verbatim}
+%
+% O |ic-min-exemplo.tex| e o |ic-max-exemplo.tex|, gerados deste arquivo, são
+% os dois exemplos. O resto --- ordem dos elementos, margens, fontes, citações
+% e referências --- é a classe, que segue o Manual.
+%
+% \section{De onde vêm os dados}
+%
+% Do \textbf{Projeto Jacurutu}, o modelo \LaTeX\ de trabalhos acadêmicos da
+% UFRJ mantido no PPGI (\url{https://github.com/projeto-jacurutu/jacurutu-latex},
+% versão 2.1, conferida em 29/10/2026): o nome dos institutos, o do Programa e
+% o do curso, as siglas, a frase da natureza, o logotipo do PPGI e as
+% instruções de resumo que os exemplos trazem. Como no estilo da Escola
+% Politécnica, o modelo serviu como \emph{informação}: a capa, a folha de rosto,
+% a folha de aprovação e a ficha são as da classe |ufrj|.
+%
+% \section{Pós-graduação: os dois institutos do PPGI}
+%
+% O PPGI é oferecido pelo \textbf{Instituto de Computação} e pelo
+% \textbf{Instituto Tércio Pacitti de Aplicações e Pesquisas Computacionais}, e
+% o Jacurutu nomeia os dois. Com |msc| ou |dsc|, o estilo declara a unidade com
+% os dois nomes:
+%
+% \begin{itemize}
+% \item na \textbf{capa}, cada instituto numa linha, entre a universidade e o
+%   Programa, em caixa-alta;
+% \item na \textbf{natureza} da folha de rosto e da folha de aprovação, o texto
+%   da classe com os dois nomes ligados por ``e'': ``Dissertação de Mestrado
+%   apresentada ao Programa de Pós-Graduação em Informática, Instituto de
+%   Computação e Instituto Tércio Pacitti de Aplicações e Pesquisas
+%   Computacionais, Universidade Federal do Rio de Janeiro, como requisito
+%   parcial à obtenção do título de Mestre em Informática.'' --- a mesma frase
+%   do Jacurutu;
+% \item a \textbf{sigla} da unidade é |IC|, a da ficha (UFRJ/IC).
+% \end{itemize}
+%
+% A linha do Programa, na capa, leva a sigla entre parênteses, como no
+% Jacurutu: ``PROGRAMA DE PÓS-GRADUAÇÃO EM INFORMÁTICA (PPGI)''. O título
+% conferido é o da classe, o grau ``em'' o nome do Programa --- Mestre em
+% Informática, Doutor em Informática ---, sem o ``em Ciências'' que a COPPE
+% acrescenta.
+%
+% \section{Graduação: o Bacharelado em Ciência da Computação}
+%
+% O trabalho de conclusão do curso é apresentado \textbf{só ao Instituto de
+% Computação}, e não ao Instituto Tércio Pacitti, e tem \textbf{outro
+% logotipo}. Com |grad|:
+%
+% \begin{itemize}
+% \item a capa traz a universidade, o Instituto de Computação e ``CURSO DE
+%   BACHARELADO EM CIÊNCIA DA COMPUTAÇÃO'', como o Jacurutu;
+% \item a natureza é a da classe para a graduação, que segue o modelo do SiBI:
+%   ``Trabalho de Conclusão de Curso apresentado ao Curso de Ciência da
+%   Computação, Instituto de Computação, Universidade Federal do Rio de
+%   Janeiro, como requisito parcial à obtenção do título de Bacharel em
+%   Ciência da Computação.'';
+% \item o logotipo da direita é o do curso, o arquivo |ic-logo.pdf|. A
+%   distribuição \textbf{ainda não o traz}: ponha-o em |coppetex/logos/| ou ao
+%   lado do trabalho. Sem ele, a direita da capa fica vazia e o log avisa.
+% \end{itemize}
+%
+% \section{O logotipo do PPGI}
+%
+% O logotipo da UFRJ, à esquerda da capa, é da classe. O do PPGI, à direita, é
+% o |ppgi-logo.pdf|, o mesmo desenho do Jacurutu, que vem em
+% |coppetex/logos/|. A altura dele é \textbf{a do logotipo da UFRJ}, 2\,cm:
+% no Jacurutu os dois logotipos da capa têm a mesma altura, e a classe compõe
+% os dois com a altura que a unidade declara. Medida na página composta, a
+% tinta do logotipo do PPGI tem 0,70 da altura da do logotipo da UFRJ, a mesma
+% razão da capa do Jacurutu. A largura acompanha a proporção do arquivo (cerca
+% de 8\,cm), e a linha dos dois cabe na mancha.
+%
+% O arquivo do Jacurutu trazia um grupo de transparência na página, que fazia o
+% pdfTeX avisar e escrever uma segunda chave |/Group| na página da capa. O
+% |ppgi-logo.pdf| da distribuição foi regravado pelo Ghostscript sem ele.
+%
+% \section{Os dois nomes de cada comando}
+%
+% Vale aqui a regra da classe: todo comando público tem nome em inglês e
+% apelido em português. Este estilo, como o da Escola Politécnica, \textbf{não
+% cria comando público nenhum}: traz só \emph{dados} da unidade, declarados
+% pela interface da classe (|\ufrjdeclareunit|, |\ufrjdeclareprogram|,
+% |\ufrjdeclarelogo|, |\ufrjdeclareplace| e |\ufrjdefunitstring|).
+%
+% \section{O código}
+%
+%    \begin{macrocode}
+%<*package>
+\NeedsTeXFormat{LaTeX2e}[2020/10/01]
+\ProvidesPackage{ufrj-ic}[2026/10/29 v5.0 CoppeTeX Instituto de Computacao/UFRJ unit style]
+\@ifclassloaded{ufrj}{}{%
+  \PackageError{ufrj-ic}{O estilo ufrj-ic precisa da classe ufrj}{%
+    Escreva \string\documentclass[msc]{ufrj} antes de\MessageBreak
+    \string\usepackage{ufrj-ic}.}%
+  \endinput}
+\ufrjdeclareplace{Rio de Janeiro}{RJ}{Brasil}
+\if@ufrjgrad
+% GRADUACAO: o Bacharelado em Ciencia da Computacao, apresentado so ao
+% Instituto de Computacao, com o logotipo do curso.
+\ufrjdeclareunit{Instituto de Computação}{Instituto de Computação}{IC}
+% O logotipo do curso, se o arquivo existir: em logos/ (a pasta da
+% distribuicao, que a classe acha dentro de coppetex/) ou ao lado do trabalho.
+\IfFileExists{logos/ic-logo.pdf}
+  {\ufrjdeclarelogo[2cm]{ic-logo}}
+  {\IfFileExists{ic-logo.pdf}
+    {\ufrjdeclarelogo[2cm]{ic-logo}}
+    {\PackageWarningNoLine{ufrj-ic}{ic-logo.pdf, o logotipo do curso, nao
+       encontrado:\MessageBreak a capa sai so com o logotipo da UFRJ}}}
+\ufrjdeclareprogram[Bacharel em Ciência da Computação]{BCC}
+  {Ciência da Computação}{Computer Science}
+% A linha do curso na capa, como no Jacurutu.
+\ufrjdefunitstring{brazilian}{coverprogram}{Curso de Bacharelado em \local@deptname}
+\ufrjdefunitstring{brazilian}{tounit}{ao IC/UFRJ}
+\ufrjdefunitstring{english}  {tounit}{to IC/UFRJ}
+\ufrjdefunitstring{spanish}  {tounit}{al IC/UFRJ}
+\ufrjdefunitstring{french}   {tounit}{à l'IC/UFRJ}
+\ufrjdefunitstring{italian}  {tounit}{all'IC/UFRJ}
+\else
+% POS-GRADUACAO: o PPGI, oferecido pelos DOIS institutos, como no Jacurutu. O
+% nome por extenso vai na natureza e na referencia do resumo; o da capa poe
+% cada instituto numa linha; a sigla e a da ficha (UFRJ/IC).
+\ufrjdeclareunit
+  {Instituto de Computação e Instituto Tércio Pacitti de Aplicações e
+   Pesquisas Computacionais}
+  {Instituto de Computação \\
+     Instituto Tércio Pacitti de Aplicações e Pesquisas Computacionais}
+  {IC}
+% O logotipo do PPGI, a direita da capa, na altura do da UFRJ: a classe compoe
+% os dois com a altura declarada aqui, e 2cm e a do logotipo da UFRJ. No
+% Jacurutu os dois tem a mesma altura (71 pt); a tinta do PPGI sai com 0,70 da
+% altura da do da UFRJ, nas duas capas (rtu19).
+\ufrjdeclarelogo[2cm]{ppgi-logo}
+% O Programa. O titulo e o da classe: Mestre ou Doutor "em" o nome do Programa.
+\ufrjdeclareprogram{PPGI}{Informática}{Informatics}
+% A linha do Programa na capa, com a sigla, como no Jacurutu.
+\ufrjdefunitstring{brazilian}{coverprogram}
+  {Programa de Pós-Graduação em \local@deptname\ (\ufrj@deptcode)}
+% A quem o trabalho foi apresentado, na frase de abertura do resumo (opcional,
+% \configuraresumos).
+\ufrjdefunitstring{brazilian}{tounit}{ao PPGI/UFRJ}
+\ufrjdefunitstring{english}  {tounit}{to PPGI/UFRJ}
+\ufrjdefunitstring{spanish}  {tounit}{al PPGI/UFRJ}
+\ufrjdefunitstring{french}   {tounit}{au PPGI/UFRJ}
+\ufrjdefunitstring{italian}  {tounit}{al PPGI/UFRJ}
+\fi
+%</package>
+%    \end{macrocode}
+%
+% \section{Os dois exemplos}
+%
+% São dois, como na COPPE e na Escola Politécnica. O |ic-min-exemplo.tex| é a
+% menor dissertação do PPGI que a norma aceita, para começar a escrever por
+% cima; o |ic-max-exemplo.tex| é uma tese que exercita tudo o que a classe
+% compõe --- as folhas pré-textuais na ordem da 3.1.2, a folha adicional da
+% Coleta CAPES, as listas, o glossário, o índice remissivo, ilustração com
+% fonte e largura, quadro, tabela, equação, listagem de programa, algoritmo,
+% citação longa, apêndice e anexo ---, e serve de conferência: se algo quebrar
+% na classe ou no estilo, quebra nele.
+%
+% O resumo dos dois é o texto de instrução do Jacurutu, adaptado do Manual do
+% SiBI: em vez de um texto de enchimento, ele diz ao autor o que escrever ali.
+%
+%    \begin{macrocode}
+%<*icminexemplo>
+% Uma dissertacao do PPGI com a classe ufrj e o estilo ufrj-ic. Os nomes sao
+% genericos: troque pelos seus. Para o trabalho de conclusao do Bacharelado em
+% Ciencia da Computacao, use [grad] e \department{BCC}.
+\documentclass[msc]{ufrj}   % msc = dissertacao; dsc = tese
+\usepackage{ufrj-ic}
+\addbibresource{exemplo.bib}
+
+\begin{document}
+  \title{Título do Trabalho}
+  \foreigntitle{Title of the Work}
+  \author{Nome do Autor}{Sobrenome}
+  \advisor{Nome do Orientador}{Sobrenome}{D.Sc.}{UFRJ}
+  % A folha de aprovacao lista a banca declarada aqui, na ordem: o orientador,
+  % que preside a banca, e o primeiro (3.1.2.1.3e).
+  \examiner{Nome do Orientador Sobrenome}{D.Sc.}{PPGI/UFRJ}
+  \examiner{Nome do Primeiro Examinador Sobrenome}{D.Sc.}{PPGI/UFRJ}
+  \examiner{Nome do Segundo Examinador Sobrenome}{Ph.D.}{UFRJ}
+  \department{PPGI}
+  \date{03}{2026}
+  \approvaldate{30 de março de 2026}
+  \keyword{primeira palavra-chave}
+  \keyword{segunda palavra-chave}
+  \foreignkeyword{first keyword}
+  \foreignkeyword{second keyword}
+
+  % Folha adicional da Coleta CAPES (3.1.2.1.2), obrigatoria em dissertacoes e
+  % teses. A ficha catalografica vem de fichacatalografica.sibi.ufrj.br; com o
+  % arquivo em maos, descomente a linha \catalogcard.
+  \concentrationarea{Ciência da Computação}
+  \productiontype{bibliographic}
+  \linkedproject{no}
+  % \catalogcard{ficha.pdf}
+
+  % Ordem dos elementos pre-textuais (Manual 3.1.2), que a classe confere:
+  % \maketitle, \frontmatter, o resumo em portugues, o abstract, as listas e
+  % \tableofcontents, sempre o ultimo.
+  \maketitle
+  \frontmatter
+  % O resumo e o abstract trazem as instrucoes do Projeto Jacurutu: troque-as
+  % pelo seu texto.
+  \begin{abstract}
+    Utilize, de preferência, um só parágrafo para descrever os objetivos de
+    seu trabalho acadêmico, o método com informações sobre coleta, tratamento
+    e análise dos dados, as técnicas de abordagem, os resultados e suas
+    principais conclusões. Esse resumo deve conter de 150 a 500 palavras. Deve
+    ser evitado o uso de frases negativas, símbolos ou contrações que não
+    sejam de uso corrente, fórmulas, equações, diagramas etc. que não sejam
+    absolutamente necessários; quando for indispensável, defini-los na
+    primeira vez que aparecerem. Texto adaptado do Manual do SiBI da UFRJ pelo
+    Projeto Jacurutu.
+  \end{abstract}
+  \begin{foreignabstract}
+    Translate your abstract into the language of international dissemination
+    chosen by you and your advisor. Translate the keywords as well.
+  \end{foreignabstract}
+  \tableofcontents
+
+  \mainmatter
+  \chapter{Introdução}
+  O texto do trabalho começa aqui, e as citações seguem a classe
+  \cite{m-4211}.
+
+  \chapter{Conclusão}
+  A conclusão do trabalho.
+
+  \backmatter
+  \printbibliography
+\end{document}
+%</icminexemplo>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%<*icmaxexemplo>
+% Uma tese do PPGI com TUDO o que a classe compoe. Para comecar a escrever,
+% prefira o ic-min-exemplo.tex, que e o menor trabalho que a norma aceita. Este
+% aqui existe para exercitar a classe: cada folha, cada lista e cada tipo de
+% ilustracao aparece uma vez.
+%
+% Opcoes de classe que valem conhecer aqui:
+%  - msc ou dsc: dissertacao ou tese do PPGI; grad: trabalho de conclusao do
+%    Bacharelado em Ciencia da Computacao, com \department{BCC};
+%  - numeracaoporcapitulo: figuras, tabelas, quadros, programas, algoritmos e
+%    equacoes numerados dentro do capitulo (Figura 4.1). Sem ela, a numeracao
+%    corre no trabalho todo (Figura 1, 2, 3), como nos exemplos do Manual;
+%  - sempdfa: desliga o PDF/A-2b, que a classe produz por padrao porque e o
+%    formato que o deposito exige (Manual 2.2d).
+\documentclass[dsc]{ufrj}
+\usepackage{ufrj-ic}
+
+% O indice remissivo (3.1.4.5) e do makeidx, e nao da classe.
+\usepackage{makeidx}
+
+\addbibresource{exemplo.bib}
+
+% As listas pre-textuais so coletam se forem ligadas aqui.
+\makelosymbols
+\makeloabbreviations
+\makelosiglas
+\makeglossarylist
+\makeindex
+
+% As siglas declaradas saem por extenso na primeira vez que \sigla as usa.
+\defineacronym{ufrj}{UFRJ}{Universidade Federal do Rio de Janeiro}
+\defineacronym{ppgi}{PPGI}{Programa de Pós-Graduação em Informática}
+
+\begin{document}
+  \title{Título da Tese}
+  \foreigntitle{Title of the Thesis}
+  \subtitle{subtítulo, quando houver}
+  \foreignsubtitle{subtitle, if any}
+  \author{Nome do Autor}{Sobrenome}
+  \advisor{Nome do Orientador}{Sobrenome}{D.Sc.}{UFRJ}
+  \coadvisor{Nome do Coorientador}{Sobrenome}{D.Sc.}{UFRJ}
+  % A banca e o que se declara aqui, na ordem: o orientador, que a preside
+  % (3.1.2.1.3e), e o primeiro.
+  \examiner{Nome do Orientador Sobrenome}{D.Sc.}{PPGI/UFRJ}
+  \examiner{Nome do Coorientador Sobrenome}{D.Sc.}{PPGI/UFRJ}
+  \examiner{Nome do Primeiro Examinador Sobrenome}{D.Sc.}{PPGI/UFRJ}
+  \examiner{Nome do Segundo Examinador Sobrenome}{D.Sc.}{UFRJ}
+  \examiner{Nome do Terceiro Examinador Sobrenome}{Ph.D.}{UFF}
+  \department{PPGI}
+  \date{03}{2026}
+  \approvaldate{30 de março de 2026}
+  \keyword{primeira palavra-chave}
+  \keyword{segunda palavra-chave}
+  \keyword{terceira palavra-chave}
+  \foreignkeyword{first keyword}
+  \foreignkeyword{second keyword}
+  \foreignkeyword{third keyword}
+
+  % Folha adicional da Coleta CAPES (3.1.2.1.2), obrigatoria em teses e
+  % dissertacoes. A ficha catalografica vem de fichacatalografica.sibi.ufrj.br;
+  % com o arquivo em maos, descomente a linha \catalogcard.
+  \concentrationarea{Ciência da Computação}
+  % A linha de pesquisa so sai na folha de rosto com a opcao de classe
+  % linhanafolhaderosto; sem ela, o comando apenas guarda o valor.
+  \researchline{Engenharia de Software}
+  \productiontype{bibliographic}
+  \linkedproject{yes}
+  \projectname{Nome do Projeto de Pesquisa ao qual o trabalho se vincula}
+  \fundingagency{Coordenação de Aperfeiçoamento de Pessoal de Nível
+                  Superior}{CAPES}
+  % \catalogcard{ficha.pdf}
+
+  \maketitle
+  \frontmatter
+
+  \dedication{A quem leu a norma antes de escrever.}
+
+  \epigrafe{``A citação que abre o trabalho, com a mesma formatação da
+    citação longa.''}{Autor da epígrafe}
+
+  % O resumo e o abstract trazem as instrucoes do Projeto Jacurutu: troque-as
+  % pelo seu texto.
+  \begin{abstract}
+    Utilize, de preferência, um só parágrafo para descrever os objetivos de
+    seu trabalho acadêmico, o método com informações sobre coleta, tratamento
+    e análise dos dados, as técnicas de abordagem, os resultados e suas
+    principais conclusões. Esse resumo deve conter de 150 a 500 palavras. Deve
+    ser evitado o uso de frases negativas, símbolos ou contrações que não
+    sejam de uso corrente, fórmulas, equações, diagramas etc. que não sejam
+    absolutamente necessários; quando for indispensável, defini-los na
+    primeira vez que aparecerem. Texto adaptado do Manual do SiBI da UFRJ pelo
+    Projeto Jacurutu.
+  \end{abstract}
+
+  \begin{foreignabstract}
+    Translate your abstract into the language of international dissemination
+    chosen by you and your advisor. Translate the keywords as well.
+  \end{foreignabstract}
+
+  % As listas, na ordem da 3.1.2: ilustracoes (figuras, quadros, programas,
+  % algoritmos), tabelas, abreviaturas, siglas e simbolos. O sumario e sempre o
+  % ultimo, e a classe confere a ordem.
+  \listoffigures
+  \listofquadros
+  \listofprograms
+  \listofalgorithms
+  \listoftables
+  \printloabbreviations
+  \printlosiglas
+  \printlosymbols
+  \tableofcontents
+
+  \mainmatter
+
+  \chapter{Introdução}
+  \label{cap:introducao}
+  O texto do trabalho começa aqui. O \sigla{ppgi} é um Programa da
+  \sigla{ufrj}, e na segunda vez a sigla sai sozinha: o \sigla{ppgi}.
+
+  A citação segue o sistema da classe \cite{m-4211}, e a citação com o autor
+  no texto sai como em \textcite{m-4212}. A citação de mais de três linhas vai
+  no ambiente próprio:
+
+  \begin{longquote}
+    A citação longa entra com recuo de 4 cm da margem esquerda, em corpo
+    menor, sem aspas e com espaçamento simples, como pede a 2.5 do Manual.
+    Depois dela, o texto continua no parágrafo seguinte.
+  \end{longquote}
+
+  \section{Uma seção}
+  O símbolo \symbl{$\alpha$}{taxa de aprendizado} entra na lista de
+  símbolos na ordem em que aparece, e a abreviatura \abbrev{Prof.}{Professor}
+  e o \acron{LLM}{Large Language Model} entram nas suas. O
+  \glossaryterm{termo técnico}{a definição do termo, que sai no glossário}
+  entra no glossário, e esta palavra\index{palavra} entra no índice
+  remissivo.
+
+  \subsection{Uma subseção}
+  A equação destacada sai centralizada, com o número entre parênteses à
+  direita (2.9 do Manual):
+  \begin{equation}
+    \label{eq:exemplo}
+    E = \sum_{i=1}^{n} (y_i - \hat{y}_i)^2
+  \end{equation}
+  e a menção a ela usa o número: a Equação~(\ref{eq:exemplo}).
+
+  \chapter{Ilustrações, quadros e tabelas}
+  \label{cap:ilustracoes}
+
+  A legenda vem em cima e a fonte embaixo, as duas alinhadas à esquerda, na
+  margem da ilustração (2.10 e Figura 1 do Manual).
+
+  \begin{figure}[htbp]
+    \caption{Uma figura estreita, com a legenda na largura dela}
+    \illustrationwidth{6cm}
+    \centering
+    \rule{6cm}{3cm}
+    \source{Elaborado pelo autor (2026).}
+  \end{figure}
+
+  \begin{quadro}[htbp]
+    \caption{Um quadro: informação textual, com as quatro bordas}
+    \centering
+    \begin{tabular}{|l|l|}
+      \hline
+      Elemento & Onde está \\
+      \hline
+      Capa & 3.1.1.1 \\
+      Folha de rosto & 3.1.2.1.1 \\
+      \hline
+    \end{tabular}
+    \source{Elaborado pelo autor (2026).}
+  \end{quadro}
+
+  \begin{table}[htbp]
+    \caption{Uma tabela: dado numérico, sem as bordas laterais}
+    \centering
+    \begin{tabular}{lr}
+      \hline
+      Curso & Alunos \\
+      \hline
+      Mestrado em Informática & 100 \\
+      Doutorado em Informática & 50 \\
+      \hline
+    \end{tabular}
+    \source{Elaborado pelo autor (2026).}
+  \end{table}
+
+  \chapter{Programas e algoritmos}
+  \label{cap:programa}
+  A listagem sai com o estilo da linguagem, e o flutuante dela tem lista
+  própria:
+
+  \begin{python}[caption={Um programa de exemplo},label={prog:exemplo}]
+def soma(a, b):
+    return a + b
+  \end{python}
+  \source{Elaborado pelo autor (2026).}
+
+  \begin{algorithm}[htbp]
+    \caption{Um algoritmo de exemplo}
+    \KwData{uma lista $L$ de números}
+    \KwResult{a soma $s$ dos elementos de $L$}
+    $s \leftarrow 0$\;
+    \ForEach{$x \in L$}{
+      $s \leftarrow s + x$\;
+    }
+    \Return{$s$}\;
+  \end{algorithm}
+  \source{Elaborado pelo autor (2026).}
+
+  \chapter{Conclusão}
+  \label{cap:conclusao}
+  A conclusão do trabalho, que retoma o que o Capítulo~\ref{cap:introducao}
+  propôs.
+
+  \appendix
+  \chapter{Um apêndice}
+  O apêndice é texto do próprio autor, complementar ao trabalho.
+
+  \annex
+  \chapter{Um anexo}
+  O anexo é documento de terceiro, trazido para o trabalho.
+
+  \backmatter
+  \printbibliography
+  \printglossarylist
+  \printindex
+\end{document}
+%</icmaxexemplo>
+%    \end{macrocode}
+%
+% \Finale
+\endinput

@@ -38,7 +38,8 @@ DTX = os.path.join(RAIZ, "src", "ufrj.dtx")
 # viria com o numero velho. TODO estilo de unidade novo entra nesta lista.
 FONTES = [DTX,
           os.path.join(RAIZ, "src", "ufrj-coppe.dtx"),
-          os.path.join(RAIZ, "src", "ufrj-poli.dtx")]
+          os.path.join(RAIZ, "src", "ufrj-poli.dtx"),
+          os.path.join(RAIZ, "src", "ufrj-ic.dtx")]
 
 # O console do Windows e cp1252 e nao sabe escrever uma seta, um travessao nem
 # um til combinante. Sem isto, o script MORRE no meio ao imprimir uma linha de

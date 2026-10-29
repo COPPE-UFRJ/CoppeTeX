@@ -1,0 +1,231 @@
+%%
+%% This is file `ic-max-exemplo.tex',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% ufrj-ic.dtx  (with options: `icmaxexemplo')
+%% 
+%% This is a sample dissertation or thesis which illustrates the use of the `ufrj'
+%% document class with the `ufrj-ic' unit style. It is generated from
+%% ufrj-ic.dtx by docstrip.
+%% 
+%% Copyright (C) 2008-2026 Vicente Helano F. Batista, George O. Ainsworth Jr.,
+%% Geraldo Xexéo and Eduardo Mangeli. Released under the GNU General Public
+%% License version 3 (see the COPYING.txt file).
+%% 
+\documentclass[dsc]{ufrj}
+\usepackage{ufrj-ic}
+
+\usepackage{makeidx}
+
+\addbibresource{exemplo.bib}
+
+\makelosymbols
+\makeloabbreviations
+\makelosiglas
+\makeglossarylist
+\makeindex
+
+\defineacronym{ufrj}{UFRJ}{Universidade Federal do Rio de Janeiro}
+\defineacronym{ppgi}{PPGI}{Programa de Pós-Graduação em Informática}
+
+\begin{document}
+  \title{Título da Tese}
+  \foreigntitle{Title of the Thesis}
+  \subtitle{subtítulo, quando houver}
+  \foreignsubtitle{subtitle, if any}
+  \author{Nome do Autor}{Sobrenome}
+  \advisor{Nome do Orientador}{Sobrenome}{D.Sc.}{UFRJ}
+  \coadvisor{Nome do Coorientador}{Sobrenome}{D.Sc.}{UFRJ}
+  % A banca e o que se declara aqui, na ordem: o orientador, que a preside
+  % (3.1.2.1.3e), e o primeiro.
+  \examiner{Nome do Orientador Sobrenome}{D.Sc.}{PPGI/UFRJ}
+  \examiner{Nome do Coorientador Sobrenome}{D.Sc.}{PPGI/UFRJ}
+  \examiner{Nome do Primeiro Examinador Sobrenome}{D.Sc.}{PPGI/UFRJ}
+  \examiner{Nome do Segundo Examinador Sobrenome}{D.Sc.}{UFRJ}
+  \examiner{Nome do Terceiro Examinador Sobrenome}{Ph.D.}{UFF}
+  \department{PPGI}
+  \date{03}{2026}
+  \approvaldate{30 de março de 2026}
+  \keyword{primeira palavra-chave}
+  \keyword{segunda palavra-chave}
+  \keyword{terceira palavra-chave}
+  \foreignkeyword{first keyword}
+  \foreignkeyword{second keyword}
+  \foreignkeyword{third keyword}
+
+  % Folha adicional da Coleta CAPES (3.1.2.1.2), obrigatoria em teses e
+  % dissertacoes. A ficha catalografica vem de fichacatalografica.sibi.ufrj.br;
+  % com o arquivo em maos, descomente a linha \catalogcard.
+  \concentrationarea{Ciência da Computação}
+  % A linha de pesquisa so sai na folha de rosto com a opcao de classe
+  % linhanafolhaderosto; sem ela, o comando apenas guarda o valor.
+  \researchline{Engenharia de Software}
+  \productiontype{bibliographic}
+  \linkedproject{yes}
+  \projectname{Nome do Projeto de Pesquisa ao qual o trabalho se vincula}
+  \fundingagency{Coordenação de Aperfeiçoamento de Pessoal de Nível
+                  Superior}{CAPES}
+  % \catalogcard{ficha.pdf}
+
+  \maketitle
+  \frontmatter
+
+  \dedication{A quem leu a norma antes de escrever.}
+
+  \epigrafe{``A citação que abre o trabalho, com a mesma formatação da
+    citação longa.''}{Autor da epígrafe}
+
+  % O resumo e o abstract trazem as instrucoes do Projeto Jacurutu: troque-as
+  % pelo seu texto.
+  \begin{abstract}
+    Utilize, de preferência, um só parágrafo para descrever os objetivos de
+    seu trabalho acadêmico, o método com informações sobre coleta, tratamento
+    e análise dos dados, as técnicas de abordagem, os resultados e suas
+    principais conclusões. Esse resumo deve conter de 150 a 500 palavras. Deve
+    ser evitado o uso de frases negativas, símbolos ou contrações que não
+    sejam de uso corrente, fórmulas, equações, diagramas etc. que não sejam
+    absolutamente necessários; quando for indispensável, defini-los na
+    primeira vez que aparecerem. Texto adaptado do Manual do SiBI da UFRJ pelo
+    Projeto Jacurutu.
+  \end{abstract}
+
+  \begin{foreignabstract}
+    Translate your abstract into the language of international dissemination
+    chosen by you and your advisor. Translate the keywords as well.
+  \end{foreignabstract}
+
+  % As listas, na ordem da 3.1.2: ilustracoes (figuras, quadros, programas,
+  % algoritmos), tabelas, abreviaturas, siglas e simbolos. O sumario e sempre o
+  % ultimo, e a classe confere a ordem.
+  \listoffigures
+  \listofquadros
+  \listofprograms
+  \listofalgorithms
+  \listoftables
+  \printloabbreviations
+  \printlosiglas
+  \printlosymbols
+  \tableofcontents
+
+  \mainmatter
+
+  \chapter{Introdução}
+  \label{cap:introducao}
+  O texto do trabalho começa aqui. O \sigla{ppgi} é um Programa da
+  \sigla{ufrj}, e na segunda vez a sigla sai sozinha: o \sigla{ppgi}.
+
+  A citação segue o sistema da classe \cite{m-4211}, e a citação com o autor
+  no texto sai como em \textcite{m-4212}. A citação de mais de três linhas vai
+  no ambiente próprio:
+
+  \begin{longquote}
+    A citação longa entra com recuo de 4 cm da margem esquerda, em corpo
+    menor, sem aspas e com espaçamento simples, como pede a 2.5 do Manual.
+    Depois dela, o texto continua no parágrafo seguinte.
+  \end{longquote}
+
+  \section{Uma seção}
+  O símbolo \symbl{$\alpha$}{taxa de aprendizado} entra na lista de
+  símbolos na ordem em que aparece, e a abreviatura \abbrev{Prof.}{Professor}
+  e o \acron{LLM}{Large Language Model} entram nas suas. O
+  \glossaryterm{termo técnico}{a definição do termo, que sai no glossário}
+  entra no glossário, e esta palavra\index{palavra} entra no índice
+  remissivo.
+
+  \subsection{Uma subseção}
+  A equação destacada sai centralizada, com o número entre parênteses à
+  direita (2.9 do Manual):
+  \begin{equation}
+    \label{eq:exemplo}
+    E = \sum_{i=1}^{n} (y_i - \hat{y}_i)^2
+  \end{equation}
+  e a menção a ela usa o número: a Equação~(\ref{eq:exemplo}).
+
+  \chapter{Ilustrações, quadros e tabelas}
+  \label{cap:ilustracoes}
+
+  A legenda vem em cima e a fonte embaixo, as duas alinhadas à esquerda, na
+  margem da ilustração (2.10 e Figura 1 do Manual).
+
+  \begin{figure}[htbp]
+    \caption{Uma figura estreita, com a legenda na largura dela}
+    \illustrationwidth{6cm}
+    \centering
+    \rule{6cm}{3cm}
+    \source{Elaborado pelo autor (2026).}
+  \end{figure}
+
+  \begin{quadro}[htbp]
+    \caption{Um quadro: informação textual, com as quatro bordas}
+    \centering
+    \begin{tabular}{|l|l|}
+      \hline
+      Elemento & Onde está \\
+      \hline
+      Capa & 3.1.1.1 \\
+      Folha de rosto & 3.1.2.1.1 \\
+      \hline
+    \end{tabular}
+    \source{Elaborado pelo autor (2026).}
+  \end{quadro}
+
+  \begin{table}[htbp]
+    \caption{Uma tabela: dado numérico, sem as bordas laterais}
+    \centering
+    \begin{tabular}{lr}
+      \hline
+      Curso & Alunos \\
+      \hline
+      Mestrado em Informática & 100 \\
+      Doutorado em Informática & 50 \\
+      \hline
+    \end{tabular}
+    \source{Elaborado pelo autor (2026).}
+  \end{table}
+
+  \chapter{Programas e algoritmos}
+  \label{cap:programa}
+  A listagem sai com o estilo da linguagem, e o flutuante dela tem lista
+  própria:
+
+  \begin{python}[caption={Um programa de exemplo},label={prog:exemplo}]
+def soma(a, b):
+    return a + b
+  \end{python}
+  \source{Elaborado pelo autor (2026).}
+
+  \begin{algorithm}[htbp]
+    \caption{Um algoritmo de exemplo}
+    \KwData{uma lista $L$ de números}
+    \KwResult{a soma $s$ dos elementos de $L$}
+    $s \leftarrow 0$\;
+    \ForEach{$x \in L$}{
+      $s \leftarrow s + x$\;
+    }
+    \Return{$s$}\;
+  \end{algorithm}
+  \source{Elaborado pelo autor (2026).}
+
+  \chapter{Conclusão}
+  \label{cap:conclusao}
+  A conclusão do trabalho, que retoma o que o Capítulo~\ref{cap:introducao}
+  propôs.
+
+  \appendix
+  \chapter{Um apêndice}
+  O apêndice é texto do próprio autor, complementar ao trabalho.
+
+  \annex
+  \chapter{Um anexo}
+  O anexo é documento de terceiro, trazido para o trabalho.
+
+  \backmatter
+  \printbibliography
+  \printglossarylist
+  \printindex
+\end{document}
+%% 
+%%
+%% End of file `ic-max-exemplo.tex'.

@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 """Gera as distribuicoes da CoppeTeX a partir de src/.
 
-    python tools/distribuicoes.py              regera build/, as normas, as tres
-                                               dist-* e os dois pacotes de envio
+    python tools/distribuicoes.py              regera build/, as normas, as quatro
+                                               dist-* e os pacotes de envio
     python tools/distribuicoes.py --regerar    so prepara build/ e roda os tres .ins
     python tools/distribuicoes.py --normas     so converte as normas de src/normas
-    python tools/distribuicoes.py --montar     so monta dist-coppe, dist-poli e dist-biblatex
+    python tools/distribuicoes.py --montar     so monta dist-coppe, dist-poli, dist-ic e dist-biblatex
     python tools/distribuicoes.py --ctan       so o pacote do CTAN (da COPPE), em build/
-    python tools/distribuicoes.py --overleaf   so o projeto do Overleaf (da COPPE), em build/
+    python tools/distribuicoes.py --overleaf   so os projetos do Overleaf (COPPE, Poli e IC), em build/
     python tools/distribuicoes.py --pacote     fecha cada dist-* num .zip em build/pacotes
     python tools/distribuicoes.py --conferir   so diz o que falta em build/ para montar
 
@@ -53,9 +53,10 @@ NORMAS = os.path.join(RAIZ, "normas")
 # Fontes: o que de src/ e copiado para build/ antes de rodar os .ins
 # ---------------------------------------------------------------------------
 FONTES = ["ufrj.dtx", "ufrj.ins", "ufrj-coppe.dtx", "ufrj-coppe.ins",
-          "ufrj-poli.dtx", "ufrj-poli.ins", "manual.tex"]
+          "ufrj-poli.dtx", "ufrj-poli.ins", "ufrj-ic.dtx", "ufrj-ic.ins",
+          "manual.tex"]
 PASTAS_FONTE = ["logos"]
-INS = ["ufrj.ins", "ufrj-coppe.ins", "ufrj-poli.ins"]
+INS = ["ufrj.ins", "ufrj-coppe.ins", "ufrj-poli.ins", "ufrj-ic.ins"]
 
 # ---------------------------------------------------------------------------
 # Blocos que se repetem entre as distribuicoes. A repeticao e de proposito:
@@ -114,6 +115,11 @@ def _pasta(logos):
 MANUAIS_COPPE = ("ufrj.pdf", "ufrj-coppe.pdf", "ufrj-quickref.pdf",
                  "coppe-quickref.pdf", "manual.pdf", "coppe-min-exemplo.pdf",
                  "coppe-max-exemplo.pdf")
+MANUAIS_POLI = ("ufrj.pdf", "ufrj-poli.pdf", "ufrj-quickref.pdf",
+                "poli-quickref.pdf", "poli-min-exemplo.pdf",
+                "poli-max-exemplo.pdf")
+MANUAIS_IC = ("ufrj.pdf", "ufrj-ic.pdf", "ufrj-quickref.pdf",
+              "ic-min-exemplo.pdf", "ic-max-exemplo.pdf")
 
 DISTRIBUICOES = {
     "dist-coppe": (
@@ -142,11 +148,21 @@ DISTRIBUICOES = {
            _b("poli-min-exemplo.tex"), _b("poli-max-exemplo.tex"),
            _b("exemplo.bib")]
         + _pasta(["poli-logo.pdf", "ufrj-logo.pdf"])
-        + [_b(n, "manuais") for n in (
-            "ufrj.pdf", "ufrj-poli.pdf", "ufrj-quickref.pdf", "poli-quickref.pdf",
-            "poli-min-exemplo.pdf", "poli-max-exemplo.pdf")]
+        + [_b(n, "manuais") for n in MANUAIS_POLI]
         + [_b("poli.cls", "migracao")]
         + [_n("norma-poli/NORMA_POLI_2026.pdf")]
+    ),
+    # O Instituto de Computacao: o PPGI (msc, dsc) e o Bacharelado em Ciencia da
+    # Computacao (grad). Sem norma propria e sem classe antiga a migrar. O
+    # logotipo do curso de graduacao (ic-logo.pdf) ainda nao existe aqui.
+    "dist-ic": (
+        [_s("distribuicao/ic/README.md"), _r("COPYING.txt")]
+        + [_b(n) for n in CLASSE]
+        + [_b("ufrj-ic.sty"),
+           _b("ic-min-exemplo.tex"), _b("ic-max-exemplo.tex"),
+           _b("exemplo.bib")]
+        + _pasta(["ppgi-logo.pdf", "ufrj-logo.pdf"])
+        + [_b(n, "manuais") for n in MANUAIS_IC]
     ),
     "dist-biblatex": (
         [_s("distribuicao/biblatex/README.md"), _r("COPYING.txt"),
@@ -173,6 +189,23 @@ IDIOMAS = ESPANHOL + OUTRAS
 # colisao com outro pacote da TeX Live.
 CTAN_NOME = "ufrj"
 
+def _overleaf(unidade, estilo, logos, manuais):
+    """O projeto do Overleaf de uma unidade, plano, com o README dele."""
+    return {
+        "dentro": "",
+        "arquivos": (
+            [_s("distribuicao/overleaf-%s/README.md" % unidade), _r("COPYING.txt")]
+            + [_b(n) for n in CLASSE]
+            + [_b(estilo),
+               _b("%s-min-exemplo.tex" % unidade),
+               _b("%s-max-exemplo.tex" % unidade),
+               _b("exemplo.bib")]
+            + _pasta(logos)
+            + [_b(n, "manuais") for n in manuais]
+        ),
+    }
+
+
 PACOTES = {
     # O CTAN recebe a FONTE e a documentacao, numa pasta com o nome do pacote,
     # mais a arvore TDS pronta num .zip de dentro. Os .cls e .sty nao vao soltos
@@ -193,25 +226,20 @@ PACOTES = {
         ),
     },
     # O Overleaf abre o .zip COMO PROJETO: o que estiver na raiz do zip vira a
-    # raiz do projeto, e por isso aqui nao ha pasta de dentro. A raiz e a mesma
-    # da dist-coppe, com os dois exemplos -- o minimo e o maximo --, e o
-    # coppe-min-exemplo.tex e o documento principal, que o README manda
-    # confirmar em Menu > Main document. A coppe.cls nao vai: projeto novo nao
-    # comeca com \documentclass{coppe}. Os manuais em PDF vao em manuais/, como
-    # na dist-coppe: o aluno le sem sair do projeto.
-    "overleaf": {
-        "dentro": "",
-        "arquivos": (
-            [_s("distribuicao/overleaf/README.md"), _r("COPYING.txt")]
-            + [_b(n) for n in CLASSE]
-            + [_b("ufrj-coppe.sty"),
-               _b("coppe-min-exemplo.tex"), _b("coppe-max-exemplo.tex"),
-               _b("exemplo.bib")]
-            + _pasta(["coppe-logo.pdf", "ufrj-logo.pdf"])
-            + [_b(n, "manuais") for n in MANUAIS_COPPE]
-        ),
-    },
+    # raiz do projeto, e por isso aqui nao ha pasta de dentro. Um projeto por
+    # unidade: a raiz e a mesma da dist-* dela, com os dois exemplos -- o minimo
+    # e o maximo --, e o minimo e o documento principal, que o README manda
+    # confirmar em Menu > Main document. As classes de compatibilidade nao vao:
+    # projeto novo nao comeca com \documentclass{coppe} nem {poli}. Os manuais
+    # em PDF vao em manuais/, como na dist-*: o aluno le sem sair do projeto.
+    "overleaf-coppe": _overleaf("coppe", "ufrj-coppe.sty",
+                                ["coppe-logo.pdf", "ufrj-logo.pdf"], MANUAIS_COPPE),
+    "overleaf-poli": _overleaf("poli", "ufrj-poli.sty",
+                               ["poli-logo.pdf", "ufrj-logo.pdf"], MANUAIS_POLI),
+    "overleaf-ic": _overleaf("ic", "ufrj-ic.sty",
+                             ["ppgi-logo.pdf", "ufrj-logo.pdf"], MANUAIS_IC),
 }
+OVERLEAF = ["overleaf-coppe", "overleaf-poli", "overleaf-ic"]
 
 # A arvore TDS que vai dentro do pacote do CTAN: onde cada arquivo mora num
 # texmf. Os logotipos ficam junto da classe, em tex/latex/, para o documento
@@ -460,7 +488,9 @@ def pacote(diz=_diz):
 # ---------------------------------------------------------------------------
 ZIP = {
     "ctan": CTAN_NOME + "-%s.zip",
-    "overleaf": "CoppeTeX-overleaf-coppe-%s.zip",
+    "overleaf-coppe": "CoppeTeX-overleaf-coppe-%s.zip",
+    "overleaf-poli": "CoppeTeX-overleaf-poli-%s.zip",
+    "overleaf-ic": "CoppeTeX-overleaf-ic-%s.zip",
 }
 
 
@@ -575,7 +605,8 @@ def main(argv):
     if tudo or "--ctan" in passos:
         ok = montar_pacote("ctan") and ok
     if tudo or "--overleaf" in passos:
-        ok = montar_pacote("overleaf") and ok
+        for nome in OVERLEAF:
+            ok = montar_pacote(nome) and ok
     if "--pacote" in passos:
         ok = pacote() and ok
     return 0 if ok else 1

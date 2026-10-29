@@ -4,6 +4,49 @@ Project changes worth noting, newest first. Follows
 [Keep a Changelog](https://keepachangelog.com/) loosely; dates are
 ISO-8601.
 
+## [Unreleased] — 2026-10-29 — Unit style for the Instituto de Computação (PPGI)
+
+- **New unit style `ufrj-ic`** (`src/ufrj-ic.dtx`, `src/ufrj-ic.ins`), for the
+  dissertations and theses of the Programa de Pós-Graduação em Informática
+  (PPGI). Data from the Jacurutu project (projeto-jacurutu/jacurutu-latex,
+  v2.1): the PPGI is offered by two institutes, the Instituto de Computação
+  and the Instituto Tércio Pacitti de Aplicações e Pesquisas Computacionais,
+  and both are named on the capa (one per line) and in the natureza, which
+  is the Jacurutu sentence word for word. The program line on the capa
+  carries the acronym, "(PPGI)"; the degree is Mestre/Doutor em Informática.
+- **The PPGI logo** (`src/logos/ppgi-logo.pdf`, from Jacurutu) sits on the
+  right of the capa at the height of the UFRJ logo, 2 cm: the visible ink of
+  the PPGI logo is 0.70 of the UFRJ one, the same ratio as on the Jacurutu
+  capa. The file was rewritten with Ghostscript to drop a page transparency
+  group that made pdfTeX warn and write a second /Group key on the page.
+- **The IC undergraduate course too** (`grad`, `\department{BCC}`): the
+  Curso de Bacharelado em Ciência da Computação, presented to the Instituto
+  de Computação alone, with its own logo, `ic-logo.pdf`. The file is not in
+  the repository yet: without it the right of the capa stays empty and the
+  log says so.
+- **Two examples**, `ic-min-exemplo.tex` (a PPGI dissertation) and
+  `ic-max-exemplo.tex` (a thesis with every element: CAPES sheet, all
+  lists, glossary, index, equation, program, algorithm, appendix, annex).
+- **The abstract instructions of Jacurutu** replace the Lorem ipsum of the
+  abstracts in the COPPE maximal and minimal examples and fill the IC ones.
+- **New `dist-ic/`**, like dist-poli: class, style, examples, `coppetex/`
+  with the PPGI logo, `manuais/` with the five PDFs.
+- **One Overleaf project per unit**: `overleaf-coppe` (was `overleaf`),
+  `overleaf-poli` and `overleaf-ic`, each with its README
+  (`src/distribuicao/overleaf-*/`), its two examples and its manuals.
+  `--overleaf` and the painel build the three. Each one was compiled from
+  an empty folder with no TEXINPUTS.
+- **The Poli examples failed PDF/A-2b** (veraPDF rule 6.2.4.3-3: DeviceCMYK
+  with no CMYK output intent). The cause was `poli-logo.pdf`, the only logo
+  in CMYK; it was converted to RGB with Ghostscript, with no visible change.
+  The `pdfa` scope of build-check validated only the COPPE examples, which is
+  why nobody saw it; it now validates the six examples.
+- build-check compiles the IC examples (scope `example`) and the IC manual
+  (scope `docs`). The root README lists `dist-ic` and the Overleaf projects.
+- Regression tests: rtu19 covers the PPGI capa, natureza and logo ratio and
+  the undergraduate capa; rtu17 checks the three Overleaf projects and that
+  no package carries another unit's files.
+
 ## [Unreleased] — 2026-10-29 — Continuous numbering of illustrations
 
 - **Floats are numbered through the whole work by default** (Figura 1, 2,

@@ -14,15 +14,15 @@
 
 .PARAMETER Scope
     class    - só regenera ufrj.cls e companhia a partir de ufrj.ins (rápido)
-    example  - class + os quatro exemplos (coppe-max, coppe-min, poli-max,
-               poli-min) e o
+    example  - class + os seis exemplos (coppe-max, coppe-min, poli-max,
+               poli-min, ic-max, ic-min) e o
                conferir-norma nos tres PDFs
     langs    - class + os cinco example_<lang>.tex
     tests    - class + a suíte tests/run-tests.ps1
     docs     - class + ufrj.pdf (manual), NORMA_COPPE_2026.pdf,
                PROPOSTA-DE-RESOLUCAO.pdf (a proposta da Escola Politecnica),
                manual.pdf e covers_5languages.pdf
-    pdfa     - class + coppe-max-exemplo.tex e coppe-min-exemplo.tex (que usam pdfa), tests/test_pdfa.tex e
+    pdfa     - class + os exemplos maximo e minimo de cada unidade (COPPE, Poli e IC, todos em PDF/A), tests/test_pdfa.tex e
                tests/test_comserifa.tex, e passa os tres
                pelo veraPDF no perfil 2b. Precisa do veraPDF instalado (o
                script procura em %USERPROFILE%\verapdf e no PATH); sem ele o
@@ -333,9 +333,12 @@ if ($Scope -in @("example", "all")) {
     Build-Tex -Stem "coppe-min-exemplo" -Dir $src -WithBiber
     Build-Tex -Stem "poli-min-exemplo" -Dir $src -WithBiber
     Build-Tex -Stem "poli-max-exemplo" -Dir $src -WithBiber
+    Build-Tex -Stem "ic-min-exemplo" -Dir $src -WithBiber
+    Build-Tex -Stem "ic-max-exemplo" -Dir $src -WithBiber
     Invoke-Conferir "conferir-norma-exemplos" "conferir-norma.py" @(
         (Join-Path $src "coppe-max-exemplo.pdf"), (Join-Path $src "coppe-min-exemplo.pdf"),
-        (Join-Path $src "poli-min-exemplo.pdf"), (Join-Path $src "poli-max-exemplo.pdf"))
+        (Join-Path $src "poli-min-exemplo.pdf"), (Join-Path $src "poli-max-exemplo.pdf"),
+        (Join-Path $src "ic-min-exemplo.pdf"), (Join-Path $src "ic-max-exemplo.pdf"))
 }
 
 if ($Scope -in @("langs", "all")) {
@@ -382,6 +385,15 @@ if ($Scope -in @("docs", "all")) {
     Invoke-Step "ufrj-poli-glo" $src { & makeindex -s gglo.ist -o ufrj-poli.gls ufrj-poli.glo }
     Invoke-Step "ufrj-poli-2" $src { & pdflatex -interaction=nonstopmode ufrj-poli.dtx }
     Invoke-Step "ufrj-poli-3" $src { & pdflatex -interaction=nonstopmode ufrj-poli.dtx }
+
+    # O manual do estilo do Instituto de Computacao (PPGI e Ciencia da Computacao).
+    Remove-Item (Join-Path $src "ufrj-ic.gls"), (Join-Path $src "ufrj-ic.ind") `
+        -ErrorAction SilentlyContinue
+    Invoke-Step "ufrj-ic-1" $src { & pdflatex -interaction=nonstopmode ufrj-ic.dtx }
+    Invoke-Step "ufrj-ic-idx" $src { & makeindex -s gind.ist -o ufrj-ic.ind ufrj-ic.idx }
+    Invoke-Step "ufrj-ic-glo" $src { & makeindex -s gglo.ist -o ufrj-ic.gls ufrj-ic.glo }
+    Invoke-Step "ufrj-ic-2" $src { & pdflatex -interaction=nonstopmode ufrj-ic.dtx }
+    Invoke-Step "ufrj-ic-3" $src { & pdflatex -interaction=nonstopmode ufrj-ic.dtx }
 
     # O manual envelhece em silencio: um comando novo entra na classe e ninguem o
     # documenta, e nada quebra. Este passo cobra isso, e tambem confere se a
@@ -512,9 +524,13 @@ if ($Scope -in @("pdfa", "all")) {
     # que vai para o deposito.
     # Os dois exemplos ja compilam com a opcao pdfa (#99, #102); no escopo all
     # eles ja sairam no passo "example", e compila-los de novo so gastaria tempo.
+    # Os da Poli e do IC tambem: cada unidade traz o seu logotipo, e um logotipo
+    # em CMYK reprova o PDF/A-2b (6.2.4.3-3) sem que nada mais mude -- foi o que
+    # aconteceu com o da Poli, que so era validado pelo conferir-norma.
+    $exemplosPdfa = @("coppe-max-exemplo", "coppe-min-exemplo", "poli-max-exemplo",
+                      "poli-min-exemplo", "ic-max-exemplo", "ic-min-exemplo")
     if ($Scope -eq "pdfa") {
-        Build-Tex -Stem "coppe-max-exemplo" -Dir $src -WithBiber
-        Build-Tex -Stem "coppe-min-exemplo" -Dir $src -WithBiber
+        foreach ($e in $exemplosPdfa) { Build-Tex -Stem $e -Dir $src -WithBiber }
     }
     Build-Tex -Stem "test_pdfa"    -Dir $testDir -WithBiber
     # A opcao `comserifa' volta o documento para a familia serifada. A pergunta que
@@ -542,9 +558,9 @@ if ($Scope -in @("pdfa", "all")) {
     } else {
         Add-Line ""
         Add-Line "veraPDF: $vera"
-        $veraTargets = @(
-            @{ Stem = "coppe-max-exemplo";    Dir = $src },
-            @{ Stem = "coppe-min-exemplo";    Dir = $src },
+        $veraTargets = @()
+        foreach ($e in $exemplosPdfa) { $veraTargets += @{ Stem = $e; Dir = $src } }
+        $veraTargets += @(
             @{ Stem = "test_pdfa";      Dir = $testDir },
             @{ Stem = "test_comserifa"; Dir = $testDir })
         # todo documento adversativo e compilado com a opcao pdfa: se algum

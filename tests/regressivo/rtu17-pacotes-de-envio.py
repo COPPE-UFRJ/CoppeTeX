@@ -1,22 +1,24 @@
 # -*- coding: utf-8 -*-
 """Teste de conformidade da CoppeTeX.
 
-BUG: nao havia defeito antigo aqui -- este teste guarda os dois pacotes de ENVIO, o do CTAN e o do Overleaf, que nasceram em outubro de 2026. Os dois sao da COPPE so, saem em build/ e nao sao versionados: sao feitos na hora de enviar, e um arquivo que faltasse na lista so apareceria como erro de compilacao na maquina de quem recebeu.
+BUG: nao havia defeito antigo aqui -- este teste guarda os pacotes de ENVIO, o do CTAN e os do Overleaf, que nasceram em outubro de 2026. O do CTAN e da COPPE; o Overleaf tem um projeto por unidade (COPPE, Poli e IC). Todos saem em build/ e nao sao versionados: sao feitos na hora de enviar, e um arquivo que faltasse na lista so apareceria como erro de compilacao na maquina de quem recebeu.
 
 Cobra-se, sem compilar nada:
-  1. todo arquivo das duas listas ou e fonte de src/, ou esta na raiz, ou e
-     gerado por um dos .ins -- nenhum nome que nao possa existir nunca;
-  2. o projeto do Overleaf basta sozinho e tem a arrumacao da dist-coppe: na
-     raiz a classe, o estilo da unidade, o ufrj.ist, o latexmkrc e a base; em
-     coppetex/ os estilos de bibliografia, os .lbx e .def de TODO idioma e os
-     logotipos, e nenhuma outra subpasta -- o aluno nao tem de mover arquivo
-     nenhum, porque a classe poe coppetex/ no \\input@path;
-  3. o projeto do Overleaf tem os dois exemplos, o minimo e o maximo, e nenhum
-     outro documento principal;
+  1. todo arquivo das listas ou e fonte de src/, ou esta na raiz, ou e gerado
+     por um dos .ins -- nenhum nome que nao possa existir nunca;
+  2. cada projeto do Overleaf basta sozinho e tem a arrumacao da dist-* da
+     unidade: na raiz a classe, o estilo da unidade, o ufrj.ist, o latexmkrc e
+     a base; em coppetex/ os estilos de bibliografia, os .lbx e .def de TODO
+     idioma e os logotipos; em manuais/ os PDFs da dist-*, e nenhuma outra
+     subpasta -- o aluno nao tem de mover arquivo nenhum, porque a classe poe
+     coppetex/ no \\input@path;
+  3. cada projeto do Overleaf tem os dois exemplos da unidade, o minimo e o
+     maximo, e nenhum outro documento principal;
   4. o pacote do CTAN leva o README e a licenca, as quatro fontes (.dtx e .ins)
      e os manuais, e a arvore TDS poe cada arquivo no lugar que o TDS manda;
-  5. nenhum dos dois leva nada da Poli: sao da COPPE;
-  6. nada dos dois esta versionado -- eles moram em build/, que o git ignora.
+  5. nenhum pacote leva nada de outra unidade: o do CTAN e da COPPE, e cada
+     Overleaf e so da sua;
+  6. nada deles esta versionado -- eles moram em build/, que o git ignora.
 """
 import io
 import os
@@ -72,36 +74,50 @@ for pacote, (sub, nome, (origem, caminho)) in entradas:
         if not os.path.exists(os.path.join(base, *caminho.split("/"))):
             problemas.append("%s: %s/%s nao existe" % (pacote, origem, caminho))
 
-# 2. O Overleaf e plano e basta sozinho.
-over = D.PACOTES["overleaf"]["arquivos"]
-na_raiz = set(n for sub, n, _ in over if not sub)
-for n in ["ufrj.cls", "ufrj-coppe.sty", "ufrj.ist", "latexmkrc",
-          "exemplo.bib", "README.md", "COPYING.txt"]:
-    if n not in na_raiz:
-        problemas.append("overleaf: falta %s na raiz do projeto" % n)
-na_pasta = set(n for sub, n, _ in over if sub == D.PASTA)
-for n in D.BIBLATEX + D.IDIOMAS:
-    if n not in na_pasta:
-        problemas.append("overleaf: falta %s em %s/" % (n, D.PASTA))
-# Alem de coppetex/, so manuais/, que se le e de que nenhum documento depende.
-permitidas = {D.PASTA, D.PASTA + "/logos", "manuais"}
-subpastas = set(sub for sub, _, _ in over if sub)
-if subpastas - permitidas:
-    problemas.append("overleaf: o projeto tem subpasta alem de %s/ e manuais/ (%s); "
-                     "no Overleaf o aluno nao deve ter de mover arquivo"
-                     % (D.PASTA, ", ".join(sorted(subpastas - permitidas))))
-na_manuais = set(n for sub, n, _ in over if sub == "manuais")
-for n in D.MANUAIS_COPPE:
-    if n not in na_manuais:
-        problemas.append("overleaf: falta manuais/%s" % n)
-if not any(n.endswith("logo.pdf") for s, n, _ in over if s == D.PASTA + "/logos"):
-    problemas.append("overleaf: faltam os logotipos em %s/logos/" % D.PASTA)
-
-# 3. Os dois exemplos, e nenhum outro documento principal.
-principais = sorted(n for _, n, _ in over if n.endswith(".tex"))
-if principais != ["coppe-max-exemplo.tex", "coppe-min-exemplo.tex"]:
-    problemas.append("overleaf: o projeto devia ter o exemplo minimo e o maximo, "
-                     "e tem %s" % (", ".join(principais) or "nenhum"))
+# 2 e 3. Cada Overleaf e plano, basta sozinho e tem os dois exemplos.
+UNIDADES = {
+    "overleaf-coppe": ("coppe", "ufrj-coppe.sty", D.MANUAIS_COPPE),
+    "overleaf-poli": ("poli", "ufrj-poli.sty", D.MANUAIS_POLI),
+    "overleaf-ic": ("ic", "ufrj-ic.sty", D.MANUAIS_IC),
+}
+if sorted(D.OVERLEAF) != sorted(UNIDADES):
+    problemas.append("os projetos do Overleaf sao %s; o teste conhece %s"
+                     % (", ".join(sorted(D.OVERLEAF)), ", ".join(sorted(UNIDADES))))
+for pac in sorted(UNIDADES):
+    if pac not in D.PACOTES:
+        problemas.append("%s: o pacote nao existe" % pac)
+        continue
+    unidade, estilo, manuais = UNIDADES[pac]
+    over = D.PACOTES[pac]["arquivos"]
+    na_raiz = set(n for sub, n, _ in over if not sub)
+    for n in ["ufrj.cls", estilo, "ufrj.ist", "latexmkrc",
+              "exemplo.bib", "README.md", "COPYING.txt"]:
+        if n not in na_raiz:
+            problemas.append("%s: falta %s na raiz do projeto" % (pac, n))
+    na_pasta = set(n for sub, n, _ in over if sub == D.PASTA)
+    for n in D.BIBLATEX + D.IDIOMAS:
+        if n not in na_pasta:
+            problemas.append("%s: falta %s em %s/" % (pac, n, D.PASTA))
+    # Alem de coppetex/, so manuais/, que se le e de que nenhum documento depende.
+    permitidas = {D.PASTA, D.PASTA + "/logos", "manuais"}
+    subpastas = set(sub for sub, _, _ in over if sub)
+    if subpastas - permitidas:
+        problemas.append("%s: o projeto tem subpasta alem de %s/ e manuais/ (%s); "
+                         "no Overleaf o aluno nao deve ter de mover arquivo"
+                         % (pac, D.PASTA, ", ".join(sorted(subpastas - permitidas))))
+    na_manuais = set(n for sub, n, _ in over if sub == "manuais")
+    for n in manuais:
+        if n not in na_manuais:
+            problemas.append("%s: falta manuais/%s" % (pac, n))
+    logos = [n for s, n, _ in over if s == D.PASTA + "/logos"]
+    if "ufrj-logo.pdf" not in logos or len(logos) < 2:
+        problemas.append("%s: faltam os logotipos em %s/logos/ (tem %s)"
+                         % (pac, D.PASTA, ", ".join(logos) or "nenhum"))
+    principais = sorted(n for _, n, _ in over if n.endswith(".tex"))
+    esperados = ["%s-max-exemplo.tex" % unidade, "%s-min-exemplo.tex" % unidade]
+    if principais != esperados:
+        problemas.append("%s: o projeto devia ter o exemplo minimo e o maximo, "
+                         "e tem %s" % (pac, ", ".join(principais) or "nenhum"))
 
 # 4. O CTAN leva fonte, licenca e documentacao, e o TDS poe cada um no lugar.
 ctan = set(n for _, n, _ in D.PACOTES["ctan"]["arquivos"])
@@ -121,10 +137,22 @@ for tdsdir, (_, nome, _) in D.TDS:
 if not any(t.startswith("doc/latex/") for t, _ in D.TDS):
     problemas.append("ctan: a arvore TDS nao tem doc/latex/")
 
-# 5. Nada da Poli nos dois: sao da COPPE.
+# 5. Cada pacote so com a sua unidade. A marca de cada uma no nome do arquivo:
+#    "coppetex" e o nome da pasta da classe, e nao da COPPE.
+MARCA = {
+    "coppe": re.compile(r"(^|[/-])coppe[-.]"),
+    "poli": re.compile(r"poli"),
+    "ic": re.compile(r"(^|[/-])(ic|ppgi)[-.]"),
+}
+DONO = {"ctan": "coppe", "overleaf-coppe": "coppe", "overleaf-poli": "poli",
+        "overleaf-ic": "ic"}
 for pacote, (sub, nome, (origem, caminho)) in entradas:
-    if "poli" in nome.lower() or "poli" in caminho.lower():
-        problemas.append("%s: %s e da Poli, e estes pacotes sao da COPPE" % (pacote, nome))
+    dono = DONO.get(pacote.split(" ")[0])
+    for unidade, marca in sorted(MARCA.items()):
+        if unidade != dono and (marca.search(nome.lower())
+                                or marca.search(caminho.lower())):
+            problemas.append("%s: %s e de %s, e este pacote e de %s"
+                             % (pacote, nome, unidade, dono))
 
 # 6. O pacote nao e versionado, mas o que ele copia de src/ e da raiz TEM de
 #    ser: numa copia limpa do repositorio, o que nao esta no git nao existe, e

@@ -1,0 +1,74 @@
+%%
+%% This is file `ufrj-ic.sty',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% ufrj-ic.dtx  (with options: `package')
+%% 
+%% This is the `ufrj-ic' unit style of the `ufrj' document class -- the data
+%% and texts of the Instituto de Computacao (IC) of the Federal University of
+%% Rio de Janeiro, for the dissertations and theses of its Programa de
+%% Pos-Graduacao em Informatica (PPGI). It is generated from ufrj-ic.dtx by
+%% docstrip; edit the .dtx source, not this file.
+%% 
+%% Copyright (C) 2008-2026 Vicente Helano F. Batista, George O. Ainsworth Jr.,
+%% Geraldo Xexéo and Eduardo Mangeli.
+%% 
+%% This program is free software; you can redistribute it and/or modify
+%% it under the terms of the GNU General Public License version 3 as
+%% published by the Free Software Foundation.
+%% 
+%% This program is distributed in the hope that it will be useful,
+%% but WITHOUT ANY WARRANTY; without even the implied warranty of
+%% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+%% GNU General Public License version 3 for more details.
+%% 
+%% You should have received a copy of the GNU General Public License
+%% version 3 along with this package (see the COPYING.txt file).
+%% If not, see <http://www.gnu.org/licenses/>.
+%% 
+\NeedsTeXFormat{LaTeX2e}[2020/10/01]
+\ProvidesPackage{ufrj-ic}[2026/10/29 v5.0 CoppeTeX Instituto de Computacao/UFRJ unit style]
+\@ifclassloaded{ufrj}{}{%
+  \PackageError{ufrj-ic}{O estilo ufrj-ic precisa da classe ufrj}{%
+    Escreva \string\documentclass[msc]{ufrj} antes de\MessageBreak
+    \string\usepackage{ufrj-ic}.}%
+  \endinput}
+\ufrjdeclareplace{Rio de Janeiro}{RJ}{Brasil}
+\if@ufrjgrad
+\ufrjdeclareunit{Instituto de Computação}{Instituto de Computação}{IC}
+\IfFileExists{logos/ic-logo.pdf}
+  {\ufrjdeclarelogo[2cm]{ic-logo}}
+  {\IfFileExists{ic-logo.pdf}
+    {\ufrjdeclarelogo[2cm]{ic-logo}}
+    {\PackageWarningNoLine{ufrj-ic}{ic-logo.pdf, o logotipo do curso, nao
+       encontrado:\MessageBreak a capa sai so com o logotipo da UFRJ}}}
+\ufrjdeclareprogram[Bacharel em Ciência da Computação]{BCC}
+  {Ciência da Computação}{Computer Science}
+\ufrjdefunitstring{brazilian}{coverprogram}{Curso de Bacharelado em \local@deptname}
+\ufrjdefunitstring{brazilian}{tounit}{ao IC/UFRJ}
+\ufrjdefunitstring{english}  {tounit}{to IC/UFRJ}
+\ufrjdefunitstring{spanish}  {tounit}{al IC/UFRJ}
+\ufrjdefunitstring{french}   {tounit}{à l'IC/UFRJ}
+\ufrjdefunitstring{italian}  {tounit}{all'IC/UFRJ}
+\else
+\ufrjdeclareunit
+  {Instituto de Computação e Instituto Tércio Pacitti de Aplicações e
+   Pesquisas Computacionais}
+  {Instituto de Computação \\
+     Instituto Tércio Pacitti de Aplicações e Pesquisas Computacionais}
+  {IC}
+\ufrjdeclarelogo[2cm]{ppgi-logo}
+\ufrjdeclareprogram{PPGI}{Informática}{Informatics}
+\ufrjdefunitstring{brazilian}{coverprogram}
+  {Programa de Pós-Graduação em \local@deptname\ (\ufrj@deptcode)}
+\ufrjdefunitstring{brazilian}{tounit}{ao PPGI/UFRJ}
+\ufrjdefunitstring{english}  {tounit}{to PPGI/UFRJ}
+\ufrjdefunitstring{spanish}  {tounit}{al PPGI/UFRJ}
+\ufrjdefunitstring{french}   {tounit}{au PPGI/UFRJ}
+\ufrjdefunitstring{italian}  {tounit}{al PPGI/UFRJ}
+\fi
+%% 
+%%
+%% End of file `ufrj-ic.sty'.
