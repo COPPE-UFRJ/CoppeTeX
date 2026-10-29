@@ -148,10 +148,11 @@ CAMPOS = [
     ("areaconcentracao", "Folha adicional", "\u00c1rea de concentra\u00e7\u00e3o", "texto",
      "\u00c1rea de Concentra\u00e7\u00e3o", None, ""),
     ("linhapesquisa", "Folha adicional", "Linha de pesquisa", "texto",
-     "Linha de Pesquisa", None, "Vazio n\u00e3o imprime a linha"),
+     "Linha de Pesquisa", None, "S\u00f3 sai na folha de rosto se pedida abaixo"),
     ("folharosto", "Folha adicional", "Na folha de rosto, abaixo da natureza",
-     "escolha", "linha",
-     [("linha", "A linha de pesquisa"),
+     "escolha", "nada",
+     [("nada", "Nada (padr\u00e3o)"),
+      ("linha", "A linha de pesquisa"),
       ("area", "A \u00e1rea de concentra\u00e7\u00e3o (a do diploma)")],
      "A \u00e1rea ali sai da Norma COPPE 2026 (4.4); use s\u00f3 se o Programa pedir"),
     ("tipoproducao", "Folha adicional", "Tipo de produ\u00e7\u00e3o", "escolha",
@@ -295,6 +296,9 @@ def monta_tex(v, nome_bib):
     for o in OPCOES_CLASSE:
         if v.get(o):
             opcoes.append(o)
+    # A linha de pesquisa so sai na folha de rosto com a opcao da classe.
+    if v.get("folharosto") == "linha" and v["linhapesquisa"].strip():
+        opcoes.append("linhanafolhaderosto")
 
     A("%% Gerado pelo geradocvazio.py, da CoppeTeX.")
     A("%% Troque o conteudo e apague o que nao usar.")

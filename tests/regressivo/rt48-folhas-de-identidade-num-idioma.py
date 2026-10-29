@@ -51,7 +51,9 @@ for lingua in ("english", "spanish"):
                r"\begin{abstract}Um.\end{abstract}")
     else:
         pre = r"\begin{foreignabstract}Dois.\end{foreignabstract}\begin{abstract}Um.\end{abstract}"
-    with Documento(opcoes="dsc," + lingua, preambulo=PREAMBULO, pre=pre,
+    # linhanafolhaderosto: sem ela o rotulo da linha nem sai, e nao haveria
+    # o que cobrar dele.
+    with Documento(opcoes="dsc,linhanafolhaderosto," + lingua, preambulo=PREAMBULO, pre=pre,
                    corpo=r"\chapter{Um}Texto.") as d:
         if not d.ok:
             problemas.append("%s: nao compilou: %s" % (lingua, d.erros_do_log()))

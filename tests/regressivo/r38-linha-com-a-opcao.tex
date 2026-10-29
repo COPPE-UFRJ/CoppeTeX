@@ -1,0 +1,32 @@
+%% Teste de regressao da CoppeTeX. NAO roda na suite normal.
+%% Rode com: python tests/regressivo/run-regressivo.py
+%% PEDIDO: com a opcao linhanafolhaderosto, a linha de pesquisa informada sai
+%% na folha de rosto, acima dos orientadores, como no modelo do SiBI (r37 e o
+%% padrao, sem ela).
+%%
+%% A folha de rosto e a SEGUNDA folha.
+%% ESPERA-TEXTO-PAGINA: 2::Linha de pesquisa: Linha Prova
+%% ESPERA-TEXTO-PAGINA: 2::Orientador
+\documentclass[dsc,linhanafolhaderosto]{ufrj}
+\usepackage{ufrj-coppe}
+\title{Linha com a opcao}
+\foreigntitle{Research line with the option}
+\author{Nome}{Sobrenome}
+\advisor{Ana}{Silva}{D.Sc.}{UFRJ}
+\examiner{Carla Lima}{D.Sc.}{UFRJ}
+\department{PESC}
+\date{09}{2026}
+\areaconcentracao{Engenharia de Sistemas}
+\linhapesquisa{Linha Prova}
+\keyword{Regressao}
+\foreignkeyword{Regression}
+\begin{document}
+  \maketitle
+  \frontmatter
+  \begin{abstract}Resumo.\end{abstract}
+  \begin{foreignabstract}Abstract.\end{foreignabstract}
+  \tableofcontents
+  \mainmatter
+  \chapter{Um capitulo}
+  Texto.
+\end{document}

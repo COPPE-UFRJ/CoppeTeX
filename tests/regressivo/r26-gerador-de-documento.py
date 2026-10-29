@@ -48,6 +48,7 @@ CASOS = [
                   "--listofalgorithms=sim"]),
     ("glossariomanual", ["--glossario=sim", "--glossario_manual=sim"]),
     ("arearosto", ["--folharosto=area"]),
+    ("linharosto", ["--folharosto=linha"]),
 ]
 
 problemas = []

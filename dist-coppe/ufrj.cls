@@ -560,6 +560,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \DeclareOption{listasnosumario}{\@ufrjlistastoctrue}
 \newif\if@ufrjarearosto \@ufrjarearostofalse
 \DeclareOption{areanafolhaderosto}{\@ufrjarearostotrue}
+\newif\if@ufrjlinharosto \@ufrjlinharostofalse
+\DeclareOption{linhanafolhaderosto}{\@ufrjlinharostotrue}
 \newif\if@ufrjsimbalfa \@ufrjsimbalfafalse
 \DeclareOption{simbolosalfabeticos}{\@ufrjsimbalfatrue}
 \newif\if@ufrjrascunho \@ufrjrascunhofalse
@@ -1169,7 +1171,9 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
     \vspace*{5mm}}}
 \newcommand\ufrj@rostofields{%
   \ifx\ufrj@rostotroca\@empty
-    \ufrj@rostofield{\ufrj@unitstr{brazilian}{researchline}}{\ufrj@linhapesq}%
+    \if@ufrjlinharosto
+      \ufrj@rostofield{\ufrj@unitstr{brazilian}{researchline}}{\ufrj@linhapesq}%
+    \fi
   \else
     \ufrj@rostotroca
   \fi}

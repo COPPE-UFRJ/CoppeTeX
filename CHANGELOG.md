@@ -4,6 +4,18 @@ Project changes worth noting, newest first. Follows
 [Keep a Changelog](https://keepachangelog.com/) loosely; dates are
 ISO-8601.
 
+## [Unreleased] — 2026-10-29 — The linha de pesquisa off by default
+
+- **New option `linhanafolhaderosto`, off by default.** `\linhapesquisa`
+  (`\researchline`) no longer prints on the folha de rosto unless the option
+  is given; the command still records the value. The body of the Manual does
+  not list the linha among the elements of the folha de rosto, only the SiBI
+  model does. `\areaconcentracaonafolharosto` and `\campofolharosto` still fill
+  that place without the option.
+- The gerador gains "Nada (padrão)" in the folha de rosto field; choosing the
+  linha adds the option. New regression tests r37 (off by default) and r38
+  (with the option); r19, rt48 and r26 use the option.
+
 ## [Unreleased] — 2026-10-28 — A lighter root: the `coppetex/` folder
 
 - **The class finds its own files in `coppetex/`.** Right after loading, `ufrj`

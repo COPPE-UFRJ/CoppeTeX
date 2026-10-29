@@ -146,3 +146,6 @@ the string files described above.
 
 GNU General Public License, versão 3 (`COPYING.txt`). Dúvidas, sugestões e
 defeitos: <https://github.com/COPPE-UFRJ/CoppeTeX/issues>.
+
+<!-- registro de build -->
+_Último build exportado: 29/10/2026 10:41 (build/, dist-coppe, dist-poli, dist-biblatex, Overleaf e CTAN)._
