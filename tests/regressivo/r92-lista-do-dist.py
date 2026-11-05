@@ -42,23 +42,24 @@ def ler(*partes):
 
 
 PRECISA = {
+    # Sem migracao/ nem norma/ (ordem do autor 2026-11-05): a coppe.cls de
+    # migracao e a norma ficam na fonte (src/) e em specs/, fora das dist-*.
     "dist-coppe": ["README.md", "COPYING.txt", "ufrj.cls", "ufrj-coppe.sty",
-                   "migracao/coppe.cls", "latexmkrc", "ufrj.ist", "exemplo.bib",
+                   "latexmkrc", "ufrj.ist", "exemplo.bib",
                    "coppe-min-exemplo.tex", "coppe-max-exemplo.tex",
                    "coppetex/logos/ufrj-logo.pdf", "coppetex/logos/coppe-logo.pdf",
                    "manuais/ufrj.pdf", "manuais/ufrj-coppe.pdf", "manuais/manual.pdf",
                    "manuais/ufrj-quickref.pdf", "manuais/coppe-quickref.pdf",
+                   "manuais/coppe-guia.pdf",
                    "manuais/coppe-min-exemplo.pdf", "manuais/coppe-max-exemplo.pdf",
                    "exemplos/example_en.tex", "exemplos/example_es.tex",
-                   "coppetex/spanish-ufrj.lbx", "coppetex/ufrj-lang-spanish.def",
-                   "norma/NORMA_COPPE_2026.pdf"],
+                   "coppetex/spanish-ufrj.lbx", "coppetex/ufrj-lang-spanish.def"],
     "dist-poli": ["README.md", "COPYING.txt", "ufrj.cls", "ufrj-poli.sty",
-                  "migracao/poli.cls", "latexmkrc", "ufrj.ist", "exemplo.bib",
+                  "latexmkrc", "ufrj.ist", "exemplo.bib",
                   "poli-min-exemplo.tex", "poli-max-exemplo.tex",
                   "coppetex/logos/ufrj-logo.pdf", "coppetex/logos/poli-logo.pdf",
                   "manuais/ufrj.pdf", "manuais/ufrj-poli.pdf",
-                  "manuais/poli-quickref.pdf",
-                  "norma/NORMA_POLI_2026.pdf"],
+                  "manuais/poli-quickref.pdf", "manuais/poli-guia.pdf"],
     "dist-biblatex": ["README.md", "COPYING.txt", "exemplo-biblatex.tex",
                       "exemplo.bib"],
 }

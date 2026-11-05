@@ -212,7 +212,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %% !BIB program = biber
 %% Com o latexmk funcionando (no Windows ele pede o Perl), troque a primeira
 %% linha por: % !TeX program = latexmk -pdf -synctex=1
-\documentclass[dsc,setavermelha,numeracaoporcapitulo]{ufrj}
+\documentclass[dsc,setavermelha,numeracaoporcapitulo,linhanafolhaderosto]{ufrj}
 \usepackage{ufrj-coppe}
 %% coppe-max-exemplo.tex -- tudo o que a classe oferece e o Manual prevê, inclusive o
 %% opcional. Para só o obrigatório, veja o coppe-min-exemplo.tex.
@@ -239,6 +239,10 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %%    ela, a numeração corre no trabalho todo (Figura 1, 2, 3...; (1), (2)),
 %%    como nos exemplos do Manual (2.10, 2.11) e da NBR 14724 (5.7, 5.8). Este
 %%    exemplo a usa para mostrá-la; apague-a para a numeração contínua.
+%%  - linhanafolhaderosto: imprime a linha de pesquisa (\researchline) na folha
+%%    de rosto, à margem esquerda, logo acima dos orientadores, como no modelo
+%%    do SiBI. Desligada por padrão: o corpo do Manual não lista a linha entre
+%%    os elementos da folha de rosto. Este exemplo a usa para mostrá-la.
 %%  - semmorewrites: não carrega o pacote morewrites. Compila meio segundo mais
 %%    rápido por passada, mas só serve a trabalho SEM índice remissivo, sem
 %%    vários índices e sem glossário, e com menos listas que este exemplo, que
@@ -358,25 +362,29 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \foreignkeyword{Second keyword}
   \foreignkeyword{Third keyword}
 
-  % Dados da folha adicional (Coleta CAPES), obrigatoria desde agosto de 2026.
-  % A folha e preenchida pelo Programa; estes campos apenas a compoem.
-  \concentrationarea{Engenharia de Sistemas e Computação}
-  % A linha de pesquisa so sai na folha de rosto com a opcao de classe
-  % linhanafolhaderosto; sem ela, o comando apenas guarda o valor.
+  % LINHA DE PESQUISA: sai na folha de rosto, à margem esquerda, logo acima dos
+  % orientadores, por causa da opção de classe `linhanafolhaderosto' lá em cima.
+  % Sem a opção, \researchline apenas guarda o valor e nada sai na folha de rosto.
   \researchline{Engenharia de Dados e Conhecimento}
   % No lugar da linha de pesquisa, na folha de rosto, a área de concentração
   % (a do diploma) ou um campo seu. A área ali sai da Norma COPPE 2026 (4.4):
   % \titlepageconcentrationarea
   % \titlepagefield{Grupo de pesquisa}{Engenharia de Dados}
-  \productiontype{bibliographic}   % bibliografica | artistica | tecnologica | tecnica
-  \linkedproject{yes}         % sim | nao
-  \projectname{Nome do Projeto de Pesquisa ao qual o trabalho se vincula (caso haja)}
-  \fundingagency{Conselho Nacional de Desenvolvimento Científico e
-                  Tecnológico}{CNPq}
-  \fundingagency{Fundação Carlos Chagas Filho de Amparo à Pesquisa do
-                  Estado do Rio de Janeiro}{FAPERJ}
-  % A ficha oficial vem de fichacatalografica.sibi.ufrj.br; tendo o arquivo,
-  % descomente a linha abaixo e a moldura vazia da folha adicional some.
+  %
+  % FOLHA ADICIONAL -- Coleta CAPES. O bloco "Informações Coleta CAPES" é
+  % preenchido pelo Programa, e por isso NÃO acompanha o documento do aluno: só
+  % sai com a opção de classe `dadoscoleta'. Sem ela (como neste exemplo), a
+  % folha adicional traz só a ficha catalográfica. Para compor os campos, ligue
+  % a opção e informe os valores; os comandos estão descritos no manual
+  % (ufrj.pdf, "Folha de rosto e folha da Coleta CAPES") e na folha de consulta
+  % rápida (ufrj-quickref):
+  %   \concentrationarea{Engenharia de Sistemas e Computação}
+  %   \productiontype{bibliographic}   % bibliografica | artistica | tecnologica | tecnica
+  %   \linkedproject{yes}              % sim | nao
+  %   \projectname{Nome do Projeto de Pesquisa ao qual o trabalho se vincula (caso haja)}
+  %   \fundingagency{Conselho Nacional de Desenvolvimento Científico e Tecnológico}{CNPq}
+  % A ficha catalográfica aparece sempre; a oficial vem de
+  % fichacatalografica.sibi.ufrj.br -- tendo o arquivo, a moldura vazia some:
   % \catalogcard{ficha.pdf}
 
   % ORDEM DOS ELEMENTOS PRÉ-TEXTUAIS (Manual 3.1.2). A classe confere esta
@@ -1751,7 +1759,8 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor i
 %%  - PDF/A ............... o depósito é em PDF/A (2.2d), e é o padrão da
 %%    classe: não se escreve opção nenhuma para ter;
 %%  - \maketitle .......... capa, folha de rosto (3.1.2.1.1) e folha adicional
-%%    com a Coleta CAPES e a ficha catalográfica (3.1.2.1.2);
+%%    (3.1.2.1.2) com a ficha catalográfica; o bloco da Coleta CAPES, que o
+%%    Programa preenche, só sai com a opção de classe dadoscoleta;
 %%  - \frontmatter ........ folha de aprovação (3.1.2.1.3), com o orientador
 %%    em primeiro lugar na banca, como presidente;
 %%  - abstract ............ resumo na língua do trabalho (3.1.2.1.4);
@@ -1795,13 +1804,12 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor i
   \foreignkeyword{Second keyword}
   \foreignkeyword{Third keyword}
 
-  % Folha adicional: a área de concentração e os demais campos da Coleta CAPES
-  % (3.1.2.1.2). A área não sai na folha de rosto -- é o modelo do SiBI, e a
-  % COPPE não liga a opção areanafolhaderosto. A ficha catalográfica vem do
-  % gerador do SiBI; com o arquivo em mãos, descomente a linha \catalogcard.
-  \concentrationarea{Engenharia de Sistemas e Computação}
-  \productiontype{bibliographic}
-  \linkedproject{no}
+  % FOLHA ADICIONAL: por padrão traz só a ficha catalográfica. O bloco
+  % "Informações Coleta CAPES" (tipo de produção, projeto vinculado, nome do
+  % projeto, área de concentração e agências de fomento) é preenchido pelo
+  % Programa e só sai com a opção de classe `dadoscoleta'; os comandos estão no
+  % manual (ufrj.pdf) e na folha de consulta rápida. A ficha oficial vem do
+  % gerador do SiBI -- com o arquivo em mãos, descomente a linha abaixo:
   % \catalogcard{ficha.pdf}
 
   % A ordem dos elementos pré-textuais é a da 3.1.2 do Manual, e a classe a
@@ -1852,6 +1860,304 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor i
 
 \end{document}
 %</minexemplo>
+%    \end{macrocode}
+%
+% \subsection{O guia passo a passo}
+%
+% O arquivo |coppe-guia.tex| é o \emph{Guia Passo a Passo para Usar o CoppeTeX}:
+% um documento curto que leva o aluno da distribuição baixada ao trabalho
+% compilando. Ensina a \textbf{montagem} --- a estrutura de pastas e de arquivos,
+% um capítulo por arquivo --- e \textbf{o que preencher no |.tex|}. É, ele mesmo,
+% um trabalho da COPPE composto com a classe, e por isso demonstra o que ensina.
+% Vai na pasta |manuais/| da |dist-coppe| e no projeto do Overleaf.
+%    \begin{macrocode}
+%<*guiacoppe>
+%% !TeX program = pdflatex
+%% !TeX encoding = UTF-8
+%% !TeX spellcheck = pt_BR
+%% Guia Passo a Passo para Usar o CoppeTeX -- COPPE.
+%% Este arquivo e, ele mesmo, um trabalho da COPPE composto com a classe ufrj.
+%% Para comecar o SEU trabalho NAO copie este guia: copie o coppe-min-exemplo.tex,
+%% que e o ponto de partida. Gerado de ufrj-coppe.dtx por docstrip.
+\documentclass[dsc]{ufrj}
+\usepackage{ufrj-coppe}
+
+\begin{document}
+  \title{Guia Passo a Passo para Usar o CoppeTeX}
+  \subtitle{a montagem do trabalho e o que preencher no \texttt{.tex}, para
+    teses e dissertações da COPPE}
+  \foreigntitle{A step-by-step guide to CoppeTeX}
+  \foreignsubtitle{assembling the work and filling in the \texttt{.tex}, for
+    COPPE theses and dissertations}
+  \author{Projeto}{CoppeTeX}
+  \advisor{Geraldo}{Xexéo}{D.Sc.}{UFRJ}
+  \examiner{Geraldo Xexéo}{D.Sc.}{UFRJ}
+  \examiner{Eduardo Mangeli}{D.Sc.}{UFRJ}
+  \department{PESC}
+  \date{11}{2026}
+
+  \keyword{CoppeTeX}
+  \keyword{LaTeX}
+  \keyword{Tese}
+  \foreignkeyword{CoppeTeX}
+  \foreignkeyword{LaTeX}
+  \foreignkeyword{Thesis}
+
+  \maketitle
+  \frontmatter
+
+  \begin{abstract}
+  Este guia mostra, passo a passo, como montar uma tese ou dissertação da COPPE
+  com o CoppeTeX. Trata de duas coisas: a montagem do trabalho em vários arquivos
+  --- a estrutura de pastas e um capítulo por arquivo --- e o que preencher no
+  \texttt{.tex} principal, dos dados da folha de rosto aos elementos pós-textuais.
+  Não substitui o manual da norma (\texttt{manual.pdf}) nem o manual da classe
+  (\texttt{ufrj.pdf}): é o caminho mais curto entre baixar a distribuição e ver o
+  seu trabalho compilando.
+  \end{abstract}
+
+  \begin{foreignabstract}
+  This guide shows, step by step, how to assemble a COPPE thesis or dissertation
+  with CoppeTeX. It covers two things: splitting the work across files --- the
+  folder layout and one chapter per file --- and what to fill in the main
+  \texttt{.tex}, from the title-page data to the post-textual elements. It does
+  not replace the norm manual (\texttt{manual.pdf}) or the class manual
+  (\texttt{ufrj.pdf}): it is the shortest path from downloading the distribution
+  to seeing your work compile.
+  \end{foreignabstract}
+
+  \tableofcontents
+
+  \mainmatter
+
+  \chapter{Antes de começar}
+
+  Escolha onde vai trabalhar. No \textbf{Overleaf}, suba o \texttt{dist-coppe.zip}
+  em \emph{New Project \textrightarrow{} Upload Project} e pule para o
+  \autoref{cap:principal}. Na \textbf{sua máquina}, instale uma distribuição TeX
+  (MiKTeX no Windows, MacTeX no Mac, TeX Live no Linux) e extraia o
+  \texttt{dist-coppe.zip} --- ou copie a pasta \texttt{dist-coppe/} --- para onde
+  vai escrever.
+
+  Em qualquer caso, \textbf{não comece deste guia}: o ponto de partida é o
+  \texttt{coppe-min-exemplo.tex}, que já traz o esqueleto de uma dissertação ou
+  tese com o mínimo que a norma exige. Renomeie-o para o nome do seu trabalho
+  (por exemplo \texttt{tese.tex}) e escreva por cima. O
+  \texttt{coppe-max-exemplo.tex} mostra, comentado linha a linha, tudo o que a
+  classe oferece.
+
+  \begin{quote}
+  \textbf{A regra de ouro da arrumação:} ao lado do seu \texttt{.tex} ficam a
+  classe, o estilo da COPPE e os exemplos; o resto mora na pasta
+  \texttt{coppetex/}, e a classe sabe procurar lá. Copie \texttt{coppetex/}
+  junto, e não a abra.
+  \end{quote}
+
+  \chapter{A estrutura de pastas e arquivos}
+
+  Um trabalho curto cabe num \texttt{.tex} só. Uma tese, não: dezenas de páginas
+  num arquivo tornam a navegação e a compilação lentas, e um erro num capítulo
+  esconde o resto. A saída é \textbf{um arquivo por capítulo}, reunidos por um
+  arquivo principal. A \autoref{qua:pastas} é a arrumação recomendada.
+
+  \begin{framefloat}[ht]
+  \centering
+  \caption{Uma arrumação recomendada para o trabalho}
+  \label{qua:pastas}
+  \begin{tabular}{|l|l|}
+  \hline
+  \textbf{Pasta ou arquivo} & \textbf{O que guarda} \\
+  \hline
+  \texttt{tese.tex} & o arquivo principal (preâmbulo e montagem) \\
+  \hline
+  \texttt{pre-textual/} & dedicatória, agradecimentos, epígrafe, resumos \\
+  \hline
+  \texttt{capitulos/} & um arquivo por capítulo do texto \\
+  \hline
+  \texttt{pos-textual/} & apêndices e anexos \\
+  \hline
+  \texttt{figuras/} & as imagens \\
+  \hline
+  \texttt{referencias/} & a base \texttt{.bib} \\
+  \hline
+  \texttt{coppetex/} & o que é da classe (copie junto, não abra) \\
+  \hline
+  \end{tabular}
+  \source{Elaboração própria.}
+  \end{framefloat}
+
+  Em disco, fica assim:
+
+\begin{verbatim}
+minha-tese/
+  tese.tex
+  coppetex/            <- veio da distribuicao; nao mexa
+  ufrj.cls  ufrj-coppe.sty  ufrj.ist  latexmkrc
+  pre-textual/
+    agradecimentos.tex
+    epigrafe.tex
+  capitulos/
+    01-introducao.tex
+    02-revisao.tex
+    03-metodo.tex
+    04-resultados.tex
+    05-conclusao.tex
+  pos-textual/
+    apendice-a.tex
+    anexo-a.tex
+  figuras/
+    diagrama.pdf
+  referencias/
+    minha-tese.bib
+\end{verbatim}
+
+  Os nomes das pastas e dos arquivos são seus; o que importa é a ideia: o
+  principal monta, e cada parte mora no seu arquivo. O capítulo numerado no nome
+  (\texttt{01-}, \texttt{02-}) mantém a lista do capítulo em ordem no editor.
+
+  \chapter{O arquivo principal, parte por parte}
+  \label{cap:principal}
+
+  O \texttt{tese.tex} tem duas metades: o \textbf{preâmbulo}, antes do
+  \verb|\begin{document}|, onde se declara a classe e se carrega o que o trabalho
+  usa; e o \textbf{corpo}, onde se preenchem os dados e se chamam os capítulos. O
+  esqueleto é este, e os capítulos seguintes explicam cada bloco:
+
+\begin{verbatim}
+\documentclass[dsc]{ufrj}   % dsc = tese; msc = dissertacao
+\usepackage{ufrj-coppe}
+\addbibresource{referencias/minha-tese.bib}
+
+\begin{document}
+  % --- dados do trabalho (o que preencher: proximo capitulo) ---
+  \title{...}  \foreigntitle{...}
+  \author{...}{...}
+  \advisor{...}{...}{D.Sc.}{UFRJ}
+  \examiner{...}{D.Sc.}{UFRJ}
+  \department{PESC}
+  \date{09}{2026}
+  \keyword{...}   \foreignkeyword{...}
+
+  \maketitle       % capa, folha de rosto e folha adicional
+  \frontmatter     % folha de aprovacao e, dai em diante, numeracao i, ii...
+
+  \include{pre-textual/agradecimentos}
+  \begin{abstract}  ...  \end{abstract}
+  \begin{foreignabstract}  ...  \end{foreignabstract}
+  \tableofcontents
+
+  \mainmatter      % comeca a numeracao 1, 2, 3 e o texto
+  \include{capitulos/01-introducao}
+  \include{capitulos/02-revisao}
+  \include{capitulos/03-metodo}
+  \include{capitulos/04-resultados}
+  \include{capitulos/05-conclusao}
+
+  \backmatter      % referencias e, depois, apendices e anexos
+  \printbibliography
+  \appendix
+  \include{pos-textual/apendice-a}
+  \annex
+  \include{pos-textual/anexo-a}
+\end{document}
+\end{verbatim}
+
+  Cada \verb|\include{capitulos/01-introducao}| traz o conteúdo de
+  \texttt{capitulos/01-introducao.tex} (sem a extensão, e com barra para frente
+  mesmo no Windows). Dentro de cada arquivo de capítulo vai só o conteúdo ---
+  \verb|\chapter{...}| e o texto ---, sem preâmbulo e sem
+  \verb|\begin{document}|.
+
+  Enquanto escreve um capítulo, compile só ele com \verb|\includeonly| no
+  preâmbulo, que o LaTeX acelera muito e mantém a numeração das páginas e das
+  referências:
+
+\begin{verbatim}
+\includeonly{capitulos/03-metodo}
+\end{verbatim}
+
+  \chapter{O que preencher no \texttt{.tex}}
+
+  Os dados abaixo vão no corpo, logo depois do \verb|\begin{document}| e antes do
+  \verb|\maketitle|. A classe compõe com eles a capa, a folha de rosto, a folha
+  de aprovação e os metadados do PDF.
+
+  \begin{description}
+  \item[Título] \verb|\title{...}| em português e \verb|\foreigntitle{...}| em
+    inglês; o subtítulo, se houver, com \verb|\subtitle{...}| e
+    \verb|\foreignsubtitle{...}|.
+  \item[Autor] \verb|\author{Nomes}{Sobrenome}| --- dois argumentos, porque a
+    ficha inverte o nome.
+  \item[Orientação] um \verb|\advisor{Nome}{Sobrenome}{D.Sc.}{UFRJ}| por
+    orientador (de um a três).
+  \item[Banca] um \verb|\examiner{Nome Sobrenome}{D.Sc.}{Instituição}| por
+    membro, na ordem; o orientador preside e vem primeiro (3.1.2.1.3e).
+  \item[Programa] \verb|\department{PESC}| --- a sigla do seu Programa, como o
+    estilo da COPPE a declara (a folha de consulta rápida lista as treze).
+  \item[Datas] \verb|\date{mes}{ano}| do depósito e, na folha de aprovação,
+    \verb|\approvaldate{15 de setembro de 2026}|.
+  \item[Palavras-chave] \verb|\keyword{...}| e \verb|\foreignkeyword{...}|, uma
+    chamada por palavra.
+  \end{description}
+
+  Dois blocos são \textbf{opcionais} e dependem de uma opção de classe:
+
+  \begin{description}
+  \item[Linha de pesquisa] \verb|\researchline{...}| guarda o valor; para
+    imprimi-lo na folha de rosto, acima dos orientadores, ligue a opção
+    \verb|linhanafolhaderosto| no \verb|\documentclass|.
+  \item[Coleta CAPES] a folha adicional é preenchida pelo \emph{Programa}, e por
+    isso a classe não imprime o bloco ``Informações Coleta CAPES'' por padrão ---
+    a folha adicional traz só a ficha catalográfica. Se precisar compô-lo, ligue
+    a opção \verb|dadoscoleta| e informe \verb|\concentrationarea|,
+    \verb|\productiontype|, \verb|\linkedproject|, \verb|\projectname| e
+    \verb|\fundingagency|. A ficha vem de \texttt{fichacatalografica.sibi.ufrj.br}
+    e entra com \verb|\catalogcard{ficha.pdf}|.
+  \end{description}
+
+  \chapter{Pré-textual, textual e pós-textual}
+
+  O trabalho tem três partes, na ordem da 3.1.2 do Manual, e a classe confere a
+  ordem: um elemento fora de lugar é erro de compilação, com a mensagem dizendo o
+  que mover.
+
+  \textbf{Pré-textual} --- o que vem antes do texto. A classe compõe sozinha a
+  capa, a folha de rosto, a folha adicional e a folha de aprovação, a partir dos
+  dados que você preencheu. Você escreve só o que tem texto seu: a dedicatória
+  (\verb|\dedication{...}|), os agradecimentos (\verb|\chapter*{Agradecimentos}|),
+  a epígrafe (\verb|\epigrafe{...}{...}|) e os dois resumos (\verb|abstract| e
+  \verb|foreignabstract|). As listas (\verb|\listoffigures|, \verb|\listoftables|
+  etc.) e o \verb|\tableofcontents| fecham a parte, nessa ordem.
+
+  \textbf{Textual} --- a introdução, o desenvolvimento e a conclusão, cada
+  capítulo no seu arquivo, trazidos por \verb|\include| depois do
+  \verb|\mainmatter|.
+
+  \textbf{Pós-textual} --- depois do \verb|\backmatter|: as referências
+  (\verb|\printbibliography|), e então os apêndices (depois de \verb|\appendix|) e
+  os anexos (depois de \verb|\annex|). Apêndice é material do autor; anexo é
+  material de terceiros. O índice remissivo, se houver, é o último.
+
+  \chapter{Compilar e depositar}
+
+  Compile com o \texttt{latexmk}, que resolve as referências, as listas, o
+  glossário e o índice sozinho:
+
+\begin{verbatim}
+latexmk -pdf tese
+\end{verbatim}
+
+  À mão, a sequência é \texttt{pdflatex}, \texttt{biber}, \texttt{pdflatex},
+  \texttt{pdflatex}. O backend da bibliografia é o \texttt{biber}, não o BibTeX:
+  sem rodá-lo, as citações saem em negrito com a chave. No Windows, o
+  \texttt{latexmk} pede o Perl.
+
+  O arquivo sai em \textbf{PDF/A-2b}, como o depósito exige (Manual 2.2d). Antes
+  de entregar, inclua a ficha catalográfica real com \verb|\catalogcard{...}| e
+  confira a lista de verificação no fim do \texttt{manual.pdf}.
+
+\end{document}
+%</guiacoppe>
 %    \end{macrocode}
 %
 % \StopEventually{\PrintIndex}

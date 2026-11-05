@@ -1,11 +1,14 @@
 # -*- coding: utf-8 -*-
 """Gera as distribuicoes da CoppeTeX a partir de src/.
 
-    python tools/distribuicoes.py              regera build/, as normas, as tres
-                                               dist-* e os dois pacotes de envio
+    python tools/distribuicoes.py              regera build/, as tres dist-*, os
+                                               tres .zip no raiz e os dois pacotes
+                                               de envio (a norma NAO entra nas dist-*)
     python tools/distribuicoes.py --regerar    so prepara build/ e roda os tres .ins
     python tools/distribuicoes.py --normas     so converte as normas de src/normas
     python tools/distribuicoes.py --montar     so monta dist-coppe, dist-poli e dist-biblatex
+    python tools/distribuicoes.py --zip        so fecha dist-coppe.zip, dist-poli.zip
+                                               e dist-biblatex.zip no raiz
     python tools/distribuicoes.py --ctan       so o pacote do CTAN (da COPPE), em build/
     python tools/distribuicoes.py --overleaf   so o projeto do Overleaf (da COPPE), em build/
     python tools/distribuicoes.py --pacote     fecha cada dist-* num .zip em build/pacotes
@@ -15,11 +18,14 @@ O caminho inteiro, do .dtx ao que se baixa, e:
 
     src/  --(copia das fontes)-->  build/  --(.ins)-->  build/ com os gerados
           build/  --(compilacao: build-check.ps1 / coppetex.bat --docs)-->  PDFs
-          build/ + src/distribuicao + src/normas  --(--montar)-->  dist-*/ e normas/
+          build/ + src/distribuicao  --(--montar)-->  dist-*/ e os dist-*.zip
 
 src/ so tem fonte. build/ e a pasta de trabalho: recebe uma copia das fontes,
 os arquivos que os .ins geram e os PDFs que a compilacao produz, e fica fora do
-git. As dist-* e normas/ sao versionadas: sao o que se baixa.
+git. As dist-* (pasta e .zip) sao versionadas: sao o que se baixa. A NORMA nao
+entra mais nas distribuicoes (ordem do autor 2026-11-05): ela esta em specs/ e a
+fonte em src/normas/; normas/ no raiz nao e mais gerada nem versionada. As
+pastas norma/, gerador/ e migracao/ tambem sairam das dist-*.
 
 Os dois pacotes de ENVIO -- o do CTAN e o do Overleaf, os dois da COPPE so --
 saem em build/ctan/ e build/overleaf/, com o .zip em build/pacotes/, e NAO sao
@@ -112,8 +118,8 @@ def _pasta(logos):
 # Os manuais da COPPE, em PDF: na dist-coppe e no projeto do Overleaf, numa
 # pasta manuais/ que so se le -- nenhum documento depende dela.
 MANUAIS_COPPE = ("ufrj.pdf", "ufrj-coppe.pdf", "ufrj-quickref.pdf",
-                 "coppe-quickref.pdf", "manual.pdf", "coppe-min-exemplo.pdf",
-                 "coppe-max-exemplo.pdf")
+                 "coppe-quickref.pdf", "coppe-guia.pdf", "manual.pdf",
+                 "coppe-min-exemplo.pdf", "coppe-max-exemplo.pdf")
 
 DISTRIBUICOES = {
     "dist-coppe": (
@@ -126,14 +132,10 @@ DISTRIBUICOES = {
         + [_b(n, "manuais") for n in MANUAIS_COPPE]
         + [_b(n, "exemplos") for n in (
             "example_en.tex", "example_en.pdf", "example_es.tex", "example_es.pdf")]
-        + [_s("gerador/coppetex-novo.bat", "gerador"),
-           _s("gerador/geradocvazio.py", "gerador")]
-        # A coppe.cls so serve a trabalho comecado com \documentclass{coppe}, e
-        # e quem migra que a traz para junto do documento.
-        + [_s("distribuicao/coppe/MIGRATION_v3_to_v4.md", "migracao"),
-           _s("distribuicao/coppe/MIGRATION_v4_to_v5.md", "migracao"),
-           _b("coppe.cls", "migracao")]
-        + [_n("norma-coppe/NORMA_COPPE_2026.pdf")]
+        # As pastas norma/, gerador/ e migracao/ NAO vao na distribuicao (ordem
+        # do autor 2026-11-05): a norma esta em specs/ e em src/normas; o gerador
+        # de trabalho novo e a coppe.cls de migracao ficam na fonte (src/), para
+        # quem precisar.
     ),
     "dist-poli": (
         [_s("distribuicao/poli/README.md"), _r("COPYING.txt")]
@@ -144,9 +146,9 @@ DISTRIBUICOES = {
         + _pasta(["poli-logo.pdf", "ufrj-logo.pdf"])
         + [_b(n, "manuais") for n in (
             "ufrj.pdf", "ufrj-poli.pdf", "ufrj-quickref.pdf", "poli-quickref.pdf",
-            "poli-min-exemplo.pdf", "poli-max-exemplo.pdf")]
-        + [_b("poli.cls", "migracao")]
-        + [_n("norma-poli/NORMA_POLI_2026.pdf")]
+            "poli-guia.pdf", "poli-min-exemplo.pdf", "poli-max-exemplo.pdf")]
+        # Sem norma/ nem migracao/ (ordem do autor 2026-11-05): a norma esta em
+        # specs/ e em src/normas; a poli.cls de migracao fica na fonte (src/).
     ),
     "dist-biblatex": (
         [_s("distribuicao/biblatex/README.md"), _r("COPYING.txt"),
@@ -433,6 +435,35 @@ def versao_atual():
     return m.group(1) if m else "x"
 
 
+def zipar_raiz(diz=_diz):
+    """Um .zip por distribuicao, na RAIZ do repositorio: dist-coppe.zip,
+    dist-poli.zip e dist-biblatex.zip.
+
+    Os arquivos vao na RAIZ do zip (sem pasta dentro), de modo que o .zip serve
+    tanto para baixar quanto para subir no Overleaf (New Project > Upload
+    Project toma a raiz do zip como raiz do projeto). E o par do folder dist-*/:
+    a mesma entrega, uma aberta e uma fechada, e e versionado junto com elas.
+    So fecha o que estiver em dia: se a dist tem arquivo fora da lista, avisa e
+    manda rodar --montar.
+
+    Side-effect: escreve/sobrescreve <raiz>/dist-*.zip."""
+    ok = True
+    for d in sorted(DISTRIBUICOES):
+        if sobras(d):
+            diz("   %s tem arquivo fora da lista -- rode --montar" % d)
+            ok = False
+            continue
+        zipado = os.path.join(RAIZ, d + ".zip")
+        pasta = os.path.join(RAIZ, d)
+        if os.path.exists(zipado):
+            os.remove(zipado)
+        with zipfile.ZipFile(zipado, "w", zipfile.ZIP_DEFLATED) as z:
+            for rel in esperado(d):
+                z.write(os.path.join(pasta, *rel.split("/")), rel)
+        diz("   %s.zip" % d)
+    return ok
+
+
 def pacote(diz=_diz):
     """Um .zip por distribuicao, em build/pacotes/, com uma pasta dentro."""
     versao = versao_atual()
@@ -568,10 +599,14 @@ def main(argv):
     ok = True
     if tudo or "--regerar" in passos:
         ok = regerar() and ok
-    if tudo or "--normas" in passos:
+    # A norma NAO entra mais nas distribuicoes (ordem do autor 2026-11-05): a
+    # conversao de src/normas so roda quando pedida de proposito, com --normas.
+    if "--normas" in passos:
         ok = normas() and ok
     if tudo or "--montar" in passos:
         ok = montar() and ok
+    if tudo or "--zip" in passos:
+        ok = zipar_raiz() and ok
     if tudo or "--ctan" in passos:
         ok = montar_pacote("ctan") and ok
     if tudo or "--overleaf" in passos:

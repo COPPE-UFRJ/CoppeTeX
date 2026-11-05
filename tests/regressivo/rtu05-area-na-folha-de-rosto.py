@@ -26,8 +26,9 @@ CORPO = r"\chapter{Um}Texto."
 
 problemas = []
 
-# 1. o padrao: a area so na folha adicional
-with Documento(preambulo=PRE, corpo=CORPO) as d:
+# 1. o padrao: a area so na folha adicional (a tabela da Coleta CAPES so sai com
+# a opcao dadoscoleta -- a folha e preenchida pelo Programa)
+with Documento(opcoes="dsc,dadoscoleta", preambulo=PRE, corpo=CORPO) as d:
     if not d.ok:
         relatar(["nao compilou: %s" % d.erros_do_log()])
     folhas = [n for n in range(1, d.n_paginas() + 1)

@@ -32,8 +32,14 @@
 
 # Pasta de trabalho: copia das fontes, o que os .ins geram, os PDFs compilados,
 # logs, cache do regressivo e os zips. src/ so tem fonte; o que se baixa sao as
-# dist-* e normas/, versionadas.
+# dist-* (pasta e .zip), versionadas.
 /build/
+
+# normas/ no raiz deixou de ser versionada (ordem do autor 2026-11-05: "tire as
+# normas do raiz; o que e preciso esta no specs, mas mantenha no src"). Ela e
+# gerada de src/normas/ como intermediario de build e alimenta a pasta norma/
+# de cada dist-* (essa, sim, versionada). A FONTE, src/normas/, continua no git.
+/normas/
 # restos de versoes anteriores do harness
 _scratch/
 specs/*.txt
@@ -43,9 +49,9 @@ specs/*.txt
 *page-*.png
 *.synctex.gz
 
-# Os PDFs versionados sao os das dist-* e de normas/, e so esses. Eles sao a
-# ENTREGA: quem abre o repositorio no GitHub tem de conseguir ver o manual, o
-# exemplo e a norma sem instalar TeX. Sao copia dos de build/.
+# Os PDFs versionados sao os das dist-*, e so esses. Eles sao a ENTREGA: quem
+# abre o repositorio no GitHub tem de conseguir ver o manual, o exemplo e a
+# norma (em dist-*/norma/) sem instalar TeX. Sao copia dos de build/.
 #
 # Os de tests/ NAO entram, e a razao e outra: eles sao prova de funcionamento,
 # mudam a cada compilacao e so interessam a quem esta rodando os testes naquele
@@ -64,6 +70,11 @@ tests/**/*.pdf
 
 # Configuração local do Claude Code
 .claude/
+
+# Notas de trabalho/historico do desenvolvimento com o Claude: ficam locais, nao
+# vao para o GitHub (ordem do autor 2026-11-05). O registro que viaja entre
+# maquinas e o historico do git (commits comentados).
+/claude/
 
 # cache do Python; aparece assim que o painel importa qualquer coisa de tools/
 __pycache__/

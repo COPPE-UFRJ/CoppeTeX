@@ -71,6 +71,20 @@ License version 3 (see the COPYING.txt file).
 
 \endpreamble
 
+\declarepreamble\guiapreamble
+
+This is the "Guia Passo a Passo para Usar o CoppeTeX": a step-by-step guide to
+assembling an Escola Politecnica undergraduate project and filling in the .tex.
+It is itself a Projeto de Graduacao composed with the `ufrj' class. Generated
+from ufrj-poli.dtx by docstrip; edit the .dtx source, not this file. To start
+your own work, copy poli-min-exemplo.tex, not this guide.
+
+Copyright (C) 2008-2026 Vicente Helano F. Batista, George O. Ainsworth Jr.,
+Geraldo Xexéo and Eduardo Mangeli. Released under the GNU General Public
+License version 3 (see the COPYING.txt file).
+
+\endpreamble
+
 \postamble
 % end of `ufrj-poli' customized files
 \endpostamble
@@ -86,5 +100,8 @@ License version 3 (see the COPYING.txt file).
   \file{poli-min-exemplo.tex}{\from{ufrj-poli.dtx}{poliexemplo}}%
   \file{poli-max-exemplo.tex}{\from{ufrj-poli.dtx}{polimaxexemplo}}%
   \file{poli-quickref.tex}{\from{ufrj-poli.dtx}{quickrefpoli}}%
+% O Guia Passo a Passo da Escola: ensina a montar o trabalho e o que preencher.
+  \usepreamble\guiapreamble
+  \file{poli-guia.tex}{\from{ufrj-poli.dtx}{guiapoli}}%
 }
 \endbatchfile

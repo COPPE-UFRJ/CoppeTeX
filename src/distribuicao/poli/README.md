@@ -6,8 +6,8 @@ ignore o resto do repositório.
 
 > A norma da Escola em vigor ainda é o Anexo da Resolução n.º 05/2012. Esta
 > distribuição segue o Manual da UFRJ/SiBI (2026) e a proposta de Norma 2026 da
-> Escola, em `norma/`. Confirme com a coordenação do seu Curso antes de
-> depositar.
+> Escola (no repositório, em `specs/`). Confirme com a coordenação do seu Curso
+> antes de depositar.
 
 > Esta pasta é gerada. Não edite nada aqui dentro: a fonte está em `src/` no
 > repositório <https://github.com/COPPE-UFRJ/CoppeTeX>.
@@ -35,8 +35,8 @@ frases da norma. A lista das siglas aceitas por `\department` está no
 `manuais/ufrj-poli.pdf` e no `manuais/poli-quickref.pdf`.
 
 Se o seu trabalho começou com `\documentclass{poli}`, ele continua compilando:
-traga a `migracao/poli.cls` para a raiz, e ela carrega a `ufrj` com o estilo
-`ufrj-poli`.
+pegue a `poli.cls` de compatibilidade no repositório (em `src/`) e traga-a para
+a raiz; ela carrega a `ufrj` com o estilo `ufrj-poli`.
 
 ## A regra da arrumação
 
@@ -50,8 +50,6 @@ jeito: `pdflatex` à mão, o botão do seu editor, `latexmk` ou Overleaf.
 | **raiz** | Classe, estilo da Escola, exemplos, base de referências | Copie para a pasta do trabalho. |
 | `coppetex/` | Estilos de bibliografia, os arquivos de **todo** idioma e os logotipos | Copie junto, sem abrir. |
 | `manuais/` | Os PDFs para ler | Nada. |
-| `norma/` | A proposta de Norma 2026 da Escola, em PDF | Leitura. |
-| `migracao/` | A `poli.cls` | Traga para a raiz só se o seu trabalho começa com `\documentclass{poli}` |
 
 ## Os arquivos da raiz
 

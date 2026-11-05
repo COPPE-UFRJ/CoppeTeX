@@ -20,7 +20,7 @@
 %% !BIB program = biber
 %% Com o latexmk funcionando (no Windows ele pede o Perl), troque a primeira
 %% linha por: % !TeX program = latexmk -pdf -synctex=1
-\documentclass[dsc,setavermelha,numeracaoporcapitulo]{ufrj}
+\documentclass[dsc,setavermelha,numeracaoporcapitulo,linhanafolhaderosto]{ufrj}
 \usepackage{ufrj-coppe}
 %% coppe-max-exemplo.tex -- tudo o que a classe oferece e o Manual prevê, inclusive o
 %% opcional. Para só o obrigatório, veja o coppe-min-exemplo.tex.
@@ -47,6 +47,10 @@
 %%    ela, a numeração corre no trabalho todo (Figura 1, 2, 3...; (1), (2)),
 %%    como nos exemplos do Manual (2.10, 2.11) e da NBR 14724 (5.7, 5.8). Este
 %%    exemplo a usa para mostrá-la; apague-a para a numeração contínua.
+%%  - linhanafolhaderosto: imprime a linha de pesquisa (\researchline) na folha
+%%    de rosto, à margem esquerda, logo acima dos orientadores, como no modelo
+%%    do SiBI. Desligada por padrão: o corpo do Manual não lista a linha entre
+%%    os elementos da folha de rosto. Este exemplo a usa para mostrá-la.
 %%  - semmorewrites: não carrega o pacote morewrites. Compila meio segundo mais
 %%    rápido por passada, mas só serve a trabalho SEM índice remissivo, sem
 %%    vários índices e sem glossário, e com menos listas que este exemplo, que
@@ -165,25 +169,29 @@
   \foreignkeyword{Second keyword}
   \foreignkeyword{Third keyword}
 
-  % Dados da folha adicional (Coleta CAPES), obrigatoria desde agosto de 2026.
-  % A folha e preenchida pelo Programa; estes campos apenas a compoem.
-  \concentrationarea{Engenharia de Sistemas e Computação}
-  % A linha de pesquisa so sai na folha de rosto com a opcao de classe
-  % linhanafolhaderosto; sem ela, o comando apenas guarda o valor.
+  % LINHA DE PESQUISA: sai na folha de rosto, à margem esquerda, logo acima dos
+  % orientadores, por causa da opção de classe `linhanafolhaderosto' lá em cima.
+  % Sem a opção, \researchline apenas guarda o valor e nada sai na folha de rosto.
   \researchline{Engenharia de Dados e Conhecimento}
   % No lugar da linha de pesquisa, na folha de rosto, a área de concentração
   % (a do diploma) ou um campo seu. A área ali sai da Norma COPPE 2026 (4.4):
   % \titlepageconcentrationarea
   % \titlepagefield{Grupo de pesquisa}{Engenharia de Dados}
-  \productiontype{bibliographic}   % bibliografica | artistica | tecnologica | tecnica
-  \linkedproject{yes}         % sim | nao
-  \projectname{Nome do Projeto de Pesquisa ao qual o trabalho se vincula (caso haja)}
-  \fundingagency{Conselho Nacional de Desenvolvimento Científico e
-                  Tecnológico}{CNPq}
-  \fundingagency{Fundação Carlos Chagas Filho de Amparo à Pesquisa do
-                  Estado do Rio de Janeiro}{FAPERJ}
-  % A ficha oficial vem de fichacatalografica.sibi.ufrj.br; tendo o arquivo,
-  % descomente a linha abaixo e a moldura vazia da folha adicional some.
+  %
+  % FOLHA ADICIONAL -- Coleta CAPES. O bloco "Informações Coleta CAPES" é
+  % preenchido pelo Programa, e por isso NÃO acompanha o documento do aluno: só
+  % sai com a opção de classe `dadoscoleta'. Sem ela (como neste exemplo), a
+  % folha adicional traz só a ficha catalográfica. Para compor os campos, ligue
+  % a opção e informe os valores; os comandos estão descritos no manual
+  % (ufrj.pdf, "Folha de rosto e folha da Coleta CAPES") e na folha de consulta
+  % rápida (ufrj-quickref):
+  %   \concentrationarea{Engenharia de Sistemas e Computação}
+  %   \productiontype{bibliographic}   % bibliografica | artistica | tecnologica | tecnica
+  %   \linkedproject{yes}              % sim | nao
+  %   \projectname{Nome do Projeto de Pesquisa ao qual o trabalho se vincula (caso haja)}
+  %   \fundingagency{Conselho Nacional de Desenvolvimento Científico e Tecnológico}{CNPq}
+  % A ficha catalográfica aparece sempre; a oficial vem de
+  % fichacatalografica.sibi.ufrj.br -- tendo o arquivo, a moldura vazia some:
   % \catalogcard{ficha.pdf}
 
   % ORDEM DOS ELEMENTOS PRÉ-TEXTUAIS (Manual 3.1.2). A classe confere esta

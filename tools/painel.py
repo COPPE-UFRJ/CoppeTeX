@@ -156,15 +156,17 @@ def acao_conferir(saida):
 
 
 def acao_dist(saida):
-    """Converte as normas e monta dist-coppe, dist-poli e dist-biblatex a partir
-    de build/ e de src/. Nunca compila nada por conta: o que faltar em build/ e
-    apontado, e nada e montado."""
-    saida("")
-    saida("normas/")
-    ok = distribuicoes.normas(saida)
+    """Monta dist-coppe, dist-poli e dist-biblatex a partir de build/ e de src/,
+    e fecha os tres .zip no raiz (dist-coppe.zip, etc.). A norma nao entra mais
+    nas distribuicoes (ordem do autor 2026-11-05), entao nao se converte nada de
+    src/normas aqui; quem quiser a norma em PDF usa `--normas'. Nunca compila
+    nada por conta: o que faltar em build/ e apontado, e nada e montado."""
     saida("")
     saida("montando as distribuicoes")
-    return distribuicoes.montar(saida) and ok
+    ok = distribuicoes.montar(saida)
+    saida("")
+    saida("zipando as distribuicoes no raiz")
+    return distribuicoes.zipar_raiz(saida) and ok
 
 
 def acao_pacote(saida):

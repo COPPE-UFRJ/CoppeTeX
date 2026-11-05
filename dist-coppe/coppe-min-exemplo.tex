@@ -28,7 +28,8 @@
 %%  - PDF/A ............... o depósito é em PDF/A (2.2d), e é o padrão da
 %%    classe: não se escreve opção nenhuma para ter;
 %%  - \maketitle .......... capa, folha de rosto (3.1.2.1.1) e folha adicional
-%%    com a Coleta CAPES e a ficha catalográfica (3.1.2.1.2);
+%%    (3.1.2.1.2) com a ficha catalográfica; o bloco da Coleta CAPES, que o
+%%    Programa preenche, só sai com a opção de classe dadoscoleta;
 %%  - \frontmatter ........ folha de aprovação (3.1.2.1.3), com o orientador
 %%    em primeiro lugar na banca, como presidente;
 %%  - abstract ............ resumo na língua do trabalho (3.1.2.1.4);
@@ -72,13 +73,12 @@
   \foreignkeyword{Second keyword}
   \foreignkeyword{Third keyword}
 
-  % Folha adicional: a área de concentração e os demais campos da Coleta CAPES
-  % (3.1.2.1.2). A área não sai na folha de rosto -- é o modelo do SiBI, e a
-  % COPPE não liga a opção areanafolhaderosto. A ficha catalográfica vem do
-  % gerador do SiBI; com o arquivo em mãos, descomente a linha \catalogcard.
-  \concentrationarea{Engenharia de Sistemas e Computação}
-  \productiontype{bibliographic}
-  \linkedproject{no}
+  % FOLHA ADICIONAL: por padrão traz só a ficha catalográfica. O bloco
+  % "Informações Coleta CAPES" (tipo de produção, projeto vinculado, nome do
+  % projeto, área de concentração e agências de fomento) é preenchido pelo
+  % Programa e só sai com a opção de classe `dadoscoleta'; os comandos estão no
+  % manual (ufrj.pdf) e na folha de consulta rápida. A ficha oficial vem do
+  % gerador do SiBI -- com o arquivo em mãos, descomente a linha abaixo:
   % \catalogcard{ficha.pdf}
 
   % A ordem dos elementos pré-textuais é a da 3.1.2 do Manual, e a classe a

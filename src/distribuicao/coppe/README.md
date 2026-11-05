@@ -39,10 +39,7 @@ qualquer jeito: `pdflatex` à mão, o botão do seu editor, `latexmk` ou Overlea
 | **raiz** | Classe, estilo da COPPE, exemplos em português, base de referências | Copie para a pasta do trabalho. |
 | `coppetex/` | Estilos de bibliografia, os arquivos de **todo** idioma e os logotipos | Copie junto, sem abrir. |
 | `manuais/` | Os PDFs para ler | Nada. |
-| `norma/` | A Norma COPPE 2026, em PDF | Leitura. |
 | `exemplos/` | Exemplos em **inglês** e em **espanhol**, com o PDF de cada um | Para usar um, traga o `.tex` para a raiz. |
-| `gerador/` | Gerador de trabalho novo (`coppetex-novo.bat`) | Rode se quiser começar de uma folha em branco |
-| `migracao/` | Guias para quem começou com a versão 3 ou 4, e a `coppe.cls` | Leitura; a `coppe.cls` vai para a raiz só se o seu trabalho começa com `\documentclass{coppe}` |
 
 ## Os arquivos da raiz
 
@@ -126,8 +123,8 @@ local do TeX e rode `texhash` (TeX Live) ou `initexmf --update-fndb` (MiKTeX).
 - Inclua a ficha catalográfica real, gerada em
   <http://fichacatalografica.sibi.ufrj.br/> ou pedida à biblioteca do Programa:
   `\catalogcard{ficha.pdf}`.
-- Confira a `norma/NORMA_COPPE_2026.pdf` e a lista de verificação no fim do
-  `manuais/manual.pdf`.
+- Confira a lista de verificação no fim do `manuais/manual.pdf`. A norma da
+  COPPE está no repositório (em `specs/` e em `src/normas/`).
 
 ## Se der problema
 

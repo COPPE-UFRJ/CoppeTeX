@@ -707,6 +707,277 @@ def soma(a, b):
 %</polimaxexemplo>
 %    \end{macrocode}
 %
+% \section{O guia passo a passo}
+%
+% O |poli-guia.tex| é o \emph{Guia Passo a Passo para Usar o CoppeTeX} da Escola
+% Politécnica: leva o aluno da distribuição baixada ao Projeto de Graduação
+% compilando. Ensina a \textbf{montagem} --- a estrutura de pastas e de arquivos,
+% um capítulo por arquivo --- e \textbf{o que preencher no |.tex|}. É, ele mesmo,
+% um Projeto de Graduação composto com a classe. Vai na pasta |manuais/| da
+% |dist-poli|.
+%    \begin{macrocode}
+%<*guiapoli>
+%% !TeX program = pdflatex
+%% !TeX encoding = UTF-8
+%% !TeX spellcheck = pt_BR
+%% Guia Passo a Passo para Usar o CoppeTeX -- Escola Politecnica.
+%% Este arquivo e, ele mesmo, um Projeto de Graduacao composto com a classe ufrj.
+%% Para comecar o SEU trabalho NAO copie este guia: copie o poli-min-exemplo.tex,
+%% que e o ponto de partida. Gerado de ufrj-poli.dtx por docstrip.
+\documentclass[grad]{ufrj}
+\usepackage{ufrj-poli}
+
+\begin{document}
+  \title{Guia Passo a Passo para Usar o CoppeTeX}
+  \subtitle{a montagem do trabalho e o que preencher no \texttt{.tex}, para
+    Projetos de Graduação da Escola Politécnica}
+  \foreigntitle{A step-by-step guide to CoppeTeX}
+  \foreignsubtitle{assembling the work and filling in the \texttt{.tex}, for
+    Escola Politécnica undergraduate projects}
+  \author{Projeto}{CoppeTeX}
+  \advisor{Nome do}{Orientador}{D.Sc.}{UFRJ}
+  \examiner{Nome do Orientador}{D.Sc.}{UFRJ}
+  \examiner{Nome do Examinador}{D.Sc.}{UFRJ}
+  \department{ECI}
+  \date{11}{2026}
+  \approvaldate{15 de novembro de 2026}
+
+  \keyword{CoppeTeX}
+  \keyword{LaTeX}
+  \keyword{Projeto de Graduação}
+  \foreignkeyword{CoppeTeX}
+  \foreignkeyword{LaTeX}
+  \foreignkeyword{Undergraduate Project}
+
+  \maketitle
+  \frontmatter
+
+  \begin{abstract}
+  Este guia mostra, passo a passo, como montar um Projeto de Graduação da Escola
+  Politécnica com o CoppeTeX. Trata de duas coisas: a montagem do trabalho em
+  vários arquivos --- a estrutura de pastas e um capítulo por arquivo --- e o que
+  preencher no \texttt{.tex} principal, dos dados da folha de rosto aos elementos
+  pós-textuais. Não substitui o manual da norma (\texttt{manual.pdf}) nem o
+  manual da classe (\texttt{ufrj.pdf}): é o caminho mais curto entre baixar a
+  distribuição e ver o seu trabalho compilando.
+  \end{abstract}
+
+  \begin{foreignabstract}
+  This guide shows, step by step, how to assemble an Escola Politécnica
+  undergraduate project with CoppeTeX. It covers two things: splitting the work
+  across files --- the folder layout and one chapter per file --- and what to
+  fill in the main \texttt{.tex}, from the title-page data to the post-textual
+  elements. It does not replace the norm manual (\texttt{manual.pdf}) or the
+  class manual (\texttt{ufrj.pdf}): it is the shortest path from downloading the
+  distribution to seeing your work compile.
+  \end{foreignabstract}
+
+  \tableofcontents
+
+  \mainmatter
+
+  \chapter{Antes de começar}
+
+  Escolha onde vai trabalhar. No \textbf{Overleaf}, suba o \texttt{dist-poli.zip}
+  em \emph{New Project \textrightarrow{} Upload Project} e pule para o
+  \autoref{cap:principal}. Na \textbf{sua máquina}, instale uma distribuição TeX
+  (MiKTeX no Windows, MacTeX no Mac, TeX Live no Linux) e extraia o
+  \texttt{dist-poli.zip} --- ou copie a pasta \texttt{dist-poli/} --- para onde
+  vai escrever.
+
+  Em qualquer caso, \textbf{não comece deste guia}: o ponto de partida é o
+  \texttt{poli-min-exemplo.tex}, que já traz o esqueleto de um Projeto de
+  Graduação com o mínimo que a norma exige. Renomeie-o para o nome do seu
+  trabalho (por exemplo \texttt{projeto.tex}) e escreva por cima. O
+  \texttt{poli-max-exemplo.tex} mostra tudo o que a classe oferece.
+
+  \begin{quote}
+  \textbf{A regra de ouro da arrumação:} ao lado do seu \texttt{.tex} ficam a
+  classe, o estilo da Escola e os exemplos; o resto mora na pasta
+  \texttt{coppetex/}, e a classe sabe procurar lá. Copie \texttt{coppetex/}
+  junto, e não a abra.
+  \end{quote}
+
+  \chapter{A estrutura de pastas e arquivos}
+
+  Um trabalho curto cabe num \texttt{.tex} só. Um projeto mais longo, não:
+  muitas páginas num arquivo tornam a navegação e a compilação lentas, e um erro
+  num capítulo esconde o resto. A saída é \textbf{um arquivo por capítulo},
+  reunidos por um arquivo principal. A \autoref{qua:pastaspoli} é a arrumação
+  recomendada.
+
+  \begin{framefloat}[ht]
+  \centering
+  \caption{Uma arrumação recomendada para o trabalho}
+  \label{qua:pastaspoli}
+  \begin{tabular}{|l|l|}
+  \hline
+  \textbf{Pasta ou arquivo} & \textbf{O que guarda} \\
+  \hline
+  \texttt{projeto.tex} & o arquivo principal (preâmbulo e montagem) \\
+  \hline
+  \texttt{pre-textual/} & agradecimentos, epígrafe, resumos \\
+  \hline
+  \texttt{capitulos/} & um arquivo por capítulo do texto \\
+  \hline
+  \texttt{pos-textual/} & apêndices e anexos \\
+  \hline
+  \texttt{figuras/} & as imagens \\
+  \hline
+  \texttt{referencias/} & a base \texttt{.bib} \\
+  \hline
+  \texttt{coppetex/} & o que é da classe (copie junto, não abra) \\
+  \hline
+  \end{tabular}
+  \source{Elaboração própria.}
+  \end{framefloat}
+
+  Em disco, fica assim:
+
+\begin{verbatim}
+meu-projeto/
+  projeto.tex
+  coppetex/            <- veio da distribuicao; nao mexa
+  ufrj.cls  ufrj-poli.sty  ufrj.ist  latexmkrc
+  pre-textual/
+    agradecimentos.tex
+  capitulos/
+    01-introducao.tex
+    02-desenvolvimento.tex
+    03-conclusao.tex
+  pos-textual/
+    apendice-a.tex
+  figuras/
+    diagrama.pdf
+  referencias/
+    meu-projeto.bib
+\end{verbatim}
+
+  Os nomes são seus; o que importa é a ideia: o principal monta, e cada parte
+  mora no seu arquivo.
+
+  \chapter{O arquivo principal, parte por parte}
+  \label{cap:principal}
+
+  O \texttt{projeto.tex} tem duas metades: o \textbf{preâmbulo}, antes do
+  \verb|\begin{document}|, onde se declara a classe; e o \textbf{corpo}, onde se
+  preenchem os dados e se chamam os capítulos. O esqueleto é este:
+
+\begin{verbatim}
+\documentclass[grad]{ufrj}   % grad = Projeto de Graduacao
+\usepackage{ufrj-poli}
+\addbibresource{referencias/meu-projeto.bib}
+
+\begin{document}
+  % --- dados do trabalho (o que preencher: proximo capitulo) ---
+  \title{...}  \foreigntitle{...}
+  \author{...}{...}
+  \advisor{...}{...}{D.Sc.}{UFRJ}
+  \examiner{...}{D.Sc.}{UFRJ}
+  \department{ECI}
+  \date{11}{2026}
+  \approvaldate{...}
+  \keyword{...}   \foreignkeyword{...}
+
+  \maketitle       % capa, folha de rosto e folha adicional (a ficha)
+  \frontmatter     % folha de aprovacao
+
+  \include{pre-textual/agradecimentos}
+  \begin{abstract}  ...  \end{abstract}
+  \begin{foreignabstract}  ...  \end{foreignabstract}
+  \tableofcontents
+
+  \mainmatter      % comeca a numeracao 1, 2, 3 e o texto
+  \include{capitulos/01-introducao}
+  \include{capitulos/02-desenvolvimento}
+  \include{capitulos/03-conclusao}
+
+  \backmatter      % referencias e, depois, apendices e anexos
+  \printbibliography
+  \appendix
+  \include{pos-textual/apendice-a}
+\end{document}
+\end{verbatim}
+
+  Cada \verb|\include{capitulos/01-introducao}| traz o conteúdo de
+  \texttt{capitulos/01-introducao.tex} (sem a extensão, e com barra para frente
+  mesmo no Windows). Dentro de cada arquivo vai só o conteúdo ---
+  \verb|\chapter{...}| e o texto ---, sem preâmbulo. Enquanto escreve um
+  capítulo, compile só ele com \verb|\includeonly{capitulos/02-desenvolvimento}|
+  no preâmbulo.
+
+  \chapter{O que preencher no \texttt{.tex}}
+
+  Os dados vão no corpo, logo depois do \verb|\begin{document}| e antes do
+  \verb|\maketitle|. A classe compõe com eles a capa, a folha de rosto, a folha
+  de aprovação e os metadados do PDF.
+
+  \begin{description}
+  \item[Título] \verb|\title{...}| em português e \verb|\foreigntitle{...}| em
+    inglês; o subtítulo, se houver, com \verb|\subtitle{...}|.
+  \item[Autor] \verb|\author{Nomes}{Sobrenome}| --- dois argumentos, porque a
+    ficha inverte o nome.
+  \item[Orientação] um \verb|\advisor{Nome}{Sobrenome}{D.Sc.}{UFRJ}| por
+    orientador.
+  \item[Banca] um \verb|\examiner{Nome Sobrenome}{D.Sc.}{Instituição}| por
+    membro, na ordem; o orientador preside e vem primeiro (3.1.2.1.3e).
+  \item[Curso] \verb|\department{ECI}| --- a sigla do seu curso, como o estilo da
+    Escola a declara (a folha de consulta rápida lista todas: DCC, DES, DEG, DET,
+    DHIMA, DEE, DEM, DMM, DNC, DENO, DEI, ECI, DEL).
+  \item[Datas] \verb|\date{mes}{ano}| e, na folha de aprovação,
+    \verb|\approvaldate{15 de novembro de 2026}|.
+  \item[Palavras-chave] \verb|\keyword{...}| e \verb|\foreignkeyword{...}|, uma
+    chamada por palavra.
+  \end{description}
+
+  No Projeto de Graduação, a folha adicional traz \textbf{só a ficha
+  catalográfica} --- os campos da Coleta CAPES são das teses e dissertações. A
+  ficha vem de \texttt{fichacatalografica.sibi.ufrj.br} e entra com
+  \verb|\catalogcard{ficha.pdf}|.
+
+  \chapter{Pré-textual, textual e pós-textual}
+
+  O trabalho tem três partes, na ordem da 3.1.2 do Manual, e a classe confere a
+  ordem: um elemento fora de lugar é erro de compilação, com a mensagem dizendo o
+  que mover.
+
+  \textbf{Pré-textual} --- a classe compõe sozinha a capa, a folha de rosto, a
+  folha adicional (a ficha) e a folha de aprovação, a partir dos dados que você
+  preencheu. Você escreve só o que tem texto seu: os agradecimentos
+  (\verb|\chapter*{Agradecimentos}|), a epígrafe (\verb|\epigrafe{...}{...}|) e os
+  dois resumos (\verb|abstract| e \verb|foreignabstract|). As listas e o
+  \verb|\tableofcontents| fecham a parte, nessa ordem.
+
+  \textbf{Textual} --- a introdução, o desenvolvimento e a conclusão, cada
+  capítulo no seu arquivo, trazidos por \verb|\include| depois do
+  \verb|\mainmatter|.
+
+  \textbf{Pós-textual} --- depois do \verb|\backmatter|: as referências
+  (\verb|\printbibliography|) e, então, os apêndices (depois de \verb|\appendix|)
+  e os anexos (depois de \verb|\annex|). Apêndice é material do autor; anexo é de
+  terceiros.
+
+  \chapter{Compilar e depositar}
+
+  Compile com o \texttt{latexmk}, que resolve as referências, as listas e o
+  índice sozinho:
+
+\begin{verbatim}
+latexmk -pdf projeto
+\end{verbatim}
+
+  À mão, a sequência é \texttt{pdflatex}, \texttt{biber}, \texttt{pdflatex},
+  \texttt{pdflatex}. O backend da bibliografia é o \texttt{biber}, não o BibTeX.
+  No Windows, o \texttt{latexmk} pede o Perl.
+
+  O arquivo sai em \textbf{PDF/A-2b}, como o depósito exige (Manual 2.2d). Antes
+  de entregar, inclua a ficha catalográfica real e confira a lista de verificação
+  no fim do \texttt{manual.pdf}.
+
+\end{document}
+%</guiapoli>
+%    \end{macrocode}
+%
 % \section{A folha de consulta da Escola}
 %
 % O |poli-quickref.tex| é a metade da Escola de uma folha só, em inglês: os

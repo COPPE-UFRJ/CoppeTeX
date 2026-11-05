@@ -165,7 +165,11 @@ banca = re.findall(r"\\examiner\{([^}]*)\}", codigo)
 if len(banca) != 5 or not all("membro da banca" in b for b in banca):
     problemas.append("coppe-max-exemplo.tex: a banca deve ter cinco membros declarados, "
                      "'Nome do Primeiro membro da banca Sobrenome'...; tem %r (#166)" % banca)
-m = re.search(r"\\projectname\{([^}]*)\}", codigo)
+# Desde 2026-11-05 os campos da Coleta CAPES saem COMENTADOS do exemplo (so
+# aparecem com a opcao dadoscoleta, preenchidos pelo Programa), entao \projectname
+# e procurado no texto inteiro, e nao so no codigo ativo: o que o #166 cobra e
+# que o exemplo documente o "(caso haja)".
+m = re.search(r"\\projectname\{([^}]*)\}", tex)
 if not m or "(caso haja)" not in m.group(1):
     problemas.append("coppe-max-exemplo.tex: o projeto de pesquisa sem '(caso haja)' (#166)")
 

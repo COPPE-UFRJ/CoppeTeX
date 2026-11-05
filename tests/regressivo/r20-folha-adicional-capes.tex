@@ -11,7 +11,9 @@
 %% ESPERA-TEXTO: Area de concentracao da producao intelectual:
 %% ESPERA-TEXTO: Agencia(s) de fomento financiadora(s) da producao intelectual:
 %% ESPERA-TEXTO: Ficha catalografica
-\documentclass[dsc]{ufrj}
+%% O bloco "Informacoes Coleta CAPES" so sai com a opcao dadoscoleta (o Programa
+%% preenche a folha); sem ela, a folha adicional traz so a ficha.
+\documentclass[dsc,dadoscoleta]{ufrj}
 \usepackage{ufrj-coppe}
 \title{Folha adicional}
 \foreigntitle{The additional sheet}

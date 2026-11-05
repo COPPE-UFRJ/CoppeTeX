@@ -66,12 +66,13 @@
   \department{PESC}
   \date{09}{2026}
 
-  \concentrationarea{Engenharia de Sistemas e Computação}
-  \researchline{Engenharia de Dados e Conhecimento}
-  \productiontype{bibliographic}
-  \linkedproject{no}
-  \fundingagency{Conselho Nacional de Desenvolvimento Científico e
-    Tecnológico}{CNPq}
+  % Folha adicional (Coleta CAPES): preenchida pelo Programa, não pelo autor. O
+  % bloco "Informações Coleta CAPES" só sai com a opção de classe `dadoscoleta',
+  % que este manual não liga de propósito: assim a sua própria folha adicional
+  % traz só a ficha catalográfica, que é o padrão da classe e o que a seção "A
+  % folha adicional" enuncia. Os comandos de dado (\concentrationarea,
+  % \productiontype, \linkedproject, \projectname, \fundingagency) estão na
+  % referência rápida, no apêndice.
 
   \keyword{Normalização}
   \keyword{Trabalhos acadêmicos}
@@ -435,10 +436,17 @@
 
   É o elemento novo, e o que mais surpreende quem escreveu a tese antes de 2026.
 
-  Vem \textbf{logo depois da folha de rosto}, é preenchida pelo Programa, e traz
-  duas coisas: os campos da coleta de dados da \useacronym{capes} --- tipo de produção
-  intelectual, projeto de pesquisa vinculado, nome do projeto, área de
-  concentração e agências de fomento --- e, abaixo deles, a ficha catalográfica.
+  Vem \textbf{logo depois da folha de rosto} e traz a \textbf{ficha
+  catalográfica}. Pode trazer também, acima dela, o bloco \textbf{Informações
+  Coleta CAPES} --- tipo de produção intelectual, projeto de pesquisa vinculado,
+  nome do projeto, área de concentração e agências de fomento.
+
+  Esse bloco é \textbf{preenchido pelo Programa}, e não pelo autor. Por isso a
+  classe o deixa \textbf{de fora por padrão}: sem pedir nada, a folha adicional
+  traz só a ficha --- como nesta mesma folha. Quem precisar compô-lo liga a
+  opção de classe \verb|dadoscoleta| e informa os campos com os comandos da
+  referência rápida (apêndice); um campo sem valor sai vazio. \textbf{A ficha
+  aparece sempre.}
 
   Ela \textbf{não é contada nem numerada}, como diz a \autoref{sec:paginacao}.
 
@@ -1103,9 +1111,12 @@ public class Saudacao {
     \item identificação: \verb|\title|, \verb|\foreigntitle|, \verb|\subtitle|,
       \verb|\author|, \verb|\advisor|, \verb|\coadvisor|, \verb|\examiner|,
       \verb|\department|, \verb|\date|, \verb|\keyword|;
-    \item folha adicional: \verb|\concentrationarea|, \verb|\researchline|,
+    \item folha de rosto: \verb|\researchline| (sai com a opção
+      \verb|linhanafolhaderosto|);
+    \item folha adicional: \verb|\catalogcard| (ficha, sempre presente); os
+      campos da Coleta CAPES --- \verb|\concentrationarea|,
       \verb|\productiontype|, \verb|\linkedproject|, \verb|\projectname|,
-      \verb|\fundingagency|, \verb|\catalogcard|;
+      \verb|\fundingagency| --- só com a opção de classe \verb|dadoscoleta|;
     \item estrutura: \verb|\maketitle|, \verb|\frontmatter|, \verb|\mainmatter|,
       \verb|\backmatter|, \verb|\dedication|, \verb|\appendix|, \verb|\annex|;
     \item ilustrações: \verb|\source|, ambiente \verb|framefloat|,

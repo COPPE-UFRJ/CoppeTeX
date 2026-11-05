@@ -223,9 +223,12 @@ def confere(pdf):
             if alto:
                 folios[i] = int(alto[0][4].strip())
         # A folha adicional so existe fora do exame de qualificacao; procura-se
-        # pelo titulo dela entre as pre-textuais. No trabalho de graduacao
-        # (#170) ela traz so a ficha, sem o bloco da Coleta CAPES.
-        temadicional = any("Coleta CAPES" in t or "Ficha catalogr" in t
+        # por ela entre as pre-textuais. Desde 2026-11-05 essa pagina NAO tem
+        # titulo (ordem do autor): identifica-se pelo bloco "Coleta CAPES"
+        # (quando a opcao dadoscoleta esta ligada) ou pelo texto da moldura que
+        # pede a ficha ("ficha catalografica"), sem depender de maiuscula. No
+        # trabalho de graduacao (#170) ela traz so a ficha, sem a Coleta CAPES.
+        temadicional = any("coleta capes" in t.lower() or "ficha catalogr" in t.lower()
                            for t in (texto(pdf, j) for j in range(1, prim_num)))
         previsto = 2 if temadicional else 1
         naocontadas = prim_num - folios[prim_num]

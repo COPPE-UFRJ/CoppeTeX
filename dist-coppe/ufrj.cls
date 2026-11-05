@@ -563,6 +563,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \DeclareOption{areanafolhaderosto}{\@ufrjarearostotrue}
 \newif\if@ufrjlinharosto \@ufrjlinharostofalse
 \DeclareOption{linhanafolhaderosto}{\@ufrjlinharostotrue}
+\newif\if@ufrjdadoscoleta \@ufrjdadoscoletafalse
+\DeclareOption{dadoscoleta}{\@ufrjdadoscoletatrue}
 \newif\if@ufrjfloatcap \@ufrjfloatcapfalse
 \DeclareOption{numeracaocontinua}{\@ufrjfloatcapfalse}
 \DeclareOption{numeracaoporcapitulo}{\@ufrjfloatcaptrue}
@@ -1746,9 +1748,9 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 \newcommand\makefolhaadicional{%
   \clearpage
   \thispagestyle{empty}%
-  \if@ufrjgrad\else\ufrj@checatipo\fi
+  \if@ufrjgrad\else\if@ufrjdadoscoleta\ufrj@checatipo\fi\fi
   {\singlespacing
-  \if@ufrjgrad\else
+  \if@ufrjgrad\else\if@ufrjdadoscoleta
   \begin{center}
     {\bfseries Informações Coleta CAPES}
   \end{center}
@@ -1781,10 +1783,9 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
           \advance\count1 by 1}}}
   \end{tabular}\par
   \vspace{9mm}
-  \fi
+  \fi\fi
+  \vspace*{\fill}
   \begin{center}
-    {\bfseries Ficha catalográfica}\par
-    \vspace{4mm}
     \ifthenelse{\equal{\ufrj@fichafile}{}}{%
       \if@ufrjrascunho
         \makecatalog
@@ -1795,7 +1796,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
           arquivo com \texttt{\string\fichacatalografica\{arquivo.pdf\}},
           ou solicite-a à biblioteca da sua unidade.}}%
       \fi}{%
-      \includegraphics[page=\ufrj@fichapage,width=125mm]{\ufrj@fichafile}}%
+      \includegraphics[page=\ufrj@fichapage,width=\textwidth,%
+        height=.92\textheight,keepaspectratio]{\ufrj@fichafile}}%
   \end{center}
   \par}}
 \newcommand\dedication[1]{%

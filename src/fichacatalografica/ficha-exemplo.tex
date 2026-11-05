@@ -1,0 +1,47 @@
+%% !TeX program = pdflatex
+%% !TeX encoding = UTF-8
+%% !TeX spellcheck = pt_BR
+%%
+%% ficha-exemplo.tex -- PROVA de que \catalogcard poe a ficha catalografica no
+%% lugar da moldura "Espaco reservado a ficha catalografica", no PE da folha
+%% adicional. A ficha de exemplo e a fichacatalografica.pdf, ao lado deste
+%% arquivo (uma pagina A4 qualquer serve de prova).
+%%
+%% Este exemplo fica em src/ (versionado, para nao envelhecer em silencio), mas
+%% NAO vai para as distribuicoes: e prova de funcionamento, nao material do
+%% aluno. Para compilar, tenha a classe ao alcance (ex.: copie este .tex e a
+%% fichacatalografica.pdf para build/, ou instale a classe) e rode:
+%%     pdflatex ficha-exemplo
+%% Sem \catalogcard a mesma folha sai com a moldura vazia; com ele, a ficha
+%% fornecida ocupa aquele lugar.
+\documentclass[dsc]{ufrj}
+\usepackage{ufrj-coppe}
+\begin{document}
+  \title{Prova da ficha catalográfica}
+  \foreigntitle{Catalog card placement proof}
+  \author{Nome}{Sobrenome}
+  \advisor{Nome do Orientador}{Sobrenome}{D.Sc.}{UFRJ}
+  \examiner{Nome do Orientador Sobrenome}{D.Sc.}{UFRJ}
+  \department{PESC}
+  \date{11}{2026}
+  \approvaldate{15 de novembro de 2026}
+  \keyword{ficha catalográfica}
+  \foreignkeyword{catalog card}
+  % A PROVA: com \catalogcard, a ficha fornecida substitui a moldura vazia e sai
+  % no pe da folha adicional. Comente esta linha e a moldura "Espaço reservado"
+  % volta ao mesmo lugar.
+  \catalogcard{fichacatalografica.pdf}
+  \maketitle
+  \frontmatter
+  \begin{abstract}
+  Documento mínimo para provar a colocação da ficha catalográfica.
+  \end{abstract}
+  \begin{foreignabstract}
+  Minimal document to prove the catalog-card placement.
+  \end{foreignabstract}
+  \tableofcontents
+  \mainmatter
+  \chapter{Introdução}
+  O corpo existe só para o documento compilar; o que esta prova mostra está na
+  folha adicional, antes desta página.
+\end{document}

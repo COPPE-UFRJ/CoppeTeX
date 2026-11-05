@@ -237,6 +237,7 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \changes{v5.0}{2026/10/29}{Equations follow the same option as the floats: numbered through the whole work by default, (1), (2), as in the only example, that of 5.7 of NBR 14724; within the chapter, (4.1), under numeracaoporcapitulo. The Manual (2.9) and the NBR ask only for the number in parentheses, on the right.}
 % \changes{v5.0}{2026/10/29}{Floats are numbered continuously through the whole work (Figura 1, 2, 3...), as 2.10 and 2.11 of the Manual and 5.8 of NBR 14724 ask: the number of order of occurrence in the text, and every example there is Figura 1, Quadro 1, Tabela 1. The new option numeracaoporcapitulo brings back the numbering within the chapter (Figura 4.1); numeracaocontinua names the default. It covers figure, table, quadro, the programs of listings, the algorithms of algorithm2e and the floats of newufrjfloat. Equations keep the chapter.}
 % \changes{v5.0}{2026/10/29}{The linha de pesquisa leaves the folha de rosto by default, and the new option linhanafolhaderosto brings it back. The body of the Manual does not list it among the elements of the folha de rosto; only the SiBI model carries it. researchline still records the value, and titlepageconcentrationarea and titlepagefield still fill the place without the option.}
+% \changes{v5.0}{2026/11/05}{The Informacoes Coleta CAPES block of the folha adicional leaves the document by default, and the new option dadoscoleta brings it back. The sheet is filled by the Programa, so the student's document no longer carries the fields: without the option the folha adicional shows only the ficha catalografica, which is always present. The data commands (concentrationarea, productiontype, linkedproject, projectname, fundingagency) still record their values; the option is what makes the table appear.}
 % \changes{v5.0}{2026/10/28}{The place of the linha de pesquisa on the folha de rosto gains two alternatives: titlepageconcentrationarea (areaconcentracaonafolharosto) puts the area de concentracao, the one on the diploma, in place of the linha de pesquisa, labelled from a new key, concentrationarea, in every language pack, with the value of concentrationarea or the one in its optional argument; and titlepagefield (campofolharosto) puts there a label and a value given by the author. The place holds one thing; of the two requests the last one counts. Without a linha de pesquisa and without a request, or with an empty value, nothing is printed. The label of the area in the natureza block, under areanafolhaderosto, comes from the same key.}
 % \changes{v5.0}{2026/09/17}{The area de concentracao leaves the natureza block of the folha de rosto and of the folha de aprovacao, and the new option areanafolhaderosto brings it back. The SiBI model that 3.1.2.1.2 links to carries it on the folha adicional, as a Coleta CAPES field, and Annexes B and D end the natureza block at the degree; only the prose of 3.1.2.1.1(e) and 3.1.2.1.3(c) lists it among the elements of the two sheets. The data is untouched: areaconcentracao still feeds the folha adicional, where it is mandatory.}
 % \changes{v5.0}{2026/09/15}{tests/regressivo gains four tests of the split: rtu01 composes a work with the class alone and forbids every COPPE phrase, rtu02 composes one with a made-up unit style that uses only the public interface, rtu03 compiles a work of the class coppe with the old names and a .toc written by the old class, and rtu04 reads the class, the bibliography styles, the language packs and the glossary style and fails if one names COPPE or any of its data.}
@@ -1306,6 +1307,16 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 %     |\linhapesquisa|. O corpo do Manual não a lista entre os elementos da
 %     folha de rosto; só o modelo do SiBI a traz. Ligue-a se o seu Programa
 %     a quiser ali: ela sai à margem esquerda, logo acima dos orientadores.
+%   \item[\texttt{dadoscoleta}] \textbf{Desligada por padrão}: o bloco
+%     \textbf{Informações Coleta CAPES} da folha adicional \emph{não} sai. Essa
+%     folha é preenchida pelo Programa, e por isso não acompanha o documento do
+%     aluno: sem a opção, a folha adicional traz \textbf{só a ficha
+%     catalográfica} (que aparece sempre). Ligue-a para compor os cinco campos
+%     --- tipo de produção, projeto vinculado, nome do projeto, área de
+%     concentração e agências de fomento --- a partir de |\concentrationarea|,
+%     |\productiontype|, |\linkedproject|, |\projectname| e |\fundingagency|; um
+%     campo sem valor sai vazio na tabela. Os dois exames e o seminário não
+%     levam folha adicional, com ou sem a opção.
 %   \item[\texttt{numeracaoporcapitulo}] \textbf{Desligada por padrão}:
 %     figuras, tabelas, quadros, programas, algoritmos e os flutuantes de
 %     |\newufrjfloat| são numerados \textbf{em sequência no trabalho todo}
@@ -3112,54 +3123,54 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % \textbf{Recurso} & \textbf{Comando} & \textbf{Linha} \\
 % \hline
 % Opções de classe        & |\documentclass|        & 23 \\
-% Base de referências        & |\addbibresource|       & 102 \\
-% Coleta da lista de símbolos& |\makelosymbols|        & 105 \\
-% Coleta das abreviaturas      & |\makeloabbreviations|  & 106 \\
-% Flutuante criado pelo autor  & |\newufrjfloat|        & 112 \\
-% Título                     & |\title|                & 121 \\
-% Título no estrangeiro      & |\foreigntitle|         & 122 \\
-% Autor                        & |\author|               & 126 \\
-% Orientação              & |\advisor|              & 130 \\
-% Coorientação            & |\coadvisor|            & 136 \\
-% Banca                        & |\examiner|             & 146 \\
-% Programa                     & |\department|           & 152 \\
-% Data do depósito           & |\date|                 & 153 \\
-% Data da defesa               & |\approvaldate|        & 157 \\
-% Palavras-chave               & |\keyword|              & 160 \\
-% Área de concentração  & |\concentrationarea|     & 170 \\
-% Linha de pesquisa            & |\researchline|        & 173 \\
-% Coleta CAPES                 & |\productiontype|         & 178 \\
-% Projeto vinculado            & |\linkedproject|     & 179 \\
-% Nome do projeto              & |\projectname|          & 180 \\
-% Agência de fomento         & |\fundingagency|       & 181 \\
-% Ficha catalográfica        & |\catalogcard|   & 187 \\
-% Capa e folha de rosto        & |\maketitle|            & 192 \\
-% Parte pré-textual          & |\frontmatter|          & 194 \\
-% Dedicatória                & |\dedication|           & 195 \\
-% Resumo                       & |abstract|              & 112 \\
-% Abstract                     & |foreignabstract|       & 128 \\
-% Listas pré-textuais        & |\listoffigures| \dots  & 146 \\
-% Sumário                    & |\tableofcontents|      & 202 \\
-% Parte textual                & |\mainmatter|           & 285 \\
-% Símbolo                    & |\symbl|                & 353 \\
-% Citação longa           & |longquote|             & 236 \\
-% Fonte da ilustração     & |\source|               & 444 \\
-% Quadro                       & |quadro|                & 300 \\
-% Bibliografia                 & |\printbibliography|    & 934 \\
-% Código no texto            & |\pythoninline|         & 1082 \\
-% Código Java no texto       & |\javainline|           & 1119 \\
-% Sigla declarada              & |\defineacronym|             & 1455 \\
-% Sigla usada                  & |\useacronym|                & 1458 \\
-% Abreviatura                  & |\abbrev|               & 1452 \\
-% Parte pós-textual          & |\backmatter|           & 1464 \\
-% Apêndices                  & |\appendix|             & 1480 \\
-% Anexos                       & |\annex|                & 1492 \\
-% Glossário automático        & |\makeglossarylist|     & 64 \\
-% Termo do glossário          & |\glossaryterm|         & 60 \\
-% Glossário                    & |\printglossarylist|    & 61 \\
-% Entrada do índice            & |\index|                & 396 \\
-% Índice                       & |\printindex|           & 1358 \\
-% Colófon                    & |\ufrjfinalpage|    & 1511 \\
+% Base de referências        & |\addbibresource|       & 106 \\
+% Coleta da lista de símbolos& |\makelosymbols|        & 109 \\
+% Coleta das abreviaturas      & |\makeloabbreviations|  & 110 \\
+% Flutuante criado pelo autor  & |\newufrjfloat|        & 116 \\
+% Título                     & |\title|                & 125 \\
+% Título no estrangeiro      & |\foreigntitle|         & 126 \\
+% Autor                        & |\author|               & 130 \\
+% Orientação              & |\advisor|              & 134 \\
+% Coorientação            & |\coadvisor|            & 140 \\
+% Banca                        & |\examiner|             & 150 \\
+% Programa                     & |\department|           & 156 \\
+% Data do depósito           & |\date|                 & 157 \\
+% Data da defesa               & |\approvaldate|        & 161 \\
+% Palavras-chave               & |\keyword|              & 164 \\
+% Área de concentração  & |\concentrationarea|     & 188 \\
+% Linha de pesquisa            & |\researchline|        & 175 \\
+% Coleta CAPES                 & |\productiontype|         & 189 \\
+% Projeto vinculado            & |\linkedproject|     & 190 \\
+% Nome do projeto              & |\projectname|          & 191 \\
+% Agência de fomento         & |\fundingagency|       & 192 \\
+% Ficha catalográfica        & |\catalogcard|   & 195 \\
+% Capa e folha de rosto        & |\maketitle|            & 200 \\
+% Parte pré-textual          & |\frontmatter|          & 202 \\
+% Dedicatória                & |\dedication|           & 203 \\
+% Resumo                       & |abstract|              & 226 \\
+% Abstract                     & |foreignabstract|       & 242 \\
+% Listas pré-textuais        & |\listoffigures| \dots  & 282 \\
+% Sumário                    & |\tableofcontents|      & 210 \\
+% Parte textual                & |\mainmatter|           & 293 \\
+% Símbolo                    & |\symbl|                & 361 \\
+% Citação longa           & |longquote|             & 390 \\
+% Fonte da ilustração     & |\source|               & 452 \\
+% Quadro                       & |quadro|                & 492 \\
+% Bibliografia                 & |\printbibliography|    & 942 \\
+% Código no texto            & |\pythoninline|         & 1090 \\
+% Código Java no texto       & |\javainline|           & 1127 \\
+% Sigla declarada              & |\defineacronym|             & 1463 \\
+% Sigla usada                  & |\useacronym|                & 1466 \\
+% Abreviatura                  & |\abbrev|               & 1460 \\
+% Parte pós-textual          & |\backmatter|           & 1472 \\
+% Apêndices                  & |\appendix|             & 1488 \\
+% Anexos                       & |\annex|                & 1500 \\
+% Glossário automático        & |\makeglossarylist|     & 68 \\
+% Termo do glossário          & |\glossaryterm|         & 64 \\
+% Glossário                    & |\printglossarylist|    & 65 \\
+% Entrada do índice            & |\index|                & 404 \\
+% Índice                       & |\printindex|           & 1366 \\
+% Colófon                    & |\ufrjfinalpage|    & 1519 \\
 % \end{tabular}
 % \end{center}
 %
@@ -3751,6 +3762,7 @@ rascunhoficha & [dsc,rascunhoficha] & \pre & Draft catalogue card while writing.
 resumosemreferencia & [dsc,resumosemreferencia] & \pre & Drop the work's own reference from the top of the three abstracts. It is printed by default (3.1.2.1.4, Annexes E and F). \\
 numeracaoporcapitulo & [dsc,numeracaoporcapitulo] & \pre & Number figures, tables, quadros, programs, algorithms and equations within the chapter (Figure 4.1, equation (4.1)). By default they run through the whole work (Figure 1, 2, 3; (1), (2)), as the UFRJ manual (2.10, 2.11) and NBR 14724 (5.7, 5.8) show. \\
 linhanafolhaderosto & [dsc,linhanafolhaderosto] & \pre & Print the research line (linhapesquisa) on the title page, above the advisors, as in the SiBI model. Off by default. \\
+dadoscoleta & [dsc,dadoscoleta] & \pre & Print the Informacoes Coleta CAPES block on the folha adicional (tipo de producao, projeto vinculado, nome do projeto, area de concentracao, agencias). Off by default: the sheet is filled by the Programa, so the folha adicional shows only the ficha catalografica. \\
 listasnosumario & [dsc,listasnosumario] & \pre & Put the pre-textual lists in the table of contents. Against NBR 6027 and the UFRJ manual (3.1.2.1.6): use only if your Programa requires it. \\
 simbolosalfabeticos & [dsc,simbolosalfabeticos] & \pre & List of symbols in alphabetical order instead of order of appearance. \\
 assinaturas & ---           & \pre & Accepted, does nothing. Signature rules are gone: deposit is digital. \\
@@ -3801,7 +3813,7 @@ semmorewrites & [dsc,semmorewrites] & \pre & Do not load \texttt{morewrites}. Sa
 \midrule
 
 \multicolumn{4}{@{}l@{}}{\normalfont\bfseries\small TITLE PAGE AND CAPES
-  SHEET}\\[2pt]
+  SHEET --- the Coleta CAPES fields print only with the \texttt{dadoscoleta} option}\\[2pt]
 \textbackslash areaconcentracao & \textbackslash areaconcentracao\{Engenharia de Sistemas\} & \doc & Area of concentration. On the folha adicional; on the identity sheets only under the \texttt{areanafolhaderosto} option. \\
 \textbackslash linhapesquisa & \textbackslash linhapesquisa\{Engenharia de Dados\} & \doc & Research line. On the title page only under the \texttt{linhanafolhaderosto} option; left out or empty, nothing is printed. \\
 \textbackslash areaconcentracaonafolharosto & \textbackslash areaconcentracaonafolharosto[...] & \pre & Puts the area of concentration (the diploma's) on the title page in place of the research line. Off by default; the optional text replaces it there only. \\
@@ -5230,6 +5242,14 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
 % pede pelo nome; \linhapesquisa guarda o valor de qualquer jeito.
 \newif\if@ufrjlinharosto \@ufrjlinharostofalse
 \DeclareOption{linhanafolhaderosto}{\@ufrjlinharostotrue}
+% A folha adicional da Coleta CAPES e preenchida pelo Programa, e nao pelo
+% aluno: o bloco "Informacoes Coleta CAPES" so sai com a opcao dadoscoleta
+% (ordem do autor 2026-11-05). Sem ela, a folha adicional traz SO a ficha
+% catalografica, que aparece sempre. Os comandos de dado (\concentrationarea,
+% \productiontype, ...) guardam o valor de qualquer jeito; a opcao e o que faz
+% a tabela sair.
+\newif\if@ufrjdadoscoleta \@ufrjdadoscoletafalse
+\DeclareOption{dadoscoleta}{\@ufrjdadoscoletatrue}
 % Ilustracoes e tabelas: "numero de ordem de ocorrencia no texto" (2.10, 2.11;
 % NBR 14724 5.8), e os exemplos sao Figura 1, Quadro 1, Tabela 1. A numeracao
 % corre no trabalho todo; numeracaoporcapitulo devolve a do capitulo (4.1).
@@ -7477,10 +7497,14 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
   \clearpage
   \thispagestyle{empty}%
 % No trabalho de graduacao (#170) a folha traz so a ficha: os campos da Coleta
-% CAPES sao "das teses e dissertacoes" (3.1.2.1.2).
-  \if@ufrjgrad\else\ufrj@checatipo\fi
+% CAPES sao "das teses e dissertacoes" (3.1.2.1.2). E, desde 2026-11-05 (ordem
+% do autor), o bloco "Informacoes Coleta CAPES" so sai com a opcao de classe
+% dadoscoleta: a folha e preenchida pelo Programa, e por isso nao acompanha o
+% documento do aluno por padrao -- sem a opcao, a folha adicional traz so a
+% ficha catalografica, que aparece sempre.
+  \if@ufrjgrad\else\if@ufrjdadoscoleta\ufrj@checatipo\fi\fi
   {\singlespacing
-  \if@ufrjgrad\else
+  \if@ufrjgrad\else\if@ufrjdadoscoleta
   \begin{center}
     {\bfseries Informações Coleta CAPES}
   \end{center}
@@ -7513,10 +7537,19 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
           \advance\count1 by 1}}}
   \end{tabular}\par
   \vspace{9mm}
-  \fi
+  \fi\fi
+% A ficha catalografica fica no PE da folha adicional: o \fill empurra a ficha
+% para a base da mancha -- e, quando ha a tabela da Coleta CAPES, deixa a tabela
+% no alto e a ficha embaixo --, em vez de solta no topo ou no centro (ordem do
+% autor 2026-11-05).
+  \vspace*{\fill}
+% Esta pagina -- a da ficha catalografica -- NAO tem titulo (ordem do autor
+% 2026-11-05: a ficha ja se identifica, e o modelo do SiBI nao poe cabecalho).
+% O \fill acima a mantem no pe da folha. Vazio: a classe gera a moldura que PEDE
+% a ficha, com o endereco do gerador do SiBI (ou o rascunho, com rascunhoficha).
+% Com arquivo: a pagina fornecida entra ajustada a mancha -- uma ficha em folha
+% A4 inteira quase enche a pagina; um cartao menor fica no seu tamanho.
   \begin{center}
-    {\bfseries Ficha catalográfica}\par
-    \vspace{4mm}
     \ifthenelse{\equal{\ufrj@fichafile}{}}{%
       \if@ufrjrascunho
         \makecatalog
@@ -7527,7 +7560,8 @@ T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor1000}
           arquivo com \texttt{\string\fichacatalografica\{arquivo.pdf\}},
           ou solicite-a à biblioteca da sua unidade.}}%
       \fi}{%
-      \includegraphics[page=\ufrj@fichapage,width=125mm]{\ufrj@fichafile}}%
+      \includegraphics[page=\ufrj@fichapage,width=\textwidth,%
+        height=.92\textheight,keepaspectratio]{\ufrj@fichafile}}%
   \end{center}
   \par}}
 %    \end{macrocode}

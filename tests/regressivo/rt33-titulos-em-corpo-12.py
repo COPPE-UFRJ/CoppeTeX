@@ -34,7 +34,8 @@ Texto.
 """
 ALVOS = [
     ("Informacoes Coleta CAPES", "titulo da folha adicional"),
-    ("Ficha catalografica", "titulo da ficha, na folha adicional"),
+    # A pagina da ficha catalografica NAO tem titulo (ordem do autor
+    # 2026-11-05): nada de "Ficha catalografica" para conferir aqui.
     ("AGRADECIMENTOS", "titulo sem indicativo (Agradecimentos)"),
     ("SUMARIO", "titulo do sumario"),
     ("CAPITULO PRIMARIO", "titulo de capitulo"),
@@ -44,7 +45,7 @@ ALVOS = [
 ]
 
 problemas = []
-with Documento(pre=PRE, corpo=CORPO) as d:
+with Documento(opcoes="dsc,dadoscoleta", pre=PRE, corpo=CORPO) as d:
     if not d.ok:
         relatar(["nao compilou: %s" % d.erros_do_log()])
     maiores = {}

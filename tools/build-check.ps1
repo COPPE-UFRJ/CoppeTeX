@@ -402,6 +402,13 @@ if ($Scope -in @("docs", "all")) {
     }
 
     Build-Tex -Stem "manual"     -Dir $src -WithBiber
+
+    # O Guia Passo a Passo, um por unidade (COPPE e Poli): documentos da classe
+    # que ensinam a montar o trabalho e o que preencher no .tex. Nao tem
+    # bibliografia, entao sem biber; as passadas do Build-Tex resolvem o sumario
+    # e os \autoref.
+    Build-Tex -Stem "coppe-guia" -Dir $src
+    Build-Tex -Stem "poli-guia"  -Dir $src
     # As normas sao .docx (src/normas) e nao se compilam: o
     # tools/distribuicoes.py --normas as converte em PDF.
 
