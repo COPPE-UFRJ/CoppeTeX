@@ -19,3 +19,6 @@
 .pdf-group a:hover{color:var(--wine)}
 .pdf-type{flex-shrink:0;color:var(--wine);font-size:9px;letter-spacing:.7px}
 @media(max-width:760px){.pdf-grid{grid-template-columns:1fr;gap:30px}.library h2{font-size:35px}.header{flex-wrap:wrap;gap:14px}.header nav{flex-wrap:wrap}}
+
+/* Identificador manual: incrementar a cada atualização da página publicada. */
+.page-version{font-size:10px;color:var(--muted);text-align:right;margin-top:0;margin-bottom:18px;letter-spacing:.3px}
