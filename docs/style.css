@@ -5,3 +5,17 @@
 .brand .brand-coppe{width:auto;height:.75em;display:inline-block;align-self:center}
 .brand .brand-tex{font-family:var(--serif);font-weight:normal;margin-left:2px}
 @media(max-width:390px){.header{flex-wrap:wrap;gap:12px}.header nav{margin-left:auto}}
+
+/* 05/11/2026: marca única em curvas, incluindo TeX e o ponto. */
+.brand .brand-logo{display:block;width:auto;height:1.13em}
+
+/* 05/11/2026: biblioteca com destinos PDF verificados nas distribuições. */
+.library{border-top:1px solid var(--line);padding-top:52px}
+.pdf-grid{display:grid;grid-template-columns:1.25fr 1fr 1fr;gap:35px}
+.pdf-group h3{font-size:23px;margin:0 0 20px}
+.pdf-group ul{list-style:none;margin:0;padding:0}
+.pdf-group li{border-bottom:1px solid var(--line)}
+.pdf-group a{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 0;font-size:12px;line-height:1.5}
+.pdf-group a:hover{color:var(--wine)}
+.pdf-type{flex-shrink:0;color:var(--wine);font-size:9px;letter-spacing:.7px}
+@media(max-width:760px){.pdf-grid{grid-template-columns:1fr;gap:30px}.library h2{font-size:35px}.header{flex-wrap:wrap;gap:14px}.header nav{flex-wrap:wrap}}
