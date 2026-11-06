@@ -36,6 +36,56 @@ import time
 import unicodedata
 import xml.etree.ElementTree as ET
 
+
+# --- O pdftotext do poppler -------------------------------------------------
+# medidas mede posicao com `pdftotext -bbox`, que e do poppler. O Git traz um
+# pdftotext do Xpdf (em Program Files\Git\mingw64\bin) que NAO tem -bbox; se ele
+# vier primeiro no PATH -- tipico ao rodar pelo Git Bash -- toda medida vinha
+# vazia e os testes de medida falhavam em falso. Para nao depender da ordem do
+# PATH, achamos aqui o pdftotext do poppler -- o primeiro do PATH cujo `-v` diga
+# "poppler", ou o do MiKTeX -- e usamos os tres utilitarios (pdftotext, pdfinfo,
+# pdftohtml) do MESMO diretorio, que o poppler distribui juntos. Sem poppler,
+# cai no nome puro (o PATH), e a guarda em `palavras' avisa. (Conserto 2026-11-06.)
+def _acha_poppler():
+    exe = ".exe" if os.name == "nt" else ""
+    candidatos = []
+    for d in os.environ.get("PATH", "").split(os.pathsep):
+        c = os.path.join(d, "pdftotext" + exe)
+        if os.path.isfile(c):
+            candidatos.append(c)
+    for padrao in (
+            os.path.expanduser(
+                r"~\AppData\Local\Programs\MiKTeX\miktex\bin\x64\pdftotext.exe"),
+            r"C:\Program Files\MiKTeX\miktex\bin\x64\pdftotext.exe",
+            r"C:\Program Files (x86)\MiKTeX\miktex\bin\x64\pdftotext.exe"):
+        candidatos += glob.glob(padrao)
+    for c in candidatos:
+        try:
+            v = subprocess.run([c, "-v"], stdout=subprocess.PIPE,
+                               stderr=subprocess.STDOUT).stdout
+        except OSError:
+            continue
+        if b"poppler" in v.lower():
+            return os.path.dirname(c)
+    return None
+
+
+_POPPLER = _acha_poppler()
+
+
+def _ferramenta(nome):
+    """O utilitario `nome' do poppler achado, ou o nome puro (cai no PATH)."""
+    if _POPPLER:
+        p = os.path.join(_POPPLER, nome + (".exe" if os.name == "nt" else ""))
+        if os.path.isfile(p):
+            return p
+    return nome
+
+
+PDFTOTEXT = _ferramenta("pdftotext")
+PDFINFO = _ferramenta("pdfinfo")
+PDFTOHTML = _ferramenta("pdftohtml")
+
 AQUI = os.path.dirname(os.path.abspath(__file__))
 RAIZ = os.path.dirname(os.path.dirname(AQUI))
 # COPPE_SRC aponta para outra copia da classe -- serve para provar uma correcao
@@ -425,13 +475,13 @@ class Documento(object):
 
     # -- leitura do PDF -----------------------------------------------------
     def n_paginas(self):
-        p = subprocess.run(["pdfinfo", self.pdf], stdout=subprocess.PIPE,
+        p = subprocess.run([PDFINFO, self.pdf], stdout=subprocess.PIPE,
                            stderr=subprocess.PIPE)
         m = re.search(r"Pages:\s+(\d+)", p.stdout.decode("utf-8", "replace"))
         return int(m.group(1)) if m else 0
 
     def texto(self, pagina=None):
-        cmd = ["pdftotext", "-enc", "UTF-8"]
+        cmd = [PDFTOTEXT, "-enc", "UTF-8"]
         if pagina:
             cmd += ["-f", str(pagina), "-l", str(pagina)]
         cmd += [self.pdf, "-"]
@@ -439,7 +489,7 @@ class Documento(object):
         return p.stdout.decode("utf-8", "replace")
 
     def texto_layout(self, pagina=None):
-        cmd = ["pdftotext", "-enc", "UTF-8", "-layout"]
+        cmd = [PDFTOTEXT, "-enc", "UTF-8", "-layout"]
         if pagina:
             cmd += ["-f", str(pagina), "-l", str(pagina)]
         cmd += [self.pdf, "-"]
@@ -464,7 +514,7 @@ class Documento(object):
         if pagina in self._paginas_xml:
             return self._paginas_xml[pagina]
         base = os.path.join(self.pasta, "_xml%d" % pagina)
-        subprocess.run(["pdftohtml", "-xml", "-i", "-q", "-zoom", "2",
+        subprocess.run([PDFTOHTML, "-xml", "-i", "-q", "-zoom", "2",
                         "-fontfullname", "-f", str(pagina), "-l", str(pagina),
                         self.pdf, base], stdout=subprocess.PIPE,
                        stderr=subprocess.PIPE)
@@ -495,7 +545,7 @@ class Documento(object):
         """Palavras da folha com a caixa exata (pdftotext -bbox)."""
         if pagina in self._palavras:
             return self._palavras[pagina]
-        p = subprocess.run(["pdftotext", "-bbox", "-f", str(pagina), "-l",
+        p = subprocess.run([PDFTOTEXT, "-bbox", "-f", str(pagina), "-l",
                             str(pagina), self.pdf, "-"], stdout=subprocess.PIPE,
                            stderr=subprocess.PIPE)
         bruto = p.stdout.decode("utf-8", "replace")
@@ -510,13 +560,14 @@ class Documento(object):
             # sempre o pdftotext do PATH e o do Xpdf (o que vem com o Git), que
             # nao tem a opcao. Sem esta guarda, o teste de medida PASSA sem
             # medir nada -- e passa em falso.
-            onde = shutil.which("pdftotext") or "pdftotext"
             raise SystemExit(
                 "medidas: 'pdftotext -bbox' nao devolveu palavra nenhuma na folha %d.\n"
                 "  pdftotext em uso: %s\n"
-                "  O -bbox e do poppler; o pdftotext do Xpdf (o do Git) nao o tem.\n"
-                "  Rode pelo PowerShell, ou ponha o poppler na frente do PATH."
-                % (pagina, onde))
+                "  O -bbox e do poppler. medidas tenta achar o poppler sozinho (o do\n"
+                "  MiKTeX, ou o primeiro do PATH cujo -v diga 'poppler'); se esta\n"
+                "  mensagem aparece, nenhum poppler foi encontrado -- instale o poppler\n"
+                "  ou o pdftotext do MiKTeX."
+                % (pagina, PDFTOTEXT))
         self._palavras[pagina] = saida
         return saida
 
