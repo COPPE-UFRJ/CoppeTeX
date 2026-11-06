@@ -213,7 +213,7 @@ When you edit a `.dtx`:
   the documentation prose in the `.dtx` (the lines starting with `%`).
 - **Distributions in sync?** When you finalise, rebuild them with
   `coppetex.bat --distribuir` (or `python tools/distribuicoes.py` after compiling).
-  Never edit `build/`, `dist-*` or `normas/` by hand: `src/` is the only source.
+  Never edit `build/` or `dist-*` by hand: `src/` is the only source.
 
 For larger restructurings, see how the v4.0 multilingual refactor was
 sequenced (commits `775db80`, `a363bc6`, `466302a`, `bfd0b5d`) — three

@@ -21,7 +21,7 @@ qualquer menção à COPPE.
 **Nada do que é gerado mora aqui.** Desde outubro de 2026, `src/` só tem fonte:
 o `tools/distribuicoes.py` copia as fontes para `../build/`, roda os três `.ins`
 lá, e é de `build/` que saem as distribuições (`../dist-coppe`, `../dist-poli`,
-`../dist-biblatex`) e as normas (`../normas`). `build/` fica fora do git. O
+`../dist-biblatex`) e os seus `.zip` no raiz. `build/` fica fora do git. O
 teste `tests/regressivo/rtu14` reprova qualquer arquivo gerado que volte a ser
 versionado em `src/`.
 
@@ -64,7 +64,7 @@ Fonte — **é aqui que se mexe**:
 | `manual.tex` | O manual da NORMA: como o trabalho tem de sair. Não confundir com `ufrj.pdf`, que é o manual da classe. |
 | `normas/` | As normas de cada unidade, **em Word** (`norma-coppe/NORMA_COPPE_2026.docx`, `norma-poli/NORMA_POLI_2026.docx`) — o `.docx` é a fonte; o gerador faz o PDF. Em `norma-coppe/cpgp/`, os documentos do processo na CPGP. |
 | `distribuicao/` | O que cada distribuição leva além do gerado: o `README.md` de cada uma, os guias de migração (`coppe/`) e o documento de exemplo do biblatex avulso (`biblatex/`). |
-| `gerador/` | O gerador de trabalho novo, `coppetex-novo.bat` + `geradocvazio.py`. É ferramenta do ALUNO e vai na `dist-coppe`. |
+| `gerador/` | O gerador de trabalho novo, `coppetex-novo.bat` + `geradocvazio.py`. Ferramenta do aluno; fica em `src/` (não vai mais nas distribuições — ordem do autor 2026-11). |
 
 ## Como os `.dtx` são organizados
 
