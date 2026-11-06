@@ -20,23 +20,58 @@
 *.ist    text
 *.md     text
 *.txt    text
-# .eps pode ser PostScript ASCII OU EPS binario (com preview DOS, cabecalho
-# C5 D0 D3 C6). Tratar como `text` normalizava o binario e o corrompia no git
-# (ex.: Marca_Principal.eps perdia ~5 KB). `binary` guarda byte a byte os dois.
-*.eps    binary
 LEIAME   text
 COPYING.txt  text
 
-# Binários: nunca converter.
+# Binários: NUNCA converter fim de linha -- a normalização corrompe o binário.
+# Marcados explicitamente mesmo com o `text=auto` lá em cima, porque a
+# auto-detecção erra: um binário "de muito texto" (um PDF denso) pode ser visto
+# como texto, e um EPS de cabeçalho ASCII idem; aí o git normaliza o LF e
+# estraga o arquivo (foi o que corrompeu o Marca_Principal.eps). Defende-se
+# tudo o que é ou pode vir a ser binário no projeto.
+# Documentos
 *.pdf    binary
+*.ps     binary
+*.eps    binary
+*.docx   binary
+*.doc    binary
+*.xlsx   binary
+*.xls    binary
+*.pptx   binary
+*.ppt    binary
+*.odt    binary
+*.ods    binary
+*.odp    binary
+# Imagens
 *.png    binary
 *.jpg    binary
 *.jpeg   binary
 *.gif    binary
-*.zip    binary
-*.gz     binary
+*.bmp    binary
+*.tif    binary
+*.tiff   binary
+*.webp   binary
+*.ico    binary
+*.xcf    binary
+*.psd    binary
+*.emf    binary
+*.wmf    binary
+# Fontes
 *.ttf    binary
 *.otf    binary
+*.woff   binary
+*.woff2  binary
+*.eot    binary
+# Compactados e mídia
+*.zip    binary
+*.gz     binary
+*.7z     binary
+*.rar    binary
+*.tar    binary
+*.mp4    binary
+*.mp3    binary
+*.mov    binary
+*.wav    binary
 
 # Scripts precisam do fim de linha da sua plataforma.
 *.ps1    text eol=crlf
