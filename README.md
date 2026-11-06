@@ -262,4 +262,4 @@ reproduz e, se houver, o `.log` da compilação.
 GNU General Public License, versão 3 (`COPYING.txt`).
 
 <!-- registro de build -->
-_Último build exportado: 29/10/2026 12:48 (build/, dist-coppe, dist-poli, dist-biblatex, Overleaf e CTAN)._
+_Último build exportado: 06/11/2026 — versão 5.0 (build/, dist-coppe, dist-poli, dist-biblatex, os `.zip` do raiz, o site `docs/` e o pacote CTAN)._

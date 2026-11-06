@@ -4,7 +4,35 @@ Project changes worth noting, newest first. Follows
 [Keep a Changelog](https://keepachangelog.com/) loosely; dates are
 ISO-8601.
 
-## [Unreleased] — 2026-10-29 — Continuous numbering of illustrations
+## [5.0] — 2026-11-06 — Folha adicional opcional, guia passo a passo e site
+
+- **Coleta CAPES opcional**: nova opção de classe `dadoscoleta`. Por padrão a
+  folha adicional traz só a ficha catalográfica; o bloco "Informações Coleta
+  CAPES", preenchido pelo Programa, só sai com a opção. Os comandos de dado
+  (`\concentrationarea`, `\productiontype`, `\linkedproject`, `\projectname`,
+  `\fundingagency`) saíram dos exemplos e ficam documentados no manual da classe
+  e na referência rápida.
+- **Ficha catalográfica no pé da folha adicional e sem título**: com arquivo,
+  `\catalogcard` põe a página fornecida ajustada à mancha; vazio, a classe gera
+  a moldura que pede a ficha. `conferir-norma` identifica a folha adicional sem
+  depender do título.
+- **Linha de pesquisa** volta ao exemplo máximo da COPPE, acima dos orientadores,
+  com a opção `linhanafolhaderosto`.
+- **Guia Passo a Passo para Usar o CoppeTeX**, um por unidade (`coppe-guia.pdf` e
+  `poli-guia.pdf`): a montagem do trabalho em vários arquivos — estrutura de
+  pastas e um capítulo por arquivo — e o que preencher no `.tex`. Entra nos
+  manuais de cada distribuição e no site.
+- **Distribuições fechadas em `.zip` no raiz** (`dist-coppe.zip`, `dist-poli.zip`
+  e `dist-biblatex.zip`), prontas para o Overleaf, além da pasta aberta.
+- **README reorganizado**: começa por qual pasta ou `.zip` baixar, com as seções
+  "Usando no Overleaf", "Usando no Windows, Mac e Linux" e "Os manuais".
+- **A norma, o gerador e a migração saíram das distribuições**: a norma fica em
+  `specs/` e em `src/normas/`; a `coppe.cls`/`poli.cls` de migração e o gerador,
+  na fonte. `normas/` no raiz e `claude/` deixam de ser versionados.
+- **O site (`docs/`) acompanha o build**: `docs/pdfs/` é atualizado com os PDFs
+  das distribuições no fluxo de geração (`distribuicoes.py --site`).
+
+## [5.0] — 2026-10-29 — Continuous numbering of illustrations
 
 - **Floats are numbered through the whole work by default** (Figura 1, 2,
   3…), as 2.10 and 2.11 of the UFRJ Manual and 5.8 of NBR 14724 show: the
@@ -26,7 +54,7 @@ ISO-8601.
 - New regression test rtu18 (both modes, six kinds of float and equations); r01, r18,
   rt36, rt69 and rt74 expect the continuous numbers.
 
-## [Unreleased] — 2026-10-29 — The linha de pesquisa off by default
+## [5.0] — 2026-10-29 — The linha de pesquisa off by default
 
 - **New option `linhanafolhaderosto`, off by default.** `\linhapesquisa`
   (`\researchline`) no longer prints on the folha de rosto unless the option
@@ -38,7 +66,7 @@ ISO-8601.
   linha adds the option. New regression tests r37 (off by default) and r38
   (with the option); r19, rt48 and r26 use the option.
 
-## [Unreleased] — 2026-10-28 — A lighter root: the `coppetex/` folder
+## [5.0] — 2026-10-28 — A lighter root: the `coppetex/` folder
 
 - **The class finds its own files in `coppetex/`.** Right after loading, `ufrj`
   appends `coppetex/` to `\input@path` and `coppetex/` and `coppetex/logos/`
@@ -76,7 +104,7 @@ ISO-8601.
 - The Norma COPPE 2026 is listed as approved by the CPGP in `normas/README.md`;
   `MIGRATION_v4_to_v5.md` points at `coppetex/logos/`.
 
-## [Unreleased] — 2026-10-28 — The research-line place on the folha de rosto
+## [5.0] — 2026-10-28 — The research-line place on the folha de rosto
 
 - **One place, one thing.** The line between the natureza block and the
   advisors on the folha de rosto holds the linha de pesquisa (`\linhapesquisa`,
@@ -93,7 +121,7 @@ ISO-8601.
 - Regression tests r33–r36 cover the area in place of the line, the free field
   winning over the area, the area with its own text, and no field at all.
 
-## [Unreleased] — 2026-10-20 — Packages for CTAN and for Overleaf
+## [5.0] — 2026-10-20 — Packages for CTAN and for Overleaf
 
 - **Two submission packages, both COPPE's, both outside git.**
   `coppetex.bat --envio` (or `tools/distribuicoes.py --ctan --overleaf`) builds
@@ -121,7 +149,7 @@ ISO-8601.
     compiles.
   - Guarded by `tests/regressivo/rtu17`.
 
-## [Unreleased] — 2026-10-20 — The institution block on the cover
+## [5.0] — 2026-10-20 — The institution block on the cover
 
 - **The three blocks of the capa are set apart.** The university, the unit and
   the Programa are separated by extra space; the lines *inside* the unit's own
@@ -134,7 +162,7 @@ ISO-8601.
   unit style redefines it: COPPE, Poli and any new unit get the same cover.
   Guarded by `tests/regressivo/rtu16`.
 
-## [Unreleased] — 2026-10-20 — `src/` holds only source
+## [5.0] — 2026-10-20 — `src/` holds only source
 
 - **`src/` really holds only source now.** The reorganisation of 2026-10-12
   moved the generated files out of git, but 146 of them were still sitting in
@@ -147,7 +175,7 @@ ISO-8601.
   `__pycache__/`, which the generator in `src/gerador/` writes next to its
   `.py`.
 
-## [Unreleased] — 2026-10-12 — Repository reorganisation
+## [5.0] — 2026-10-12 — Repository reorganisation
 
 No change to what the class produces: the files generated from the three
 `.dtx` are byte-identical to the ones previously versioned in `src/`.
