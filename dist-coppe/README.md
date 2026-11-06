@@ -8,6 +8,9 @@ coisa — e ignore o resto do repositório.
 > repositório <https://github.com/COPPE-UFRJ/CoppeTeX>, e a próxima geração
 > apaga o que tiver sido mudado à mão.
 
+> 🌐 **Site do projeto: <https://coppetex.coppe.ufrj.br>** — baixe tudo e leia
+> os manuais no navegador.
+
 ## Em 30 segundos
 
 1. Copie **os arquivos da raiz desta pasta e a pasta `coppetex/`** para a

@@ -13,6 +13,8 @@ documento LaTeX**: artigo, relatório, livro, apresentação.
 > Esta pasta é gerada. A fonte é o `src/ufrj.dtx` do repositorio
 > <https://github.com/COPPE-UFRJ/CoppeTeX>.
 
+> 🌐 **Site do projeto: <https://coppetex.coppe.ufrj.br>**
+
 ## O que tem aqui
 
 | Arquivo | O que é |
