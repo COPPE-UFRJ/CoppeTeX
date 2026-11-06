@@ -9,6 +9,8 @@
     python tools/distribuicoes.py --montar     so monta dist-coppe, dist-poli e dist-biblatex
     python tools/distribuicoes.py --zip        so fecha dist-coppe.zip, dist-poli.zip
                                                e dist-biblatex.zip no raiz
+    python tools/distribuicoes.py --site       so atualiza docs/pdfs/ (o site do
+                                               GitHub Pages) com os PDFs das dist-*
     python tools/distribuicoes.py --ctan       so o pacote do CTAN (da COPPE), em build/
     python tools/distribuicoes.py --overleaf   so o projeto do Overleaf (da COPPE), em build/
     python tools/distribuicoes.py --pacote     fecha cada dist-* num .zip em build/pacotes
@@ -120,6 +122,19 @@ def _pasta(logos):
 MANUAIS_COPPE = ("ufrj.pdf", "ufrj-coppe.pdf", "ufrj-quickref.pdf",
                  "coppe-quickref.pdf", "coppe-guia.pdf", "manual.pdf",
                  "coppe-min-exemplo.pdf", "coppe-max-exemplo.pdf")
+
+# --- O site do GitHub Pages (docs/) ----------------------------------------
+# docs/pdfs/ hospeda, para leitura direta no site, copias dos PDFs que vao em
+# dist-*/manuais. O mapa esta em docs/pdfs/README.md; aqui ele vira codigo para
+# o fluxo de atualizacao manter o site em dia (ordem do autor 2026-11-06).
+DOCS_PDFS = os.path.join(RAIZ, "docs", "pdfs")
+DOCS_FONTE = {
+    "dist-coppe": ["coppe-guia.pdf", "coppe-min-exemplo.pdf",
+                   "coppe-max-exemplo.pdf", "manual.pdf", "ufrj.pdf",
+                   "ufrj-coppe.pdf", "ufrj-quickref.pdf", "coppe-quickref.pdf"],
+    "dist-poli": ["poli-guia.pdf", "poli-min-exemplo.pdf", "poli-max-exemplo.pdf",
+                  "ufrj-poli.pdf", "poli-quickref.pdf"],
+}
 
 DISTRIBUICOES = {
     "dist-coppe": (
@@ -464,6 +479,32 @@ def zipar_raiz(diz=_diz):
     return ok
 
 
+def sincroniza_docs(diz=_diz):
+    """Atualiza docs/pdfs/ (o site do GitHub Pages) com os PDFs das dist-*/manuais.
+
+    O site le estes PDFs direto; depois de regenerar as distribuicoes, as copias
+    do site tem de acompanhar. O mapa de cada arquivo esta em docs/pdfs/README.md.
+    Nao mexe no index.html nem no CSS, que sao do autor.
+
+    Side-effect: sobrescreve docs/pdfs/*.pdf."""
+    if not os.path.isdir(DOCS_PDFS):
+        diz("   docs/pdfs/ nao existe -- site do GitHub Pages ausente, pulado")
+        return True
+    ok = True
+    n = 0
+    for d, nomes in sorted(DOCS_FONTE.items()):
+        for nome in nomes:
+            fonte = os.path.join(RAIZ, d, "manuais", nome)
+            if not os.path.exists(fonte):
+                diz("   FALTOU %s/manuais/%s -- compile e monte antes" % (d, nome))
+                ok = False
+                continue
+            shutil.copy2(fonte, os.path.join(DOCS_PDFS, nome))
+            n += 1
+    diz("   docs/pdfs/: %d PDF(s) atualizado(s)" % n)
+    return ok
+
+
 def pacote(diz=_diz):
     """Um .zip por distribuicao, em build/pacotes/, com uma pasta dentro."""
     versao = versao_atual()
@@ -607,6 +648,8 @@ def main(argv):
         ok = montar() and ok
     if tudo or "--zip" in passos:
         ok = zipar_raiz() and ok
+    if tudo or "--site" in passos:
+        ok = sincroniza_docs() and ok
     if tudo or "--ctan" in passos:
         ok = montar_pacote("ctan") and ok
     if tudo or "--overleaf" in passos:

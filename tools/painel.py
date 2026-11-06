@@ -2,7 +2,7 @@
 """Painel de controle do desenvolvedor da CoppeTeX.
 
     coppetex.bat                      abre a janela
-    coppetex.bat --distribuir         do .dtx as tres dist-* e as normas
+    coppetex.bat --distribuir         do .dtx as tres dist-*, os .zip e o site
     coppetex.bat --regerar --dist     so regera build/ e monta, sem compilar
     coppetex.bat --tudo               a prova inteira
     coppetex.bat --ajuda              a lista completa
@@ -166,7 +166,10 @@ def acao_dist(saida):
     ok = distribuicoes.montar(saida)
     saida("")
     saida("zipando as distribuicoes no raiz")
-    return distribuicoes.zipar_raiz(saida) and ok
+    ok = distribuicoes.zipar_raiz(saida) and ok
+    saida("")
+    saida("atualizando docs/pdfs/ (site do GitHub Pages)")
+    return distribuicoes.sincroniza_docs(saida) and ok
 
 
 def acao_pacote(saida):
@@ -238,7 +241,7 @@ def acao_versao3(saida):
 # nome de linha de comando, rotulo na janela, funcao, explicacao de uma linha
 ACOES = [
     ("distribuir", "TUDO o que se baixa: regerar, compilar, montar", acao_distribuir,
-     "do .dtx as tres dist-* e as normas, de uma vez"),
+     "do .dtx as tres dist-*, os .zip do raiz e o site, de uma vez"),
     ("regerar", "Regerar build/ a partir do .dtx", acao_regerar,
      "copia src/ para build/ e roda os tres .ins: classe, estilos, exemplos, latexmkrc"),
     ("docs", "Compilar os PDFs da entrega", acao_docs,
