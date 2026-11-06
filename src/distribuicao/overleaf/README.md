@@ -8,6 +8,8 @@ trabalho mínimo para você começar a escrever por cima.
 > <https://github.com/COPPE-UFRJ/CoppeTeX>, e a próxima geração apaga o que
 > tiver sido mudado à mão aqui dentro. Versão @VERSAO@.
 
+> 🌐 **Site do projeto: <https://coppetex.coppe.ufrj.br>**
+
 ## Em 30 segundos
 
 1. No Overleaf: **New Project → Upload Project** e solte este `.zip`.

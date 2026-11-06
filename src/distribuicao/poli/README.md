@@ -12,6 +12,9 @@ ignore o resto do repositório.
 > Esta pasta é gerada. Não edite nada aqui dentro: a fonte está em `src/` no
 > repositório <https://github.com/COPPE-UFRJ/CoppeTeX>.
 
+> 🌐 **Site do projeto: <https://coppetex.coppe.ufrj.br>** — baixe tudo e leia
+> os manuais no navegador.
+
 ## Em 30 segundos
 
 1. Copie **os arquivos da raiz desta pasta e a pasta `coppetex/`** para a
