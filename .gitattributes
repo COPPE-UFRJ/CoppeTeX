@@ -20,7 +20,10 @@
 *.ist    text
 *.md     text
 *.txt    text
-*.eps    text
+# .eps pode ser PostScript ASCII OU EPS binario (com preview DOS, cabecalho
+# C5 D0 D3 C6). Tratar como `text` normalizava o binario e o corrompia no git
+# (ex.: Marca_Principal.eps perdia ~5 KB). `binary` guarda byte a byte os dois.
+*.eps    binary
 LEIAME   text
 COPYING.txt  text
 
