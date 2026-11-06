@@ -5,6 +5,9 @@ o *Manual para Elaboração e Normalização de Trabalhos Acadêmicos* da UFRJ/S
 (9.ª ed. rev., 2026), com os estilos da COPPE e da Escola Politécnica e estilos
 biblatex ABNT.
 
+> 🌐 **Site do projeto: <https://coppetex.coppe.ufrj.br>** — a porta de entrada:
+> baixe a sua distribuição, leia os manuais em PDF no navegador e comece por lá.
+
 ## O que eu baixo?
 
 Pegue **só a sua distribuição** — e ignore o resto do repositório. Cada uma vem
@@ -165,8 +168,8 @@ python tools/distribuicoes.py --pacote     # os zips de release, versionados, em
 Sem argumento, `coppetex.bat` abre o painel do desenvolvedor, com testes,
 verificadores e versão. Antes de marcar uma versão: `coppetex.bat --tudo`.
 
-> **A fonte é `src/`, e só ela.** Nada em `build/`, `dist-*` ou `normas/` é
-> editado à mão: a próxima geração apaga a edição.
+> **A fonte é `src/`, e só ela.** Nada em `build/` ou `dist-*` é editado à mão:
+> a próxima geração apaga a edição.
 
 ## Required LaTeX packages
 
